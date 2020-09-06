@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="rojo">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -12,9 +12,9 @@
     <title>Bienvenida</title>
 
     {{-- css  --}}
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/global.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plantilla/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/login/login.css') }}" rel="stylesheet">
 
     {{-- Script  --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -40,8 +40,7 @@
                                         <h1 class="ml1">
                                             <span class="text-wrapper">
                                                 <span class="line line1"></span>
-                                                <span data-tooltip
-                                                title="Sistema de información para la gestión administrativa,
+                                                <span data-tooltip title="Sistema de información para la gestión administrativa,
                                                 académica y curricular de la Escuela de Bibliotecología,
                                                 Documentación e Información.">
                                                     <span class="letters" id='letras'>SIGAB</span>
@@ -52,29 +51,62 @@
                                     </div>
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
-                                        <div class="form-group">
-                                            <input id="cedula" type="cedula" class="form-control  form-control-user @error('cedula') is-invalid @enderror" placeholder="Cédula" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
-                                            @error('cedula')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input id="contrasenna" type="contrasenna" class="form-control @error('contrasenna') is-invalid @enderror" placeholder="Contraseña" name="contrasenna" required autocomplete="current-password">
-                                            @error('contrasenna')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group d-flex justify-content-center py-3">
-                                            <button type="submit" class="btn btn-rojo">
-                                                {{ __('Iniciar Sesión') }} &nbsp; <i class="fas fa-sign-in-alt"></i>
 
-                                            </button>
+                                        <div class="form-group row">
+                                            <label for="persona_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="persona_id" type="text" class="form-control @error('persona_id') is-invalid @enderror" name="persona_id" value="{{ old('persona_id') }}" required autocomplete="email" autofocus>
+
+                                                @error('persona_id')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                                @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-6 offset-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                                    <label class="form-check-label" for="remember">
+                                                        {{ __('Remember Me') }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-0">
+                                            <div class="col-md-8 offset-md-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    {{ __('Login') }}
+                                                </button>
+
+                                                @if (Route::has('password.request'))
+                                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                    {{ __('Forgot Your Password?') }}
+                                                </a>
+                                                @endif
+                                            </div>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -84,15 +116,12 @@
         </div>
 
     </div>
-    {{--
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="assets/js/script.min.js"></script>--}}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <script src="{{ asset('js/login.js') }}" defer></script>
-    <script src="{{ asset('js/Tooltip.js') }}" defer></script>
+    <script src="{{ asset('js/login/login.js') }}" defer></script>
+    <script src="{{ asset('js/login/Tooltip.js') }}" defer></script>
+
+
 </body>
 
 </html>

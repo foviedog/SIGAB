@@ -1,15 +1,18 @@
+/* Clases de las letras */
+
+/* Forma de las letras */
 .ml1 {
-    font-weight: 900;
-    font-size: 95px;
+    font-weight: 700;
+    font-size: 100px;
     color: #0151a0;
     cursor: default;
 }
-
+/* Forma en la que se despliega la letra */
 .ml1 .letter {
     display: inline-block;
     line-height: 0.5em;
 }
-
+/* Posición en la que se ubicarán las lineas */
 .ml1 .text-wrapper {
     position: relative;
     display: inline-block;
@@ -18,6 +21,7 @@
     padding-bottom: 0.15em;
 }
 
+/* Lineas que envuelvan a las letras SIGAB */
 .ml1 .line {
     opacity: 0;
     position: absolute;
@@ -34,6 +38,7 @@
     transform-origin: 0 0;
 }
 
+/* Formateo de las lineas del login */
 .ml1 .line1 {
     top: 0;
 }
@@ -52,7 +57,7 @@
     padding: 8px;
     z-index: 999;
     max-width: 325px;
-    text-align: justify;
+    text-align: start;
 }
 
 #tooltip.alt-tooltip {

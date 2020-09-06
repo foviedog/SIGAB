@@ -12,9 +12,9 @@
     <!-- Hojas de estilo -->
 
     <!-- Hojas de estilo globales -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/global.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plantilla/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plantilla/layout.css') }}" rel="stylesheet">
 
     <!-- Scripts globales -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -112,27 +112,34 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="#">Link 1</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                            <li class="nav-item ">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->persona_id }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
+
                         </ul>
                     </div>
+
                 </div>
             </nav>
 
             @yield('contenido')
 
-            @yield('pie')
         </div>
-    </div>
 
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -147,7 +154,7 @@
                     $('#sidebar').toggleClass('active');
                 });
             });
-        </script>
-</body>
 
-</html>
+        </script>
+
+</body>

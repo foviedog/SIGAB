@@ -1,3 +1,4 @@
+// Incorpara el 'API' dentro del html
 var textWrapper = document.querySelector(".ml1 .letters");
 textWrapper.innerHTML = textWrapper.textContent.replace(
     /\S/g,
@@ -5,7 +6,9 @@ textWrapper.innerHTML = textWrapper.textContent.replace(
 );
 
 anime
+    /* Al ponerse en false solamente se hace una vez*/
     .timeline({ loop: false })
+    /* Aparecer letras  SIGAB*/
     .add({
         targets: ".ml1 .letter",
         scale: [0.3, 1],
@@ -13,8 +16,9 @@ anime
         translateZ: 0,
         easing: "easeOutExpo",
         duration: 900,
-        delay: (el, i) => 70 * (i + 1),
+        delay: (el, i) => 70 * (i + 1)
     })
+    /* Lineas de arriba y abajo de las letras SIGAB */
     .add({
         targets: ".ml1 .line",
         scaleX: [0, 1],
@@ -22,8 +26,10 @@ anime
         easing: "easeOutExpo",
         duration: 2000,
         offset: "-=875",
-        delay: (el, i, l) => 80 * (l - i),
+        delay: (el, i, l) => 80 * (l - i)
     });
+/* Desaparecer letras SIGAB*/
+
 /*.add({
         targets: ".ml1",
         opacity: 0,

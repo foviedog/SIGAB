@@ -1,28 +1,28 @@
 /* Fuente utilizada */
 
-@import url(
-    http://fonts.googleapis.com/css?family=Roboto:400,
-    100,
-    100italic,
-    300,
-    300ita‌​lic,
-    400italic,
-    500,
-    500italic,
-    700,
-    700italic,
-    900italic,
-    900
-);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,
+ 100,
+100italic,
+300,
+300ita‌​lic,
+400italic,
+500,
+500italic,
+700,
+700italic,
+900italic,
+900);
 html,
 body,
 html * {
     font-family: "Roboto", sans-serif;
 }
 
+
 /* ====================================================
 Paleta de colores para todo SIGAB
 ==================================================== */
+
 
 /* ------------------------
 Colores de fondo
@@ -52,6 +52,7 @@ Colores de fondo
     background-color: #e6e6e6 !important;
 }
 
+
 /* ------------------------
 Colores de Letras
 ------------------------ */
@@ -80,9 +81,11 @@ Colores de Letras
     background-color: #e6e6e6 !important;
 }
 
+
 /* ------------------------
 Colores de botones
 ------------------------ */
+
 
 /* ********************
 Botones rellenos
@@ -116,6 +119,7 @@ Botones rellenos
     color: #e6e6e6 !important;
 }
 
+
 /* ***********************
 Botones contorno (outline)
 ************************** */
@@ -141,6 +145,7 @@ Botones contorno (outline)
     background-color: #2d2d2d !important;
     color: #e6e6e6 !important;
 }
+
 
 /* ====================================================
 Fin de la paleta de colores
