@@ -1,0 +1,147 @@
+/* Fuente utilizada */
+
+@import url(
+    http://fonts.googleapis.com/css?family=Roboto:400,
+    100,
+    100italic,
+    300,
+    300ita‌​lic,
+    400italic,
+    500,
+    500italic,
+    700,
+    700italic,
+    900italic,
+    900
+);
+html,
+body,
+html * {
+    font-family: "Roboto", sans-serif;
+}
+
+/* ====================================================
+Paleta de colores para todo SIGAB
+==================================================== */
+
+/* ------------------------
+Colores de fondo
+------------------------ */
+
+.bg-rojo-oscuro {
+    background-color: #921315 !important;
+}
+
+.bg-rojo-medio {
+    background-color: #aa1816 !important;
+}
+
+.bg-rojo-claro {
+    background-color: #e3302d !important;
+}
+
+.bg-gris-oscuro {
+    background-color: #2d2d2d !important;
+}
+
+.bg-gris-medio {
+    background-color: #414141 !important;
+}
+
+.bg-gris-claro {
+    background-color: #e6e6e6 !important;
+}
+
+/* ------------------------
+Colores de Letras
+------------------------ */
+
+.texto-rojo-oscuro {
+    color: #921315 !important;
+}
+
+.texto-rojo-medio {
+    background-color: #aa1816 !important;
+}
+
+.texto-rojo-claro {
+    background-color: #e3302d !important;
+}
+
+.texto-gris-oscuro {
+    background-color: #2d2d2d !important;
+}
+
+.texto-gris-medio {
+    background-color: #414141 !important;
+}
+
+.texto-gris-claro {
+    background-color: #e6e6e6 !important;
+}
+
+/* ------------------------
+Colores de botones
+------------------------ */
+
+/* ********************
+Botones rellenos
+******************** */
+
+.btn-rojo {
+    background-color: #aa1816 !important;
+    border-color: #aa1816 !important;
+    color: #e6e6e6 !important;
+}
+
+.btn-rojo:hover {
+    background-color: #e3302d !important;
+    border-color: #e3302d !important;
+}
+
+.btn-gris {
+    background-color: #2d2d2d !important;
+    border-color: #2d2d2d !important;
+    color: #e6e6e6 !important;
+}
+
+.btn-gris:hover {
+    background-color: #414141 !important;
+    border-color: #e6e6e6 !important;
+}
+
+.btn-rojo {
+    background-color: #aa1816 !important;
+    border-color: #aa1816 !important;
+    color: #e6e6e6 !important;
+}
+
+/* ***********************
+Botones contorno (outline)
+************************** */
+
+.btn-contorno-rojo {
+    background-color: #e6e6e6 !important;
+    border-color: #aa1816 !important;
+    color: #aa1816 !important;
+}
+
+.btn-contorno-rojo:hover {
+    background-color: #aa1816 !important;
+    color: #e6e6e6 !important;
+}
+
+.btn-contorno-gris {
+    background-color: #e6e6e6 !important;
+    border-color: #2d2d2d !important;
+    color: #2d2d2d !important;
+}
+
+.btn-contorno-gros:hover {
+    background-color: #2d2d2d !important;
+    color: #e6e6e6 !important;
+}
+
+/* ====================================================
+Fin de la paleta de colores
+ ==================================================== */
