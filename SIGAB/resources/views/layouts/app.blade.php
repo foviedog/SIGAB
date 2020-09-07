@@ -123,9 +123,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-
-
-
                                 </div>
 
                             </li>
@@ -135,12 +132,14 @@
                 </div>
             </nav>
 
-            @yield('contenido')
+            <div class="bg-white">
+                @yield('contenido')
+            </div>
         </div>
     </div>
+
+    @yield('scripts')
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
-
-
     <script type="text/javascript">
         $(document).ready(function() {
             $('#sidebarCollapse').on('click', function() {
