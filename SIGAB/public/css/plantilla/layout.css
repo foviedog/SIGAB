@@ -46,29 +46,35 @@ span {
     align-items: stretch;
 }
 
+/* Barra de lado desplegada */
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #7386d5;
+    min-width: 230px;
+    max-width: 230px;
     color: #fff;
     transition: all 0.3s;
 }
 
+/* Barra de lado sin desplegar */
 #sidebar.active {
-    min-width: 80px;
-    max-width: 80px;
+    min-width: 130px;
+    max-width: 130px;
     text-align: center;
 }
 
+/* Eliminar formato de elementos */
 #sidebar.active .sidebar-header h3,
 #sidebar.active .CTAs {
     display: none;
 }
 
+/* Cambiar la forma en la que se ven los componentes cuando no está desplegada */
 #sidebar.active .sidebar-header strong {
     display: block;
 }
 
+/*----------------------------------------
+ Formato de letras con menú sin desplegar
+ ----------------------------------------*/
 #sidebar ul li a {
     text-align: left;
 }
@@ -76,7 +82,7 @@ span {
 #sidebar.active ul li a {
     padding: 20px 10px;
     text-align: center;
-    font-size: 0.85em;
+    font-size: 0.9em;
 }
 
 #sidebar.active ul li a i {
@@ -99,47 +105,47 @@ span {
     transform: translateX(50%);
 }
 
+/* Encabezado de la barra de lado desplegada*/
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
 }
 
-#sidebar .sidebar-header strong {
+/* Encabezado de la barra de lado sin desplegar */
+#sidebar .sidebar-header .short {
     display: none;
     font-size: 1.8em;
 }
 
+/* Linea separadora */
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #d4d4d4;
 }
 
+/* Items del navbar */
 #sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
-
+/* Cambio de color en items del navbar */
 #sidebar ul li a:hover {
-    color: #7386d5;
+    color: #e3302d;
     background: #fff;
 }
 
+/* Felcha del desplegable */
 #sidebar ul li a i {
     margin-right: 10px;
 }
 
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
-}
-
+/* Desplegar barra lateral */
 a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
+/* Animación y cambio en el menú sin desplegar */
+.link-drop-sidebar::after {
     display: block;
     position: absolute;
     top: 50%;
@@ -147,37 +153,23 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
+/* Subitems de menú */
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #680c0d;
 }
-
-ul.CTAs {
-    padding: 20px;
+.logo {
+    max-width: 60px;
+    margin-left: 10px;
+    padding-left: 5px;
 }
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-a.download {
-    background: #fff;
-    color: #7386d5;
-}
-
-a.article,
-a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
+.titulo {
+    border: ;
 }
 
 /* ---------------------------------------------------
-    CONTENT STYLE
+Estilo del body
 ----------------------------------------------------- */
 
 #content {
@@ -188,7 +180,7 @@ a.article:hover {
 }
 
 /* ---------------------------------------------------
-    MEDIAQUERIES
+    MEDIAQUERIES - Responsive
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {

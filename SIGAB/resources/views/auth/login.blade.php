@@ -12,7 +12,7 @@
     <title>Bienvenida</title>
 
     {{-- css  --}}
-    <link href="{{ asset('css/plantilla/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
     <link href="{{ asset('css/login/login.css') }}" rel="stylesheet">
 
@@ -35,8 +35,6 @@
                             <div class="col-lg-6 pb-5">
                                 <div class="p-5 mt-5">
                                     <div class="text-center pb-3">
-
-                                        {{-- <span style="font-size: 60px;color:#414141;">SIGAB</span> --}}
                                         <h1 class="ml1">
                                             <span class="text-wrapper">
                                                 <span class="line line1"></span>
