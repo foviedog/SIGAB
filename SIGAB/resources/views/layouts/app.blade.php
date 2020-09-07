@@ -2,17 +2,19 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('titulo')</title>
 
-    <!-- Hojas de estilo -->
+    <!-- Hojas de estilo individuales -->
+    @yield('css')
 
     <!-- Hojas de estilo globales -->
-    <link href="{{ asset('css/plantilla/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plantilla/layout.css') }}" rel="stylesheet">
 
@@ -20,65 +22,133 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <!-- Hojas de estilo individuales -->
-    @yield('css')
-
 </head>
-<body id="page-top">
-    <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0">
-                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Brand</span></div>
-                </a>
-                <hr class="sidebar-divider my-0">
-                <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                </ul>
-                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+
+<body>
+    <div class="wrapper bg-gris-claro">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="bg-rojo-oscuro">
+            <div class="sidebar-header bg-rojo-oscuro">
+
+                <h3 class="text-center titulo"> SIGAB</h3>
+
+
+
+
+                <strong class="short">SIGAB</strong>
             </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#controlEstudiantil" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
+
+                        <i class="fas fa-graduation-cap"></i>
+                        Control Estudiantil
+                    </a>
+                    <ul class="collapse list-unstyled" id="controlEstudiantil">
+
+                        <li>
+                            <a href="#">Añadir estudiante</a>
+                        </li>
+                        <li>
+                            <a href="#">Listar estudiantes</a>
+                        </li>
+                        <li>
+                            <a href="#">Listar Guías adémicas</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#controlPersonal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
+
+                        <i class="far fa-address-book"></i>
+                        Control de personal
+                    </a>
+                    <ul class="collapse list-unstyled" id="controlPersonal">
+                        <li>
+                            <a href="#">Añadir personal</a>
+                        </li>
+                        <li>
+                            <a href="#">Listar Personal</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
         </nav>
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <ul class="nav navbar-nav flex-nowrap ml-auto">
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                        </div>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-rojo">
+                        <i class="fas fa-align-left"></i>
+                        <span>Menú</span>
+                    </button>
+                    <img src="img/login/logo.jpg" alt="logo_ebdi" class="logo border-left border-secondary">
+
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto ">
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle border-left border-secondary px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    {{ Auth::user()->persona_id }}
+
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
+
+
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user"></i> &nbsp; Mi perfil
+
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-in-alt"></i> &nbsp; Salir
+
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
                                     </form>
+
+
+
                                 </div>
+
                             </li>
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow" role="presentation">
-                                <div class="nav-item dropdown show no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu show shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
-                                    </div>
-                                </div>
-                            </li>
+
                         </ul>
                     </div>
-                </nav>
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-1">Blank Page</h3>
                 </div>
-            </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2020</span></div>
-                </div>
-            </footer>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+            </nav>
+
+            @yield('contenido')
+        </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="js/plantilla/estructura.js"></script>
+    <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+
+    </script>
 </body>
 
 </html>

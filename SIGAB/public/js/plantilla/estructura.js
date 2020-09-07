@@ -1,39 +1,84 @@
-!(function(o) {
-    "use strict";
-    o("#sidebarToggle, #sidebarToggleTop").on("click", function(e) {
-        o("body").toggleClass("sidebar-toggled"),
-            o(".sidebar").toggleClass("toggled"),
-            o(".sidebar").hasClass("toggled") &&
-                o(".sidebar .collapse").collapse("hide");
-    }),
-        o(window).resize(function() {
-            o(window).width() < 768 && o(".sidebar .collapse").collapse("hide");
-        }),
-        o("body.fixed-nav .sidebar").on(
+$(document).ready(function() {
+    (function($) {
+        "use strict"; // Start of use strict
+
+        // Toggle the side navigation
+        $("#sidebarToggle, #sidebarToggleTop").on("click", function(e) {
+            $("body").toggleClass("sidebar-toggled");
+            $(".sidebar").toggleClass("toggled");
+            if ($(".sidebar").hasClass("toggled")) {
+                $(".sidebar .collapse").collapse("hide");
+            }
+        });
+
+        // Close any open menu accordions when window is resized below 768px
+        $(window).resize(function() {
+            if ($(window).width() < 768) {
+                $(".sidebar .collapse").collapse("hide");
+            }
+        });
+
+        // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
+        $("body.fixed-nav .sidebar").on(
             "mousewheel DOMMouseScroll wheel",
             function(e) {
-                if (o(window).width() > 768) {
-                    var l = e.originalEvent,
-                        t = l.wheelDelta || -l.detail;
-                    (this.scrollTop += 30 * (t < 0 ? 1 : -1)),
-                        e.preventDefault();
+                if ($(window).width() > 768) {
+                    var e0 = e.originalEvent,
+                        delta = e0.wheelDelta || -e0.detail;
+                    this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+                    e.preventDefault();
                 }
             }
-        ),
-        o(document).on("scroll", function() {
-            o(this).scrollTop() > 100
-                ? o(".scroll-to-top").fadeIn()
-                : o(".scroll-to-top").fadeOut();
-        }),
-        o(document).on("click", "a.scroll-to-top", function(e) {
-            var l = o(this);
-            o("html, body")
+        );
+
+        // Scroll to top button appear
+        $(document).on("scroll", function() {
+            var scrollDistance = $(this).scrollTop();
+            if (scrollDistance > 100) {
+                $(".scroll-to-top").fadeIn();
+            } else {
+                $(".scroll-to-top").fadeOut();
+            }
+        });
+
+        // Smooth scrolling using jQuery easing
+        $(document).on("click", "a.scroll-to-top", function(e) {
+            var $anchor = $(this);
+            $("html, body")
                 .stop()
                 .animate(
-                    { scrollTop: o(l.attr("href")).offset().top },
-                    1e3,
+                    {
+                        scrollTop: $($anchor.attr("href")).offset().top
+                    },
+                    1000,
                     "easeInOutExpo"
-                ),
-                e.preventDefault();
+                );
+            e.preventDefault();
         });
-})(jQuery);
+    })(jQuery); // End of use strict
+    var elixir = require("laravel-elixir");
+
+    elixir(function(mix) {
+        mix.scripts(
+            [
+                "jquery/dist/jquery.min.js"
+                // list your other npm packages here
+            ],
+            "public/js/vendor.js", // 2nd param is the output file
+            "node_modules"
+        ) // 3rd param is saying "look in /node_modules/ for these scripts"
+
+            .scripts(
+                [
+                    "scripts.js" // your custom js file located in default location: /resources/assets/js/
+                ],
+                "public/js/app.js"
+            ) // looks in default location since there's no 3rd param
+
+            .version([
+                // optionally append versioning string to filename
+                "js/vendor.js", // compiled files will be in /public/build/js/
+                "js/app.js"
+            ]);
+    });
+});
