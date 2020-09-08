@@ -20,11 +20,44 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 <form action="/trabajo" method="POST" enctype="multipart/form-data">
     @csrf
 
-    {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
+    {{-- Mensaje de exito
+        (solo se muestra si ha sido exitoso el registro) --}}
     @if(Session::has('mensaje'))
         <div class="alert alert-success" role="alert">
             {!! \Session::get('mensaje') !!}
         </div>
+    @endif
+
+    {{-- Mensaje de que muestra el objeto insertado
+        (solo se muestra si ha sido exitoso el registro)  --}}
+    @if(Session::has('trabajo_insertado'))
+        <div class="alert alert-dark" role="alert">
+
+            @php
+                $trabajo_insertado = Session::get('trabajo_insertado');
+            @endphp
+
+            Se insertó el trabajo con lo siguientes datos: <br> <br>
+            <b>Cédula de la persona:</b> {{ $trabajo_insertado->persona_id }} <br> <br>
+                <div class="row">
+                    <div class="col-6 text-justify">
+                        <b>Nombre de la organización:</b> {{ $trabajo_insertado->nombre_organizacion }} <br>
+                        <b>Jornada laboral:</b> {{ $trabajo_insertado->jornada_laboral }} <br>
+                        <b>Jefe inmediato:</b> {{ $trabajo_insertado->jefe_inmediato ?? "No se digitó" }} <br>
+                        <b>Tiempo desempleado:</b> {{ $trabajo_insertado->tiempo_desempleado ?? "No se digitó" }} <br>
+                        <b>Intereses capacitación:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
+                    </div>
+                    <div class="col-6 text-justify">
+                        <b>Tipo de organización:</b> {{ $trabajo_insertado->tipo_organizacion }} <br>
+                        <b>Cargo actual:</b> {{ $trabajo_insertado->cargo_actual }} <br>
+                        <b>Teléfono trabajo:</b> {{ $trabajo_insertado->telefono_trabajo ?? "No se digitó" }} <br>
+                        <b>Correo trabajo:</b> {{ $trabajo_insertado->correo_trabajo ?? "No se digitó" }} <br>
+                        <b>Otros estudios:</b> {{ $trabajo_insertado->otros_estudios ?? "No se digitó" }} <br>
+                    </div>
+                </div>
+        </div>
+
+        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
     @endif
 
     <div class="row">
@@ -85,7 +118,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 </div>
             </div>
 
-                    {{-- Campo: Tiempo desempleado --}}
+            {{-- Campo: Tiempo desempleado --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
                     <label for="tiempo_desempleado">Tiempo desempleado:</label>
