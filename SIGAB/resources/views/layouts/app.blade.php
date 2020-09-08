@@ -131,9 +131,10 @@
                     </div>
                 </div>
             </nav>
-
-            <div class="bg-white">
-                @yield('contenido')
+            <div class="card">
+                <div class="card-body">
+                    @yield('contenido')
+                </div>
             </div>
         </div>
     </div>

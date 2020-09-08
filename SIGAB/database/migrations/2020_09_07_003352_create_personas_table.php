@@ -25,7 +25,7 @@ class CreatePersonasTable extends Migration
             $table->string('estado_civil', 45);
             $table->string('direccion_residencia', 250);
             $table->string('genero', 4);
-            //$table->timestamps();
+            $table->timestamps();
 
             $table->index('persona_id');
         });

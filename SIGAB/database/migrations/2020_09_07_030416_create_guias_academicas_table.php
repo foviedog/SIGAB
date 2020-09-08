@@ -23,7 +23,7 @@ class CreateGuiasAcademicasTable extends Migration
             $table->longText('situacion');
             $table->string('lugar_atencion', 45);
             $table->longText('recomendaciones');
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estudiante extends Model{
 
+    protected $primaryKey = 'persona_id';
+
     public function persona(){
-        return $this->hasOne('App\Persona');
+        return $this->belongsTo('App\Persona', 'persona_id');
     }
 
     public function guias_academicas(){

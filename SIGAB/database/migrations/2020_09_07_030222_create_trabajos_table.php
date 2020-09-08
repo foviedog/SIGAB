@@ -27,7 +27,7 @@ class CreateTrabajosTable extends Migration
             $table->string('correo_trabajo', 80)->nullable();
             $table->longText('interes_capacitacion')->nullable();
             $table->longText('otros_estudios')->nullable();
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

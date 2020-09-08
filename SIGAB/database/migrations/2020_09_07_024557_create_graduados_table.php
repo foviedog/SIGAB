@@ -20,7 +20,7 @@ class CreateGraduadosTable extends Migration
             $table->string('grado_academico', 15);
             $table->string('carrera_cursada', 80);
             $table->date('anio_graduacion');
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 
