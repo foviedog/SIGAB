@@ -9,6 +9,8 @@ use App\Trabajo;
 
 class TrabajoController extends Controller
 {
+
+    /* Devuelve la página para registrar un trabajo de un estudiante en específico */
     public function create($id_estudiante){
         $estudiante = Estudiante::findOrFail($id_estudiante);
         //dd($estudiante);
@@ -17,6 +19,8 @@ class TrabajoController extends Controller
         ]);
     }
 
+     /* Recoge los datos desde el request e inserta en la base de datos, al
+        final devuelve a la página anterior */
     public function store(Request $request){
         $trabajo = new Trabajo;
         $trabajo->persona_id = $request->persona_id;
@@ -32,7 +36,9 @@ class TrabajoController extends Controller
         $trabajo->otros_estudios = $request->otros_estudios;
         //dd($trabajo);
         $trabajo->save();
-        return Redirect::back()->with('mensaje', '¡El registro ha sido exitoso!');
+        return Redirect::back()
+            ->with('mensaje', '¡El registro ha sido exitoso!')
+                ->with('trabajo_insertado', $trabajo);
 
     }
 
