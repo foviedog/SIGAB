@@ -29,13 +29,14 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-rojo-oscuro">
             <div class="sidebar-header bg-rojo-oscuro">
-
+<a href="{{ route('home' ) }}">
                 <h3 class="text-center titulo"> SIGAB</h3>
-
+                </a>
 
 
 
                 <strong class="short">SIGAB</strong>
+
             </div>
 
             <ul class="list-unstyled components">
@@ -48,7 +49,7 @@
                     <ul class="collapse list-unstyled" id="controlEstudiantil">
 
                         <li>
-                            <a href="#">Añadir estudiante</a>
+                            <a href="{{ route('estudiante.create' ) }}">Añadir estudiante</a>
                         </li>
                         <li>
                             <a href="#">Listar estudiantes</a>
