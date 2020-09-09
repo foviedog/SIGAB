@@ -31,10 +31,6 @@
             <div class="sidebar-header bg-rojo-oscuro">
 
                 <h3 class="text-center titulo"> SIGAB</h3>
-
-
-
-
                 <strong class="short">SIGAB</strong>
             </div>
 

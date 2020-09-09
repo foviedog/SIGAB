@@ -24,9 +24,9 @@ class CreateEstudiantesTable extends Migration
             $table->date('anio_ingreso_UNA');
             $table->string('carrera_matriculada_1', 45);
             $table->string('carrera_matriculada_2', 45)->nullable();
-            $table->integer('anio_graduacion_estimado_1');
-            $table->integer('anio_graduacion_estimado_2')->nullable();
-            $table->string('anio_desercion', 45)->nullable(); /* verificar tipo de dato */
+            $table->integer('anio_graduacion_estimado_1');  /*Debe ser un date*/
+            $table->integer('anio_graduacion_estimado_2')->nullable(); /*Debe ser un date*/
+            $table->string('anio_desercion', 45)->nullable(); /* verificar tipo de dato */  /*Debe ser un int*/
             $table->string('tipo_beca', 70)->nullable();
             $table->double('nota_admision');
             $table->string('apoyo_educativo', 150)->nullable();
