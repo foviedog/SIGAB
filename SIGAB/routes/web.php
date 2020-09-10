@@ -17,10 +17,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-/* Registrar un usuario */
-Route::get('/admin', function () {
-    return view('auth.register');
-});
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 Auth::routes([
     //'register' => false, // Registration Routes...
@@ -28,10 +27,13 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/listadoEstudiantil', 'EstudianteController@index');
 
 /* Rutas para informacion laboral */
 Route::post('/trabajo', 'TrabajoController@store');
 Route::get('/trabajo/{id_estudiante}', 'TrabajoController@create');
 
 
+/* Rutas para informacion de estudiantes */
+Route::get('/estudiante/registrar', 'EstudianteController@create')->name('estudiante.create');
+Route::post('/estudiante', 'EstudianteController@store');
