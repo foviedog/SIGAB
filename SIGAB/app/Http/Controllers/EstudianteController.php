@@ -7,9 +7,19 @@ use Illuminate\Support\Facades\Redirect;
 use App\Persona;
 use App\Estudiante;
 
-class EstudianteController extends Controller{
+class EstudianteController extends Controller
+{
 
-    public function create(){
+    public function index()
+    {
+        $estudiantes = Estudiante::all();
+        return view('control_educativo.listado', [
+            'estudiantes' => $estudiantes,
+        ]);
+    }
+
+    public function create()
+    {
         //$estudiante = Estudiante::findOrFail($id_estudiante);
         //dd($estudiante);
         return view('control_educativo.informacion_estudiantil.registrar', [
@@ -17,7 +27,11 @@ class EstudianteController extends Controller{
         ]);
     }
 
-    public function store(Request $request){
+
+
+
+    public function store(Request $request)
+    {
 
         $persona = new Persona;
         $estudiante = new Estudiante;
@@ -36,21 +50,21 @@ class EstudianteController extends Controller{
         $persona->save();
 
         $estudiante->persona_id = $request->cedula;
-        $estudiante->direccion_lectivo= $request->direccion_lectivo;
-        $estudiante->cant_hijos= $request->cantidad_hijos;
+        $estudiante->direccion_lectivo = $request->direccion_lectivo;
+        $estudiante->cant_hijos = $request->cantidad_hijos;
         $estudiante->tipo_colegio_procedencia = $request->tipo_colegio_procedencia;
         $estudiante->condicion_discapacidad = $request->condicion_discapacidad;
-        $estudiante->anio_ingreso_ebdi= $request->anio_ingreso_ebdi;
-        $estudiante->anio_ingreso_UNA= $request->anio_ingreso_una;
+        $estudiante->anio_ingreso_ebdi = $request->anio_ingreso_ebdi;
+        $estudiante->anio_ingreso_UNA = $request->anio_ingreso_una;
         $estudiante->carrera_matriculada_1 = $request->carrera_matriculada_1;
         $estudiante->carrera_matriculada_2 = $request->carrera_matriculada_2;
-        $estudiante->anio_graduacion_estimado_1= $request->anio_gradacion_estimado_1;
-        $estudiante->anio_graduacion_estimado_2= $request->anio_graduacion_estimado_2;
+        $estudiante->anio_graduacion_estimado_1 = $request->anio_gradacion_estimado_1;
+        $estudiante->anio_graduacion_estimado_2 = $request->anio_graduacion_estimado_2;
         $estudiante->anio_desercion = $request->anio_desercion;
         $estudiante->tipo_beca = $request->tipo_beca;
-        $estudiante->nota_admision= $request->nota_admision;
+        $estudiante->nota_admision = $request->nota_admision;
         $estudiante->apoyo_educativo = $request->apoyo_educativo;
-        $estudiante->residencias_UNA= $request->residencias;
+        $estudiante->residencias_UNA = $request->residencias;
         $estudiante->save();
         return Redirect::back()->with('mensaje', '¡El registro ha sido exitoso!');
     }
