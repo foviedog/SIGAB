@@ -29,7 +29,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                 </div>
                 <div class="card-body pb-5">
                     <form>
-                        <div class="form-group"><label for="city"><strong>Año de ingreso a la carrera</strong><br /></label><input class="form-control" type="text" placeholder="Los Angeles" name="anio_ingreso_ebdi" value="2020" /></div>
+                        <div class="form-group"><label for="city"><strong>Año de ingreso a la carrera</strong><br /></label><input class="form-control " type="text" placeholder="Los Angeles" name="anio_ingreso_ebdi" value="2020" disabled/></div>
                         <div class="form-group"><label for="city"><strong>Segunda Carrera</strong><br /></label><input class="form-control" type="text" placeholder="Los Angeles" name="city" value="No tiene" /></div>
                     </form>
                     <form>
