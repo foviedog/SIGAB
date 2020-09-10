@@ -56,6 +56,11 @@ class EstudianteController extends Controller{
     }
 
 
-
+    public function show(){
+        $estudiante = Estudiante::findOrFail($id_estudiante);
+        return view('control_educativo.detalle', [
+            'estudiante' => $estudiante,
+        ]);
+    }
 
 }

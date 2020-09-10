@@ -28,6 +28,9 @@ Auth::routes([
 ]);
 
 Route::get('/listadoEstudiantil', 'EstudianteController@index');
+/* Ruta de detalle del estudiante*/
+Route::get('/detalle/{id_estudiante}', 'EstudianteController@show');
+
 
 /* Rutas para informacion laboral */
 Route::post('/trabajo', 'TrabajoController@store');
@@ -37,3 +40,5 @@ Route::get('/trabajo/{id_estudiante}', 'TrabajoController@create');
 /* Rutas para informacion de estudiantes */
 Route::get('/estudiante/registrar', 'EstudianteController@create')->name('estudiante.create');
 Route::post('/estudiante', 'EstudianteController@store');
+
+
