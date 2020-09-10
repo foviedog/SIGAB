@@ -42,7 +42,7 @@
                                     </span>
                                 </h1>
                             </div>
-                            <form method="POST" action="{{ route('register') }}">
+                            <form method="POST" action="/registro">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="persona_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>

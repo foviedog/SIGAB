@@ -29,7 +29,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-rojo-oscuro">
             <div class="sidebar-header bg-rojo-oscuro">
-<a href="{{ route('home' ) }}">
+                {{-- <a href="{{ route('home' ) }}"> --}}
                 <h3 class="text-center titulo"> SIGAB</h3>
                 </a>
 
@@ -116,7 +116,7 @@
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                    document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-in-alt"></i> &nbsp; Salir
 
                                     </a>

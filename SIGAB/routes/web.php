@@ -21,6 +21,8 @@ Route::get('/home', function () {
     return view('home');
 });
 
+Route::post('/registro', 'RegistroController@registro');
+
 Auth::routes([
     //'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
