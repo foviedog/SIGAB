@@ -23,41 +23,41 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
     {{-- Mensaje de exito
         (solo se muestra si ha sido exitoso el registro) --}}
     @if(Session::has('mensaje'))
-        <div class="alert alert-success" role="alert">
-            {!! \Session::get('mensaje') !!}
-        </div>
+    <div class="alert alert-success" role="alert">
+        {!! \Session::get('mensaje') !!}
+    </div>
     @endif
 
     {{-- Mensaje de que muestra el objeto insertado
         (solo se muestra si ha sido exitoso el registro)  --}}
     @if(Session::has('trabajo_insertado'))
-        <div class="alert alert-dark" role="alert">
+    <div class="alert alert-dark" role="alert">
 
-            @php
-                $trabajo_insertado = Session::get('trabajo_insertado');
-            @endphp
+        @php
+        $trabajo_insertado = Session::get('trabajo_insertado');
+        @endphp
 
-            Se insertó el trabajo con lo siguientes datos: <br> <br>
-            <b>Cédula de la persona:</b> {{ $trabajo_insertado->persona_id }} <br> <br>
-                <div class="row">
-                    <div class="col-6 text-justify">
-                        <b>Nombre de la organización:</b> {{ $trabajo_insertado->nombre_organizacion }} <br>
-                        <b>Jornada laboral:</b> {{ $trabajo_insertado->jornada_laboral }} <br>
-                        <b>Jefe inmediato:</b> {{ $trabajo_insertado->jefe_inmediato ?? "No se digitó" }} <br>
-                        <b>Tiempo desempleado:</b> {{ $trabajo_insertado->tiempo_desempleado ?? "No se digitó" }} <br>
-                        <b>Intereses capacitación:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
-                    </div>
-                    <div class="col-6 text-justify">
-                        <b>Tipo de organización:</b> {{ $trabajo_insertado->tipo_organizacion }} <br>
-                        <b>Cargo actual:</b> {{ $trabajo_insertado->cargo_actual }} <br>
-                        <b>Teléfono trabajo:</b> {{ $trabajo_insertado->telefono_trabajo ?? "No se digitó" }} <br>
-                        <b>Correo trabajo:</b> {{ $trabajo_insertado->correo_trabajo ?? "No se digitó" }} <br>
-                        <b>Otros estudios:</b> {{ $trabajo_insertado->otros_estudios ?? "No se digitó" }} <br>
-                    </div>
-                </div>
+        Se insertó el trabajo con lo siguientes datos: <br> <br>
+        <b>Cédula de la persona:</b> {{ $trabajo_insertado->persona_id }} <br> <br>
+        <div class="row">
+            <div class="col-6 text-justify">
+                <b>Nombre de la organización:</b> {{ $trabajo_insertado->nombre_organizacion }} <br>
+                <b>Jornada laboral:</b> {{ $trabajo_insertado->jornada_laboral }} <br>
+                <b>Jefe inmediato:</b> {{ $trabajo_insertado->jefe_inmediato ?? "No se digitó" }} <br>
+                <b>Tiempo desempleado:</b> {{ $trabajo_insertado->tiempo_desempleado ?? "No se digitó" }} <br>
+                <b>Intereses capacitación:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
+            </div>
+            <div class="col-6 text-justify">
+                <b>Tipo de organización:</b> {{ $trabajo_insertado->tipo_organizacion }} <br>
+                <b>Cargo actual:</b> {{ $trabajo_insertado->cargo_actual }} <br>
+                <b>Teléfono trabajo:</b> {{ $trabajo_insertado->telefono_trabajo ?? "No se digitó" }} <br>
+                <b>Correo trabajo:</b> {{ $trabajo_insertado->correo_trabajo ?? "No se digitó" }} <br>
+                <b>Otros estudios:</b> {{ $trabajo_insertado->otros_estudios ?? "No se digitó" }} <br>
+            </div>
         </div>
+    </div>
 
-        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
+    <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
     @endif
 
     <div class="row">
@@ -71,12 +71,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="nombre_organizacion">Nombre de la organización:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="nombre_organizacion"
-                    name="nombre_organizacion"
-                    onkeyup="contarCarNomOrg(this)"
-                    required>
+                    <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeyup="contarCarNomOrg(this)" required>
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_nom_org"></span>
@@ -89,12 +84,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="jornada_laboral">Jornada laboral:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="jornada_laboral"
-                    name="jornada_laboral"
-                    onkeyup="contarCarJornLab(this)"
-                    required>
+                    <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCarJornLab(this)" required>
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_jorn_lab"></span>
@@ -107,11 +97,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="jefe_inmediato">Jefe inmediato:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="jefe_inmediato"
-                    name="jefe_inmediato"
-                    onkeyup="contarCarJefInme(this)">
+                    <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeyup="contarCarJefInme(this)">
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_jef_inme"></span>
@@ -124,11 +110,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="tiempo_desempleado">Tiempo desempleado:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="tiempo_desempleado"
-                    name="tiempo_desempleado"
-                    onkeyup="contarCarTiempDesempl(this)">
+                    <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCarTiempDesempl(this)">
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_tiemp_desmp"></span>
@@ -141,10 +123,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="interes_capacitacion">Intereses capacitación:</label>
                 </div>
                 <div class="col-6">
-                    <textarea
-                    class="form-control w-100"
-                    id="interes_capacitacion"
-                    name="interes_capacitacion"></textarea>
+                    <textarea class="form-control w-100" id="interes_capacitacion" name="interes_capacitacion"></textarea>
                 </div>
             </div>
 
@@ -159,12 +138,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="tipo_organizacion">Tipo de organización:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="tipo_organizacion"
-                    name="tipo_organizacion"
-                    onkeyup="contarCarTipOrg(this)"
-                    required>
+                    <input type='text' class="form-control w-100" id="tipo_organizacion" name="tipo_organizacion" onkeyup="contarCarTipOrg(this)" required>
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_tip_org"></span>
@@ -177,12 +151,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="cargo_actual">Cargo actual:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="cargo_actual"
-                    name="cargo_actual"
-                    onkeyup="contarCarCargAct(this)"
-                    required>
+                    <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCarCargAct(this)" required>
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_carg_act"></span>
@@ -195,11 +164,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="telefono_trabajo">Teléfono trabajo:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="telefono_trabajo"
-                    name="telefono_trabajo"
-                    onkeyup="contarCarTelfTrbj(this)">
+                    <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeyup="contarCarTelfTrbj(this)">
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_tel_trbj"></span>
@@ -212,11 +177,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="correo_trabajo">Correo trabajo:</label>
                 </div>
                 <div class="col-6">
-                    <input type='text'
-                    class="form-control w-100"
-                    id="correo_trabajo"
-                    name="correo_trabajo"
-                    onkeyup="contarCarCorrTrbj(this)">
+                    <input type='text' class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeyup="contarCarCorrTrbj(this)">
                 </div>
                 <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_corr_trbj"></span>
@@ -229,10 +190,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <label for="otros_estudios">Otros estudios:</label>
                 </div>
                 <div class="col-6">
-                    <textarea
-                    class="form-control w-100"
-                    id="otros_estudios"
-                    name="otros_estudios"></textarea>
+                    <textarea class="form-control w-100" id="otros_estudios" name="otros_estudios"></textarea>
                 </div>
             </div>
 

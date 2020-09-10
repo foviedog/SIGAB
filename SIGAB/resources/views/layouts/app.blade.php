@@ -29,11 +29,9 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-rojo-oscuro">
             <div class="sidebar-header bg-rojo-oscuro">
-                {{-- <a href="{{ route('home' ) }}"> --}}
-                <h3 class="text-center titulo"> SIGAB</h3>
+                <a href="{{ route('home' ) }}">
+                    <h3 class="text-center titulo"> SIGAB</h3>
                 </a>
-
-
 
                 <strong class="short">SIGAB</strong>
 
