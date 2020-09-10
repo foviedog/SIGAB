@@ -12,7 +12,6 @@ Listado Estudiantil
 
 @section('contenido')
 
-{{ $estudiantes }}
 
 
 <div class="card shadow">
@@ -43,29 +42,45 @@ Listado Estudiantil
                         <th>Carrera (Principal) matriculada</th>
                         <th>Teléfono celular</th>
                         <th>Correo</th>
+                        <td><strong>Ver detalle<br /></strong></td>
                         <th>Guía Académica</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($estudiantes as $estudiante)
                     <tr id="estudiante" class="cursor-pointer" onclick="clickEnEstudiante()">
-                        <td>117380366</td>
-                        <td><img class="rounded-circle mr-2" width="30" height="30" src="avatars/Foto.jpg" />Aguilar Rojas, David</td>
-                        <td>Ingeniería en Sistemas de Información </td>
-                        <td>84494891<br /></td>
-                        <td><strong>Correo@ejemplo.com</strong><br /></td>
-                        <td><strong>
-                                <div class="btn btn-contorno-rojo"> Ver guías </div>
-                            </strong><br /></td>
+                        <td>{{ $estudiante->persona_id }}</td>
+                        {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
+                        <td>{{ $estudiante->persona->apellido.", ". $estudiante->persona->nombre }}</td>
+                        <td>{{ $estudiante->carrera_matriculada_1 }} </td>
+                        <td>{{ $estudiante->persona->telefono_celular }}<br /> </td>
+                        <td>
+                            <strong>
+                                {{ $estudiante->persona->correo_personal }}
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
+                                <a class="btn btn-rojo"> Detalle </a>
+                            </strong><br />
+                        </td>
+                        <td>
+                            <strong>
+                                <a class="btn btn-contorno-rojo"> Ver guías </a>
+                            </strong><br />
+                        </td>
                     </tr>
-
+                    @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
                         <td><strong>N° de Cédula<br /></strong></td>
-                        <td>Nombre</td>
+                        <td><strong>Nombre<strong></td>
                         <td><strong>Carrera (Principal) matriculada<br /></strong></td>
                         <td><strong>Telefono Celular</strong><br /></td>
                         <td><strong>Correo<br /></strong></td>
+                        <td><strong>Ver detalle<br /></strong></td>
+                        <td><strong>Guia académica<br /></strong></td>
                     </tr>
                 </tfoot>
             </table>
