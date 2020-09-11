@@ -61,23 +61,23 @@ Colores de Letras
 }
 
 .texto-rojo-medio {
-    background-color: #aa1816 !important;
+    color: #aa1816 !important;
 }
 
 .texto-rojo-claro {
-    background-color: #e3302d !important;
+    color: #e3302d !important;
 }
 
 .texto-gris-oscuro {
-    background-color: #2d2d2d !important;
+    color: #2d2d2d !important;
 }
 
 .texto-gris-medio {
-    background-color: #414141 !important;
+    color: #414141 !important;
 }
 
 .texto-gris-claro {
-    background-color: #e6e6e6 !important;
+    color: #e6e6e6 !important;
 }
 
 /* ------------------------
@@ -132,16 +132,33 @@ Botones contorno (outline)
 }
 
 .btn-contorno-gris {
-    background-color: #e6e6e6 !important;
+    background-color: #ffffff !important;
     border-color: #2d2d2d !important;
     color: #2d2d2d !important;
 }
 
-.btn-contorno-gros:hover {
+.btn-contorno-gris:hover {
     background-color: #2d2d2d !important;
-    color: #e6e6e6 !important;
+    color: #ffffff !important;
 }
-
+/* ***********************
+Botones de paginación
+************************** */
+.page-item.active .page-link {
+    color: #ffffff !important;
+    background-color: #aa1816 !important;
+    border: #e3302d !important;
+    box-shadow: -1px 0px 26px -8px rgba(0, 0, 0, 0.75);
+}
+.page-link {
+    transition: all ease-in-out 500ms;
+    color: #921315 !important;
+}
+.page-link:hover {
+    background-color: #e6e6e6 !important;
+    position: relative;
+    bottom: 3px;
+}
 /* ====================================================
 Fin de la paleta de colores
  ==================================================== */

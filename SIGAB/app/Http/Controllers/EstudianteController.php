@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use App\Persona;
 use App\Estudiante;
 
@@ -12,12 +13,45 @@ class EstudianteController extends Controller
 
     public function index()
     {
-        $estudiantes = Estudiante::all();
+        $paginaciones = [2, 4, 25, 50, 100];
+
+        $itemsPagina = request('itemsPagina', 2);
+        $filtro = request('filtro', NULL);
+
+        if (!is_null($filtro)) {
+            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id')
+                ->where('personas.nombre', 'like', '%' . $filtro . '%')
+                ->orWhere('personas.apellido', 'like', '%' . $filtro . '%')
+                ->orWhere('personas.persona_id', 'like', '%' . $filtro . '%')
+                ->orWhere('personas.apellido', 'asc')
+                ->paginate($itemsPagina);
+        } else {
+            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id')
+                ->orderBy('personas.apellido', 'asc')
+                ->paginate($itemsPagina);
+        }
+
         return view('control_educativo.listado', [
             'estudiantes' => $estudiantes,
+            'paginaciones' => $paginaciones,
+            'itemsPagina' => $itemsPagina
         ]);
     }
 
+    public function filter()
+    {
+        $paginaciones = [2, 4, 25, 50, 100];
+        $itemsPagina = request('itemsPagina', 2);
+
+
+
+
+        return view('control_educativo.listado', [
+            'estudiantes' => $estudiantes,
+            'paginaciones' => $paginaciones,
+            'itemsPagina' => $itemsPagina
+        ]);
+    }
     public function create()
     {
         //$estudiante = Estudiante::findOrFail($id_estudiante);
@@ -70,11 +104,11 @@ class EstudianteController extends Controller
     }
 
 
-    public function show(){
+    public function show()
+    {
         $estudiante = Estudiante::findOrFail($id_estudiante);
         return view('control_educativo.detalle', [
             'estudiante' => $estudiante,
         ]);
     }
-
 }
