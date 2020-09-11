@@ -68,4 +68,13 @@ class EstudianteController extends Controller
         $estudiante->save();
         return Redirect::back()->with('mensaje', '¡El registro ha sido exitoso!');
     }
+
+
+    public function show(){
+        $estudiante = Estudiante::findOrFail($id_estudiante);
+        return view('control_educativo.detalle', [
+            'estudiante' => $estudiante,
+        ]);
+    }
+
 }
