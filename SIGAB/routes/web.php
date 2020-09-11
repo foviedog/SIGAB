@@ -21,12 +21,14 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+Route::get('/register', 'RegistroController@index');
+Route::post('/registroselper', 'RegistroController@mostrarFormulario');
 Route::post('/registro', 'RegistroController@registro');
 
 Auth::routes([
-    //'register' => false, // Registration Routes...
-    'reset' => false, // Password Reset Routes...
-    'verify' => false, // Email Verification Routes...
+    'register' => false, // Desactivado el auth con el registro
+    'reset' => false, // Desactivado el auth con el reset de contrasennas
+    'verify' => false, // Desactivado el auth con la verificacion de email
 ]);
 
 Route::get('/listadoEstudiantil', 'EstudianteController@index');
