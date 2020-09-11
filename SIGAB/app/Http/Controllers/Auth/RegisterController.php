@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        //$this->middleware('guest');
     }
 
     /**
@@ -51,7 +51,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'persona_id' => ['required', 'string', 'max:15', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
             'rol' => ['required', 'string', 'max:15'],
         ]);
     }
@@ -66,8 +66,9 @@ class RegisterController extends Controller
     {
         return User::create([
             'persona_id' => $data['persona_id'],
-            'password' => Hash::make($data['password']),
             'rol' => $data['rol'],
+            'password' => Hash::make($data['password']),
         ]);
     }
+
 }

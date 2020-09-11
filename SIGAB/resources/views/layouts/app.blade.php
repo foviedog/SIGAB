@@ -50,7 +50,7 @@
                             <a href="{{ route('estudiante.create' ) }}">Añadir estudiante</a>
                         </li>
                         <li>
-                            <a href="#">Listar estudiantes</a>
+                            <a href="/listadoEstudiantil">Listar estudiantes</a>
                         </li>
                         <li>
                             <a href="#">Listar Guías adémicas</a>
@@ -86,7 +86,7 @@
                         <i class="fas fa-align-left"></i>
                         <span>Menú</span>
                     </button>
-                    <img src="img/login/logo.jpg" alt="logo_ebdi" class="logo border-left border-secondary">
+                    <img src="{{ asset('img/login/logo.jpg') }}" alt="logo_ebdi" class="logo border-left border-secondary">
 
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
@@ -114,7 +114,7 @@
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                    document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-in-alt"></i> &nbsp; Salir
 
                                     </a>

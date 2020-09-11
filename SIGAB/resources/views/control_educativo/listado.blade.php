@@ -12,26 +12,48 @@ Listado Estudiantil
 
 @section('contenido')
 
+<div class="d-flex justify-content-between">
+    <h2 class="texto-gris-oscuro mb-4">Control Estudiantil</h2>
+    <div>
+        <a href="/estudiante/registrar" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
 
+
+
+
+    </div>
+
+</div>
 
 <div class="card shadow">
     <div class="card-header py-3">
         <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de estudiantes </p>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-6 text-nowrap">
-                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Mostrar<select class="form-control form-control-sm custom-select custom-select-sm">
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select></label></div>
+        <form action="listadoEstudiantil" method="GET" role="form" id="item-pagina">
+            <div class="row">
+                <div class="col-md-6 text-nowrap">
+                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                        <label class="font-weight-bold">Mostrar &nbsp;
+                            <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                @foreach($paginaciones as $paginacion)
+                                <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                @endforeach
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <div class="d-flex justify-content-end w-50">
+                        <div class="text-md-right dataTables_filter input-group mb-3 ">
+                            <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." aria-label="buscaEstudiante" aria-describedby="filtro estudiante" name="filtro" />
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Buscar estudiante" /></label></div>
-            </div>
-        </div>
+        </form>
         <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
 
             <table class="table my-0" id="dataTable">
@@ -61,12 +83,12 @@ Listado Estudiantil
                         </td>
                         <td>
                             <strong>
-                                <a class="btn btn-rojo"> Detalle </a>
+                                <a href="/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
                             </strong><br />
                         </td>
                         <td>
                             <strong>
-                                <a class="btn btn-contorno-rojo"> Ver guías </a>
+                                <a href="/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
                             </strong><br />
                         </td>
                     </tr>
@@ -87,18 +109,10 @@ Listado Estudiantil
         </div>
         <div class="row">
             <div class="col-md-6 align-self-center">
-                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 500</p>
+                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $estudiantes->perPage() }} de {{ $estudiantes->total() }}</p>
             </div>
             <div class="col-md-6">
-                <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                    </ul>
-                </nav>
+                {{ $estudiantes->links() }}
             </div>
         </div>
     </div>
