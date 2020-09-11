@@ -21,9 +21,9 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-Route::get('/register', 'RegistroController@index');
-Route::post('/registroselper', 'RegistroController@mostrarFormulario');
-Route::post('/registro', 'RegistroController@registro');
+Route::get('/register', 'RegistroController@index')->name('register');
+Route::post('/registroselper', 'RegistroController@show');
+Route::post('/registro', 'RegistroController@register');
 
 Auth::routes([
     'register' => false, // Desactivado el auth con el registro

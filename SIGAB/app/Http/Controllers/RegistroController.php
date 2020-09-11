@@ -19,7 +19,7 @@ class RegistroController extends Controller
         ]);
     }
 
-    public function mostrarFormulario(Request $request){
+    public function show(Request $request){
 
         $persona_id = explode(' ', $request->persona)[0];
 
@@ -37,7 +37,7 @@ class RegistroController extends Controller
 
     }
 
-    public function registro(Request $request){
+    public function register(Request $request){
 
         if($this->verificarContrasenna($request->password)){
 
@@ -56,7 +56,7 @@ class RegistroController extends Controller
 
     }
 
-    public function verificarContrasenna($password) {
+    private function verificarContrasenna($password) {
         if ( strlen($password) < 6 ) {
             return false;
         } if ( !preg_match("#[0-9]+#", $password) ) {
