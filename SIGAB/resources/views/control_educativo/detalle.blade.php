@@ -151,12 +151,20 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                             <label for="fecha_nacimiento"><strong>Fecha de Nacimiento</strong><br /></label><input class="form-control" type="text" placeholder="FechaNacimiento" name="fecha_nacimiento" value={{ $estudiante->persona->fecha_nacimiento }} disabled/>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     {{-- Campo: Genero --}}
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="genero"><strong>Genero</strong><br /></label><input disabled class="form-control" type="text" placeholder="Genero" name="genero"
                                             {{-- Segmento PHP que valida el genero guardado para mostrarlo correctamente --}}
                                             <?php if( $estudiante->persona->genero == "masc" ) { ?>value="Masculino":value="Femenino"<?php } ?>  />
+                                        </div>
+                                    </div>
+                                    {{-- Campo: Estado Civil --}}
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="estadoCivil"><strong>Estado civil</strong><br/></label><input class="form-control" type="text" placeholder="Estado Civil" name="estado_civil"  value={{ $estudiante->persona->estado_civil }}  disabled/>
                                         </div>
                                     </div>
                                     {{-- Cantidad de hijos --}}
