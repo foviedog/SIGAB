@@ -23,6 +23,7 @@ sysdate(),
 sysdate(),
 sysdate()
 );
+-- <---------------------------------------->
 insert into personas 
 values (
 '2312312312',
@@ -39,6 +40,7 @@ sysdate(),
 sysdate(),
 sysdate()
 );
+-- <---------------------------------------->
 insert into personas 
 values (
 '31231241231',
@@ -55,7 +57,7 @@ sysdate(),
 sysdate(),
 sysdate()
 );
-
+-- <---------------------------------------->
 insert into personas 
 values (
 '41231231231',
@@ -72,6 +74,41 @@ sysdate(),
 sysdate(),
 sysdate()
 );
+-- <---------------------------------------->
+insert into personas 
+values (
+'123412312',
+'HOLA',
+'OTRO 2',
+sysdate(),
+'22548891',
+'88914892',
+'HOA@example.com',
+'HOA@una.ac.cr',
+'soltero',
+'Hatillo',
+'masculino',
+sysdate(),
+sysdate()
+);
+-- <---------------------------------------->
+insert into personas 
+values (
+'ASD123123',
+'HOLA',
+'OTRO 2',
+sysdate(),
+'22548891',
+'88914892',
+'ASDA@example.com',
+'ASDAS@una.ac.cr',
+'soltero',
+'Hatillo',
+'masculino',
+sysdate(),
+sysdate()
+);
+
 
 -- <---------------------------------------->
 -- 			Select de personas
@@ -165,6 +202,49 @@ values ('41231231231',
 0,
 sysdate(),
 sysdate());
+-- <---------------------------------------->
+insert into estudiantes 
+values ('123412312', 
+'A la par de CopyChalo Segundo piso.',
+ 0,
+ 'Privado',
+ 'Ninguna',
+ sysdate(),
+ sysdate(),
+ 'Bibliotecología',
+ 'Ciencias de la computación', 
+2024,
+2021,
+2024,
+'2',
+713,
+'sí',
+0,
+sysdate(),
+sysdate());
+-- <---------------------------------------->
+insert into estudiantes 
+values ('ASD123123', 
+'A la par de CopyChalo Segundo piso.',
+ 0,
+ 'Privado',
+ 'Ninguna',
+ sysdate(),
+ sysdate(),
+ 'Bibliotecología',
+ 'Ciencias de la computación', 
+2024,
+2021,
+2024,
+'2',
+713,
+'sí',
+0,
+sysdate(),
+sysdate());
+
+
+-- <------------
 -- <----------------FIN DE INGRESO DE ESTUDIANTES------------------------>
 
 -- <---------------------------------------->

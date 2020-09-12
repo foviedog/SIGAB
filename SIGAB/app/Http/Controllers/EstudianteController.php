@@ -11,47 +11,41 @@ use App\Estudiante;
 class EstudianteController extends Controller
 {
 
+    // Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
     {
+        // Array que devuelve los items que se cargan por página
         $paginaciones = [2, 4, 25, 50, 100];
 
+        //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+        //request se setea por defecto en 2 por página
         $itemsPagina = request('itemsPagina', 2);
+
+        //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
         $filtro = request('filtro', NULL);
 
+        //En caso de que el filtro esté seteado entonces se realiza un búsqueda en la base de datos con dichos datos.
         if (!is_null($filtro)) {
-            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id')
-                ->where('personas.nombre', 'like', '%' . $filtro . '%')
-                ->orWhere('personas.apellido', 'like', '%' . $filtro . '%')
-                ->orWhere('personas.persona_id', 'like', '%' . $filtro . '%')
-                ->orWhere('personas.apellido', 'asc')
-                ->paginate($itemsPagina);
-        } else {
-            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id')
+            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con personas
+                ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
+                ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
+                ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
                 ->orderBy('personas.apellido', 'asc')
-                ->paginate($itemsPagina);
+                ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
+        } else { //Si no se setea el filtro se devuelve un listado de los estudiantes
+            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con personas
+                ->orderBy('personas.apellido', 'asc') // Ordena por medio del apellido de manera ascendente
+                ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
         }
-
+        //se devuelve la vista con los atributos de paginación de los estudiante
         return view('control_educativo.listado', [
-            'estudiantes' => $estudiantes,
-            'paginaciones' => $paginaciones,
-            'itemsPagina' => $itemsPagina
+            'estudiantes' => $estudiantes, // Listado estudiantel.
+            'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+            'itemsPagina' => $itemsPagina, // Item que se desean por página.
+            'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
         ]);
     }
 
-    public function filter()
-    {
-        $paginaciones = [2, 4, 25, 50, 100];
-        $itemsPagina = request('itemsPagina', 2);
-
-
-
-
-        return view('control_educativo.listado', [
-            'estudiantes' => $estudiantes,
-            'paginaciones' => $paginaciones,
-            'itemsPagina' => $itemsPagina
-        ]);
-    }
     public function create()
     {
         //$estudiante = Estudiante::findOrFail($id_estudiante);
@@ -60,9 +54,6 @@ class EstudianteController extends Controller
             //'estudiante' => $estudiante,
         ]);
     }
-
-
-
 
     public function store(Request $request)
     {

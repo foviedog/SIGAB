@@ -23,7 +23,6 @@
 
 <body class="bg-rojo-oscuro">
     <div class="container">
-
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-12 col-xl-10">
                 <div class="card shadow-lg o-hidden border-0 my-5">
