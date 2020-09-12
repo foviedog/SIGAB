@@ -118,7 +118,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="telefono_fijo"><strong>Telefono Fijo</strong><br /></label><input class="form-control" type="text" placeholder="Telefono" name="telefono_celular"  value={{ $estudiante->persona->telefono_fijo}} disabled/>
+                                            <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input class="form-control" type="text" placeholder="Telefono" name="telefono_celular"  value={{ $estudiante->persona->telefono_fijo}} disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                     {{-- Tarjeta de informacion adicional del estudiante --}}
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="texto-rojo-medio m-0 font-weight-bold ">Información adicional</p>
+                            <p class="texto-rojo-medio m-0 font-weight-bold ">Información Adicional</p>
                         </div>
                         <div class="card-body">
                             <form>
@@ -156,9 +156,11 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                     {{-- Campo: Genero --}}
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="genero"><strong>Genero</strong><br /></label><input disabled class="form-control" type="text" placeholder="Genero" name="genero"
+                                            <label for="genero"><strong>Género</strong><br /></label><input disabled class="form-control" type="text" placeholder="Genero" name="genero"
                                             {{-- Segmento PHP que valida el genero guardado para mostrarlo correctamente --}}
-                                            <?php if( $estudiante->persona->genero == "masc" ) { ?>value="Masculino":value="Femenino"<?php } ?>  />
+                                            <?php if( $estudiante->persona->genero == "M") { ?>value="Masculino"<?php } ?>
+                                            <?php if( $estudiante->persona->genero == "F") { ?>value="Femenino"<?php } ?>
+                                            <?php if( $estudiante->persona->genero == "Otro") { ?>value="Otro"<?php } ?>  />
                                         </div>
                                     </div>
                                     {{-- Campo: Estado Civil --}}
@@ -177,18 +179,12 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                 <div class="form-row">
                                     {{-- Campo: Apoyo Educativo --}}
                                     <div class="col">
-                                        <label for="apoyo"><strong>Apoyo Educativo</strong><br /></label>
-                                        <div class="d-flex justify-content-start pb-4">
-                                            <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="si" name="apoyo_educativo"
-                                                {{-- Segmento PHP que valida si hay apoyo educativo para marcarlo correctamente --}}
-                                                <?php if( $estudiante->apoyo_educativo == "sí" ) { ?>checked="checked"<?php } ?><label class="form-check-label" for="formCheck-2">Si</label>
-                                            </div>
-                                            <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="no" name="apoyo_educativo"
-                                                {{-- Segmento PHP que valida si hay apoyo educativo para marcarlo correctamente --}}
-                                                <?php if( $estudiante->apoyo_educativo == "no" ) { ?>checked="checked"<?php } ?><label class="form-check-label" for="formCheck-3">No</label>
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="apoyo_educativo"><strong>Apoyo Educativo</strong><br /></label><textarea class="form-control" type="text"value={{ $estudiante->apoyo_educativo }} placeholder={{ $estudiante->apoyo_educativo }} name="apoyo_educativo"  disabled/></textarea>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     {{-- Campo: Beca --}}
                                     <div class="col">
                                         <div class="form-group">
@@ -214,7 +210,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="discapacidad"><strong>Condicion Discapacidad</strong><br/></label><input class="form-control" type="text" placeholder="Condicion Discapacidad" name="condicion_discapacidad"  value={{ $estudiante->condicion_discapacidad}} disabled  />
+                                            <label for="condicion_discapacidad"><strong>Condición Discapacidad</strong><br /></label><textarea class="form-control" type="text" placeholder={{ $estudiante->condicion_discapacidad }} name="condicion_discapacidad"  disabled/></textarea>
                                         </div>
                                     </div>
                                 </div>
