@@ -103,7 +103,7 @@ class EstudianteController extends Controller
         return Redirect::back()->with('mensaje', '¡El registro ha sido exitoso!');
     }
 
-
+// Toma al estudiante por el id para mostrar su informacion detallada
     public function show($id_estudiante)
     {
         $estudiante = Estudiante::findOrFail($id_estudiante);
