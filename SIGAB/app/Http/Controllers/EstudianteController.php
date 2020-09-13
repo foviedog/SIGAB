@@ -9,14 +9,13 @@ use App\Estudiante;
 
 class EstudianteController extends Controller{
 
+        /* Devuelve la página para registrar un estudiante */
     public function create(){
-        //$estudiante = Estudiante::findOrFail($id_estudiante);
-        //dd($estudiante);
-        return view('control_educativo.informacion_estudiantil.registrar', [
-            //'estudiante' => $estudiante,
-        ]);
+        return view('control_educativo.informacion_estudiantil.registrar');
     }
 
+    /* Recoge los datos desde el request e inserta en la base de datos, al
+        final devuelve a la página anterior */
     public function store(Request $request){
 
         $persona = new Persona;
@@ -36,6 +35,7 @@ class EstudianteController extends Controller{
         $persona->save();
 
         $estudiante->persona_id = $request->cedula;
+        $estudiante->persona_id = $request->cedula;
         $estudiante->direccion_lectivo= $request->direccion_lectivo;
         $estudiante->cant_hijos= $request->cantidad_hijos;
         $estudiante->tipo_colegio_procedencia = $request->tipo_colegio_procedencia;
@@ -52,7 +52,13 @@ class EstudianteController extends Controller{
         $estudiante->apoyo_educativo = $request->apoyo_educativo;
         $estudiante->residencias_UNA= $request->residencias;
         $estudiante->save();
-        return Redirect::back()->with('mensaje', '¡El registro ha sido exitoso!');
+
+
+        return Redirect::back()
+        ->with('mensaje', '¡El registro ha sido exitoso!')
+        ->with('persona_insertado', $persona)
+        ->with('estudiante_insertado', $estudiante)
+        ->with('cedula', $request->cedula);
     }
 
 

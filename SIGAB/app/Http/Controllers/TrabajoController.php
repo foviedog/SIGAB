@@ -19,7 +19,7 @@ class TrabajoController extends Controller
         ]);
     }
 
-     /* Recoge los datos desde el request e inserta en la base de datos, al
+    /* Recoge los datos desde el request e inserta en la base de datos, al
         final devuelve a la página anterior */
     public function store(Request $request){
         $trabajo = new Trabajo;
