@@ -10,7 +10,7 @@ Registrar información laboral de
 
 {{-- Link al script de registro de registro guias academicas de estudiantes --}}
 @section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_estudiante/registrar.js') }}" defer></script>
+<script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>
 @endsection
 
 @section('contenido')
