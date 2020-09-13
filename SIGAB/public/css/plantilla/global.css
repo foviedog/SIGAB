@@ -80,6 +80,13 @@ Colores de Letras
     color: #e6e6e6 !important;
 }
 
+.texto-ebdi {
+    font-weight: 700;
+    font-size: 25px;
+    color: #0151a0;
+    cursor: default;
+}
+
 /* ------------------------
 Colores de botones
 ------------------------ */

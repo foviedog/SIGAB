@@ -17,7 +17,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 <hr>
 
 {{-- Formulario para registrar informacion laboral --}}
-<form action="/trabajo" method="POST" enctype="multipart/form-data">
+<form action="/trabajo/registrar" method="POST" role="form" enctype="multipart/form-data">
     @csrf
 
     {{-- Mensaje de exito

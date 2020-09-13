@@ -34,7 +34,7 @@ Listado Estudiantil
                 <div class="col-md-6 text-nowrap">
                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                         <label class="font-weight-bold">Mostrar &nbsp;
-                            {{-- Selecet con la cantidad de items por páginas--}}
+                            {{-- Select con la cantidad de items por páginas--}}
                             <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
                                 @foreach($paginaciones as $paginacion)
                                 <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>

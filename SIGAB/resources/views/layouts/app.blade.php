@@ -29,8 +29,8 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-rojo-oscuro">
             <div class="sidebar-header bg-rojo-oscuro">
-                <a href="{{ route('home' ) }}">
-                    <h3 class="text-center titulo"> SIGAB</h3>
+                <a href="{{ route('home') }}">
+                    <h3 class="text-center titulo">SIGAB</h3>
                 </a>
 
                 <strong class="short">SIGAB</strong>
@@ -86,7 +86,9 @@
                         <i class="fas fa-align-left"></i>
                         <span>Menú</span>
                     </button>
-                    <img src="{{ asset('img/login/logo.jpg') }}" alt="logo_ebdi" class="logo border-left border-secondary">
+
+                    <img src="{{ asset('img/login/logo_sin_fondo.png') }}" alt="logo_ebdi" class="logo border-left border-secondary mx-3" id="img-ebdi">
+                    <span class="texto-ebdi" id="letras-ebdi"></span>
 
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
@@ -140,14 +142,8 @@
 
     @yield('scripts')
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#sidebarCollapse').on('click', function() {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
 </body>
 
 </html>

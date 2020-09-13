@@ -219,7 +219,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                     <div class="col">
                                         <div class="form-group"><label for="city"><strong>Información Laboral</strong><br /></label>
                                             <div class="w-100 d-flex justify-content-center">
-                                                <button class="btn btn-rojo" type="button" value="Ver trabajo" data-target="#trabajoModal" data-toggle="modal">Ver trabajo</button>
+                                                <a href="/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button" value="Ver trabajo">Ver trabajo</a>
                                             </div>
                                         </div>
                                     </div>

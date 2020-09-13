@@ -41,8 +41,9 @@ Route::get('/detalle/{id_estudiante}', 'EstudianteController@show');
 
 
 /* Rutas para informacion laboral */
-Route::post('/trabajo', 'TrabajoController@store');
-Route::get('/trabajo/{id_estudiante}', 'TrabajoController@create');
+Route::get('/trabajo/{id_estudiante}', 'TrabajoController@index');
+Route::post('/trabajo/registrar', 'TrabajoController@store')->name('trabajo.store');
+Route::get('/trabajo/registrar/{id_estudiante}', 'TrabajoController@create');
 
 
 /* Rutas para informacion de estudiantes */
