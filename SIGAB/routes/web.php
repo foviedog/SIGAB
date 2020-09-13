@@ -37,7 +37,7 @@ Auth::routes([
 Route::get('/listadoEstudiantil', 'EstudianteController@index')->name('listadoEstudiantil');
 
 /* Ruta de detalle del estudiante*/
-Route::get('/detalle/{id_estudiante}', 'EstudianteController@show');
+Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
 
 
 /* Rutas para informacion laboral */

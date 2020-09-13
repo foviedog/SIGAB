@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Registrar información laboral de
+Registrar información del estudiante
 @endsection
 
 @section('css')
@@ -14,7 +14,7 @@ Registrar información laboral de
 @endsection
 
 @section('contenido')
-<h2>Registrar información del estudiante </h2>
+<h2>Registrar información del estudiante</h2>
 <hr>
 
 {{-- Formulario para registrar informacion del estudiante --}}
@@ -55,6 +55,12 @@ Registrar información laboral de
                         <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
                         <b>Dirección lectivo:</b> {{ $estudiante_insertado->direccion_lectivo }} <br>
                         <b>Cantidad de hijos:</b> {{ $estudiante_insertado->cant_hijos ?? "No se digitó" }} <br>
+
+                        {{-- Link directo al estudiante recien agregado --}}
+                        <br>
+                        <a href="/estudiante/detalle/{{ $cedula }}">Ver detalle</a>
+                        <br>
+
                     </div>
                     <div class="col-6 text-justify">
                         <b>Tipo de colegio de procedencia:</b> {{ $estudiante_insertado->tipo_colegio_procedencia ?? "No se digitó" }} <br>
@@ -69,8 +75,15 @@ Registrar información laboral de
                         <b>Tipo de beca:</b> {{ $estudiante_insertado->tipo_beca ?? "No se digitó" }} <br>
                         <b>Nota de admisión:</b> {{ $estudiante_insertado->nota_admision ?? "No se digitó" }} <br>
                         <b>Apoyo educativo:</b> {{ $estudiante_insertado->apoyo_educativo ?? "No se digitó" }} <br>
-                        <b>Residencias:</b> {{ $estudiante_insertado->residencias_UNA ?? "No se digitó" }} <br>
+
+                        @if($estudiante_insertado->residencias_UNA == 0)
+                            <b>Residencias:</b> {{ "No" ?? "No se digitó" }} <br>
+                        @else
+                            <b>Residencias:</b> {{ "Sí" ?? "No se digitó" }} <br>
+                        @endif
+
                     </div>
+
                 </div>
         </div>
 
@@ -167,7 +180,7 @@ Registrar información laboral de
                     name="telefono_fijo"
                     onkeyup="contarCarTelefonoFijo(this)">
                 </div>
-                                <div class="col-1">
+                <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_telefono_fijo"></span>
                 </div>
             </div>
@@ -283,7 +296,6 @@ Registrar información laboral de
                     </select>
                 </div>
             </div>
-
 
             {{-- Campo: Direccion lectivo --}}
             <div class="form-inline mb-3">
@@ -424,24 +436,26 @@ Registrar información laboral de
                 <div class="col-4">
                     <label for="tipo_beca">Tipo de beca:</label>
                 </div>
-                <select
-                class="form-control w-50"
-                id="tipo_beca"
-                name="tipo_beca"
-                form="estudiante"
-                required>
-                    <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
-                    <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
-                    <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
-                    <option value="Becas de posgrado">Becas de posgrado</option>
-                    <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
-                    <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
-                    <option value="Honor">Honor</option>
-                    <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
-                    <option value="Intercambio estudiantil">Intercambio estudiantil</option>
-                    <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
-                    <option value="Giras">Giras</option>
-                </select>
+                <div class="col-6">
+                    <select
+                    class="form-control w-100"
+                    id="tipo_beca"
+                    name="tipo_beca"
+                    form="estudiante"
+                    required>
+                        <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
+                        <option value="Beca Luis Felipe Gonzalez Flores">Beca Luis Felipe González Flores</option>
+                        <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
+                        <option value="Becas de posgrado">Becas de posgrado</option>
+                        <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
+                        <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
+                        <option value="Honor">Honor</option>
+                        <option value="Estudiante Asistente Académico y Paracadémico">Estudiante Asistente Académico y Paracadémico</option>
+                        <option value="Intercambio estudiantil">Intercambio estudiantil</option>
+                        <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
+                        <option value="Giras">Giras</option>
+                    </select>
+                </div>
             </div>
 
             {{-- Campo: Nota de admision --}}
@@ -506,6 +520,7 @@ Registrar información laboral de
                 </div>
                 <div class="col-6">
                     <input type='number'
+                    min="1975"
                     max="9999"
                     class="form-control w-100"
                     id="anio_gradacion_estimado_1"
@@ -525,6 +540,7 @@ Registrar información laboral de
                 </div>
                 <div class="col-6">
                     <input type='number'
+                    min="1975"
                     max="9999"
                     class="form-control w-100"
                     id="anio_graduacion_estimado_2"
@@ -558,25 +574,27 @@ Registrar información laboral de
                 <div class="col-4">
                     <label for="residencias">Residencias:</label>
                 </div>
+                <div class="col-6">
                     <select
-                    class="form-control w-50"
+                    class="form-control w-100"
                     id="residencias"
                     name="residencias"
                     form="estudiante"
                     required>
                         <option value="0">No</option>
-                        <option value="1">Si</option>
+                        <option value="1">Sí</option>
                     </select>
+                </div>
             </div>
 
         </div>
 
     </div>
 
-    <div class="d-flex justify-content-center">
-        {{-- Boton para agregar informacion del estudiante --}}
-        <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
-    </div>
+<div class="d-flex justify-content-center">
+    {{-- Boton para agregar informacion del estudiante --}}
+    <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
+</div>
 
 </form>
 @endsection

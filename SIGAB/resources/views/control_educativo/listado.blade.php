@@ -89,13 +89,13 @@ Listado Estudiantil
                         <td>
                             {{-- Botón para ver el detalle del estudiante --}}
                             <strong>
-                                <a href=" /detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
+                                <a href="/estudiante/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
                             </strong><br />
                         </td>
                         <td>
                             {{-- Botón para ver las guías académicas del estudiante --}}
                             <strong>
-                                <a href="/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
+                                <a href="/estudiante/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
                             </strong><br />
                         </td>
                     </tr>
