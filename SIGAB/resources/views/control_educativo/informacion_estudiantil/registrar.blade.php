@@ -8,8 +8,8 @@ Registrar información laboral de
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-{{-- Link al script de registro de registro de estudiantes --}}
 @section('scripts')
+{{-- Link al script de registro de registro de estudiantes --}}
 <script src="{{ asset('js/control_educativo/informacion_estudiante/registrar.js') }}" defer></script>
 @endsection
 
@@ -43,30 +43,29 @@ Registrar información laboral de
                 <div class="row">
                     <div class="col-6 text-justify">
                         <b>Cédula:</b> {{ $cedula }} <br>
-                        <b>Nombre:</b> {{ $persona_insertado->nombre }} <br>
-                        <b>Apellido:</b> {{ $persona_insertado->apellido }} <br>
+                        <b>Nombre/s:</b> {{ $persona_insertado->nombre }} <br>
+                        <b>Apellido/s:</b> {{ $persona_insertado->apellido }} <br>
                         <b>Fecha de nacimiento:</b> {{ $persona_insertado->fecha_nacimiento ?? "No se digitó" }} <br>
-                        <b>Telefono fijo:</b> {{ $persona_insertado->telefono_fijo ?? "No se digitó" }} <br>
-                        <b>Telefono Celular:</b> {{ $persona_insertado->telefono_celular ?? "No se digitó" }} <br>
+                        <b>Teléfono fijo:</b> {{ $persona_insertado->telefono_fijo ?? "No se digitó" }} <br>
+                        <b>Teléfono celular:</b> {{ $persona_insertado->telefono_celular ?? "No se digitó" }} <br>
                         <b>Correo personal:</b> {{ $persona_insertado->correo_personal ?? "No se digitó" }} <br>
                         <b>Correo institucional:</b> {{ $persona_insertado->correo_institucional ?? "No se digitó" }} <br>
                         <b>Estado Civil:</b> {{ $persona_insertado->estado_civil ?? "No se digitó" }} <br>
-                        <b>Direccion de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
-                        <b>Genero:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
-                        <b>Direccion lectivo:</b> {{ $estudiante_insertado->direccion_lectivo }} <br>
+                        <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
+                        <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
+                        <b>Dirección lectivo:</b> {{ $estudiante_insertado->direccion_lectivo }} <br>
                         <b>Cantidad de hijos:</b> {{ $estudiante_insertado->cant_hijos ?? "No se digitó" }} <br>
                     </div>
                     <div class="col-6 text-justify">
-
                         <b>Tipo de colegio de procedencia:</b> {{ $estudiante_insertado->tipo_colegio_procedencia ?? "No se digitó" }} <br>
-                        <b>Condicion de discapacidad:</b> {{ $estudiante_insertado->condicion_discapacidad ?? "No se digitó" }} <br>
+                        <b>Condición de discapacidad:</b> {{ $estudiante_insertado->condicion_discapacidad ?? "No se digitó" }} <br>
                         <b>Año de ingreso a la EBDI:</b> {{ $estudiante_insertado->anio_ingreso_ebdi ?? "No se digitó" }} <br>
                         <b>Año de ingreso a la UNA:</b> {{ $estudiante_insertado->anio_ingreso_UNA ?? "No se digitó" }} <br>
                         <b>Carrera matriculada 1:</b> {{ $estudiante_insertado->carrera_matriculada_1 ?? "No se digitó" }} <br>
                         <b>Carrera matriculada 2:</b> {{ $estudiante_insertado->carrera_matriculada_2 ?? "No se digitó" }} <br>
-                        <b>Año de graduacion estimado 1:</b> {{ $estudiante_insertado->anio_graduacion_estimado_1 ?? "No se digitó" }} <br>
-                        <b>Año de graduacion estimado 2:</b> {{ $estudiante_insertado->anio_graduacion_estimado_2 ?? "No se digitó" }} <br>
-                        <b>Año de desercion:</b> {{ $estudiante_insertado->anio_desercion ?? "No se digitó" }} <br>
+                        <b>Año de graduación estimado 1:</b> {{ $estudiante_insertado->anio_graduacion_estimado_1 ?? "No se digitó" }} <br>
+                        <b>Año de graduación estimado 2:</b> {{ $estudiante_insertado->anio_graduacion_estimado_2 ?? "No se digitó" }} <br>
+                        <b>Año de deserción:</b> {{ $estudiante_insertado->anio_desercion ?? "No se digitó" }} <br>
                         <b>Tipo de beca:</b> {{ $estudiante_insertado->tipo_beca ?? "No se digitó" }} <br>
                         <b>Nota de admisión:</b> {{ $estudiante_insertado->nota_admision ?? "No se digitó" }} <br>
                         <b>Apoyo educativo:</b> {{ $estudiante_insertado->apoyo_educativo ?? "No se digitó" }} <br>
@@ -86,7 +85,7 @@ Registrar información laboral de
             {{-- Campo: Cedula --}}
             <div class="form-inline mb-4">
                 <div class="col-4">
-                    <label for="cedula">Cedula:</label>
+                    <label for="cedula">Cédula:</label>
                 </div>
                 <div class="col-6">
                     <input type='text'
@@ -104,7 +103,7 @@ Registrar información laboral de
             {{-- Campo: Nombre --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="nombre">Nombre:</label>
+                    <label for="nombre">Nombre/s:</label>
                 </div>
                 <div class="col-6">
                     <input type='text'
@@ -122,7 +121,7 @@ Registrar información laboral de
             {{-- Campo: Apellidos --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="apellido">Apellido</label>
+                    <label for="apellido">Apellido/s:</label>
                 </div>
                 <div class="col-6">
                     <input type='text'
@@ -137,7 +136,7 @@ Registrar información laboral de
                 </div>
             </div>
 
-                    {{-- Campo: Fecha de nacimiento --}}
+            {{-- Campo: Fecha de nacimiento --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
                     <label for="fecha_nacimiento">Fecha de nacimiento:</label>
@@ -159,7 +158,7 @@ Registrar información laboral de
             {{-- Campo: Telefono fijo --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="telefono_fijo">Telefono fijo:</label>
+                    <label for="telefono_fijo">Teléfono fijo:</label>
                 </div>
                 <div class="col-6">
                     <input type='text'
@@ -173,11 +172,10 @@ Registrar información laboral de
                 </div>
             </div>
 
-
-                    {{-- Campo: Telefono celular --}}
+            {{-- Campo: Telefono celular --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="telefono_celular">Telefono celular:</label>
+                    <label for="telefono_celular">Teléfono celular:</label>
                 </div>
                 <div class="col-6">
                     <input type='text'
@@ -191,7 +189,7 @@ Registrar información laboral de
                 </div>
             </div>
 
-                    {{-- Campo: Correo personal --}}
+            {{-- Campo: Correo personal --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
                     <label for="correo_personal">Correo personal:</label>
@@ -210,7 +208,7 @@ Registrar información laboral de
                 </div>
             </div>
 
-                {{-- Campo: Correo institucional --}}
+            {{-- Campo: Correo institucional --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
                     <label for="correo_institucional">Correo institucional:</label>
@@ -230,7 +228,7 @@ Registrar información laboral de
                 </div>
             </div>
 
-             {{-- Campo: Estado civil --}}
+            {{-- Campo: Estado civil --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
                     <label for="estado_civil">Estado civil:</label>
@@ -241,18 +239,18 @@ Registrar información laboral de
                     id="estado_civil"
                     name="estado_civil" form="estudiante"
                     required>
-  <option value="Soltero">Soltero</option>
-  <option value="Casado">Casado</option>
-  <option value="Viudo">Viudo</option>
-  <option value="Divorsiado">Divorsiado</option>
-</select>
+                        <option value="Soltero">Soltero</option>
+                        <option value="Casado">Casado</option>
+                        <option value="Viudo">Viudo</option>
+                        <option value="Divorciado">Divorciado</option>
+                    </select>
                 </div>
             </div>
 
             {{-- Campo: Direccion de residencia --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="direccion_residencia">Direccion de residencia:</label>
+                    <label for="direccion_residencia">Dirección de residencia:</label>
                 </div>
                 <div class="col-6">
                     <textarea
@@ -270,21 +268,19 @@ Registrar información laboral de
             {{-- Campo: Genero --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="genero">Genero:</label>
+                    <label for="genero">Género:</label>
                 </div>
                 <div class="col-6">
-
                     <select
                     class="form-control w-100"
                     id="genero"
                     name="genero"
                     form="estudiante"
                     required>
-  <option value="M">M</option>
-  <option value="F">F</option>
-  <option value="Otro">Otro</option>
-</select>
-
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="Otro">Otro</option>
+                    </select>
                 </div>
             </div>
 
@@ -292,7 +288,7 @@ Registrar información laboral de
             {{-- Campo: Direccion lectivo --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="direccion_lectivo">Direccion lectivo:</label>
+                    <label for="direccion_lectivo">Dirección lectivo:</label>
                 </div>
                 <div class="col-6">
                     <textarea
@@ -325,43 +321,35 @@ Registrar información laboral de
                     <span class="text-muted" id="mostrar_cant_cantidad_hijos"></span>
                 </div>
             </div>
-
         </div>
-
-
 
         {{-- Campos de la derecha --}}
         <div class="col">
 
-
-                    {{-- Campo: Tipo de colegio de procedencia --}}
+            {{-- Campo: Tipo de colegio de procedencia --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="tipo_colegio_procedencia">Tipo colegio procedencia:</label>
+                    <label for="tipo_colegio_procedencia">Tipo colegio de procedencia:</label>
                 </div>
                 <div class="col-6">
-
-                    <select
-                    class="form-control w-100"
-                    id="tipo_colegio_procedencia"
-                    name="tipo_colegio_procedencia"
-                    form="estudiante"
-                    required>
-  <option value="Normal">Normal</option>
-  <option value="Tecnico">Tecnico</option>
-  <option value="Cientifico">Cientifico</option>
-  <option value="Bilingue">Bilingue</option>
-</select>
-
-
-
+                <select
+                class="form-control w-100"
+                id="tipo_colegio_procedencia"
+                name="tipo_colegio_procedencia"
+                form="estudiante"
+                required>
+                    <option value="Liceo">Liceo</option>
+                    <option value="Tecnico">Técnico</option>
+                    <option value="Cientifico">Científico</option>
+                    <option value="Bilingue">Bilingüe</option>
+                </select>
                 </div>
             </div>
 
             {{-- Campo: Condicion de discapacidad --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="condicion_discapacidad">Condicion diacapacidad:</label>
+                    <label for="condicion_discapacidad">Condición diacapacidad:</label>
                 </div>
                 <div class="col-6">
                     <textarea
@@ -370,15 +358,15 @@ Registrar información laboral de
                     name="condicion_discapacidad"
                     onkeyup="contarCarCondicionDiscapacidad(this)"></textarea>
                 </div>
-                                <div class="col-1">
+                <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_condicion_discapacidad"></span>
                 </div>
             </div>
 
-              {{-- Campo: Año de ingreso a la EBDI --}}
+            {{-- Campo: Año de ingreso a la EBDI --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="anio_ingreso_ebdi">Año ingreso EBDI:</label>
+                    <label for="anio_ingreso_ebdi">Año ingreso a la EBDI:</label>
                 </div>
                 <div class="col-6">
                     <input type='date'
@@ -397,7 +385,7 @@ Registrar información laboral de
             {{-- Campo: Año de ingreso a la UNA --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="anio_ingreso_una">Año ingreso UNA:</label>
+                    <label for="anio_ingreso_una">Año ingreso a la UNA:</label>
                 </div>
                 <div class="col-6">
                     <input type='date'
@@ -413,10 +401,10 @@ Registrar información laboral de
                 </div>
             </div>
 
-                    {{-- Campo: Año de desercion --}}
+            {{-- Campo: Año de desercion --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="anio_desercion">Año desercion:</label>
+                    <label for="anio_desercion">Año deserción:</label>
                 </div>
                 <div class="col-6">
                     <input type='number'
@@ -431,40 +419,35 @@ Registrar información laboral de
                 </div>
             </div>
 
-                    {{-- Campo: Tipo de beca --}}
+            {{-- Campo: Tipo de beca --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="tipo_beca">Tipo beca:</label>
+                    <label for="tipo_beca">Tipo de beca:</label>
                 </div>
-
-
-
-
-                    <select
-                    class="form-control w-50"
-                    id="tipo_beca"
-                    name="tipo_beca"
-                    form="estudiante"
-                    required>
-  <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
-  <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
-  <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
-  <option value="Becas de posgrado">Becas de posgrado</option>
-    <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
-      <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
-        <option value="Honor">Honor</option>
-          <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
-            <option value="Intercambio estudiantil">Intercambio estudiantil</option>
-              <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
-                <option value="Giras">Giras</option>
-                    </select>
-
+                <select
+                class="form-control w-50"
+                id="tipo_beca"
+                name="tipo_beca"
+                form="estudiante"
+                required>
+                    <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
+                    <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
+                    <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
+                    <option value="Becas de posgrado">Becas de posgrado</option>
+                    <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
+                    <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
+                    <option value="Honor">Honor</option>
+                    <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
+                    <option value="Intercambio estudiantil">Intercambio estudiantil</option>
+                    <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
+                    <option value="Giras">Giras</option>
+                </select>
             </div>
 
             {{-- Campo: Nota de admision --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="nota_admision">Nota admision:</label>
+                    <label for="nota_admision">Nota de admisión:</label>
                 </div>
                 <div class="col-6">
                     <input type='number'
@@ -519,7 +502,7 @@ Registrar información laboral de
             {{-- Campo: Año de graduacion estimado 1 --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="anio_gradacion_estimado_1">Año de graduacion estimado 1:</label>
+                    <label for="anio_gradacion_estimado_1">Año de graduación estimado 1:</label>
                 </div>
                 <div class="col-6">
                     <input type='number'
@@ -535,10 +518,10 @@ Registrar información laboral de
                 </div>
             </div>
 
-                        {{-- Campo: Año estimado de graduacion 2 --}}
+            {{-- Campo: Año estimado de graduacion 2 --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
-                    <label for="anio_graduacion_estimado_2">Año de graduacion estimado 2:</label>
+                    <label for="anio_graduacion_estimado_2">Año de graduación estimado 2:</label>
                 </div>
                 <div class="col-6">
                     <input type='number'
@@ -548,13 +531,12 @@ Registrar información laboral de
                     name="anio_graduacion_estimado_2"
                     onkeyup="contarCarAnioGraduacionEstimado2(this)">
                 </div>
-                                <div class="col-1">
+                <div class="col-1">
                     <span class="text-muted" id="mostrar_cant_anio_graduacion_estimado_2"></span>
                 </div>
             </div>
 
-
-                    {{-- Campo: Apoyo educativo --}}
+            {{-- Campo: Apoyo educativo --}}
             <div class="form-inline mb-3">
                 <div class="col-4">
                     <label for="apoyo_educativo">Apoyo educativo:</label>
@@ -582,11 +564,10 @@ Registrar información laboral de
                     name="residencias"
                     form="estudiante"
                     required>
-  <option value="0">No</option>
-  <option value="1">Si</option>
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
                     </select>
             </div>
-
 
         </div>
 
