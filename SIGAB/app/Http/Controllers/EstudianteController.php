@@ -11,7 +11,7 @@ use App\Estudiante;
 class EstudianteController extends Controller
 {
 
-    // Devuevle el listado de los estudiantes ordenados por su apellido.
+    //Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
     {
         // Array que devuelve los items que se cargan por página
@@ -91,7 +91,13 @@ class EstudianteController extends Controller
         $estudiante->apoyo_educativo = $request->apoyo_educativo;
         $estudiante->residencias_UNA = $request->residencias;
         $estudiante->save();
-        return Redirect::back()->with('mensaje', '¡El registro ha sido exitoso!');
+
+
+        return Redirect::back()
+        ->with('mensaje', '¡El registro ha sido exitoso!')
+        ->with('persona_insertado', $persona)
+        ->with('estudiante_insertado', $estudiante)
+        ->with('cedula', $request->cedula);
     }
 
 // Toma al estudiante por el id para mostrar su informacion detallada

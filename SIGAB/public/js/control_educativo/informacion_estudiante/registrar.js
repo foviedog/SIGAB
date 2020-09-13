@@ -8,7 +8,7 @@ function contarCarCed(val) {
     }
 }
 
-/*Contador de caracteres de Nombre de la Organizacion */
+/*Contador de caracteres de Nombre */
 function contarCarNombre(val) {
     var len = val.value.length;
     if (len >= 50) {
@@ -18,7 +18,7 @@ function contarCarNombre(val) {
     }
 }
 
-/*Contador de caracteres de Nombre de la Organizacion */
+/*Contador de caracteres de Apellido */
 function contarCarApellido(val) {
     var len = val.value.length;
     if (len >= 50) {
@@ -28,7 +28,7 @@ function contarCarApellido(val) {
     }
 }
 
-/*Contador de caracteres de Cargo actual */
+/*Contador de caracteres de telefono fijo */
 function contarCarTelefonoFijo(val) {
     var len = val.value.length;
     if (len >= 30) {
@@ -38,27 +38,7 @@ function contarCarTelefonoFijo(val) {
     }
 }
 
-/*Contador de caracteres de Jefe inmediato */
-function contarCarJefInme(val) {
-    var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
-    } else {
-        $("#mostrar_cant_jef_inme").text(45 - len);
-    }
-}
-
-/*Contador de caracteres de Telefono trabajo */
-function contarCarTelfTrbj(val) {
-    var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
-    } else {
-        $("#mostrar_cant_tel_trbj").text(45 - len);
-    }
-}
-
-/*Contador de caracteres de Jornada laboral*/
+/*Contador de caracteres de telefono celular*/
 function contarCarTelefonoCelular(val) {
     var len = val.value.length;
     if (len >= 30) {
@@ -68,7 +48,7 @@ function contarCarTelefonoCelular(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de correo personal*/
 function contarCarCorreoPersonal(val) {
     var len = val.value.length;
     if (len >= 45) {
@@ -78,7 +58,7 @@ function contarCarCorreoPersonal(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de correo institucional*/
 function contarCarCorreoInstitucional(val) {
     var len = val.value.length;
     if (len >= 45) {
@@ -88,17 +68,17 @@ function contarCarCorreoInstitucional(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de estado civil*/
 function contarCarEstadoCivil(val) {
     var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
+    if (len >= 44) {
+        val.value = val.value.substring(0, 44);
     } else {
-        $("#mostrar_cant_estado_civil").text(45 - len);
+        $("#mostrar_cant_estado_civil").text(44 - len);
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de direccion residencia*/
 function contarCarDireccionResidencia(val) {
     var len = val.value.length;
     if (len >= 250) {
@@ -108,7 +88,7 @@ function contarCarDireccionResidencia(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de genero*/
 function contarCarGenero(val) {
     var len = val.value.length;
     if (len >= 4) {
@@ -118,7 +98,7 @@ function contarCarGenero(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de direccion lectivo*/
 function contarCarDireccionLectivo(val) {
     var len = val.value.length;
     if (len >= 80) {
@@ -128,7 +108,17 @@ function contarCarDireccionLectivo(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de Cantidad de Hijos */
+function contarCarCantidadHijos(val) {
+    var len = val.value.length;
+    if (len >= 2) {
+        val.value = val.value.substring(0, 2);
+    } else {
+        $("#mostrar_cant_cantidad_hijos").text(2 - len);
+    }
+}
+
+/*Contador de caracteres de colegio procedencia*/
 function contarCarTipoColegioProcedencia(val) {
     var len = val.value.length;
     if (len >= 13) {
@@ -138,27 +128,27 @@ function contarCarTipoColegioProcedencia(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
-function contarCarTipoColegioProcedencia(val) {
+/*Contador de caracteres de condicion discapacidad*/
+function contarCarCondicionDiscapacidad(val) {
     var len = val.value.length;
     if (len >= 250) {
         val.value = val.value.substring(0, 250);
     } else {
-        $("#mostrar_cant_tipo_colegio_procedencia").text(250 - len);
+        $("#mostrar_cant_condicion_discapacidad").text(250 - len);
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
-function contarCarCorrTrbj(val) {
+/*Contador de caracteres de Año de desercion  */
+function contarCarAnioDesercion(val) {
     var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
+    if (len >= 4) {
+        val.value = val.value.substring(0, 4);
     } else {
-        $("#mostrar_cant_corr_trbj").text(45 - len);
+        $("#mostrar_cant_anio_desercion").text(4 - len);
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de carrera matriculada 1*/
 function contarCarCarreraMatriculada1(val) {
     var len = val.value.length;
     if (len >= 45) {
@@ -168,17 +158,37 @@ function contarCarCarreraMatriculada1(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de carrera matriculada 2*/
 function contarCarMateriaMatriculada2(val) {
     var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
+    if (len >= 44) {
+        val.value = val.value.substring(0, 44);
     } else {
-        $("#mostrar_cant_anio_desercion").text(45 - len);
+        $("#mostrar_cant_carrera_matriculada2").text(44 - len);
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de Año de graduacion estimado 1*/
+function contarCarAnioGraduacionEstimado1(val) {
+    var len = val.value.length;
+    if (len >= 4) {
+        val.value = val.value.substring(0, 4);
+    } else {
+        $("#mostrar_cant_anio_graduacion_estimado_1").text(4 - len);
+    }
+}
+
+/*Contador de caracteres de Año de graduacion estimado 2*/
+function contarCarAnioGraduacionEstimado2(val) {
+    var len = val.value.length;
+    if (len >= 4) {
+        val.value = val.value.substring(0, 4);
+    } else {
+        $("#mostrar_cant_anio_graduacion_estimado_2").text(4 - len);
+    }
+}
+
+/*Contador de caracteres de tipo beca*/
 function contarCarTipoBeca(val) {
     var len = val.value.length;
     if (len >= 70) {
@@ -188,12 +198,32 @@ function contarCarTipoBeca(val) {
     }
 }
 
-/*Contador de caracteres de Correo trabajo*/
+/*Contador de caracteres de apoyo educativo*/
 function contarCarApoyoEducativo(val) {
     var len = val.value.length;
     if (len >= 150) {
         val.value = val.value.substring(0, 150);
     } else {
         $("#mostrar_cant_apoyo_educativo").text(150 - len);
+    }
+}
+
+/*Contador de caracteres de residencias*/
+function contarCarResidencias(val) {
+    var len = val.value.length;
+    if (len >= 9) {
+        val.value = val.value.substring(0, 9);
+    } else {
+        $("#mostrar_cant_residencias").text(9 - len);
+    }
+}
+
+/*Contador de caracteres de residencias*/
+function contarCarNotaAdmision(val) {
+    var len = val.value.length;
+    if (len >= 6) {
+        val.value = val.value.substring(0, 6);
+    } else {
+        $("#mostrar_cant_anio_admision").text(6 - len);
     }
 }
