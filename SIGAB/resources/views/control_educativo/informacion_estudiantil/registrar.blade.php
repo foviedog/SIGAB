@@ -446,6 +446,7 @@ Registrar información laboral de
                     name="tipo_beca"
                     form="estudiante"
                     required>
+<option value="No tiene">No tiene</option>
   <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
   <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
   <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>

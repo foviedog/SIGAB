@@ -49,3 +49,7 @@ Route::get('/trabajo/registrar/{id_estudiante}', 'TrabajoController@create');
 /* Rutas para informacion de estudiantes */
 Route::get('/estudiante/registrar', 'EstudianteController@create')->name('estudiante.create');
 Route::post('/estudiante', 'EstudianteController@store');
+
+/* Rutas para informacion de estudiantes */
+Route::get('/estudiante/guia-academica/registrar', 'EstudianteController@guia_create')->name('guia-academica.create');
+Route::post('/estudiante/guia-academica', 'EstudianteController@guia_store');

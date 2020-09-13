@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Persona;
 use App\Estudiante;
+use App\Guias_academica;
 
 class EstudianteController extends Controller
 {
@@ -55,8 +56,7 @@ class EstudianteController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
 
         $persona = new Persona;
         $estudiante = new Estudiante;
@@ -92,7 +92,6 @@ class EstudianteController extends Controller
         $estudiante->residencias_UNA = $request->residencias;
         $estudiante->save();
 
-
         return Redirect::back()
         ->with('mensaje', '¡El registro ha sido exitoso!')
         ->with('persona_insertado', $persona)
@@ -108,4 +107,34 @@ class EstudianteController extends Controller
             'estudiante' => $estudiante,
         ]);
     }
+
+
+
+
+public function guia_create(){
+        return view('control_educativo.informacion_estudiantil.guia_academica_registrar');
+    }
+
+    public function guia_store(Request $request){
+
+        $guia = new Guias_academica;
+
+        $guia->persona_id = 116250948;
+        $guia->motivo = $request->motivo;
+        $guia->fecha = $request->fecha;
+        $guia->ciclo_lectivo = $request->ciclo_lectivo;
+        $guia->situacion = $request->situacion;
+        $guia->lugar_atencion = $request->lugar_atencion;
+        $guia->recomendaciones = $request->recomendaciones;
+        $guia->save();
+
+        return Redirect::back()
+        ->with('mensaje', '¡El registro ha sido exitoso!')
+        ->with('gua_academica_insertada', $guia);
+    }
+
+
+
+
+
 }
