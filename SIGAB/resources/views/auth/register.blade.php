@@ -9,10 +9,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- titulo de la página  --}}
-    <title>Registrar usuario</title>
+    <title>Registrar un nuevo usuario</title>
 
     {{-- css  --}}
-    <link href="{{ asset('css/plantilla/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
     <link href="{{ asset('css/login/login.css') }}" rel="stylesheet">
 
@@ -33,19 +33,19 @@
                                 <h1 class="ml1">
                                     <span class="text-wrapper">
                                         <span class="line line1"></span>
-                                        <span data-tooltip title="Sistema de información para la gestión administrativa,
-                                                académica y curricular de la Escuela de Bibliotecología,
-                                                Documentación e Información.">
                                             <span class="letters" id='letras'>SIGAB</span>
-                                        </span>
                                         <span class="line line2"></span>
                                     </span>
                                 </h1>
                             </div>
-                            <form method="POST" action="{{ route('register') }}">
+
+                            @if(Session::has('persona'))
+
+                            <form method="POST" action="/registro" id="envio_registro">
                                 @csrf
-                                <div class="form-group row">
-                                    <label for="persona_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
+
+                                {{--<div class="form-group row">
+                                    <label for="persona_id" class="col-md-4 col-form-label text-md-right">{{ __('Número de cédula:') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="persona_id" type="text" class="form-control @error('persona_id') is-invalid @enderror" name="persona_id" value="{{ old('persona_id') }}" required autocomplete="persona_id" autofocus>
@@ -56,13 +56,37 @@
                                         </span>
                                         @enderror
                                     </div>
+                                </div>--}}
+
+                                @php
+                                $persona = Session::get('persona');
+                                @endphp
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">{{ __('Persona:') }}</label>
+
+                                    <input id="persona_id" type="hidden" class="form-control @error('persona_id') is-invalid @enderror" name="persona_id" value="{{ $persona->persona_id }}">
+
+                                    <div class="col-md-6">
+                                        {{ $persona->persona_id." - ".$persona->apellido." ".$persona->nombre }}
+                                    </div>
+
+                                    @error('persona_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="rol" class="col-md-4 col-form-label text-md-right">{{ __('Rol') }}</label>
+                                    <label for="rol" class="col-md-4 col-form-label text-md-right">{{ __('Rol:') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol">
+                                        <select id="rol" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol">
+                                            <option>Administrador</option>
+                                            <option>Docente</option>
+                                            <option>Asistente</option>
+                                        </select>
 
                                         @error('rol')
                                         <span class="invalid-feedback" role="alert">
@@ -73,7 +97,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña:') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -86,19 +110,56 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña:') }}</label>
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
+
+                                <div class="col-md-6 offset-md-4 mb-3 text-danger" id="error_contrasenna"></div>
+
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Register') }}
+                                        <a onclick="confirmar()" class="btn btn-rojo">
+                                            {{ __('Registrar nuevo usuario') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            @else
+
+                            @if(Session::has('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ \Session::get('error') }}
+                                </div>
+                            @endif
+
+                            @if(Session::has('exito'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ \Session::get('exito') }}
+                                </div>
+                            @endif
+
+                            <form method="POST" action="/registroselper">
+                                @csrf
+
+                                <select multiple class="form-control mb-3" id="personas" name="persona" size="15">
+                                    @foreach($personas as $persona)
+                                        <option>{{ $persona->persona_id." - ".strtoupper(iconv( 'UTF-8', 'ASCII//TRANSLIT', $persona->apellido))." ".strtoupper(iconv( 'UTF-8', 'ASCII//TRANSLIT', $persona->nombre)) }}</option>
+                                    @endforeach
+                                </select>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-rojo">
+                                            {{ __('Seleccionar persona') }}
                                         </button>
                                     </div>
                                 </div>
                             </form>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -110,7 +171,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script src="{{ asset('js/login/login.js') }}" defer></script>
     <script src="{{ asset('js/login/Tooltip.js') }}" defer></script>
-
+    <script src="{{ asset('js/register/register.js') }}" defer></script>
 
 </body>
 </html>
