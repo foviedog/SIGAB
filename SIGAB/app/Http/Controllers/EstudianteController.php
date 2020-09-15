@@ -108,4 +108,34 @@ class EstudianteController extends Controller
         ]);
     }
 
+// Toma al estudiante completo para permitir su modificacion
+    public function edit(Estudiante $estudiante)
+    {
+        return view('estudiantes.edit', compact('estudiante'));
+    }
+
+//Datos del estudiante a actualizar
+    public function update(Estudiante $estudiante)
+    {
+        //Datos asociados a la persona
+        $data = request()->validate([
+            'nombre'=>'required',
+            'apellido'=>'required',
+            'fecha_nacimiento'=>'required',
+            'telefono_fijo'=>'required',
+            'telefono_celular'=>'required',
+            'correo_personal'=>'required',
+            'telefono_fijo'=>'required',
+            'correo_institucional'=>'required',
+            'estado_civil'=>'required',
+            'direccion_residencia'=>'required',
+            'genero'=>'required',
+        ]);
+
+        auth()->estudiante()->persona->update(array_merge(
+            $data
+        ));
+        return redirect("/estudiante/detalle/{$estudiante->persona->persona_id}");
+    }
+
 }
