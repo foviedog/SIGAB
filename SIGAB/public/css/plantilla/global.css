@@ -98,7 +98,7 @@ Botones rellenos
 .btn-rojo {
     background-color: #aa1816 !important;
     border-color: #aa1816 !important;
-    color: #e6e6e6 !important;
+    color: #ffffff !important;
 }
 
 .btn-rojo:hover {
@@ -109,7 +109,7 @@ Botones rellenos
 .btn-gris {
     background-color: #2d2d2d !important;
     border-color: #2d2d2d !important;
-    color: #e6e6e6 !important;
+    color: #ffffff !important;
 }
 
 .btn-gris:hover {
@@ -120,7 +120,7 @@ Botones rellenos
 .btn-rojo {
     background-color: #aa1816 !important;
     border-color: #aa1816 !important;
-    color: #e6e6e6 !important;
+    color: #ffffff !important;
 }
 
 /* ***********************
@@ -135,7 +135,7 @@ Botones contorno (outline)
 
 .btn-contorno-rojo:hover {
     background-color: #aa1816 !important;
-    color: #e6e6e6 !important;
+    color: #ffffff !important;
 }
 
 .btn-contorno-gris {

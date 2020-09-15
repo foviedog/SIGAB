@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Estudiante;
+use App\Guias_academica;
 
-class GuiasAcademicaController extends Controller{
+class GuiasAcademicaController extends Controller
+{
 
-public function create(){
+    public function create()
+    {
         return view('control_educativo.informacion_guias_academicas.registrar');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $guia = new Guias_academica;
 
@@ -24,15 +30,45 @@ public function create(){
         $guia->save();
 
         return Redirect::back()
-        ->with('mensaje', '¡El registro ha sido exitoso!')
-        ->with('gua_academica_insertada', $guia);
+            ->with('mensaje', '¡El registro ha sido exitoso!')
+            ->with('gua_academica_insertada', $guia);
     }
 
 
 
+    public function index()
+    {
+        // Array que devuelve los items que se cargan por página
+        $paginaciones = [10, 25, 50, 100];
 
-    public function listar(){
-        return view('control_educativo.informacion_guias_academicas.listado');
+        //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+        //request se setea por defecto en 10 por página
+        $itemsPagina = request('itemsPagina', 10);
+
+        //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
+        $filtro = request('filtro', NULL);
+
+        //En caso de que el filtro esté seteado entonces se realiza un búsqueda en la base de datos con dichos datos.
+        if (!is_null($filtro)) {
+            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con personas
+                ->join('guias_academicas', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
+                ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
+                ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
+                ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
+                ->orderBy('personas.apellido', 'asc')
+                ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
+        } else { //Si no se setea el filtro se devuelve un listado de los estudiantes
+            $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con personas
+                ->join('guias_academicas', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
+                ->orderBy('personas.apellido', 'asc') // Ordena por medio del apellido de manera ascendente
+                ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
+        }
+        //se devuelve la vista con los atributos de paginación de los estudiante
+        return view('control_educativo.informacion_guias_academicas.listado', [
+            'estudiantes' => $estudiantes, // Listado estudiantel.
+            'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+            'itemsPagina' => $itemsPagina, // Item que se desean por página.
+            'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
+        ]);
     }
-
 }

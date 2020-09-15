@@ -34,17 +34,11 @@ Auth::routes([
 
 
 // Muestra el listado de los estudiantes ordenados por su apellido
-Route::get('/listadoEstudiantil', 'EstudianteController@index')->name('listadoEstudiantil');
+Route::get('/listado-estudiantil', 'EstudianteController@index')->name('listado-estudiantil');
 
 /* Ruta de detalle del estudiante*/
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
 
-/* Rutas para editar  y actualizar la informacion del estudiante*/
-Route::get('/estudiante/editar/{id_estudiante}', 'EstudianteController@edit');
-Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@update');
-
-/* Ruta para cambiar imagen del estudiante*/
-Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar');
 
 /* Rutas para informacion laboral */
 Route::get('/trabajo/{id_estudiante}', 'TrabajoController@index');
@@ -58,5 +52,5 @@ Route::post('/estudiante', 'EstudianteController@store');
 
 /* Rutas para informacion de Guias academicas */
 Route::get('/estudiante/guia-academica/registrar', 'GuiasAcademicaController@create')->name('guia-academica.create');
-Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store');
-Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@listar')->name('guia-academica.listar');
+Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');
+Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@index')->name('guia-academica.listar');

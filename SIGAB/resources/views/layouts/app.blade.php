@@ -50,10 +50,10 @@
                             <a href="{{ route('estudiante.create' ) }}">Añadir estudiante</a>
                         </li>
                         <li>
-                            <a href="/listadoEstudiantil">Listar estudiantes</a>
+                            <a href="{{ route('listado-estudiantil' ) }}">Listar estudiantes</a>
                         </li>
                         <li>
-                            <a href="#">Listar Guías adémicas</a>
+                            <a href="{{ route('guia-academica.listar' ) }}">Listar Guías adémicas</a>
                         </li>
                     </ul>
                 </li>
