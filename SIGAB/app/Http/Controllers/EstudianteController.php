@@ -41,7 +41,7 @@ class EstudianteController extends Controller
                 ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
         }
         //se devuelve la vista con los atributos de paginación de los estudiante
-        return view('control_educativo.listado', [
+        return view('control_educativo.informacion_estudiantil.listado', [
             'estudiantes' => $estudiantes, // Listado estudiantel.
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
             'itemsPagina' => $itemsPagina, // Item que se desean por página.
