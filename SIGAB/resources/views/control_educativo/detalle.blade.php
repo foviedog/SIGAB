@@ -21,9 +21,34 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
             <div class="card mb-3">
                 <div class="card-body text-center shadow">
                     {{-- Foto del estudiante --}}
-                    {{--  <img class="rounded-circle mb-3 mt-4" src="" width="160" height="160" />  --}}
+                    <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
                     <div class="mb-3"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
-                    <div class="mb-3"><button class="btn btn-contorno-rojo btn-sm" type="button">Cambiar Foto</button></div>
+                    <div class="mb-3"><button class="btn btn-contorno-rojo btn-sm" type="button" data-toggle="modal" data-target="#modalCambiarFoto">Cambiar Foto</button></div>
+
+                    {{-- Modal para modificar foto --}}
+                    <div class="modal fade" id="modalCambiarFoto" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Cambiar foto de perfil</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{--Form para cambiar la foto de perfil--}}
+                                    <form  enctype="multipart/form-data" action="/estudiante/imagen/cambiar" method="POST">
+                                    <input type="file" name="avatar">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="id_estudiante" value="{{ $estudiante->persona->persona_id }}"><br><hr>
+                                    <input type="submit" class="pull-right btn btn-rojo" value="Subir">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
             {{-- Tarjeta de información académica del estudiante --}}
