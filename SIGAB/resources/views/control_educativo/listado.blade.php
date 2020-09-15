@@ -9,7 +9,6 @@ Listado Estudiantil
 @endsection
 
 
-
 @section('contenido')
 
 {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}

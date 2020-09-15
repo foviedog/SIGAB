@@ -28,6 +28,17 @@ Registrar información del estudiante
         </div>
     @endif
 
+    {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
+    @php
+        $error = Session::get('error');
+    @endphp
+
+    @if(Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ "¡Oops! Algo ocurrió. ".$error }}
+        </div>
+    @endif
+
     {{-- Mensaje de que muestra el objeto insertado
         (solo se muestra si ha sido exitoso el registro)  --}}
     @if(Session::has('estudiante_insertado'))

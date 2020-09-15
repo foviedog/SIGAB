@@ -39,6 +39,8 @@ Route::get('/listadoEstudiantil', 'EstudianteController@index')->name('listadoEs
 /* Ruta de detalle del estudiante*/
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
 
+/* Ruta para cambiar imagen del estudiante*/
+Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar');
 
 /* Rutas para informacion laboral */
 Route::get('/trabajo/{id_estudiante}', 'TrabajoController@index');
