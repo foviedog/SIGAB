@@ -9,6 +9,7 @@ use App\Persona;
 use App\Estudiante;
 use Image;
 use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+use App\Guias_academica;
 
 class EstudianteController extends Controller
 {

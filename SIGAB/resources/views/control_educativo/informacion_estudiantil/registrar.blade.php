@@ -454,17 +454,18 @@ Registrar información del estudiante
                     name="tipo_beca"
                     form="estudiante"
                     required>
-                        <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
-                        <option value="Beca Luis Felipe Gonzalez Flores">Beca Luis Felipe González Flores</option>
-                        <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
-                        <option value="Becas de posgrado">Becas de posgrado</option>
-                        <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
-                        <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
-                        <option value="Honor">Honor</option>
-                        <option value="Estudiante Asistente Académico y Paracadémico">Estudiante Asistente Académico y Paracadémico</option>
-                        <option value="Intercambio estudiantil">Intercambio estudiantil</option>
-                        <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
-                        <option value="Giras">Giras</option>
+<option value="No tiene">No tiene</option>
+  <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
+  <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
+  <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
+  <option value="Becas de posgrado">Becas de posgrado</option>
+    <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
+      <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
+        <option value="Honor">Honor</option>
+          <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
+            <option value="Intercambio estudiantil">Intercambio estudiantil</option>
+              <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
+                <option value="Giras">Giras</option>
                     </select>
                 </div>
             </div>
