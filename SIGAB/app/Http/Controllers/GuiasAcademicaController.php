@@ -30,4 +30,9 @@ public function create(){
 
 
 
+
+    public function listar(){
+        return view('control_educativo.informacion_guias_academicas.listado');
+    }
+
 }

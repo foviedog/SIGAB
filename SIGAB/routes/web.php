@@ -53,3 +53,4 @@ Route::post('/estudiante', 'EstudianteController@store');
 /* Rutas para informacion de Guias academicas */
 Route::get('/estudiante/guia-academica/registrar', 'GuiasAcademicaController@create')->name('guia-academica.create');
 Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store');
+Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@listar')->name('guia-academica.listar');
