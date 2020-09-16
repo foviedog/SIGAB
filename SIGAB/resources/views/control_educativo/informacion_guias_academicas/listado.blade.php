@@ -21,21 +21,23 @@ Listado de Guias Academicas
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="alert alert-danger" role="alert">
-                    El estudiante ingresado no existe!
-                </div>
-                <form>
+            <form action="/estudiante/guia-academica/registrar" method="GET" role="form" enctype="multipart/form-data" id="guia">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert">
+                        El estudiante ingresado no existe!
+                    </div>
                     <div class="form-group">
                         <label for="id-estudiante" class="col-form-label">Cédula del estudiante:</label>
-                        <input type="text" class="form-control" id="id-estudiante">
+                        <input type="text" class="form-control" name="cedula">
+
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-rojo">Crear Guía Académica</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-rojo">Crear Guía Académica</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -45,75 +47,75 @@ Listado de Guias Academicas
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detalle-guia-modal">New message</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-rojo" id="habilitar-edicion">
+                        Habilitar edición
+                    </button>
+                </div>
+
             </div>
             <div class="modal-body">
-                <div class="row d-flex">
-                    <div class="col">
-                        <img src="{{ asset('img/login/logo_sin_fondo.png') }}" alt="logo_ebdi" class="mx-3 w-50" id="img-ebdi">
+                <div class="row d-flex mb-3">
+                    <div class="col-2 bg-gris-claro d-flex justify-content-center py-2 ml-5 sombra">
+                        {{-- <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" /> --}}
+                        {{-- <img class="rounded-circle" src="{{ asset('img/fotos/david.jpg') }}" alt="logo_ebdi" class="mx-3 w-50" id="img-ebdi" width="160" height="160"> --}}
+                        <img class="rounded-circle mb-3 mt-4" width="160" height="160" id="imagen-modal" />
                     </div>
-                    <div class="col">
-                        <button class="btn btn-rojo" id="habilitar-edicion">
-                            Habilitar edición
-                        </button>
+                    <div class="col-8 bg-gris-claro py-4 ml-5 sombra">
+                        <strong> Persona id:</strong> &nbsp;&nbsp;<span id="cedula">117380366</span> <br>
+                        <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre">David Aguilar Rojas</span> <br>
+                        <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo">david0406p2009@homtail.com</span> <br>
                     </div>
                 </div>
                 <form>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Motivo:</label>
-                                <input type="text" class="form-control" id="recipient-name" disabled>
+                                <label for="motivo" class="col-form-label">Motivo:</label>
+                                <input type="text" class="form-control" id="motivo" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Fecha:</label>
-                                <input type="text" class="form-control" id="recipient-name" disabled>
+                                <label for="fecha" class="col-form-label">Fecha:</label>
+                                <input type="text" class="form-control" id="fecha" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Ciclo lectivo:</label>
-                                <input type="text" class="form-control" id="recipient-name" disabled>
+                                <label for="ciclo" class="col-form-label">Ciclo lectivo:</label>
+                                <input type="text" class="form-control" id="ciclo" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Lugar de atención:</label>
-                                <input type="text" class="form-control" id="recipient-name" disabled>
+                                <label for="lugar-atencion" class="col-form-label">Lugar de atención:</label>
+                                <input type="text" class="form-control" id="lugar-atencion" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Situación:</label>
-                        <textarea class="form-control" id="message-text" rows="4" cols="50" disabled></textarea>
+                        <label for="situacion" class="col-form-label">Situación:</label>
+                        <textarea class="form-control" id="situacion" rows="2" cols="50" disabled></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label" for="recomendacion">Recomendaciones:</label>
-                        <textarea class="form-control" id="recomendacion" rows="8" cols="50" disabled>
-                            asdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaa
-                            asdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaa
-                            asdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaa
-                            asdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaa
-                            asdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaa
-                            asdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaaasdaaaaaaaaaaaaaaaaaaaaa
+                        <label class="col-form-label" for="recomendaciones">Recomendaciones:</label>
+                        <textarea class="form-control" id="recomendaciones" rows="4" cols="50" disabled>
+
                         </textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-gris" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-rojo">Send message</button>
             </div>
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idestudiante="117380366"> Ver detalle </button>
+
 
 {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
 <div class="d-flex justify-content-between">
@@ -121,7 +123,9 @@ Listado de Guias Academicas
     <h2 class="texto-gris-oscuro mb-4">Lista de Guias Academicas</h2>
     <div>
         {{-- //Botón para añadir estudainte --}}
-        <a href="/estudiante/registrar" class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía"> Añadir Guía académica &nbsp; <i class="fas fa-plus-circle"></i> </a>
+        <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
+            Añadir Guía académica &nbsp; <i class="fas fa-plus-circle"></i>
+        </button>
     </div>
 </div>
 {{-- // Contenedor de la tabla --}}
@@ -188,20 +192,20 @@ Listado de Guias Academicas
                 </thead>
                 <tbody>
                     {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
-                    @foreach($estudiantes as $estudiante)
-                    <tr id="estudiante" class="cursor-pointer">
-                        <td>{{ $estudiante->persona_id }}</td>
+                    @foreach($guias as $guia)
+                    <tr class="cursor-pointer">
+                        <td>{{ $guia->persona_id }}</td>
                         {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
-                        <td>{{ $estudiante->persona->apellido.", ". $estudiante->persona->nombre }}</td>
-                        <td> {{ $estudiante->motivo }} </td>
-                        <td> {{ $estudiante->fecha }}</td>
-                        <td> {{ $estudiante->ciclo_lectivo }}</td>
-                        <td> {{ $estudiante->lugar_atencion }}</td>
+                        <td>{{ $guia->apellido.", ". $guia->nombre }}</td>
+                        <td> {{ $guia->motivo }} </td>
+                        <td> {{ $guia->fecha }}</td>
+                        <td> {{ $guia->ciclo_lectivo }}</td>
+                        <td> {{ $guia->lugar_atencion }}</td>
                         <td>
-                            {{-- Botón para ver las guías académicas del estudiante --}}
-                            <strong>
-                                <a class="btn btn-contorno-rojo"> Ver detalle </a>
-                            </strong><br />
+                            {{-- Botón para ver el detalle de la guía académica del estudiante --}}
+                            <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idestudiante="{{ $guia->id }}">
+                                Ver detalle
+                            </button>
                         </td>
                     </tr>
                     @endforeach
@@ -223,11 +227,11 @@ Listado de Guias Academicas
         <div class="row">
             {{-- Información general de los items por página y el total de resultados --}}
             <div class="col-md-6 align-self-center">
-                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $estudiantes->perPage() }} de {{ $estudiantes->total() }}</p>
+                {{-- <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $estudiantes->perPage() }} de {{ $estudiantes->total() }}</p> --}}
             </div>
             {{-- Items de paginación --}}
             <div class="col-md-6">
-                {{ $estudiantes->withQueryString()->links() }}
+                {{-- {{ $estudiantes->withQueryString()->links() }} --}}
             </div>
         </div>
     </div>
@@ -237,6 +241,12 @@ Listado de Guias Academicas
 
 
 @section('scripts')
+<script>
+    // "global" vars, built using blade
+    var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
+</script>
+
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/listado.js') }}" defer></script>
 @endsection
 

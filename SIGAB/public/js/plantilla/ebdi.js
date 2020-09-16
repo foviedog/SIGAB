@@ -9,7 +9,7 @@ $(document).ready(function(){
             $("#letras-ebdi").html("");
             let ebdi = new Typed('#letras-ebdi', {
                 strings: ['Escuela de Bibliotecología, Documentación e Información.'],
-                typeSpeed: 35,
+                typeSpeed: 16,
                 cursorChar: '_',
                 loop: false,
                 onComplete: function (self) { self.destroy() },

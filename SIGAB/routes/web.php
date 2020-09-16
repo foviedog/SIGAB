@@ -55,6 +55,8 @@ Route::post('/estudiante', 'EstudianteController@store');
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
 
 /* Rutas para informacion de Guias academicas */
+
 Route::get('/estudiante/guia-academica/registrar', 'GuiasAcademicaController@create')->name('guia-academica.create');
-Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');
 Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@index')->name('guia-academica.listar');
+Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@show')->name('guia-academica.show');
+Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');

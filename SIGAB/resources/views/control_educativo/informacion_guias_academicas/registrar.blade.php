@@ -36,13 +36,13 @@ Registrar información laboral de
         Se insertó el estudiante con lo siguientes datos: <br> <br>
         <div class="row">
             <div class="col-6 text-justify">
-                <b>Nombre:</b> {{ $guia->persona_id ?? "nope" }} <br>
-                <b>Nombre:</b> {{ $guia->motivo }} <br>
-                <b>Apellido:</b> {{ $guia->fecha }} <br>
-                <b>Fecha de nacimiento:</b> {{ $guia->ciclo_lectivo ?? "No se digitó" }} <br>
-                <b>Telefono fijo:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
-                <b>Telefono Celular:</b> {{ $guia->lugar_atencion ?? "No se digitó" }} <br>
-                <b>Correo personal:</b> {{ $guia->recomendaciones ?? "No se digitó" }} <br>
+                <b>Cedula:</b> {{ $guia->persona_id ?? "nope" }} <br>
+                <b>Motivo:</b> {{ $guia->motivo }} <br>
+                <b>Fecha:</b> {{ $guia->fecha }} <br>
+                <b>Ciclo lectivo:</b> {{ $guia->ciclo_lectivo ?? "No se digitó" }} <br>
+                <b>Situacion:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
+                <b>Lugar de atencion:</b> {{ $guia->lugar_atencion ?? "No se digitó" }} <br>
+                <b>Recomendaciones:</b> {{ $guia->recomendaciones ?? "No se digitó" }} <br>
             </div>
         </div>
     </div>
@@ -133,6 +133,11 @@ Registrar información laboral de
             </div>
         </div>
     </div>
+
+    {{-- Input oculto que envia el id del estudiante --}}
+    <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}">
+
+
 
     <div class="d-flex justify-content-center">
         {{-- Boton para agregar informacion del estudiante --}}
