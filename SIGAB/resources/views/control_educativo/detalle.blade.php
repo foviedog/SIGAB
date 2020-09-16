@@ -9,17 +9,20 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
 @endsection
 
 @section('scripts')
-{{-- <script src="{{ asset('js/control_educativo/estudiante/detalle.js') }}" defer></script> --}}
+<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 @endsection
 
 @section('contenido')
 <div class="container-fluid">
-    <h3 class="text-dark mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }} <div class="w-100 d-flex justify-content-end"><button class="btn btn-rojo" type="button" value="Editar" data-target="#trabajoModal" data-toggle="modal" disabled>Editar</button></div></h3>
+    <h3 class="text-dark mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }}
+        <div class="w-100 d-flex justify-content-end">
+            <button class="btn btn-rojo" type="button" id="editar-estudiante" value="Editar" data-target="#trabajoModal" data-toggle="modal" >Editar</button>
+        </div></h3>
 
     <div class="row mb-3">
         <div class="col-lg-4">
             <div class="card mb-3">
-                <div class="card-body text-center shadow">
+                <div class="card-body text-center shadow-sm rounded">
                     {{-- Foto del estudiante --}}
                     <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
                     <div class="mb-3"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
@@ -47,12 +50,10 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             {{-- Tarjeta de información académica del estudiante --}}
-            <div class="card shadow mb-4">
+            <div class="card shadow-sm mb-4 rounded">
                 <div class="card-header py-3">
                     <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Información académica</h6>
                 </div>
@@ -60,38 +61,44 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                     <form>
                         {{-- Campo: Nota admision --}}
                         <div class="form-group">
-                            <label for="nota"><strong>Nota de admisión</strong><br /></label><input class="form-control" type="text" placeholder="Nota Admision" name="nota_admision" value={{ $estudiante->nota_admision }} disabled/>
+                            <label for="nota"><strong>Nota de admisión</strong><br /></label><input class="form-control" type="number" placeholder="Nota Admision" name="nota_admision" value={{ $estudiante->nota_admision }} disabled/>
                         </div>
                         {{-- Campo: Ingreso a la UNA --}}
                         <div class="form-group">
-                            <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input class="form-control " type="text" placeholder="Ingreso a la UNA" name="anio_ingreso_una" value={{ $estudiante->anio_ingreso_UNA }} disabled/>
+                            <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la UNA" name="anio_ingreso_una" value={{ $estudiante->anio_ingreso_UNA }} disabled/>
                         </div>
                         {{-- Campo: Ingreso a la EBDI --}}
                         <div class="form-group">
-                            <label for="anioEBDI"><strong>Año de ingreso a la EBDI</strong><br /></label><input class="form-control " type="text" placeholder="Ingreso a la EBDI" name="anio_ingreso_ebdi" value={{ $estudiante->anio_ingreso_ebdi }} disabled/>
+                            <label for="anioEBDI"><strong>Año de ingreso a la EBDI</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la EBDI" name="anio_ingreso_ebdi" value={{ $estudiante->anio_ingreso_ebdi }} disabled/>
                         </div>
                         {{-- Campo: Primera Carrera --}}
                         <div class="form-group">
-                            <label for="carrera1"><strong>Primera Carrera</strong><br /></label><input class="form-control" type="text" placeholder="Carrera 1" name="carrera_matriculada_1" value={{ $estudiante->carrera_matriculada_1 }} disabled/>
+                            <label for="carrera1"><strong>Primera Carrera</strong><br /></label><textarea class="form-control h-auto" type="text" placeholder="Carrera 1" name="carrera_matriculada_1" disabled/> {{ $estudiante->carrera_matriculada_1 }} </textarea>
                         </div>
                         {{-- Campo: Segunda Carrera --}}
                         <div class="form-group">
-                            <label for="carrera2"><strong>Segunda Carrera</strong><br /></label><input class="form-control" type="text" placeholder="Carrera 2" name="carrera_matriculada_2" value={{ $estudiante->carrera_matriculada_2 }} disabled/>
+                            <label for="carrera2"><strong>Segunda Carrera</strong><br /></label><textarea class="form-control h-auto" type="text" placeholder="Carrera 2" name="carrera_matriculada_2"  disabled/> {{ $estudiante->carrera_matriculada_2 }} </textarea>
                         </div>
                         {{-- Campo: Colegio Procedencia --}}
                         <div class="form-group">
-                            <label for="colegio"><strong>Tipo de colegio de procedencia</strong><br /></label><input class="form-control" type="text" placeholder="Colegio Procedencia" name="tipo_colegio_procedencia" value={{ $estudiante->tipo_colegio_procedencia }} disabled/>
+                            <label for="colegio"><strong>Tipo de colegio de procedencia</strong><br /></label>
+                                <select disabled class="form-control"id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" required>
+                                    <option value="Liceo">Liceo</option>
+                                    <option value="Tecnico">Técnico</option>
+                                    <option value="Cientifico">Científico</option>
+                                    <option value="Bilingue">Bilingüe</option>
+                                </select>
                         </div>
                         {{-- Campo: Estimado Graduacion --}}
                         <div class="form-group">
-                            <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type="text" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled/>
+                            <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type="date" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled/>
                         </div>
                         <div class="form-group">
-                            <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="text" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled/>
+                            <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="date" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled/>
                         </div>
                         {{-- Campo: Desercion --}}
                         <div class="form-group">
-                            <label for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="text" placeholder="Deserción" name="anio_desercion" value={{ $estudiante->anio_desercion }} disabled/>
+                            <label for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="date" placeholder="Deserción" name="anio_desercion" value={{ $estudiante->anio_desercion }} disabled/>
                         </div>
                     </form>
                 </div>
@@ -101,7 +108,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
             <div class="row">
                 <div class="col">
                     {{-- Tarjeta de Informacion de contacto del estudiante --}}
-                    <div class="card shadow mb-3">
+                    <div class="card shadow-sm mb-3 rounded">
                         <div class="card-header py-3">
                             <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Contacto</p>
                         </div>
@@ -111,13 +118,13 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                     {{-- Campo: Nombre estudiante --}}
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="nombre"><strong>Nombre</strong></label><input class="form-control" type="text" name="nombre" value={{ $estudiante->persona->nombre }} disabled/>
+                                            <label for="nombre"><strong>Nombre</strong></label><input class="form-control" type="text" id="nombre" name="nombre" value={{ $estudiante->persona->nombre }} disabled/>
                                         </div>
                                     </div>
                                     {{-- Campo: Apellidos --}}
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="apellido"><strong>Apellidos</strong></label><input class="form-control" type="text" name="apellido" placeholder="Apellidos" value={{ $estudiante->persona->apellido }}  disabled/>
+                                            <label for="apellido"><strong>Apellidos</strong></label><textarea class="form-control h-25 " rows="1" type="text" name="apellido"  disabled/> {{ $estudiante->persona->apellido }} </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -151,7 +158,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                         </div>
                     </div>
                     {{-- Tarjeta de informacion adicional del estudiante --}}
-                    <div class="card shadow">
+                    <div class="card shadow-sm">
                         <div class="card-header py-3">
                             <p class="texto-rojo-medio m-0 font-weight-bold ">Información Adicional</p>
                         </div>
@@ -159,45 +166,58 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                             <form>
                                 {{-- Campo: Direccion Residencia --}}
                                 <div class="form-group">
-                                    <label for="DireccionResidencia"><strong>Dirección Residencia</strong><br /></label><input class="form-control" type="text" placeholder="Direccion" name="direccion_residencia" value={{ $estudiante->persona->direccion_residencia }} disabled/>
+                                    <label for="DireccionResidencia"><strong>Dirección Residencia</strong><br /></label><textarea class="form-control" type="text" placeholder="Direccion" name="direccion_residencia" disabled/>{{ $estudiante->persona->direccion_residencia }} </textarea>
                                 </div>
                                 {{-- Campo: Direccion tiempo lectivo --}}
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo</strong><br /></label><input class="form-control" type="text" placeholder="Direccion" value={{ $estudiante->direccion_lectivo }} name="direccion_lectivo" disabled/>
+                                            <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo</strong><br /></label><textarea class="form-control" type="text" placeholder="Direccion"  name="direccion_lectivo" disabled/> {{ $estudiante->direccion_lectivo }} </textarea>
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Campo: Fecha Nacimiento --}}
                                 <div class="form-row">
-                                    {{-- Campo: Fecha Nacimiento --}}
-                                    <div class="col">
+                                    <div class="col-3 mr-2">
                                         <div class="form-group">
-                                            <label for="fecha_nacimiento"><strong>Fecha de Nacimiento</strong><br /></label><input class="form-control" type="text" placeholder="FechaNacimiento" name="fecha_nacimiento" value={{ $estudiante->persona->fecha_nacimiento }} disabled/>
+                                            <label for="fecha_nacimiento"><strong>Fecha de Nacimiento</strong><br /></label><input class="form-control" type='date' placeholder="FechaNacimiento" name="fecha_nacimiento" value={{ $estudiante->persona->fecha_nacimiento }} disabled/>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
                                     {{-- Campo: Genero --}}
-                                    <div class="col">
+                                    <div class="col-3 mr-2">
                                         <div class="form-group">
-                                            <label for="genero"><strong>Género</strong><br /></label><input disabled class="form-control" type="text" placeholder="Genero" name="genero"
-                                            {{-- Segmento PHP que valida el genero guardado para mostrarlo correctamente --}}
-                                            <?php if( $estudiante->persona->genero == "M") { ?>value="Masculino"<?php } ?>
-                                            <?php if( $estudiante->persona->genero == "F") { ?>value="Femenino"<?php } ?>
-                                            <?php if( $estudiante->persona->genero == "Otro") { ?>value="Otro"<?php } ?>  />
-                                        </div>
+                                            <label for="genero"><strong>Género </strong></label>
+                                        <select disabled
+                                        class="form-control w-100"
+                                        id="genero"
+                                        name="genero"
+                                        required>
+                                        <option value="M" <?php if( $estudiante->persona->genero == "M" ) { ?> option selected<?php } ?>>Masculino</option>
+                                        <option value="F" <?php if( $estudiante->persona->genero == "F" ) { ?> option selected<?php } ?>>Femenino</option>
+                                        <option value="Otro" <?php if( $estudiante->persona->genero == "Otro" ) { ?> option selected<?php } ?>>Otro</option>
+                                        </select>
+                                    </div>
                                     </div>
                                     {{-- Campo: Estado Civil --}}
-                                    <div class="col">
+                                    <div class="col-3 mr-2">
                                         <div class="form-group">
-                                            <label for="estadoCivil"><strong>Estado civil</strong><br/></label><input class="form-control" type="text" placeholder="Estado Civil" name="estado_civil"  value={{ $estudiante->persona->estado_civil }}  disabled/>
-                                        </div>
+                                            <label for="estadoCivil"><strong>Estado civil</strong></label>
+                                            <select disabled
+                                            class="form-control w-100"
+                                            id="estado_civil"
+                                            name="estado_civil"
+                                            required>
+                                                <option value="Soltero">Soltero</option>
+                                                <option value="Casado">Casado</option>
+                                                <option value="Viudo">Viudo</option>
+                                                <option value="Divorciado">Divorciado</option>
+                                            </select>
+                                    </div>
                                     </div>
                                     {{-- Cantidad de hijos --}}
-                                    <div class="col">
+                                    <div class="col-2">
                                         <div class="form-group">
-                                            <label for="hijos"><strong>Hijos</strong><br /></label><input class="form-control" type="text" placeholder="Hijos" name="cant_hijos" value={{ $estudiante->cant_hijos }} disabled/>
+                                            <label for="hijos"><strong>Hijos</strong><br /></label><input class="form-control" type="number" placeholder="Hijos" name="cant_hijos" value={{ $estudiante->cant_hijos }} disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -205,16 +225,35 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                     {{-- Campo: Apoyo Educativo --}}
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="apoyo_educativo"><strong>Apoyo Educativo</strong><br /></label><textarea class="form-control" type="text"value={{ $estudiante->apoyo_educativo }} placeholder={{ $estudiante->apoyo_educativo }} name="apoyo_educativo"  disabled/></textarea>
+                                            <label for="apoyo_educativo"><strong>Apoyo Educativo</strong><br /></label><textarea class="form-control" type="text" name="apoyo_educativo"  disabled/>{{ $estudiante->apoyo_educativo }}</textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     {{-- Campo: Beca --}}
-                                    <div class="col">
+                                    <div class="col-7 mr-3">
                                         <div class="form-group">
-                                            <label for="beca"><strong>Beca</strong><br /></label><input class="form-control" type="text" placeholder="Beca" name="tipo_beca" value={{ $estudiante->tipo_beca }} disabled/>
-                                        </div>
+                                            <label for="beca"><strong>Beca</strong></label>
+                                            <select disabled
+                                            class="form-control w-100"
+                                            id="tipo_beca"
+                                            name="tipo_beca"
+                                            form="estudiante"
+                                            required>
+                                            <option value="No tiene">No tiene</option>
+                                            <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
+                                            <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
+                                            <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
+                                            <option value="Becas de posgrado">Becas de posgrado</option>
+                                            <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
+                                            <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
+                                            <option value="Honor">Honor</option>
+                                            <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
+                                            <option value="Intercambio estudiantil">Intercambio estudiantil</option>
+                                            <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
+                                            <option value="Giras">Giras</option>
+                                            </select>
+                                    </div>
                                     </div>
                                     {{-- Campo: Residencias UNA --}}
                                     <div class="col">
@@ -235,11 +274,11 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="condicion_discapacidad"><strong>Condición Discapacidad</strong><br /></label><textarea class="form-control" type="text" placeholder={{ $estudiante->condicion_discapacidad }} name="condicion_discapacidad"  disabled/></textarea>
+                                            <label for="condicion_discapacidad"><strong>Condición Discapacidad</strong><br /></label><textarea class="form-control" type="text" name="condicion_discapacidad"  disabled/> {{ $estudiante->condicion_discapacidad }}</textarea>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- Capo: Trabajo--}}
+                                {{-- Campo: Trabajo--}}
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group"><label for="city"><strong>Información Laboral</strong><br /></label>
