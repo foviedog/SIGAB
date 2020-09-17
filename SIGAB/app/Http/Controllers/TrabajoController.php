@@ -49,7 +49,8 @@ class TrabajoController extends Controller
     }
 
     /* Devuelve la página para registrar un trabajo de un estudiante en específico */
-    public function create($id_estudiante){
+    public function create($id_estudiante)
+    {
         $estudiante = Estudiante::findOrFail($id_estudiante);
         //dd($estudiante);
         return view('control_educativo.informacion_laboral.registrar', [
@@ -59,7 +60,8 @@ class TrabajoController extends Controller
 
     /* Recoge los datos desde el request e inserta en la base de datos, al
         final devuelve a la página anterior */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $trabajo = new Trabajo;
         $trabajo->persona_id = $request->persona_id;
         $trabajo->nombre_organizacion = $request->nombre_organizacion;
@@ -76,8 +78,6 @@ class TrabajoController extends Controller
         $trabajo->save();
         return Redirect::back()
             ->with('mensaje', '¡El registro ha sido exitoso!')
-                ->with('trabajo_insertado', $trabajo);
-
+            ->with('trabajo_insertado', $trabajo);
     }
-
 }

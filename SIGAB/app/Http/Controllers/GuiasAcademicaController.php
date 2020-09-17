@@ -55,17 +55,14 @@ class GuiasAcademicaController extends Controller
 
         //En caso de que el filtro esté seteado entonces se realiza un búsqueda en la base de datos con dichos datos.
         if (!is_null($filtro)) {
-            $guias = Guias_academica::join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con personas
+            $guias = Guias_academica::join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
                 ->join('estudiantes', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
-                ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
-                ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
-                ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
-                ->orderBy('personas.apellido', 'asc')
+                ->orderBy('guias_academicas.id', 'desc') // Ordena por medio del apellido de manera ascendente
                 ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
         } else { //Si no se setea el filtro se devuelve un listado de los estudiantes
             $guias = Guias_academica::join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
                 ->join('estudiantes', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
-                ->orderBy('guias_academicas.id', 'asc') // Ordena por medio del apellido de manera ascendente
+                ->orderBy('guias_academicas.id', 'desc') // Ordena por medio del apellido de manera ascendente
                 ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
         }
         //se devuelve la vista con los atributos de paginación de los estudiante

@@ -97,65 +97,61 @@ class EstudianteController extends Controller
             $estudiante->save();
 
             return Redirect::back()
-            ->with('mensaje', '¡El registro ha sido exitoso!')
-            ->with('persona_insertado', $persona)
-            ->with('estudiante_insertado', $estudiante)
-            ->with('cedula', $request->cedula);
-
-        } catch(\Illuminate\Database\QueryException $ex){
+                ->with('mensaje', '¡El registro ha sido exitoso!')
+                ->with('persona_insertado', $persona)
+                ->with('estudiante_insertado', $estudiante)
+                ->with('cedula', $request->cedula);
+        } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
                 ->with('error', $ex->getMessage());
         }
     }
 
-// Toma al estudiante por el id para mostrar su informacion detallada
+    // Toma al estudiante por el id para mostrar su informacion detallada
     public function show($id_estudiante)
     {
         $estudiante = Estudiante::findOrFail($id_estudiante);
-        return view('control_educativo.detalle', [
+        return view('control_educativo.informacion_estudiantil.detalle', [
             'estudiante' => $estudiante,
         ]);
     }
 
-// Toma al estudiante completo para permitir su modificacion
-    public function edit(Estudiante $estudiante)
-    {
-        return view('estudiantes.edit', compact('estudiante'));
-    }
 
-//Datos del estudiante a actualizar
+    //Datos del estudiante a actualizar
     public function update(Estudiante $estudiante)
     {
         //Datos asociados a la persona
         $data = request()->validate([
-            'nombre'=>'required',
-            'apellido'=>'required',
-            'fecha_nacimiento'=>'required',
-            'telefono_fijo'=>'required',
-            'telefono_celular'=>'required',
-            'correo_personal'=>'required',
-            'telefono_fijo'=>'required',
-            'correo_institucional'=>'required',
-            'estado_civil'=>'required',
-            'direccion_residencia'=>'required',
-            'genero'=>'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'fecha_nacimiento' => 'required',
+            'telefono_fijo' => 'required',
+            'telefono_celular' => 'required',
+            'correo_personal' => 'required',
+            'telefono_fijo' => 'required',
+            'correo_institucional' => 'required',
+            'estado_civil' => 'required',
+            'direccion_residencia' => 'required',
+            'genero' => 'required',
         ]);
 
-        auth()->estudiante()->persona->update(array_merge(
+        estudiante()->persona->update(array_merge(
             $data
         ));
+
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");
     }
 
-    public function update_avatar(Request $request){
-        if($request->hasFile('avatar')){
+    public function update_avatar(Request $request)
+    {
+        if ($request->hasFile('avatar')) {
 
             $avatar = $request->file('avatar');
-            $archivo = time(). '.' . $avatar->getClientOriginalExtension();
+            $archivo = time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->resize(300, 300)->save(public_path('/img/fotos/' . $archivo));
             $estudiante = Estudiante::findOrFail($request->id_estudiante);
 
-            if($estudiante->persona->imagen_perfil != "default.jpg")
+            if ($estudiante->persona->imagen_perfil != "default.jpg")
                 File::delete(public_path('/img/fotos/' . $estudiante->persona->imagen_perfil)); //Elimina la foto anterior
 
             $estudiante->persona->imagen_perfil = $archivo;

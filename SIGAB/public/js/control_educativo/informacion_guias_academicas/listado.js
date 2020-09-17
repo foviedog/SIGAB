@@ -11,7 +11,7 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
                 console.log(response);
                 let modal = $(this);
                 $('#cedula').text(response.persona_id);
-                $('#nombre').text(response.nombre);
+                $('#nombre').text(response.nombre+'  '+response.apellido);
                 $('#correo').text(response.correo_personal);
                 $('#motivo').val(response.motivo);
                 $('#lugar-atencion').val(response.persona_id);

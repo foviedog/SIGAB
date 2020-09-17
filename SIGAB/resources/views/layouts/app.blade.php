@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="card">
+            <div class="">
                 <div class="card-body">
                     @yield('contenido')
                 </div>
