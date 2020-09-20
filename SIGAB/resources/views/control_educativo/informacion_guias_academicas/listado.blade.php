@@ -120,7 +120,7 @@ Listado de Guias Academicas
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
-            <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guias Academicas</h2>
+            <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Academicas</h2>
             <div>
                 {{-- //Botón para añadir estudainte --}}
                 <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">

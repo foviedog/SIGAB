@@ -40,18 +40,18 @@ Registrar información laboral de
             Se insertó el estudiante con lo siguientes datos: <br> <br>
             <div class="row">
                 <div class="col-6 ">
-                    <b>Cedula:</b> {{ $guia->persona_id ?? "nope" }} <br>
+                    <b>Cédula:</b> {{ $guia->persona_id ?? "nope" }} <br>
                     <b>Motivo:</b> {{ $guia->motivo }} <br>
                     <b>Fecha:</b> {{ $guia->fecha }} <br>
                     <b>Ciclo lectivo:</b> {{ $guia->ciclo_lectivo ?? "No se digitó" }} <br>
-                    <b>Situacion:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
-                    <b>Lugar de atencion:</b> {{ $guia->lugar_atencion ?? "No se digitó" }} <br>
+                    <b>Situación:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
+                    <b>Lugar de atención:</b> {{ $guia->lugar_atencion ?? "No se digitó" }} <br>
                     <b>Recomendaciones:</b> {{ $guia->recomendaciones ?? "No se digitó" }} <br>
                 </div>
             </div>
         </div>
 
-        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo estudiante:</div>
+        {{-- <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo estudiante:</div> --}}
         @endif
 
         <div class="d-flex justify-content-center flex-column">
@@ -78,14 +78,14 @@ Registrar información laboral de
 
             {{-- Campo:  Lugar atencion--}}
             <div class=" mb-3">
-                <label for="lugar_atencion">Lugar atencion:</label>
+                <label for="lugar_atencion">Lugar atención:</label>
                 <input type='text' class="form-control w-100" id="lugar_atencion" name="lugar_atencion" onkeyup="contarCarLugarAtencion(this)">
                 <span class="text-muted" id="mostrar_cant_lugar_atencion"></span>
             </div>
 
             {{-- Campo: Situacion --}}
             <div class=" mb-3">
-                <label for="situacion">Situacion:</label>
+                <label for="situacion">Situación:</label>
                 <textarea class="form-control w-100" id="situacion" name="situacion" onkeyup="contarCarSituacion(this)" rows="4" cols="50"></textarea>
                 <span class="text-muted" id="mostrar_cant_situacion"></span>
             </div>
