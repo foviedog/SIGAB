@@ -80,4 +80,33 @@ class TrabajoController extends Controller
             ->with('mensaje', '¡El registro ha sido exitoso!')
             ->with('trabajo_insertado', $trabajo);
     }
+
+    // Método que muestra un trabajo específico
+    public function get($id_trabajo)
+    {
+        $trabajo = Trabajo::find($id_trabajo);
+        return response()->json($trabajo, 200);
+    }
+
+    // Método que actualiza la información laboral
+    public function update(Request $request)
+    {
+        $trabajo = Trabajo::find($request->id_trabajo);
+        $trabajo->nombre_organizacion = $request->nombre_organizacion;
+        $trabajo->tipo_organizacion = $request->tipo_organizacion;
+        $trabajo->tiempo_desempleado = $request->tiempo_desempleado;
+        $trabajo->cargo_actual = $request->cargo_actual;
+        $trabajo->jefe_inmediato = $request->jefe_inmediato;
+        $trabajo->telefono_trabajo = $request->telefono_trabajo;
+        $trabajo->jornada_laboral = $request->jornada_laboral;
+        $trabajo->correo_trabajo = $request->correo_trabajo;
+        $trabajo->interes_capacitacion = $request->interes_capacitacion;
+        $trabajo->otros_estudios = $request->otros_estudios;
+
+        $trabajo->save();
+        return Redirect::back()
+            ->with('exito', '¡Se ha actualizado correctamente!');
+
+    }
+
 }

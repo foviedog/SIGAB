@@ -110,7 +110,7 @@ Registrar información del estudiante
                 <div class="col">
 
                     {{-- Campo: Cedula --}}
-                    <div class="form-inline mb-4">
+                    <div class="d-flex justify-content-start mb-4">
                         <div class="col-4">
                             <label for="cedula">Cédula:</label>
                         </div>
@@ -123,7 +123,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Nombre --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="nombre">Nombre/s:</label>
                         </div>
@@ -136,7 +136,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Apellidos --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="apellido">Apellido/s:</label>
                         </div>
@@ -149,7 +149,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Fecha de nacimiento --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="fecha_nacimiento">Fecha de nacimiento:</label>
                         </div>
@@ -162,7 +162,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Telefono fijo --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="telefono_fijo">Teléfono fijo:</label>
                         </div>
@@ -175,7 +175,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Telefono celular --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="telefono_celular">Teléfono celular:</label>
                         </div>
@@ -188,7 +188,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Correo personal --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="correo_personal">Correo personal:</label>
                         </div>
@@ -201,7 +201,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Correo institucional --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="correo_institucional">Correo institucional:</label>
                         </div>
@@ -214,7 +214,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Estado civil --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="estado_civil">Estado civil:</label>
                         </div>
@@ -229,7 +229,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Direccion de residencia --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="direccion_residencia">Dirección de residencia:</label>
                         </div>
@@ -242,7 +242,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Genero --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="genero">Género:</label>
                         </div>
@@ -256,7 +256,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Direccion lectivo --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="direccion_lectivo">Dirección lectivo:</label>
                         </div>
@@ -269,7 +269,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Cantidad de hijos --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="cantidad_hijos">Cantidad hijos:</label>
                         </div>
@@ -286,7 +286,7 @@ Registrar información del estudiante
                 <div class="col">
 
                     {{-- Campo: Tipo de colegio de procedencia --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="tipo_colegio_procedencia">Tipo colegio de procedencia:</label>
                         </div>
@@ -301,7 +301,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Condicion de discapacidad --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="condicion_discapacidad">Condición diacapacidad:</label>
                         </div>
@@ -314,7 +314,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Año de ingreso a la EBDI --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="anio_ingreso_ebdi">Año ingreso a la EBDI:</label>
                         </div>
@@ -327,7 +327,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Año de ingreso a la UNA --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="anio_ingreso_una">Año ingreso a la UNA:</label>
                         </div>
@@ -340,7 +340,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Año de desercion --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="anio_desercion">Año deserción:</label>
                         </div>
@@ -353,7 +353,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Tipo de beca --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="tipo_beca">Tipo de beca:</label>
                         </div>
@@ -376,7 +376,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Nota de admision --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="nota_admision">Nota de admisión:</label>
                         </div>
@@ -389,7 +389,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Carrera matriculada 1 --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="carrera_matriculada_1">Carrera matriculada 1:</label>
                         </div>
@@ -402,7 +402,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Carrera matriculada 2 --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="carrera_matriculada_2">Carrera matriculada 2:</label>
                         </div>
@@ -415,7 +415,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Año de graduacion estimado 1 --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="anio_gradacion_estimado_1">Año de graduación estimado 1:</label>
                         </div>
@@ -428,7 +428,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Año estimado de graduacion 2 --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="anio_graduacion_estimado_2">Año de graduación estimado 2:</label>
                         </div>
@@ -441,7 +441,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Apoyo educativo --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="apoyo_educativo">Apoyo educativo:</label>
                         </div>
@@ -454,7 +454,7 @@ Registrar información del estudiante
                     </div>
 
                     {{-- Campo: Residencias --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="residencias">Residencias:</label>
                         </div>
