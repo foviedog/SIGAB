@@ -1,11 +1,16 @@
-
+/* Variable global que guarda el id del trabajo que se va a
+    desplegar al abri el modal */
 let id_trabajo;
 
-$('#detalle-trabajo-modal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var id = button.data('idtrabajo') // Extract info from data-* attributes
-    id_trabajo = id;
 
+/* Petición al servidor de la información sobre el trabajo a desplegar
+   en el modal */
+$('#detalle-trabajo-modal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botón que abre el modal
+    var id = button.data('idtrabajo')   // Se estrae el id del trabajo
+    id_trabajo = id;                    // Se guarda el id del trabajo abierto en la variable global
+
+    //Método en AJAX que trae la información del trabajo desde el servidor
     $.ajax({
         url: "/trabajo/obtener/" + id,
         type: "GET",
@@ -32,6 +37,7 @@ $('#detalle-trabajo-modal').on('show.bs.modal', function (event) {
 
 });
 
+/* Funcionalidades para habilitar y deshaibilitar los campos de texto del modal */
 $('#cancelar-edicion').hide();
 $('#terminar-edicion').hide();
 
@@ -51,8 +57,8 @@ $('#cancelar-edicion').on('click', function () {
     $('#habilitar-edicion').show();
 });
 
+/* Funcion que actualiza los datos ingresados */
 function actualizar() {
-
     $('#form-actualizar').attr('action', '/trabajo/actualizar/' + id_trabajo);
     $('#form-actualizar').trigger("submit");
 }

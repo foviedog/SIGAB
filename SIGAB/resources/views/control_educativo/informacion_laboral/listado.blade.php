@@ -16,7 +16,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
 <div class="card">
     <div class="card-body">
 
-        {{-- MODAL para ver el detalle del trabajo --}}
+        {{-- Modal para ver el detalle del trabajo --}}
         <div class="modal fade" id="detalle-trabajo-modal" tabindex="-1" aria-labelledby="detalle-trabajo-modal" aria-hidden="true">
             <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
                 <div class="modal-content">
@@ -176,6 +176,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
                         </form>
                     </div>
 
+                    {{-- Botones para cerrar el modal o para guardar la edición --}}
                     <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
                         <button onclick="actualizar()" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
@@ -195,7 +196,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
         </div>
 
         {{-- Mensaje de exito
-        (solo se muestra si ha sido exitoso la edicion) --}}
+            (solo se muestra si ha sido exitoso la edicion) --}}
         @if(Session::has('exito'))
             <div class="alert alert-success" role="alert">
                 {!! \Session::get('exito') !!}

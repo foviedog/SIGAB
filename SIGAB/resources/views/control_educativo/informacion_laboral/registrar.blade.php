@@ -15,7 +15,15 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 @section('contenido')
 <div class="card">
     <div class="card-body">
-        <h2>Registrar información laboral para {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
+
+        <div class="d-flex justify-content-between">
+            <h2>Registrar información laboral para {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
+            <div>
+                {{-- Botón para regresar al listado de trabajos del estudiante --}}
+                <a href="/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a>
+            </div>
+        </div>
+
         <hr>
 
         {{-- Formulario para registrar informacion laboral --}}
@@ -23,7 +31,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             @csrf
 
         {{-- Mensaje de exito
-        (solo se muestra si ha sido exitoso el registro) --}}
+            (solo se muestra si ha sido exitoso el registro) --}}
             @if(Session::has('mensaje'))
             <div class="alert alert-success" role="alert">
                 {!! \Session::get('mensaje') !!}
@@ -31,7 +39,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             @endif
 
         {{-- Mensaje de que muestra el objeto insertado
-        (solo se muestra si ha sido exitoso el registro)  --}}
+            (solo se muestra si ha sido exitoso el registro)  --}}
             @if(Session::has('trabajo_insertado'))
             <div class="alert alert-dark" role="alert">
 
@@ -58,6 +66,9 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
                 </div>
             </div>
+
+            {{-- Mensaje "Agregar un nuevo trabajo"
+                (solo se muestra si ha sido exitoso el registro)  --}}
 
             <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
             @endif
@@ -214,7 +225,6 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
     </div>
 </div>
 @endsection
-
 
 @section('pie')
 Copyright
