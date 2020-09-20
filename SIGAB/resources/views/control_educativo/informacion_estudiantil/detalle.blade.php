@@ -102,7 +102,6 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                     <input type="text" class="form-control" placeholder="Carrera 2" name="carrera_matriculada_2" value=" {{ $estudiante->carrera_matriculada_2 }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Colegio Procedencia --}}
-
                                 <div class="form-group">
                                     <label for="colegio"><strong>Tipo de colegio de procedencia</strong><br /></label>
                                     <select class="form-control" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" disabled>
@@ -113,10 +112,10 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                 </div>
                                 {{-- Campo: Estimado Graduacion --}}
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type='date' placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled />
+                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled />
                                 </div>
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type='date' placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled />
+                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled />
                                 </div>
                                 {{-- Campo: Desercion --}}
                                 <div class="form-group">
@@ -223,7 +222,7 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                                     <label for="estadoCivil"><strong>Estado civil</strong></label>
                                                     <select class="form-control" id="estado_civil" name="estado_civil" form="estudiante" disabled>
                                                         @foreach($estadosCiviles as $estadoCivil)
-                                                        <option value="{{ $estadoCivil }}" @if ($estadoCivil==$estudiante->estado_civil) selected @endif> {{ $estadoCivil }} </option>
+                                                        <option value="{{ $estadoCivil }}" @if ($estadoCivil==$estudiante->persona->estado_civil) selected @endif> {{ $estadoCivil }} </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
