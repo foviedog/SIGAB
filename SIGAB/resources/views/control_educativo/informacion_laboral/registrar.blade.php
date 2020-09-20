@@ -215,6 +215,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 </div>
 @endsection
 
+
 @section('pie')
 Copyright
 @endsection

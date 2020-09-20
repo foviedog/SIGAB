@@ -21,7 +21,7 @@ anime
     /* Lineas de arriba y abajo de las letras SIGAB */
     .add({
         targets: ".ml1 .line",
-        scaleX: [0, 1],
+        scaleX: [0.4, 1],
         opacity: [0.9, 1],
         easing: "easeOutExpo",
         duration: 2000,

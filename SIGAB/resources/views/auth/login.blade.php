@@ -21,18 +21,26 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
-<body class="bg-rojo-oscuro">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-9 col-lg-12 col-xl-10">
+<body>
+    <div class="container p-5">
+        <div class="row justify-content-center pt-5">
+            <div class="col-md-8 col-xs-8">
                 <div class="card shadow-lg o-hidden border-0 my-5">
+
+                    <div class="card-header bg-rojo-oscuro">
+                        <div class="text-lext font-weight-bold text-white bg-rojo-oscuro">
+                            Inicio de sesión
+                        </div>
+                    </div>
                     <div class="card-body p-0">
-                        <div class="row mt-5">
-                            <div class="col-lg-6 d-none d-lg-flex">
-                                <div class="flex-grow-1 bg-login-image" style="background-image: url(img/login/logo.jpg ); background-repeat: no-repeat; background-size: cover; "></div>
+                        <div class="container">
+                            <div class="row d-flex justify-content-between px-4">
+                                <img src="{{ asset('img/login/logo.jpg') }}" alt="" class="logo">
+                                <img src="{{ asset('img/login/UNA.png') }}" alt="" class="logo">
                             </div>
-                            <div class="col-lg-6 pb-5">
-                                <div class="p-5 mt-5">
+
+                            <div class="row d-flex justify-content-center pb-5 ">
+                                <div class="col-6">
                                     <div class="text-center pb-3">
                                         <h1 class="ml1">
                                             <span class="text-wrapper">
@@ -88,7 +96,6 @@
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -96,7 +103,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>

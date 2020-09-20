@@ -10,6 +10,7 @@ Listado de Guias Academicas
 
 
 @section('contenido')
+
 <div class="card">
     <div class="card-body">
         {{-- MODAL para agregar una guía académica --}}
@@ -139,7 +140,7 @@ Listado de Guias Academicas
 
             <div class="card-body">
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="listadoEstudiantil" method="GET" role="form" id="item-pagina">
+                <form action="{{ route('guia-academica.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap d-flex align-items-end">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
@@ -155,21 +156,27 @@ Listado de Guias Academicas
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                             <div class="mx-2 ">
-                                <label for="fecha-inicio">Fecha inicio: </label>
-                                <input type="date" class="form-control form-control-sm" name="" id="fecha-final">
+                                <label for="fecha-inicio" class="ml-3"> &nbsp;Fecha inicio: </label>
+                                <div class="d-flex">
+                                    <span id="fechaIni" class="fechaIni"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                    <input type="date" class="form-control form-control-sm" name="fechaIni" id="fecha-inicio" @if (!is_null($fechaIni)) value={{ $fechaIni }} @endif>
+                                </div>
                             </div>
-                            <div class="mx-3 ">
-                                <label for="fecha-final"> Fecha final: </label>
-                                <input type="date" class="form-control form-control-sm" name="" id="fecha-final">
+                            <div class=" mx-3 ">
+                                <label for=" fecha-final" class="ml-3"> &nbsp; Fecha final: </label>
+                                <div class="d-flex">
+                                    <span id="fechaFin" class="fechaFin"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                    <input type="date" class="form-control form-control-sm" name="fechaFin" id="fecha-final" @if (!is_null($fechaFin)) value={{ $fechaFin }} @endif>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-end w-25">
-                                <div class="text-md-right dataTables_filter d-flex align-items-end">
+                                <div class="text-md-right dataTables_filter d-flex align-items-center mt-3">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" />
+                                    <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del estudiante --}}
-                            <div class="d-flex align-items-end">
+                            <div class="d-flex align-items-center mt-3">
                                 <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                             </div>
                         </div>
@@ -231,7 +238,7 @@ Listado de Guias Academicas
                     </div>
                     {{-- Items de paginación --}}
                     <div class="col-md-6">
-                        {{-- {{ $estudiantes->withQueryString()->links() }} --}}
+                        {{ $guias->withQueryString()->links() }}
                     </div>
                 </div>
             </div>

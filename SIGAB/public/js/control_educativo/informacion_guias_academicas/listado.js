@@ -27,16 +27,17 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
         }
     });
 
-
-
 });
 
 $('#habilitar-edicion').on('click', function () {
     $('#recomendacion').removeAttr('disabled');
-
-
 });
 
-
+$('#fechaIni').on('click', function () {
+    $('#fecha-inicio').removeAttr('value');
+});
+$('#fechaFin').on('click', function () {
+    $('#fecha-final').removeAttr('value');
+});
 
 // setTimeout(function(){ console.log("Hello"); }, 3000);

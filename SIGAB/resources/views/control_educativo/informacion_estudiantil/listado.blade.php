@@ -97,7 +97,7 @@ Listado Estudiantil
                                 <td>
                                     {{-- Botón para ver las guías académicas del estudiante --}}
                                     <strong>
-                                        <a href="/estudiante/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
+                                        <a href="/estudiante/guia-academica/listar?nombreFiltro={{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
                                     </strong><br />
                                 </td>
                             </tr>
