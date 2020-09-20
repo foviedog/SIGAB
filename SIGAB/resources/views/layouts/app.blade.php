@@ -29,11 +29,10 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-rojo-oscuro">
             <div class="sidebar-header bg-rojo-oscuro">
-                <a href="{{ route('home') }}">
-                    <h3 class="text-center titulo">SIGAB</h3>
+                <a href="{{ route('home') }}" class="d-flex justify-content-center">
+                    <img src="{{ asset('img/login/logo_EBDI_Blanco.png') }}" alt="SIGAB" class="logo">
                 </a>
 
-                <strong class="short">SIGAB</strong>
 
             </div>
 
@@ -87,8 +86,8 @@
                         <span>Menú</span>
                     </button>
 
-                    <img src="{{ asset('img/login/logo_sin_fondo.png') }}" alt="logo_ebdi" class="logo border-left border-secondary mx-3" id="img-ebdi">
-                    <span class="texto-ebdi" id="letras-ebdi"></span>
+                    <img src="{{ asset('img/login/UNA_horizontal.png') }}" alt="logo_universidad" class="logo-una-horizontal border-left border-secondary mx-3" id="img-UNA">
+
 
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
@@ -98,7 +97,7 @@
                         <ul class="nav navbar-nav ml-auto ">
 
                             <li class="nav-item active">
-                                {{-- <a class="nav-link" href="#">Page</a> --}}
+                                <span class="texto-SIGAB pr-3" id="letras-SIGAB"></span>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle border-left border-secondary px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

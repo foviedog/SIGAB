@@ -1,13 +1,13 @@
 let flag = true;
 
-$("#letras-ebdi").html("EBDI");
+$("#letras-SIGAB").html("SIGAB");
 
 $(document).ready(function(){
     $("#img-ebdi").click(function () {
         if (flag) {
             flag = false;
             $("#letras-ebdi").html("");
-            let ebdi = new Typed('#letras-ebdi', {
+            let ebdi = new Typed('#letras-SIGAB', {
                 strings: ['Escuela de Bibliotecología, Documentación e Información.'],
                 typeSpeed: 16,
                 cursorChar: '_',

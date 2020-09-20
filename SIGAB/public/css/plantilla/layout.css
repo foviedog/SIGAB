@@ -179,6 +179,19 @@ Estilo del body
     transition: all 0.3s;
 }
 
+/* -------------------------------------------------------
+    Letras de SIGAB de la barra de información de arriba
+---------------------------------------------------------- */
+.texto-SIGAB {
+    font-weight: 700;
+    font-size: 25px;
+    color: #0151a0;
+    cursor: default;
+}
+
+.logo-una-horizontal {
+    max-width: 180px !important;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES - Responsive
 ----------------------------------------------------- */
