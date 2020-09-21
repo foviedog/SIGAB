@@ -49,22 +49,21 @@ class EstudianteController extends Controller
         ]);
     }
 
+    //Retorna la vista para crear un estudiante
     public function create()
     {
-        //$estudiante = Estudiante::findOrFail($id_estudiante);
-        //dd($estudiante);
-        return view('control_educativo.informacion_estudiantil.registrar', [
-            //'estudiante' => $estudiante,
-        ]);
+        return view('control_educativo.informacion_estudiantil.registrar');
     }
 
+    //Método que inserta un estudiante especifico en la base de datos
     public function store(Request $request)
     {
-        try {
+        try { //se utiliza un try-catch para control de errores
 
-            $persona = new Persona;
-            $estudiante = new Estudiante;
+            $persona = new Persona; //Se crea una nueva instacia de Persona
+            $estudiante = new Estudiante; //Se crea una nueva instacia de estudiante
 
+            //se setean los atributos del objeto
             $persona->persona_id = $request->cedula;
             $persona->nombre = $request->nombre;
             $persona->apellido = $request->apellido;
@@ -76,8 +75,9 @@ class EstudianteController extends Controller
             $persona->estado_civil = $request->estado_civil;
             $persona->direccion_residencia = $request->direccion_residencia;
             $persona->genero = $request->genero;
-            $persona->save();
+            $persona->save(); //se guarda el objeto en la base de datos
 
+            //se setean los atributos del objeto
             $estudiante->persona_id = $request->cedula;
             $estudiante->direccion_lectivo = $request->direccion_lectivo;
             $estudiante->cant_hijos = $request->cantidad_hijos;
@@ -94,16 +94,17 @@ class EstudianteController extends Controller
             $estudiante->nota_admision = $request->nota_admision;
             $estudiante->apoyo_educativo = $request->apoyo_educativo;
             $estudiante->residencias_UNA = $request->residencias;
-            $estudiante->save();
+            $estudiante->save(); //se guarda el objeto en la base de datos
 
+            //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado
             return Redirect::back()
-                ->with('mensaje', '¡El registro ha sido exitoso!')
-                ->with('persona_insertado', $persona)
-                ->with('estudiante_insertado', $estudiante)
-                ->with('cedula', $request->cedula);
-        } catch (\Illuminate\Database\QueryException $ex) {
-            return Redirect::back()
-                ->with('error', $ex->getMessage());
+                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('persona_insertado', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                ->with('estudiante_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                ->with('cedula', $request->cedula); //Retorna un objeto en el response con la cedula, de otra manera no obtiene el dato de manera adecuada para imprimirlo en la vista
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina de registro estudiante
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -121,7 +122,7 @@ class EstudianteController extends Controller
     public function update(Estudiante $estudiante)
     {
         //Datos asociados a la persona
-        $data = request()->validate([
+        $data1 = request()->validate([
             'nombre' => 'required',
             'apellido' => 'required',
             'fecha_nacimiento' => 'required',
@@ -136,7 +137,7 @@ class EstudianteController extends Controller
         ]);
 
         estudiante()->persona->update(array_merge(
-            $data
+            $data1
         ));
 
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");

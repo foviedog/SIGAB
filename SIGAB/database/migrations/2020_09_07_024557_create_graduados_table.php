@@ -19,7 +19,7 @@ class CreateGraduadosTable extends Migration
             $table->foreign('persona_id')->references('persona_id')->on('personas'); /* falta ->onDelete('cascade'); */
             $table->string('grado_academico', 15);
             $table->string('carrera_cursada', 80);
-            $table->date('anio_graduacion');
+            $table->int('anio_graduacion');
             $table->timestamps();
         });
     }

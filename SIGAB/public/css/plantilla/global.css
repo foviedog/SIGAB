@@ -205,3 +205,6 @@ Fin de la paleta de colores
 .far {
     cursor: pointer;
 }
+.obligatorio {
+    color: rojo;
+}

@@ -1,4 +1,4 @@
-/*Contador de caracteres de residencias*/
+/*Contador de caracteres de motivo*/
 function contarCarMotivo(val) {
     var len = val.value.length;
     if (len >= 44) {
@@ -8,7 +8,7 @@ function contarCarMotivo(val) {
     }
 }
 
-/*Contador de caracteres de residencias*/
+/*Contador de caracteres de ciclo lectivo*/
 function contarCarCicloLectivo(val) {
     var len = val.value.length;
     if (len >= 44) {
@@ -18,7 +18,7 @@ function contarCarCicloLectivo(val) {
     }
 }
 
-/*Contador de caracteres de residencias*/
+/*Contador de caracteres de lugar de atencion*/
 function contarCarLugarAtencion(val) {
     var len = val.value.length;
     if (len >= 44) {

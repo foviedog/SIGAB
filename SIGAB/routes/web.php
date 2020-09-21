@@ -42,6 +42,7 @@ Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar');
 
 // Muestra el listado de los estudiantes ordenados por su apellido
 Route::get('/listado-estudiantil', 'EstudianteController@index')->name('listado-estudiantil');
+Route::get('/estudiantes/graduados/listar', 'GraduadoController@index')->name('graduados.listar');
 
 /* Rutas para informacion de Guias academicas */
 Route::get('/estudiante/guia-academica/registrar', 'GuiasAcademicaController@create')->name('guia-academica.create');
@@ -60,3 +61,7 @@ Route::post('/trabajo/registrar', 'TrabajoController@store')->name('trabajo.stor
 Route::get('/trabajo/registrar/{id_estudiante}', 'TrabajoController@create');
 Route::get('/trabajo/obtener/{id_trabajo}', 'TrabajoController@get');
 Route::post('/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update');
+
+/* Rutas para informacion de Graduados */
+Route::get('/estudiante/graduacion/registrar', 'GraduadoController@create')->name('graduado.create');
+Route::post('/estudiante/graduacion', 'GraduadoController@store')->name('graduadoa.store');

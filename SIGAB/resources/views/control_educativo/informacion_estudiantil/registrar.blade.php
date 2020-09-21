@@ -112,7 +112,7 @@ Registrar información del estudiante
                     {{-- Campo: Cedula --}}
                     <div class="d-flex justify-content-start mb-4">
                         <div class="col-4">
-                            <label for="cedula">Cédula:</label>
+                            <label for="cedula">Cédula: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCarCed(this)" required>
@@ -125,7 +125,7 @@ Registrar información del estudiante
                     {{-- Campo: Nombre --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="nombre">Nombre/s:</label>
+                            <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCarNombre(this)" required>
@@ -138,7 +138,7 @@ Registrar información del estudiante
                     {{-- Campo: Apellidos --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="apellido">Apellido/s:</label>
+                            <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCarApellido(this)" required>
@@ -151,7 +151,7 @@ Registrar información del estudiante
                     {{-- Campo: Fecha de nacimiento --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                            <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" onkeyup="contarCarFechaNacimiento(this)" required>
@@ -203,7 +203,7 @@ Registrar información del estudiante
                     {{-- Campo: Correo institucional --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="correo_institucional">Correo institucional:</label>
+                            <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCarCorreoInstitucional(this)" multiple required>
@@ -216,7 +216,7 @@ Registrar información del estudiante
                     {{-- Campo: Estado civil --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="estado_civil">Estado civil:</label>
+                            <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="estado_civil" name="estado_civil" form="estudiante" required>
@@ -231,11 +231,12 @@ Registrar información del estudiante
                     {{-- Campo: Direccion de residencia --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="direccion_residencia">Dirección de residencia:</label>
+                            <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCarDireccionResidencia(this)" required></textarea>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Direccion del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_direccion_residencia"></span>
                         </div>
@@ -244,7 +245,7 @@ Registrar información del estudiante
                     {{-- Campo: Genero --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="genero">Género:</label>
+                            <label for="genero">Género: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="genero" name="genero" form="estudiante" required>
@@ -258,11 +259,12 @@ Registrar información del estudiante
                     {{-- Campo: Direccion lectivo --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="direccion_lectivo">Dirección lectivo:</label>
+                            <label for="direccion_lectivo">Dirección en tiempo lectivo: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCarDireccionLectivo(this)" required></textarea>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Direccion del domicilio o apartamento en el que reside durante los ciclos lectivos"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_direccion_lectivo"></span>
                         </div>
@@ -271,11 +273,12 @@ Registrar información del estudiante
                     {{-- Campo: Cantidad de hijos --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="cantidad_hijos">Cantidad hijos:</label>
+                            <label for="cantidad_hijos">Cantidad hijos: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='number' max="99" class="form-control w-100" id="cantidad_hijos" name="cantidad_hijos" onkeyup="contarCarCantidadHijos(this)" required>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="En caso de no tener hijos, se debe ingresar un 0"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_cantidad_hijos"></span>
                         </div>
@@ -288,7 +291,7 @@ Registrar información del estudiante
                     {{-- Campo: Tipo de colegio de procedencia --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="tipo_colegio_procedencia">Tipo colegio de procedencia:</label>
+                            <label for="tipo_colegio_procedencia">Tipo colegio de procedencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" required>
@@ -303,11 +306,12 @@ Registrar información del estudiante
                     {{-- Campo: Condicion de discapacidad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="condicion_discapacidad">Condición diacapacidad:</label>
+                            <label for="condicion_discapacidad">Condición de diacapacidad:</label>
                         </div>
                         <div class="col-6">
                             <textarea class="form-control w-100" id="condicion_discapacidad" name="condicion_discapacidad" onkeyup="contarCarCondicionDiscapacidad(this)"></textarea>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Se debe especificar la condicion que posee, o de no tener, se debe dejar vacio"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_condicion_discapacidad"></span>
                         </div>
@@ -316,11 +320,12 @@ Registrar información del estudiante
                     {{-- Campo: Año de ingreso a la EBDI --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_ingreso_ebdi">Año ingreso a la EBDI:</label>
+                            <label for="anio_ingreso_ebdi">Año ingreso a la EBDI: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCarAnioIngresoEbdi(this)" required>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingreso a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_ingreso_ebdi"></span>
                         </div>
@@ -329,11 +334,12 @@ Registrar información del estudiante
                     {{-- Campo: Año de ingreso a la UNA --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_ingreso_una">Año ingreso a la UNA:</label>
+                            <label for="anio_ingreso_una">Año ingreso a la UNA: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCarAnioIngresoUna(this)" required>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingreso a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_ingreso_una"></span>
                         </div>
@@ -342,11 +348,12 @@ Registrar información del estudiante
                     {{-- Campo: Año de desercion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_desercion">Año deserción:</label>
+                            <label for="anio_desercion">Año de deserción:</label>
                         </div>
                         <div class="col-6">
                             <input type='number' max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCarAnioDesercion(this)">
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que desertó de la carrera, si no lo ha hecho, se debe dejar el espacio vacio"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_desercion"></span>
                         </div>
@@ -355,7 +362,7 @@ Registrar información del estudiante
                     {{-- Campo: Tipo de beca --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="tipo_beca">Tipo de beca:</label>
+                            <label for="tipo_beca">Tipo de beca: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_beca" name="tipo_beca" form="estudiante" required>
@@ -378,11 +385,12 @@ Registrar información del estudiante
                     {{-- Campo: Nota de admision --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="nota_admision">Nota de admisión:</label>
+                            <label for="nota_admision">Nota de admisión: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='number' class="form-control w-100" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCarNotaAdmision(this)" required>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Nota de admision especifico para la Universidad Nacional"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_admision"></span>
                         </div>
@@ -391,11 +399,12 @@ Registrar información del estudiante
                     {{-- Campo: Carrera matriculada 1 --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="carrera_matriculada_1">Carrera matriculada 1:</label>
+                            <label for="carrera_matriculada_1">Carrera matriculada 1: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="carrera_matriculada_1" name="carrera_matriculada_1" onkeyup="contarCarCarreraMatriculada1(this)" required>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_carrera_matriculada1"></span>
                         </div>
@@ -409,6 +418,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="carrera_matriculada_2" name="carrera_matriculada_2" onkeyup="contarCarMateriaMatriculada2(this)">
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera secundaria"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_materia_matriculada_2"></span>
                         </div>
@@ -417,11 +427,12 @@ Registrar información del estudiante
                     {{-- Campo: Año de graduacion estimado 1 --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_gradacion_estimado_1">Año de graduación estimado 1:</label>
+                            <label for="anio_gradacion_estimado_1">Año de graduación estimado 1: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_gradacion_estimado_1" name="anio_gradacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)" required>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_graduacion_estimado_1"></span>
                         </div>
@@ -435,6 +446,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" onkeyup="contarCarAnioGraduacionEstimado2(this)">
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera secundaria"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_graduacion_estimado_2"></span>
                         </div>
@@ -448,6 +460,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeyup="contarCarApoyoEducativo(this)"></textarea>
                         </div>
+                        <span data-toggle="tooltip" data-placement="bottom" title="El tipo de apoyo educativo que posee"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_apoyo_educativo"></span>
                         </div>
@@ -459,10 +472,13 @@ Registrar información del estudiante
                             <label for="residencias">Residencias:</label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="residencias" name="residencias" form="estudiante" required>
-                                <option value="0">No</option>
-                                <option value="1">Sí</option>
-                            </select>
+                            <div class="form-check">
+                                <input class="form-check-input " type="radio" name="residencias" id="residencias1" value="0" checked>
+                                <label class="form-check-label pr-5" for="residencias1"> No </label>
+
+                                <input class="form-check-input" type="radio" name="residencias" id="residencias2" value="1">
+                                <label class="form-check-label" for="residencias2"> Si </label>
+                            </div>
                         </div>
                     </div>
 

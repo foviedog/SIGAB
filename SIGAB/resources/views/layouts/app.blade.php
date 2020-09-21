@@ -19,8 +19,9 @@
     <link href="{{ asset('css/plantilla/layout.css') }}" rel="stylesheet">
 
     <!-- Scripts globales -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
 </head>
 
@@ -49,10 +50,13 @@
                             <a href="{{ route('estudiante.create' ) }}">Añadir estudiante</a>
                         </li>
                         <li>
-                            <a href="{{ route('listado-estudiantil' ) }}">Listar estudiantes</a>
+                            <a href="{{ route('listado-estudiantil' ) }}">Estudiantes</a>
                         </li>
                         <li>
-                            <a href="{{ route('guia-academica.listar' ) }}">Listar Guías adémicas</a>
+                            <a href="{{ route('graduados.listar' ) }}">Estudiantes Graduados</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('guia-academica.listar' ) }}">Guías adémicas</a>
                         </li>
                     </ul>
                 </li>
@@ -143,6 +147,8 @@
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> --}}
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
+
+
 </body>
 
 </html>

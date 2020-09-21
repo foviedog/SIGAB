@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    (function($) {
+    (function ($) {
+
         "use strict"; // Start of use strict
 
         // Toggle the side navigation
@@ -10,6 +11,7 @@ $(document).ready(function() {
                 $(".sidebar .collapse").collapse("hide");
             }
         });
+
 
         // Close any open menu accordions when window is resized below 768px
         $(window).resize(function() {

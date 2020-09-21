@@ -11,32 +11,42 @@ use App\Guias_academica;
 class GuiasAcademicaController extends Controller
 {
 
+    //Método que obtiene una cedula por medio del request, devuelve ese estudiante espefico junto con la vista para crear una guia academica
     public function create()
     {
-        $id_estudiante = request('cedula', '');
+        $id_estudiante = request('cedula', NULL); //Se obtiene el atributo de cédila que viene en el request y en caso de que no se encuentre seteado se pone en blanco
         $estudiante = Estudiante::findOrFail($id_estudiante);
         return view('control_educativo.informacion_guias_academicas.registrar', [
             'estudiante' => $estudiante,
         ]);
     }
 
+    //Método que inserta una guia academica de un estudiante especifico en la base de datos
     public function store(Request $request)
     {
+        try { //se utiliza un try-catch para control de errores
+            //Se crea una nueva instacia de guías académicas.
+            $guia = new Guias_academica;
 
-        $guia = new Guias_academica;
+            //se setean los atributos del objeto
+            $guia->persona_id = $request->persona_id;
+            $guia->motivo = $request->motivo;
+            $guia->fecha = $request->fecha;
+            $guia->ciclo_lectivo = $request->ciclo_lectivo;
+            $guia->situacion = $request->situacion;
+            $guia->lugar_atencion = $request->lugar_atencion;
+            $guia->recomendaciones = $request->recomendaciones;
+            //se guarda el objeto en la base de datos
+            $guia->save();
 
-        $guia->persona_id = $request->persona_id;
-        $guia->motivo = $request->motivo;
-        $guia->fecha = $request->fecha;
-        $guia->ciclo_lectivo = $request->ciclo_lectivo;
-        $guia->situacion = $request->situacion;
-        $guia->lugar_atencion = $request->lugar_atencion;
-        $guia->recomendaciones = $request->recomendaciones;
-        $guia->save();
-
-        return Redirect::back()
-            ->with('mensaje', '¡El registro ha sido exitoso!')
-            ->with('gua_academica_insertada', $guia);
+            //se redirecciona a la pagina de registro de guias academicas con un mensaje de exito y los datos específicos del objeto insertado
+            return Redirect::back()
+                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('gua_academica_insertada', $guia); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina de registro guias academicas
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
 
