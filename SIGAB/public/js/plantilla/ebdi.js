@@ -1,6 +1,6 @@
 let flag = true;
 
-$("#letras-SIGAB").html("SIGAB");
+/*$("#letras-SIGAB").html("SIGAB");
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
@@ -23,7 +23,7 @@ $(document).ready(function () {
             $("#letras-ebdi").html("EBDI");
         };
     });
-});
+});*/
 
 $(document).ready(function() {
         $('#sidebarCollapse').on('click', function() {

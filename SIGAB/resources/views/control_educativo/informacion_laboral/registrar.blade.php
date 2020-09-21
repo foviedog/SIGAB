@@ -15,23 +15,31 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 @section('contenido')
 <div class="card">
     <div class="card-body">
-        <h2>Registrar información laboral para {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
+
+        <div class="d-flex justify-content-between">
+            <h2>Registrar información laboral para {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
+            <div>
+                {{-- Botón para regresar al listado de trabajos del estudiante --}}
+                <a href="/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a>
+            </div>
+        </div>
+
         <hr>
 
         {{-- Formulario para registrar informacion laboral --}}
         <form action="/trabajo/registrar" method="POST" role="form" enctype="multipart/form-data">
             @csrf
 
-            {{-- Mensaje de exito
-        (solo se muestra si ha sido exitoso el registro) --}}
+        {{-- Mensaje de exito
+            (solo se muestra si ha sido exitoso el registro) --}}
             @if(Session::has('mensaje'))
             <div class="alert alert-success" role="alert">
                 {!! \Session::get('mensaje') !!}
             </div>
             @endif
 
-            {{-- Mensaje de que muestra el objeto insertado
-        (solo se muestra si ha sido exitoso el registro)  --}}
+        {{-- Mensaje de que muestra el objeto insertado
+            (solo se muestra si ha sido exitoso el registro)  --}}
             @if(Session::has('trabajo_insertado'))
             <div class="alert alert-dark" role="alert">
 
@@ -59,6 +67,9 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 </div>
             </div>
 
+            {{-- Mensaje "Agregar un nuevo trabajo"
+                (solo se muestra si ha sido exitoso el registro)  --}}
+
             <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
             @endif
 
@@ -68,7 +79,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 <div class="col">
 
                     {{-- Campo: Nombre de la organizacion --}}
-                    <div class="form-inline mb-4">
+                    <div class="d-flex justify-content-start mb-4">
                         <div class="col-4">
                             <label for="nombre_organizacion">Nombre de la organización:</label>
                         </div>
@@ -81,7 +92,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Jornada laboral --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="jornada_laboral">Jornada laboral:</label>
                         </div>
@@ -94,7 +105,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Jefe inmediato --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="jefe_inmediato">Jefe inmediato:</label>
                         </div>
@@ -107,7 +118,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Tiempo desempleado --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="tiempo_desempleado">Tiempo desempleado:</label>
                         </div>
@@ -120,7 +131,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Intereses Capacitacion --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="interes_capacitacion">Intereses capacitación:</label>
                         </div>
@@ -135,7 +146,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 <div class="col">
 
                     {{-- Campo: Tipo de organizacion --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="tipo_organizacion">Tipo de organización:</label>
                         </div>
@@ -148,7 +159,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Cargo actual --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="cargo_actual">Cargo actual:</label>
                         </div>
@@ -161,7 +172,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Telefono trabajo --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="telefono_trabajo">Teléfono trabajo:</label>
                         </div>
@@ -174,7 +185,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Correo trabajo --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="correo_trabajo">Correo trabajo:</label>
                         </div>
@@ -187,7 +198,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     </div>
 
                     {{-- Campo: Otros estudios --}}
-                    <div class="form-inline mb-3">
+                    <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="otros_estudios">Otros estudios:</label>
                         </div>
@@ -214,7 +225,6 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
     </div>
 </div>
 @endsection
-
 
 @section('pie')
 Copyright

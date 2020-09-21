@@ -98,7 +98,7 @@
                         <ul class="nav navbar-nav ml-auto ">
 
                             <li class="nav-item active">
-                                <span class="texto-SIGAB pr-3" id="letras-SIGAB"></span>
+                                <span class="texto-SIGAB pr-3" id="letras-SIGAB">SIGAB</span>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle border-left border-secondary px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -142,7 +142,7 @@
 
     @yield('scripts')
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> --}}
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
 
 

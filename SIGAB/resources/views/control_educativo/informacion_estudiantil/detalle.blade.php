@@ -102,7 +102,6 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                     <input type="text" class="form-control" placeholder="Carrera 2" name="carrera_matriculada_2" value=" {{ $estudiante->carrera_matriculada_2 }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Colegio Procedencia --}}
-
                                 <div class="form-group">
                                     <label for="colegio"><strong>Tipo de colegio de procedencia</strong><br /></label>
                                     <select class="form-control" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" disabled>
@@ -113,14 +112,14 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                 </div>
                                 {{-- Campo: Estimado Graduacion --}}
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type="date" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled />
+                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled />
                                 </div>
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="date" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled />
+                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled />
                                 </div>
                                 {{-- Campo: Desercion --}}
                                 <div class="form-group">
-                                    <label for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="date" placeholder="Deserción" name="anio_desercion" value={{ $estudiante->anio_desercion }} disabled />
+                                    <label for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="number" placeholder="Deserción" name="anio_desercion" value={{ $estudiante->anio_desercion }} disabled />
                                 </div>
                             </form>
                         </div>
@@ -140,7 +139,7 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                             {{-- Campo: Nombre estudiante --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nombre"><strong>Nombre</strong></label><input class="form-control" type="text" id="nombre" name="nombre" value={{ $estudiante->persona->nombre }} disabled />
+                                                    <label for="nombre"><strong>Nombre</strong></label><input class="form-control" type="text" id="nombre" name="nombre" value="{{ $estudiante->persona->nombre }}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Apellidos --}}
@@ -168,12 +167,12 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input class="form-control" type="text" name="telefono_celular" value={{ $estudiante->persona->telefono_celular }} disabled />
+                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input class="form-control" type="text" name="telefono_celular" value="{{ $estudiante->persona->telefono_celular }}" disabled />
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input class="form-control" type="text" placeholder="Telefono" name="telefono_celular" value={{ $estudiante->persona->telefono_fijo}} disabled />
+                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input class="form-control" type="text" placeholder="Telefono" name="telefono_celular" value="{{ $estudiante->persona->telefono_fijo}}" disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -221,11 +220,10 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
                                                     <label for="estadoCivil"><strong>Estado civil</strong></label>
-                                                    <select disabled class="form-control w-100" id="estado_civil" name="estado_civil" required>
-                                                        <option value="Soltero">Soltero</option>
-                                                        <option value="Casado">Casado</option>
-                                                        <option value="Viudo">Viudo</option>
-                                                        <option value="Divorciado">Divorciado</option>
+                                                    <select class="form-control" id="estado_civil" name="estado_civil" form="estudiante" disabled>
+                                                        @foreach($estadosCiviles as $estadoCivil)
+                                                        <option value="{{ $estadoCivil }}" @if ($estadoCivil==$estudiante->persona->estado_civil) selected @endif> {{ $estadoCivil }} </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -249,19 +247,10 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                             <div class="col-7 mr-3">
                                                 <div class="form-group">
                                                     <label for="beca"><strong>Beca</strong></label>
-                                                    <select disabled class="form-control w-100" id="tipo_beca" name="tipo_beca" form="estudiante" required>
-                                                        <option value="No tiene">No tiene</option>
-                                                        <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
-                                                        <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
-                                                        <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
-                                                        <option value="Becas de posgrado">Becas de posgrado</option>
-                                                        <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
-                                                        <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
-                                                        <option value="Honor">Honor</option>
-                                                        <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
-                                                        <option value="Intercambio estudiantil">Intercambio estudiantil</option>
-                                                        <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
-                                                        <option value="Giras">Giras</option>
+                                                    <select class="form-control" id="tipo_beca" name="tipo_beca" form="estudiante" disabled>
+                                                        @foreach($tiposBecas as $tipoBeca)
+                                                        <option value="{{ $tipoBeca }}" @if ($tipoBeca==$estudiante->tipo_beca) selected @endif> {{ $tipoBeca }} </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

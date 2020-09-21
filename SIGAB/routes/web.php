@@ -58,3 +58,5 @@ Route::post('/estudiante', 'EstudianteController@store');
 Route::get('/trabajo/{id_estudiante}', 'TrabajoController@index');
 Route::post('/trabajo/registrar', 'TrabajoController@store')->name('trabajo.store');
 Route::get('/trabajo/registrar/{id_estudiante}', 'TrabajoController@create');
+Route::get('/trabajo/obtener/{id_trabajo}', 'TrabajoController@get');
+Route::post('/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update');
