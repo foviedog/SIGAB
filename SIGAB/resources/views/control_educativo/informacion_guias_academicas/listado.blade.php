@@ -37,7 +37,7 @@ Listado de Guias Academicas
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-rojo">Crear Guía Académica</button>
+                            <button type="submit" class="btn btn-rojo" id="crear_guia_modal">Crear Guía Académica</button>
                         </div>
                     </form>
                 </div>

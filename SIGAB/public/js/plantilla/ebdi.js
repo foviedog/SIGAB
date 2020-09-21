@@ -1,4 +1,5 @@
 let flag = true;
+$('[data-toggle="tooltip"]').tooltip();
 
 /*$("#letras-SIGAB").html("SIGAB");
 
@@ -13,7 +14,7 @@ $(document).ready(function () {
                 typeSpeed: 16,
                 cursorChar: '_',
                 loop: false,
-                onComplete: function (self) { self.destroy() },
+                onComplete: function (self) { self.destroy() },{{  }}
                 onDestroy: function (self) {
                     $("#letras-ebdi").html('Escuela de Bibliotecología, Documentación e Información.');
                     flag = true;

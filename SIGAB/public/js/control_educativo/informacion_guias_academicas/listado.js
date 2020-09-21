@@ -29,6 +29,22 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
 
 });
 
+$('#crear_guia_modal').on('click', function (event) {
+    var id = $('#cedula').value(); // Extract info from data-* attributes
+
+    $.ajax({
+        url: "/estudiante/guia-academica/registrar" + id,
+        type: "GET",
+        success: function(response) {
+            window.location.href = "/estudiante/guia-academica/registrar/" + id +"&aceptado=true";
+        },
+        error: {
+
+        }
+    });
+});
+
+
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
