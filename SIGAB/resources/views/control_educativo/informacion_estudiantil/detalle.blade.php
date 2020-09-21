@@ -31,8 +31,8 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                     <h3 class="texto-gris mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }}
                 </div>
                 <div>
-                    {{-- <button class="btn btn-rojo" type="button" id="editar-estudiante" value="Editar" data-target="#trabajoModal" data-toggle="modal">Editar</button> --}}
-                    <button type="button" class="btn btn-contorno-rojo" id="editar-estudiante"> Editar </button>
+                    <a href="/listado-estudiantil" class="btn btn-contorno-rojo"> Volver al listado </a>
+                    <button type="button" class="btn btn-rojo" id="editar-estudiante"> Editar </button>
                     <button type="button" class="btn btn-rojo" id="cancelar-edi"> Cancelar </button>
                 </div>
             </div>
@@ -45,8 +45,7 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                             {{-- Foto del estudiante --}}
                             <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
                             <div class="mb-3"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
-                            <div class="mb-3"><button class="btn btn-contorno-rojo btn-sm" type="button" data-toggle="modal" data-target="#modalCambiarFoto">Cambiar Foto</button></div>
-
+                            <div class="mb-3"><button id="cambiar-foto" class="btn btn-rojo btn-sm" type="button" data-toggle="modal" data-target="#modalCambiarFoto">Cambiar Foto</button></div>
                             {{-- Modal para modificar foto --}}
                             <div class="modal fade" id="modalCambiarFoto" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -292,7 +291,7 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <button class="btn btn-rojo">Guardar cambios</button>
+                <button id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
             </div>
         </div>
     </div>
