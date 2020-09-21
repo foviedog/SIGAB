@@ -1,6 +1,7 @@
 function confirmar() {
 
-    verificarContrasenna($("#password").val());
+    console.log(verificarContrasenna($("#password").val()));
+
 /*
     if ($("#password").val() != "" && $("#password-confirm").val() != "") {
         if ($("#password").val() === $("#password-confirm").val()) {
@@ -15,11 +16,54 @@ function confirmar() {
 }
 
 function verificarContrasenna(password) {
-    let caracteresEspeciales = "/[\'^£$%&*()}{@#~?><>,|=_+!-]/";
-    if (password.match(caracteresEspeciales)) {
-        console.log("Todo bien");
-    } else {
-        console.log("Todo mal");
-    }
+    // let caracteresEspeciales = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    // if (!caracteresEspeciales.test(password))
+    //     return false;
 
+    if (password.length < 6)
+        return false;
+
+    if (!contieneMayuscula(password))
+        return false;
+
+
+    if (!contieneNumero(password))
+        return false;
+
+    return true;
+
+}
+
+function contieneMayuscula(password) {
+
+    let contieneMayuscula = false;
+    for (var i = 0; i < password.length && !contieneMayuscula; i++)
+    {
+        if (!esCaracterEspecial(password[i]) && isNaN(password[i]) && password[i] == password[i].toUpperCase()) {
+            contieneMayuscula = true;
+        }
+    }
+    return contieneMayuscula;
+}
+
+function contieneNumero(password) {
+    let contieneNumero = false;
+    for (var i = 0; i < password.length && !contieneNumero; i++)
+    {
+        if (!isNaN(password[i])) {
+            contieneNumero = true;
+        }
+    }
+    return contieneNumero;
+}
+
+function esCaracterEspecial(letra) {
+    let caracteresEspeciales = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=";
+
+    for(i = 0; i < caracteresEspeciales.length;i++){
+        if(caracteresEspeciales[i] == letra){
+            return true;
+        }
+    }
+    return false;
 }

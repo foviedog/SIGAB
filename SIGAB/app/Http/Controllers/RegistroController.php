@@ -106,9 +106,9 @@ class RegistroController extends Controller
     private function verificarContrasenna($password) {
 
         /* La contraseña debe ser mayor a 6 carácteres */
-        if ( strlen($password) < 6 ) {
+        /*if ( strlen($password) < 6 ) {
             return false;
-        }
+        }*/
 
         /* La contraseña debe tener algún número */
         if ( !preg_match("#[0-9]+#", $password) ) {
