@@ -122,7 +122,7 @@ class EstudianteController extends Controller
     public function update(Estudiante $estudiante)
     {
         //Datos asociados a la persona
-        $data = request()->validate([
+        $data1 = request()->validate([
             'nombre' => 'required',
             'apellido' => 'required',
             'fecha_nacimiento' => 'required',
@@ -137,7 +137,7 @@ class EstudianteController extends Controller
         ]);
 
         estudiante()->persona->update(array_merge(
-            $data
+            $data1
         ));
 
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");
