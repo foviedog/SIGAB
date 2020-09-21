@@ -2,7 +2,8 @@ let flag = true;
 
 $("#letras-SIGAB").html("SIGAB");
 
-$(document).ready(function(){
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     $("#img-ebdi").click(function () {
         if (flag) {
             flag = false;

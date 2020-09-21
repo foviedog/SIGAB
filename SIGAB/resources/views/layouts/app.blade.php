@@ -19,8 +19,9 @@
     <link href="{{ asset('css/plantilla/layout.css') }}" rel="stylesheet">
 
     <!-- Scripts globales -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
 </head>
 
@@ -143,6 +144,8 @@
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
+
+
 </body>
 
 </html>

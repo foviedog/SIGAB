@@ -142,7 +142,7 @@ Listado de Guias Academicas
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
                 <form action="{{ route('guia-academica.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
-                        <div class="col-md-6 text-nowrap d-flex align-items-end">
+                        <div class="col-md-4 text-nowrap d-flex align-items-end">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                 <label class="font-weight-bold">Mostrar &nbsp;
                                     {{-- Select con la cantidad de items por páginas--}}
@@ -154,25 +154,26 @@ Listado de Guias Academicas
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end">
+                        <div class="col-md-8 d-flex justify-content-end">
                             <div class="mx-2 ">
                                 <label for="fecha-inicio" class="ml-3"> &nbsp;Fecha inicio: </label>
                                 <div class="d-flex">
-                                    <span id="fechaIni" class="fechaIni"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                    <span id="fechaIni" class="fechaIni" data-toggle="tooltip" data-placement="bottom" title="Vaciar valor Fecha de inicio"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
                                     <input type="date" class="form-control form-control-sm" name="fechaIni" id="fecha-inicio" @if (!is_null($fechaIni)) value={{ $fechaIni }} @endif>
                                 </div>
                             </div>
                             <div class=" mx-3 ">
                                 <label for=" fecha-final" class="ml-3"> &nbsp; Fecha final: </label>
                                 <div class="d-flex">
-                                    <span id="fechaFin" class="fechaFin"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                    <span id="fechaFin" class="fechaFin" data-toggle="tooltip" data-placement="bottom" title="Vaciar valor Fecha final"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
                                     <input type="date" class="form-control form-control-sm" name="fechaFin" id="fecha-final" @if (!is_null($fechaFin)) value={{ $fechaFin }} @endif>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end w-25">
                                 <div class="text-md-right dataTables_filter d-flex align-items-center mt-3">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre,apellido o cedula"><i class="far fa-question-circle fa-lg"></i></span>
+                                    &nbsp;&nbsp;<input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del estudiante --}}
@@ -254,7 +255,10 @@ Listado de Guias Academicas
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
 </script>
+<script>
 
+
+</script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/listado.js') }}" defer></script>
 @endsection
 

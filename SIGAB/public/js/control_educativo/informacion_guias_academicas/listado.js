@@ -29,6 +29,10 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
 
 });
 
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
 $('#habilitar-edicion').on('click', function () {
     $('#recomendacion').removeAttr('disabled');
 });
