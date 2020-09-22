@@ -16,10 +16,14 @@ class GraduadoController extends Controller
     //Método que obtiene una cedula por medio del request, devuelve ese estudiante espefico junto con la vista para crear una guia academica
     public function create()
     {
+
         $id_estudiante = request('cedula', NULL); //Se obtiene el atributo de cédila que viene en el request y en caso de que no se encuentre seteado se pone en blanco
+
         $estudiante = Estudiante::findOrFail($id_estudiante);
+
         return view('control_educativo.informacion_estudiantil.informacion_graduados.registrar', [
             'estudiante' => $estudiante,
+
         ]);
     }
 
@@ -58,22 +62,67 @@ class GraduadoController extends Controller
         $paginaciones = [10, 25, 50, 100];
 
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
-        //request se setea por defecto en 10 por página
+        //request se setea por defecto en 2 por página
         $itemsPagina = request('itemsPagina', 10);
 
-        $graduados = $this->obtenerGraduados($itemsPagina);
+        //Se recibe del request  el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
+        $filtro = request('filtro', NULL);
+
+        //Se recibe del request el valor de anio, y se le asigna a la variable ciclo par realizar el filtro. Si dicho valor no está seteado se pone en NULL
+        $anio = request('anio', NULL);
+
+        //En caso de que el filtro de ciclo lectivo se encuentre dentro del request entonces se realiza un búsqueda en la base de datos con dichos datos.
+        if (!is_null($anio) && $anio != ' ') {
+            $graduados = $this->filtroAnio($anio, $filtro, $itemsPagina); //Retorna la lista de guías con respecto a las fechas especificadas
+        } else if (!is_null($filtro)) { // En caso de que se busque únicamente el nombre,apellido o cédula de la persona se ejecuta la búsqueda por nombre
+            $graduados = $this->filtroNombre($filtro, $itemsPagina); //Búsqueda en la BD del por nombre, apellido o cédula
+        } else { //Si no se adjunta ningún filtro de búsqueda se devuelve un listado de los estudiantes
+            $graduados = $this->obtenerGraduados($itemsPagina);
+        }
+
 
         //se devuelve la vista con los atributos de paginación de los estudiante
         return view('control_educativo.informacion_estudiantil.informacion_graduados.listado', [
             'graduados' => $graduados, // Listado estudiantel.
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
             'itemsPagina' => $itemsPagina, // Item que se desean por página.
+            'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página,
+            'anio' => $anio // Valor del filtro de año de graduación
         ]);
     }
 
     /* ====================================================================================
                 Métodos de búsquda de base de datos  utilizados en el index
     ==================================================================================== */
+
+    //Función que realiza la búsqueda de guías académicas en la base de datos con respecto al nombre, apellido o cédula que se haya especificado
+    private function filtroAnio($anio, $filtro, $itemsPagina)
+    {
+        $guias = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
+            ->join('graduados', 'estudiantes.persona_id', '=', 'graduados.persona_id')
+            ->where('graduados.anio_graduacion', '=', $anio)
+            ->orderBy('personas.apellido', 'asc')
+            ->groupBy('estudiantes.persona_id') // Ordena con respecto al orden de pellido de manera ascendentemente
+            ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
+
+        return $guias; //Retorna el resultado de todas las guías que cumplan con los filtros especificados
+    }
+
+
+    //Función que realiza la búsqueda de guías académicas en la base de datos con respecto al nombre, apellido o cédula que se haya especificado
+    private function filtroNombre($filtro, $itemsPagina)
+    {
+        $guias =  $graduados = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
+            ->join('graduados', 'estudiantes.persona_id', '=', 'graduados.persona_id')
+            ->orWhere('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
+            ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
+            ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
+            ->orderBy('personas.apellido', 'asc')
+            ->groupBy('estudiantes.persona_id') // Ordena con respecto al orden de pellido de manera ascendentemente
+            ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
+
+        return $guias; //Retorna el resultado de todas las guías que cumplan con los filtros especificados
+    }
 
     //Función que retorna todas las guías presentes en la BD ordenadas con respecto a la última agregada en la BD.
     private function obtenerGraduados($itemsPagina)
@@ -82,7 +131,6 @@ class GraduadoController extends Controller
         $graduados = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
             ->join('graduados', 'estudiantes.persona_id', '=', 'graduados.persona_id')
             ->groupBy('estudiantes.persona_id')->paginate($itemsPagina);
-
 
         return $graduados; //Retorna el resultado de todas las guías
     }
