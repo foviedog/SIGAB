@@ -4,7 +4,7 @@
 .ml1 {
     font-weight: 670px;
     font-size: 65px;
-    color: #0151a0;
+    color: #034991; /*#0151a0*/
     cursor: default;
 }
 
@@ -24,12 +24,12 @@
     position: absolute;
     left: 0;
     height: 3px;
-    width: 90%;
+    width: 100%;
     background: rgb(255, 255, 255);
     background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 1) 0%,
-        rgba(78, 118, 189, 1) 50%,
+        #0151a0 50%,
         rgba(255, 255, 255, 1) 100%
     );
     transform-origin: 0 0;

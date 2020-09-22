@@ -12,7 +12,7 @@ $('#detalle-trabajo-modal').on('show.bs.modal', function (event) {
 
     //Método en AJAX que trae la información del trabajo desde el servidor
     $.ajax({
-        url: "/trabajo/obtener/" + id,
+        url: "/estudiante/trabajo/obtener/" + id,
         type: "GET",
         success: function(response) {
             if (response) {
@@ -59,7 +59,7 @@ $('#cancelar-edicion').on('click', function () {
 
 /* Funcion que actualiza los datos ingresados */
 function actualizar() {
-    $('#form-actualizar').attr('action', '/trabajo/actualizar/' + id_trabajo);
+    $('#form-actualizar').attr('action', '/estudiante/trabajo/actualizar/' + id_trabajo);
     $('#form-actualizar').trigger("submit");
 }
 

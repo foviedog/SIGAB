@@ -191,7 +191,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
             <h2 class="texto-gris-oscuro mb-4">Trabajos de {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
             <div>
                 {{-- //Botón para añadir trabajo --}}
-                <a href="/trabajo/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nuevo trabajo &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                <a href="/estudiante/trabajo/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nuevo trabajo &nbsp; <i class="fas fa-plus-circle"></i> </a>
             </div>
         </div>
 
@@ -211,7 +211,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
             </div>
             <div class="card-body">
                 {{-- Form para la paginación de la página y para la búsqueda de trabajos --}}
-                <form action="/trabajo/{{ $estudiante->persona->persona_id }}" method="GET" role="form" id="item-pagina">
+                <form action="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
@@ -241,7 +241,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
                         </thead>
                         <tbody>
                             @if(count($trabajos))
-                            {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
+                            {{-- Inserción iterativa de los trabajos dentro de la tabla --}}
                             @foreach($trabajos as $trabajo)
                             <tr id="trabajo" class="cursor-pointer">
                                 <td>{{ $trabajo->nombre_organizacion }}</td>

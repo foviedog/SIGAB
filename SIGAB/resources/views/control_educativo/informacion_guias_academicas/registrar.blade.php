@@ -13,7 +13,6 @@ Registrar información laboral de
 
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
 
-
     <h3 class="text-center texto-gris-oscuro font-weight-bold "> Registrar información de la guia academica de {{ $estudiante->persona->nombre }} - {{ $estudiante->persona_id }} </h3>
     <hr class="pb-5">
     {{-- Formulario para registrar informacion de la guia academica --}}

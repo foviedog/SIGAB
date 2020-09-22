@@ -15,16 +15,16 @@ anime
         opacity: [0, 1],
         translateZ: 0,
         easing: "easeOutExpo",
-        duration: 900,
+        duration: 800,
         delay: (el, i) => 70 * (i + 1)
     })
     /* Lineas de arriba y abajo de las letras SIGAB */
     .add({
         targets: ".ml1 .line",
-        scaleX: [0.4, 1],
-        opacity: [0.9, 1],
+        scaleX: [0.5, 1],
+        opacity: [0, 1],
         easing: "easeOutExpo",
-        duration: 2000,
+        duration: 800,
         offset: "-=875",
         delay: (el, i, l) => 80 * (l - i)
     });

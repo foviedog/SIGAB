@@ -278,7 +278,7 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Información Laboral</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button" value="Ver trabajo">Ver trabajo</a>
+                                                        <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button" value="Ver trabajo">Ver trabajo</a>
                                                     </div>
                                                 </div>
                                             </div>

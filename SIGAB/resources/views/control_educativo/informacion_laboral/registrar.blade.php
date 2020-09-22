@@ -20,14 +20,14 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             <h2>Registrar información laboral para {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
             <div>
                 {{-- Botón para regresar al listado de trabajos del estudiante --}}
-                <a href="/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a>
+                <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a>
             </div>
         </div>
 
         <hr>
 
         {{-- Formulario para registrar informacion laboral --}}
-        <form action="/trabajo/registrar" method="POST" role="form" enctype="multipart/form-data">
+        <form action="/estudiante/trabajo/registrar" method="POST" role="form" enctype="multipart/form-data">
         @csrf
 
         {{-- Mensaje de exito
