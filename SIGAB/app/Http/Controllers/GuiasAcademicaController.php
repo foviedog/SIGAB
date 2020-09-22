@@ -12,13 +12,19 @@ class GuiasAcademicaController extends Controller
 {
 
     //Método que obtiene una cedula por medio del request, devuelve ese estudiante espefico junto con la vista para crear una guia academica
-    public function create()
+    public function create($id_estudiante)
     {
-        $id_estudiante = request('cedula', NULL); //Se obtiene el atributo de cédila que viene en el request y en caso de que no se encuentre seteado se pone en blanco
+        //Se obtiene el atributo de cédula que viene en el request y en caso de que no se encuentre seteado se pone en blanco
+        $aceptado = request('aceptado', false);
+
         $estudiante = Estudiante::findOrFail($id_estudiante);
-        return view('control_educativo.informacion_guias_academicas.registrar', [
-            'estudiante' => $estudiante,
-        ]);
+
+        if ($aceptado == 'true') {
+            return view('control_educativo.informacion_guias_academicas.registrar', [
+                'estudiante' => $estudiante,
+            ]);
+        }
+        return response()->json($estudiante, 200);
     }
 
     //Método que inserta una guia academica de un estudiante especifico en la base de datos
@@ -94,6 +100,27 @@ class GuiasAcademicaController extends Controller
             ->first(); // Obtener únicamente a la guía a la que se ha consultado.
 
         return response()->json($guia, 200); // Retorna el resultado por medio de un atributo JSON en la respuesta al AJAX del documento js/control_educativo/información_guias_academicas/listado.js
+    }
+
+    public function update($id_graduacion, Request $request)
+    {
+        //Busca la graduación en la base de datos
+        $graduacion = Guias_academica::find($id_graduacion);
+
+        //Al la graduación encontrada se le actualizan los atributos
+        $graduacion->motivo = $request->motivo;
+        $graduacion->fecha = $request->fecha;
+        $graduacion->ciclo_lectivo = $request->ciclo;
+        $graduacion->lugar_atencion = $request->lugar;
+        $graduacion->situacion = $request->situacion;
+        $graduacion->recomendaciones = $request->recomendaciones;
+
+        //Se guarda en la base de datos
+        $graduacion->save();
+
+        //Se reedirige a la página anterior con un mensaje de éxito
+        return Redirect::back()
+            ->with('exito', '¡Se ha actualizado correctamente!');
     }
 
 

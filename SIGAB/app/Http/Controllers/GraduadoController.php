@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Persona;
 use App\Graduado;
 use App\Estudiante;
+use App\Guias_academica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -133,15 +134,14 @@ class GraduadoController extends Controller
     }
 
     // Método que actualiza la información de la graduación
-    public function update($id_graduacion, Request $request)
+    public function update($id_guia, Request $request)
     {
-        //Busca la graduación en la base de datos
-        $graduacion = Graduado::find($id_graduacion);
+        $guia = Guias_academica::find($id_guia);
 
         //Al la graduación encontrada se le actualizan los atributos
-        $graduacion->grado_academico = $request->grado_academico;
-        $graduacion->carrera_cursada = $request->carrera_cursada;
-        $graduacion->anio_graduacion = $request->anio_graduacion;
+        $guia->grado_academico = $request->grado_academico;
+        $guia->carrera_cursada = $request->carrera_cursada;
+        $guia->anio_graduacion = $request->anio_graduacion;
 
         //Se guarda en la base de datos
         $graduacion->save();
@@ -149,7 +149,6 @@ class GraduadoController extends Controller
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
-
     }
 
     /* ====================================================================================

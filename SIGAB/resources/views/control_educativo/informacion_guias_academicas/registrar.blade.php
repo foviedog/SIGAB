@@ -12,8 +12,10 @@ Registrar información laboral de
 @section('contenido')
 
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
-
-    <h3 class="text-center texto-gris-oscuro font-weight-bold "> Registrar información de la guia academica de {{ $estudiante->persona->nombre }} - {{ $estudiante->persona_id }} </h3>
+    <div class="d-flex">
+        <div><a href="{{ route('guia-academica.listar' ) }}" class="btn btn-contorno-rojo mr-5"><i class="far fa-arrow-alt-circle-left"></i> &nbsp; Regresar</a></div>
+        <h3 class="text-center texto-gris-oscuro font-weight-bold ml-5"> Registrar información de la guia academica de {{ $estudiante->persona->nombre }} - {{ $estudiante->persona_id }} </h3>
+    </div>
     <hr class="pb-5">
     {{-- Formulario para registrar informacion de la guia academica --}}
     <form action="/estudiante/guia-academica" method="POST" enctype="multipart/form-data" id="estudiante">
@@ -76,7 +78,7 @@ Registrar información laboral de
                 {{-- Campo: Fecha --}}
                 <div class=" mb-3">
                     <label for="fecha">Fecha: <i class="text-danger">*</i></label>
-                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha" name="fecha" onkeyup="contarCarFecha(this)" required>
+                    <input type='date' class="form-control w-100" id="fecha" name="fecha" onkeyup="contarCarFecha(this)" required>
                     <span class="text-muted" id="mostrar_cant_fecha"></span>
                 </div>
 
@@ -84,8 +86,8 @@ Registrar información laboral de
                 <div class="mb-3 pb-4">
                     <label for="ciclo_lectivo">Ciclo lectivo: <i class="text-danger">*</i></label>
                     <select class="form-control w-100" id="ciclo_lectivo" name="ciclo_lectivo" form="estudiante" required>
-                        <option value="0">Ciclo I, {{ date("Y") }}</option>
-                        <option value="1">Ciclo II, {{date("Y") }} </option>
+                        <option value="Ciclo I, {{ date("Y") }}">Ciclo I, {{ date("Y") }}</option>
+                        <option value="Ciclo II, {{ date("Y") }}">Ciclo II, {{date("Y") }} </option>
                     </select>
                 </div>
 

@@ -43,8 +43,10 @@ Route::get('/listado-estudiantil', 'EstudianteController@index')->name('listado-
 Route::get('/estudiantes/graduados/listar', 'GraduadoController@index')->name('graduados.listar');
 
 /* Rutas para informacion de Guias academicas */
-Route::get('/estudiante/guia-academica/registrar', 'GuiasAcademicaController@create')->name('guia-academica.create');
+Route::patch('/estudiante/guia-academica/actualizar/{id_guia}', 'GuiasAcademicaController@update')->name('guia-academica.update');
+
 Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@index')->name('guia-academica.listar');
+Route::get('/estudiante/guia-academica/registrar/{id_estudiante}', 'GuiasAcademicaController@create')->name('guia-academica.create');
 Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@show')->name('guia-academica.show');
 Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');
 
@@ -65,4 +67,3 @@ Route::get('/estudiante/graduacion/registrar/{id_estudiante}', 'GraduadoControll
 Route::post('/estudiante/graduacion', 'GraduadoController@store')->name('graduado.store');
 Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@get');
 Route::post('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update');
-

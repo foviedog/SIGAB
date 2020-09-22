@@ -23,26 +23,24 @@ Listado de Guias Academicas
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="/estudiante/guia-academica/registrar" method="GET" role="form" enctype="multipart/form-data" id="guia">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="alert alert-danger" role="alert">
-                                El estudiante ingresado no existe!
-                            </div>
-                            <div class="form-group">
-                                <label for="id-estudiante" class="col-form-label">Cédula del estudiante:</label>
-                                <input type="text" class="form-control" name="cedula">
-
-                            </div>
+                    @csrf
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert" id="no-existe-estudiante">
+                            El estudiante ingresado no existe!
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-rojo" id="crear_guia_modal">Crear Guía Académica</button>
+                        <div class="form-group">
+                            <label for="id-estudiante" class="col-form-label">Cédula del estudiante:</label>
+                            <input type="text" class="form-control" name="cedula" id="id-estudiante">
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-rojo" id="crear-guia-modal">Crear Guía Académica</button>
+                    </div>
                 </div>
             </div>
         </div>
+
         {{-- MODAL para ver el detalle de una guía académica--}}
         <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledby="detalle-guia-modal" aria-hidden="true">
             <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
@@ -52,6 +50,9 @@ Listado de Guias Academicas
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-rojo" id="habilitar-edicion">
                                     Habilitar edición
+                                </button>
+                                <button type="button" class="btn btn-rojo" id="cancelar-edicion">
+                                    Cancelar edición
                                 </button>
                             </div>
                     </div>
@@ -69,18 +70,20 @@ Listado de Guias Academicas
                         </div>
 
 
-                        <form>
+                        <form action="" method="post" id="form-actualizar">
+                            @csrf
+                            @method('PATCH')
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="motivo" class="col-form-label">Motivo:</label>
-                                        <input type="text" class="form-control" id="motivo" disabled>
+                                        <input type="text" class="form-control" id="motivo" name="motivo" disabled>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="fecha" class="col-form-label">Fecha:</label>
-                                        <input type="text" class="form-control" id="fecha" disabled>
+                                        <input type="text" class="form-control" id="fecha" name="fecha" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -88,30 +91,32 @@ Listado de Guias Academicas
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="ciclo" class="col-form-label">Ciclo lectivo:</label>
-                                        <input type="text" class="form-control" id="ciclo" disabled>
+                                        <input type="text" class="form-control" id="ciclo" name="ciclo" disabled>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="lugar-atencion" class="col-form-label">Lugar de atención:</label>
-                                        <input type="text" class="form-control" id="lugar-atencion" disabled>
+                                        <input type="text" class="form-control" id="lugar-atencion" name="lugar" disabled>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="situacion" class="col-form-label">Situación:</label>
-                                <textarea class="form-control" id="situacion" rows="2" cols="50" disabled></textarea>
+                                <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label" for="recomendaciones">Recomendaciones:</label>
-                                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" disabled>
+                                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled>
                         </textarea>
                             </div>
                         </form>
                     </div>
+                    <input type="hidden" name="id-guia-modal" id="id-guia-modal">
+
                     <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-rojo ml-3">Terminar edición</button>
+                        <button type="button" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
                     </div>
                 </div>
             </div>
