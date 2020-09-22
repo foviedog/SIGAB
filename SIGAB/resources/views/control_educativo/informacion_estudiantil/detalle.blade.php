@@ -18,22 +18,25 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
 $estadosCiviles = ['Soltero','Casado','Viudo','Divorciado','Unión libre'];
 $generos = ['Femenino','Masculino','Otro'];
 $colegiosProcedencias = ['Científico','Técnico','Bilingüe','Privado','Liceo','Nocturno'];
-$tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
+$tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
 'Beca por participación en actividades artísticas y deportivas','Beca por participación en movimiento estudiantil',
-'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantile','Giras'];
+'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
 @endphp
 
 <div class="card">
     <div class="card-body">
+                {{-- Formulario general de estudiante --}}
+                <form action="/estudiante/detalle/{estudiante}" method="POST" role="form" enctype="multipart/form-data" >
+                    @csrf
         <div class="container-fluid">
             <div class=" d-flex justify-content-between">
                 <div>
                     <h3 class="texto-gris mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }}
                 </div>
                 <div>
-                    <a href="/listado-estudiantil" class="btn btn-contorno-rojo"> Volver al listado </a>
-                    <button type="button" class="btn btn-rojo" id="editar-estudiante"> Editar </button>
-                    <button type="button" class="btn btn-rojo" id="cancelar-edi"> Cancelar </button>
+                    <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                    <button type="button" class="btn btn-rojo" id="editar-estudiante"><i class="fas fa-edit "></i> Editar </button>
+                    <button type="button" class="btn btn-rojo" id="cancelar-edi"><i class="fas fa-close "></i> Cancelar </button>
                 </div>
             </div>
             </h3>
@@ -80,25 +83,25 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                             <form>
                                 {{-- Campo: Nota admision --}}
                                 <div class="form-group">
-                                    <label for="nota"><strong>Nota de admisión</strong><br /></label><input class="form-control" type="number" placeholder="Nota Admision" name="nota_admision" value={{ $estudiante->nota_admision }} disabled />
+                                    <label for="nota"><strong>Nota de admisión *</strong><br /></label><input id="nota_admision" class="form-control" type="number" placeholder="Nota Admision" name="nota_admision" value="{{  $estudiante->nota_admision }}" disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la UNA --}}
                                 <div class="form-group">
-                                    <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la UNA" name="anio_ingreso_una" value={{ $estudiante->anio_ingreso_UNA }} disabled />
+                                    <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la UNA" name="anio_ingreso_una" value="{{ $estudiante->anio_ingreso_UNA }}" disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la EBDI --}}
                                 <div class="form-group">
-                                    <label for="anioEBDI"><strong>Año de ingreso a la EBDI</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la EBDI" name="anio_ingreso_ebdi" value={{ $estudiante->anio_ingreso_ebdi }} disabled />
+                                    <label for="anioEBDI"><strong>Año de ingreso a la EBDI *</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la EBDI" name="anio_ingreso_ebdi" value="{{ $estudiante->anio_ingreso_ebdi }}" disabled />
                                 </div>
                                 {{-- Campo: Primera Carrera --}}
                                 <div class="form-group">
-                                    <label for="carrera1"><strong>Primera Carrera</strong><br /></label>
+                                    <label for="carrera1"><strong>Primera Carrera *</strong><br /></label>
                                     <input type="text" class="form-control" placeholder="Carrera 1" name="carrera_matriculada_1" value="{{ $estudiante->carrera_matriculada_1 }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Segunda Carrera --}}
                                 <div class="form-group">
-                                    <label for="carrera2"><strong>Segunda Carrera</strong><br /></label>
-                                    <input type="text" class="form-control" placeholder="Carrera 2" name="carrera_matriculada_2" value=" {{ $estudiante->carrera_matriculada_2 }}" disabled /> </input>
+                                    <label data-toggle="tooltip" data-placement="left" title="Sólo en caso de que existe segunda carrera" for="carrera2"><strong>Segunda Carrera</strong><br /></label>
+                                    <input type="text" class="form-control" placeholder="Carrera 2" name="carrera_matriculada_2" value=" {{ $estudiante->carrera_matriculada_2 ?? "No se registra ninguna" }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Colegio Procedencia --}}
                                 <div class="form-group">
@@ -111,20 +114,21 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                 </div>
                                 {{-- Campo: Estimado Graduacion --}}
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value={{ $estudiante->anio_graduacion_estimado_1 }} disabled />
+                                    <label data-toggle="tooltip" data-placement="left" title="Año estimado de graduación de la primera carrera" for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1 *</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value="{{ $estudiante->anio_graduacion_estimado_1 ?? 0 }}" disabled />
                                 </div>
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value={{ $estudiante->anio_graduacion_estimado_2 }} disabled />
+                                    <label data-toggle="tooltip" data-placement="left" title="Año estimado de graduación de la segunda carrera (Si el estudiante tiene)" for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value="{{ $estudiante->anio_graduacion_estimado_2 ?? 0 }}" disabled />
                                 </div>
                                 {{-- Campo: Desercion --}}
                                 <div class="form-group">
-                                    <label for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="number" placeholder="Deserción" name="anio_desercion" value={{ $estudiante->anio_desercion }} disabled />
+                                    <label data-toggle="tooltip" data-placement="left" title="Se ingresa año de deserción si existe" for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="number" placeholder="Deserción" name="anio_desercion" value="{{ $estudiante->anio_desercion ?? 0 }}"  disabled />
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
+
                     <div class="row">
                         <div class="col">
                             {{-- Tarjeta de Informacion de contacto del estudiante --}}
@@ -134,44 +138,47 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                 </div>
                                 <div class="card-body">
                                     <form>
+
                                         <div class="form-row">
                                             {{-- Campo: Nombre estudiante --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nombre"><strong>Nombre</strong></label><input class="form-control" type="text" id="nombre" name="nombre" value="{{ $estudiante->persona->nombre }}" disabled />
+                                                    <label for="nombre"><strong>Nombre *</strong></label><input id="nombre" class="form-control" type="text" id="nombre" placeholder="Nombre Estudiante" name="nombre" value="{{ $estudiante->persona->nombre }}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Apellidos --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="apellido"><strong>Apellidos</strong></label>
-                                                    <input type="text" class="form-control " name="apellido" disabled value="{{ $estudiante->persona->apellido }}" /> </input>
+                                                    <label for="apellido"><strong>Apellidos *</strong></label>
+                                                    <input type="text" class="form-control " name="apellido" placeholder="Apellido" value="{{ $estudiante->persona->apellido }}" disabled/> </input>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class=" form-row">
                                             {{-- Campos: Correo electronico --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_personal"><strong>Correo Personal</strong><br /></label><input class="form-control" type="email" name="correo_personal" value={{ $estudiante->persona->correo_personal}} disabled />
+                                                    <label for="correo_personal"><strong>Correo Personal</strong><br /></label><input class="form-control" placeholder="Correo personal" type="email" name="correo_personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_institucional"><strong>Correo Institucional</strong><br /></label><input class="form-control" type="email" name="correo_institucional" value={{ $estudiante->persona->correo_institucional}} disabled />
+                                                    <label for="correo_institucional"><strong>Correo Institucional *</strong><br /></label><input class="form-control" type="email" name="correo_institucional" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" disabled />
                                                 </div>
                                             </div>
                                         </div>
+
                                         {{-- Campos: Telefonos --}}
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input class="form-control" type="text" name="telefono_celular" value="{{ $estudiante->persona->telefono_celular }}" disabled />
+                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input class="form-control" type="text" name="telefono_celular" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular ?? "No se registra ninguno" }}" required disabled />
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input class="form-control" type="text" placeholder="Telefono" name="telefono_celular" value="{{ $estudiante->persona->telefono_fijo}}" disabled />
+                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input class="form-control" type="text" placeholder="Telefono" name="telefono_fijo" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo ?? "No se registra ninguno" }}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -187,27 +194,31 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                     <form>
                                         {{-- Campo: Direccion Residencia --}}
                                         <div class="form-group">
-                                            <label for="DireccionResidencia"><strong>Dirección Residencia</strong><br /></label><textarea class="form-control" type="text" placeholder="Direccion" name="direccion_residencia" disabled />{{ $estudiante->persona->direccion_residencia }} </textarea>
+                                            <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante fuera del tiempo lectivo" for="DireccionResidencia"><strong>Dirección Residencia *</strong><br /></label>
+                                            <textarea  class="form-control" type="text" placeholder="Direccion" name="direccion_residencia" disabled />{{ $estudiante->persona->direccion_residencia }} </textarea>
                                         </div>
+
                                         {{-- Campo: Direccion tiempo lectivo --}}
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo</strong><br /></label><textarea class="form-control" type="text" placeholder="Direccion" name="direccion_lectivo" disabled /> {{ $estudiante->direccion_lectivo }} </textarea>
+                                                    <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante durante el tiempo lectivo"  for="DireccionLectivo"><strong>Dirección Tiempo Lectivo *</strong><br /></label>
+                                                    <textarea class="form-control" type="text" placeholder="Direccion" name="direccion_lectivo" disabled /> {{ $estudiante->direccion_lectivo }} </textarea>
                                                 </div>
                                             </div>
                                         </div>
+
                                         {{-- Campo: Fecha Nacimiento --}}
                                         <div class="form-row">
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
-                                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento</strong><br /></label><input class="form-control" type='date' placeholder="FechaNacimiento" name="fecha_nacimiento" value={{ $estudiante->persona->fecha_nacimiento }} disabled />
+                                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento *</strong><br /></label><input class="form-control" type='date' placeholder="FechaNacimiento" name="fecha_nacimiento" value={{ $estudiante->persona->fecha_nacimiento }} disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Genero --}}
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
-                                                    <label for="genero"><strong>Género </strong></label>
+                                                    <label for="genero"><strong>Género *</strong></label>
                                                     <select disabled class="form-control w-100" id="genero" name="genero" required>
                                                         <option value="M" <?php if( $estudiante->persona->genero == "M" ) { ?> option selected<?php } ?>>Masculino</option>
                                                         <option value="F" <?php if( $estudiante->persona->genero == "F" ) { ?> option selected<?php } ?>>Femenino</option>
@@ -218,7 +229,7 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                             {{-- Campo: Estado Civil --}}
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
-                                                    <label for="estadoCivil"><strong>Estado civil</strong></label>
+                                                    <label for="estadoCivil"><strong>Estado Civil *</strong></label>
                                                     <select class="form-control" id="estado_civil" name="estado_civil" form="estudiante" disabled>
                                                         @foreach($estadosCiviles as $estadoCivil)
                                                         <option value="{{ $estadoCivil }}" @if ($estadoCivil==$estudiante->persona->estado_civil) selected @endif> {{ $estadoCivil }} </option>
@@ -229,23 +240,26 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                             {{-- Cantidad de hijos --}}
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="hijos"><strong>Hijos</strong><br /></label><input class="form-control" type="number" placeholder="Hijos" name="cant_hijos" value={{ $estudiante->cant_hijos }} disabled />
+                                                    <label data-toggle="tooltip" data-placement="left" title="Ingresar 0 en caso de no tener hijos" for="hijos"><strong>Hijos *</strong><br /></label><input class="form-control" type="number" placeholder="Hijos" name="cant_hijos" value="{{ $estudiante->cant_hijos }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-row">
                                             {{-- Campo: Apoyo Educativo --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="apoyo_educativo"><strong>Apoyo Educativo</strong><br /></label><textarea class="form-control" type="text" name="apoyo_educativo" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
+                                                    <label data-toggle="tooltip" data-placement="left" title="Detalle del apoyo educativo recibido por el estudiante o indicar si no ha recibido" for="apoyo_educativo"><strong>Apoyo Educativo</strong><br /></label>
+                                                    <textarea class="form-control" type="text" name="apoyo_educativo" disabled />{{ $estudiante->apoyo_educativo ?? "No se registra ningún dato de apoyo educativo"}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-row">
                                             {{-- Campo: Beca --}}
                                             <div class="col-7 mr-3">
                                                 <div class="form-group">
-                                                    <label for="beca"><strong>Beca</strong></label>
+                                                    <label data-toggle="tooltip" data-placement="left" title="Se enlistan tipos de becas y otro tipo de ayudas como: Giras o Préstamos Estudiantiles" for="beca"><strong>Beca *</strong></label>
                                                     <select class="form-control" id="tipo_beca" name="tipo_beca" form="estudiante" disabled>
                                                         @foreach($tiposBecas as $tipoBeca)
                                                         <option value="{{ $tipoBeca }}" @if ($tipoBeca==$estudiante->tipo_beca) selected @endif> {{ $tipoBeca }} </option>
@@ -255,23 +269,30 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                                             </div>
                                             {{-- Campo: Residencias UNA --}}
                                             <div class="col">
-                                                <label for="residencia"><strong>Residencias UNA</strong><br /></label>
+                                                <label for="residencia"><strong>Residencias UNA *</strong><br /></label>
                                                 <div class="d-flex justify-content-start pb-4">
-                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="1" name="residencias_UNA" {{-- Segmento PHP que valida si se registro con residencia --}} <?php if( $estudiante->residencias_UNA == "1" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-2">Si</label>
+                                                    {{-- Segmento PHP que valida si se registro con residencia --}}
+                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="1" name="residencias_UNA"
+                                                        <?php if( $estudiante->residencias_UNA == "1" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-2">Si</label>
                                                     </div>
-                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="0" name="residencias_UNA" {{-- Segmento PHP que valida si se registro con residencia --}} <?php if( $estudiante->residencias_UNA == "0" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-3">No</label>
+                                                    {{-- Segmento PHP que valida si se registro con residencia --}}
+                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="0" name="residencias_UNA"
+                                                        <?php if( $estudiante->residencias_UNA == "0" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-3">No</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         {{-- Campo: Discapacidad --}}
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="condicion_discapacidad"><strong>Condición Discapacidad</strong><br /></label><textarea class="form-control" type="text" name="condicion_discapacidad" disabled /> {{ $estudiante->condicion_discapacidad }}</textarea>
+                                                    <label data-toggle="tooltip" data-placement="left" title="Ingresar si el estudiante posee alguna discapacidad o no" for="condicion_discapacidad"><strong>Condición Discapacidad</strong><br /></label>
+                                                    <textarea class="form-control" type="text" name="condicion_discapacidad" disabled /> {{ $estudiante->condicion_discapacidad ?? "No se registra ninguna discapacidad" }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
+
                                         {{-- Campo: Trabajo--}}
                                         <div class="form-row">
                                             <div class="col">
@@ -291,9 +312,12 @@ $tiposBecas = ['Beca por condición socioeconómica','Beca Omar Dengo (Residenci
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <button id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
+                <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}"><br>
+                <button id="guardar-cambios" type="submit" class="btn btn-rojo">Guardar cambios</button>
             </div>
+
         </div>
+    </form>
     </div>
 </div>
 

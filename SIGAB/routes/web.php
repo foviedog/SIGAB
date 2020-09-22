@@ -34,7 +34,7 @@ Auth::routes([
 /* Ruta de detalle del estudiante*/
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
 /* Rutas para editar  y actualizar la informacion del estudiante*/
-Route::patch('/estudiante/detalle/{estudiante}', 'EstudianteController@update');
+Route::post('/estudiante/detalle/{id_estudiante}', 'EstudianteController@update');
 /* Ruta para cambiar imagen del estudiante*/
 Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar');
 
