@@ -18,7 +18,7 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
                 $('#nombre').text(response.nombre+'  '+response.apellido);
                 $('#correo').text(response.correo_personal);
                 $('#motivo').val(response.motivo);
-                $('#lugar-atencion').val(response.persona_id);
+                $('#lugar-atencion').val(response.lugar_atencion);
                 $('#ciclo').val(response.ciclo_lectivo);
                 $('#fecha').val(response.fecha);
                 $('#situacion').val(response.situacion);
@@ -66,33 +66,37 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-$('#habilitar-edicion').on('click', function () {
-    $('#recomendaciones').removeAttr('disabled');
-    $('#situacion').removeAttr('disabled');
-    $('#ciclo').removeAttr('disabled');
-    $('#lugar-atencion').removeAttr('disabled');
-    $('#fecha').removeAttr('disabled');
-    $('#motivo').removeAttr('disabled');
-    $('#cancelar-edicion').show();
-    $('#terminar-edicion').show();
-    $('#habilitar-edicion').hide();
+    $('#habilitar-edicion').on('click', function () {
+        $('#recomendaciones').removeAttr('disabled');
+        $('#situacion').removeAttr('disabled');
+        $('#ciclo').removeAttr('disabled');
+        $('#lugar-atencion').removeAttr('disabled');
+        $('#fecha').removeAttr('disabled');
+        $('#motivo').removeAttr('disabled');
+        $('#cancelar-edicion').show();
+        $('#terminar-edicion').show();
+        $('#habilitar-edicion').hide();
+    });
 
-});
+function cancelarEdicion() {
+        $('#recomendaciones').attr("disabled", "disabled");
+        $('#situacion').attr("disabled", "disabled");
+        $('#ciclo').attr("disabled", "disabled");
+        $('#lugar-atencion').attr("disabled", "disabled");
+        $('#fecha').attr("disabled", "disabled");
+        $('#motivo').attr("disabled", "disabled");
+        $('#cancelar-edicion').hide();
+        $('#habilitar-edicion').show();
+        $('#terminar-edicion').hide();
+}
 
 $('#cancelar-edicion').on('click', function () {
-    $('#recomendaciones').attr("disabled", "disabled");
-    $('#situacion').attr("disabled", "disabled");
-    $('#ciclo').attr("disabled", "disabled");
-    $('#lugar-atencion').attr("disabled", "disabled");
-    $('#fecha').attr("disabled", "disabled");
-    $('#motivo').attr("disabled", "disabled");
-    $('#cancelar-edicion').hide();
-    $('#habilitar-edicion').show();
-    $('#terminar-edicion').hide();
-
+    cancelarEdicion();
 });
 
-
+$('#cerrar-modal-edicion').on('click', function () {
+    cancelarEdicion();
+});
 $('#fechaIni').on('click', function () {
     $('#fecha-inicio').removeAttr('value');
 });

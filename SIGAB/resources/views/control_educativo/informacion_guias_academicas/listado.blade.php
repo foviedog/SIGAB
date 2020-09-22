@@ -115,7 +115,7 @@ Listado de Guias Academicas
                     <input type="hidden" name="id-guia-modal" id="id-guia-modal">
 
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-gris" data-dismiss="modal" id="cerrar-modal-edicion">Cerrar</button>
                         <button type="button" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
                     </div>
                 </div>

@@ -23,64 +23,49 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
 @endphp
 
-<div class="card">
-    <div class="card-body">
-                {{-- Formulario general de estudiante --}}
-                <form action="/estudiante/detalle/{estudiante}" method="POST" role="form" enctype="multipart/form-data" >
-                    @csrf
-        <div class="container-fluid">
-            <div class=" d-flex justify-content-between">
-                <div>
-                    <h3 class="texto-gris mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }}
+<form action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
+    @csrf
+    @method('PATCH')
+    <div class="card">
+        <div class="card-body">
+            {{-- Formulario general de estudiante --}}
+            <div class="container-fluid">
+                <div class=" d-flex justify-content-between">
+                    <div>
+                        <h3 class="texto-gris mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }}
+                    </div>
+                    <div>
+                        <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        <button type="button" class="btn btn-rojo" id="editar-estudiante"><i class="fas fa-edit "></i> Editar </button>
+                        <button type="button" class="btn btn-rojo" id="cancelar-edi"><i class="fas fa-close "></i> Cancelar </button>
+                    </div>
                 </div>
-                <div>
-                    <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
-                    <button type="button" class="btn btn-rojo" id="editar-estudiante"><i class="fas fa-edit "></i> Editar </button>
-                    <button type="button" class="btn btn-rojo" id="cancelar-edi"><i class="fas fa-close "></i> Cancelar </button>
-                </div>
-            </div>
-            </h3>
+                </h3>
 
-            <div class="row mb-3">
-                <div class="col-lg-4">
-                    <div class="card mb-3">
-                        <div class="card-body text-center shadow-sm rounded pb-5">
-                            {{-- Foto del estudiante --}}
-                            <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
-                            <div class="mb-3"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
-                            <div class="mb-3"><button id="cambiar-foto" class="btn btn-rojo btn-sm" type="button" data-toggle="modal" data-target="#modalCambiarFoto">Cambiar Foto</button></div>
-                            {{-- Modal para modificar foto --}}
-                            <div class="modal fade" id="modalCambiarFoto" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Cambiar foto de perfil</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{--Form para cambiar la foto de perfil--}}
-                                            <form enctype="multipart/form-data" action="/estudiante/imagen/cambiar" method="POST">
-                                                <input type="file" name="avatar">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="hidden" name="id_estudiante" value="{{ $estudiante->persona->persona_id }}"><br>
-                                                <hr>
-                                                <input type="submit" class="pull-right btn btn-rojo" value="Subir">
-                                            </form>
-                                        </div>
-                                    </div>
+                <div class="row mb-3">
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-body text-center shadow-sm rounded pb-5">
+                                {{-- Foto del estudiante --}}
+
+
+                                <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
+                                <div class="mb-3"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
+                                <div id="cambiar-foto">
+                                    <hr>
+                                    <input type="file" name="avatar" class="border">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="id_estudiante" value="{{ $estudiante->persona->persona_id }}"><br>
                                 </div>
+
                             </div>
                         </div>
-                    </div>
-                    {{-- Tarjeta de información académica del estudiante --}}
-                    <div class="card shadow-sm mb-4 rounded">
-                        <div class="card-header py-3">
-                            <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Información académica</h6>
-                        </div>
-                        <div class="card-body pb-5">
-                            <form>
+                        {{-- Tarjeta de información académica del estudiante --}}
+                        <div class="card shadow-sm mb-4 rounded">
+                            <div class="card-header py-3">
+                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Información académica</h6>
+                            </div>
+                            <div class="card-body pb-5">
                                 {{-- Campo: Nota admision --}}
                                 <div class="form-group">
                                     <label for="nota"><strong>Nota de admisión *</strong><br /></label><input id="nota_admision" class="form-control" type="number" placeholder="Nota Admision" name="nota_admision" value="{{  $estudiante->nota_admision }}" disabled />
@@ -121,24 +106,21 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                 </div>
                                 {{-- Campo: Desercion --}}
                                 <div class="form-group">
-                                    <label data-toggle="tooltip" data-placement="left" title="Se ingresa año de deserción si existe" for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="number" placeholder="Deserción" name="anio_desercion" value="{{ $estudiante->anio_desercion ?? 0 }}"  disabled />
+                                    <label data-toggle="tooltip" data-placement="left" title="Se ingresa año de deserción si existe" for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" type="number" placeholder="Deserción" name="anio_desercion" value="{{ $estudiante->anio_desercion ?? 0 }}" disabled />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-8">
+                    <div class="col-lg-8  col-sm-12">
 
-                    <div class="row">
-                        <div class="col">
-                            {{-- Tarjeta de Informacion de contacto del estudiante --}}
-                            <div class="card shadow-sm mb-3 rounded pb-2">
-                                <div class="card-header py-3">
-                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Contacto</p>
-                                </div>
-                                <div class="card-body">
-                                    <form>
-
+                        <div class=" row">
+                            <div class="col">
+                                {{-- Tarjeta de Informacion de contacto del estudiante --}}
+                                <div class="card shadow-sm mb-3 rounded pb-2">
+                                    <div class="card-header py-3">
+                                        <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Contacto</p>
+                                    </div>
+                                    <div class="card-body">
                                         <div class="form-row">
                                             {{-- Campo: Nombre estudiante --}}
                                             <div class="col">
@@ -150,7 +132,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="apellido"><strong>Apellidos *</strong></label>
-                                                    <input type="text" class="form-control " name="apellido" placeholder="Apellido" value="{{ $estudiante->persona->apellido }}" disabled/> </input>
+                                                    <input type="text" class="form-control " name="apellido" placeholder="Apellido" value="{{ $estudiante->persona->apellido }}" disabled /> </input>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,27 +164,25 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
-                            {{-- Tarjeta de informacion adicional del estudiante --}}
-                            <div class="card shadow-sm pb-5">
-                                <div class="card-header py-3">
-                                    <p class="texto-rojo-medio m-0 font-weight-bold ">Información Adicional</p>
-                                </div>
-                                <div class="card-body pb-5">
-                                    <form>
+                                {{-- Tarjeta de informacion adicional del estudiante --}}
+                                <div class="card shadow-sm pb-5">
+                                    <div class="card-header py-3">
+                                        <p class="texto-rojo-medio m-0 font-weight-bold ">Información Adicional</p>
+                                    </div>
+                                    <div class="card-body pb-5">
                                         {{-- Campo: Direccion Residencia --}}
                                         <div class="form-group">
                                             <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante fuera del tiempo lectivo" for="DireccionResidencia"><strong>Dirección Residencia *</strong><br /></label>
-                                            <textarea  class="form-control" type="text" placeholder="Direccion" name="direccion_residencia" disabled />{{ $estudiante->persona->direccion_residencia }} </textarea>
+                                            <textarea class="form-control" type="text" placeholder="Direccion" name="direccion_residencia" disabled />{{ $estudiante->persona->direccion_residencia }} </textarea>
                                         </div>
 
                                         {{-- Campo: Direccion tiempo lectivo --}}
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante durante el tiempo lectivo"  for="DireccionLectivo"><strong>Dirección Tiempo Lectivo *</strong><br /></label>
+                                                    <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante durante el tiempo lectivo" for="DireccionLectivo"><strong>Dirección Tiempo Lectivo *</strong><br /></label>
                                                     <textarea class="form-control" type="text" placeholder="Direccion" name="direccion_lectivo" disabled /> {{ $estudiante->direccion_lectivo }} </textarea>
                                                 </div>
                                             </div>
@@ -237,7 +217,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- Cantidad de hijos --}}
+                                            {{-- Cantidad de hijos  --}}
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label data-toggle="tooltip" data-placement="left" title="Ingresar 0 en caso de no tener hijos" for="hijos"><strong>Hijos *</strong><br /></label><input class="form-control" type="number" placeholder="Hijos" name="cant_hijos" value="{{ $estudiante->cant_hijos }}" disabled />
@@ -272,12 +252,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 <label for="residencia"><strong>Residencias UNA *</strong><br /></label>
                                                 <div class="d-flex justify-content-start pb-4">
                                                     {{-- Segmento PHP que valida si se registro con residencia --}}
-                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="1" name="residencias_UNA"
-                                                        <?php if( $estudiante->residencias_UNA == "1" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-2">Si</label>
+                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="1" name="residencias_UNA" <?php if( $estudiante->residencias_UNA == "1" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-2">Si</label>
                                                     </div>
                                                     {{-- Segmento PHP que valida si se registro con residencia --}}
-                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="0" name="residencias_UNA"
-                                                        <?php if( $estudiante->residencias_UNA == "0" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-3">No</label>
+                                                    <div class="form-check px-2 mx-3"><input disabled class="form-check-input" type="radio" value="0" name="residencias_UNA" <?php if( $estudiante->residencias_UNA == "0" ) { ?>checked="checked" <?php } ?><label class="form-check-label" for="formCheck-3">No</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -299,28 +277,33 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Información Laboral</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button" value="Ver trabajo">Ver trabajo</a>
+                                                        <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button">Ver trabajo</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group text-center mt-4">
+                                                    <label for="city"><strong>Titulaciones</strong><br /></label>
+                                                    <div class="w-100 d-flex justify-content-center">
+                                                        <a href="{{ route('graduado.show',$estudiante->persona->persona_id ) }}" class="btn btn-rojo" type="button">Ver graduaciones</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}"><br>
+                    <button id="guardar-cambios" type="submit" class="btn btn-rojo">Guardar cambios</button>
+                </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}"><br>
-                <button id="guardar-cambios" type="submit" class="btn btn-rojo">Guardar cambios</button>
-            </div>
-
         </div>
-    </form>
     </div>
-</div>
-
+</form>
 @endsection
 
 @section('pie')

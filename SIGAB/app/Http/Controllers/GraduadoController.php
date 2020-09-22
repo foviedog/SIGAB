@@ -37,6 +37,7 @@ class GraduadoController extends Controller
             $graduado->grado_academico = $request->grado_academico;
             $graduado->carrera_cursada = $request->carrera_cursada;
             $graduado->anio_graduacion = $request->anio_graduacion;
+
             //se guarda el objeto en la base de datos
             $graduado->save();
 
@@ -61,7 +62,7 @@ class GraduadoController extends Controller
         $itemsPagina = request('itemsPagina', 10);
 
         //Se recibe del request  el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
-        $filtro = request('filtro', NULL);
+        $filtro = request('nombreFiltro', NULL);
 
         //Se recibe del request el valor de anio, y se le asigna a la variable ciclo par realizar el filtro. Si dicho valor no está seteado se pone en NULL
         $anio = request('anio', NULL);
@@ -86,7 +87,7 @@ class GraduadoController extends Controller
         ]);
     }
 
-    public function indexIndividual($id_estudiante)
+    public function show($id_estudiante)
     {
         // Estudiante al que se le quiere añadir una graduación
         $estudiante = Estudiante::findOrFail($id_estudiante);
@@ -115,7 +116,7 @@ class GraduadoController extends Controller
         }
 
         //Se devuelve la vista con los atributos de paginación de los estudiante
-        return view('control_educativo.informacion_estudiantil.informacion_graduados.listado-individual', [
+        return view('control_educativo.informacion_estudiantil.informacion_graduados.show', [
             'estudiante' => $estudiante,       // Estudiante
             'graduaciones' => $graduaciones,   // Graduaciones
             'paginaciones' => $paginaciones,  // Listado de items de paginaciones
@@ -134,14 +135,15 @@ class GraduadoController extends Controller
     }
 
     // Método que actualiza la información de la graduación
-    public function update($id_guia, Request $request)
+    public function update($id_graduacion, Request $request)
     {
-        $guia = Guias_academica::find($id_guia);
+        //Busca la graduación en la base de datos
+        $graduacion = Graduado::find($id_graduacion);
 
         //Al la graduación encontrada se le actualizan los atributos
-        $guia->grado_academico = $request->grado_academico;
-        $guia->carrera_cursada = $request->carrera_cursada;
-        $guia->anio_graduacion = $request->anio_graduacion;
+        $graduacion->grado_academico = $request->grado_academico;
+        $graduacion->carrera_cursada = $request->carrera_cursada;
+        $graduacion->anio_graduacion = $request->anio_graduacion;
 
         //Se guarda en la base de datos
         $graduacion->save();

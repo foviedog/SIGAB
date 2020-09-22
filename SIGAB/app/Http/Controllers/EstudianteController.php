@@ -119,11 +119,11 @@ class EstudianteController extends Controller
 
 
     //Metodo para actualizar los datos del estudiante
-    public function update(Request $request)
+    public function update($id_estudiante, Request $request)
     {
-        $persona = Persona::find($request->persona_id);
+        $persona = Persona::find($id_estudiante);
 
-        $estudiante = Estudiante::find($request->persona_id);
+        $estudiante = Estudiante::find($id_estudiante);
 
         //Datos asociados a la persona
         //$persona->persona_id = $request->cedula;
@@ -157,20 +157,18 @@ class EstudianteController extends Controller
         $estudiante->apoyo_educativo = $request->apoyo_educativo;
         $estudiante->residencias_UNA = $request->residencias;
 
-        $estudiante->save();
+        $this->update_avatar($request, $estudiante);
 
-        dd($estudiante);
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");
     }
 
-    public function update_avatar(Request $request)
+    public function update_avatar($request, $estudiante)
     {
         if ($request->hasFile('avatar')) {
 
             $avatar = $request->file('avatar');
             $archivo = time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->resize(300, 300)->save(public_path('/img/fotos/' . $archivo));
-            $estudiante = Estudiante::findOrFail($request->id_estudiante);
 
             if ($estudiante->persona->imagen_perfil != "default.jpg")
                 File::delete(public_path('/img/fotos/' . $estudiante->persona->imagen_perfil)); //Elimina la foto anterior

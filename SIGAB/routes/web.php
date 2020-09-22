@@ -34,7 +34,7 @@ Auth::routes([
 /* Ruta de detalle del estudiante*/
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
 /* Rutas para editar  y actualizar la informacion del estudiante*/
-Route::post('/estudiante/detalle/{id_estudiante}', 'EstudianteController@update');
+Route::patch('/estudiante/detalle/{id_estudiante}', 'EstudianteController@update')->name('estudiante.update');
 /* Ruta para cambiar imagen del estudiante*/
 Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar');
 
@@ -62,7 +62,7 @@ Route::get('/estudiante/trabajo/obtener/{id_trabajo}', 'TrabajoController@get');
 Route::post('/estudiante/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update');
 
 /* Rutas para informacion de Graduados */
-Route::get('/estudiante/graduacion/{id_estudiante}', 'GraduadoController@indexIndividual')->name('graduado.create');
+Route::get('/estudiante/graduacion/{id_estudiante}', 'GraduadoController@show')->name('graduado.show');
 Route::get('/estudiante/graduacion/registrar/{id_estudiante}', 'GraduadoController@create')->name('graduado.create');
 Route::post('/estudiante/graduacion', 'GraduadoController@store')->name('graduado.store');
 Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@get');
