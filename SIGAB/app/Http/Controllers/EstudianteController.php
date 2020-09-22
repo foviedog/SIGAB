@@ -118,28 +118,48 @@ class EstudianteController extends Controller
     }
 
 
-    //Datos del estudiante a actualizar
-    public function update(Estudiante $estudiante)
+    //Metodo para actualizar los datos del estudiante
+    public function update(Request $request)
     {
+        $persona = Persona::find($request->persona_id);
+
+        $estudiante = Estudiante::find($request->persona_id);
+
         //Datos asociados a la persona
-        $data1 = request()->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'fecha_nacimiento' => 'required',
-            'telefono_fijo' => 'required',
-            'telefono_celular' => 'required',
-            'correo_personal' => 'required',
-            'telefono_fijo' => 'required',
-            'correo_institucional' => 'required',
-            'estado_civil' => 'required',
-            'direccion_residencia' => 'required',
-            'genero' => 'required',
-        ]);
+        //$persona->persona_id = $request->cedula;
+        $persona->nombre = $request->nombre;
+        $persona->apellido = $request->apellido;
+        $persona->fecha_nacimiento = $request->fecha_nacimiento;
+        $persona->telefono_fijo = $request->telefono_fijo;
+        $persona->telefono_celular = $request->telefono_celular;
+        $persona->correo_personal = $request->correo_personal;
+        $persona->correo_institucional = $request->correo_institucional;
+        $persona->estado_civil = $request->estado_civil;
+        $persona->direccion_residencia = $request->direccion_residencia;
+        $persona->genero = $request->genero;
 
-        estudiante()->persona->update(array_merge(
-            $data1
-        ));
+        $persona->save();
+        //Datos asociados al estudiante
+        //$estudiante->persona_id = $request->cedula;
+        $estudiante->direccion_lectivo = $request->direccion_lectivo;
+        $estudiante->cant_hijos = $request->cantidad_hijos;
+        $estudiante->tipo_colegio_procedencia = $request->tipo_colegio_procedencia;
+        $estudiante->condicion_discapacidad = $request->condicion_discapacidad;
+        $estudiante->anio_ingreso_ebdi = $request->anio_ingreso_ebdi;
+        $estudiante->anio_ingreso_UNA = $request->anio_ingreso_una;
+        $estudiante->carrera_matriculada_1 = $request->carrera_matriculada_1;
+        $estudiante->carrera_matriculada_2 = $request->carrera_matriculada_2;
+        $estudiante->anio_graduacion_estimado_1 = $request->anio_gradacion_estimado_1;
+        $estudiante->anio_graduacion_estimado_2 = $request->anio_graduacion_estimado_2;
+        $estudiante->anio_desercion = $request->anio_desercion;
+        $estudiante->tipo_beca = $request->tipo_beca;
+        $estudiante->nota_admision = $request->nota_admision;
+        $estudiante->apoyo_educativo = $request->apoyo_educativo;
+        $estudiante->residencias_UNA = $request->residencias;
 
+        $estudiante->save();
+
+        dd($estudiante);
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");
     }
 

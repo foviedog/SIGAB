@@ -1,6 +1,7 @@
 let flag = true;
 $('[data-toggle="tooltip"]').tooltip();
 
+$('[data-toggle="tooltip"]').tooltip();
 /*$("#letras-SIGAB").html("SIGAB");
 
 $(document).ready(function () {
@@ -27,7 +28,7 @@ $(document).ready(function () {
 });*/
 
 $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
-            $('#sidebar').toggleClass('active');
-        });
+    $("#sidebarCollapse").on("click", function() {
+        $("#sidebar").toggleClass("active");
+    });
 });
