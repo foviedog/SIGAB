@@ -429,10 +429,10 @@ Registrar información del estudiante
                     {{-- Campo: Año de graduacion estimado 1 --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_gradacion_estimado_1">Año de graduación estimado 1: <i class="text-danger">*</i></label>
+                            <label for="anio_graduacion_estimado_1">Año de graduación estimado 1: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_gradacion_estimado_1" name="anio_gradacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)" required>
+                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">

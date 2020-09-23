@@ -44,9 +44,9 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                         {{-- Regresar al listado de estudiantes --}}
                         <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         {{-- Boton que habilita opcion de editar --}}
-                        <button type="button" class="btn btn-rojo" id="editar-estudiante"><i class="fas fa-edit "></i> Editar </button>
+                        <button type="button" id="editar-estudiante" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}
-                        <button type="button" class="btn btn-rojo" id="cancelar-edi"><i class="fas fa-close "></i> Cancelar </button>
+                        <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -57,7 +57,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                 {{-- Foto del estudiante --}}
                                 <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
                                 {{-- Cedula del estudiante --}}
-                                <div class="mb-3"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
+                                <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del estudiante"><i class="fa fa-id-card mr-3 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>{{ $estudiante->persona_id }}</strong></small></div>
                                 <div id="cambiar-foto">
                                     <hr>
                                     <input type="file" name="avatar" class="border">
@@ -74,30 +74,30 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                             <div class="card-body pb-5">
                                 {{-- Campo: Nota admision --}}
                                 <div class="form-group">
-                                    <label for="nota"><strong>Nota de admisión *</strong><br /></label><input id="nota_admision" class="form-control" type="number" placeholder="Nota Admision" name="nota_admision" value="{{  $estudiante->nota_admision }}" required disabled />
+                                    <label for="nota"><strong>Nota de admisión *</strong><br /></label><input type="number" id="nota_admision" name="nota_admision" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" required disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la UNA --}}
                                 <div class="form-group">
-                                    <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la UNA" name="anio_ingreso_una" value="{{ $estudiante->anio_ingreso_UNA }}" required disabled />
+                                    <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input type="date" name="anio_ingreso_una" class="form-control " placeholder="Ingreso a la UNA" value="{{ $estudiante->anio_ingreso_UNA }}" required disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la EBDI --}}
                                 <div class="form-group">
-                                    <label for="anioEBDI"><strong>Año de ingreso a la EBDI *</strong><br /></label><input class="form-control " type="date" placeholder="Ingreso a la EBDI" name="anio_ingreso_ebdi" value="{{ $estudiante->anio_ingreso_ebdi }}" required disabled />
+                                    <label for="anioEBDI"><strong>Año de ingreso a la EBDI *</strong><br /></label><input type="date" name="anio_ingreso_ebdi" class="form-control" placeholder="Ingreso a la EBDI" value="{{ $estudiante->anio_ingreso_ebdi }}" required disabled />
                                 </div>
                                 {{-- Campo: Primera Carrera --}}
                                 <div class="form-group">
                                     <label for="carrera1"><strong>Primera Carrera *</strong><br /></label>
-                                    <input type="text" class="form-control" placeholder="Nombre de primera carrera" name="carrera_matriculada_1" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
+                                    <input type="text" name="carrera_matriculada_1" class="form-control" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
                                 </div>
                                 {{-- Campo: Segunda Carrera --}}
                                 <div class="form-group">
                                     <label for="carrera2" data-toggle="tooltip" data-placement="left" title="Sólo en caso de que existe segunda carrera"><strong>Segunda Carrera</strong><br /></label>
-                                    <input type="text" class="form-control" placeholder="Nombre de carrera" name="carrera_matriculada_2" value="{{ $estudiante->carrera_matriculada_2  }}" disabled /> </input>
+                                    <input type="text" name="carrera_matriculada_2" class="form-control" placeholder="Nombre de carrera" value="{{ $estudiante->carrera_matriculada_2  }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Colegio Procedencia --}}
                                 <div class="form-group">
                                     <label for="colegio"><strong>Tipo de colegio de procedencia</strong><br /></label>
-                                    <select class="form-control" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" required disabled>
+                                    <select id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" class="form-control" required disabled>
                                         @foreach($colegiosProcedencias as $colegioProcedencia)
                                         <option value="{{ $colegioProcedencia }}" @if($colegioProcedencia==$estudiante->tipo_colegio_procedencia) selected @endif> {{ $colegioProcedencia }} </option>
                                         @endforeach
@@ -107,15 +107,15 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 
                                 {{-- Primera Carrera --}}
                                 <div class="form-group">
-                                    <label data-toggle="tooltip" data-placement="left" title="Año estimado de graduación de la primera carrera" for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1 *</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_1" value="{{ $estudiante->anio_graduacion_estimado_1 }}" required disabled />
+                                    <label for="anio_graduacion_estimado_1" data-toggle="tooltip" data-placement="left" title="Año estimado de graduación de la primera carrera"><strong>Año Estimado Graduación 1 *</strong><br /></label><input type="number" name="anio_graduacion_estimado_1" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_1}}" required disabled />
                                 </div>
                                 {{-- Segunda Carrera --}}
                                 <div class="form-group">
-                                    <label data-toggle="tooltip" data-placement="left" title="Año estimado de graduación de la segunda carrera (Si el estudiante tiene)" for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong><br /></label><input class="form-control" type="number" placeholder="Estimado Graduación" name="anio_graduacion_estimado_2" value="{{ $estudiante->anio_graduacion_estimado_2  }}" disabled />
+                                    <label for="anio_graduacion_estimado_2" data-toggle="tooltip" data-placement="left" title="Año estimado de graduación de la segunda carrera (Si el estudiante tiene)"><strong>Año Estimado Graduación 2</strong><br /></label><input type="number" name="anio_graduacion_estimado_2" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_2}}" disabled />
                                 </div>
                                 {{-- Campo: Desercion --}}
                                 <div class="form-group">
-                                    <label data-toggle="tooltip" data-placement="left" title="Se ingresa año de deserción si existe" for="anio_desercion"><strong>Año Deserción</strong><br /></label><input class="form-control" name="anio_desercion" type="number" placeholder="Año de Deserción" value="{{ $estudiante->anio_desercion }}" disabled />
+                                    <label for="anio_desercion" data-toggle="tooltip" data-placement="left" title="Se ingresa año de deserción si existe"><strong>Año Deserción</strong><br /></label><input type="number" name="anio_desercion" class="form-control" placeholder="Año de Deserción" value="{{ $estudiante->anio_desercion }}" disabled />
                                 </div>
                             </div>
                         </div>
@@ -133,14 +133,14 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Campo: Nombre estudiante --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nombre"><strong>Nombre *</strong></label><input id="nombre" class="form-control" type="text" id="nombre" placeholder="Nombre Estudiante" name="nombre" value="{{ $estudiante->persona->nombre }}" required disabled />
+                                                    <label for="nombre"><strong>Nombre *</strong></label><input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" value="{{ $estudiante->persona->nombre }}" required disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Apellidos --}}
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="apellido"><strong>Apellidos *</strong></label>
-                                                    <input class="form-control " type="text" name="apellido" placeholder="Apellidos" value="{{ $estudiante->persona->apellido }}" required disabled /> </input>
+                                                    <input type="text" name="apellido" class="form-control" placeholder="Apellidos" value="{{ $estudiante->persona->apellido }}" required disabled /> </input>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,13 +150,13 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Correo Personal --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_personal"><strong>Correo Personal</strong><br /></label><input class="form-control" placeholder="Correo Personal" type="email" name="correo_personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
+                                                    <label for="correo_personal"><strong>Correo Personal</strong><br /></label><input type="email" name="correo_personal" class="form-control" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_institucional"><strong>Correo Institucional *</strong><br /></label><input class="form-control" type="email" name="correo_institucional" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
+                                                    <label for="correo_institucional"><strong>Correo Institucional *</strong><br /></label><input type="email" name="correo_institucional" class="form-control" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -166,13 +166,13 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Celular --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input class="form-control" type="text" name="telefono_celular" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular  }}" disabled />
+                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input type="text" name="telefono_celular" class="form-control" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular  }}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Telefono Fijo --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input class="form-control" type="text" name="telefono_fijo" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo }}" disabled />
+                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input type="text" name="telefono_fijo" class="form-control" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -186,15 +186,15 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                     <div class="card-body pb-5">
                                         {{-- Campo: Direccion Residencia --}}
                                         <div class="form-group">
-                                            <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante fuera del tiempo lectivo" for="DireccionResidencia"><strong>Dirección Residencia *</strong><br /></label>
-                                            <textarea class="form-control" type="text" placeholder="Direccion de residencia" name="direccion_residencia" required disabled />{{$estudiante->persona->direccion_residencia}} </textarea>
+                                            <label for="DireccionResidencia" data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante fuera del tiempo lectivo"><strong>Dirección Residencia *</strong><br /></label>
+                                            <textarea type="text" name="direccion_residencia" class="form-control" placeholder="Direccion de residencia" required disabled />{{$estudiante->persona->direccion_residencia}}</textarea>
                                         </div>
                                         {{-- Campo: Direccion tiempo lectivo --}}
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label data-toggle="tooltip" data-placement="left" title="Lugar de residencia del estudiante durante el tiempo lectivo" for="DireccionLectivo"><strong>Dirección Tiempo Lectivo *</strong><br /></label>
-                                                    <textarea class="form-control" type="text" placeholder="Direccion de tiempo lectivo" name="direccion_lectivo" required disabled /> {{$estudiante->direccion_lectivo}} </textarea>
+                                                    <textarea type="text" name="direccion_lectivo" class="form-control" placeholder="Direccion de tiempo lectivo" required disabled /> {{$estudiante->direccion_lectivo}} </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -202,14 +202,14 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                         <div class="form-row">
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
-                                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento *</strong><br /></label><input class="form-control" type='date' placeholder="Fecha Nacimiento" name="fecha_nacimiento" value={{$estudiante->persona->fecha_nacimiento}} required disabled />
+                                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento *</strong><br /></label><input type='date' name="fecha_nacimiento" class="form-control" placeholder="Fecha Nacimiento" value={{$estudiante->persona->fecha_nacimiento}} required disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Genero --}}
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
                                                     <label for="genero"><strong>Género *</strong></label>
-                                                    <select class="form-control w-100" id="genero" name="genero" required disabled>
+                                                    <select id="genero" name="genero" class="form-control w-100" required disabled>
                                                         <option value="M" @if( $estudiante->persona->genero == "M" ) option selected @endif>Masculino</option>
                                                         <option value="F" @if( $estudiante->persona->genero == "F" ) option selected @endif>Femenino</option>
                                                         <option value="Otro" @if( $estudiante->persona->genero == "Otro" ) option selected @endif>Otro</option>
@@ -220,7 +220,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
                                                     <label for="estadoCivil"><strong>Estado Civil *</strong></label>
-                                                    <select class="form-control" id="estado_civil" name="estado_civil" required disabled>
+                                                    <select id="estado_civil" name="estado_civil" class="form-control" required disabled>
                                                         @foreach($estadosCiviles as $estadoCivil)
                                                         <option value='{{ $estadoCivil }}' @if ( $estadoCivil==$estudiante->persona->estado_civil) selected @endif> {{ $estadoCivil }}</option>
                                                         @endforeach
@@ -230,7 +230,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Cantidad de hijos (en numero) --}}
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" data-placement="left" title="Ingresar el número de hijos o 0 en caso de no tener" for="cantidad_hijos"><strong>Hijos *</strong><br /></label><input class="form-control" type="number" placeholder="Hijos" name="cantidad_hijos" value="{{ $estudiante->cant_hijos }}" required disabled />
+                                                    <label for="cantidad_hijos" data-toggle="tooltip" data-placement="left" title="Ingresar el número de hijos o 0 en caso de no tener"><strong>Hijos *</strong><br /></label><input type="number" name="cantidad_hijos" class="form-control" placeholder="Hijos" value="{{ $estudiante->cant_hijos }}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -238,8 +238,8 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" data-placement="left" title="Detalle del apoyo educativo recibido por el estudiante o indicar si no ha recibido" for="apoyo_educativo"><strong>Apoyo Educativo</strong><br /></label>
-                                                    <textarea class="form-control" placeholder="Apoyo educativo del estudiante" type="text" name="apoyo_educativo" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
+                                                    <label for="apoyo_educativo" data-toggle="tooltip" data-placement="left" title="Detalle del apoyo educativo recibido por el estudiante o indicar si no ha recibido"><strong>Apoyo Educativo</strong><br /></label>
+                                                    <textarea type="text" name="apoyo_educativo" class="form-control" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,8 +247,8 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Campo: Beca --}}
                                             <div class="col-7 mr-3">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" data-placement="left" title="Se enlistan tipos de becas y otro tipo de ayudas como: Giras o Préstamos Estudiantiles" for="beca"><strong>Beca *</strong></label>
-                                                    <select class="form-control" id="tipo_beca" name="tipo_beca" required disabled>
+                                                    <label for="beca" data-toggle="tooltip" data-placement="left" title="Se enlistan tipos de becas y otro tipo de ayudas como: Giras o Préstamos Estudiantiles"><strong>Beca *</strong></label>
+                                                    <select id="tipo_beca" name="tipo_beca" class="form-control" required disabled>
                                                         @foreach($tiposBecas as $tipoBeca)
                                                         <option value="{{ $tipoBeca }}" @if ($tipoBeca==$estudiante->tipo_beca) selected @endif> {{ $tipoBeca }} </option>
                                                         @endforeach
@@ -260,10 +260,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 <label for="residencias"><strong>Residencias UNA *</strong><br /></label>
                                                 <div class="d-flex justify-content-start pb-4">
                                                     {{-- Segmento que valida si se registro con residencia --}}
-                                                    <div class="form-check px-2 mx-3"><input class="form-check-input" type="radio" value="1" name="residencias" @if( $estudiante->residencias_UNA == "1" ) checked="checked" @endif disabled><label class="form-check-label" for="formCheck-2">Si</label>
+                                                    <div class="form-check px-2 mx-3"><input type="radio" name="residencias" class="form-check-input" value="1" @if( $estudiante->residencias_UNA == "1" ) checked="checked" @endif disabled><label class="form-check-label" for="formCheck-2">Si</label>
                                                     </div>
                                                     {{-- Segmento que valida si se registro sin residencia --}}
-                                                    <div class="form-check px-2 mx-3"><input class="form-check-input" type="radio" value="0" name="residencias" @if( $estudiante->residencias_UNA == "0" ) checked="checked" @endif disabled><label class="form-check-label" for="formCheck-3">No</label>
+                                                    <div class="form-check px-2 mx-3"><input type="radio" name="residencias" class="form-check-input" value="0" @if( $estudiante->residencias_UNA == "0" ) checked="checked" @endif disabled><label class="form-check-label" for="formCheck-3">No</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -272,8 +272,8 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" data-placement="left" title="Ingresar si el estudiante posee alguna discapacidad o no" for="condicion_discapacidad"><strong>Condición Discapacidad</strong><br /></label>
-                                                    <textarea class="form-control" placeholder="Discapacidad del estudiante" type="text" name="condicion_discapacidad" disabled />{{$estudiante->condicion_discapacidad}}</textarea>
+                                                    <label for="condicion_discapacidad" data-toggle="tooltip" data-placement="left" title="Ingresar si el estudiante posee alguna discapacidad o no"><strong>Condición Discapacidad</strong><br /></label>
+                                                    <textarea type="text" name="condicion_discapacidad" class="form-control" placeholder="Discapacidad del estudiante" disabled />{{$estudiante->condicion_discapacidad}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -307,7 +307,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                     {{-- Guarda oculto el ID del estudiante en el detalle --}}
                     <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}"><br>
                     {{-- Boton para enviar los cambios --}}
-                    <button id="guardar-cambios" type="submit" class="btn btn-rojo">Guardar cambios</button>
+                    <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
                 </div>
             </div>
         </div>

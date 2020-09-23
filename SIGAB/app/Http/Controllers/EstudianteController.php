@@ -87,7 +87,7 @@ class EstudianteController extends Controller
             $estudiante->anio_ingreso_UNA = $request->anio_ingreso_una;
             $estudiante->carrera_matriculada_1 = $request->carrera_matriculada_1;
             $estudiante->carrera_matriculada_2 = $request->carrera_matriculada_2;
-            $estudiante->anio_graduacion_estimado_1 = $request->anio_gradacion_estimado_1;
+            $estudiante->anio_graduacion_estimado_1 = $request->anio_graduacion_estimado_1;
             $estudiante->anio_graduacion_estimado_2 = $request->anio_graduacion_estimado_2;
             $estudiante->anio_desercion = $request->anio_desercion;
             $estudiante->tipo_beca = $request->tipo_beca;
@@ -151,7 +151,7 @@ class EstudianteController extends Controller
         $estudiante->anio_ingreso_UNA = $request->anio_ingreso_una;
         $estudiante->carrera_matriculada_1 = $request->carrera_matriculada_1;
         $estudiante->carrera_matriculada_2 = $request->carrera_matriculada_2;
-        $estudiante->anio_graduacion_estimado_1 = $request->anio_gradacion_estimado_1;
+        $estudiante->anio_graduacion_estimado_1 = $request->anio_graduacion_estimado_1;
         $estudiante->anio_graduacion_estimado_2 = $request->anio_graduacion_estimado_2;
         $estudiante->anio_desercion = $request->anio_desercion;
         $estudiante->tipo_beca = $request->tipo_beca;
