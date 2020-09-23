@@ -35,7 +35,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
 
                         {{-- Formulario para actualizar informacion laboral --}}
                         <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
-                        @csrf
+                            @csrf
 
                             <div class="row">
 
@@ -190,6 +190,8 @@ Trabajos de {{ $estudiante->persona->nombre }}
             {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro mb-4">Trabajos de {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
             <div>
+                {{-- Regresar al detalle del estudiante --}}
+                <a href="/estudiante/detalle/{{ $estudiante->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 {{-- //Botón para añadir trabajo --}}
                 <a href="/estudiante/trabajo/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nuevo trabajo &nbsp; <i class="fas fa-plus-circle"></i> </a>
             </div>
@@ -198,9 +200,9 @@ Trabajos de {{ $estudiante->persona->nombre }}
         {{-- Mensaje de exito
             (solo se muestra si ha sido exitoso la edicion) --}}
         @if(Session::has('exito'))
-            <div class="alert alert-success" role="alert">
-                {!! \Session::get('exito') !!}
-            </div>
+        <div class="alert alert-success" role="alert">
+            {!! \Session::get('exito') !!}
+        </div>
         @endif
 
         {{-- Contenedor de la tabla --}}
