@@ -299,6 +299,8 @@ Registrar información del estudiante
                                 <option value="Tecnico">Técnico</option>
                                 <option value="Cientifico">Científico</option>
                                 <option value="Bilingue">Bilingüe</option>
+                                <option value="Nocturno">Nocturno</option>
+                                <option value="Privado">Privado</option>
                             </select>
                         </div>
                     </div>
@@ -306,7 +308,7 @@ Registrar información del estudiante
                     {{-- Campo: Condicion de discapacidad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="condicion_discapacidad">Condición de diacapacidad:</label>
+                            <label for="condicion_discapacidad">Condición de discapacidad:</label>
                         </div>
                         <div class="col-6">
                             <textarea class="form-control w-100" id="condicion_discapacidad" name="condicion_discapacidad" onkeyup="contarCarCondicionDiscapacidad(this)"></textarea>

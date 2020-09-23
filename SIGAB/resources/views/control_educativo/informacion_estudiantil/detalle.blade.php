@@ -17,7 +17,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
 @php
 $estadosCiviles = ['Soltero','Casado','Viudo','Divorciado','Unión libre'];
 $generos = ['Femenino','Masculino','Otro'];
-$colegiosProcedencias = ['Científico','Técnico','Bilingüe','Privado','Liceo','Nocturno'];
+
 $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
 'Beca por participación en actividades artísticas y deportivas','Beca por participación en movimiento estudiantil',
 'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
@@ -91,10 +91,18 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                 {{-- Campo: Colegio Procedencia --}}
                                 <div class="form-group">
                                     <label for="colegio"><strong>Tipo de colegio de procedencia</strong><br /></label>
-                                    <select class="form-control" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" disabled>
-                                        @foreach($colegiosProcedencias as $colegioProcedencia)
+                                    <select class="form-control" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" disabled>
+                                        {{-- @foreach($colegiosProcedencias as $colegioProcedencia)
                                         <option value="{{ $colegioProcedencia }}" @if ($colegioProcedencia==$estudiante->tipo_colegio_procedencia) selected @endif> {{ $colegioProcedencia }} </option>
-                                        @endforeach
+                                        @endforeach --}}
+
+                                        <option value="Liceo" @if( $estudiante->tipo_colegio_procedencia == "Liceo" ) option selected @endif>Liceo</option>
+                                        <option value="Tecnico" @if( $estudiante->tipo_colegio_procedencia == "Tecnico" ) option selected @endif>Técnico</option>
+                                        <option value="Cientifico" @if( $estudiante->tipo_colegio_procedencia == "Cientifico" ) option selected @endif>Científico</option>
+                                        <option value="Bilingue" @if( $estudiante->tipo_colegio_procedencia == "Bilingue" ) option selected @endif>Bilingüe</option>
+                                        <option value="Nocturno" @if( $estudiante->tipo_colegio_procedencia == "Nocturno" ) option selected @endif>Nocturno</option>
+                                        <option value="Privado" @if( $estudiante->tipo_colegio_procedencia == "Privado" ) option selected @endif>Privado</option>
+
                                     </select>
                                 </div>
                                 {{-- Campo: Estimado Graduacion --}}
@@ -200,9 +208,9 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 <div class="form-group">
                                                     <label for="genero"><strong>Género *</strong></label>
                                                     <select disabled class="form-control w-100" id="genero" name="genero" required>
-                                                        <option value="M" <?php if( $estudiante->persona->genero == "M" ) { ?> option selected<?php } ?>>Masculino</option>
-                                                        <option value="F" <?php if( $estudiante->persona->genero == "F" ) { ?> option selected<?php } ?>>Femenino</option>
-                                                        <option value="Otro" <?php if( $estudiante->persona->genero == "Otro" ) { ?> option selected<?php } ?>>Otro</option>
+                                                        <option value="M" @if( $estudiante->persona->genero == "M" ) option selected @endif>Masculino</option>
+                                                        <option value="F" @if( $estudiante->persona->genero == "F" ) option selected @endif>Femenino</option>
+                                                        <option value="Otro" @if( $estudiante->persona->genero == "Otro" ) option selected @endif>Otro</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -210,9 +218,9 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
                                                     <label for="estadoCivil"><strong>Estado Civil *</strong></label>
-                                                    <select class="form-control" id="estado_civil" name="estado_civil" form="estudiante" disabled>
+                                                    <select class="form-control" id="estado_civil" name="estado_civil" disabled>
                                                         @foreach($estadosCiviles as $estadoCivil)
-                                                        <option value="{{ $estadoCivil }}" @if ($estadoCivil==$estudiante->persona->estado_civil) selected @endif> {{ $estadoCivil }} </option>
+                                                        <option value='{{ $estadoCivil }}' @if ( $estadoCivil==$estudiante->persona->estado_civil) selected @endif> {{ $estadoCivil }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -240,7 +248,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <div class="col-7 mr-3">
                                                 <div class="form-group">
                                                     <label data-toggle="tooltip" data-placement="left" title="Se enlistan tipos de becas y otro tipo de ayudas como: Giras o Préstamos Estudiantiles" for="beca"><strong>Beca *</strong></label>
-                                                    <select class="form-control" id="tipo_beca" name="tipo_beca" form="estudiante" disabled>
+                                                    <select class="form-control" id="tipo_beca" name="tipo_beca" disabled>
                                                         @foreach($tiposBecas as $tipoBeca)
                                                         <option value="{{ $tipoBeca }}" @if ($tipoBeca==$estudiante->tipo_beca) selected @endif> {{ $tipoBeca }} </option>
                                                         @endforeach
