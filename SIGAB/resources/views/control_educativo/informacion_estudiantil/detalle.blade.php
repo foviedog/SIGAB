@@ -36,7 +36,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                     </div>
                     <div>
                         <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
-                        <button type="button" class="btn btn-rojo" id="editar-estudiante"><i class="fas fa-edit "></i> Editar </button>
+                        <button type="button" class="btn btn-rojo" id="editar-estudiante"><i class="fas f-edit "></i> Editar </button>
                         <button type="button" class="btn btn-rojo" id="cancelar-edi"><i class="fas fa-close "></i> Cancelar </button>
                     </div>
                 </div>

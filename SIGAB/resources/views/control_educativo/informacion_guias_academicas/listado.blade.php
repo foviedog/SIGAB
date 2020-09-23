@@ -30,7 +30,7 @@ Listado de Guias Academicas
                         </div>
                         <div class="form-group">
                             <label for="id-estudiante" class="col-form-label">Cédula del estudiante:</label>
-                            <input type="text" class="form-control" name="cedula" id="id-estudiante">
+                            <input type="text" class="form-control" name="cedula" id="id-estudiante" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -42,7 +42,7 @@ Listado de Guias Academicas
         </div>
 
         {{-- MODAL para ver el detalle de una guía académica--}}
-        <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledby="detalle-guia-modal" aria-hidden="true">
+        <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledby="detalle-guia-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -69,45 +69,48 @@ Listado de Guias Academicas
                             </div>
                         </div>
 
-
+                        <div class="alert alert-danger text-center font-weight-bold" role="alert" id="rellenar-campos-modificar">
+                            Todos los campos son necesarios.
+                        </div>
                         <form action="" method="post" id="form-actualizar">
                             @csrf
                             @method('PATCH')
                             <div class="row">
+
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="motivo" class="col-form-label">Motivo:</label>
-                                        <input type="text" class="form-control" id="motivo" name="motivo" disabled>
+                                        <label for="motivo" class="col-form-label">Motivo &nbsp;<i class="text-danger">*</i></label>
+                                        <input type="text" class="form-control" id="motivo" name="motivo" disabled required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="fecha" class="col-form-label">Fecha:</label>
-                                        <input type="text" class="form-control" id="fecha" name="fecha" disabled>
+                                        <label for="fecha" class="col-form-label">Fecha &nbsp;<i class="text-danger">*</i></label>
+                                        <input type="date" class="form-control" id="fecha" name="fecha" disabled required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="ciclo" class="col-form-label">Ciclo lectivo:</label>
-                                        <input type="text" class="form-control" id="ciclo" name="ciclo" disabled>
+                                        <label for="ciclo" class="col-form-label">Ciclo lectivo &nbsp;<i class="text-danger">*</i></label>
+                                        <input type="text" class="form-control" id="ciclo" name="ciclo" disabled required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="lugar-atencion" class="col-form-label">Lugar de atención:</label>
-                                        <input type="text" class="form-control" id="lugar-atencion" name="lugar" disabled>
+                                        <label for="lugar-atencion" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i></label>
+                                        <input type="text" class="form-control" id="lugar-atencion" name="lugar" disabled required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="situacion" class="col-form-label">Situación:</label>
-                                <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled></textarea>
+                                <label for="situacion" class="col-form-label">Situación &nbsp;<i class="text-danger">*</i></label>
+                                <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled required></textarea>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label" for="recomendaciones">Recomendaciones:</label>
-                                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled>
+                                <label class="col-form-label" for="recomendaciones">Recomendaciones &nbsp;<i class="text-danger">*</i></label>
+                                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled required>
                         </textarea>
                             </div>
                         </form>
@@ -138,7 +141,7 @@ Listado de Guias Academicas
         <div class="card shadow">
             <div class="card-header py-3">
                 {{-- //Título de la tabla --}}
-                <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de estudiantes </p>
+                <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de guías académicas</p>
             </div>
 
 

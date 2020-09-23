@@ -38,9 +38,9 @@ class GuiasAcademicaController extends Controller
             $guia->persona_id = $request->persona_id;
             $guia->motivo = $request->motivo;
             $guia->fecha = $request->fecha;
-            $guia->ciclo_lectivo = $request->ciclo_lectivo;
+            $guia->ciclo_lectivo = $request->ciclo;
             $guia->situacion = $request->situacion;
-            $guia->lugar_atencion = $request->lugar_atencion;
+            $guia->lugar_atencion = $request->lugar;
             $guia->recomendaciones = $request->recomendaciones;
             //se guarda el objeto en la base de datos
             $guia->save();
