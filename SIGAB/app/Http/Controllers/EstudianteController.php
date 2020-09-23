@@ -87,7 +87,7 @@ class EstudianteController extends Controller
             $estudiante->anio_ingreso_UNA = $request->anio_ingreso_una;
             $estudiante->carrera_matriculada_1 = $request->carrera_matriculada_1;
             $estudiante->carrera_matriculada_2 = $request->carrera_matriculada_2;
-            $estudiante->anio_graduacion_estimado_1 = $request->anio_gradacion_estimado_1;
+            $estudiante->anio_graduacion_estimado_1 = $request->anio_graduacion_estimado_1;
             $estudiante->anio_graduacion_estimado_2 = $request->anio_graduacion_estimado_2;
             $estudiante->anio_desercion = $request->anio_desercion;
             $estudiante->tipo_beca = $request->tipo_beca;
@@ -121,12 +121,13 @@ class EstudianteController extends Controller
     //Metodo para actualizar los datos del estudiante
     public function update($id_estudiante, Request $request)
     {
+        //Se obtiene la persona en base al ID
         $persona = Persona::find($id_estudiante);
 
+        //Se obtiene el estudiante que contiene ese ID
         $estudiante = Estudiante::find($id_estudiante);
 
-        //Datos asociados a la persona
-        //$persona->persona_id = $request->cedula;
+        // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
         $persona->nombre = $request->nombre;
         $persona->apellido = $request->apellido;
         $persona->fecha_nacimiento = $request->fecha_nacimiento;
@@ -138,9 +139,10 @@ class EstudianteController extends Controller
         $persona->direccion_residencia = $request->direccion_residencia;
         $persona->genero = $request->genero;
 
+        //Se guardan los datos de la persona
         $persona->save();
-        //Datos asociados al estudiante
-        //$estudiante->persona_id = $request->cedula;
+
+        //Datos asociados al estudiante (no incluye el ID ya que no debería ser posible editarlo)
         $estudiante->direccion_lectivo = $request->direccion_lectivo;
         $estudiante->cant_hijos = $request->cantidad_hijos;
         $estudiante->tipo_colegio_procedencia = $request->tipo_colegio_procedencia;
@@ -149,7 +151,7 @@ class EstudianteController extends Controller
         $estudiante->anio_ingreso_UNA = $request->anio_ingreso_una;
         $estudiante->carrera_matriculada_1 = $request->carrera_matriculada_1;
         $estudiante->carrera_matriculada_2 = $request->carrera_matriculada_2;
-        $estudiante->anio_graduacion_estimado_1 = $request->anio_gradacion_estimado_1;
+        $estudiante->anio_graduacion_estimado_1 = $request->anio_graduacion_estimado_1;
         $estudiante->anio_graduacion_estimado_2 = $request->anio_graduacion_estimado_2;
         $estudiante->anio_desercion = $request->anio_desercion;
         $estudiante->tipo_beca = $request->tipo_beca;
@@ -157,8 +159,12 @@ class EstudianteController extends Controller
         $estudiante->apoyo_educativo = $request->apoyo_educativo;
         $estudiante->residencias_UNA = $request->residencias;
 
+        //Se guardan los datos del estudiante
+        $estudiante->save();
+        //Llamado al método que actualiza la foto de perfil
         $this->update_avatar($request, $estudiante);
 
+        //Se retorna el detalle del estudiante ya modificado
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");
     }
 

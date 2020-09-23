@@ -299,6 +299,8 @@ Registrar información del estudiante
                                 <option value="Tecnico">Técnico</option>
                                 <option value="Cientifico">Científico</option>
                                 <option value="Bilingue">Bilingüe</option>
+                                <option value="Nocturno">Nocturno</option>
+                                <option value="Privado">Privado</option>
                             </select>
                         </div>
                     </div>
@@ -306,7 +308,7 @@ Registrar información del estudiante
                     {{-- Campo: Condicion de discapacidad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="condicion_discapacidad">Condición de diacapacidad:</label>
+                            <label for="condicion_discapacidad">Condición de discapacidad:</label>
                         </div>
                         <div class="col-6">
                             <textarea class="form-control w-100" id="condicion_discapacidad" name="condicion_discapacidad" onkeyup="contarCarCondicionDiscapacidad(this)"></textarea>
@@ -427,10 +429,10 @@ Registrar información del estudiante
                     {{-- Campo: Año de graduacion estimado 1 --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_gradacion_estimado_1">Año de graduación estimado 1: <i class="text-danger">*</i></label>
+                            <label for="anio_graduacion_estimado_1">Año de graduación estimado 1: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_gradacion_estimado_1" name="anio_gradacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)" required>
+                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">

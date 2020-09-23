@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Listado de Guias Academicas
+Listado de Guías Académicas
 @endsection
 
 @section('css')
