@@ -1,6 +1,7 @@
 $('#no-existe-estudiante').hide();
 $('#cancelar-edicion').hide();
 $('#terminar-edicion').hide();
+$("#rellenar-campos-modificar").hide();
 
 $('#detalle-guia-modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
@@ -25,7 +26,7 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
                 $('#recomendaciones').val(response.recomendaciones);
 
                 let src = fotosURL+"/"+response.imagen_perfil;
-                $('#imagen-modal').attr('src',src);{{  }}{{  }}
+                $('#imagen-modal').attr('src',src);
 
             }
         }
@@ -34,8 +35,13 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
 });
 
 $('#crear-guia-modal').on('click', function (event) {
-    var id = $('#id-estudiante').val(); // Obtiene el valor digitado en el input de cédula
-
+    var id = $('#id-estudiante').val(); // Obtiene el valor digitado en el input de cédu
+    if (id === '') {
+        $("#no-existe-estudiante").html("Por favor digite una cédula.");
+        $("#no-existe-estudiante").fadeTo(2000, 500).slideUp(500, function () {
+            $("#no-existe-estudiante").slideUp(500);
+        });
+    } else {
     $.ajax({
         url: "/estudiante/guia-academica/registrar/" + id,
         type: "GET",
@@ -44,23 +50,49 @@ $('#crear-guia-modal').on('click', function (event) {
         },
         statusCode: {
             404: function () {
-                $("#no-existe-estudiante").fadeTo(1000, 500).slideUp(500, function () {
+                $("#no-existe-estudiante").html("El estudiante no existe.");
+                $("#no-existe-estudiante").fadeTo(2000, 500).slideUp(500, function () {
                     $("#no-existe-estudiante").slideUp(500);
                 });
             },
-            503: function() {
-                // Service Unavailable (503)
-                // This code will be executed if the server returns a 503 response
-            }
         }
     });
+}
 });
 
 $('#terminar-edicion').on('click', function () {
-    let id_graduacion = $('#id-guia-modal').val();
-    $('#form-actualizar').attr('action', '/estudiante/guia-academica/actualizar/' + id_graduacion);
-    $('#form-actualizar').trigger("submit");
+    if (validarEdicion()) {
+        let id_graduacion = $('#id-guia-modal').val();
+        $('#form-actualizar').attr('action', '/estudiante/guia-academica/actualizar/' + id_graduacion);
+        $('#form-actualizar').trigger("submit");
+    } else {
+        $("#rellenar-campos-modificar").fadeTo(2000, 500).slideUp(500, function () {
+            $("#rellenar-campos-modificar").slideUp(500);
+        });
+    }
+
 });
+function validarEdicion() {
+    if ($('#lugar-atencion').val() === '') {
+        return false;
+    }
+    if ($('#fecha').val() === '') {
+        return false;
+    }
+    if ($('#motivo').val() === '') {
+        return false;
+    }
+    if ($('#ciclo').val() === '') {
+        return false;
+    }
+    if ($('#situacion').val() === '') {
+        return false;
+    }
+    if ($('#recomendaciones').val() === '') {
+        return false;
+    }
+    return true;
+}
 
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
