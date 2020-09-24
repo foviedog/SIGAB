@@ -72,7 +72,7 @@ Registrar información del estudiante
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a href="/estudiante/detalle/{{ $cedula }}">Ver detalle</a>
+                        <a href="/estudiante/detalle/{{ $cedula }}">Editar</a>
                         <br>
 
                     </div>
@@ -220,10 +220,11 @@ Registrar información del estudiante
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="estado_civil" name="estado_civil" form="estudiante" required>
-                                <option value="Soltero">Soltero</option>
-                                <option value="Casado">Casado</option>
-                                <option value="Viudo">Viudo</option>
-                                <option value="Divorciado">Divorciado</option>
+                                <option value="Soltero(a)">Soltero(a)</option>
+                                <option value="Casado(a)">Casado(a)</option>
+                                <option value="Viudo(a)">Viudo(a)</option>
+                                <option value="Divorciado(a)">Divorciado(a)</option>
+                                <option value="Unión libre">Unión libre</option>
                             </select>
                         </div>
                     </div>
@@ -276,7 +277,7 @@ Registrar información del estudiante
                             <label for="cantidad_hijos">Cantidad hijos: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='number' max="99" class="form-control w-100" id="cantidad_hijos" name="cantidad_hijos" onkeyup="contarCarCantidadHijos(this)" required>
+                            <input type='number' min="0" max="99" class="form-control w-100" id="cantidad_hijos" name="cantidad_hijos" onkeyup="contarCarCantidadHijos(this)" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="En caso de no tener hijos, se debe ingresar un 0"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -296,9 +297,9 @@ Registrar información del estudiante
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" required>
                                 <option value="Liceo">Liceo</option>
-                                <option value="Tecnico">Técnico</option>
-                                <option value="Cientifico">Científico</option>
-                                <option value="Bilingue">Bilingüe</option>
+                                <option value="Técnico">Técnico</option>
+                                <option value="Científico">Científico</option>
+                                <option value="Bilingüe">Bilingüe</option>
                                 <option value="Nocturno">Nocturno</option>
                                 <option value="Privado">Privado</option>
                             </select>
@@ -353,7 +354,7 @@ Registrar información del estudiante
                             <label for="anio_desercion">Año de deserción:</label>
                         </div>
                         <div class="col-6">
-                            <input type='number' max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCarAnioDesercion(this)">
+                            <input type='number' min="0" max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCarAnioDesercion(this)">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que desertó de la carrera, si no lo ha hecho, se debe dejar el espacio vacio"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -390,7 +391,7 @@ Registrar información del estudiante
                             <label for="nota_admision">Nota de admisión: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='number' class="form-control w-100" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCarNotaAdmision(this)" required>
+                            <input type='number' class="form-control w-100" min="0" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCarNotaAdmision(this)" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Nota de admision especifico para la Universidad Nacional"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
