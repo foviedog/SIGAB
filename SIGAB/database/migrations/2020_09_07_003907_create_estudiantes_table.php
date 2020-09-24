@@ -16,19 +16,19 @@ class CreateEstudiantesTable extends Migration
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->string('persona_id', 15)->primary();
             $table->foreign('persona_id')->references('persona_id')->on('personas');
-            $table->string('direccion_lectivo', 250);
-            $table->integer('cant_hijos');
-            $table->string('tipo_colegio_procedencia', 13); /* verificar la cantidad de caracteres */
+            $table->string('direccion_lectivo', 250)->nullable();
+            $table->integer('cant_hijos')->nullable();
+            $table->string('tipo_colegio_procedencia', 13)->nullable(); /* verificar la cantidad de caracteres */
             $table->string('condicion_discapacidad', 250)->nullable();
-            $table->date('anio_ingreso_ebdi');
-            $table->date('anio_ingreso_UNA');
-            $table->string('carrera_matriculada_1', 45);
+            $table->date('anio_ingreso_ebdi')->nullable();
+            $table->date('anio_ingreso_UNA')->nullable();
+            $table->string('carrera_matriculada_1', 45)->nullable();
             $table->string('carrera_matriculada_2', 45)->nullable();
-            $table->integer('anio_graduacion_estimado_1');
+            $table->integer('anio_graduacion_estimado_1')->nullable();
             $table->integer('anio_graduacion_estimado_2')->nullable();
-            $table->integer('anio_desercion')->nullable(); /* verificar tipo de dato */
-            $table->string('tipo_beca', 70)->nullable();
-            $table->double('nota_admision');
+            $table->integer('anio_desercion')->nullable()->nullable(); /* verificar tipo de dato */
+            $table->string('tipo_beca', 70)->nullable()->nullable();
+            $table->double('nota_admision')->nullable();
             $table->string('apoyo_educativo', 150)->nullable();
             $table->integer('residencias_UNA')->nullable();
             $table->timestamps();
