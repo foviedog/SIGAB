@@ -12,7 +12,7 @@ Listado Estudiantil
 
 @section('contenido') <div class="card">
     @php
-    $anios =array();
+    $anios = array();
 
     for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios,$anio) ; } @endphp <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
@@ -48,7 +48,7 @@ Listado Estudiantil
                         </div>
                         <div class="col-md-8 d-flex justify-content-end">
                             <div class=" mx-3 w-25">
-                                <label for="anio" class="ml-3"> &nbsp; Año graduacion: </label>
+                                <label for="anio" class="ml-3"> &nbsp; Año de graduación: </label>
                                 <div class="d-flex align-items-center">
                                     {{-- Select con la cantidad de items por páginas--}}
                                     <i class="far fa-question-circle fa-lg" data-toggle="tooltip" data-placement="bottom" title="Ver estudiantes graduados en un año determinado"></i>
@@ -65,7 +65,7 @@ Listado Estudiantil
                             <div class="d-flex justify-content-end w-25">
                                 <div class="text-md-right dataTables_filter d-flex align-items-end">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre,apellido o cedula"><i class="far fa-question-circle fa-lg mb-2"></i></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg mb-2"></i></span>
                                     &nbsp;&nbsp;<input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
@@ -126,10 +126,10 @@ Listado Estudiantil
                                 <td><strong>N° de Cédula<br /></strong></td>
                                 <td><strong>Nombre<strong></td>
                                 <td><strong>Carrera (Principal) matriculada<br /></strong></td>
-                                <td><strong>Telefono Celular</strong><br /></td>
+                                <td><strong>Teléfono celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>
-                                <td><strong>Guia académica<br /></strong></td>
+                                <td><strong>Guía académica<br /></strong></td>
                             </tr>
                         </tfoot>
                     </table>

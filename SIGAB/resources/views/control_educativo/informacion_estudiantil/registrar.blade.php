@@ -237,7 +237,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCarDireccionResidencia(this)" required></textarea>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Direccion del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_direccion_residencia"></span>
                         </div>
@@ -265,7 +265,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCarDireccionLectivo(this)" required></textarea>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Direccion del domicilio o apartamento en el que reside durante los ciclos lectivos"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio o apartamento en el que reside durante los ciclos lectivos"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_direccion_lectivo"></span>
                         </div>
@@ -279,7 +279,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='number' min="0" max="99" class="form-control w-100" id="cantidad_hijos" name="cantidad_hijos" onkeyup="contarCarCantidadHijos(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="En caso de no tener hijos, se debe ingresar un 0"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="En caso de no tener hijos se debe ingresar un 0"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_cantidad_hijos"></span>
                         </div>
@@ -314,7 +314,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <textarea class="form-control w-100" id="condicion_discapacidad" name="condicion_discapacidad" onkeyup="contarCarCondicionDiscapacidad(this)"></textarea>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Se debe especificar la condicion que posee, o de no tener, se debe dejar vacio"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Se debe especificar la condición que posee, o de no tener, se debe dejar vacío"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_condicion_discapacidad"></span>
                         </div>
@@ -328,7 +328,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCarAnioIngresoEbdi(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingreso a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_ingreso_ebdi"></span>
                         </div>
@@ -342,7 +342,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCarAnioIngresoUna(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingreso a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_ingreso_una"></span>
                         </div>
@@ -356,7 +356,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='number' min="0" max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCarAnioDesercion(this)">
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que desertó de la carrera, si no lo ha hecho, se debe dejar el espacio vacio"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que desertó de la carrera, si no lo ha hecho, se debe dejar el espacio vacío"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_desercion"></span>
                         </div>
@@ -393,7 +393,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='number' class="form-control w-100" min="0" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCarNotaAdmision(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Nota de admision especifico para la Universidad Nacional"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Nota de admisión especifíco para la Universidad Nacional"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_admision"></span>
                         </div>
@@ -480,7 +480,7 @@ Registrar información del estudiante
                                 <label class="form-check-label pr-5" for="residencias1"> No </label>
 
                                 <input class="form-check-input" type="radio" name="residencias" id="residencias2" value="1">
-                                <label class="form-check-label" for="residencias2"> Si </label>
+                                <label class="form-check-label" for="residencias2"> Sí </label>
                             </div>
                         </div>
                     </div>

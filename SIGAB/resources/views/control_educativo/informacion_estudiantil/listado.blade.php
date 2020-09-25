@@ -49,7 +49,7 @@ Listado Estudiantil
                             <div class="d-flex justify-content-end w-50">
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre,apellido o cedula"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
                                     &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ Listado Estudiantil
                                 <td><strong>N° de Cédula<br /></strong></td>
                                 <td><strong>Nombre<strong></td>
                                 <td><strong>Carrera (Principal) matriculada<br /></strong></td>
-                                <td><strong>Telefono Celular</strong><br /></td>
+                                <td><strong>Teléfono Celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>
                                 <td><strong>Guia académica<br /></strong></td>

@@ -115,7 +115,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                 {{-- Segunda Carrera --}}
                                 <div class="form-group">
                                     <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Año estimado de graduación de la segunda carrera (Si el estudiante tiene)"><i class="far fa-question-circle fa-lg"></i></span><br />
+                                    <span data-toggle="tooltip" data-placement="right" title="Año estimado de graduación de la segunda carrera (en el caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span><br />
                                     <input type="number" name="anio_graduacion_estimado_2" min="1975" max="9999" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_2}}" disabled />
                                 </div>
                                 {{-- Campo: Desercion --}}
@@ -140,13 +140,13 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Campo: Nombre estudiante --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nombre"><strong>Nombre<i class="text-danger">* </i> </strong></label><input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" value="{{ $estudiante->persona->nombre }}" required disabled />
+                                                    <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label><input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" value="{{ $estudiante->persona->nombre }}" required disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Apellidos --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="apellido"><strong>Apellidos<i class="text-danger">* </i> </strong></label>
+                                                    <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
                                                     <input type="text" name="apellido" class="form-control" placeholder="Apellidos" value="{{ $estudiante->persona->apellido }}" required disabled /> </input>
                                                 </div>
                                             </div>
