@@ -92,6 +92,12 @@ Listado Estudiantil
                             </tr>
                         </thead>
                         <tbody>
+                            {{-- Si no vienen registros --}}
+                            @if(count($graduaciones) == 0)
+                            <tr class="cursor-pointer">
+                                <td colspan="7" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                            </tr>
+                            @endif
                             {{-- Inserción iterativa de los graduados dentro de la tabla --}}
                             @foreach($graduados as $graduado)
                             <tr id="graduado" class="cursor-pointer">
@@ -139,7 +145,7 @@ Listado Estudiantil
                     <div class="col-md-5 align-self-center">
                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $graduados->perPage() }} de {{ $graduados->total() }}</p>
                     </div>
-                    {{-- Items de paginación --}}
+                {{      }}{{-- Items de paginación --}}
                     <div class="col-md-5 ml-5">
                         {{ $graduados->withQueryString()->links() }}
                     </div>

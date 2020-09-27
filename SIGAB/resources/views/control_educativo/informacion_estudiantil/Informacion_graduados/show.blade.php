@@ -110,6 +110,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                         </thead>
                         <tbody>
+                    {{-- Si no vienen registros --}}
                             @if(count($graduaciones))
                             {{-- Inserción iterativa de las graduaciones dentro de la tabla --}}
                             @foreach($graduaciones as $graduacion)
@@ -127,9 +128,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                             @endforeach
                             @else
-                            <td>
-                                No existen registros aún
-                            </td>
+                                <tr class="cursor-pointer">
+                                    <td colspan="4" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                </tr
                             @endif
                         </tbody>
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
@@ -142,7 +143,11 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                         </tfoot>
                     </table>
+                    <div>
+                        <span class="ml-2"> Total de registros: <span class="font-weight-bold">{{ count($graduaciones) }}</span></span>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

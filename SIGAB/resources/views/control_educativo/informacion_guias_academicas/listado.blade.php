@@ -18,6 +18,7 @@ Listado de Guías Académicas
             <div class="modal-dialog  modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+
                         <h5 class="modal-title" id="agregar-guia-modal"><strong>Añadir Guía Académica</strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -132,6 +133,8 @@ Listado de Guías Académicas
             <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Académicas</h2>
             <div>
                 {{-- //Botón para añadir estudainte --}}
+                 {{-- Regresar al listado de estudiantes --}}
+                 <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
                 <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
                     Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
                 </button>
@@ -208,6 +211,11 @@ Listado de Guías Académicas
                         </thead>
                         <tbody>
                             {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
+                            @if(count($guias) == 0)
+                            <tr class="cursor-pointer">
+                                <td colspan="7" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                            </tr>
+                            @endif
                             @foreach($guias as $guia)
                             <tr class="cursor-pointer">
                                 <td>{{ $guia->persona_id }}</td>
@@ -243,7 +251,7 @@ Listado de Guías Académicas
                 <div class="row">
                     {{-- Información general de los items por página y el total de resultados --}}
                     <div class="col-md-6 align-self-center">
-                        {{-- <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $estudiantes->perPage() }} de {{ $estudiantes->total() }}</p> --}}
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $guias->perPage() }} de {{ $guias->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}
                     <div class="col-md-6">

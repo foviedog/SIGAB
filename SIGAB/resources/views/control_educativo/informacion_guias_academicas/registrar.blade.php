@@ -70,7 +70,7 @@ Registrar guía académica
             <div class=" d-flex justify-content-center align-items-center border-bottom">
                 <div class=" text-center mb-3">
                     <strong> Cédula:</strong> &nbsp;&nbsp;<span id="cedula"> {{ $estudiante->persona->persona_id }}</span> <br>
-                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre }} </span> <br>
+                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre }} &nbsp; {{ $estudiante->persona->apellido }}</span> <br>
                     <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
                 </div>
             </div>
@@ -87,7 +87,6 @@ Registrar guía académica
                     <div class="form-group">
                         <label for="fecha" class="col-form-label">Fecha &nbsp;<i class="text-danger">*</i></label>
                         <input type="date" class="form-control" id="fecha" name="fecha" required>
-
                     </div>
                 </div>
             </div>
@@ -96,8 +95,8 @@ Registrar guía académica
                     <div class="form-group">
                         <label for="ciclo">Ciclo lectivo <i class="text-danger">*</i></label>
                         <select class="form-control " id="ciclo" name="ciclo" form="estudiante" required>
-                            <option value="Ciclo I, {{ date("Y") }}">Ciclo I, {{ date("Y") }}</option>
-                            <option value="Ciclo II, {{ date("Y") }}">Ciclo II, {{date("Y") }} </option>
+                            <option value="Ciclo I">Ciclo I </option>
+                            <option value="Ciclo II">Ciclo II </option>
                         </select>
                     </div>
                 </div>
@@ -115,9 +114,8 @@ Registrar guía académica
                 <span class="text-muted" id="mostrar_cant_situacion"></span>
             </div>
             <div class="form-group">
-                <label class="col-form-label" for="recomendaciones">Recomendaciones &nbsp;<i class="text-danger">*</i></label>
-                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" required>
-                </textarea>
+                <label class="col-form-label" for="recomendaciones">Recomendaciones </label>
+                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" ></textarea>
                 <span class="text-muted" id="mostrar_cant_recomendaciones"></span>
             </div>
         </div>

@@ -260,9 +260,9 @@ Trabajos de {{ $estudiante->persona->nombre }}
                             </tr>
                             @endforeach
                             @else
-                            <td>
-                                No existen registros aún
-                            </td>
+                            <tr class="cursor-pointer">
+                                <td colspan="4" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                            </tr>
                             @endif
                         </tbody>
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}

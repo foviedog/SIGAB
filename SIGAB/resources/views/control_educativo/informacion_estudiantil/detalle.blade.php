@@ -298,7 +298,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Información Laboral</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button">Ver trabajo</a>
+                                                        <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button">Ver trabajos</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -311,6 +311,15 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col">
+                                                <div class="form-group text-center mt-4">
+                                                    <label for="city"><strong>Guías académicas</strong><br /></label>
+                                                    <div class="w-100 d-flex justify-content-center">
+                                                        <a href="/estudiante/guia-academica/listar?nombreFiltro={{ $estudiante->persona_id }}" class="btn btn-rojo"> Ver guías </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

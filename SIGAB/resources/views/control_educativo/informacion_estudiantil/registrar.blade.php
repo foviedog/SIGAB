@@ -72,7 +72,9 @@ Registrar información del estudiante
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a href="/estudiante/detalle/{{ $cedula }}">Editar</a>
+                        <a clas="btn btn-rojo" href="/estudiante/detalle/{{ $cedula }}">
+                        <input type="button" value="Editar" class="btn btn-rojo">
+                        </a>
                         <br>
 
                     </div>
@@ -260,10 +262,10 @@ Registrar información del estudiante
                     {{-- Campo: Direccion lectivo --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="direccion_lectivo">Dirección en tiempo lectivo: <i class="text-danger">*</i></label>
+                            <label for="direccion_lectivo">Dirección en tiempo lectivo: </label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCarDireccionLectivo(this)" required></textarea>
+                            <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCarDireccionLectivo(this)"></textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio o apartamento en el que reside durante los ciclos lectivos"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -388,10 +390,10 @@ Registrar información del estudiante
                     {{-- Campo: Nota de admision --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="nota_admision">Nota de admisión: <i class="text-danger">*</i></label>
+                            <label for="nota_admision">Nota de admisión: </label>
                         </div>
                         <div class="col-6">
-                            <input type='number' class="form-control w-100" min="0" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCarNotaAdmision(this)" required>
+                            <input type='number' class="form-control w-100" min="0" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCarNotaAdmision(this)">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Nota de admisión especifíco para la Universidad Nacional"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -430,12 +432,12 @@ Registrar información del estudiante
                     {{-- Campo: Año de graduacion estimado 1 --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_graduacion_estimado_1">Año de graduación estimado 1: <i class="text-danger">*</i></label>
+                            <label for="anio_graduacion_estimado_1">Año de graduación estimado 1: </label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)" required>
+                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCarAnioGraduacionEstimado1(this)">
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_graduacion_estimado_1"></span>
                         </div>
@@ -449,7 +451,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" onkeyup="contarCarAnioGraduacionEstimado2(this)">
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera secundaria"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera matriculada 2"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_graduacion_estimado_2"></span>
                         </div>
@@ -463,7 +465,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeyup="contarCarApoyoEducativo(this)"></textarea>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="El tipo de apoyo educativo que posee"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el departamento de orientación y psicología"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_apoyo_educativo"></span>
                         </div>
