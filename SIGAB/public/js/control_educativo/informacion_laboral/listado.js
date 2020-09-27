@@ -1,7 +1,20 @@
+/* Desaparece el mensaje de éxito */
+$("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
+    $("#mensaje-exito").slideUp(500);
+});
+
+/* Botón cancelar y cerrar campos */
+function cancelarEdicion() {
+    $("input").attr('disabled', "disabled");
+    $("textarea").attr('disabled', "disabled");
+    $('#terminar-edicion').hide();
+    $('#cancelar-edicion').hide();
+    $('#habilitar-edicion').show();
+}
+
 /* Variable global que guarda el id del trabajo que se va a
     desplegar al abri el modal */
 let id_trabajo;
-
 
 /* Petición al servidor de la información sobre el trabajo a desplegar
    en el modal */
@@ -66,10 +79,10 @@ function actualizar() {
 /*Contador de caracteres de Nombre de la Organizacion */
 function contarCarNomOrg(val) {
     var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
+    if (len >= 100) {
+        val.value = val.value.substring(0, 100);
     } else {
-        $("#mostrar_cant_nom_org").text(45 - len);
+        $("#mostrar_cant_nom_org").text(100 - len);
     }
 }
 

@@ -13,22 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Ruta principal que lleva al login */
 Route::get('/', function () {
     return view('auth.login');
 });
 
+/* Ruta principal */
 Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+/* Ruta para registrar usuario */
 Route::get('/register', 'RegistroController@index')->name('register');
 Route::post('/registroselper', 'RegistroController@show');
 Route::post('/registro', 'RegistroController@register');
 
+/* Ruta del auth */
 Auth::routes([
     'register' => false, // Desactivado el auth con el registro
-    'reset' => false, // Desactivado el auth con el reset de contrasennas
-    'verify' => false, // Desactivado el auth con la verificacion de email
+    'reset' => false, // Desactivado el auth con el reset de contraseñas
+    'verify' => false, // Desactivado el auth con la verificación de email
 ]);
 
 /* Ruta de detalle del estudiante*/
@@ -44,7 +48,6 @@ Route::get('/estudiantes/graduados/listar', 'GraduadoController@index')->name('g
 
 /* Rutas para informacion de Guias academicas */
 Route::patch('/estudiante/guia-academica/actualizar/{id_guia}', 'GuiasAcademicaController@update')->name('guia-academica.update');
-
 Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@index')->name('guia-academica.listar');
 Route::get('/estudiante/guia-academica/registrar/{id_estudiante}', 'GuiasAcademicaController@create')->name('guia-academica.create');
 Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@show')->name('guia-academica.show');
@@ -56,14 +59,14 @@ Route::post('/estudiante', 'EstudianteController@store');
 
 /* Rutas para informacion laboral */
 Route::get('/estudiante/trabajo/{id_estudiante}', 'TrabajoController@index');
-Route::post('/estudiante/trabajo/registrar', 'TrabajoController@store')->name('trabajo.store');
+Route::patch('/estudiante/trabajo/registrar', 'TrabajoController@store')->name('trabajo.store');
 Route::get('/estudiante/trabajo/registrar/{id_estudiante}', 'TrabajoController@create');
-Route::get('/estudiante/trabajo/obtener/{id_trabajo}', 'TrabajoController@get');
-Route::post('/estudiante/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update');
+Route::get('/estudiante/trabajo/obtener/{id_trabajo}', 'TrabajoController@edit');
+Route::patch('/estudiante/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update');
 
 /* Rutas para informacion de Graduados */
 Route::get('/estudiante/graduacion/{id_estudiante}', 'GraduadoController@show')->name('graduado.show');
 Route::get('/estudiante/graduacion/registrar/{id_estudiante}', 'GraduadoController@create')->name('graduado.create');
-Route::post('/estudiante/graduacion', 'GraduadoController@store')->name('graduado.store');
-Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@get');
-Route::post('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update');
+Route::patch('/estudiante/graduacion', 'GraduadoController@store')->name('graduado.store');
+Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@edit');
+Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update');

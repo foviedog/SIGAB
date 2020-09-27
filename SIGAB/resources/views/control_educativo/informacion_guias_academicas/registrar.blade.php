@@ -8,9 +8,7 @@ Registrar guía académica
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-
 @section('contenido')
-
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold"> Registrar Guía Académica </h3>

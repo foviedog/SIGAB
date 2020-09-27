@@ -98,28 +98,28 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-    $('#habilitar-edicion').on('click', function () {
-        $('#recomendaciones').removeAttr('disabled');
-        $('#situacion').removeAttr('disabled');
-        $('#ciclo').removeAttr('disabled');
-        $('#lugar-atencion').removeAttr('disabled');
-        $('#fecha').removeAttr('disabled');
-        $('#motivo').removeAttr('disabled');
-        $('#cancelar-edicion').show();
-        $('#terminar-edicion').show();
-        $('#habilitar-edicion').hide();
-    });
+$('#habilitar-edicion').on('click', function () {
+    $('#recomendaciones').removeAttr('disabled');
+    $('#situacion').removeAttr('disabled');
+    $('#ciclo').removeAttr('disabled');
+    $('#lugar-atencion').removeAttr('disabled');
+    $('#fecha').removeAttr('disabled');
+    $('#motivo').removeAttr('disabled');
+    $('#cancelar-edicion').show();
+    $('#terminar-edicion').show();
+    $('#habilitar-edicion').hide();
+});
 
 function cancelarEdicion() {
-        $('#recomendaciones').attr("disabled", "disabled");
-        $('#situacion').attr("disabled", "disabled");
-        $('#ciclo').attr("disabled", "disabled");
-        $('#lugar-atencion').attr("disabled", "disabled");
-        $('#fecha').attr("disabled", "disabled");
-        $('#motivo').attr("disabled", "disabled");
-        $('#cancelar-edicion').hide();
-        $('#habilitar-edicion').show();
-        $('#terminar-edicion').hide();
+    $('#recomendaciones').attr("disabled", "disabled");
+    $('#situacion').attr("disabled", "disabled");
+    $('#ciclo').attr("disabled", "disabled");
+    $('#lugar-atencion').attr("disabled", "disabled");
+    $('#fecha').attr("disabled", "disabled");
+    $('#motivo').attr("disabled", "disabled");
+    $('#cancelar-edicion').hide();
+    $('#habilitar-edicion').show();
+    $('#terminar-edicion').hide();
 }
 
 $('#cancelar-edicion').on('click', function () {
@@ -129,9 +129,11 @@ $('#cancelar-edicion').on('click', function () {
 $('#cerrar-modal-edicion').on('click', function () {
     cancelarEdicion();
 });
+
 $('#fechaIni').on('click', function () {
     $('#fecha-inicio').removeAttr('value');
 });
+
 $('#fechaFin').on('click', function () {
     $('#fecha-final').removeAttr('value');
 });

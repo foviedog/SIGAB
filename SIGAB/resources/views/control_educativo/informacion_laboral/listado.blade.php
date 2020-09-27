@@ -17,7 +17,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
     <div class="card-body">
 
         {{-- Modal para ver el detalle del trabajo --}}
-        <div class="modal fade" id="detalle-trabajo-modal" tabindex="-1" aria-labelledby="detalle-trabajo-modal" aria-hidden="true">
+        <div class="modal fade" id="detalle-trabajo-modal" tabindex="-1" aria-labelledby="detalle-trabajo-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -36,6 +36,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
                         {{-- Formulario para actualizar informacion laboral --}}
                         <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                             @csrf
+                            @method('PATCH')
 
                             <div class="row">
 
@@ -178,7 +179,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
 
                     {{-- Botones para cerrar el modal o para guardar la edición --}}
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-gris" data-dismiss="modal" onclick="cancelarEdicion()">Cerrar</button>
                         <button onclick="actualizar()" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
                     </div>
                 </div>
@@ -200,7 +201,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
         {{-- Mensaje de exito
             (solo se muestra si ha sido exitoso la edicion) --}}
         @if(Session::has('exito'))
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" id="mensaje-exito">
             {!! \Session::get('exito') !!}
         </div>
         @endif
@@ -209,7 +210,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
         <div class="card shadow">
             <div class="card-header py-3">
                 {{-- Título de la tabla --}}
-                <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Trabajos</p>
+                <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información laboral</p>
             </div>
             <div class="card-body">
                 {{-- Form para la paginación de la página y para la búsqueda de trabajos --}}

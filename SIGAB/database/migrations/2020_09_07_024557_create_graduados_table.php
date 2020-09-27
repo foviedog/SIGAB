@@ -15,7 +15,7 @@ class CreateGraduadosTable extends Migration
     {
         Schema::create('graduados', function (Blueprint $table) {
             $table->id();
-            $table->string('persona_id', 15);
+            $table->string('persona_id', 120);
             $table->foreign('persona_id')->references('persona_id')->on('personas'); /* falta ->onDelete('cascade'); */
             $table->string('grado_academico', 15);
             $table->string('carrera_cursada', 120);

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+use Image;
 use App\Persona;
 use App\Estudiante;
-use Image;
-use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use App\Guias_academica;
 
 class EstudianteController extends Controller

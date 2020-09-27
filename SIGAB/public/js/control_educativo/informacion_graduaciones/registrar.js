@@ -1,10 +1,15 @@
+/* Desaparece el mensaje de éxito */
+$("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
+    $("#mensaje-exito").slideUp(500);
+});
+
 /*Contador de caracteres de Grado Académico */
 function contarCarGradoAcademico(val) {
     var len = val.value.length;
-    if (len >= 15) {
-        val.value = val.value.substring(0, 15);
+    if (len >= 120) {
+        val.value = val.value.substring(0, 120);
     } else {
-        $("#mostrar_cant_grado_academico").text(15 - len);
+        $("#mostrar_cant_grado_academico").text(120 - len);
     }
 }
 
@@ -21,9 +26,9 @@ function contarCarCarrCursada(val) {
 /*Contador de caracteres de Año de graduación */
 function contarCarAnioGraduacion(val) {
     var len = val.value.length;
-    if (len >= 11) {
-        val.value = val.value.substring(0, 11);
+    if (len >= 4) {
+        val.value = val.value.substring(0, 4);
     } else {
-        $("#mostrar_cant_anio_graduacion").text(11 - len);
+        $("#mostrar_cant_anio_graduacion").text(4 - len);
     }
 }

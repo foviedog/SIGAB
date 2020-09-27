@@ -93,39 +93,17 @@ class GraduadoController extends Controller
         $estudiante = Estudiante::findOrFail($id_estudiante);
 
         // Graduaciones por estudiante
-        $graduaciones = Graduado::where('persona_id', $id_estudiante);
+        $graduaciones = Graduado::where('persona_id', $id_estudiante)->get();
 
-        // Array que devuelve los items que se cargan por página
-        $paginaciones = [2, 4, 25, 50, 100];
-
-        ///Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
-        //     request se setea por defecto en 2 por página
-        $itemsPagina = request('itemsPagina', 2);
-
-        //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
-        $filtro = request('filtro', NULL);
-
-        //En caso de que el filtro esté seteado entonces se realiza un búsqueda en la base de datos con dichos datos.
-        if (!is_null($filtro)) {
-            $graduaciones = Graduado::where('persona_id', $id_estudiante)
-                ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
-        } else {
-            $graduaciones = Graduado::where('persona_id', $id_estudiante)
-                ->orderBy('anio_graduacion', 'desc') // Ordena por medio del nombre organizacion de manera ascendente
-                ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
-        }
-
-        //Se devuelve la vista con los atributos de paginación de los estudiante
+        //Se devuelve la vista
         return view('control_educativo.informacion_estudiantil.informacion_graduados.show', [
             'estudiante' => $estudiante,       // Estudiante
             'graduaciones' => $graduaciones,   // Graduaciones
-            'paginaciones' => $paginaciones,  // Listado de items de paginaciones
-            'itemsPagina' => $itemsPagina,   // Items que se desean por página
         ]);
     }
 
     // Método que muestra una graduación específica
-    public function get($id_graduacion)
+    public function edit($id_graduacion)
     {
         //Busca la graduación en la base de datos
         $graduacion = Graduado::find($id_graduacion);
