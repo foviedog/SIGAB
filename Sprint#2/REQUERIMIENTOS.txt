@@ -1,0 +1,19 @@
+Oscar
+RF-12 '5
+RF-13 '3
+RF 14 '8
+
+
+David
+RF-11 '8
+RF-15 '8
+RF-19
+
+Iván
+RF-46 '8 
+RF-16 '3
+
+Stacy 
+RF-17 '13
+RF-18 '5
+

@@ -213,9 +213,9 @@ Listado de Guías Académicas
                                 <td>{{ $guia->persona_id }}</td>
                                 {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
                                 <td>{{ $guia->apellido.", ". $guia->nombre }}</td>
-                                <td> {{ $guia->motivo }} </td>
-                                <td> {{ $guia->fecha }}</td>
-                                <td> {{ $guia->ciclo_lectivo }}</td>
+                                <td> {{ $guia->motivo }}  </td>
+                                <td> {{ $guia->fecha }} </td>
+                                <td> {{ $guia->ciclo_lectivo }} </td>
                                 <td> {{ $guia->lugar_atencion }}</td>
                                 <td>
                                     {{-- Botón para ver el detalle de la guía académica del estudiante --}}
