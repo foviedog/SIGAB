@@ -17,7 +17,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
     <div class="card-body">
 
         {{-- Modal para ver el detalle de la gradución --}}
-        <div class="modal fade" id="detalle-graduacion-modal" tabindex="-1" aria-labelledby="detalle-graduacion-modal" aria-hidden="true">
+        <div class="modal fade" id="detalle-graduacion-modal" tabindex="-1" aria-labelledby="detalle-graduacion-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -36,7 +36,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                         {{-- Formulario para actualizar informacion de la graduación --}}
                         <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                         @csrf
-                            <div class="d-flex justify-content-center flex-column ">
+                        @method('PATCH')
+
+                            <div class="d-flex justify-content-center flex-column">
                                 {{-- Campo: Grado académico --}}
                                 <div class="mb-3">
                                     <label for="grado_academico">Grado académico <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span></label>
@@ -52,7 +54,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                 {{-- Campo: Año de graduación --}}
                                 <div class=" mb-3">
                                     <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span></label>
-                                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" required disabled>
+                                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" min="1975" required disabled>
                                 </div>
                             </div>
                         </form>
@@ -61,7 +63,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
 
                     {{-- Botones para cerrar el modal o para guardar la edición --}}
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-gris" data-dismiss="modal" onclick="cancelarEdicion()">Cerrar</button>
                         <button onclick="actualizar()" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
                     </div>
                 </div>
@@ -73,6 +75,8 @@ Graduaciones de {{ $estudiante->persona->nombre }}
             {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro mb-4">Graduaciones de {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
             <div>
+                {{-- Regresar al detalle del estudiante --}}
+                <a href="/estudiante/detalle/{{ $estudiante->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 {{-- //Botón para añadir graduación --}}
                 <a href="/estudiante/graduacion/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nueva graduación &nbsp; <i class="fas fa-plus-circle"></i> </a>
             </div>
@@ -81,7 +85,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
         {{-- Mensaje de exito
             (solo se muestra si ha sido exitoso la edicion) --}}
         @if(Session::has('exito'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success" role="alert" id="mensaje-exito">
                 {!! \Session::get('exito') !!}
             </div>
         @endif
@@ -93,23 +97,6 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Graduaciones</p>
             </div>
             <div class="card-body">
-                {{-- Form para la paginación de la página y para la búsqueda de graduaciones --}}
-                <form action="/estudiante/graduacion/{{ $estudiante->persona->persona_id }}" method="GET" role="form" id="item-pagina">
-                    <div class="row">
-                        <div class="col-md-6 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                <label class="font-weight-bold">Mostrar &nbsp;
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </form>
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
 
                     <table class="table my-0" id="dataTable">
@@ -123,6 +110,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                         </thead>
                         <tbody>
+                    {{-- Si no vienen registros --}}
                             @if(count($graduaciones))
                             {{-- Inserción iterativa de las graduaciones dentro de la tabla --}}
                             @foreach($graduaciones as $graduacion)
@@ -140,9 +128,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                             @endforeach
                             @else
-                            <td>
-                                No existen registros aún
-                            </td>
+                                <tr class="cursor-pointer">
+                                    <td colspan="4" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                </tr
                             @endif
                         </tbody>
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
@@ -155,17 +143,11 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                         </tfoot>
                     </table>
-                </div>
-                <div class="row">
-                    {{-- Información general de los items por página y el total de resultados --}}
-                    <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $graduaciones->perPage() }} de {{ $graduaciones->total() }}</p>
-                    </div>
-                    {{-- Items de paginación --}}
-                    <div class="col-md-6">
-                        {{ $graduaciones->withQueryString()->links() }}
+                    <div>
+                        <span class="ml-2"> Total de registros: <span class="font-weight-bold">{{ count($graduaciones) }}</span></span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

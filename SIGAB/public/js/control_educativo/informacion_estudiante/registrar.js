@@ -201,10 +201,10 @@ function contarCarTipoBeca(val) {
 /*Contador de caracteres de apoyo educativo*/
 function contarCarApoyoEducativo(val) {
     var len = val.value.length;
-    if (len >= 150) {
-        val.value = val.value.substring(0, 150);
+    if (len >= 500) {
+        val.value = val.value.substring(0, 500);
     } else {
-        $("#mostrar_cant_apoyo_educativo").text(150 - len);
+        $("#mostrar_cant_apoyo_educativo").text(500 - len);
     }
 }
 
@@ -218,7 +218,7 @@ function contarCarResidencias(val) {
     }
 }
 
-/*Contador de caracteres de residencias*/
+/*Contador de caracteres de nota admision*/
 function contarCarNotaAdmision(val) {
     var len = val.value.length;
     if (len >= 6) {

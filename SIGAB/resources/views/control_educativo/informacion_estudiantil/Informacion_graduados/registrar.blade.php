@@ -16,23 +16,32 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 @section('contenido')
 
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
-
-
-    <h3 class="texto-gris-oscuro font-weight-bold">Registrar información de graduación para {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h3>
-    <hr class="pb-2">
-
-    <div class="d-flex flex-row-reverse mb-4">
-        {{-- Botón para regresar al listado de graduaciones del estudiante --}}
-        <a href="/estudiante/graduacion/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a>
+    <div class="d-flex justify-content-between">
+        <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar graduación</h3>
+        <div><a href="/estudiante/graduacion/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
     </div>
+    <hr>
+
+        {{-- Información del estudiante --}}
+        <div class="d-flex justify-content-center mb-2">
+            <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
+        </div>
+        <div class="d-flex justify-content-center align-items-center border-bottom mb-2 pb-3">
+            <div class=" text-center">
+                <strong>Cédula:</strong> &nbsp;&nbsp;<span id="cedula"> {{ $estudiante->persona->persona_id }}</span> <br>
+                <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }} </span> <br>
+                <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
+            </div>
+        </div>
 
     {{-- Formulario para registrar informacion de la graduación --}}
     <form action="/estudiante/graduacion" method="POST" enctype="multipart/form-data" id="estudiante">
         @csrf
+        @method('PATCH')
 
         {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
         @if(Session::has('mensaje'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success" role="alert" id="mensaje-exito">
                 {!! \Session::get('mensaje') !!}
             </div>
         @endif
@@ -61,9 +70,9 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
                 <div class="row">
                     <div class="col-6 ">
                         <b>Cédula:</b> {{ $graduado->persona_id ?? "Error" }} <br>
-                        <b>Motivo:</b> {{ $graduado->grado_academico }} <br>
-                        <b>Fecha:</b> {{ $graduado->carrera_cursada }} <br>
-                        <b>Ciclo lectivo:</b> {{ $graduado->anio_graduacion ?? "No se digitó" }} <br>
+                        <b>Grado académico:</b> {{ $graduado->grado_academico }} <br>
+                        <b>Carrera cursada:</b> {{ $graduado->carrera_cursada }} <br>
+                        <b>Año de graduación:</b> {{ $graduado->anio_graduacion ?? "No se digitó" }} <br>
                     </div>
                 </div>
             </div>
@@ -73,7 +82,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 
         <div class="container w-75 ">
 
-            <div class="d-flex justify-content-center flex-column ">
+            <div class="d-flex justify-content-center flex-column mt-3">
                 {{-- Campo: Grado académico --}}
                 <div class="mb-3">
                     <label for="grado_academico">Grado académico <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span></label>
@@ -89,7 +98,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
                 {{-- Campo: Año de graduación --}}
                 <div class=" mb-3">
                     <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span></label>
-                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" required>
+                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" min="1975" required>
                 </div>
             </div>
 

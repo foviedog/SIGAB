@@ -1,10 +1,15 @@
+/* Desaparece el mensaje de éxito */
+$("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
+    $("#mensaje-exito").slideUp(500);
+});
+
 /*Contador de caracteres de Nombre de la Organizacion */
 function contarCarNomOrg(val) {
     var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
+    if (len >= 100) {
+        val.value = val.value.substring(0, 100);
     } else {
-        $("#mostrar_cant_nom_org").text(45 - len);
+        $("#mostrar_cant_nom_org").text(100 - len);
     }
 }
 

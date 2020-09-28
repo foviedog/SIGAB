@@ -149,7 +149,7 @@ class GuiasAcademicaController extends Controller
                     ->orWhere('personas.apellido', 'like', '%' . request('nombreFiltro', NULL) . '%') // Filtro para buscar por apellido de persona
                     ->orWhere('personas.nombre', 'like', '%' . request('nombreFiltro', NULL) . '%'); // Filtro para buscar por cédula
             })
-            ->orderBy('guias_academicas.id', 'desc') // Ordena con respecto al orden de  insercisión de guías académicas de manera descendente
+            ->orderBy('guias_academicas.fecha', 'desc') // Ordena con respecto al orden de  insercisión de guías académicas de manera descendente
             ->paginate($itemsPagina);  //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
 
         return $guias; //Retorna el resultado de todas las guías que cumplan con los filtros especificados
@@ -163,7 +163,7 @@ class GuiasAcademicaController extends Controller
             ->orWhere('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
             ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
             ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
-            ->orderBy('personas.apellido', 'asc') // Ordena con respecto al orden de pellido de manera ascendentemente
+            ->orderBy('guias_academicas.fecha', 'desc') // Ordena con respecto al orden de pellido de manera ascendentemente
             ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
 
         return $guias; //Retorna el resultado de todas las guías que cumplan con los filtros especificados
@@ -174,7 +174,7 @@ class GuiasAcademicaController extends Controller
     {
         $guias = Guias_academica::join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
             ->join('estudiantes', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
-            ->orderBy('guias_academicas.id', 'desc') // Ordena con respecto al orden de  insercisión de guías académicas de manera descendente
+            ->orderBy('guias_academicas.fecha', 'desc') // Ordena con respecto al orden de  insercisión de guías académicas de manera descendente
             ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
 
         return $guias; //Retorna el resultado de todas las guías

@@ -18,7 +18,8 @@ Listado de Guías Académicas
             <div class="modal-dialog  modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="agregar-guia-modal"><strong>Añadir Guía cadémica</strong></h5>
+
+                        <h5 class="modal-title" id="agregar-guia-modal"><strong>Añadir Guía Académica</strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -26,7 +27,7 @@ Listado de Guías Académicas
                     @csrf
                     <div class="modal-body">
                         <div class="alert alert-danger" role="alert" id="no-existe-estudiante">
-                            El estudiante ingresado no existe!
+                            El estudiante ingresado no existe.
                         </div>
                         <div class="form-group">
                             <label for="id-estudiante" class="col-form-label">Cédula del estudiante:</label>
@@ -46,7 +47,7 @@ Listado de Guías Académicas
             <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title font-weight-bold" id="detalle-guia-modal">Detalle de guía académica</h5>
+                        <h4 class="modal-title font-weight-bold" id="detalle-guia-modal">Detalle de Guía Académica</h5>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-rojo" id="habilitar-edicion">
                                     Habilitar edición
@@ -129,11 +130,13 @@ Listado de Guías Académicas
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
-            <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Academicas</h2>
+            <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Académicas</h2>
             <div>
                 {{-- //Botón para añadir estudainte --}}
+                 {{-- Regresar al listado de estudiantes --}}
+                 <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
                 <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
-                    Añadir Guía académica &nbsp; <i class="fas fa-plus-circle"></i>
+                    Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
                 </button>
             </div>
         </div>
@@ -180,7 +183,7 @@ Listado de Guías Académicas
                             <div class="d-flex justify-content-end w-25">
                                 <div class="text-md-right dataTables_filter d-flex align-items-center mt-3">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre,apellido o cedula"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
                                     &nbsp;&nbsp;<input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
@@ -202,12 +205,17 @@ Listado de Guías Académicas
                                 <th>Motivo</th>
                                 <th>Fecha</th>
                                 <th>Ciclo lectivo</th>
-                                <th>Lugar de atencion</th>
+                                <th>Lugar de atención</th>
                                 <th>Ver detalle</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
+                            @if(count($guias) == 0)
+                            <tr class="cursor-pointer">
+                                <td colspan="7" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                            </tr>
+                            @endif
                             @foreach($guias as $guia)
                             <tr class="cursor-pointer">
                                 <td>{{ $guia->persona_id }}</td>
@@ -234,7 +242,7 @@ Listado de Guías Académicas
                                 <th>Motivo</th>
                                 <th>Fecha</th>
                                 <th>Ciclo lectivo</th>
-                                <th>Lugar de atencion</th>
+                                <th>Lugar de atención</th>
                                 <th>Ver detalle</th>
                             </tr>
                         </tfoot>
@@ -243,7 +251,7 @@ Listado de Guías Académicas
                 <div class="row">
                     {{-- Información general de los items por página y el total de resultados --}}
                     <div class="col-md-6 align-self-center">
-                        {{-- <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $estudiantes->perPage() }} de {{ $estudiantes->total() }}</p> --}}
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $guias->perPage() }} de {{ $guias->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}
                     <div class="col-md-6">

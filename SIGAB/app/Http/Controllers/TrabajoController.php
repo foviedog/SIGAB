@@ -20,11 +20,11 @@ class TrabajoController extends Controller
         $trabajos = Trabajo::where('persona_id', $id_estudiante);
 
         // Array que devuelve los items que se cargan por página
-        $paginaciones = [2, 4, 25, 50, 100];
+        $paginaciones = [5, 10, 25, 40];
 
         ///Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
         //     request se setea por defecto en 2 por página
-        $itemsPagina = request('itemsPagina', 2);
+        $itemsPagina = request('itemsPagina', 5);
 
         //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
         $filtro = request('filtro', NULL);
@@ -91,7 +91,7 @@ class TrabajoController extends Controller
     }
 
     // Método que muestra un trabajo específico
-    public function get($id_trabajo)
+    public function edit($id_trabajo)
     {
         //Busca el trabajo en la base de datos
         $trabajo = Trabajo::find($id_trabajo);
