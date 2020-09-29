@@ -22,17 +22,17 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
     </div>
     <hr>
 
-        {{-- Información del estudiante --}}
-        <div class="d-flex justify-content-center mb-2">
-            <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
+    {{-- Información del estudiante --}}
+    <div class="d-flex justify-content-center mb-2">
+        <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
+    </div>
+    <div class="d-flex justify-content-center align-items-center border-bottom mb-2 pb-3">
+        <div class=" text-center">
+            <strong>Cédula:</strong> &nbsp;&nbsp;<span id="cedula"> {{ $estudiante->persona->persona_id }}</span> <br>
+            <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }} </span> <br>
+            <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
         </div>
-        <div class="d-flex justify-content-center align-items-center border-bottom mb-2 pb-3">
-            <div class=" text-center">
-                <strong>Cédula:</strong> &nbsp;&nbsp;<span id="cedula"> {{ $estudiante->persona->persona_id }}</span> <br>
-                <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }} </span> <br>
-                <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
-            </div>
-        </div>
+    </div>
 
     {{-- Formulario para registrar informacion de la graduación --}}
     <form action="/estudiante/graduacion" method="POST" enctype="multipart/form-data" id="estudiante">
@@ -41,43 +41,43 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 
         {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
         @if(Session::has('mensaje'))
-            <div class="alert alert-success" role="alert" id="mensaje-exito">
-                {!! \Session::get('mensaje') !!}
-            </div>
+        <div class="alert alert-success" role="alert" id="mensaje-exito">
+            {!! \Session::get('mensaje') !!}
+        </div>
         @endif
 
         {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
         @php
-            $error = Session::get('error');
+        $error = Session::get('error');
         @endphp
 
         @if(Session::has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ "¡Oops! Algo ocurrió. ".$error }}
-            </div>
+        <div class="alert alert-danger" role="alert">
+            {{ "¡Oops! Algo ocurrió. ".$error }}
+        </div>
         @endif
         {{-- Mensaje de que muestra el objeto insertado
             (solo se muestra si ha sido exitoso el registro)  --}}
         @if(Session::has('graduado_insertada'))
-            <div class="alert alert-dark" role="alert">
+        <div class="alert alert-dark" role="alert">
 
-                {{-- Esto viene  del controller y trae el objeto recien creado en caso de haber hecho un registro exitoso --}}
-                @php
-                    $graduado = Session::get('graduado_insertada');
-                @endphp
+            {{-- Esto viene  del controller y trae el objeto recien creado en caso de haber hecho un registro exitoso --}}
+            @php
+            $graduado = Session::get('graduado_insertada');
+            @endphp
 
-                Se insertó la graduación con los siguientes datos: <br> <br>
-                <div class="row">
-                    <div class="col-6 ">
-                        <b>Cédula:</b> {{ $graduado->persona_id ?? "Error" }} <br>
-                        <b>Grado académico:</b> {{ $graduado->grado_academico }} <br>
-                        <b>Carrera cursada:</b> {{ $graduado->carrera_cursada }} <br>
-                        <b>Año de graduación:</b> {{ $graduado->anio_graduacion ?? "No se digitó" }} <br>
-                    </div>
+            Se insertó la graduación con los siguientes datos: <br> <br>
+            <div class="row">
+                <div class="col-6 ">
+                    <b>Cédula:</b> {{ $graduado->persona_id ?? "Error" }} <br>
+                    <b>Grado académico:</b> {{ $graduado->grado_academico }} <br>
+                    <b>Carrera cursada:</b> {{ $graduado->carrera_cursada }} <br>
+                    <b>Año de graduación:</b> {{ $graduado->anio_graduacion ?? "No se digitó" }} <br>
                 </div>
             </div>
+        </div>
 
-            <div class="h3 mb-5 mt-4 mx-3">Agregar nueva graduación:</div>
+        <div class="h3 mb-5 mt-4 mx-3">Agregar nueva graduación:</div>
         @endif
 
         <div class="container w-75 ">
