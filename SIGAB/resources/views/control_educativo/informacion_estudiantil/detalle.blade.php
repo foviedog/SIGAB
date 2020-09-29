@@ -74,7 +74,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                             <div class="card-body pb-5">
                                 {{-- Campo: Nota admision --}}
                                 <div class="form-group">
-                                    <label for="nota"><strong>Nota de admisión<i class="text-danger">* </i> </strong><br /></label><input type="number" id="nota_admision" name="nota_admision" min="0" max="999.99" step="0.01" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" required disabled />
+                                    <label for="nota"><strong>Nota de admisión</strong><br /></label><input type="number" id="nota_admision" name="nota_admision" min="0" max="999.99" step="0.01" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la UNA --}}
                                 <div class="form-group">
@@ -108,14 +108,14 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 
                                 {{-- Primera Carrera --}}
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1 <i class="text-danger">* </i> </strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Año estimado de graduación de la primera carrera"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                    <input type="number" name="anio_graduacion_estimado_1" min="1975" max="9999" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_1}}" required disabled />
+                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong></label>
+                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span><br />
+                                    <input type="number" name="anio_graduacion_estimado_1" min="1975" max="9999" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_1}}" disabled />
                                 </div>
                                 {{-- Segunda Carrera --}}
                                 <div class="form-group">
                                     <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Año estimado de graduación de la segunda carrera (en el caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span><br />
+                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 2 (en caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span><br />
                                     <input type="number" name="anio_graduacion_estimado_2" min="1975" max="9999" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_2}}" disabled />
                                 </div>
                                 {{-- Campo: Desercion --}}
@@ -173,7 +173,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             {{-- Celular --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input type="text" name="telefono_celular" class="form-control" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular  }}" disabled />
+                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input type="text" name="telefono_celular" class="form-control" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Telefono Fijo --}}
@@ -201,9 +201,9 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo<i class="text-danger">* </i> </strong></label>
+                                                    <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo</strong></label>
                                                     <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia del estudiante durante el tiempo lectivo"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                                    <textarea type="text" name="direccion_lectivo" class="form-control" placeholder="Direccion de tiempo lectivo" required disabled /> {{$estudiante->direccion_lectivo}} </textarea>
+                                                    <textarea type="text" name="direccion_lectivo" class="form-control" placeholder="Direccion de tiempo lectivo" disabled />{{$estudiante->direccion_lectivo}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +250,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="apoyo_educativo"><strong>Apoyo Educativo</strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Detalle del apoyo educativo recibido por el estudiante o indicar si no ha recibido"><i class="far fa-question-circle fa-lg"></i></span><br />
+                                                    <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el departamento de orientación y psicología"><i class="far fa-question-circle fa-lg"></i></span><br />
                                                     <textarea type="text" name="apoyo_educativo" class="form-control" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
                                                 </div>
                                             </div>
