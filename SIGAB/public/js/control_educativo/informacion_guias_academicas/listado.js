@@ -2,6 +2,13 @@ $('#no-existe-estudiante').hide();
 $('#cancelar-edicion').hide();
 $('#terminar-edicion').hide();
 $("#rellenar-campos-modificar").hide();
+$('#fechaIni').on('click', function () {
+    $('#fecha-inicio').val('');
+});
+
+$('#fechaFin').on('click', function () {
+    $('#fecha-final').val('');
+});
 
 $('#detalle-guia-modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
@@ -130,12 +137,5 @@ $('#cerrar-modal-edicion').on('click', function () {
     cancelarEdicion();
 });
 
-$('#fechaIni').on('click', function () {
-    $('#fecha-inicio').removeAttr('value');
-});
 
-$('#fechaFin').on('click', function () {
-    $('#fecha-final').removeAttr('value');
-});
 
-// setTimeout(function(){ console.log("Hello"); }, 3000);

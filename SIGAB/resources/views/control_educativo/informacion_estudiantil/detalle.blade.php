@@ -250,7 +250,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="apoyo_educativo"><strong>Apoyo Educativo</strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el departamento de orientación y psicología"><i class="far fa-question-circle fa-lg"></i></span><br />
+                                                    <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span><br />
                                                     <textarea type="text" name="apoyo_educativo" class="form-control" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
                                                 </div>
                                             </div>

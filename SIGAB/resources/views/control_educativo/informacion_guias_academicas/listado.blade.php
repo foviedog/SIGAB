@@ -133,8 +133,8 @@ Listado de Guías Académicas
             <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Académicas</h2>
             <div>
                 {{-- //Botón para añadir estudainte --}}
-                 {{-- Regresar al listado de estudiantes --}}
-                 <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
+                {{-- Regresar al listado de estudiantes --}}
+                <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
                 <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
                     Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
                 </button>
@@ -169,14 +169,14 @@ Listado de Guías Académicas
                             <div class="mx-2 ">
                                 <label for="fecha-inicio" class="ml-3"> &nbsp;Fecha inicio: </label>
                                 <div class="d-flex">
-                                    <span id="fechaIni" class="fechaIni" data-toggle="tooltip" data-placement="bottom" title="Vaciar valor Fecha de inicio"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                    <span id="fechaIni" class="fechaIni" data-toggle="tooltip" data-placement="bottom" title="Limpiar Fecha de inicio"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
                                     <input type="date" class="form-control form-control-sm" name="fechaIni" id="fecha-inicio" @if (!is_null($fechaIni)) value={{ $fechaIni }} @endif>
                                 </div>
                             </div>
                             <div class=" mx-3 ">
                                 <label for=" fecha-final" class="ml-3"> &nbsp; Fecha final: </label>
                                 <div class="d-flex">
-                                    <span id="fechaFin" class="fechaFin" data-toggle="tooltip" data-placement="bottom" title="Vaciar valor Fecha final"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                    <span id="fechaFin" class="fechaFin" data-toggle="tooltip" data-placement="bottom" title="Limpiar Fecha final"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
                                     <input type="date" class="form-control form-control-sm" name="fechaFin" id="fecha-final" @if (!is_null($fechaFin)) value={{ $fechaFin }} @endif>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@ Listado de Guías Académicas
                             {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
                             @if(count($guias) == 0)
                             <tr class="cursor-pointer">
-                                <td colspan="7" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
                             </tr>
                             @endif
                             @foreach($guias as $guia)

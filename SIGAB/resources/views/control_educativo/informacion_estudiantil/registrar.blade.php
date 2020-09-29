@@ -73,7 +73,7 @@ Registrar información del estudiante
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
                         <a clas="btn btn-rojo" href="/estudiante/detalle/{{ $cedula }}">
-                        <input type="button" value="Editar" class="btn btn-rojo">
+                            <input type="button" value="Editar" class="btn btn-rojo">
                         </a>
                         <br>
 
@@ -465,7 +465,7 @@ Registrar información del estudiante
                         <div class="col-6">
                             <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeyup="contarCarApoyoEducativo(this)"></textarea>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el departamento de orientación y psicología"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_apoyo_educativo"></span>
                         </div>
