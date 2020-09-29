@@ -18,7 +18,7 @@ class EstudianteController extends Controller
     public function index()
     {
         // Array que devuelve los items que se cargan por página
-        $paginaciones = [2, 4, 25, 50, 100];
+        $paginaciones = [5, 10, 25, 50];
 
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
         //request se setea por defecto en 2 por página
@@ -31,8 +31,7 @@ class EstudianteController extends Controller
         if (!is_null($filtro)) {
             $estudiantes = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con personas
                 ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
-                ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
-                ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
+                ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro . "%'") //Filtro para buscar por nombre completo
                 ->orderBy('personas.apellido', 'asc')
                 ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
         } else { //Si no se setea el filtro se devuelve un listado de los estudiantes

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* Ruta principal que lleva al login */
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -34,6 +35,10 @@ Auth::routes([
     'reset' => false, // Desactivado el auth con el reset de contraseñas
     'verify' => false, // Desactivado el auth con la verificación de email
 ]);
+// ======================================================================================================================================
+//                                                           Control Estudiantil
+// ======================================================================================================================================
+
 
 /* Ruta de detalle del estudiante*/
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
@@ -70,3 +75,7 @@ Route::get('/estudiante/graduacion/registrar/{id_estudiante}', 'GraduadoControll
 Route::patch('/estudiante/graduacion', 'GraduadoController@store')->name('graduado.store');
 Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@edit');
 Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update');
+
+// ======================================================================================================================================
+//                                                           Control de Personal
+// ======================================================================================================================================

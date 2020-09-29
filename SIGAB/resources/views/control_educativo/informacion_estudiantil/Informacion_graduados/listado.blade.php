@@ -34,7 +34,7 @@ Listado Estudiantil
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
                 <form action="{{ route('graduados.listar' ) }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
-                        <div class="col-md-4 text-nowrap">
+                        <div class="col-md-3 col-sm-12 d text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                 <label class="font-weight-bold">Mostrar &nbsp;
                                     {{-- Select con la cantidad de items por páginas--}}
@@ -46,7 +46,7 @@ Listado Estudiantil
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-8 d-flex justify-content-end">
+                        <div class="col-md-9  col-sm-12 d-flex justify-content-end">
                             <div class=" mx-3 w-25">
                                 <label for="anio" class="ml-3"> &nbsp; Año de graduación: </label>
                                 <div class="d-flex align-items-center">
@@ -60,7 +60,12 @@ Listado Estudiantil
                                         <option value={{ $anio }}>{{ $anio }}</option>
                                         @endforeach
                                     </select>
+
                                 </div>
+                            </div>
+                            {{-- Botón de submit para realizar la búsqueda del estudiante por año--}}
+                            <div class="d-flex align-items-end ">
+                                <button class="btn btn-rojo mr-4" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                             </div>
                             <div class="d-flex justify-content-end w-25">
                                 <div class="text-md-right dataTables_filter d-flex align-items-end">
@@ -93,9 +98,9 @@ Listado Estudiantil
                         </thead>
                         <tbody>
                             {{-- Si no vienen registros --}}
-                            @if(count($graduaciones) == 0)
+                            @if(count($graduados) == 0)
                             <tr class="cursor-pointer">
-                                <td colspan="7" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
                             </tr>
                             @endif
                             {{-- Inserción iterativa de los graduados dentro de la tabla --}}
@@ -145,7 +150,7 @@ Listado Estudiantil
                     <div class="col-md-5 align-self-center">
                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $graduados->perPage() }} de {{ $graduados->total() }}</p>
                     </div>
-                {{      }}{{-- Items de paginación --}}
+                    {{-- Items de paginación --}}
                     <div class="col-md-5 ml-5">
                         {{ $graduados->withQueryString()->links() }}
                     </div>

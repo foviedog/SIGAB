@@ -55,7 +55,7 @@ class GraduadoController extends Controller
     public function index()
     {
         // Array que devuelve los items que se cargan por página
-        $paginaciones = [10, 25, 50, 100];
+        $paginaciones = [5, 10, 25, 50];
 
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
         //request se setea por defecto en 2 por página
@@ -155,8 +155,7 @@ class GraduadoController extends Controller
         $guias =  $graduados = Estudiante::join('personas', 'estudiantes.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
             ->join('graduados', 'estudiantes.persona_id', '=', 'graduados.persona_id')
             ->orWhere('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
-            ->orWhere('personas.apellido', 'like', '%' . $filtro . '%') // Filtro para buscar por apellido de persona
-            ->orWhere('personas.nombre', 'like', '%' . $filtro . '%') // Filtro para buscar por cédula
+            ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro . "%'") //Filtro para buscar por nombre completo
             ->orderBy('personas.apellido', 'asc')
             ->groupBy('estudiantes.persona_id') // Ordena con respecto al orden de pellido de manera ascendentemente
             ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request

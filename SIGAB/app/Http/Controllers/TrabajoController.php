@@ -20,7 +20,7 @@ class TrabajoController extends Controller
         $trabajos = Trabajo::where('persona_id', $id_estudiante);
 
         // Array que devuelve los items que se cargan por página
-        $paginaciones = [5, 10, 25, 40];
+        $paginaciones = [5, 10, 25, 50];
 
         ///Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
         //     request se setea por defecto en 2 por página
@@ -124,7 +124,5 @@ class TrabajoController extends Controller
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
-
     }
-
 }
