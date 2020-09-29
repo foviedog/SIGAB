@@ -28,7 +28,8 @@ class CreatePersonasTable extends Migration
             $table->string('imagen_perfil')->default('default.jpg')->nullable();
             $table->timestamps();
 
-            $table->index('persona_id');
+            $table->index('nombre');
+            $table->index('apellido');
         });
     }
 

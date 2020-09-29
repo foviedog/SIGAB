@@ -32,8 +32,6 @@ class CreateEstudiantesTable extends Migration
             $table->string('apoyo_educativo', 150)->nullable();
             $table->integer('residencias_UNA')->nullable();
             $table->timestamps();
-
-            $table->index('persona_id');
         });
     }
 

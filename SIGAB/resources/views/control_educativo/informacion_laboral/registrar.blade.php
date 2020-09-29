@@ -94,7 +94,14 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 <div class="d-flex justify-content-center flex-column ">
                     <div class="mb-3">
                         <label for="tipo_organizacion">Tipo de organización</label> <i class="text-danger">*</i> <span class="text-muted" id="mostrar_cant_tip_org"></span>
-                        <input type='text' class="form-control w-100" id="tipo_organizacion" name="tipo_organizacion" onkeyup="contarCarTipOrg(this)" required>
+                        {{-- <input type='text' class="form-control w-100" id="tipo_organizacion" name="tipo_organizacion" onkeyup="contarCarTipOrg(this)" required> --}}
+                        <select name="tipo_organizacion" class="form-control w-100">
+                            <option value="Instituciones públicas">Instituciones públicas</option>
+                            <option value="Instituciones privadas">Instituciones privadas</option>
+                            <option value="Instituciones autónomas">Instituciones autónomas</option>
+                            <option value="Instituciones semiautónomas">Instituciones semiautónomas</option>
+                            <option value="Organismos internacionales (ONGs)">Organismos internacionales (ONGs)</option>
+                        </select>
                     </div>
                 </div>
 

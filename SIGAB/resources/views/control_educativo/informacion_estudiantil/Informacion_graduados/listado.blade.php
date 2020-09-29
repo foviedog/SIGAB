@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
 @section('titulo')
-Listado Estudiantil
+Listado de Graduados
 @endsection
 
 @section('css')
 
 @endsection
 
-
-
 @section('contenido') <div class="card">
+
     @php
     $anios = array();
+    for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios,$anio) ; }
+    @endphp
 
-    for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios,$anio) ; } @endphp <div class="card-body">
+    <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
@@ -93,7 +94,7 @@ Listado Estudiantil
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
                                 <td><strong>Ver detalle<br /></strong></td>
-                                <th>Guía Académica</th>
+                                <th>Graduaciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,7 +126,7 @@ Listado Estudiantil
                                 <td>
                                     {{-- Botón para ver las guías académicas del estudiante --}}
                                     <strong>
-                                        <a href="/estudiante/guia-academica/listar?nombreFiltro={{ $graduado->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
+                                        <a href="{{ route('graduado.show', $graduado->persona->persona_id ) }}" class="btn btn-contorno-rojo"> Ver graduaciones </a>
                                     </strong><br />
                                 </td>
                             </tr>
@@ -140,7 +141,7 @@ Listado Estudiantil
                                 <td><strong>Teléfono celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>
-                                <td><strong>Guía académica<br /></strong></td>
+                                <td><strong>Graduaciones<br /></strong></td>
                             </tr>
                         </tfoot>
                     </table>

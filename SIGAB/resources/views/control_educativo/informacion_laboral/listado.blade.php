@@ -116,7 +116,14 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                             <label for="tipo_organizacion">Tipo de organización:</label>
                                         </div>
                                         <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="tipo_organizacion" name="tipo_organizacion" onkeyup="contarCarTipOrg(this)" required disabled>
+                                            {{-- <input type='text' class="form-control w-100" id="tipo_organizacion" name="tipo_organizacion" onkeyup="contarCarTipOrg(this)" required> --}}
+                                            <select name="tipo_organizacion" class="form-control w-100" id="tipo_organizacion" disabled>
+                                                <option value="Instituciones públicas">Instituciones públicas</option>
+                                                <option value="Instituciones privadas">Instituciones privadas</option>
+                                                <option value="Instituciones autónomas">Instituciones autónomas</option>
+                                                <option value="Instituciones semiautónomas">Instituciones semiautónomas</option>
+                                                <option value="Organismos internacionales (ONGs)">Organismos internacionales (ONGs)</option>
+                                            </select>
                                         </div>
                                         <div class="col-1">
                                             <span class="text-muted" id="mostrar_cant_tip_org"></span>

@@ -7,6 +7,7 @@ $("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
 function cancelarEdicion() {
     $("input").attr('disabled', "disabled");
     $("textarea").attr('disabled', "disabled");
+    $("select").attr("disabled", "disabled");
     $('#terminar-edicion').hide();
     $('#cancelar-edicion').hide();
     $('#habilitar-edicion').show();
@@ -57,13 +58,15 @@ $('#terminar-edicion').hide();
 $('#habilitar-edicion').on('click', function () {
     $("input").removeAttr('disabled');
     $("textarea").removeAttr('disabled');
+    $("select").removeAttr("disabled");
     $('#terminar-edicion').show();
     $('#cancelar-edicion').show();
     $('#habilitar-edicion').hide();
 });
 
 $('#cancelar-edicion').on('click', function () {
-    $("input").attr('disabled',"disabled");
+    $("input").attr('disabled', "disabled");
+    $("select").attr("disabled", "disabled");
     $("textarea").attr('disabled', "disabled");
     $('#terminar-edicion').hide();
     $('#cancelar-edicion').hide();
