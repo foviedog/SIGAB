@@ -110,7 +110,7 @@ Listado de Guías Académicas
                                 <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled required></textarea>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label" for="recomendaciones">Recomendaciones &nbsp;<i class="text-danger">*</i></label>
+                                <label class="col-form-label" for="recomendaciones">Recomendaciones &nbsp;</label>
                                 <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled required>
                         </textarea>
                             </div>

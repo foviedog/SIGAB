@@ -76,10 +76,11 @@ Listado Estudiantil
                             </tr>
                         </thead>
                         <tbody>
+
                             {{-- En caso de que no existan registros --}}
                             @if(count($estudiantes) == 0)
                             <tr class="cursor-pointer">
-                                <td colspan="7" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
                             </tr>
                             @endif
                             {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}

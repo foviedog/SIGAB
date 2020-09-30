@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
+    public $incrementing = false;
     use Notifiable;
 
     /**
@@ -42,5 +43,4 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = \Hash::make($password);
     }
-
 }

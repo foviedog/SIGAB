@@ -8,4 +8,5 @@ class Participacion extends Model
 {
 
     protected $table = 'participaciones';
+    public $incrementing = false;
 }
