@@ -46,9 +46,11 @@
                     </a>
                     <ul class="collapse list-unstyled" id="controlEstudiantil">
 
+                        {{--
                         <li>
                             <a href="{{ route('estudiante.create' ) }}">Añadir estudiante</a>
                         </li>
+                        --}}
                         <li>
                             <a href="{{ route('listado-estudiantil' ) }}">Estudiantes</a>
                         </li>
