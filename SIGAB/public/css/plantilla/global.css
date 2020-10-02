@@ -1,11 +1,11 @@
 /* Fuente utilizada */
 
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');*/
-@import url('https://fonts.googleapis.com/css2?family=Yantramanav:wght@400;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 html,
 body,
 html * {
-    font-family: 'Yantramanav', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 /* ====================================================
@@ -152,12 +152,12 @@ Botones contorno (outline)
 
 .btn-contorno-azul-una {
     border-color: #034991 !important;
-    background-color:#ffffff !important;
+    background-color: #ffffff !important;
     color: #034991 !important;
 }
 
 .btn-contorno-azul-una:hover {
-    background-color:#034991 !important;
+    background-color: #034991 !important;
     color: #ffffff !important;
 }
 

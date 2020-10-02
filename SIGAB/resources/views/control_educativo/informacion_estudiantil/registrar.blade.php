@@ -304,6 +304,7 @@ Registrar información del estudiante
                                 <option value="Bilingüe">Bilingüe</option>
                                 <option value="Nocturno">Nocturno</option>
                                 <option value="Privado">Privado</option>
+                                <option value="Semiprivado">Semiprivado</option>
                             </select>
                         </div>
                     </div>
