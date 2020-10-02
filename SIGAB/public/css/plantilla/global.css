@@ -1,11 +1,11 @@
 /* Fuente utilizada */
 
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');*/
-@import url('https://fonts.googleapis.com/css2?family=Yantramanav:wght@400;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto');
 html,
 body,
 html * {
-    font-family: 'Yantramanav', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* ====================================================

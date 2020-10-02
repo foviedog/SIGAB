@@ -18,7 +18,7 @@ class CreateActividadesTable extends Migration
             $table->string('tema', 100)->nullable();
             $table->string('lugar', 45)->nullable();
             $table->string('estado', 45)->nullable();
-            $table->date('anio_fecha_actividad')->nullable();
+            $table->date('fecha_actividad')->nullable();
             $table->longText('descripcion')->nullable();
             $table->string('evaluacion', 45)->nullable();
             $table->string('objetivos', 45)->nullable();
