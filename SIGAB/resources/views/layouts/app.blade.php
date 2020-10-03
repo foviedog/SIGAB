@@ -74,7 +74,7 @@
                         <a href="#">Añadir personal</a>
                     </li>
                     <li>
-                        <a href="#">Listar Personal</a>
+                        <a href="{{ route('personal.listar' ) }}">Listar Personal</a>
                     </li>
                 </ul>
             </li>
