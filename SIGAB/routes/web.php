@@ -79,3 +79,5 @@ Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoContr
 // ======================================================================================================================================
 //                                                           Control de Personal
 // ======================================================================================================================================
+/* Ruta de detalle del estudiante*/
+Route::get('/personal/registrar', 'PersonalController@create');
