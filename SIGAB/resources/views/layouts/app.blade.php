@@ -49,35 +49,49 @@
                         {{--
                         <li>
                             <a href="{{ route('estudiante.create' ) }}">Añadir estudiante</a>
-                        </li>
-                        --}}
-                        <li>
-                            <a href="{{ route('listado-estudiantil' ) }}">Estudiantes</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('graduados.listar' ) }}">Estudiantes Graduados</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('guia-academica.listar' ) }}">Guías adémicas</a>
-                        </li>
-                    </ul>
                 </li>
-
+                --}}
                 <li>
-                    <a href="#controlPersonal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
-
-                        <i class="far fa-address-book"></i>
-                        Control de personal
-                    </a>
-                    <ul class="collapse list-unstyled" id="controlPersonal">
-                        <li>
-                            <a href="#">Añadir personal</a>
-                        </li>
-                        <li>
-                            <a href="#">Listar Personal</a>
-                        </li>
-                    </ul>
+                    <a href="{{ route('listado-estudiantil' ) }}">Estudiantes</a>
                 </li>
+                <li>
+                    <a href="{{ route('graduados.listar' ) }}">Estudiantes Graduados</a>
+                </li>
+                <li>
+                    <a href="{{ route('guia-academica.listar' ) }}">Guías adémicas</a>
+                </li>
+            </ul>
+            </li>
+
+            <li>
+                <a href="#controlPersonal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
+
+                    <i class="far fa-address-book"></i>
+                    Control de personal
+                </a>
+                <ul class="collapse list-unstyled" id="controlPersonal">
+                    <li>
+                        <a href="#">Añadir personal</a>
+                    </li>
+                    <li>
+                        <a href="#">Listar Personal</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#controlActividades" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
+
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    Control Actividades
+
+                </a>
+                <ul class="collapse list-unstyled" id="controlActividades">
+                    <li>
+                        <a href="{{ route('actividad-interna.create' ) }}">Añadir actividad interna</a>
+                    </li>
+                </ul>
+            </li>
             </ul>
 
         </nav>
