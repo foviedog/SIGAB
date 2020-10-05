@@ -81,3 +81,11 @@ Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoContr
 // ======================================================================================================================================
 /* Ruta de detalle del estudiante*/
 Route::get('/personal/registrar', 'PersonalController@create');
+Route::get('/personal/listar', 'PersonalController@index')->name('personal.listar');
+
+// ======================================================================================================================================
+//                                                           Control de Actividades Internas
+// ======================================================================================================================================
+/* Rutas para informacion de actividades internas */
+Route::get('/actividad-interna/registrar', 'ActividadeController@create')->name('actividad-interna.create');
+Route::post('/actividad-interna', 'ActividadeController@store');
