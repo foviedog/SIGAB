@@ -21,7 +21,7 @@ Registrar información del estudiante
         <hr>
 
         {{-- Formulario para registrar informacion del estudiante --}}
-        <form action="/estudiante" method="POST" enctype="multipart/form-data" id="estudiante">
+        <form action="/personal" method="POST" enctype="multipart/form-data" id="estudiante">
             @csrf
 
             {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
@@ -265,7 +265,7 @@ Registrar información del estudiante
                             <label for="grado_academico">Grado académico: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="estado_civil" name="estado_civil" form="estudiante" required>
+                            <select class="form-control w-100" id="grado_academico" name="grado_academico" form="estudiante" required>
                                 <option value="Bachillerato(a)">Bachillerato(a)</option>
                                 <option value="Licenciado(a)">Licenciado(a)</option>
                                 <option value="Master(a)">Master(a)</option>
@@ -279,8 +279,6 @@ Registrar información del estudiante
 
                 {{-- Campos de la derecha --}}
                 <div class="col">
-
-
                     {{-- Campo: tipo de nombramiento --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
@@ -288,10 +286,9 @@ Registrar información del estudiante
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_nombramiento" name="tipo_nombramiento" form="estudiante" required>
-                                <option value="Tiempo Completo">Tiempo Completo</option>
-                                <option value="Parcial">Parcial</option>
-                                <option value="Científico">A largo plazo</option>
-                                <option value="Por incapacidad">Por incapacidad</option>
+                                <option value="Interino">Interino</option>
+                                <option value="Propietario">Propietario</option>
+                                <option value="Plazo fijo">Plazo fijo</option>
                             </select>
                         </div>
                     </div>
@@ -303,25 +300,28 @@ Registrar información del estudiante
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_puesto" name="tipo_puesto" form="estudiante" required>
-                                <option value="Tiempo Completo">Tiempo Completo</option>
-                                <option value="Parcial">Parcial</option>
-                                <option value="Científico">A largo plazo</option>
-                                <option value="Por incapacidad">Por incapacidad</option>
+                                <option value="Secretaría">Secretaría</option>
+                                <option value="Dirección">Dirección</option>
+                                <option value="Subdirección">Subdirección</option>
+                                <option value="Participante">Participante</option>
+                                <option value="Responsable PPAA">Responsable PPAA</option>
+                                <option value="Informático">Informático</option>
+                                <option value="Biblioteca infantil">Biblioteca infantil</option>
+                                <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
                             </select>
                         </div>
                     </div>
 
-                    {{-- Campo: tipo de puesto --}}
+                    {{-- Campo: Jornada --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="jornada">Jornada: <i class="text-danger">*</i></label>
+                            <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="jornada" name="jornadar" form="estudiante" required>
-                                <option value="Tiempo Completo">Tiempo Completo</option>
-                                <option value="Parcial">Parcial</option>
-                                <option value="Científico">A largo plazo</option>
-                                <option value="Por incapacidad">Por incapacidad</option>
+                            <select class="form-control w-100" id="jornada" name="jornada" form="estudiante" required>
+                                <option value="Por horas">Por horas</option>
+                                <option value="Ciclo lectivo">Ciclo lectivo</option>
+                                <option value="Año">Año</option>
                             </select>
                         </div>
                     </div>
@@ -334,7 +334,6 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCarCarreraMatriculada1(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_carrera_matriculada1"></span>
                         </div>
@@ -347,34 +346,31 @@ Registrar información del estudiante
                         <div class="col-6">
                             <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCarAnioIngresoUna(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_anio_ingreso_una"></span>
                         </div>
                     </div>
-                    {{-- Campo: Area de esplización 1 --}}
+                    {{-- Campo: Area de especialización 1 --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="carrera_matriculada_1">Area de esplización 1 : <i class="text-danger">*</i></label>
+                            <label for="area_especializacion_1">Area de especialización 1 : <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="carrera_matriculada_1" name="carrera_matriculada_1" onkeyup="contarCarCarreraMatriculada1(this)" required>
+                            <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCarCarreraMatriculada1(this)" required>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_carrera_matriculada1"></span>
                         </div>
                     </div>
 
-                    {{-- Campo: Area de esplización 1  --}}
+                    {{-- Campo: Area de especialización 2  --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="carrera_matriculada_2">Area de esplización 2:</label>
+                            <label for="area_especializacion_2">Area de esplización 2:</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="carrera_matriculada_2" name="carrera_matriculada_2" onkeyup="contarCarMateriaMatriculada2(this)">
+                            <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCarMateriaMatriculada2(this)">
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera secundaria"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cant_materia_matriculada_2"></span>
                         </div>
@@ -407,6 +403,19 @@ Registrar información del estudiante
                             <span class="text-muted" id="mostrar_cant_apoyo_educativo"></span>
                         </div>
                     </div>
+                    {{-- Campo: Rol --}}
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="col-4">
+                            <label for="rol">Rol: <i class="text-danger">*</i></label>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-control w-100" id="rol" name="rol" form="estudiante" required>
+                                <option value="Administrativo">Administrativo</option>
+                                <option value="Docente">Docente</option>
+                            </select>
+                        </div>
+                    </div>
+
                     {{-- Campo: Regimen administrativo  --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
