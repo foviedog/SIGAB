@@ -85,7 +85,7 @@ Registrar Actividad Interna
                             <label for="objetivos">Objetivos</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="objetivos" name="objetivos" multiple>
+                            <input type='text' class="form-control w-100" id="objetivos" name="objetivos">
                         </div>
                     </div>
 
@@ -118,7 +118,7 @@ Registrar Actividad Interna
                             <label for="proposito">Proposito <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="publico_dirigido" name="publico_dirigido" required>
+                            <select class="form-control w-100" id="proposito" name="proposito" required>
                                 <option value="Inducción">Inducción</option>
                                 <option value="Capacitación">Capacitación</option>
                                 <option value="Actualización">Actualización</option>
@@ -178,18 +178,18 @@ Registrar Actividad Interna
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
-                                <option value="Curso">Curso</option>
-                                <option value="Conferencia">Conferencia</option>
-                                <option value="Taller">Taller</option>
-                                <option value="Seminario">Seminario</option>
-                                <option value="Conversatorio">Conversatorio</option>
-                                <option value="Órgano colegiado">Órgano colegiado</option>
-                                <option value="Tutorías">Tutorías</option>
-                                <option value="Lectorías">Lectorías</option>
-                                <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
-                                <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
-                                <option value="Comisiones de trabajo">Comisiones de trabajo</option>
-                                <option value="Externa">Externa</option>
+                                <option value="0">Curso</option>
+                                <option value="1">Conferencia</option>
+                                <option value="2">Taller</option>
+                                <option value="3">Seminario</option>
+                                <option value="4">Conversatorio</option>
+                                <option value="5">Órgano colegiado</option>
+                                <option value="6">Tutorías</option>
+                                <option value="7">Lectorías</option>
+                                <option value="8">Tribunales de prueba de grado</option>
+                                <option value="9">Tribunales de defensas públicas</option>
+                                <option value="10">Comisiones de trabajo</option>
+                                <option value="11">Externa</option>
                             </select>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ Registrar Actividad Interna
                         </div>
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input " type="radio" name="certificacion" id="certificacion1" value="0" checked>
+                                <input class="form-check-input " type="radio" name="certificacion" id="certificacion1" value="0">
                                 <label class="form-check-label pr-5" for="certificacion1"> No </label>
                                 <input class="form-check-input" type="radio" name="certificacion" id="certificacion2" value="1">
                                 <label class="form-check-label" for="certificacion2"> Sí </label>
