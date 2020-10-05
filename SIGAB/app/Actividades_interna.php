@@ -9,8 +9,8 @@ class Actividades_interna extends Model
     protected $primaryKey = 'actividad_id';
     public $incrementing = false;
 
-    public function actividad(){
-        return $this->belongsTo('App\Actividad', 'id'); /* Revisar */
+    public function actividades(){
+        return $this->belongsTo('App\Actividades', 'id'); /* Revisar */
     }
 
 }

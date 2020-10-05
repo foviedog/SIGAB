@@ -87,5 +87,5 @@ Route::get('/personal/listar', 'PersonalController@index')->name('personal.lista
 //                                                           Control de Actividades Internas
 // ======================================================================================================================================
 /* Rutas para informacion de actividades internas */
-Route::get('/actividad-interna/registrar', 'ActividadeController@create')->name('actividad-interna.create');
-Route::post('/actividad-interna', 'ActividadeController@store');
+Route::get('/actividad-interna/registrar', 'ActividadesInternaController@create')->name('actividad-interna.create');
+Route::post('/actividad-interna', 'ActividadesInternaController@store');

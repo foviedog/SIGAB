@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Actividades extends Model
 {
+
     protected $table = 'actividades';
 
     public function personal(){
@@ -13,6 +14,6 @@ class Actividades extends Model
     }
 
     public function actividadInterna(){
-        return $this->hasOne('App\Actividades_interna', 'actividad_id'); /* Revisar */
+        return $this->belongsTo('App\Actividades_interna', 'actividad_id'); /* Revisar */
     }
 }
