@@ -23,7 +23,6 @@ class CreatePersonalTable extends Migration
             $table->string('jornada', 60)->nullable();
             $table->string('lugar_trabajo_externo', 60)->nullable();
             $table->integer('anio_propiedad')->nullable();
-            $table->string('carga_academica', 100)->nullable();
             $table->longText('experiencia_profesional')->nullable();
             $table->longText('experiencia_academica')->nullable();
             $table->string('regimen_administrativo', 45)->nullable();
