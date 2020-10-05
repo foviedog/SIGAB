@@ -78,9 +78,8 @@ Registrar guía académica
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="motivo" class="col-form-label">Motivo &nbsp;<i class="text-danger">*</i></label>
-                        <input type="text" class="form-control" id="motivo" name="motivo" required>
-                        <span class="text-muted" id="mostrar_cant_motivo"></span>
+                        <label for="motivo" class="col-form-label">Motivo &nbsp;<i class="text-danger">*</i></label><span class="text-muted" id="mostrar_motivo"></span>
+                        <input type="text" class="form-control" id="motivo" name="motivo" onkeyup="contarCaracteres(this,44)" required>
                     </div>
                 </div>
                 <div class="col">
@@ -102,20 +101,20 @@ Registrar guía académica
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i></label>
-                        <input type="text" class="form-control" id="lugar" name="lugar" required>
-                        <span class="text-muted" id="mostrar_cant_lugar_atencion"></span>
+                        <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i>
+                            <span class="text-muted" id="mostrar_lugar"></span>
+                        </label>
+                        <input type="text" class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,44)" required>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="situacion" class="col-form-label">Situación &nbsp;<i class="text-danger">*</i></label>
                 <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" required></textarea>
-                <span class="text-muted" id="mostrar_cant_situacion"></span>
             </div>
             <div class="form-group">
                 <label class="col-form-label" for="recomendaciones">Recomendaciones </label>
-                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" ></textarea>
+                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones"></textarea>
                 <span class="text-muted" id="mostrar_cant_recomendaciones"></span>
             </div>
         </div>
@@ -133,9 +132,11 @@ Registrar guía académica
 </div>
 
 @endsection
+
+
 {{-- Link al script de registro de registro guias academicas de estudiantes --}}
 @section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 @endsection
 
 @section('pie')

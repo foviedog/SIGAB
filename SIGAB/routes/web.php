@@ -80,8 +80,11 @@ Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoContr
 //                                                           Control de Personal
 // ======================================================================================================================================
 /* Ruta de detalle del estudiante*/
+
+Route::post('/personal', 'PersonalController@store');
 Route::get('/personal/registrar', 'PersonalController@create');
 Route::get('/personal/listar', 'PersonalController@index')->name('personal.listar');
+
 
 // ======================================================================================================================================
 //                                                           Control de Actividades Internas

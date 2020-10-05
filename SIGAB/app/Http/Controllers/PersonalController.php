@@ -12,8 +12,9 @@ class PersonalController extends Controller
 
 
 
-        //Devuevle el listado del personal ordenados por su apellido.
-        public function index(){
+    //Devuevle el listado del personal ordenados por su apellido.
+    public function index()
+    {
 
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
@@ -34,26 +35,66 @@ class PersonalController extends Controller
                 ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
         }
         //se devuelve la vista con los atributos de paginación del personal
-            return view('control_personal.listado', [
-                'personal' => $personal, // Listado de personal.
-                'paginaciones' => $paginaciones, // Listado de items de paginaciones.
-                'itemsPagina' => $itemsPagina, // Item que se desean por página.
-                'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
-            ]);
-        }
-
-
-
-
+        return view('control_personal.listado', [
+            'personal' => $personal, // Listado de personal.
+            'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+            'itemsPagina' => $itemsPagina, // Item que se desean por página.
+            'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
+        ]);
+    }
 
     public function create()
     {
         return view('control_personal.registrar');
     }
+    public function store(Request $request)
+    {
+        try { //se utiliza un try-catch para evitar el redireccionamiento a página default de error de Laravel
+
+            $persona = new Persona; //Se crea una nueva instacia de Persona
+            $personal = new Personal; //Se crea una nueva instacia de estudiante
+
+            //se setean los atributos del objeto
+            $persona->persona_id = $request->cedula;
+            $persona->nombre = $request->nombre;
+            $persona->apellido = $request->apellido;
+            $persona->fecha_nacimiento = $request->fecha_nacimiento;
+            $persona->telefono_fijo = $request->telefono_fijo;
+            $persona->telefono_celular = $request->telefono_celular;
+            $persona->correo_personal = $request->correo_personal;
+            $persona->correo_institucional = $request->correo_institucional;
+            $persona->estado_civil = $request->estado_civil;
+            $persona->direccion_residencia = $request->direccion_residencia;
+            $persona->genero = $request->genero;
+            $persona->save(); //se guarda el objeto en la base de datos
+
+            //se setean los atributos del objeto tipo personal
+            $personal->persona_id = $request->cedula;
+            $personal->carga_academica = $request->carga_academica;
+            $personal->grado_academico = $request->grado_academico;
+            $personal->tipo_nombramiento = $request->tipo_nombramiento;
+            $personal->tipo_puesto = $request->tipo_puesto;
+            $personal->jornada = $request->jornada;
+            $personal->lugar_trabajo_externo = $request->trabajo_externo;
+            $personal->anio_propiedad = $request->anio_propiedad;
+            $personal->experiencia_profesional = $request->experiencia_profesional;
+            $personal->experiencia_academica = $request->experiencia_academica;
+            $personal->regimen_administrativo = $request->regimen_administrativo;
+            $personal->regimen_docente = $request->regimen_docente;
+            $personal->area_especializacion_1 = $request->area_especializacion_1;
+            $personal->area_especializacion_2 = $request->area_especializacion_2;
+
+            $personal->save(); //se guarda el objeto en la base de datos
+            //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado
+            return Redirect::back()
+                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                ->with('personal_registrado', $personal); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
 
 
-
-
-
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina de registro estudiante
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
+    }
 }
-

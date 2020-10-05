@@ -8,11 +8,6 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('scripts')
-{{-- Link al script de registro de registro de estudiantes --}}
-<script src="{{ asset('js/control_educativo/informacion_graduaciones/registrar.js') }}" defer></script>
-@endsection
-
 @section('contenido')
 
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
@@ -85,20 +80,20 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
             <div class="d-flex justify-content-center flex-column mt-3">
                 {{-- Campo: Grado académico --}}
                 <div class="mb-3">
-                    <label for="grado_academico">Grado académico <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span></label>
-                    <input type='text' class="form-control" id="grado_academico" name="grado_academico" onkeyup="contarCarGradoAcademico(this)" required>
+                    <label for="grado_academico">Grado académico <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_grado_academico"></span></label>
+                    <input type='text' class="form-control" id="grado_academico" name="grado_academico" onkeyup="contarCaracteres(this,120)" required>
                 </div>
 
                 {{-- Campo: Carrera cursada--}}
                 <div class=" mb-3">
-                    <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_carrera_cursada"></span></label>
-                    <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeyup="contarCarCarrCursada(this)" required>
+                    <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_carrera_cursada"></span></label>
+                    <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeyup="contarCaracteres(this,80)" required>
                 </div>
 
                 {{-- Campo: Año de graduación --}}
                 <div class=" mb-3">
-                    <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span></label>
-                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" min="1975" required>
+                    <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_anio_graduacion"></span></label>
+                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCaracteres(this,4)" min="1975" required>
                 </div>
             </div>
 
@@ -112,6 +107,12 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+{{-- Link al script de registro de registro de estudiantes --}}
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ asset('js/global/mensajes.js') }}" defer></script>
 @endsection
 
 @section('pie')
