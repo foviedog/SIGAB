@@ -29,7 +29,7 @@ Listado de Personal
             </div>
             <div class="card-body">
                 {{-- // Form para la paginación y para la búsqueda del personal --}}
-                <form action="listado-estudiantil" method="GET" role="form" id="item-pagina">
+                <form action="{{ route('personal.listar' ) }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
