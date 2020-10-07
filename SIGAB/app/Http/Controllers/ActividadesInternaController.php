@@ -9,6 +9,29 @@ use App\Actividades_interna;
 class ActividadesInternaController extends Controller
 {
 
+        //Devuevle el listado de las actividades internas.
+        public function index()
+        {
+            // Array que devuelve los items que se cargan por página
+            $paginaciones = [5, 10, 25, 50];
+
+            //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+            //request se setea por defecto en 25 por página
+            $itemsPagina = request('itemsPagina', 25);
+
+            //Inner join de actividades internas con actividades
+            $actividades_internas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
+            ->paginate($itemsPagina); //Paginación de los resultados
+
+            //se devuelve la vista con los atributos de paginación de los estudiante
+            return view('control_actividades_internas.informacion_actividad.listado', [
+                'actividades-internas' => $actividades_internas, // Listado de actividades
+                'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+                'itemsPagina' => $itemsPagina // Item que se desean por página.
+            ]);
+        }
+
     //Retorna la vista de registrar actividades internas
     public function create()
     {
@@ -24,7 +47,6 @@ class ActividadesInternaController extends Controller
             $actividad_interna = new Actividades_interna; //Se crea una nueva instacia de la actividad interna
 
             //se setean los atributos del objeto
-            //$actividad->id =
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
             $actividad->estado = $request->estado;
