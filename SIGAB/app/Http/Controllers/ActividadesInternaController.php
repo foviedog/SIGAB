@@ -20,9 +20,9 @@ class ActividadesInternaController extends Controller
             $itemsPagina = request('itemsPagina', 25);
 
             //Inner join de actividades internas con actividades
-            $actividades_internas = Actividades_interna::join('actividades', 'actividades_interna.actividad_id', '=', 'actividades.id')
+            $actividades_internas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
-            ->paginate($itemsPagina);; //Paginación de los resultados
+            ->paginate($itemsPagina); //Paginación de los resultados
 
             //se devuelve la vista con los atributos de paginación de los estudiante
             return view('control_actividades_internas.informacion_actividad.listado', [
