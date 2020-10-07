@@ -17,6 +17,7 @@ class CreatePersonalTable extends Migration
             $table->string('persona_id', 15)->primary();
             $table->foreign('persona_id')->references('persona_id')->on('personas');
             $table->string('carga_academica', 250)->nullable();
+            $table->string('cargo', 15)->nullable();
             $table->string('grado_academico', 100)->nullable();
             $table->string('tipo_nombramiento', 40)->nullable();
             $table->string('tipo_puesto', 60)->nullable();
