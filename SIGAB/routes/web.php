@@ -93,5 +93,8 @@ Route::get('/personal/actualizar/{id_personal}', 'PersonalController@update')->n
 //                                                           Control de Actividades Internas
 // ======================================================================================================================================
 /* Rutas para informacion de actividades internas */
+//Registrar una actividad interna
 Route::get('/actividad-interna/registrar', 'ActividadesInternaController@create')->name('actividad-interna.create');
 Route::post('/actividad-interna', 'ActividadesInternaController@store');
+// Listado de actividades internas
+Route::get('/listado-actividad-interna', 'ActividadesInternaController@index')->name('listado-actividad-interna');

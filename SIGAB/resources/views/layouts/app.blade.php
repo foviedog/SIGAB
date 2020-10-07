@@ -91,6 +91,11 @@
                         <a href="{{ route('actividad-interna.create' ) }}">Añadir actividad interna</a>
                     </li>
                 </ul>
+                <ul class="collapse list-unstyled" id="controlActividades">
+                    <li>
+                        <a href="{{ route('listado-actividad-interna' ) }}">Listar actividades internas</a>
+                    </li>
+                </ul>
             </li>
             </ul>
 

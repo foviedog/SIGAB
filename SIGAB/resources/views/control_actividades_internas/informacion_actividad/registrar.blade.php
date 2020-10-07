@@ -38,10 +38,10 @@ Registrar Actividad Interna
                     {{-- Campo: Lugar --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="lugar">Lugar <i class="text-danger">*</i></label>
+                            <label for="lugar">Lugar </label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="lugar" name="lugar" required>
+                            <input type='text' class="form-control w-100" id="lugar" name="lugar">
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@ Registrar Actividad Interna
                     {{-- Campo: Estado --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="estado">Estado</label>
+                            <label for="estado">Estado <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="estado" name="estado" required>
@@ -69,13 +69,13 @@ Registrar Actividad Interna
                         </div>
                     </div>
 
-                    {{-- Campo: Descripcion --}}
+                    {{-- Campo: Descripción --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="descripcion">Descripcion</label>
+                            <label for="descripcion">Descripción <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="descripcion" name="descripcion">
+                            <textarea type='text' class="form-control w-100" id="descripcion" name="descripcion" required></textarea>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@ Registrar Actividad Interna
                     {{-- Campo: Responsable de coordinar --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="responsable_coordinar">Responsable de coordinar <i class="text-danger">*</i></label>
+                            <label for="responsable_coordinar">Responsable de coordinar<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='text' class="form-control w-100" id="responsable_coordinar" name="responsable_coordinar" required>
@@ -102,10 +102,10 @@ Registrar Actividad Interna
                     {{-- Campo: Evaluacion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="evaluacion">Evaluacion<i class="text-danger">*</i></label>
+                            <label for="evaluacion">Evaluación</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="evaluacion" name="evaluacion" required>
+                            <input type='text' class="form-control w-100" id="evaluacion" name="evaluacion">
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ Registrar Actividad Interna
                     {{-- Campo: Proposito--}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="proposito">Proposito <i class="text-danger">*</i></label>
+                            <label for="proposito">Propósito <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="proposito" name="proposito" required>
@@ -165,7 +165,7 @@ Registrar Actividad Interna
                     {{-- Campo: Duracion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="duracion">Duracion </label>
+                            <label for="duracion">Duración </label>
                         </div>
                         <div class="col-6">
                             <input type='number' min="0" class="form-control w-100" id="duracion" name="duracion">
@@ -174,7 +174,7 @@ Registrar Actividad Interna
                     {{-- Campo: Tipo de actividad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="tipo_actividad">Tipo actividad <i class="text-danger">*</i></label>
+                            <label for="tipo_actividad">Tipo de actividad <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
@@ -196,7 +196,7 @@ Registrar Actividad Interna
                     {{-- Campo: Ambito --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="ambito">Ambito</label>
+                            <label for="ambito">Ámbito<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="ambito" name="ambito" required>
@@ -208,7 +208,7 @@ Registrar Actividad Interna
                     {{-- Campo: Certificacion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="certificacion">Certificacion</label>
+                            <label for="certificacion">Certificación</label>
                         </div>
                         <div class="col-6">
                             <div class="form-check">
