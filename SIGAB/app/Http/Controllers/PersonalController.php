@@ -125,7 +125,18 @@ class PersonalController extends Controller
         }
     }
 
-
+    public function show($id_personal)
+    {
+        $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
+            ->where('personal.persona_id', '=', $id_personal)
+            ->first();
+        $idiomas = Idioma::where('persona_id', '=', $id_personal)
+            ->get();
+        return view('control_personal.detalle', [
+            'personal' => $personal,
+            'idiomas' => $idiomas
+        ]);
+    }
 
 
     //Metodo para actualizar los datos del personal

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Registrar información del estudiante
+Registrar información del personal
 @endsection
 
 @section('css')
@@ -116,14 +116,14 @@ Registrar información del estudiante
 
             </div>
             <div class="row d-flex justify-content-start py-3">
-                {{-- Link directo al estudiante recien agregado --}}
-                <a clas="btn btn-lg btn-rojo my-3" href="/personal/detalle/{{ $persona_insertado->persona_id }}">
-                    <input type="button" value="Editar" class="btn btn-rojo">
+                {{-- Link directo al personal recien agregado --}}
+                <a clas="btn btn-lg btn-rojo my-3" href="{{ route('estudiante.update',$estudiante->persona_id ) }}">
+                    Editar
                 </a>
             </div>
         </div>
 
-        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo estudiante:</div>
+        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo personal:</div>
         @endif
         {{-- Formulario para registrar informacion del personal --}}
         <form action="/personal" method="POST" enctype="multipart/form-data" id="personal">
@@ -288,11 +288,11 @@ Registrar información del estudiante
                         <div class="col-6">
                             <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal" required>
                                 <option value="" selected>Seleccione</option>
-                                <option value="Bachillerato(a)">Bachillerato(a)</option>
-                                <option value="Licenciado(a)">Licenciado(a)</option>
-                                <option value="Master(a)">Master(a)</option>
-                                <option value="Doctorado(a)">Doctorado(a)</option>
-                                <option value="Posdoctorado(a)">Posdoctorado(a)</option>
+                                <option value="Bachillerato">Bachillerato</option>
+                                <option value="Licenciatura">Licenciatura</option>
+                                <option value="Master">Master</option>
+                                <option value="Doctorado">Doctorado</option>
+                                <option value="Posdoctorado">Posdoctorado</option>
                             </select>
                         </div>
                     </div>
@@ -343,7 +343,7 @@ Registrar información del estudiante
                                 <option value="Docente">Docente</option>
                                 <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
                                 <option value="Participante de PPAA">Participante de PPAA</option>
-                                <option value="Responsable PPAA">Responsable PPAA</option>
+                                <option value="Responsable de PPAA">Responsable de PPAA</option>
                                 <option value="Técnico Auxiliar">Técnico Auxiliar</option>
                                 <option value="Biblioteca infantil">Biblioteca infantil</option>
                                 <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
@@ -520,7 +520,7 @@ Registrar información del estudiante
                 </div>
                 <div class="col">
                     <div class="d-flex justify-content-center  pt-5">
-                        {{-- Boton para agregar informacion del estudiante --}}
+                        {{-- Boton para agregar informacion del personal --}}
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-rojo" data-toggle="modal" data-target="#idomasModal">
                             Agragar idiomas
@@ -625,7 +625,7 @@ Registrar información del estudiante
             </div>
 
             <div class="d-flex justify-content-center  pt-5">
-                {{-- Boton para agregar informacion del estudiante --}}
+                {{-- Boton para agregar informacion del personal --}}
                 <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
             </div>
 
@@ -634,7 +634,7 @@ Registrar información del estudiante
 </div>
 @endsection
 @section('scripts')
-{{-- Link al script de registro de registro de estudiantes --}}
+{{-- Link al script de registro de registro de personal --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}" defer></script>
 @endsection
