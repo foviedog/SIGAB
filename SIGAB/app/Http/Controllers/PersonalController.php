@@ -97,4 +97,79 @@ class PersonalController extends Controller
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
+
+
+
+
+//Metodo para actualizar los datos del personal
+public function update($id_personal, Request $request)
+{
+    //Se obtiene la persona en base al ID
+    $persona = Persona::find($id_personal);
+
+    //Se obtiene el personal que contiene ese ID
+    $personal = Personal::find($id_personal);
+
+    // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
+    $persona->nombre = $request->nombre;
+    $persona->apellido = $request->apellido;
+    $persona->fecha_nacimiento = $request->fecha_nacimiento;
+    $persona->telefono_fijo = $request->telefono_fijo;
+    $persona->telefono_celular = $request->telefono_celular;
+    $persona->correo_personal = $request->correo_personal;
+    $persona->correo_institucional = $request->correo_institucional;
+    $persona->estado_civil = $request->estado_civil;
+    $persona->direccion_residencia = $request->direccion_residencia;
+    $persona->genero = $request->genero;
+
+    //Se guardan los datos de la persona
+    $persona->save();
+
+    //Datos asociados al personal (no incluye el ID ya que no debería ser posible editarlo)
+    $personal->carga_academica = $request->carga_academica;
+    $personal->grado_academico = $request->grado_academico;
+    $personal->tipo_nombramiento = $request->tipo_nombramiento;
+    $personal->tipo_puesto = $request->tipo_puesto;
+    $personal->jornada = $request->jornada;
+    $personal->lugar_trabajo_externo = $request->trabajo_externo;
+    $personal->anio_propiedad = $request->anio_propiedad;
+    $personal->experiencia_profesional = $request->experiencia_profesional;
+    $personal->experiencia_academica = $request->experiencia_academica;
+    $personal->regimen_administrativo = $request->regimen_administrativo;
+    $personal->regimen_docente = $request->regimen_docente;
+    $personal->area_especializacion_1 = $request->area_especializacion_1;
+    $personal->area_especializacion_2 = $request->area_especializacion_2;
+
+    //Se guardan los datos del personal
+    $personal->save();
+    //Llamado al método que actualiza la foto de perfil
+    $this->update_avatar($request, $personal);
+
+    //Se retorna el detalle del personal ya modificado
+    return redirect("/personal/detalle/{$personal->persona_id}");
+}
+
+public function update_avatar($request, $personal)
+{
+    if ($request->hasFile('avatar')) {
+
+        $avatar = $request->file('avatar');
+        $archivo = time() . '.' . $avatar->getClientOriginalExtension();
+        Image::make($avatar)->resize(300, 300)->save(public_path('/img/fotos/' . $archivo));
+
+        if ($personal->persona->imagen_perfil != "default.jpg")
+            File::delete(public_path('/img/fotos/' . $personal->persona->imagen_perfil)); //Elimina la foto anterior
+
+        $personal->persona->imagen_perfil = $archivo;
+        $personal->persona->save();
+    }
+
+    return \Redirect::back();
+}
+
+
+
+
+
+
 }

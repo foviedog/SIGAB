@@ -31,7 +31,7 @@ Listado Estudiantil
             </div>
             <div class="card-body">
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="listado-estudiantil" method="GET" role="form" id="item-pagina">
+                <form action="personal.listar" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
