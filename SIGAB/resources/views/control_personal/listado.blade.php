@@ -18,7 +18,7 @@ Listado de Personal
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control de Personal</h2>
             <div>
                 {{-- //Botón para añadir personal --}}
-                <a href="/estudiante/registrar" class="btn btn-rojo"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                <a href="{{ route('personal.create' ) }}" class="btn btn-rojo"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </a>
             </div>
         </div>
         {{-- // Contenedor de la tabla --}}
@@ -47,7 +47,7 @@ Listado de Personal
                             <div class="d-flex justify-content-end w-50">
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del personal --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o puesto"><i class="far fa-question-circle fa-lg"></i></span>
                                     &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable"  name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ Listado de Personal
                             <tr>
                                 <th>N° de Cédula</th>
                                 <th>Nombre</th>
-                                <th>Rol</th>
+                                <th>Puesto</th>
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
                                 <td><strong>Ver detalle<br /></strong></td>
@@ -87,7 +87,7 @@ Listado de Personal
                                 <td>{{ $perso->persona_id }}</td>
                                 {{-- Aquí se debería de agregar la foto del personal, si así se desea. --}}
                                 <td>{{ $perso->persona->apellido.", ". $perso->persona->nombre }}</td>
-                                <td>{{ $perso->rol }}</td>
+                                <td>{{ $perso->tipo_puesto }}</td>
                                 <td>{{ $perso->persona->telefono_celular }}<br /> </td>
                                 <td>
                                     <strong>
@@ -114,7 +114,7 @@ Listado de Personal
                             <tr>
                                 <td><strong>N° de Cédula<br /></strong></td>
                                 <td><strong>Nombre<strong></td>
-                                <td><strong>Rol<br /></strong></td>
+                                <td><strong>Puesto<br /></strong></td>
                                 <td><strong>Teléfono Celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>

@@ -26,6 +26,7 @@ class PersonalController extends Controller
         if (!is_null($filtro)) {
             $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id') //Inner join de personal con personas
                 ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
+                ->orWhere('personal.tipo_puesto', 'like', '%' . $filtro . '%') // Filtro para buscar tipo de puesto del personal
                 ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro . "%'") //Filtro para buscar por nombre completo
                 ->orderBy('personas.apellido', 'asc')
                 ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
