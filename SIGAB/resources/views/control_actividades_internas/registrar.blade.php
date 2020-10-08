@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Registrar Actividad Interna
+Registrar actividad interna
 @endsection
 
 @section('css')
@@ -10,7 +10,7 @@ Registrar Actividad Interna
 
 @section('scripts')
 {{-- Link al script de registro de actividades internas --}}
-<script src="{{ asset('js/control_actividades_internas/informacion_actividad/registrar.js') }}" defer></script>
+<script src="{{ asset('js/control_actividades_internas/registrar.js') }}" defer></script>
 @endsection
 
 @section('contenido')
@@ -22,6 +22,70 @@ Registrar Actividad Interna
         {{-- Formulario para registrar informacion del estudiante --}}
         <form action="/actividad-interna" method="POST" enctype="multipart/form-data" id="actividad-interna">
             @csrf
+
+
+            {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
+            @if(Session::has('mensaje'))
+            <div class="alert alert-success" role="alert">
+                {!! \Session::get('mensaje') !!}
+            </div>
+            @endif
+
+            {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
+            @php
+            $error = Session::get('error');
+            @endphp
+
+            @if(Session::has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ "¡Oops! Algo ocurrió. ".$error }}
+            </div>
+            @endif
+
+            {{-- Mensaje de que muestra el objeto insertado
+                    (solo se muestra si ha sido exitoso el registro)  --}}
+            @if(Session::has('actividad_interna_insertada'))
+            <div class="alert alert-dark" role="alert">
+
+                @php
+                //Se obtiene la actividad
+                $actividad_insertada = Session::get('actividad_insertada');
+                //Se obtiene actividad interna
+                $actividad_interna_insertada = Session::get('actividad_interna_insertada');
+                @endphp
+                //Datos de la actividad a mostrar en el mensaje de exito
+                Se insertó la actividad interna con lo siguientes datos: <br> <br>
+                <div class="row">
+                    <div class="col-6 text-justify">
+                        <b>ID de actividad: </b> {{$actividad_insertada->id}} <br>
+                        <b>Tema: </b> {{$actividad_insertada->tema}} <br>
+                        <b>Lugar: </b> {{$actividad_insertada->lugar ?? "No se digitó"}} <br>
+                        <b>Estado: </b> {{$actividad_insertada->estado}} <br>
+                        <b>Fecha de actividad: </b> {{$actividad_insertada->fecha_actividad}} <br>
+                        <b>Descripción: </b> {{$actividad_insertada->descripcion}} <br>
+                        <b>Evaluación: </b> {{$actividad_insertada->evaluacion}} <br>
+                        <b>Objetivos: </b> {{$actividad_insertada->objetivos ?? "No se digitó" }} <br>
+                        <b>Responsable de coordinar: </b> {{$actividad_insertada->responsable_coordinar}} <br>
+                        <b>Tipo de actividad: </b> {{$actividad_interna_insertada->tipo_actividad}} <br>
+                        <b>Propósito: </b> {{$actividad_interna_insertada->proposito}} <br>
+                        <b>Facilitador: </b> {{$actividad_interna_insertada->facilitador_actividad ?? "No se digitó" }} <br>
+                        <b>Agenda: </b> {{$actividad_interna_insertada->agenda ?? "No se digitó"}} <br>
+                        <b>Ámbito: </b> {{$actividad_interna_insertada->ambito}} <br>
+                        <b>Duración: </b> {{$actividad_interna_insertada->duracion ?? "No se digitó"}} <br>
+                        <b>Certificación: </b> {{$actividad_interna_insertada->certificacion_actividad ?? "No se digitó"}} <br>
+                        <b>Público dirigido: </b> {{$actividad_interna_insertada->publico_dirigido}} <br>
+
+                        {{-- Link directo al detalle de la actividad recien agregada --}}
+                        <br>
+                        <a clas="btn btn-rojo" href="#">
+                            <input type="button" value="Editar" class="btn btn-rojo">
+                        </a>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            @endif
+
             <div class="row">
                 {{-- Campos de la izquierda --}}
                 <div class="col">
@@ -85,7 +149,7 @@ Registrar Actividad Interna
                             <label for="objetivos">Objetivos</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="objetivos" name="objetivos">
+                            <textarea type='text' class="form-control w-100" id="objetivos" name="objetivos"></textarea>
                         </div>
                     </div>
 
@@ -98,16 +162,17 @@ Registrar Actividad Interna
                             <input type='text' class="form-control w-100" id="responsable_coordinar" name="responsable_coordinar" required>
                         </div>
                     </div>
-
-                    {{-- Campo: Evaluacion --}}
+                    {{-- Campo: Facilitador de actividad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="evaluacion">Evaluación</label>
+                            <label for="facilitador_actividad">Facilitador de actividad </label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="evaluacion" name="evaluacion">
+                            <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad">
                         </div>
                     </div>
+
+
                 </div>
 
                 {{-- Campos de la derecha --}}
@@ -122,7 +187,29 @@ Registrar Actividad Interna
                                 <option value="Inducción">Inducción</option>
                                 <option value="Capacitación">Capacitación</option>
                                 <option value="Actualización">Actualización</option>
-                                <option value="involucramiento del personal">Involucramiento del personal</option>
+                                <option value="Involucramiento del personal">Involucramiento del personal</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{-- Campo: Tipo de actividad --}}
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="col-4">
+                            <label for="tipo_actividad">Tipo de actividad <i class="text-danger">*</i></label>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
+                                <option value="Curso">Curso</option>
+                                <option value="Conferencia">Conferencia</option>
+                                <option value="Taller">Taller</option>
+                                <option value="Seminario">Seminario</option>
+                                <option value="Conversatorio">Conversatorio</option>
+                                <option value="Órgano colegiado">Órgano colegiado</option>
+                                <option value="Tutorías">Tutorías</option>
+                                <option value="Lectorías">Lectorías</option>
+                                <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
+                                <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
+                                <option value="Comisiones de trabajo">Comisiones de trabajo</option>
+                                <option value="Externa">Externa</option>
                             </select>
                         </div>
                     </div>
@@ -141,16 +228,16 @@ Registrar Actividad Interna
                             </select>
                         </div>
                     </div>
-
-                    {{-- Campo: Facilitador de actividad --}}
+                    {{-- Campo: Certificacion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="facilitador_actividad">Facilitador de actividad </label>
+                            <label for="certificacion">Certificación</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad">
+                            <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad">
                         </div>
                     </div>
+
 
                     {{-- Campo: Agenda --}}
                     <div class="d-flex justify-content-start mb-3">
@@ -171,28 +258,6 @@ Registrar Actividad Interna
                             <input type='number' min="0" class="form-control w-100" id="duracion" name="duracion">
                         </div>
                     </div>
-                    {{-- Campo: Tipo de actividad --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="tipo_actividad">Tipo de actividad <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
-                                <option value="0">Curso</option>
-                                <option value="1">Conferencia</option>
-                                <option value="2">Taller</option>
-                                <option value="3">Seminario</option>
-                                <option value="4">Conversatorio</option>
-                                <option value="5">Órgano colegiado</option>
-                                <option value="6">Tutorías</option>
-                                <option value="7">Lectorías</option>
-                                <option value="8">Tribunales de prueba de grado</option>
-                                <option value="9">Tribunales de defensas públicas</option>
-                                <option value="10">Comisiones de trabajo</option>
-                                <option value="11">Externa</option>
-                            </select>
-                        </div>
-                    </div>
                     {{-- Campo: Ambito --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
@@ -205,18 +270,13 @@ Registrar Actividad Interna
                             </select>
                         </div>
                     </div>
-                    {{-- Campo: Certificacion --}}
+                    {{-- Campo: Evaluacion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="certificacion">Certificación</label>
+                            <label for="evaluacion">Evaluación</label>
                         </div>
                         <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input " type="radio" name="certificacion" id="certificacion1" value="0">
-                                <label class="form-check-label pr-5" for="certificacion1"> No </label>
-                                <input class="form-check-input" type="radio" name="certificacion" id="certificacion2" value="1">
-                                <label class="form-check-label" for="certificacion2"> Sí </label>
-                            </div>
+                            <input type='text' class="form-control w-100" id="evaluacion" name="evaluacion">
                         </div>
                     </div>
                 </div>

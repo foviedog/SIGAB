@@ -21,7 +21,7 @@ class CreateActividadesTable extends Migration
             $table->date('fecha_actividad')->nullable();
             $table->longText('descripcion')->nullable();
             $table->string('evaluacion', 45)->nullable();
-            $table->string('objetivos', 45)->nullable();
+            $table->longText('objetivos')->nullable();
             $table->string('responsable_coordinar', 15);
             $table->foreign('responsable_coordinar')->references('persona_id')->on('personal');
             $table->timestamps();
