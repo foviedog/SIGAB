@@ -11,49 +11,6 @@ Detalle del personal {{ $personal->persona->nombre }}
 @section('scripts')
 <script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}" defer></script>
 @endsection
-
-@section('contenido')
-
-<!-- Modal de idiomas -->
-<div class="modal fade" id="idomasModal" tabindex="-1" aria-labelledby="idomasModalLabel" data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered ">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h5 class="modal-title font-weight-light d-flex  justify-content-center" id="idomasModalLabel">Agregar idiomas de un personal</h5>
-
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="alert alert-danger text-center font-weight-bold" role="alert" id="alert-idiomas">
-                        Complete todos los campos.
-                    </div>
-                    <div class="form-group">
-                        <form name="agregar-nombre" id="agregar-nombre">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="lista-idiomas">
-                                    <tr>
-                                        <td><input type="text" name="name[]" placeholder="Nombre del idioma" class="form-control idioma" value="{{ $idiomas[0]->nombre }}" /></td>
-                                        <td><button type="button" name="agregar-btn" id="agregar-btn" class="btn btn-contorno-rojo"> <i class="fas fa-plus-circle"></i> Agregar otro idioma</button></td>
-                                    </tr>
-                                    @for ($i = 1; $i < count($idiomas); $i++) <tr id="row{{ $i }}" class="idiomaRow">
-                                        <td><input type="text" name="name[]" placeholder="Nombre de idioma" class="form-control idioma" value="{{ $idiomas[$i]->nombre }}" /></td>
-                                        <td><button type="button" name="eliminar-idioma" id="{{ $i }}" class="btn btn-gris eliminar-idioma-btn"><i class="fas fa-minus-circle"></i></button></td>
-                                        </tr>
-                                        @endfor
-
-                                </table>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer d-flex  justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar-idiomas"> Borrar todo y cancelar </button>
-                <button type="button" class="btn btn-rojo" id="aceptar-idiomas"> Aceptar </button>
-            </div>
-        </div>
-    </div>
-</div>
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
 $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
@@ -81,8 +38,55 @@ $regimenes_administrativos = ['Categoría 21 (Técnico Auxiliar)','Categoría 23
 $regimenes_docentes = ["Categoría 87 (Profesor Instructor Bachiller)","Categoría 88 (Profesor Instructor Licenciado)","Categoría 89 (Profesor I)",
 "Categoría 90 (Profesor II)","Categoría 91 (Catedrático)"];
 
-
+if(!is_null($idiomas)){
+$idiomas = [];
+}
 @endphp
+
+@section('contenido')
+
+<!-- Modal de idiomas -->
+<div class="modal fade" id="idomasModal" tabindex="-1" aria-labelledby="idomasModalLabel" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title font-weight-light d-flex  justify-content-center" id="idomasModalLabel">Agregar idiomas de un personal</h5>
+
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="alert alert-danger text-center font-weight-bold" role="alert" id="alert-idiomas">
+                        Complete todos los campos.
+                    </div>
+                    <div class="form-group">
+                        <form name="agregar-nombre" id="agregar-nombre">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="lista-idiomas">
+                                    <tr>
+                                        <td><input type="text" name="name[]" placeholder="Nombre del idioma" class="form-control idioma" @if(count($idiomas)> 0)
+                                            value="{{ idiomas[0]->nombre }}"
+                                            @endif /></td>
+                                        <td><button type="button" name="agregar-btn" id="agregar-btn" class="btn btn-contorno-rojo"> <i class="fas fa-plus-circle"></i> Agregar otro idioma</button></td>
+                                    </tr>
+                                    @for ($i = 1; $i < count($idiomas); $i++) <tr id="row{{ $i }}" class="idiomaRow">
+                                        <td><input type="text" name="name[]" placeholder="Nombre de idioma" class="form-control idioma" value="{{ $idiomas[$i]->nombre }}" /></td>
+                                        <td><button type="button" name="eliminar-idioma" id="{{ $i }}" class="btn btn-gris eliminar-idioma-btn"><i class="fas fa-minus-circle"></i></button></td>
+                                        </tr>
+                                        @endfor
+
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex  justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar-idiomas"> Borrar todo y cancelar </button>
+                <button type="button" class="btn btn-rojo" id="aceptar-idiomas"> Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- Formulario general de personal --}}
 <form action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
