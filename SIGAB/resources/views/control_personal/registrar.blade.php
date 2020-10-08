@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Registrar información del estudiante
+Registrar información del personal
 @endsection
 
 @section('css')
@@ -10,6 +10,42 @@ Registrar información del estudiante
 
 
 @section('contenido')
+
+
+<!-- Modal de idiomas -->
+<div class="modal fade" id="idomasModal" tabindex="-1" aria-labelledby="idomasModalLabel" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title font-weight-light d-flex  justify-content-center" id="idomasModalLabel">Agregar idiomas de un personal</h5>
+
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="alert alert-danger text-center font-weight-bold" role="alert" id="alert-idiomas">
+                        Complete todos los campos.
+                    </div>
+                    <div class="form-group">
+                        <form name="agregar-nombre" id="agregar-nombre">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="lista-idiomas">
+                                    <tr>
+                                        <td><input type="text" name="name[]" placeholder="Nombre del idioma" class="form-control idioma" /></td>
+                                        <td><button type="button" name="agregar-btn" id="agregar-btn" class="btn btn-contorno-rojo"> <i class="fas fa-plus-circle"></i> Agregar otro idioma</button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex  justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar-idiomas"> Borrar todo y cancelar </button>
+                <button type="button" class="btn btn-rojo" id="aceptar-idiomas"> Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-body">
@@ -47,8 +83,8 @@ Registrar información del estudiante
             @endphp
 
             <span class="my-3 font-weight-bolder">Se registró el personal exitosamente con lo siguientes datos:</span>
-            <div class="row">
-                <div class="col-5 text-justify">
+            <div class="row ">
+                <div class="col-6 ">
                     <b>Cédula:</b> {{ $persona_insertado->persona_id }} <br>
                     <b>Nombre/s:</b> {{ $persona_insertado->nombre }} <br>
                     <b>Apellido/s:</b> {{ $persona_insertado->apellido }} <br>
@@ -61,17 +97,11 @@ Registrar información del estudiante
                     <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
                     <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
                     <b>Grado academico:</b> {{ $personal_registrado->grado_academico ?? "No se digitó" }} <br>
-
-                </div>
-                <div class="col-1 d-flex align-items-end">
-                    {{-- Link directo al estudiante recien agregado --}}
-                    <a clas="btn btn-lg btn-rojo my-3" href="/personal/detalle/{{ $persona_insertado->persona_id }}">
-                        <input type="button" value="Editar" class="btn btn-rojo">
-                    </a>
-
                 </div>
 
-                <div class="col-5 text-justify">
+
+                <div class="col-6 ">
+                    <b>Tipo de cargo:</b> {{ $personal_registrado->cargo?? "No se digitó" }} <br>
                     <b>Tipo de nombramiento:</b> {{ $personal_registrado->tipo_nombramiento ?? "No se digitó" }} <br>
                     <b>Tipo de puesto:</b> {{ $personal_registrado->tipo_puesto ?? "No se digitó" }} <br>
                     <b>Jornada laboral:</b> {{ $personal_registrado->jornada ?? "No se digitó" }} <br>
@@ -82,22 +112,27 @@ Registrar información del estudiante
                     <b>Regimen docente:</b> {{ $personal_registrado->regimen_docente ?? "No se digitó" }} <br>
                     <b>Area de especialización 1:</b> {{ $personal_registrado->area_especializacion_1 ?? "No se digitó" }} <br>
                     <b>Area de especialización 2:</b> {{ $personal_registrado->area_especializacion_2 ?? "No se digitó" }} <br>
-
                 </div>
 
             </div>
+            <div class="row d-flex justify-content-start py-3">
+                {{-- Link directo al personal recien agregado --}}
+                <a clas="btn btn-lg btn-rojo my-3" href="{{ route('estudiante.update',$estudiante->persona_id ) }}">
+                    Editar
+                </a>
+            </div>
         </div>
 
-        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo estudiante:</div>
+        <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo personal:</div>
         @endif
         {{-- Formulario para registrar informacion del personal --}}
         <form action="/personal" method="POST" enctype="multipart/form-data" id="personal">
             @csrf
+            <input type="hidden" name="idiomasForm" id="idiomasForm">
             <div class="row">
 
                 {{-- Campos de la izquierda --}}
                 <div class="col">
-
                     {{-- Campo: Cedula --}}
                     <div class="d-flex justify-content-start mb-4">
                         <div class="col-4">
@@ -222,7 +257,7 @@ Registrar información del estudiante
                             <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required></textarea>
+                            <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required></textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -253,11 +288,11 @@ Registrar información del estudiante
                         <div class="col-6">
                             <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal" required>
                                 <option value="" selected>Seleccione</option>
-                                <option value="Bachillerato(a)">Bachillerato(a)</option>
-                                <option value="Licenciado(a)">Licenciado(a)</option>
-                                <option value="Master(a)">Master(a)</option>
-                                <option value="Doctorado(a)">Doctorado(a)</option>
-                                <option value="Posdoctorado(a)">Posdoctorado(a)</option>
+                                <option value="Bachillerato">Bachillerato</option>
+                                <option value="Licenciatura">Licenciatura</option>
+                                <option value="Master">Master</option>
+                                <option value="Doctorado">Doctorado</option>
+                                <option value="Posdoctorado">Posdoctorado</option>
                             </select>
                         </div>
                     </div>
@@ -281,6 +316,19 @@ Registrar información del estudiante
                 {{-- Campos de la derecha --}}
                 <div class="col">
 
+                    {{-- Campo: tipo de cargo --}}
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="col-4">
+                            <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-control w-100" id="cargo" name="cargo" form="personal" required>
+                                <option value="" selected>Seleccione</option>
+                                <option value="Administrativo">Administrativo</option>
+                                <option value="Académico">Académico</option>
+                            </select>
+                        </div>
+                    </div>
                     {{-- Campo: tipo de puesto --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
@@ -295,7 +343,7 @@ Registrar información del estudiante
                                 <option value="Docente">Docente</option>
                                 <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
                                 <option value="Participante de PPAA">Participante de PPAA</option>
-                                <option value="Responsable PPAA">Responsable PPAA</option>
+                                <option value="Responsable de PPAA">Responsable de PPAA</option>
                                 <option value="Técnico Auxiliar">Técnico Auxiliar</option>
                                 <option value="Biblioteca infantil">Biblioteca infantil</option>
                                 <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
@@ -451,11 +499,133 @@ Registrar información del estudiante
 
 
                 </div>
+            </div>
+            <div class="row pb-4">
+                <div class="col pt-5">
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="col-4">
+                            <label for="residencias">Participaciones: <i class="text-danger">*</i></label>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input " type="radio" name="EscogePparticipaciones" id="noParticipacion" value="0" checked>
+                                <label class="form-check-label pr-5" for="participaciones1"> No </label>
 
+                                <input class="form-check-input" type="radio" name="EscogePparticipaciones" id="siParticipacion" value="1">
+                                <label class="form-check-label" for="participaciones2"> Sí </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="d-flex justify-content-center  pt-5">
+                        {{-- Boton para agregar informacion del personal --}}
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-rojo" data-toggle="modal" data-target="#idomasModal">
+                            Agragar idiomas
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="participaciones">
+                <div class="row pt-4 border-top border-gray">
+                    <div class="col">
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="capacitacion_didactica">Capacitación didactica: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_capacitacion_didactica"></span>
+
+                        </div>
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="publicaciones">Publicaciones: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_publicaciones"></span>
+
+                        </div>
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="cursos_impartidos">Cursos impartidos: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_cursos_impartidos"></span>
+                        </div>
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="evaluacion_interna_ppaa">Evaluación interna PPAA: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_evaluacion_interna_ppaa"></span>
+
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="miembro_comisiones">Miembro comisiones: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_miembro_comisiones"></span>
+
+                        </div>
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="miembro_prueba_grado">Miembro prueba de grado: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_miembro_prueba_grado"></span>
+
+                        </div>
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="evaluador_defensa_publica">Evaluador defensa pública: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_evaluador_defensa_publica"></span>
+                        </div>
+                        <div class="d-flex justify-content-start mb-3">
+                            <div class="col-4">
+                                <label for="evaluacion_externa_ppaa">Evaluación externa PPAA: </label>
+                            </div>
+                            <div class="col-6">
+                                <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
+                            <span class="text-muted" id="mostrar_evaluacion_externa_ppaa"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="col-6">
+                        <label for="reconocimientos">Reconocimientos: </label>
+                        <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
+                    </div>
+                    <span class="text-muted" id="mostrar_reconocimientos"></span>
+                </div>
             </div>
 
             <div class="d-flex justify-content-center  pt-5">
-                {{-- Boton para agregar informacion del estudiante --}}
+                {{-- Boton para agregar informacion del personal --}}
                 <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
             </div>
 
@@ -464,8 +634,9 @@ Registrar información del estudiante
 </div>
 @endsection
 @section('scripts')
-{{-- Link al script de registro de registro de estudiantes --}}
+{{-- Link al script de registro de registro de personal --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}" defer></script>
 @endsection
 
 @section('pie')

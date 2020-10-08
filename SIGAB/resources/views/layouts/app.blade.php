@@ -71,7 +71,7 @@
                 </a>
                 <ul class="collapse list-unstyled" id="controlPersonal">
                     <li>
-                        <a href="#">Añadir personal</a>
+                        <a href="{{ route('personal.create' ) }}">Añadir personal</a>
                     </li>
                     <li>
                         <a href="{{ route('personal.listar' ) }}">Listar Personal</a>

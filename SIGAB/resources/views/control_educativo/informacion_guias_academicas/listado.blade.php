@@ -43,7 +43,7 @@ Listado de Guías Académicas
         </div>
 
         {{-- MODAL para ver el detalle de una guía académica--}}
-        <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledby="detalle-guia-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledb{{ route('personal.create' ) }}y="detalle-guia-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">

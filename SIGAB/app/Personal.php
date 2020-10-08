@@ -22,12 +22,11 @@ class Personal extends Model
 
     public function idiomas()
     {
-        return $this->hasOne('App\Idioma', 'persona_id');
+        return $this->hasMany('App\Idioma', 'persona_id');
     }
 
     public function actividad()
     {
         return $this->belongsTo('App\Actividad', 'id'); /* Revisar */
     }
-
 }
