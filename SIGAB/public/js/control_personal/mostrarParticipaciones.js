@@ -2,16 +2,27 @@
 
 $(document).ready(function () {
 
-$('#participaciones').hide();
 $("#alert-idiomas").hide();
 
-$('#siParticipacion').on('click', function () {
-    $('#participaciones').show();
-})
+    // $('#registrar-btn-part').on('click', function () {
+    //     $('#participaciones-ref').removeClass('active');
+    //     $('#infoParticipaciones').promise().done(function() {
+    //         $('#registrar-btn').trigger("click");
+    //     });
 
-$('#noParticipacion').on('click', function () {
-    $('#participaciones').hide();
-})
+    // });
+    $('#participaciones-ref').on('click', function (e) {
+        e.preventDefault();
+        var $personalForm = $('#personal-form');
+
+        if (!$personalForm[0].checkValidity()) {
+            console.log($personalForm[0].checkValidity());
+            $('#registrar-btn').trigger("click");
+        } else {
+            $('#general').removeClass('active');
+            $('#infoParticipaciones').tab('show');
+        }
+    });
 
     var i = 0;
     var coleccionIdiomas = [];
@@ -37,8 +48,8 @@ $('#noParticipacion').on('click', function () {
         let inputs = $(".idioma");
 
         let i = 0;
-        $.each(inputs, function (key, value) {
-            idiomas.push(value.value);
+        $.each(inputs, function (key, input) {
+            idiomas.push(input.value);
         });
         return idiomas;
     }
@@ -61,9 +72,7 @@ $('#noParticipacion').on('click', function () {
             for (let i = 0; i <= coleccionIdiomas.length; i++) {
                 $('.idiomaRow').remove();
             }
-
             $('.idioma').val('');
-
         });
 
 

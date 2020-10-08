@@ -53,7 +53,6 @@ Registrar información del personal
         <hr>
 
 
-
         {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
         @if(Session::has('mensaje'))
         <div class="alert alert-success" role="alert">
@@ -116,8 +115,8 @@ Registrar información del personal
 
             </div>
             <div class="row d-flex justify-content-start py-3">
-                {{-- Link directo al personal recien agregado --}}
-                <a clas="btn btn-lg btn-rojo my-3" href="{{ route('estudiante.update',$estudiante->persona_id ) }}">
+                {{-- Link para modificiar al personal recien agregado --}}
+                <a clas="btn btn-lg btn-rojo my-3" href="{{ route('personal.show',$personal_registrado->persona_id ) }}">
                     Editar
                 </a>
             </div>
@@ -125,512 +124,498 @@ Registrar información del personal
 
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo personal:</div>
         @endif
+
+
         {{-- Formulario para registrar informacion del personal --}}
-        <form action="/personal" method="POST" enctype="multipart/form-data" id="personal">
+        <form action="/personal" method="POST" enctype="multipart/form-data" id="personal-form">
             @csrf
             <input type="hidden" name="idiomasForm" id="idiomasForm">
-            <div class="row">
+            <div class="tab-content ">
+                <div class="tab-pane pt-4 active" id="general">
 
-                {{-- Campos de la izquierda --}}
-                <div class="col">
-                    {{-- Campo: Cedula --}}
-                    <div class="d-flex justify-content-start mb-4">
-                        <div class="col-4">
-                            <label for="cedula">Cédula: <i class="text-danger">*</i></label>
+                    <div class="row">
+
+                        {{-- Campos de la izquierda --}}
+                        <div class="col">
+                            {{-- Campo: Cedula --}}
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="col-4">
+                                    <label for="cedula">Cédula: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,15)" required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_cedula"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Nombre --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_nombre"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Apellidos --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_apellido"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Fecha de nacimiento --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Telefono fijo --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="telefono_fijo">Teléfono fijo:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)">
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_telefono_fijo"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Telefono celular --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="telefono_celular">Teléfono celular:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)">
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_telefono_celular"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Correo personal --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="correo_personal">Correo personal:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,45)" multiple>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_correo_personal"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Correo institucional --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,45)" multiple required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_cant_correo_institucional"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Estado civil --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Soltero(a)"> Soltero(a)</option>
+                                        <option value="Casado(a)"> Casado(a) </option>
+                                        <option value="Viudo(a)"> Viudo(a) </option>
+                                        <option value="Divorciado(a)"> Divorciado(a) </option>
+                                        <option value="Unión libre"> Unión libre </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Direccion de residencia --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required></textarea>
+                                </div>
+                                <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_direccion_residencia"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Genero --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="genero">Género: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="genero" name="genero" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Grado académico --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="grado_academico">Grado académico: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Bachillerato">Bachillerato</option>
+                                        <option value="Licenciatura">Licenciatura</option>
+                                        <option value="Master">Master</option>
+                                        <option value="Doctorado">Doctorado</option>
+                                        <option value="Posdoctorado">Posdoctorado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- Campo: tipo de nombramiento --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="tipo_nombramiento">Tipo de nombramiento: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="tipo_nombramiento" name="tipo_nombramiento" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Interino">Interino</option>
+                                        <option value="Propietario">Propietario</option>
+                                        <option value="Plazo fijo">Plazo fijo</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,15)" required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_cedula"></span>
+
+
+                        {{-- Campos de la derecha --}}
+                        <div class="col">
+
+                            {{-- Campo: tipo de cargo --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="cargo" name="cargo" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Administrativo">Administrativo</option>
+                                        <option value="Académico">Académico</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- Campo: tipo de puesto --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="tipo_puesto">Tipo de puesto: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="tipo_puesto" name="tipo_puesto" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Secretaría">Secretaría</option>
+                                        <option value="Dirección">Dirección</option>
+                                        <option value="Subdirección">Subdirección</option>
+                                        <option value="Docente">Docente</option>
+                                        <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
+                                        <option value="Participante de PPAA">Participante de PPAA</option>
+                                        <option value="Responsable de PPAA">Responsable de PPAA</option>
+                                        <option value="Técnico Auxiliar">Técnico Auxiliar</option>
+                                        <option value="Biblioteca infantil">Biblioteca infantil</option>
+                                        <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
+                                        <option value="Profesional Asistencial en Desarrollo Tecnológico">Profesional Asistencial en Desarrollo Tecnológico</option>
+                                        <option value="Profesional Ejecutivo en Desarrollo Documental">Profesional Ejecutivo en Desarrollo Documental</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- Campo: Regimen administrativo  --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="regimen_administrativo">Regimen administrativo:</label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Categoría 21 (Técnico Auxiliar)">Categoría 21 (Técnico Auxiliar)</option>
+                                        <option value="Categoría 23 (Técnico General 1-2-3)">Categoría 23 (Técnico General 1-2-3)</option>
+                                        <option value="Categoría 24 (Técnico Analista 1-2-3)">Categoría 24 (Técnico Analista 1-2-3)</option>
+                                        <option value="Categoría 32 (Profesional Asistencial 1-2-3-4-5)">Categoría 32 (Profesional Asistencial 1-2-3-4-5)</option>
+                                        <option value="Categoría 34 (Profesional Ejecutivo 1-2-3-4)">Categoría 34 (Profesional Ejecutivo 1-2-3-4)</option>
+                                        <option value="Categoría 35 (Profesional Analista 1-2-3)">Categoría 35 (Profesional Analista 1-2-3)</option>
+                                        <option value="Categoría 36 (Profesional Especialista)">Categoría 36 (Profesional Especialista)</option>
+                                        <option value="Categoría 37 (Profesional Asesor de Procesos 1-2)">Categoría 37 (Profesional Asesor de Procesos 1-2)</option>
+                                        <option value="Categoría 38 (Profesional Asesor General)">Categoría 38 (Profesional Asesor General)</option>
+                                        <option value="Categoría 42 (Director Ejecutivo)">Categoría 42 (Director Ejecutivo)</option>
+                                        <option value="Categoría 43 (Director Especialista)">Categoría 43 (Director Especialista)</option>
+                                        <option value="Categoría 44 (Director Asesor)">Categoría 44 (Director Asesor)</option>
+                                    </select>
+                                </div>
+                                <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+
+                            </div>
+
+                            {{-- Campo: Regimen docente  --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="regimen_docente">Regimen docente:</label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Categoría 87 (Profesor Instructor Bachiller)">Categoría 87 (Profesor Instructor Bachiller)</option>
+                                        <option value="Categoría 88 (Profesor Instructor Licenciado)">Categoría 88 (Profesor Instructor Licenciado)</option>
+                                        <option value="Categoría 89 (Profesor I)">Categoría 89 (Profesor I)</option>
+                                        <option value="Categoría 90 (Profesor II)">Categoría 90 (Profesor II) </option>
+                                        <option value="Categoría 91 (Catedrático)">Categoría 91 (Catedrático)</option>
+                                    </select>
+                                </div>
+                                <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+
+                            </div>
+
+                            {{-- Campo: Jornada --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="jornada" name="jornada" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Por horas">Por horas</option>
+                                        <option value="Ciclo lectivo">Ciclo lectivo</option>
+                                        <option value="Año">Año</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Lugar de trabajo externo --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="trabajo_externo">Lugar de trabajo externo: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_trabajo_externo"></span>
+                                </div>
+                            </div>
+                            {{-- Campo: Año de propiedad --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="anio_propiedad">Año de propiedad: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_anio_propiedad"></span>
+                                </div>
+                            </div>
+                            {{-- Campo: Area de especialización 1 --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="area_especializacion_1">Area de especialización 1 : <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)" required>
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_area_especializacion_1"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Area de especialización 2  --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="area_especializacion_2">Area de esplización 2:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCaracteres(this,100)">
+                                </div>
+                                <div class="col-1">
+                                    <span class="text-muted" id="mostrar_area_especializacion_2"></span>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Experiencia profesional  --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="experiencia_profesional"> Experiencia profesional:</label>
+                                </div>
+                                <div class="col-6">
+                                    <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3"></textarea>
+                                </div>
+                                <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+
+                            </div>
+
+                            {{-- Campo: Experiencia académica  --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="experiencia_academica">Experiencia académica:</label>
+                                </div>
+                                <div class="col-6">
+                                    <textarea class="form-control w-100" id="experiencia_academica" name="experiencia_academica" rows="3"></textarea>
+                                </div>
+                                <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+
+                            </div>
+                            {{-- Campo: carga_academica --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="carga_academica">Carga académica: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <textarea class="form-control w-100" id="carga_academica" name="carga_academica" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                </div>
+                                <span class="text-muted" id="mostrar_carga_academica"></span>
+
+                            </div>
+
+
                         </div>
                     </div>
 
-                    {{-- Campo: Nombre --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
+                    <div class="row pb-4">
+
+                        <div class="col">
+                            <div class="d-flex justify-content-center  pt-5">
+                                {{-- Boton para agregar informacion del personal --}}
+                                <!-- Button trigger modal idiomas -->
+                                <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#idomasModal">
+                                    Agregar idiomas
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_nombre"></span>
+                        <div class="col pt-5">
+                            <div class="d-flex justify-content-center mb-3">
+                                <a class="btn btn-contorno-rojo" id="participaciones-ref">Participaciones &nbsp;<i class="fas fa-chevron-right"></i></a>
+                            </div>
                         </div>
                     </div>
 
-                    {{-- Campo: Apellidos --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_apellido"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Fecha de nacimiento --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Telefono fijo --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="telefono_fijo">Teléfono fijo:</label>
-                        </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)">
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_telefono_fijo"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Telefono celular --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="telefono_celular">Teléfono celular:</label>
-                        </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)">
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_telefono_celular"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Correo personal --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="correo_personal">Correo personal:</label>
-                        </div>
-                        <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,45)" multiple>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_correo_personal"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Correo institucional --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,45)" multiple required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_cant_correo_institucional"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Estado civil --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Soltero(a)"> Soltero(a)</option>
-                                <option value="Casado(a)"> Casado(a) </option>
-                                <option value="Viudo(a)"> Viudo(a) </option>
-                                <option value="Divorciado(a)"> Divorciado(a) </option>
-                                <option value="Unión libre"> Unión libre </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Direccion de residencia --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required></textarea>
-                        </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_direccion_residencia"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Genero --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="genero">Género: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="genero" name="genero" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Grado académico --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="grado_academico">Grado académico: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Bachillerato">Bachillerato</option>
-                                <option value="Licenciatura">Licenciatura</option>
-                                <option value="Master">Master</option>
-                                <option value="Doctorado">Doctorado</option>
-                                <option value="Posdoctorado">Posdoctorado</option>
-                            </select>
-                        </div>
-                    </div>
-                    {{-- Campo: tipo de nombramiento --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="tipo_nombramiento">Tipo de nombramiento: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="tipo_nombramiento" name="tipo_nombramiento" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Interino">Interino</option>
-                                <option value="Propietario">Propietario</option>
-                                <option value="Plazo fijo">Plazo fijo</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
+                <div class="tab-pane  " id="infoParticipaciones">
+                    <div id="participaciones">
+                        <div class="row d-flex justify-content-between border-bottom pb-2">
 
-                {{-- Campos de la derecha --}}
-                <div class="col">
+                            <div class="col">
+                                <h4 class="font-weight-bold">Participaciones </h4>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <a class="btn btn-contorno-rojo" href="#general" id="info-general" data-toggle="tab"><i class="fas fa-chevron-left"></i> &nbsp; Información general </a>
+                            </div>
+                        </div>
+                        <div class="row pt-4 ">
+                            <div class="col">
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="capacitacion_didactica" class="d-flex justify-content-between">Capacitación didactica: <span class="text-muted" id="mostrar_capacitacion_didactica"></span></label>
+                                        <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
 
-                    {{-- Campo: tipo de cargo --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="cargo" name="cargo" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Administrativo">Administrativo</option>
-                                <option value="Académico">Académico</option>
-                            </select>
-                        </div>
-                    </div>
-                    {{-- Campo: tipo de puesto --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="tipo_puesto">Tipo de puesto: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="tipo_puesto" name="tipo_puesto" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Secretaría">Secretaría</option>
-                                <option value="Dirección">Dirección</option>
-                                <option value="Subdirección">Subdirección</option>
-                                <option value="Docente">Docente</option>
-                                <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
-                                <option value="Participante de PPAA">Participante de PPAA</option>
-                                <option value="Responsable de PPAA">Responsable de PPAA</option>
-                                <option value="Técnico Auxiliar">Técnico Auxiliar</option>
-                                <option value="Biblioteca infantil">Biblioteca infantil</option>
-                                <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
-                                <option value="Profesional Asistencial en Desarrollo Tecnológico">Profesional Asistencial en Desarrollo Tecnológico</option>
-                                <option value="Profesional Ejecutivo en Desarrollo Documental">Profesional Ejecutivo en Desarrollo Documental</option>
-                            </select>
-                        </div>
-                    </div>
-                    {{-- Campo: Regimen administrativo  --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="regimen_administrativo">Regimen administrativo:</label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Categoría 21 (Técnico Auxiliar)">Categoría 21 (Técnico Auxiliar)</option>
-                                <option value="Categoría 23 (Técnico General 1-2-3)">Categoría 23 (Técnico General 1-2-3)</option>
-                                <option value="Categoría 24 (Técnico Analista 1-2-3)">Categoría 24 (Técnico Analista 1-2-3)</option>
-                                <option value="Categoría 32 (Profesional Asistencial 1-2-3-4-5)">Categoría 32 (Profesional Asistencial 1-2-3-4-5)</option>
-                                <option value="Categoría 34 (Profesional Ejecutivo 1-2-3-4)">Categoría 34 (Profesional Ejecutivo 1-2-3-4)</option>
-                                <option value="Categoría 35 (Profesional Analista 1-2-3)">Categoría 35 (Profesional Analista 1-2-3)</option>
-                                <option value="Categoría 36 (Profesional Especialista)">Categoría 36 (Profesional Especialista)</option>
-                                <option value="Categoría 37 (Profesional Asesor de Procesos 1-2)">Categoría 37 (Profesional Asesor de Procesos 1-2)</option>
-                                <option value="Categoría 38 (Profesional Asesor General)">Categoría 38 (Profesional Asesor General)</option>
-                                <option value="Categoría 42 (Director Ejecutivo)">Categoría 42 (Director Ejecutivo)</option>
-                                <option value="Categoría 43 (Director Especialista)">Categoría 43 (Director Especialista)</option>
-                                <option value="Categoría 44 (Director Asesor)">Categoría 44 (Director Asesor)</option>
-                            </select>
-                        </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="publicaciones" class="d-flex justify-content-between">Publicaciones: <span class="text-muted" id="mostrar_publicaciones"></span></label>
+                                        <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="cursos_impartidos" class="d-flex justify-content-between">Cursos impartidos: <span class="text-muted" id="mostrar_cursos_impartidos"></span></label>
+                                        <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
 
-                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="evaluacion_interna_ppaa" class="d-flex justify-content-between">Evaluación interna PPAA: <span class="text-muted" id="mostrar_evaluacion_interna_ppaa"></span></label>
+                                        <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
+                                </div>
 
-                    {{-- Campo: Regimen docente  --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="regimen_docente">Regimen docente:</label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Categoría 87 (Profesor Instructor Bachiller)">Categoría 87 (Profesor Instructor Bachiller)</option>
-                                <option value="Categoría 88 (Profesor Instructor Licenciado)">Categoría 88 (Profesor Instructor Licenciado)</option>
-                                <option value="Categoría 89 (Profesor I)">Categoría 89 (Profesor I)</option>
-                                <option value="Categoría 90 (Profesor II)">Categoría 90 (Profesor II) </option>
-                                <option value="Categoría 91 (Catedrático)">Categoría 91 (Catedrático)</option>
-                            </select>
-                        </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+                            </div>
+                            <div class="col">
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="miembro_comisiones" class="d-flex justify-content-between">Miembro comisiones: <span class="text-muted" id="mostrar_miembro_comisiones"></span></label>
+                                        <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="miembro_prueba_grado" class="d-flex justify-content-between">Miembro prueba de grado: <span class="text-muted" id="mostrar_miembro_prueba_grado"></span></label>
+                                        <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
 
-                    </div>
 
-                    {{-- Campo: Jornada --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-control w-100" id="jornada" name="jornada" form="personal" required>
-                                <option value="" selected>Seleccione</option>
-                                <option value="Por horas">Por horas</option>
-                                <option value="Ciclo lectivo">Ciclo lectivo</option>
-                                <option value="Año">Año</option>
-                            </select>
-                        </div>
-                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="evaluador_defensa_publica" class="d-flex justify-content-between">Evaluador defensa pública: <span class="text-muted" id="mostrar_evaluador_defensa_publica"></span></label>
+                                        <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start mb-3">
+                                    <div class="col">
+                                        <label for="evaluacion_externa_ppaa" class="d-flex justify-content-between">Evaluación externa PPAA: <span class="text-muted" id="mostrar_evaluacion_externa_ppaa"></span></label>
+                                        <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                    </div>
+                                </div>
+                            </div>
 
-                    {{-- Campo: Lugar de trabajo externo --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="trabajo_externo">Lugar de trabajo externo: <i class="text-danger">*</i></label>
                         </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_trabajo_externo"></span>
-                        </div>
-                    </div>
-                    {{-- Campo: Año de propiedad --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="anio_propiedad">Año de propiedad: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_anio_propiedad"></span>
-                        </div>
-                    </div>
-                    {{-- Campo: Area de especialización 1 --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="area_especializacion_1">Area de especialización 1 : <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)" required>
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_area_especializacion_1"></span>
-                        </div>
-                    </div>
 
-                    {{-- Campo: Area de especialización 2  --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="area_especializacion_2">Area de esplización 2:</label>
+                        <div class="d-flex justify-content-center">
+                            <div class="col-6">
+                                <label for="reconocimientos" class="d-flex justify-content-between">Reconocimientos: <span class="text-muted" id="mostrar_reconocimientos"></span></label>
+                                <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCaracteres(this,100)">
-                        </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_area_especializacion_2"></span>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Experiencia profesional  --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="experiencia_profesional"> Experiencia profesional:</label>
-                        </div>
-                        <div class="col-6">
-                            <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3"></textarea>
-                        </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
-
-                    </div>
-
-                    {{-- Campo: Experiencia académica  --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="experiencia_academica">Experiencia académica:</label>
-                        </div>
-                        <div class="col-6">
-                            <textarea class="form-control w-100" id="experiencia_academica" name="experiencia_academica" rows="3"></textarea>
-                        </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
-
-                    </div>
-                    {{-- Campo: carga_academica --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="carga_academica">Carga académica: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <textarea class="form-control w-100" id="carga_academica" name="carga_academica" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                        </div>
-                        <span class="text-muted" id="mostrar_carga_academica"></span>
-
                     </div>
 
 
                 </div>
+
             </div>
-            <div class="row pb-4">
-                <div class="col pt-5">
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="residencias">Participaciones: <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input " type="radio" name="EscogePparticipaciones" id="noParticipacion" value="0" checked>
-                                <label class="form-check-label pr-5" for="participaciones1"> No </label>
-
-                                <input class="form-check-input" type="radio" name="EscogePparticipaciones" id="siParticipacion" value="1">
-                                <label class="form-check-label" for="participaciones2"> Sí </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col">
-                    <div class="d-flex justify-content-center  pt-5">
-                        {{-- Boton para agregar informacion del personal --}}
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-rojo" data-toggle="modal" data-target="#idomasModal">
-                            Agragar idiomas
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div id="participaciones">
-                <div class="row pt-4 border-top border-gray">
-                    <div class="col">
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="capacitacion_didactica">Capacitación didactica: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_capacitacion_didactica"></span>
-
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="publicaciones">Publicaciones: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_publicaciones"></span>
-
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="cursos_impartidos">Cursos impartidos: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_cursos_impartidos"></span>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="evaluacion_interna_ppaa">Evaluación interna PPAA: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_evaluacion_interna_ppaa"></span>
-
-                        </div>
-
-                    </div>
-                    <div class="col">
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="miembro_comisiones">Miembro comisiones: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_miembro_comisiones"></span>
-
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="miembro_prueba_grado">Miembro prueba de grado: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_miembro_prueba_grado"></span>
-
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="evaluador_defensa_publica">Evaluador defensa pública: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_evaluador_defensa_publica"></span>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="col-4">
-                                <label for="evaluacion_externa_ppaa">Evaluación externa PPAA: </label>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                            </div>
-                            <span class="text-muted" id="mostrar_evaluacion_externa_ppaa"></span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="d-flex justify-content-center">
-                    <div class="col-6">
-                        <label for="reconocimientos">Reconocimientos: </label>
-                        <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal" onkeyup="contarCaracteres(this,250)"></textarea>
-                    </div>
-                    <span class="text-muted" id="mostrar_reconocimientos"></span>
-                </div>
-            </div>
-
             <div class="d-flex justify-content-center  pt-5">
-                {{-- Boton para agregar informacion del personal --}}
-                <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
+                {{-- Boton para registrar informacion del personal --}}
+                <button type="submit" id="registrar-btn" class="btn btn-rojo btn-lg">Registrar</button>
             </div>
-
         </form>
     </div>
+</div>
 </div>
 @endsection
 @section('scripts')
