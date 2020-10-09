@@ -17,7 +17,7 @@ class ActividadesInternaController extends Controller
 
             //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
             //request se setea por defecto en 25 por página
-            $itemsPagina = request('itemsPagina', 25);
+            $itemsPagina = request('itemsPagina', 5);
 
             //Inner join de actividades internas con actividades
             $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
@@ -36,7 +36,7 @@ class ActividadesInternaController extends Controller
     //Retorna la vista de registrar actividades internas
     public function create()
     {
-        return view('control_actividades_internas.informacion_actividad.registrar');
+        return view('control_actividades_internas.registrar');
     }
 
        //Método que inserta una actividad interna en la base de datos
@@ -74,7 +74,8 @@ class ActividadesInternaController extends Controller
                 //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/actividad-interna/registrar")
                 ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
-                ->with('actividad', $actividad);
+                ->with('actividad_insertada', $actividad)
+                ->with('actividad_interna_insertada', $actividad_interna);
            } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
                 return redirect("/actividad-interna/registrar") //se redirecciona a la pagina de registro
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto

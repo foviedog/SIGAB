@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Inicio SIGAB
+Actividades internas
 @endsection
 
 @section('css')
@@ -13,25 +13,27 @@ Inicio SIGAB
 @endsection
 
 @section('contenido')
+
+
 <div class="card">
     <div class="card-body">
-        {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
+        {{-- Items de la parte superior--}}
         <div class="d-flex justify-content-between">
-            {{-- //Título de la página --}}
+            {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control Actividades </h2>
             <div>
-                {{-- //Botón para añadir actividad interna--}}
+                {{-- Botón para añadir actividad interna--}}
                 <a href="/actividad-interna/registrar" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
             </div>
         </div>
-        {{-- // Contenedor de la tabla --}}
+        {{-- Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">
-                {{-- //Título de la tabla --}}
+                {{-- Título de la tabla --}}
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades internas </p>
             </div>
             <div class="card-body">
-                {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
+                {{-- Formulario para la paginación--}}
                 <form action="listado-actividad-interna" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
@@ -49,7 +51,6 @@ Inicio SIGAB
                     </div>
                 </form>
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
-
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>
@@ -67,7 +68,8 @@ Inicio SIGAB
                             {{-- En caso de que no existan registros --}}
                             @if(count($actividadesInternas) == 0)
                             <tr class="cursor-pointer">
-                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg">
+                                    </i> &nbsp; No existen registros</td>
                             </tr>
                             @endif
                             {{-- Inserción iterativa de las actividades a la tabla --}}
@@ -76,9 +78,9 @@ Inicio SIGAB
                                 <td>{{ $actividadInterna->actividad_id }}</td>
                                 <td>{{ $actividadInterna->actividades->tema}}</td>
                                 <td>{{ $actividadInterna->actividades->responsable_coordinar }} </td>
-                                <td>{{ $actividadInterna->actividades->estado }}
-                                <td>{{ $actividadInterna->proposito }} </td>
-                                <td>{{ $actividadInterna->tipo_actividad }} </td><br /> </td>
+                                <td>{{ $actividadInterna->actividades->estado }}</td>
+                                <td>{{ $actividadInterna->proposito}} </td>
+                                <td>{{$actividadInterna->tipo_actividad}}</td>
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
@@ -105,11 +107,11 @@ Inicio SIGAB
                 <div class="row">
                     {{-- Información general de los items por página y el total de resultados --}}
                     <div class="col-md-5 align-self-center">
-
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$actividadesInternas->perPage() }} de {{ $actividadesInternas->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}
                     <div class="col-md-5 ml-5">
-
+                        {{ $actividadesInternas->withQueryString()->links() }}
                     </div>
                 </div>
             </div>
