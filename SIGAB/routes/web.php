@@ -35,10 +35,10 @@ Auth::routes([
     'reset' => false, // Desactivado el auth con el reset de contraseñas
     'verify' => false, // Desactivado el auth con la verificación de email
 ]);
+
 // ======================================================================================================================================
 //                                                           Control Estudiantil
 // ======================================================================================================================================
-
 
 /* Ruta de detalle del estudiante*/
 Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show');
@@ -80,18 +80,24 @@ Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoContr
 //                                                           Control de Personal
 // ======================================================================================================================================
 
+/* Rutas para informacion del personal */
 Route::post('/personal', 'PersonalController@store')->name('personal.store');
 Route::get('/personal/registrar', 'PersonalController@create')->name('personal.create');
 Route::get('/personal/listar', 'PersonalController@index')->name('personal.listar');
 Route::get('/personal/detalle/{id_personal}', 'PersonalController@show')->name('personal.show');
 Route::get('/personal/actualizar/{id_personal}', 'PersonalController@update')->name('personal.update');
 
-
-
+/* Rutas para informacion de Carga Academica */
+Route::get('/personal/carga-academica/{id_personal}', 'CargasAcademicaController@index')->name('cargaacademica.show');
+Route::get('/personal/carga-academica/registrar/{id_personal}', 'CargasAcademicaController@create')->name('cargaacademica.create');
+Route::patch('/personal/carga-academica', 'CargasAcademicaController@store')->name('cargaacademica.store');
+Route::get('/personal/carga-academica/obtener/{id_carga_academica}', 'CargasAcademicaController@edit')->name('cargaacademica.edit');
+Route::patch('/personal/carga-academica/actualizar/{id_carga_academica}', 'CargasAcademicaController@update')->name('cargaacademica.update');
 
 // ======================================================================================================================================
 //                                                           Control de Actividades Internas
 // ======================================================================================================================================
+
 /* Rutas para informacion de actividades internas */
 //Registrar una actividad interna
 Route::get('/actividad-interna/registrar', 'ActividadesInternaController@create')->name('actividad-interna.create');

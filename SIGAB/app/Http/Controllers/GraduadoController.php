@@ -21,7 +21,6 @@ class GraduadoController extends Controller
 
         return view('control_educativo.informacion_estudiantil.informacion_graduados.registrar', [
             'estudiante' => $estudiante,
-
         ]);
     }
 
