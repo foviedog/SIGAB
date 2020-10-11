@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Idioma;
-use App\Participacion;
+use Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
-use Image;
 use App\Persona;
 use App\Personal;
+use App\Idioma;
+use App\Participacion;
+
+
 
 class PersonalController extends Controller
 {
@@ -147,8 +149,16 @@ class PersonalController extends Controller
     public function update($id_personal, Request $request)
     {
         $persona = Persona::find($id_personal);        //Se obtiene la persona en base al ID
-        $personal = Personal::find($id_personal);   //Se obtiene el personal que contiene ese ID
-        //$participacion = Participacion::findOrFail($id_personal);   //Se crea una nueva instacia de participacion
+       // $personal = Personal::find($id_personal);   //Se obtiene el personal que contiene ese ID
+
+        $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
+        ->where('personal.persona_id', '=', $id_personal)
+        ->first();
+
+        //$participacion = new Participacion(); //Se crea una nueva instacia de estudiante
+
+
+        //$participacion = Participacion::find($id_personal);   //Se obtiene la participacion que contiene ese ID
 
         // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
         $persona->nombre = $request->nombre;
@@ -182,9 +192,11 @@ class PersonalController extends Controller
 
         $personal->save(); //Se guardan los datos del personal
 
-//if($participacion = Participacion::findOrFail($id_personal)){
+
 
         //Datos asociados a la participacion (no incluye el ID ya que no debería ser posible editarlo)
+        //$participacion->parent()->associate($personal);
+
         //$participacion->capacitacion_didactica =  $request->capacitacion_didactica;
         //$participacion->cursos_impartidos =  $request->cursos_impartidos;
         //$participacion->miembro_comisiones =  $request->miembro_comisiones;
@@ -193,8 +205,11 @@ class PersonalController extends Controller
         //$participacion->evaluacion_interna_ppaa =  $request->evaluacion_interna_ppaa;
         //$participacion->reconocimientos =  $request->reconocimientos;
 
+
+
+
         //$participacion->save();         //Se guardan los datos de la participacion
-//}
+
 
         //Llamado al método que actualiza la foto de perfil
         $this->update_avatar($request, $personal);
