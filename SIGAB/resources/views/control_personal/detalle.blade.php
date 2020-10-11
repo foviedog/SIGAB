@@ -10,22 +10,16 @@ Detalle del personal {{ $personal->persona->nombre }}
 
 @section('scripts')
 <script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/editar.js') }}" defer></script>
 @endsection
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
 $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-
 $generos = ['Femenino','Masculino','Otro'];
-
 $cargos = ['Administrativo','Académico'];
-
-
 $grados_academicos = ["Bachillerato","Licenciatura","Master","Doctorado","Posdoctorado"];
-
 $jornadas = ["Por horas","Ciclo lectivo","Año"];
-
 $tipos_nombramientos = ["Interino","Propietario","Plazo fijo"];
-
 $tipos_puestos = ['Secretaría','Dirección','Subdirección','Docente','Profesional Ejecutivo','Participante de PPAA',
 'Responsable de PPAA','Técnico Auxiliar','Biblioteca infantil','Asistente administrativo(a)',
 'Profesional Asistencial en Desarrollo Tecnológico','Profesional Ejecutivo en Desarrollo Documental'];
@@ -93,6 +87,7 @@ $idiomas = [];
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')
+
     <div class="card">
         <div class="card-body">
             {{-- Contenido total del detalle --}}
@@ -105,8 +100,8 @@ $idiomas = [];
                     <div>
                         {{-- Botones superiores --}}
 
-                        {{-- Regresar al listado de personals --}}
-                        <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        {{-- Regresar al listado de personal --}}
+                        <a href="{{ route('personal.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-personal" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}

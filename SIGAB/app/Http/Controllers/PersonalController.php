@@ -6,6 +6,9 @@ use App\Idioma;
 use App\Participacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+use Image;
 use App\Persona;
 use App\Personal;
 
@@ -143,11 +146,9 @@ class PersonalController extends Controller
     //Metodo para actualizar los datos del personal
     public function update($id_personal, Request $request)
     {
-        //Se obtiene la persona en base al ID
-        $persona = Persona::find($id_personal);
-
-        //Se obtiene el personal que contiene ese ID
-        $personal = Personal::find($id_personal);
+        $persona = Persona::find($id_personal);        //Se obtiene la persona en base al ID
+        $personal = Personal::find($id_personal);   //Se obtiene el personal que contiene ese ID
+        //$participacion = Participacion::findOrFail($id_personal);   //Se crea una nueva instacia de participacion
 
         // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
         $persona->nombre = $request->nombre;
@@ -161,12 +162,12 @@ class PersonalController extends Controller
         $persona->direccion_residencia = $request->direccion_residencia;
         $persona->genero = $request->genero;
 
-        //Se guardan los datos de la persona
-        $persona->save();
+        $persona->save();   //Se guardan los datos de la persona
 
         //Datos asociados al personal (no incluye el ID ya que no debería ser posible editarlo)
         $personal->carga_academica = $request->carga_academica;
         $personal->grado_academico = $request->grado_academico;
+        $personal->cargo = $request->cargo;
         $personal->tipo_nombramiento = $request->tipo_nombramiento;
         $personal->tipo_puesto = $request->tipo_puesto;
         $personal->jornada = $request->jornada;
@@ -179,8 +180,22 @@ class PersonalController extends Controller
         $personal->area_especializacion_1 = $request->area_especializacion_1;
         $personal->area_especializacion_2 = $request->area_especializacion_2;
 
-        //Se guardan los datos del personal
-        $personal->save();
+        $personal->save(); //Se guardan los datos del personal
+
+//if($participacion = Participacion::findOrFail($id_personal)){
+
+        //Datos asociados a la participacion (no incluye el ID ya que no debería ser posible editarlo)
+        //$participacion->capacitacion_didactica =  $request->capacitacion_didactica;
+        //$participacion->cursos_impartidos =  $request->cursos_impartidos;
+        //$participacion->miembro_comisiones =  $request->miembro_comisiones;
+        //$participacion->miembro_prueba_grado =  $request->miembro_prueba_grado;
+        //$participacion->evaluador_defensa_publica =  $request->evaluador_defensa_publica;
+        //$participacion->evaluacion_interna_ppaa =  $request->evaluacion_interna_ppaa;
+        //$participacion->reconocimientos =  $request->reconocimientos;
+
+        //$participacion->save();         //Se guardan los datos de la participacion
+//}
+
         //Llamado al método que actualiza la foto de perfil
         $this->update_avatar($request, $personal);
 
