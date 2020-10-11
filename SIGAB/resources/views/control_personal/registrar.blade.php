@@ -361,13 +361,28 @@ Registrar información del personal
                                     </select>
                                 </div>
                             </div>
+                            {{-- Campo: Jornada --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="jornada" name="jornada" form="personal-form" required>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Tiempo completo (40 horas)">Tiempo completo (40 horas)</option>
+                                        <option value="Cuarto de tiempo (30 horas)">Cuarto de tiempo (30 horas)</option>
+                                        <option value="Medio tiempo (30 horas)">Medio tiempo (30 horas)</option>
+                                        <option value="Un cuarto de tiempo (10 horas)">Un cuarto de tiempo (10 horas)</option>
+                                    </select>
+                                </div>
+                            </div>
                             {{-- Campo: Regimen administrativo  --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
                                     <label for="regimen_administrativo">Regimen administrativo:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form" required>
+                                    <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form">
                                         <option value="" selected>Seleccione</option>
                                         <option value="Categoría 21 (Técnico Auxiliar)">Categoría 21 (Técnico Auxiliar)</option>
                                         <option value="Categoría 23 (Técnico General 1-2-3)">Categoría 23 (Técnico General 1-2-3)</option>
@@ -392,7 +407,7 @@ Registrar información del personal
                                     <label for="regimen_docente">Regimen docente:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form" required>
+                                    <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form">
                                         <option value="" selected>Seleccione</option>
                                         <option value="Categoría 87 (Profesor Instructor Bachiller)">Categoría 87 (Profesor Instructor Bachiller)</option>
                                         <option value="Categoría 88 (Profesor Instructor Licenciado)">Categoría 88 (Profesor Instructor Licenciado)</option>
@@ -404,29 +419,15 @@ Registrar información del personal
 
                             </div>
 
-                            {{-- Campo: Jornada --}}
-                            <div class="d-flex justify-content-start mb-3">
-                                <div class="col-4">
-                                    <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
-                                </div>
-                                <div class="col-6">
-                                    <select class="form-control w-100" id="jornada" name="jornada" form="personal-form" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Tiempo completo (40 horas)">Tiempo completo (40 horas)</option>
-                                        <option value="Cuarto de tiempo (30 horas)">Cuarto de tiempo (30 horas)</option>
-                                        <option value="Medio tiempo (30 horas)">Medio tiempo (30 horas)</option>
-                                        <option value="Un cuarto de tiempo (10 horas)">Un cuarto de tiempo (10 horas)</option>
-                                    </select>
-                                </div>
-                            </div>
+
 
                             {{-- Campo: Lugar de trabajo externo --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="trabajo_externo">Lugar de trabajo externo: <i class="text-danger">*</i></label>
+                                    <label for="trabajo_externo">Lugar de trabajo externo: </label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" required>
+                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)">
                                 </div>
                                 <div class="col-2 d-flex">
                                     <span data-toggle="tooltip" data-placement="bottom" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -437,10 +438,10 @@ Registrar información del personal
                             {{-- Campo: Año de propiedad --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="anio_propiedad">Año de propiedad: <i class="text-danger">*</i></label>
+                                    <label for="anio_propiedad">Año de propiedad:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" required>
+                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)">
                                 </div>
                                 <div class="col-2">
                                     <span data-toggle="tooltip" data-placement="bottom" title="Año en el que obtuvo la propiedad en la UNA"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -450,10 +451,10 @@ Registrar información del personal
                             {{-- Campo: Area de especialización 1 --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="area_especializacion_1">Area de especialización 1 : <i class="text-danger">*</i></label>
+                                    <label for="area_especializacion_1">Area de especialización 1 :</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)" required>
+                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)">
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_area_especializacion_1"></span>
@@ -481,8 +482,10 @@ Registrar información del personal
                                 <div class="col-6">
                                     <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3"></textarea>
                                 </div>
-                                <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+                                <div class="col-2 d-flex">
+                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada curso con punto y coma (;))"><i class="far fa-question-circle fa-lg"></i></span>
 
+                                </div>
                             </div>
 
                             {{-- Campo: Experiencia académica  --}}
@@ -524,7 +527,7 @@ Registrar información del personal
 
                 </div>
 
-                <div class="tab-pane  active" id="infoParticipaciones">
+                <div class="tab-pane  " id="infoParticipaciones">
                     <div id="participaciones">
                         <div class="row d-flex justify-content-between border-bottom pb-2">
                             <div class="col">
@@ -542,7 +545,7 @@ Registrar información del personal
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span>
                                         </label>
-                                        <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal-form"></textarea>
                                     </div>
 
                                 </div>
@@ -551,7 +554,7 @@ Registrar información del personal
                                         <label for="publicaciones" class="d-flex justify-content-between">Publicaciones:
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span> </label>
-                                        <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
@@ -560,7 +563,7 @@ Registrar información del personal
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span>
                                         </label>
-                                        <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal-form"></textarea>
                                     </div>
 
                                 </div>
@@ -569,7 +572,7 @@ Registrar información del personal
                                         <label for="evaluacion_interna_ppaa" class="d-flex justify-content-between">Evaluación interna PPAA: <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span>
                                         </label>
-                                        <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
 
@@ -580,7 +583,7 @@ Registrar información del personal
                                         <label for="miembro_comisiones" class="d-flex justify-content-between">Miembro comisiones:
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span></label>
-                                        <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
@@ -588,7 +591,7 @@ Registrar información del personal
                                         <label for="miembro_prueba_grado" class="d-flex justify-content-between">Miembro prueba de grado:
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span></label>
-                                        <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal-form"></textarea>
                                     </div>
 
 
@@ -598,7 +601,7 @@ Registrar información del personal
                                         <label for="evaluador_defensa_publica" class="d-flex justify-content-between">Evaluador defensa pública:
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span></label>
-                                        <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
@@ -606,7 +609,7 @@ Registrar información del personal
                                         <label for="evaluacion_externa_ppaa" class="d-flex justify-content-between">Evaluación externa PPAA:
                                             <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span></label>
-                                        <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                        <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -617,7 +620,7 @@ Registrar información del personal
                             <div class="col-6">
                                 <label for="reconocimientos" class="d-flex justify-content-between">Reconocimientos: <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
                                         <i class="far fa-question-circle fa-lg"></i></span></label>
-                                <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal-form" onkeyup="contarCaracteres(this,250)"></textarea>
+                                <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal-form"></textarea>
                             </div>
                         </div>
                     </div>
