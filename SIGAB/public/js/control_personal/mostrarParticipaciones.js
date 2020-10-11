@@ -13,13 +13,14 @@ $(document).ready(function() {
         var $personalForm = $("#personal-form");
 
         if (!$personalForm[0].checkValidity()) {
-            console.log($personalForm[0].checkValidity());
             $("#registrar-btn").trigger("click");
         } else {
             $("#general").removeClass("active");
+            $("#info-general").removeClass('active');
             $("#infoParticipaciones").tab("show");
         }
     });
+
 
     var i = 0;
     var coleccionIdiomas = [];
@@ -112,11 +113,7 @@ $(document).ready(function() {
         $("#cancelar-edi").hide();
         $("#guardar-cambios").hide();
         $("#cambiar-foto").hide();
-    }
-
-
-
-
+    });
 
 
 });
