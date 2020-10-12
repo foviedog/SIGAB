@@ -47,7 +47,7 @@ Listado de Personal
                             <div class="d-flex justify-content-end w-50">
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del personal --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o puesto"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o cargo"><i class="far fa-question-circle fa-lg"></i></span>
                                     &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable"  name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
@@ -66,11 +66,11 @@ Listado de Personal
                             <tr>
                                 <th>N° de Cédula</th>
                                 <th>Nombre</th>
-                                <th>Puesto</th>
+                                <th>Cargo</th>
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
                                 <td><strong>Ver detalle<br /></strong></td>
-                                <th>Guía Académica</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +87,7 @@ Listado de Personal
                                 <td>{{ $perso->persona_id }}</td>
                                 {{-- Aquí se debería de agregar la foto del personal, si así se desea. --}}
                                 <td>{{ $perso->persona->apellido.", ". $perso->persona->nombre }}</td>
-                                <td>{{ $perso->tipo_puesto }}</td>
+                                <td>{{ $perso->cargo }}</td>
                                 <td>{{ $perso->persona->telefono_celular }}<br /> </td>
                                 <td>
                                     <strong>
@@ -97,15 +97,10 @@ Listado de Personal
                                 <td>
                                     {{-- Botón para ver el detalle del personal --}}
                                     <strong>
-                                        <a href="/perso/detalle/{{ $perso->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
+                                        <a href="/personal/detalle/{{ $perso->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
-                                <td>
-                                    {{-- Botón para ver las guías académicas del personal --}}
-                                    <strong>
-                                        <a href="/perso/guia-academica/listar?nombreFiltro={{ $perso->persona_id }}" class="btn btn-contorno-rojo"> Ver guías </a>
-                                    </strong><br />
-                                </td>
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -114,11 +109,11 @@ Listado de Personal
                             <tr>
                                 <td><strong>N° de Cédula<br /></strong></td>
                                 <td><strong>Nombre<strong></td>
-                                <td><strong>Puesto<br /></strong></td>
+                                <td><strong>Cargo<br /></strong></td>
                                 <td><strong>Teléfono Celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>
-                                <td><strong>Guia académica<br /></strong></td>
+
                             </tr>
                         </tfoot>
                     </table>

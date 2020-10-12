@@ -10,22 +10,16 @@ Detalle del personal {{ $personal->persona->nombre }}
 
 @section('scripts')
 <script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/editar.js') }}" defer></script>
 @endsection
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
 $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-
 $generos = ['Femenino','Masculino','Otro'];
-
 $cargos = ['Administrativo','Académico'];
-
-
 $grados_academicos = ["Bachillerato","Licenciatura","Master","Doctorado","Posdoctorado"];
-
 $jornadas = ["Por horas","Ciclo lectivo","Año"];
-
 $tipos_nombramientos = ["Interino","Propietario","Plazo fijo"];
-
 $tipos_puestos = ['Secretaría','Dirección','Subdirección','Docente','Profesional Ejecutivo','Participante de PPAA',
 'Responsable de PPAA','Técnico Auxiliar','Biblioteca infantil','Asistente administrativo(a)',
 'Profesional Asistencial en Desarrollo Tecnológico','Profesional Ejecutivo en Desarrollo Documental'];
@@ -93,6 +87,7 @@ $idiomas = [];
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')
+
     <div class="card">
         <div class="card-body">
             {{-- Contenido total del detalle --}}
@@ -105,8 +100,8 @@ $idiomas = [];
                     <div>
                         {{-- Botones superiores --}}
 
-                        {{-- Regresar al listado de personals --}}
-                        <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        {{-- Regresar al listado de personal --}}
+                        <a href="{{ route('personal.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-personal" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}
@@ -139,37 +134,47 @@ $idiomas = [];
                                 {{-- Campo: capacitacion_didactica --}}
                                 <div class="form-group">
                                     <label for="capacitacion_didactica"><strong>Capacitación didáctica</strong><br /></label>
-                                    <textarea type="text" id="capacitacion_didactica" name="capacitacion_didactica" class="form-control" placeholder="Carga académica" rows="4" disabled>{{ $personal->capacitacion_didactica }}</textarea>
+                                    <textarea type="text" id="capacitacion_didactica" name="capacitacion_didactica" class="form-control" placeholder="" rows="4" disabled>{{ $personal->capacitacion_didactica }}</textarea>
+                                </div>
+                                {{-- Campo: Publicaciones --}}
+                                <div class="form-group">
+                                    <label for="publicaciones"><strong>Publicaciones</strong><br /></label>
+                                    <textarea type="text" id="publicaciones" name="publicaciones" class="form-control" placeholder="" rows="4" disabled>{{ $personal->publicaciones }}</textarea>
                                 </div>
                                 {{-- Campo: cursos_impartidos --}}
                                 <div class="form-group">
                                     <label for="cursos_impartidos"><strong>Cursos impartidos</strong><br /></label>
-                                    <textarea type="text" id="cursos_impartidos" name="cursos_impartidos" class="form-control" placeholder="Carga académica" rows="4" disabled> {{ $personal->cursos_impartidos }} </textarea>
+                                    <textarea type="text" id="cursos_impartidos" name="cursos_impartidos" class="form-control" placeholder="" rows="4" disabled> {{ $personal->cursos_impartidos }} </textarea>
                                 </div>
                                 {{-- Campo: miembro_comisiones --}}
                                 <div class="form-group">
                                     <label for="miembro_comisiones"><strong>Miembro de comisiones</strong><br /></label>
-                                    <textarea type="text" id="miembro_comisiones" name="miembro_comisiones" class="form-control" placeholder="Carga académica" rows="4" disabled> {{ $personal->miembro_comisiones }}</textarea>
+                                    <textarea type="text" id="miembro_comisiones" name="miembro_comisiones" class="form-control" placeholder="" rows="4" disabled> {{ $personal->miembro_comisiones }}</textarea>
                                 </div>
                                 {{-- Campo: miembro_prueba_grado --}}
                                 <div class="form-group">
-                                    <label for="miembro_prueba_grado"><strong>Miembro de comisiones</strong><br /></label>
-                                    <textarea type="text" id="miembro_prueba_grado" name="miembro_prueba_grado" class="form-control" placeholder="Carga académica" rows="4" disabled> {{ $personal->miembro_prueba_grado }}</textarea>
+                                    <label for="miembro_prueba_grado"><strong>Miembro prueba grado</strong><br /></label>
+                                    <textarea type="text" id="miembro_prueba_grado" name="miembro_prueba_grado" class="form-control" placeholder="" rows="4" disabled> {{ $personal->miembro_prueba_grado }}</textarea>
                                 </div>
                                 {{-- Campo: evaluador_defensa_publica --}}
                                 <div class="form-group">
-                                    <label for="evaluador_defensa_publica"><strong>Miembro de comisiones</strong><br /></label>
-                                    <textarea type="text" id="evaluador_defensa_publica" name="evaluador_defensa_publica" class="form-control" placeholder="Carga académica" rows="4" disabled> {{ $personal->evaluador_defensa_publica }} </textarea>
+                                    <label for="evaluador_defensa_publica"><strong>evaluador de defensa publica</strong><br /></label>
+                                    <textarea type="text" id="evaluador_defensa_publica" name="evaluador_defensa_publica" class="form-control" placeholder="" rows="4" disabled> {{ $personal->evaluador_defensa_publica }} </textarea>
                                 </div>
                                 {{-- Campo: evaluacion_interna_ppaa --}}
                                 <div class="form-group">
-                                    <label for="evaluacion_interna_ppaa"><strong>Miembro de comisiones</strong><br /></label>
-                                    <textarea type="text" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" class="form-control" placeholder="Carga académica" rows="4" disabled> {{ $personal->evaluacion_interna_ppaa }}</textarea>
+                                    <label for="evaluacion_interna_ppaa"><strong>Evaluacion interna ppaa</strong><br /></label>
+                                    <textarea type="text" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" class="form-control" placeholder="" rows="4" disabled> {{ $personal->evaluacion_interna_ppaa }}</textarea>
+                                </div>
+                                {{-- Campo: evaluacion_externa_ppaa --}}
+                                <div class="form-group">
+                                    <label for="evaluacion_externa_ppaa"><strong>Evaluacion interna ppaa</strong><br /></label>
+                                    <textarea type="text" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" class="form-control" placeholder="" rows="4" disabled> {{ $personal->evaluacion_externa_ppaa }}</textarea>
                                 </div>
                                 {{-- Campo: reconocimientos --}}
                                 <div class="form-group">
-                                    <label for="reconocimientos"><strong>Miembro de comisiones</strong><br /></label>
-                                    <textarea type="text" id="reconocimientos" name="reconocimientos" class="form-control" placeholder="Carga académica" rows="4" disabled>{{ $personal->reconocimientos }}</textarea>
+                                    <label for="reconocimientos"><strong>Reconocimientos</strong><br /></label>
+                                    <textarea type="text" id="reconocimientos" name="reconocimientos" class="form-control" placeholder="" rows="4" disabled>{{ $personal->reconocimientos }}</textarea>
                                 </div>
 
                             </div>
