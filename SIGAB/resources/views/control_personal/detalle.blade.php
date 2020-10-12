@@ -10,7 +10,7 @@ Detalle del personal {{ $personal->persona->nombre }}
 
 @section('scripts')
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-<script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}"></script>
+<script src="{{ asset('js/control_personal/registrar.js') }}"></script>
 <script src="{{ asset('js/control_personal/editar.js') }}"></script>
 
 @endsection

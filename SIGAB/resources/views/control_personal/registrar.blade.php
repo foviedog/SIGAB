@@ -112,15 +112,15 @@ Registrar información del personal
                             {{-- Campo: Cedula --}}
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="col-4">
-                                    <label for="cedula">Cédula: <i class="text-danger">*</i></label>
+                                    <label for="persona_id">Cédula: <i class="text-danger">*</i></label>
 
                                 </div>
                                 <div class="col-6 ">
-                                    <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,15)" required>
+                                    <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" required>
                                 </div>
                                 <div class="col-2 d-flex">
                                     <span data-toggle="tooltip" data-placement="bottom" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
-                                    <span class="text-muted" id="mostrar_cedula"></span>
+                                    <span class="text-muted" id="mostrar_persona_id"></span>
                                 </div>
                             </div>
 
@@ -494,9 +494,9 @@ Registrar información del personal
                                 </table>
                             </div>
                         </div>
-                        <div class="col pt-5">
-                            <div class="d-flex justify-content-center mb-3">
-                                <a class="btn btn-contorno-rojo" id="participaciones-ref" data-toggle="tooltip" data-placement="top" title="Esta sección es opcional y se puede editar luego de que se haya registrado el personal.">
+                        <div class="col pt-5 d-flex justify-content-center  align-items-center">
+                            <div class="mb-3">
+                                <a class="btn btn-contorno-rojo " id="participaciones-ref" data-toggle="tooltip" data-placement="top" title="Esta sección es opcional y se puede editar luego de que se haya registrado el personal.">
                                     Participaciones &nbsp;<i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
@@ -619,7 +619,7 @@ Registrar información del personal
 @section('scripts')
 {{-- Link al script de registro de registro de personal --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-<script src="{{ asset('js/control_personal/mostrarParticipaciones.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/registrar.js') }}" defer></script>
 @endsection
 
 @section('pie')

@@ -52,78 +52,48 @@ class PersonalController extends Controller
         ]);
     }
 
+    // ===========================================================================================
+    // Método para redireccionar al usuario a la vista de registro de personal
+    //============================================================================================
     public function create()
     {
         return view('control_personal.registrar');
     }
+
+
+    // ===========================================================================================
+    // Método que guarda un personal en la BD
+    //============================================================================================
     public function store(Request $request)
     {
         try { //se utiliza un try-catch para evitar el redireccionamiento a página default de error de Laravel
+
 
             $persona = new Persona; //Se crea una nueva instacia de Persona
             $personal = new Personal; //Se crea una nueva instacia de estudiante
             $participacion = new Participacion(); //Se crea una nueva instacia de estudiante
 
-            //se setean los atributos del objeto
-            $persona->persona_id = $request->cedula;
-            $persona->nombre = $request->nombre;
-            $persona->apellido = $request->apellido;
-            $persona->fecha_nacimiento = $request->fecha_nacimiento;
-            $persona->telefono_fijo = $request->telefono_fijo;
-            $persona->telefono_celular = $request->telefono_celular;
-            $persona->correo_personal = $request->correo_personal;
-            $persona->correo_institucional = $request->correo_institucional;
-            $persona->estado_civil = $request->estado_civil;
-            $persona->direccion_residencia = $request->direccion_residencia;
-            $persona->genero = $request->genero;
-            $persona->save(); //se guarda el objeto en la base de datos
+            // Se le establece la cédula a cada uno de los objetos para que en el método generalizado realice un guardado del registro y no un actualizar.
+            //SI NO SE PONE LA CÉDULA EL MÉTODO GENERAL LO TOMA COMO ACTUALIZACIÓN.
+            $personal->persona_id = $request->persona_id;
+            $persona->persona_id = $request->persona_id;
 
-            //se setean los atributos del objeto tipo personal
-            $personal->persona_id = $request->cedula;
-            $personal->carga_academica = $request->carga_academica;
-            $personal->grado_academico = $request->grado_academico;
-            $personal->cargo = $request->cargo;
-            $personal->tipo_nombramiento = $request->tipo_nombramiento;
-            $personal->tipo_puesto = $request->tipo_puesto;
-            $personal->jornada = $request->jornada;
-            $personal->lugar_trabajo_externo = $request->trabajo_externo;
-            $personal->anio_propiedad = $request->anio_propiedad;
-            $personal->experiencia_profesional = $request->experiencia_profesional;
-            $personal->experiencia_academica = $request->experiencia_academica;
-            $personal->regimen_administrativo = $request->regimen_administrativo;
-            $personal->regimen_docente = $request->regimen_docente;
-            $personal->area_especializacion_1 = $request->area_especializacion_1;
-            $personal->area_especializacion_2 = $request->area_especializacion_2;
 
-            $personal->save(); //se guarda el objeto en la base de datos
-            //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado
+            $this->guardarPersona($persona, $request); //Se llama al método genérico para guardar una persona
+            $this->guardarPersonal($personal, $request); //Se llama al método genérico para guardar un personal
 
-            $participacion->persona_id =  $request->cedula;
-            $participacion->capacitacion_didactica =  $request->capacitacion_didactica;
-            $participacion->publicaciones =  $request->publicaciones;
-            $participacion->cursos_impartidos =  $request->cursos_impartidos;
-            $participacion->miembro_comisiones =  $request->miembro_comisiones;
-            $participacion->miembro_prueba_grado =  $request->miembro_prueba_grado;
-            $participacion->evaluador_defensa_publica =  $request->evaluador_defensa_publica;
-            $participacion->evaluacion_interna_ppaa =  $request->evaluacion_interna_ppaa;
-            $participacion->evaluacion_externa_ppaa =  $request->evaluacion_externa_ppaa;
-            $participacion->reconocimientos =  $request->reconocimientos;
+            //Antes de guardar las participaciones se crea un registro de participaciones en la base de datos para luego ser actualizadas
+            $participacion->persona_id = $request->persona_id;
             $participacion->save();
-            if (!is_null($request->idiomasJSON)) {
-                $idiomas =  json_decode($request->idiomasJSON);
-                foreach ($idiomas as &$idoma) {
-                    $idiomaP =  new Idioma();
-                    $idiomaP->persona_id =  $request->cedula;
-                    $idiomaP->nombre =  $idoma;
-                    $idiomaP->save();
-                }
-            }
+
+
+            $this->guardarParticipaciones($personal, $request); //Se actualizan las participaciones con los datos que vengan en el request.
+            $this->guardarIdiomas($request); //Se guarda la lista de idiomas
 
             return Redirect::back()
                 ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('personal_registrado', $personal); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
-
 
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro estudiante
@@ -131,11 +101,17 @@ class PersonalController extends Controller
         }
     }
 
+    // ===========================================================================================
+    // Método que muestra la información detallada de un personal
+    //============================================================================================
     public function show($id_personal)
     {
+        //Busca en la base de datos al personal con la cédula indicada y obtiene también las participaciones asociadas a él.
         $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
             ->where('personal.persona_id', '=', $id_personal)
             ->first();
+
+        //Se optiene un arreglo con los idiomas específicos de la persona.
         $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();
 
         return view('control_personal.detalle', [
@@ -145,30 +121,97 @@ class PersonalController extends Controller
     }
 
 
-    //Metodo para actualizar los datos del personal
+    // ===========================================================================================
+    // Método para actualizar los datos de un personal
+    //============================================================================================
     public function update($id_personal, Request $request)
     {
-        $personal = Personal::find($id_personal);   //Se obtiene el personal que contiene ese ID
+        //Se crean instancias de persona y personal para crear inicializar los atributos de cada objeto
+        $persona = new Persona();
+        $personal = new Personal();
 
+        // Se busca en la BD la persona que concuerde con el id que viene en el request
+        $persona = Persona::find($id_personal);   //Se obtiene el personal que contiene ese ID
+
+        // Se busca en la BD el personal que concuerde con el ID y se adjunta el registro de participaciones que tenga
         $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
             ->where('personal.persona_id', '=', $id_personal)
             ->first();
 
-        // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
-        $personal->persona->nombre = $request->nombre;
-        $personal->persona->fecha_nacimiento = $request->fecha_nacimiento;
-        $personal->persona->apellido = $request->apellido;
-        $personal->persona->telefono_fijo = $request->telefono_fijo;
-        $personal->persona->telefono_celular = $request->telefono_celular;
-        $personal->persona->correo_personal = $request->correo_personal;
-        $personal->persona->correo_institucional = $request->correo_institucional;
-        $personal->persona->estado_civil = $request->estado_civil;
-        $personal->persona->direccion_residencia = $request->direccion_residencia;
-        $personal->persona->genero = $request->genero;
+        $this->guardarPersona($persona, $request); //Se llama al método genérico para guardar una persona
+        $this->guardarPersonal($personal, $request); //Se llama al método genérico para guardar un personal
+        $this->guardarParticipaciones($personal, $request); //Se llama al método genérico para guardar las participaciones
 
-        $personal->persona->save();   //Se guardan los datos de la persona
+        Idioma::where('persona_id', $id_personal)->delete(); // Antes de guardar los idiommas de la persona, se eliminan todos los registros de idomas referentes a esa persona para que sea posible actualizarlo
+        $this->guardarIdiomas($request); //Se llama al método genérico para guardar idiomas
 
-        //Datos asociados al personal (no incluye el ID ya que no debería ser posible editarlo)
+        // Llamado al método que actualiza la foto de perfil
+        $this->update_avatar($request, $personal);
+
+        //Se retorna el detalle del personal ya modificado
+        return redirect("/personal/detalle/{$personal->persona_id}");
+    }
+
+
+    // ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~
+    // Métodos privados de ÚNICO uso dentro del controller
+    // ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~
+
+    // ===========================================================================================
+    // Métodos para actualizar la foto del perfil de un personal
+    //============================================================================================
+    private function update_avatar($request, $personal)
+    {
+        //En caso de que se haya subido alguna foto con el request se procede a guardarlo en el repositorio de imagenes de perfil
+        if ($request->hasFile('avatar')) {
+
+            $avatar = $request->file('avatar'); // Se obtiene el objeto que viene en el request y se guarda dentro de una variable
+            $archivo = time() . '.' . $avatar->getClientOriginalExtension(); // Se toma la hora y la extensión del archivo que se subió (.jpg,png,etc..)
+            Image::make($avatar)->resize(300, 300)->save(public_path('/img/fotos/' . $archivo)); // Se utiliza la herramienta de Image para que todas las imágenes se guarden en el mismo formato
+
+            if ($personal->persona->imagen_perfil != "default.jpg") // En caso de que *NO* se haya establecido una imagen por defecto
+                File::delete(public_path('/img/fotos/' . $personal->persona->imagen_perfil)); //Elimina la foto anterior para que no queden archivos "basura"
+
+            $personal->persona->imagen_perfil = $archivo; //Se le setea a la persona el nombre de la imagen de perfil con el formato especificado anteriormente (fecha.extension)
+            $personal->persona->save(); //Se guarda el atributo en la BD
+        }
+    }
+
+    // ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~
+    // MÉTODOS GENÉRICOS DE ACTUALIZAR Y GUARDAR
+    // ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~ ° ~
+
+    //¡¡¡¡ NOTA IMPORTANTE !!!
+    // Para que los métodos de guardado o actualizados genéricos funcionen, el request debe de mantener
+    // siempre los mismos nombres que en la base de datos.
+
+    // ===========================================================================================
+    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* una persona
+    //============================================================================================
+
+    private function guardarPersona(&$persona, $request)
+    {
+        //se setean los atributos del objeto
+        $persona->nombre = $request->nombre;
+        $persona->apellido = $request->apellido;
+        $persona->fecha_nacimiento = $request->fecha_nacimiento;
+        $persona->telefono_fijo = $request->telefono_fijo;
+        $persona->telefono_celular = $request->telefono_celular;
+        $persona->correo_personal = $request->correo_personal;
+        $persona->correo_institucional = $request->correo_institucional;
+        $persona->estado_civil = $request->estado_civil;
+        $persona->direccion_residencia = $request->direccion_residencia;
+        $persona->genero = $request->genero;
+        $persona->save(); //se guarda el objeto en la base de datos
+
+    }
+
+    // ===========================================================================================
+    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* un personal
+    //============================================================================================
+    private function guardarPersonal(&$personal, $request)
+    {
+        //se setean los atributos del objeto tipo personal
         $personal->carga_academica = $request->carga_academica;
         $personal->grado_academico = $request->grado_academico;
         $personal->cargo = $request->cargo;
@@ -183,9 +226,15 @@ class PersonalController extends Controller
         $personal->regimen_docente = $request->regimen_docente;
         $personal->area_especializacion_1 = $request->area_especializacion_1;
         $personal->area_especializacion_2 = $request->area_especializacion_2;
+        $personal->save();
+    }
 
-        $personal->save();   //Se guardan los datos de la persona
-
+    // ==============================================================================================================
+    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* las participaciones de un personal
+    //===============================================================================================================
+    private function guardarParticipaciones(&$personal, $request)
+    {
+        //Se establecen los atributos del objeto participación según los datos que vengan del request.
         $personal->participacion->capacitacion_didactica =  $request->capacitacion_didactica;
         $personal->participacion->publicaciones =  $request->publicaciones;
         $personal->participacion->cursos_impartidos =  $request->cursos_impartidos;
@@ -195,42 +244,22 @@ class PersonalController extends Controller
         $personal->participacion->evaluacion_interna_ppaa =  $request->evaluacion_interna_ppaa;
         $personal->participacion->evaluacion_externa_ppaa =  $request->evaluacion_externa_ppaa;
         $personal->participacion->reconocimientos =  $request->reconocimientos;
-        $personal->participacion->save();
-
-        Idioma::where('persona_id', $id_personal)->delete();
-        if (!is_null($request->idiomasJSON)) {
-            $idiomas =  json_decode($request->idiomasJSON);
-            foreach ($idiomas as &$idoma) {
-                $idiomaP =  new Idioma();
-                $idiomaP->persona_id =  $id_personal;
-                $idiomaP->nombre =  $idoma;
-                $idiomaP->save();
-            }
-        }
-
-        // Llamado al método que actualiza la foto de perfil
-        $this->update_avatar($request, $personal);
-
-        //Se retorna el detalle del personal ya modificado
-        return redirect("/personal/detalle/{$personal->persona_id}");
+        $personal->participacion->save(); // Se guarda el objeto participación en la base de datos
     }
 
-
-    public function update_avatar($request, $personal)
+    // ==============================================================================================================
+    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* la lista de idiomas de un personal
+    //===============================================================================================================
+    private function guardarIdiomas($request)
     {
-        if ($request->hasFile('avatar')) {
-
-            $avatar = $request->file('avatar');
-            $archivo = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->save(public_path('/img/fotos/' . $archivo));
-
-            if ($personal->persona->imagen_perfil != "default.jpg")
-                File::delete(public_path('/img/fotos/' . $personal->persona->imagen_perfil)); //Elimina la foto anterior
-
-            $personal->persona->imagen_perfil = $archivo;
-            $personal->persona->save();
+        if (!is_null($request->idiomasJSON)) {
+            $idiomas =  json_decode($request->idiomasJSON); // Se toma el arreglo que viene en el array en formato JSON y se transforma a código PHP
+            foreach ($idiomas as &$idoma) { // Por cada uno de los idiomas que esté en el arreglo se realizan las siguientes opciones:
+                $idiomaP =  new Idioma(); // Se crea una nueva instancia del objeto idioma
+                $idiomaP->persona_id =  $request->persona_id; // Se le esteblece la cédula de la persona al objeto idioma
+                $idiomaP->nombre =  $idoma; // Se establece el nombre del idioma
+                $idiomaP->save(); // Se guarda el idioma en la BD
+            }
         }
-
-        return \Redirect::back();
     }
 }
