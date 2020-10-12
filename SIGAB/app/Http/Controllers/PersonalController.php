@@ -188,6 +188,19 @@ class PersonalController extends Controller
         return redirect("/personal/detalle/{$personal->persona_id}");
     }
 
+
+    public function edit($id_personal)
+    {
+        $personal = Persona::find($id_personal);
+        if($personal===null){
+            return response("No existe",404);
+        }
+        else{
+        return response()->json($personal,200);
+        }
+    }
+
+
     public function update_avatar($request, $personal)
     {
         if ($request->hasFile('avatar')) {

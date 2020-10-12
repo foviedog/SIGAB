@@ -85,6 +85,7 @@ Route::post('/personal', 'PersonalController@store')->name('personal.store');
 Route::get('/personal/registrar', 'PersonalController@create')->name('personal.create');
 Route::get('/personal/listar', 'PersonalController@index')->name('personal.listar');
 Route::get('/personal/detalle/{id_personal}', 'PersonalController@show')->name('personal.show');
+Route::get('/personal/obtener/{id_personal}', 'PersonalController@edit');
 Route::get('/personal/actualizar/{id_personal}', 'PersonalController@update')->name('personal.update');
 
 /* Rutas para informacion de Carga Academica */

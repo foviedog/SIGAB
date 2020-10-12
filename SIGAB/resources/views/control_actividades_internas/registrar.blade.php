@@ -53,7 +53,7 @@ Registrar actividad interna
                 //Se obtiene actividad interna
                 $actividad_interna_insertada = Session::get('actividad_interna_insertada');
                 @endphp
-                //Datos de la actividad a mostrar en el mensaje de exito
+                {{-- //Datos de la actividad a mostrar en el mensaje de exito --}}
                 Se insertó la actividad interna con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
@@ -61,7 +61,8 @@ Registrar actividad interna
                         <b>Tema: </b> {{$actividad_insertada->tema}} <br>
                         <b>Lugar: </b> {{$actividad_insertada->lugar ?? "No se digitó"}} <br>
                         <b>Estado: </b> {{$actividad_insertada->estado}} <br>
-                        <b>Fecha de actividad: </b> {{$actividad_insertada->fecha_actividad}} <br>
+                        <b>Fecha de inicio actividad: </b> {{$actividad_insertada->fecha_inicio_actividad}} <br>
+                        <b>Fecha de cierre actividad: </b> {{$actividad_insertada->fecha_final_actividad}} <br>
                         <b>Descripción: </b> {{$actividad_insertada->descripcion}} <br>
                         <b>Evaluación: </b> {{$actividad_insertada->evaluacion}} <br>
                         <b>Objetivos: </b> {{$actividad_insertada->objetivos ?? "No se digitó" }} <br>
@@ -71,7 +72,6 @@ Registrar actividad interna
                         <b>Facilitador: </b> {{$actividad_interna_insertada->facilitador_actividad ?? "No se digitó" }} <br>
                         <b>Agenda: </b> {{$actividad_interna_insertada->agenda ?? "No se digitó"}} <br>
                         <b>Ámbito: </b> {{$actividad_interna_insertada->ambito}} <br>
-                        <b>Duración: </b> {{$actividad_interna_insertada->duracion ?? "No se digitó"}} <br>
                         <b>Certificación: </b> {{$actividad_interna_insertada->certificacion_actividad ?? "No se digitó"}} <br>
                         <b>Público dirigido: </b> {{$actividad_interna_insertada->publico_dirigido}} <br>
 
@@ -112,15 +112,24 @@ Registrar actividad interna
                     {{-- Campo: Fecha de actividad--}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="fecha_actividad">Fecha de actividad <i class="text-danger">*</i></label>
+                            <label for="fecha_actividad">Fecha y hora de inicio de actividad<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_actividad" name="fecha_actividad" required>
+                            <input type='datetime-local' class="form-control w-100" id="fecha_inicio_actividad" name="fecha_inicio_actividad" required>
+                        </div>
+                    </div>
+                    {{-- Campo: Fecha de actividad--}}
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="col-4">
+                            <label for="fecha_actividad">Fecha y hora final de actividad<i class="text-danger">*</i></label>
+                        </div>
+                        <div class="col-6">
+                            <input type='datetime-local' class="form-control w-100" id="fecha_final_actividad" name="fecha_final_actividad" required>
                         </div>
                     </div>
 
                     {{-- Campo: Estado --}}
-                    <div class="d-flex justify-content-start mb-3">
+                    <div class=" d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="estado">Estado <i class="text-danger">*</i></label>
                         </div>
@@ -133,15 +142,6 @@ Registrar actividad interna
                         </div>
                     </div>
 
-                    {{-- Campo: Descripción --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="descripcion">Descripción <i class="text-danger">*</i></label>
-                        </div>
-                        <div class="col-6">
-                            <textarea type='text' class="form-control w-100" id="descripcion" name="descripcion" required></textarea>
-                        </div>
-                    </div>
 
                     {{-- Campo: Objetivos --}}
                     <div class="d-flex justify-content-start mb-3">
@@ -159,16 +159,20 @@ Registrar actividad interna
                             <label for="responsable_coordinar">Responsable de coordinar<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="responsable_coordinar" name="responsable_coordinar" required>
+                            <div class="alert alert-danger" role="alert" id="mensaje-alerta"></div>
+                            <input type='text' id="cedula-responsable" class="form-control w-100">
+                            <a class="btn btn-rojo" onclick="buscarResponsable()"> Buscar </a>
+                            <input type='hidden' id="responsable_coordinar" name="responsable_coordinar" value="none">
+                            <div id="informacion-responsable"></div>
                         </div>
                     </div>
                     {{-- Campo: Facilitador de actividad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="facilitador_actividad">Facilitador de actividad </label>
+                            <label for="facilitador_actividad">Facilitador de actividad<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad">
+                            <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad" max="45" required>
                         </div>
                     </div>
 
@@ -180,7 +184,7 @@ Registrar actividad interna
                     {{-- Campo: Proposito--}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="proposito">Propósito <i class="text-danger">*</i></label>
+                            <label for="proposito">Propósito<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="proposito" name="proposito" required>
@@ -194,7 +198,7 @@ Registrar actividad interna
                     {{-- Campo: Tipo de actividad --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="tipo_actividad">Tipo de actividad <i class="text-danger">*</i></label>
+                            <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
@@ -228,13 +232,22 @@ Registrar actividad interna
                             </select>
                         </div>
                     </div>
+                    {{-- Campo: Descripción --}}
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="col-4">
+                            <label for="descripcion">Descripción <i class="text-danger">*</i></label>
+                        </div>
+                        <div class="col-6">
+                            <textarea type='text' class="form-control w-100" id="descripcion" name="descripcion" required></textarea>
+                        </div>
+                    </div>
                     {{-- Campo: Certificacion --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
                             <label for="certificacion">Certificación</label>
                         </div>
                         <div class="col-6">
-                            <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad">
+                            <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" max="100">
                         </div>
                     </div>
 
@@ -249,15 +262,6 @@ Registrar actividad interna
                         </div>
                     </div>
 
-                    {{-- Campo: Duracion --}}
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="col-4">
-                            <label for="duracion">Duración </label>
-                        </div>
-                        <div class="col-6">
-                            <input type='number' min="0" class="form-control w-100" id="duracion" name="duracion">
-                        </div>
-                    </div>
                     {{-- Campo: Ambito --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
@@ -285,7 +289,7 @@ Registrar actividad interna
 
             <div class="d-flex justify-content-center">
                 {{-- Boton para agregar informacion de la actividad --}}
-                <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
+                <a class="btn btn-rojo btn-lg" onclick="submit()">Agregar</a>
             </div>
 
         </form>
