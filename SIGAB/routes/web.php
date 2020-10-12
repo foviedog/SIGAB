@@ -57,6 +57,7 @@ Route::get('/estudiante/guia-academica/listar', 'GuiasAcademicaController@index'
 Route::get('/estudiante/guia-academica/registrar/{id_estudiante}', 'GuiasAcademicaController@create')->name('guia-academica.create');
 Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@show')->name('guia-academica.show');
 Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');
+Route::get('/estudiante/guia-academica/{id_guia}/eliminar-archivo', 'GuiasAcademicaController@deleteFile')->name('guia-academica.delete_file');
 
 /* Rutas para informacion de estudiantes */
 Route::get('/estudiante/registrar', 'EstudianteController@create')->name('estudiante.create');
@@ -86,7 +87,11 @@ Route::get('/personal/registrar', 'PersonalController@create')->name('personal.c
 Route::get('/personal/listar', 'PersonalController@index')->name('personal.listar');
 Route::get('/personal/detalle/{id_personal}', 'PersonalController@show')->name('personal.show');
 Route::get('/personal/obtener/{id_personal}', 'PersonalController@edit');
-Route::get('/personal/actualizar/{id_personal}', 'PersonalController@update')->name('personal.update');
+// Route::get('/personal/actualizar/{id_personal}', 'PersonalController@update')->name('personal.update');
+Route::patch('/personal/detalle/{id_personal}', 'PersonalController@update')->name('personal.update');
+/* Ruta para cambiar imagen del personal*/
+Route::post('/personal/imagen/cambiar', 'PersonalController@update_avatar');
+
 
 /* Rutas para informacion de Carga Academica */
 Route::get('/personal/carga-academica/{id_personal}', 'CargasAcademicaController@index')->name('cargaacademica.show');

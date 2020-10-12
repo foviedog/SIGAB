@@ -122,6 +122,11 @@ Botones rellenos
 /* ***********************
 Botones contorno (outline)
 ************************** */
+.btn-contorno-rojo:disabled {
+    background-color: #585757 !important;
+    border-color: #585757 !important;
+    color: #ffffff !important;
+}
 
 .btn-contorno-rojo {
     background-color: #ffffff !important;

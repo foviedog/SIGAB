@@ -17,12 +17,14 @@ class CreateGuiasAcademicasTable extends Migration
             $table->id();
             $table->string('persona_id', 15);
             $table->foreign('persona_id')->references('persona_id')->on('personas')->onDelete('cascade'); /* falta->onDelete('cascade'); */
-            $table->string('motivo', 45);
+            $table->string('tipo');
+            $table->string('solicitud', 15);
             $table->date('fecha');
             $table->string('ciclo_lectivo', 45);
             $table->longText('situacion');
             $table->string('lugar_atencion', 45);
             $table->longText('recomendaciones')->nullable();
+            $table->string('archivo_adjunto')->nullable();
             $table->timestamps();
         });
     }

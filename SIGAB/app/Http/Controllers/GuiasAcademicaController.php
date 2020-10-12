@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Estudiante;
 use App\Guias_academica;
+use App\Personal;
+use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+use Illuminate\Support\Facades\Validator;
 
 class GuiasAcademicaController extends Controller
 {
@@ -19,9 +22,17 @@ class GuiasAcademicaController extends Controller
 
         $estudiante = Estudiante::findOrFail($id_estudiante);
 
+        //Tipos de guías académicas
+        $tipos = $this->tiposDeGuia();
+
+        //Docentes
+        $docentes = Personal::where('cargo', 'Académico')->get();
+
         if ($aceptado == 'true') {
             return view('control_educativo.informacion_guias_academicas.registrar', [
                 'estudiante' => $estudiante,
+                'tipos' => $tipos,
+                'docentes' => $docentes
             ]);
         }
         return response()->json($estudiante, 200);
@@ -31,34 +42,75 @@ class GuiasAcademicaController extends Controller
     public function store(Request $request)
     {
         try { //se utiliza un try-catch para control de errores
+
             //Se crea una nueva instacia de guías académicas.
             $guia = new Guias_academica;
 
             //se setean los atributos del objeto
             $guia->persona_id = $request->persona_id;
-            $guia->motivo = $request->motivo;
+            $guia->tipo = $request->tipo;
+            $guia->solicitud = $request->solicitud;
             $guia->fecha = $request->fecha;
             $guia->ciclo_lectivo = $request->ciclo;
             $guia->situacion = $request->situacion;
             $guia->lugar_atencion = $request->lugar;
             $guia->recomendaciones = $request->recomendaciones;
+
+            //Verifica el archivo adjunto y lo sube
+            if($request->archivo !== NULL){
+
+
+                $validacion = Validator::make($request->all(), [
+                    'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,pptx|max:30000'
+                ]);
+
+                if($validacion->fails()){
+                    return Redirect::back() //se redirecciona a la pagina de registro guias academicas
+                        ->with('error', "El archivo no cumple con las especificaciones establecidas: ".$validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                }
+
+                $archivo = new File;
+
+                if($request->file()) {
+                    $nombreArchivo = time().'_'.$request->archivo->getClientOriginalName();
+                    $rutaArchivo = $request->file('archivo')->storeAs('guias_archivos', $nombreArchivo, 'public');
+                    $guia->archivo_adjunto = $nombreArchivo;
+                }
+
+            }
+
             //se guarda el objeto en la base de datos
             $guia->save();
 
-            //se redirecciona a la pagina de registro de guias academicas con un mensaje de exito y los datos específicos del objeto insertado
-            return Redirect::back()
-                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
-                ->with('gua_academica_insertada', $guia); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+            //Revisa si la guia fue solicitada por un docente
+            if($request->solicitud != $request->persona_id){
+
+                //Busca el docente en la base de datos
+                $docente = Personal::where('persona_id', $request->solicitud)->first();
+
+                //se redirecciona a la pagina de registro de guias academicas con un mensaje de exito y los datos específicos del objeto insertado
+                return Redirect::back()
+                    ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                    ->with('gua_academica_insertada', $guia) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                    ->with('docente', $docente); //devuelve la información del docente
+            } else {
+                return Redirect::back()
+                    ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                    ->with('gua_academica_insertada', $guia); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+            }
+
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
-
-    //Método iniciaal que devuelve el listado de guías con respecto a filtros
+    //Método inicial que devuelve el listado de guías con respecto a filtros
     public function index()
     {
+        //Tipos de guías académicas
+        $tipos = $this->tiposDeGuia();
+
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
 
@@ -79,6 +131,9 @@ class GuiasAcademicaController extends Controller
             $guias = $this->obtenerGuias($itemsPagina);
         }
 
+        //Docentes
+        $docentes = Personal::where('cargo', 'Académico')->get();
+
         //se devuelve la vista con los atributos de paginación de los estudiante
         return view('control_educativo.informacion_guias_academicas.listado', [
             'guias' => $guias, // Listado estudiantel.
@@ -86,8 +141,34 @@ class GuiasAcademicaController extends Controller
             'itemsPagina' => $itemsPagina, // Item que se desean por página.
             'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página
             'fechaIni' => $fechaIni, // Valor del filtro que se haya hecho para mantenerlo en la página
-            'fechaFin' => $fechaFin // Valor del filtro que se haya hecho para mantenerlo en la página
+            'fechaFin' => $fechaFin, // Valor del filtro que se haya hecho para mantenerlo en la página
+            'tipos' => $tipos,
+            'docentes' => $docentes
         ]);
+    }
+
+    //Método que devuelve los tipos de guías académicas
+    public function tiposDeGuia(){
+        //Tipos de guías académicas
+        $tipos = [
+            'Constancia de estudio',
+            'Trámite de Graduación',
+            'Verificación de avance en el plan de estudio',
+            'Referencias de atención solicitada por docentes',
+            'Consejos de abordaje de alguna situación particular solicitada por docentes',
+            'Atención solicitada por los estudiantes para atender su condición educativa',
+            'Solicitud de mediación por conflictos entre docentes-estudiantes',
+            'Solicitud de atención o seguimiento por conflictos entre estudiantes',
+            'Atención de consultas sobre TFG',
+            'Trámites de empadronamiento',
+            'Cupos para cursos de Inglés integrado',
+            'Proceso de pre matrícula',
+            'Atención de consultas vía correo electrónico sobre información variada',
+            'Atención de consultas del equipo de Mentorías',
+            'Ayuda económica inmediata',
+            'Proceso de Inducción a la vida universitaria',
+        ];
+        return $tipos;
     }
 
     // Método que muestra una guía específica de un estudiante.
@@ -102,25 +183,72 @@ class GuiasAcademicaController extends Controller
         return response()->json($guia, 200); // Retorna el resultado por medio de un atributo JSON en la respuesta al AJAX del documento js/control_educativo/información_guias_academicas/listado.js
     }
 
-    public function update($id_graduacion, Request $request)
+    public function update($id_guia, Request $request)
     {
         //Busca la graduación en la base de datos
-        $graduacion = Guias_academica::find($id_graduacion);
+        $guia = Guias_academica::find($id_guia);
 
         //Al la graduación encontrada se le actualizan los atributos
-        $graduacion->motivo = $request->motivo;
-        $graduacion->fecha = $request->fecha;
-        $graduacion->ciclo_lectivo = $request->ciclo;
-        $graduacion->lugar_atencion = $request->lugar;
-        $graduacion->situacion = $request->situacion;
-        $graduacion->recomendaciones = $request->recomendaciones;
+        $guia->tipo = $request->tipo;
+        $guia->solicitud = $request->solicitud;
+        $guia->fecha = $request->fecha;
+        $guia->ciclo_lectivo = $request->ciclo;
+        $guia->lugar_atencion = $request->lugar;
+        $guia->situacion = $request->situacion;
+        $guia->recomendaciones = $request->recomendaciones;
+
+
+         //Verifica el archivo adjunto y lo sube
+            if($request->archivo !== NULL){
+
+                $validacion = Validator::make($request->all(), [
+                    'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,pptx|max:30000'
+                ]);
+
+                if($validacion->fails()){
+                    return Redirect::back() //se redirecciona a la pagina de registro guias academicas
+                        ->with('error', "El archivo no cumple con las especificaciones establecidas: ".$validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                }
+
+                if($guia->archivo_adjunto != NULL){
+                    File::delete(public_path('/storage/guias_archivos/'.$guia->archivo_adjunto));
+                }
+
+                $archivo = new File;
+
+                if($request->file()) {
+                    $nombreArchivo = time().'_'.$request->archivo->getClientOriginalName();
+                    $rutaArchivo = $request->file('archivo')->storeAs('guias_archivos', $nombreArchivo, 'public');
+                    $guia->archivo_adjunto = $nombreArchivo;
+                }
+
+            }
 
         //Se guarda en la base de datos
-        $graduacion->save();
+        $guia->save();
 
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
+    }
+
+    //Método que elimina un archivo
+    public function deleteFile($id_guia){
+        //Busca la graduación en la base de datos
+        $guia = Guias_academica::find($id_guia);
+
+        if($guia->archivo_adjunto != NULL){
+            File::delete(public_path('/storage/guias_archivos/'.$guia->archivo_adjunto));
+            $guia->archivo_adjunto = NULL;
+        } else {
+            return Redirect::back() //se redirecciona a la pagina de registro guias academicas
+                        ->with('error', "El archivo no exite");
+        }
+
+        $guia->save();
+
+        return Redirect::back()
+            ->with('exito', '¡El archivo se ha borrado exitosamente!');
     }
 
 

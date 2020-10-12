@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Idioma;
-use App\Participacion;
+use Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use App\Persona;
 use App\Personal;
+use App\Idioma;
+use App\Participacion;
+
+
 
 class PersonalController extends Controller
 {
@@ -28,7 +33,7 @@ class PersonalController extends Controller
         if (!is_null($filtro)) {
             $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id') //Inner join de personal con personas
                 ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
-                ->orWhere('personal.tipo_puesto', 'like', '%' . $filtro . '%') // Filtro para buscar tipo de puesto del personal
+                ->orWhere('personal.cargo', 'like', '%' . $filtro . '%') // Filtro para buscar el cargo del personal
                 ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro . "%'") //Filtro para buscar por nombre completo
                 ->orderBy('personas.apellido', 'asc')
                 ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
@@ -37,6 +42,7 @@ class PersonalController extends Controller
                 ->orderBy('personas.apellido', 'asc') // Ordena por medio del apellido de manera ascendente
                 ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
         }
+
         //se devuelve la vista con los atributos de paginación del personal
         return view('control_personal.listado', [
             'personal' => $personal, // Listado de personal.
@@ -103,9 +109,8 @@ class PersonalController extends Controller
             $participacion->evaluacion_externa_ppaa =  $request->evaluacion_externa_ppaa;
             $participacion->reconocimientos =  $request->reconocimientos;
             $participacion->save();
-
-            if (!is_null($request->idiomasForm)) {
-                $idiomas =  json_decode($request->idiomasForm);
+            if (!is_null($request->idiomasJSON)) {
+                $idiomas =  json_decode($request->idiomasJSON);
                 foreach ($idiomas as &$idoma) {
                     $idiomaP =  new Idioma();
                     $idiomaP->persona_id =  $request->cedula;
@@ -131,8 +136,8 @@ class PersonalController extends Controller
         $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
             ->where('personal.persona_id', '=', $id_personal)
             ->first();
-        $idiomas = Idioma::where('persona_id', '=', $id_personal)
-            ->get();
+        $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();
+
         return view('control_personal.detalle', [
             'personal' => $personal,
             'idiomas' => $idiomas
@@ -143,30 +148,30 @@ class PersonalController extends Controller
     //Metodo para actualizar los datos del personal
     public function update($id_personal, Request $request)
     {
-        //Se obtiene la persona en base al ID
-        $persona = Persona::find($id_personal);
+        $personal = Personal::find($id_personal);   //Se obtiene el personal que contiene ese ID
 
-        //Se obtiene el personal que contiene ese ID
-        $personal = Personal::find($id_personal);
+        $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
+            ->where('personal.persona_id', '=', $id_personal)
+            ->first();
 
         // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
-        $persona->nombre = $request->nombre;
-        $persona->apellido = $request->apellido;
-        $persona->fecha_nacimiento = $request->fecha_nacimiento;
-        $persona->telefono_fijo = $request->telefono_fijo;
-        $persona->telefono_celular = $request->telefono_celular;
-        $persona->correo_personal = $request->correo_personal;
-        $persona->correo_institucional = $request->correo_institucional;
-        $persona->estado_civil = $request->estado_civil;
-        $persona->direccion_residencia = $request->direccion_residencia;
-        $persona->genero = $request->genero;
+        $personal->persona->nombre = $request->nombre;
+        $personal->persona->fecha_nacimiento = $request->fecha_nacimiento;
+        $personal->persona->apellido = $request->apellido;
+        $personal->persona->telefono_fijo = $request->telefono_fijo;
+        $personal->persona->telefono_celular = $request->telefono_celular;
+        $personal->persona->correo_personal = $request->correo_personal;
+        $personal->persona->correo_institucional = $request->correo_institucional;
+        $personal->persona->estado_civil = $request->estado_civil;
+        $personal->persona->direccion_residencia = $request->direccion_residencia;
+        $personal->persona->genero = $request->genero;
 
-        //Se guardan los datos de la persona
-        $persona->save();
+        $personal->persona->save();   //Se guardan los datos de la persona
 
         //Datos asociados al personal (no incluye el ID ya que no debería ser posible editarlo)
         $personal->carga_academica = $request->carga_academica;
         $personal->grado_academico = $request->grado_academico;
+        $personal->cargo = $request->cargo;
         $personal->tipo_nombramiento = $request->tipo_nombramiento;
         $personal->tipo_puesto = $request->tipo_puesto;
         $personal->jornada = $request->jornada;
@@ -179,9 +184,31 @@ class PersonalController extends Controller
         $personal->area_especializacion_1 = $request->area_especializacion_1;
         $personal->area_especializacion_2 = $request->area_especializacion_2;
 
-        //Se guardan los datos del personal
-        $personal->save();
-        //Llamado al método que actualiza la foto de perfil
+        $personal->save();   //Se guardan los datos de la persona
+
+        $personal->participacion->capacitacion_didactica =  $request->capacitacion_didactica;
+        $personal->participacion->publicaciones =  $request->publicaciones;
+        $personal->participacion->cursos_impartidos =  $request->cursos_impartidos;
+        $personal->participacion->miembro_comisiones =  $request->miembro_comisiones;
+        $personal->participacion->miembro_prueba_grado =  $request->miembro_prueba_grado;
+        $personal->participacion->evaluador_defensa_publica =  $request->evaluador_defensa_publica;
+        $personal->participacion->evaluacion_interna_ppaa =  $request->evaluacion_interna_ppaa;
+        $personal->participacion->evaluacion_externa_ppaa =  $request->evaluacion_externa_ppaa;
+        $personal->participacion->reconocimientos =  $request->reconocimientos;
+        $personal->participacion->save();
+
+        Idioma::where('persona_id', $id_personal)->delete();
+        if (!is_null($request->idiomasJSON)) {
+            $idiomas =  json_decode($request->idiomasJSON);
+            foreach ($idiomas as &$idoma) {
+                $idiomaP =  new Idioma();
+                $idiomaP->persona_id =  $id_personal;
+                $idiomaP->nombre =  $idoma;
+                $idiomaP->save();
+            }
+        }
+
+        // Llamado al método que actualiza la foto de perfil
         $this->update_avatar($request, $personal);
 
         //Se retorna el detalle del personal ya modificado
