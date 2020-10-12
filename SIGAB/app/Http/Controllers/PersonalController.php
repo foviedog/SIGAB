@@ -42,6 +42,7 @@ class PersonalController extends Controller
                 ->orderBy('personas.apellido', 'asc') // Ordena por medio del apellido de manera ascendente
                 ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
         }
+
         //se devuelve la vista con los atributos de paginación del personal
         return view('control_personal.listado', [
             'personal' => $personal, // Listado de personal.
@@ -108,9 +109,8 @@ class PersonalController extends Controller
             $participacion->evaluacion_externa_ppaa =  $request->evaluacion_externa_ppaa;
             $participacion->reconocimientos =  $request->reconocimientos;
             $participacion->save();
-
-            if (!is_null($request->idiomasForm)) {
-                $idiomas =  json_decode($request->idiomasForm);
+            if (!is_null($request->idiomasJSON)) {
+                $idiomas =  json_decode($request->idiomasJSON);
                 foreach ($idiomas as &$idoma) {
                     $idiomaP =  new Idioma();
                     $idiomaP->persona_id =  $request->cedula;
@@ -136,8 +136,8 @@ class PersonalController extends Controller
         $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
             ->where('personal.persona_id', '=', $id_personal)
             ->first();
-        $idiomas = Idioma::where('persona_id', '=', $id_personal)
-            ->get();
+        $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();
+
         return view('control_personal.detalle', [
             'personal' => $personal,
             'idiomas' => $idiomas
@@ -148,7 +148,6 @@ class PersonalController extends Controller
     //Metodo para actualizar los datos del personal
     public function update($id_personal, Request $request)
     {
-
         $personal = Personal::find($id_personal);   //Se obtiene el personal que contiene ese ID
 
         $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
@@ -198,6 +197,16 @@ class PersonalController extends Controller
         $personal->participacion->reconocimientos =  $request->reconocimientos;
         $personal->participacion->save();
 
+        Idioma::where('persona_id', $id_personal)->delete();
+        if (!is_null($request->idiomasJSON)) {
+            $idiomas =  json_decode($request->idiomasJSON);
+            foreach ($idiomas as &$idoma) {
+                $idiomaP =  new Idioma();
+                $idiomaP->persona_id =  $id_personal;
+                $idiomaP->nombre =  $idoma;
+                $idiomaP->save();
+            }
+        }
 
         // Llamado al método que actualiza la foto de perfil
         $this->update_avatar($request, $personal);
