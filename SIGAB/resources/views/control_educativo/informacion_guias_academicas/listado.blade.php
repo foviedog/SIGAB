@@ -59,61 +59,117 @@ Listado de Guías Académicas
                     </div>
                     <div class="modal-body">
 
-                        <div class="d-flex justify-content-center mb-2">
-                            <img class="rounded mb-3" width="160" height="160" id="imagen-modal" />
-                        </div>
-                        <div class="d-flex justify-content-center align-items-center border-bottom">
-                            <div class=" text-center mb-3">
-                                <strong> Persona id:</strong> &nbsp;&nbsp;<span id="cedula"></span> <br>
-                                <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"></span> <br>
-                                <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"></span> <br>
+                        <div class="container">
+                            <div class="d-flex justify-content-center mb-2">
+                                <img class="rounded mb-3" width="160" height="160" id="imagen-modal" />
                             </div>
-                        </div>
+                            <div class="d-flex justify-content-center align-items-center border-bottom">
+                                <div class="text-center mb-3">
+                                    <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula"></span> <br>
+                                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"></span> <br>
+                                    <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"></span> <br>
+                                </div>
+                            </div>
 
-                        <div class="alert alert-danger text-center font-weight-bold" role="alert" id="rellenar-campos-modificar">
-                            Todos los campos son necesarios.
-                        </div>
-                        <form action="" method="post" id="form-actualizar">
-                            @csrf
-                            @method('PATCH')
-                            <div class="row">
+                            <form action="" method="post" id="form-actualizar" enctype="multipart/form-data">
+                                @csrf
+                                @method('PATCH')
 
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="motivo" class="col-form-label">Motivo &nbsp;<i class="text-danger">*</i></label>
-                                        <input type="text" class="form-control" id="motivo" name="motivo" disabled required>
+                                <div class="form-group">
+                                    <label for="motivo" class="col-form-label mt-3">Tipo &nbsp;<i class="text-danger">*</i></label>
+                                    <select class="form-control mb-3" id="tipo" name="tipo" size="10" required disabled>
+                                        @foreach($tipos as $tipo)
+                                            <option>{{ $tipo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i>
+                                        <span class="text-muted" id="mostrar_lugar"></span>
+                                    </label>
+                                    <input type="text" class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,44)" required disabled>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="fecha" class="col-form-label">Fecha &nbsp;<i class="text-danger">*</i></label>
+                                            <input type="date" class="form-control" id="fecha" name="fecha" required disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-2">
+                                        <div class="form-group">
+                                            <label for="ciclo">Ciclo lectivo &nbsp;<i class="text-danger">*</i></label>
+                                            <select class="form-control" id="ciclo" name="ciclo" required disabled>
+                                                <option value="Ciclo I">Ciclo I </option>
+                                                <option value="Ciclo II">Ciclo II </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="fecha" class="col-form-label">Fecha &nbsp;<i class="text-danger">*</i></label>
-                                        <input type="date" class="form-control" id="fecha" name="fecha" disabled required>
+
+                                <label class="col-form-label">Solicitado por &nbsp;<i class="text-danger">*</i></label><br>
+                                <div class="row my-3 mx-1">
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radio" id="radio1" value="est" disabled>
+                                            <label class="form-check-label" for="radio">
+                                                Estudiante
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radio" id="radio2" value="docen" disabled>
+                                            <label class="form-check-label" for="radio">
+                                                Docente
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="ciclo" class="col-form-label">Ciclo lectivo &nbsp;<i class="text-danger">*</i></label>
-                                        <input type="text" class="form-control" id="ciclo" name="ciclo" disabled required>
-                                    </div>
+
+                                <div class="collapse mb-3" id="lista_docentes">
+                                    Seleccione el docente
+                                    <select class="form-control mb-3" size="10" id="docente" disabled>
+                                        @foreach($docentes as $docente)
+                                            <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="lugar-atencion" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i></label>
-                                        <input type="text" class="form-control" id="lugar-atencion" name="lugar" disabled required>
-                                    </div>
+
+                                {{-- Input oculto que envia si es la guía es solicitada por un estudiante o por un educador --}}
+                                <input type="hidden" name="solicitud" id="solicitud">
+
+                                <div class="form-group">
+                                    <label for="situacion" class="col-form-label">Situación &nbsp;<i class="text-danger">*</i></label>
+                                    <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="recomendaciones">Recomendaciones </label>
+                                    <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled></textarea>
+                                    <span class="text-muted" id="mostrar_cant_recomendaciones"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
+                                    <input type="file" name="archivo" class="border" id="adjuntar-archivo" disabled> &nbsp;
+                                    <span data-toggle="tooltip" id="tooltip" data-placement="bottom" title="Si el archivo adjunto ya existe, se reemplazará al elegir otro"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, pptx</b>.
+                                        <br>El archivo no debe pesar más de <b>30MB</b>.</div>
+
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </div>
+
+                                <div id="archivo-adjunto-existente"></div>
+                                <div id="eliminar-archivo"></div>
+
+                                <div class="alert alert-danger text-center" role="alert" id="rellenar-campos-modificar">
+                                    Hay campos vacíos que son obligatorios.
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label for="situacion" class="col-form-label">Situación &nbsp;<i class="text-danger">*</i></label>
-                                <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label" for="recomendaciones">Recomendaciones &nbsp;</label>
-                                <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled required>
-                        </textarea>
-                            </div>
+
                         </form>
                     </div>
                     <input type="hidden" name="id-guia-modal" id="id-guia-modal">
@@ -126,13 +182,11 @@ Listado de Guías Académicas
             </div>
         </div>
 
-
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Académicas</h2>
             <div>
-                {{-- //Botón para añadir estudainte --}}
                 {{-- Regresar al listado de estudiantes --}}
                 <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
                 <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
@@ -140,14 +194,28 @@ Listado de Guías Académicas
                 </button>
             </div>
         </div>
+        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
+        @if(Session::has('exito'))
+        <div class="alert alert-success" role="alert" id="mensaje-exito">
+            {!! \Session::get('exito') !!}
+        </div>
+        @endif
+        {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
+        @php
+        $error = Session::get('error');
+        @endphp
+
+        @if(Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ "¡Oops! Algo ocurrió. ".$error }}
+        </div>
+        @endif
         {{-- // Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">
                 {{-- //Título de la tabla --}}
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de guías académicas</p>
             </div>
-
-
 
             <div class="card-body">
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
@@ -202,7 +270,7 @@ Listado de Guías Académicas
                             <tr>
                                 <th>N° de Cédula</th>
                                 <th>Nombre</th>
-                                <th>Motivo</th>
+                                <th>Tipo</th>
                                 <th>Fecha</th>
                                 <th>Ciclo lectivo</th>
                                 <th>Lugar de atención</th>
@@ -221,13 +289,13 @@ Listado de Guías Académicas
                                 <td>{{ $guia->persona_id }}</td>
                                 {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
                                 <td>{{ $guia->apellido.", ". $guia->nombre }}</td>
-                                <td> {{ $guia->motivo }}  </td>
+                                <td> {{ $guia->tipo }}  </td>
                                 <td> {{ $guia->fecha }} </td>
                                 <td> {{ $guia->ciclo_lectivo }} </td>
                                 <td> {{ $guia->lugar_atencion }}</td>
                                 <td>
                                     {{-- Botón para ver el detalle de la guía académica del estudiante --}}
-                                    <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idestudiante="{{ $guia->id }}">
+                                    <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idguia="{{ $guia->id }}">
                                         Ver detalle
                                     </button>
                                 </td>
@@ -239,7 +307,7 @@ Listado de Guías Académicas
                             <tr>
                                 <th>N° de Cédula</th>
                                 <th>Nombre</th>
-                                <th>Motivo</th>
+                                <th>Tipo</th>
                                 <th>Fecha</th>
                                 <th>Ciclo lectivo</th>
                                 <th>Lugar de atención</th>
