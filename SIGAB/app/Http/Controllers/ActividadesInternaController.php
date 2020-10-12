@@ -51,7 +51,8 @@ class ActividadesInternaController extends Controller
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
             $actividad->estado = $request->estado;
-            $actividad->fecha_actividad = $request->fecha_actividad;
+            $actividad->fecha_inicio_actividad = $request->fecha_inicio_actividad;
+            $actividad->fecha_final_actividad = $request->fecha_final_actividad;
             $actividad->descripcion = $request->descripcion;
             $actividad->evaluacion = $request->evaluacion;
             $actividad->objetivos = $request->objetivos;
@@ -65,7 +66,6 @@ class ActividadesInternaController extends Controller
             $actividad_interna->facilitador_actividad = $request->facilitador_actividad;
             $actividad_interna->agenda = $request->agenda;
             $actividad_interna->ambito = $request->ambito;
-            $actividad_interna->duracion = $request->duracion;
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
 

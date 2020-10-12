@@ -85,7 +85,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Nombre de la organizacion --}}
             <div class="d-flex justify-content-center flex-column mt-3">
                 <div class="mb-3">
-                    <label for="nombre_organizacion">Nombre de la organización</label> <i class="text-danger">*</i> <span class="text-muted" id="mostrar_nombre_organizacion"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="nombre_organizacion">Nombre de la organización<i class="text-danger">*</i></label>
+                        <span class="text-muted" id="mostrar_nombre_organizacion"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeyup="contarCaracteres(this,100)" required>
                 </div>
             </div>
@@ -107,7 +110,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Jornada laboral --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="jornada_laboral">Jornada laboral</label><span class="text-muted" id="mostrar_jornada_laboral"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="jornada_laboral">Jornada laboral</label>
+                        <span class="text-muted" id="mostrar_jornada_laboral"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCaracteres(this,45)">
                 </div>
             </div>
@@ -115,7 +121,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Cargo actual --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="cargo_actual">Cargo actual:</label> <span class="text-muted" id="mostrar_cargo_actual"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="cargo_actual">Cargo actual:</label>
+                        <span class="text-muted" id="mostrar_cargo_actual"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCaracteres(this,45)">
                 </div>
             </div>
@@ -123,7 +132,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Jefe inmediato --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="jefe_inmediato">Jefe inmediato</label> <span class="text-muted" id="mostrar_jefe_inmediato"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="jefe_inmediato">Jefe inmediato</label>
+                        <span class="text-muted" id="mostrar_jefe_inmediato"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeyup="contarCaracteres(this,45)">
                 </div>
             </div>
@@ -131,7 +143,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Tiempo desempleado --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="tiempo_desempleado">Tiempo desempleado</label> <span class="text-muted" id="mostrar_tiempo_desempleado"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="tiempo_desempleado">Tiempo desempleado</label>
+                        <span class="text-muted" id="mostrar_tiempo_desempleado"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCaracteres(this,45)">
                 </div>
             </div>
@@ -139,7 +154,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Telefono trabajo --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="telefono_trabajo">Teléfono trabajo</label> <span class="text-muted" id="mostrar_telefono_trabajo"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="telefono_trabajo">Teléfono trabajo</label>
+                        <span class="text-muted" id="mostrar_telefono_trabajo"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeyup="contarCaracteres(this,45)">
                 </div>
             </div>
@@ -147,7 +165,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Correo trabajo --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="correo_trabajo">Correo trabajo</label> <span class="text-muted" id="mostrar_correo_trabajo"></span>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="correo_trabajo">Correo trabajo</label>
+                        <span class="text-muted" id="mostrar_correo_trabajo"></span>
+                    </div>
                     <input type='text' class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeyup="contarCaracteres(this,80)">
                 </div>
             </div>

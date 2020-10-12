@@ -43,7 +43,10 @@ Cargas académicas de {{ $personal->persona->nombre }}
                             <div class="d-flex justify-content-center flex-column">
                                 {{-- Campo: Ciclo lectivo --}}
                                 <div class="mb-3">
-                                    <label for="ciclo_lectivo">Ciclo lectivo <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_ciclo_lectivo"></span></label>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="ciclo_lectivo">Ciclo lectivo <i class="text-danger">*</i></label>
+                                        <span class="text-muted ml-2" id="mostrar_ciclo_lectivo"></span>
+                                    </div>
                                     <select class="form-control" name="ciclo_lectivo" id="ciclo_lectivo" disabled required>
                                         <option>I Ciclo</option>
                                         <option>II Ciclo</option>
@@ -52,7 +55,10 @@ Cargas académicas de {{ $personal->persona->nombre }}
 
                                 {{-- Campo: Año de graduación --}}
                                 <div class=" mb-3">
-                                    <label for="anio">Año <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_anio"></span></label>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="anio">Año <i class="text-danger">*</i></label>
+                                        <span class="text-muted ml-2" id="mostrar_anio"></span>
+                                    </div>
                                     <input type='number' class="form-control" id="anio" name="anio" onkeyup="contarCaracteres(this,4)" min="1975" disabled required>
                                 </div>
 
@@ -66,7 +72,10 @@ Cargas académicas de {{ $personal->persona->nombre }}
 
                                 {{-- Campo: NRC--}}
                                 <div class=" mb-3">
-                                    <label for="nrc">NRC <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_nrc"></span></label>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="nrc">NRC <i class="text-danger">*</i></label>
+                                        <span class="text-muted ml-2" id="mostrar_nrc"></span>
+                                    </div>
                                     <input type='number' class="form-control" id="nrc" name="nrc" onkeyup="contarCaracteres(this,7)" min="0" disabled required>
                                 </div>
                             </div>

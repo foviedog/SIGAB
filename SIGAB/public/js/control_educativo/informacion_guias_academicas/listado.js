@@ -6,6 +6,7 @@ $('#tooltip').hide();
 $("#rellenar-campos-modificar").hide();
 $("#mensaje-informacion-archivo").hide();
 $("#eliminar-archivo").hide();
+$("#quitar-archivo").hide();
 $('#fechaIni').on('click', function () {
     $('#fecha-inicio').val('');
 });
@@ -149,6 +150,7 @@ $('#habilitar-edicion').on('click', function () {
     $('#radio2').removeAttr('disabled');
     $('#tooltip').show();
     $("#mensaje-informacion-archivo").show();
+    $("#quitar-archivo").show();
     $("#eliminar-archivo").show();
     $('#cancelar-edicion').show();
     $('#terminar-edicion').show();
@@ -168,6 +170,7 @@ function cancelarEdicion() {
     $('#adjuntar-archivo').attr("disabled", "disabled");
     $('#tooltip').hide();
     $("#mensaje-informacion-archivo").hide();
+    $("#quitar-archivo").hide();
     $("#eliminar-archivo").hide();
     $('#cancelar-edicion').hide();
     $('#habilitar-edicion').show();
@@ -205,3 +208,6 @@ $("#docente").on("change", function () {
     //console.log($('#solicitud').val());
 });
 
+function quitarArchivo() {
+    $("#adjuntar-archivo").val(null);
+}

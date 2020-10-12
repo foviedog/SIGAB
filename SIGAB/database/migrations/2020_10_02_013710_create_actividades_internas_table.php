@@ -21,8 +21,7 @@ class CreateActividadesInternasTable extends Migration
             $table->string('facilitador_actividad', 45)->nullable();
             $table->longText('agenda')->nullable();
             $table->string('ambito', 45)->nullable();
-            $table->string('duracion', 45)->nullable();
-            $table->string('certificacion_actividad', 45)->nullable();
+            $table->string('certificacion_actividad', 100)->nullable();
             $table->string('publico_dirigido', 45)->nullable();
             $table->timestamps();
         });

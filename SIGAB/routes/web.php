@@ -86,8 +86,10 @@ Route::post('/personal', 'PersonalController@store')->name('personal.store');
 Route::get('/personal/registrar', 'PersonalController@create')->name('personal.create');
 Route::get('/personal/listar', 'PersonalController@index')->name('personal.listar');
 Route::get('/personal/detalle/{id_personal}', 'PersonalController@show')->name('personal.show');
+Route::get('/personal/obtener/{id_personal}', 'PersonalController@edit');
+// Route::get('/personal/actualizar/{id_personal}', 'PersonalController@update')->name('personal.update');
 Route::patch('/personal/detalle/{id_personal}', 'PersonalController@update')->name('personal.update');
-/* Ruta para cambiar imagen del estudiante*/
+/* Ruta para cambiar imagen del personal*/
 Route::post('/personal/imagen/cambiar', 'PersonalController@update_avatar');
 
 

@@ -262,4 +262,15 @@ class PersonalController extends Controller
             }
         }
     }
+
+
+    public function edit($id_personal)
+    {
+        $personal = Persona::find($id_personal);
+        if ($personal === null) {
+            return response("No existe", 404);
+        } else {
+            return response()->json($personal, 200);
+        }
+    }
 }

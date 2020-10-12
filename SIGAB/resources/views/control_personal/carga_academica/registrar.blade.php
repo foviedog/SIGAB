@@ -63,7 +63,7 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 
             Se insertó la carga académica con los siguientes datos: <br> <br>
             <div class="row">
-                <div class="col-6 ">
+                <div class="col-12">
                     <b>Ciclo lectivo:</b> {{ $carga_academica->ciclo_lectivo }} <br>
                     <b>Año:</b> {{ $carga_academica->anio }} <br>
                     <b>Nombre del curso:</b> {{ $carga_academica->nombre_curso }} <br>
@@ -81,7 +81,10 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 
                 {{-- Campo: Ciclo lectivo --}}
                 <div class="mb-3">
-                    <label for="ciclo_lectivo">Ciclo lectivo <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_ciclo_lectivo"></span></label>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="ciclo_lectivo">Ciclo lectivo <i class="text-danger">*</i></label>
+                        <span class="text-muted ml-2" id="mostrar_ciclo_lectivo"></span>
+                    </div>
                     <select class="form-control" name="ciclo_lectivo" id="ciclo_lectivo">
                         <option>I Ciclo</option>
                         <option>II Ciclo</option>
@@ -90,7 +93,10 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 
                 {{-- Campo: Año de graduación --}}
                 <div class=" mb-3">
-                    <label for="anio">Año <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_anio"></span></label>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="anio">Año <i class="text-danger">*</i></label>
+                        <span class="text-muted ml-2" id="mostrar_anio"></span>
+                    </div>
                     <input type='number' class="form-control" id="anio" name="anio" onkeyup="contarCaracteres(this,4)" min="1975" required>
                 </div>
 
@@ -104,7 +110,10 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 
                 {{-- Campo: NRC--}}
                 <div class=" mb-3">
-                    <label for="nrc">NRC <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_nrc"></span></label>
+                    <div class="d-flex justify-content-between w-100">
+                        <label for="nrc">NRC <i class="text-danger">*</i></label>
+                        <span class="text-muted ml-2" id="mostrar_nrc"></span>
+                    </div>
                     <input type='number' class="form-control" id="nrc" name="nrc" onkeyup="contarCaracteres(this,7)" min="0" required>
                 </div>
 

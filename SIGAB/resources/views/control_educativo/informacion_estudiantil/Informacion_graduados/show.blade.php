@@ -41,19 +41,28 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             <div class="d-flex justify-content-center flex-column">
                                 {{-- Campo: Grado académico --}}
                                 <div class="mb-3">
-                                    <label for="grado_academico">Grado académico <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span></label>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="grado_academico">Grado académico <i class="text-danger">*</i></label>
+                                        <span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span>
+                                    </div>
                                     <input type='text' class="form-control" id="grado_academico" name="grado_academico" onkeyup="contarCarGradoAcademico(this)" required disabled>
                                 </div>
 
                                 {{-- Campo: Carrera cursada--}}
                                 <div class=" mb-3">
-                                    <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_carrera_cursada"></span></label>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i></label>
+                                        <span class="text-muted ml-2" id="mostrar_cant_carrera_cursada"></span>
+                                    </div>
                                     <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeyup="contarCarCarrCursada(this)" required disabled>
                                 </div>
 
                                 {{-- Campo: Año de graduación --}}
                                 <div class=" mb-3">
-                                    <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i><span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span></label>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i></label>
+                                        <span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span>
+                                    </div>
                                     <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" min="1975" required disabled>
                                 </div>
                             </div>
