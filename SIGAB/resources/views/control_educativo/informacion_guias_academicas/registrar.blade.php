@@ -94,9 +94,10 @@ Registrar guía académica
             </div>
 
             <div class="form-group">
-                <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i>
+                <div class="d-flex justify-content-between w-100">
+                    <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i> </label>
                     <span class="text-muted" id="mostrar_lugar"></span>
-                </label>
+                </div>
                 <input type="text" class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,44)" required>
             </div>
 

@@ -85,9 +85,10 @@ Listado de Guías Académicas
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i></label>
                                         <span class="text-muted" id="mostrar_lugar"></span>
-                                    </label>
+                                    </div>
                                     <input type="text" class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,44)" required disabled>
                                 </div>
 
@@ -155,6 +156,7 @@ Listado de Guías Académicas
                                     <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
                                     <input type="file" name="archivo" class="border" id="adjuntar-archivo" disabled> &nbsp;
                                     <span data-toggle="tooltip" id="tooltip" data-placement="bottom" title="Si el archivo adjunto ya existe, se reemplazará al elegir otro"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <br><span style="cursor: pointer" onclick="quitarArchivo()" id="quitar-archivo">Quitar archivo</span>
                                     <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, pptx</b>.
                                         <br>El archivo no debe pesar más de <b>30MB</b>.</div>
 
