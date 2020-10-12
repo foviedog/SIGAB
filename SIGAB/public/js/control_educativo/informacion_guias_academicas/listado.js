@@ -1,9 +1,18 @@
+let est;
 $('#no-existe-estudiante').hide();
 $('#cancelar-edicion').hide();
 $('#terminar-edicion').hide();
+$('#tooltip').hide();
 $("#rellenar-campos-modificar").hide();
+$("#mensaje-informacion-archivo").hide();
+$("#eliminar-archivo").hide();
 $('#fechaIni').on('click', function () {
     $('#fecha-inicio').val('');
+});
+
+/* Desaparece el mensaje de éxito */
+$("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
+    $("#mensaje-exito").slideUp(500);
 });
 
 $('#fechaFin').on('click', function () {
@@ -12,25 +21,49 @@ $('#fechaFin').on('click', function () {
 
 $('#detalle-guia-modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
-    var id = button.data('idestudiante') // Extract info from data-* attributes
+    var id = button.data('idguia') // Extract info from data-* attributes
 
     $.ajax({
         url: "/estudiante/guia-academica/" + id,
         type: "GET",
         success: function(response) {
             if (response) {
-                console.log(response);
                 let modal = $(this);
                 $('#id-guia-modal').val(id);
                 $('#cedula').text(response.persona_id);
                 $('#nombre').text(response.nombre+'  '+response.apellido);
                 $('#correo').text(response.correo_personal);
-                $('#motivo').val(response.motivo);
-                $('#lugar-atencion').val(response.lugar_atencion);
+                $('#tipo').val(response.tipo);
+                $('#lugar').val(response.lugar_atencion);
                 $('#ciclo').val(response.ciclo_lectivo);
                 $('#fecha').val(response.fecha);
                 $('#situacion').val(response.situacion);
                 $('#recomendaciones').val(response.recomendaciones);
+                $('#solicitud').val(response.solicitud);
+
+                //console.log($('#solicitud').val());
+
+                est = response.persona_id;
+
+                if (response.solicitud === est) {
+                    $('input:radio[name="radio"]').filter('[value="est"]').attr('checked', true);
+                } else {
+                    $('input:radio[name="radio"]').filter('[value="docen"]').attr('checked', true);
+                    $('#lista_docentes').collapse('show');
+                    $("#docente option").each  ( function() {
+                        if ($(this).val().split(" ")[0] === response.solicitud)
+                            $(this).prop('selected', true);
+                    });
+                }
+
+                if (response.archivo_adjunto !== null) {
+                    $("#archivo-adjunto-existente").addClass("card card-body");
+                    $("#archivo-adjunto-existente").html(
+                        "<a href='/storage/guias_archivos/" + response.archivo_adjunto + "' target='_blank'>" +
+                        response.archivo_adjunto + "</a>")
+                    $("#eliminar-archivo")
+                        .html("<a href = '/estudiante/guia-academica/" + id + "/eliminar-archivo'>Eliminar archivo</a>");
+                }
 
                 let src = fotosURL+"/"+response.imagen_perfil;
                 $('#imagen-modal').attr('src',src);
@@ -77,16 +110,16 @@ $('#terminar-edicion').on('click', function () {
             $("#rellenar-campos-modificar").slideUp(500);
         });
     }
-
 });
+
 function validarEdicion() {
-    if ($('#lugar-atencion').val() === '') {
+    if ($('#lugar').val() === '') {
         return false;
     }
     if ($('#fecha').val() === '') {
         return false;
     }
-    if ($('#motivo').val() === '') {
+    if ($('#tipo').val() === '') {
         return false;
     }
     if ($('#ciclo').val() === '') {
@@ -95,9 +128,7 @@ function validarEdicion() {
     if ($('#situacion').val() === '') {
         return false;
     }
-    if ($('#recomendaciones').val() === '') {
-        return false;
-    }
+
     return true;
 }
 
@@ -109,9 +140,16 @@ $('#habilitar-edicion').on('click', function () {
     $('#recomendaciones').removeAttr('disabled');
     $('#situacion').removeAttr('disabled');
     $('#ciclo').removeAttr('disabled');
-    $('#lugar-atencion').removeAttr('disabled');
+    $('#lugar').removeAttr('disabled');
     $('#fecha').removeAttr('disabled');
-    $('#motivo').removeAttr('disabled');
+    $('#tipo').removeAttr('disabled');
+    $('#docente').removeAttr('disabled');
+    $('#adjuntar-archivo').removeAttr('disabled');
+    $('#radio1').removeAttr('disabled');
+    $('#radio2').removeAttr('disabled');
+    $('#tooltip').show();
+    $("#mensaje-informacion-archivo").show();
+    $("#eliminar-archivo").show();
     $('#cancelar-edicion').show();
     $('#terminar-edicion').show();
     $('#habilitar-edicion').hide();
@@ -121,9 +159,16 @@ function cancelarEdicion() {
     $('#recomendaciones').attr("disabled", "disabled");
     $('#situacion').attr("disabled", "disabled");
     $('#ciclo').attr("disabled", "disabled");
-    $('#lugar-atencion').attr("disabled", "disabled");
+    $('#lugar').attr("disabled", "disabled");
     $('#fecha').attr("disabled", "disabled");
-    $('#motivo').attr("disabled", "disabled");
+    $('#tipo').attr("disabled", "disabled");
+    $('#docente').attr("disabled", "disabled");
+    $('#radio1').attr("disabled", "disabled");
+    $('#radio2').attr("disabled", "disabled");
+    $('#adjuntar-archivo').attr("disabled", "disabled");
+    $('#tooltip').hide();
+    $("#mensaje-informacion-archivo").hide();
+    $("#eliminar-archivo").hide();
     $('#cancelar-edicion').hide();
     $('#habilitar-edicion').show();
     $('#terminar-edicion').hide();
@@ -135,7 +180,28 @@ $('#cancelar-edicion').on('click', function () {
 
 $('#cerrar-modal-edicion').on('click', function () {
     cancelarEdicion();
+    $("#archivo-adjunto-existente").removeClass("card card-body");
+    $("#archivo-adjunto-existente").html("");
 });
 
+$('#solicitud').val(est);
+$(function () {
+    $("input[type='radio']").on("click", function () {
+            var radioValue = $("input[name='radio']:checked").val();
+            if (radioValue == "docen") {
+                $('#lista_docentes').collapse('show');
+                //console.log($('#solicitud').val());
+            } else {
+                $('#lista_docentes').collapse('hide');
+                $('#solicitud').val(est);
+                $("#docente").val("");
+                //console.log($('#solicitud').val());
+            }
+    });
+});
 
+$("#docente").on("change", function () {
+    $('#solicitud').val($("#docente").val().split(" ")[0]);
+    //console.log($('#solicitud').val());
+});
 
