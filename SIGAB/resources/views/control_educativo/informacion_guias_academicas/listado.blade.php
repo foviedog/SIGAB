@@ -79,7 +79,7 @@ Listado de Guías Académicas
                                     <label for="motivo" class="col-form-label mt-3">Tipo &nbsp;<i class="text-danger">*</i></label>
                                     <select class="form-control mb-3" id="tipo" name="tipo" size="10" required disabled>
                                         @foreach($tipos as $tipo)
-                                            <option>{{ $tipo }}</option>
+                                        <option>{{ $tipo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -134,7 +134,7 @@ Listado de Guías Académicas
                                     Seleccione el docente
                                     <select class="form-control mb-3" size="10" id="docente" disabled>
                                         @foreach($docentes as $docente)
-                                            <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
+                                        <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -157,7 +157,7 @@ Listado de Guías Académicas
                                     <input type="file" name="archivo" class="border" id="adjuntar-archivo" disabled> &nbsp;
                                     <span data-toggle="tooltip" id="tooltip" data-placement="bottom" title="Si el archivo adjunto ya existe, se reemplazará al elegir otro"><i class="far fa-question-circle fa-lg"></i></span>
                                     <br><span style="cursor: pointer" onclick="quitarArchivo()" id="quitar-archivo">Quitar archivo</span>
-                                    <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, pptx</b>.
+                                    <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, zip, rar, 7zip</b>.
                                         <br>El archivo no debe pesar más de <b>30MB</b>.</div>
 
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -170,7 +170,7 @@ Listado de Guías Académicas
                                     Hay campos vacíos que son obligatorios.
                                 </div>
 
-                            </div>
+                        </div>
 
                         </form>
                     </div>
@@ -339,6 +339,7 @@ Listado de Guías Académicas
 <script>
     // "global" vars, built using blade
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/listado.js') }}" defer></script>

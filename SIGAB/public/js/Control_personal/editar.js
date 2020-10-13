@@ -1,4 +1,3 @@
-// jQuery(function () {
 
     document.addEventListener("DOMContentLoaded", cargaInicial);//Se agrega el evento carga inicial al momento de cargar el documento
 

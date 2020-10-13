@@ -57,33 +57,32 @@ class GuiasAcademicaController extends Controller
             $guia->recomendaciones = $request->recomendaciones;
 
             //Verifica el archivo adjunto y lo sube
-            if($request->archivo !== NULL){
+            if ($request->archivo !== NULL) {
 
 
                 $validacion = Validator::make($request->all(), [
                     'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,pptx|max:30000'
                 ]);
 
-                if($validacion->fails()){
+                if ($validacion->fails()) {
                     return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                        ->with('error', "El archivo no cumple con las especificaciones establecidas: ".$validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                        ->with('error', "El archivo no cumple con las especificaciones establecidas: " . $validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 }
 
                 $archivo = new File;
 
-                if($request->file()) {
-                    $nombreArchivo = time().'_'.$request->archivo->getClientOriginalName();
+                if ($request->file()) {
+                    $nombreArchivo = time() . '_' . $request->archivo->getClientOriginalName();
                     $rutaArchivo = $request->file('archivo')->storeAs('guias_archivos', $nombreArchivo, 'public');
                     $guia->archivo_adjunto = $nombreArchivo;
                 }
-
             }
 
             //se guarda el objeto en la base de datos
             $guia->save();
 
             //Revisa si la guia fue solicitada por un docente
-            if($request->solicitud != $request->persona_id){
+            if ($request->solicitud != $request->persona_id) {
 
                 //Busca el docente en la base de datos
                 $docente = Personal::where('persona_id', $request->solicitud)->first();
@@ -98,7 +97,6 @@ class GuiasAcademicaController extends Controller
                     ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                     ->with('gua_academica_insertada', $guia); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
             }
-
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -148,7 +146,8 @@ class GuiasAcademicaController extends Controller
     }
 
     //Método que devuelve los tipos de guías académicas
-    public function tiposDeGuia(){
+    public function tiposDeGuia()
+    {
         //Tipos de guías académicas
         $tipos = [
             'Constancia de estudio',
@@ -198,31 +197,30 @@ class GuiasAcademicaController extends Controller
         $guia->recomendaciones = $request->recomendaciones;
 
 
-         //Verifica el archivo adjunto y lo sube
-            if($request->archivo !== NULL){
+        //Verifica el archivo adjunto y lo sube
+        if ($request->archivo !== NULL) {
 
-                $validacion = Validator::make($request->all(), [
-                    'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,pptx|max:30000'
-                ]);
+            $validacion = Validator::make($request->all(), [
+                'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,rar,zip,7zip|max:30000'
+            ]);
 
-                if($validacion->fails()){
-                    return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                        ->with('error', "El archivo no cumple con las especificaciones establecidas: ".$validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-                }
-
-                if($guia->archivo_adjunto != NULL){
-                    File::delete(public_path('/storage/guias_archivos/'.$guia->archivo_adjunto));
-                }
-
-                $archivo = new File;
-
-                if($request->file()) {
-                    $nombreArchivo = time().'_'.$request->archivo->getClientOriginalName();
-                    $rutaArchivo = $request->file('archivo')->storeAs('guias_archivos', $nombreArchivo, 'public');
-                    $guia->archivo_adjunto = $nombreArchivo;
-                }
-
+            if ($validacion->fails()) {
+                return Redirect::back() //se redirecciona a la pagina de registro guias academicas
+                    ->with('error', "El archivo no cumple con las especificaciones establecidas: " . $validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
             }
+
+            if ($guia->archivo_adjunto != NULL) {
+                File::delete(public_path('/storage/guias_archivos/' . $guia->archivo_adjunto));
+            }
+
+            $archivo = new File;
+
+            if ($request->file()) {
+                $nombreArchivo = time() . '_' . $request->archivo->getClientOriginalName();
+                $rutaArchivo = $request->file('archivo')->storeAs('guias_archivos', $nombreArchivo, 'public');
+                $guia->archivo_adjunto = $nombreArchivo;
+            }
+        }
 
         //Se guarda en la base de datos
         $guia->save();
@@ -233,16 +231,17 @@ class GuiasAcademicaController extends Controller
     }
 
     //Método que elimina un archivo
-    public function deleteFile($id_guia){
+    public function deleteFile($id_guia)
+    {
         //Busca la graduación en la base de datos
         $guia = Guias_academica::find($id_guia);
 
-        if($guia->archivo_adjunto != NULL){
-            File::delete(public_path('/storage/guias_archivos/'.$guia->archivo_adjunto));
+        if ($guia->archivo_adjunto != NULL) {
+            File::delete(public_path('/storage/guias_archivos/' . $guia->archivo_adjunto));
             $guia->archivo_adjunto = NULL;
         } else {
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                        ->with('error', "El archivo no exite");
+                ->with('error', "El archivo no exite");
         }
 
         $guia->save();
