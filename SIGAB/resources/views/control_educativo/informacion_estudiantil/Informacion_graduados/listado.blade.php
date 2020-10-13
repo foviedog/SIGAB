@@ -126,7 +126,7 @@ Listado de Graduados
                                 <td>
                                     {{-- Botón para ver las guías académicas del estudiante --}}
                                     <strong>
-                                        <a href="{{ route('graduado.show', $graduado->persona->persona_id ) }}" class="btn btn-contorno-rojo"> Ver graduaciones </a>
+                                        <a href="{{ route('graduado.show', $graduado->persona->persona_id ) }}" class="btn btn-contorno-rojo"> Graduaciones </a>
                                     </strong><br />
                                 </td>
                             </tr>
@@ -148,7 +148,7 @@ Listado de Graduados
                 </div>
                 <div class="row">
                     {{-- Información general de los items por página y el total de resultados --}}
-                    <div class="col-md-5 align-self-center">
+                    <div class="col-md-3 align-self-center">
                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $graduados->perPage() }} de {{ $graduados->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}

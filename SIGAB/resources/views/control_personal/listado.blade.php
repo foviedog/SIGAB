@@ -120,7 +120,7 @@ Listado de Personal
                 </div>
                 <div class="row">
                     {{-- Información general de los items por página y el total de resultados --}}
-                    <div class="col-md-5 align-self-center">
+                    <div class="col-md-3 align-self-center">
                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $personal->perPage() }} de {{ $personal->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}

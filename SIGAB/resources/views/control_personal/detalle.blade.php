@@ -297,7 +297,7 @@ $idiomas = [];
                                             {{-- Campo: experiencia_profesional --}}
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <label for="experiencia_profesional"><strong>Experiencia profecional</strong><br /></label>
+                                                    <label for="experiencia_profesional"><strong>Experiencia profesional</strong><br /></label>
                                                     <span data-toggle="tooltip" data-placement="bottom" title="separar cada curso con punto y coma (;))"><i class="far fa-question-circle fa-lg"></i></span>
                                                     <textarea type="text" name="experiencia_profesional" id="experiencia_profesional" class="form-control" placeholder="Experiencia Profesional" disabled>{{ $personal->experiencia_profesional }}</textarea>
                                                 </div>
