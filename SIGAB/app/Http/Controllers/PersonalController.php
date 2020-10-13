@@ -69,8 +69,8 @@ class PersonalController extends Controller
         try { //se utiliza un try-catch para evitar el redireccionamiento a página default de error de Laravel
 
 
-            $persona = new Persona; //Se crea una nueva instacia de Persona
-            $personal = new Personal; //Se crea una nueva instacia de estudiante
+            $persona = new Persona(); //Se crea una nueva instacia de Persona
+            $personal = new Personal(); //Se crea una nueva instacia de estudiante
             $participacion = new Participacion(); //Se crea una nueva instacia de estudiante
 
             // Se le establece la cédula a cada uno de los objetos para que en el método generalizado realice un guardado del registro y no un actualizar.

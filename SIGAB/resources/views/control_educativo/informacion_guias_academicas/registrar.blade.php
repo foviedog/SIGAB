@@ -53,15 +53,15 @@ Registrar guía académica
                 <b>Fecha:</b> {{ $guia->fecha }} <br>
                 <b>Ciclo lectivo:</b> {{ $guia->ciclo_lectivo ?? "No se digitó" }} <br>
                 @if(Session::has('docente'))
-                    @php $docente = Session::get('docente'); @endphp
-                    <b>Solicitado por:</b> {{ $docente->persona->nombre." ".$docente->persona->apellido }} <br>
+                @php $docente = Session::get('docente'); @endphp
+                <b>Solicitado por:</b> {{ $docente->persona->nombre." ".$docente->persona->apellido }} <br>
                 @else
-                    <b>Solicitado por:</b> Estudiante <br>
+                <b>Solicitado por:</b> Estudiante <br>
                 @endif
                 <b>Situación:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
                 <b>Recomendaciones:</b> {{ $guia->recomendaciones ?? "No se digitó" }} <br>
                 @if($guia->archivo_adjunto !== NULL)
-                    <b>Archivo adjunto:</b> <a href='/storage/guias_archivos/{{ $guia->archivo_adjunto }}' target='_blank'>{{ $guia->archivo_adjunto }}</a>
+                <b>Archivo adjunto:</b> <a href='/storage/guias_archivos/{{ $guia->archivo_adjunto }}' target='_blank'>{{ $guia->archivo_adjunto }}</a>
                 @endif
             </div>
         </div>
@@ -88,7 +88,7 @@ Registrar guía académica
                 <label for="motivo" class="col-form-label mt-3">Tipo &nbsp;<i class="text-danger">*</i></label>
                 <select class="form-control mb-3" id="tipo" name="tipo" size="10" required>
                     @foreach($tipos as $tipo)
-                        <option>{{ $tipo }}</option>
+                    <option>{{ $tipo }}</option>
                     @endforeach
                 </select>
             </div>
@@ -119,7 +119,7 @@ Registrar guía académica
                 </div>
             </div>
 
-            <label class="col-form-label">Solicitado por  &nbsp;<i class="text-danger">*</i></label><br>
+            <label class="col-form-label">Solicitado por &nbsp;<i class="text-danger">*</i></label><br>
             <div class="row my-3 mx-1">
                 <div class="col">
                     <div class="form-check">
@@ -143,7 +143,7 @@ Registrar guía académica
                 Seleccione el docente
                 <select class="form-control mb-3" size="10" id="docente">
                     @foreach($docentes as $docente)
-                        <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
+                    <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
                     @endforeach
                 </select>
             </div>
@@ -165,7 +165,7 @@ Registrar guía académica
                 <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
                 <input type="file" name="archivo" class="border" id="adjuntar-archivo">
                 <br><span style="cursor: pointer" onclick="quitarArchivo()">Quitar archivo</span>
-                <div class="text-danger">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, pptx</b>.
+                <div class="text-danger">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, rar, zip, 7zip</b>.
                     <br>El archivo no debe pesar más de <b>30MB</b>.</div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </div>
@@ -188,7 +188,12 @@ Registrar guía académica
 @section('scripts')
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script>
-    let est = {{ $estudiante->persona->persona_id }}
+    let est = {
+        {
+            $estudiante - > persona - > persona_id
+        }
+    }
+
 </script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>
 @endsection
