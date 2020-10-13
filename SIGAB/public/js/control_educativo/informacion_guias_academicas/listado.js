@@ -7,6 +7,7 @@ $("#rellenar-campos-modificar").hide();
 $("#mensaje-informacion-archivo").hide();
 $("#eliminar-archivo").hide();
 $("#quitar-archivo").hide();
+$("#tipo").hide();
 $('#fechaIni').on('click', function () {
     $('#fecha-inicio').val('');
 });
@@ -48,14 +49,21 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
 
                 if (response.solicitud === est) {
                     $('input:radio[name="radio"]').filter('[value="est"]').attr('checked', true);
+                    $('#solicitud').val(est);
+                    $('#docente-mostrar').html('');
                 } else {
                     $('input:radio[name="radio"]').filter('[value="docen"]').attr('checked', true);
-                    $('#lista_docentes').collapse('show');
+                    //$('#lista_docentes').collapse('show');
                     $("#docente option").each  ( function() {
                         if ($(this).val().split(" ")[0] === response.solicitud)
                             $(this).prop('selected', true);
                     });
+                    $('#docente-mostrar').html("<br>Solicitado por: " + $("#docente").val() + "<br><br>");
                 }
+
+                $('#tipo-mostrar').html(response.tipo);
+
+                //console.log($("#docente").val());
 
                 if (response.archivo_adjunto !== null) {
                     $("#archivo-adjunto-existente").addClass("card card-body");
@@ -150,6 +158,12 @@ $('#habilitar-edicion').on('click', function () {
     $('#radio2').removeAttr('disabled');
     $('#tooltip').show();
     $("#mensaje-informacion-archivo").show();
+    $('#tipo').show();
+    $('#tipo-mostrar').hide();
+    if ($("input:radio[value='docen']:checked").val()) {
+        $('#lista_docentes').collapse('show');
+    }
+    $('#docente-mostrar').hide();
     $("#quitar-archivo").show();
     $("#eliminar-archivo").show();
     $('#cancelar-edicion').show();
@@ -170,6 +184,10 @@ function cancelarEdicion() {
     $('#adjuntar-archivo').attr("disabled", "disabled");
     $('#tooltip').hide();
     $("#mensaje-informacion-archivo").hide();
+    $('#lista_docentes').collapse('hide');
+    $('#docente-mostrar').show();
+    $('#tipo').hide();
+    $('#tipo-mostrar').show();
     $("#quitar-archivo").hide();
     $("#eliminar-archivo").hide();
     $('#cancelar-edicion').hide();
@@ -185,6 +203,8 @@ $('#cerrar-modal-edicion').on('click', function () {
     cancelarEdicion();
     $("#archivo-adjunto-existente").removeClass("card card-body");
     $("#archivo-adjunto-existente").html("");
+    $('#tipo-mostrar').html("");
+    $('#docente-mostrar').html("");
 });
 
 $('#solicitud').val(est);

@@ -10,7 +10,6 @@ Listado de Guías Académicas
 
 
 @section('contenido')
-
 <div class="card">
     <div class="card-body">
         {{-- MODAL para agregar una guía académica --}}
@@ -44,7 +43,7 @@ Listado de Guías Académicas
 
         {{-- MODAL para ver el detalle de una guía académica--}}
         <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledb{{ route('personal.create' ) }}y="detalle-guia-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
+            <div class="modal-dialog   modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title font-weight-bold" id="detalle-guia-modal">Detalle de Guía Académica</h5>
@@ -82,6 +81,7 @@ Listado de Guías Académicas
                                         <option>{{ $tipo }}</option>
                                         @endforeach
                                     </select>
+                                    <div id="tipo-mostrar"></div>
                                 </div>
 
                                 <div class="form-group">
@@ -137,7 +137,10 @@ Listado de Guías Académicas
                                         <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
                                         @endforeach
                                     </select>
+
                                 </div>
+
+                                <div id="docente-mostrar"></div>
 
                                 {{-- Input oculto que envia si es la guía es solicitada por un estudiante o por un educador --}}
                                 <input type="hidden" name="solicitud" id="solicitud">
