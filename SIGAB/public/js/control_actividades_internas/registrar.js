@@ -4,7 +4,9 @@ function submit() {
     if ($("#responsable_coordinar").val() !== "none") {
         $("#actividad-interna").submit();
     } else {
-        alert("Debe ingresar el responsable de coordinar");
+        alert(
+            "Debe ingresar el responsable de coordinar y campos obligatorios"
+        );
     }
 }
 
@@ -23,7 +25,6 @@ function buscarResponsable() {
             type: "GET",
             success: function(response) {
                 $("#responsable_coordinar").val(response.persona_id);
-                //console.log($("#responsable_coordinar").val());
                 $("#informacion-responsable").html(
                     "Nombre del responsable: " +
                         response.nombre +
