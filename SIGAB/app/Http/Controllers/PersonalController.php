@@ -264,13 +264,17 @@ class PersonalController extends Controller
     }
 
 
+    // ==============================================================================================================
+    // Método que busca el personal por su ID para probar si esta registrado
+    //===============================================================================================================
+
     public function edit($id_personal)
     {
-        $personal = Persona::find($id_personal);
+        $personal = Persona::find($id_personal);//se busca la persona con el id del personal requerido
         if ($personal === null) {
-            return response("No existe", 404);
+            return response("No existe", 404);//si no lo encuentra devuelve mensaje de error
         } else {
-            return response()->json($personal, 200);
+            return response()->json($personal, 200);//si hay un personal registrado con ese id lo retorna
         }
     }
 }

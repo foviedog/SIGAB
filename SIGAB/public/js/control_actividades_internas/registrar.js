@@ -3,7 +3,6 @@ $("#mensaje-alerta").hide();
 function submit() {
     if ($("#responsable_coordinar").val() !== "none") {
         $("#actividad-interna").submit();
-        //alert("El campo no esta vacio");
     } else {
         alert("Debe ingresar el responsable de coordinar");
     }
@@ -12,6 +11,7 @@ function submit() {
 function buscarResponsable() {
     if ($("#cedula-responsable").val() === "") {
         $("#mensaje-alerta").html("Campo vacio");
+        $("#informacion-responsable").html("");
         $("#mensaje-alerta")
             .fadeTo(2000, 500)
             .slideUp(500, function() {
