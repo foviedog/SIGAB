@@ -151,6 +151,7 @@ Registrar actividad interna
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="estado" name="estado" required>
+                                <option value="">Seleccione</option>
                                 <option value="Para ejecución">Para ejecución</option>
                                 <option value="En progreso">En progreso</option>
                                 <option value="Ejecutada">Ejecutada</option>
@@ -180,13 +181,21 @@ Registrar actividad interna
                         </div>
 
                         <div class="col-md-6 ">
-                            <input type='text' id="cedula-responsable" class="form-control w-100">
+                            <div class="input-group">
+                                <input type='text' id="cedula-responsable" class="form-control " required>
+                                <div class="input-group-append">
+                                    <a class="btn btn-contorno-rojo" onclick="buscarResponsable()">Buscar</a>
+                                </div>
+
+                            </div>
 
                             <div id="informacion-responsable"></div>
                         </div>
+
+
                         <span data-toggle="tooltip" data-placement="right" title="Ingrese el número de cédula del responsable y presione buscar"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
-                        <a class="btn btn-rojo h-25" onclick="buscarResponsable()">Buscar</a>
-                        <input class="form-control" type='hidden' id="responsable_coordinar" name="responsable_coordinar" value="none" required>
+
+                        <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable-encontrado" value="false">
 
                     </div>
 
@@ -203,7 +212,7 @@ Registrar actividad interna
                         <span data-toggle="tooltip" data-placement="right" title="En este campo se ingresa el nombre completo del facilitador de la actividad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             {{-- espacio donde se muestran los caracteres restantes  --}}
-                            <span class="text-muted" id="mostrar_facilitador"></span>
+                            <span class="text-muted" id="mostrar_facilitador_actividad"></span>
                         </div>
                     </div>
                 </div>
@@ -220,6 +229,7 @@ Registrar actividad interna
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="proposito" name="proposito" required>
+                                <option value="">Seleccione</option>
                                 <option value="Inducción">Inducción</option>
                                 <option value="Capacitación">Capacitación</option>
                                 <option value="Actualización">Actualización</option>
@@ -234,6 +244,7 @@ Registrar actividad interna
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
+                                <option value="">Seleccione</option>
                                 <option value="Curso">Curso</option>
                                 <option value="Conferencia">Conferencia</option>
                                 <option value="Taller">Taller</option>
@@ -256,6 +267,7 @@ Registrar actividad interna
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="publico_dirigido" name="publico_dirigido" required>
+                                <option value="">Seleccione</option>
                                 <option value="Estudiantes">Estudiantes</option>
                                 <option value="Graduados">Graduados</option>
                                 <option value="Académicos">Académicos</option>
@@ -286,7 +298,7 @@ Registrar actividad interna
                         <span data-toggle="tooltip" data-placement="top" title="En este espacio se ingresa si la actividad ofrece certificación o no, si se conoce el título de la certificación puede ingresarlo"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             {{-- espacio donde se muestran los caracteres restantes  --}}
-                            <span class="text-muted" id="mostrar_certificacion"></span>
+                            <span class="text-muted" id="mostrar_certificacion_actividad"></span>
                         </div>
                     </div>
 
@@ -308,6 +320,7 @@ Registrar actividad interna
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="ambito" name="ambito" required>
+                                <option value="">Seleccione</option>
                                 <option value="Nacional">Nacional</option>
                                 <option value="Internacional">Internacional</option>
                             </select>
@@ -334,9 +347,8 @@ Registrar actividad interna
 
             <div class="d-flex justify-content-center">
                 {{-- Boton para agregar informacion de la actividad --}}
-                <a class="btn btn-rojo btn-lg" onclick="submit()">Agregar</a>
+                <button type="submit" class="btn btn-rojo btn-lg" id="agregar-actividad">Agregar</button>
             </div>
-
         </form>
     </div>
 </div>
