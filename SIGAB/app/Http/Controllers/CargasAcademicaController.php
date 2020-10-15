@@ -212,5 +212,4 @@ class CargasAcademicaController extends Controller
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
     }
-
 }

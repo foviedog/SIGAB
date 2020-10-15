@@ -118,8 +118,8 @@ Registrar información del personal
                                 <div class="col-6 ">
                                     <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" required>
                                 </div>
-                                <div class="col-2 d-flex">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_persona_id"></span>
                                 </div>
                             </div>
@@ -168,8 +168,8 @@ Registrar información del personal
                                 <div class="col-6">
                                     <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)">
                                 </div>
-                                <div class="col-2 d-flex">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_telefono_fijo"></span>
                                 </div>
                             </div>
@@ -182,8 +182,8 @@ Registrar información del personal
                                 <div class="col-6">
                                     <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)">
                                 </div>
-                                <div class="col-2 d-flex">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_telefono_celular"></span>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@ Registrar información del personal
                                 <div class="col-6">
                                     <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required></textarea>
                                 </div>
-                                <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
+                                <span data-toggle="tooltip" data-placement="top" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_direccion_residencia"></span>
                                 </div>
@@ -309,13 +309,13 @@ Registrar información del personal
                                     </select>
                                 </div>
                             </div>
-                            {{-- Campo: tipo de puesto --}}
+                            {{-- Campo: tipo de puesto 1--}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="tipo_puesto">Tipo de puesto: <i class="text-danger">*</i></label>
+                                    <label for="tipo_puesto_1">Tipo de puesto 1: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_puesto" name="tipo_puesto" form="personal-form" required>
+                                    <select class="form-control w-100" id="tipo_puesto_1" name="tipo_puesto_1" form="personal-form" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Secretaría">Secretaría</option>
                                         <option value="Dirección">Dirección</option>
@@ -331,6 +331,32 @@ Registrar información del personal
                                         <option value="Profesional Ejecutivo en Desarrollo Documental">Profesional Ejecutivo en Desarrollo Documental</option>
                                     </select>
                                 </div>
+                                <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto PRINCIPAL que desempeña en la EBDI"><i class="far fa-question-circle fa-lg "></i></span>
+                            </div>
+                            {{-- Campo: tipo de puesto 2--}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="tipo_puesto_2">Tipo de puesto 2: </label>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control w-100" id="tipo_puesto_2" name="tipo_puesto_2" form="personal-form">
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Secretaría">Secretaría</option>
+                                        <option value="Dirección">Dirección</option>
+                                        <option value="Subdirección">Subdirección</option>
+                                        <option value="Docente">Docente</option>
+                                        <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
+                                        <option value="Participante de PPAA">Participante de PPAA</option>
+                                        <option value="Responsable de PPAA">Responsable de PPAA</option>
+                                        <option value="Técnico Auxiliar">Técnico Auxiliar</option>
+                                        <option value="Biblioteca infantil">Biblioteca infantil</option>
+                                        <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
+                                        <option value="Profesional Asistencial en Desarrollo Tecnológico">Profesional Asistencial en Desarrollo Tecnológico</option>
+                                        <option value="Profesional Ejecutivo en Desarrollo Documental">Profesional Ejecutivo en Desarrollo Documental</option>
+                                    </select>
+                                </div>
+                                <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto SECUNDARIO que desempeña en la EBDI"><i class="far fa-question-circle fa-lg "></i></span>
+
                             </div>
                             {{-- Campo: Jornada --}}
                             <div class="d-flex justify-content-start mb-3">
@@ -400,8 +426,8 @@ Registrar información del personal
                                 <div class="col-6">
                                     <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)">
                                 </div>
-                                <div class="col-2 d-flex">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_trabajo_externo"></span>
                                 </div>
 
@@ -412,10 +438,10 @@ Registrar información del personal
                                     <label for="anio_propiedad">Año de propiedad:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" />
+                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" min="1990" max="{{ date("Y") }}" />
                                 </div>
-                                <div class="col-2">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Año en el que obtuvo la propiedad en la UNA (Aplica para profesores propietarios)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                <div class=" col-2">
+                                    <span data-toggle="tooltip" data-placement="top" title="Año en el que obtuvo la propiedad en la UNA (Aplica para profesores propietarios) (Rango: 1990 - Año actual)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_anio_propiedad"></span>
                                 </div>
                             </div>
@@ -453,8 +479,8 @@ Registrar información del personal
                                 <div class="col-6">
                                     <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3"></textarea>
                                 </div>
-                                <div class="col-2 d-flex">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada curso con punto y coma (;))"><i class="far fa-question-circle fa-lg"></i></span>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Digite la experiencia profesional que se obtuvo en otras entidades externas a la UNA."><i class=" far fa-question-circle fa-lg"></i></span>
 
                                 </div>
                             </div>
@@ -467,8 +493,8 @@ Registrar información del personal
                                 <div class="col-6">
                                     <textarea class="form-control w-100" id="experiencia_academica" name="experiencia_academica" rows="3"></textarea>
                                 </div>
-                                <div class="col-2 d-flex">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada curso con punto y coma (;))"><i class="far fa-question-circle fa-lg"></i></span>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Experiencia académica en la UNA y en otras instituciones."><i class="far fa-question-circle fa-lg"></i></span>
 
                                 </div>
                             </div>
@@ -480,7 +506,7 @@ Registrar información del personal
 
                         <div class="col mt-2">
                             <div class="bg-light py-3 w-100">
-                                <p class=" m-0 font-weight-bold ">Lista de idiomas: </p>
+                                <p class="ml-3 font-weight-bold ">Lista de idiomas: </p>
                             </div>
                             <div class="alert alert-danger text-center font-weight-bold w-100" role="alert" id="alert-idiomas">
                                 Complete todos los campos.
@@ -510,17 +536,14 @@ Registrar información del personal
                             <div class="col">
                                 <h4 class="font-weight-bold">Participaciones </h4>
                             </div>
-                            <div class="col d-flex justify-content-end">
-                                <a class="btn btn-contorno-rojo" href="#general" id="info-general" data-toggle="tab"><i class="fas fa-chevron-left"></i> &nbsp; Información general </a>
-                            </div>
+
                         </div>
                         <div class="row pt-4 ">
                             <div class="col">
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="capacitacion_didactica" class="d-flex justify-content-between">Capacitación didactica:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span>
+                                            <i class="far fa-question-circle fa-lg"></i></span>
                                         </label>
                                         <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal-form"></textarea>
                                     </div>
@@ -529,16 +552,14 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="publicaciones" class="d-flex justify-content-between">Publicaciones:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span> </label>
+                                            <i class="far fa-question-circle fa-lg"></i></span> </label>
                                         <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="cursos_impartidos" class="d-flex justify-content-between">Cursos impartidos:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span>
+                                            <i class="far fa-question-circle fa-lg"></i></span>
                                         </label>
                                         <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal-form"></textarea>
                                     </div>
@@ -546,7 +567,7 @@ Registrar información del personal
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
-                                        <label for="evaluacion_interna_ppaa" class="d-flex justify-content-between">Evaluación interna PPAA: <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
+                                        <label for="evaluacion_interna_ppaa" class="d-flex justify-content-between">Evaluación interna PPAA: <span data-toggle="tooltip" data-placement="top" title="separar cada uno con punto y coma (;))">
                                                 <i class="far fa-question-circle fa-lg"></i></span>
                                         </label>
                                         <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal-form"></textarea>
@@ -558,16 +579,14 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="miembro_comisiones" class="d-flex justify-content-between">Miembro comisiones:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            <i class="far fa-question-circle fa-lg"></i></span></label>
                                         <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="miembro_prueba_grado" class="d-flex justify-content-between">Miembro prueba de grado:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            <i class="far fa-question-circle fa-lg"></i></span></label>
                                         <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal-form"></textarea>
                                     </div>
 
@@ -576,16 +595,14 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="evaluador_defensa_publica" class="d-flex justify-content-between">Evaluador defensa pública:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            <i class="far fa-question-circle fa-lg"></i></span></label>
                                         <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="evaluacion_externa_ppaa" class="d-flex justify-content-between">Evaluación externa PPAA:
-                                            <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            <i class="far fa-question-circle fa-lg"></i></span></label>
                                         <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
@@ -595,18 +612,21 @@ Registrar información del personal
 
                         <div class="d-flex justify-content-center">
                             <div class="col-6">
-                                <label for="reconocimientos" class="d-flex justify-content-between">Reconocimientos: <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))">
+                                <label for="reconocimientos" class="d-flex justify-content-between">Reconocimientos: <span data-toggle="tooltip" data-placement="top" title="separar cada uno con punto y coma (;))">
                                         <i class="far fa-question-circle fa-lg"></i></span></label>
                                 <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal-form"></textarea>
                             </div>
                         </div>
                     </div>
 
-
+                    <div class="col d-flex justify-content-center mt-5">
+                        <a class="btn btn-contorno-rojo" href="#general" id="info-general" data-toggle="tab"><i class="fas fa-chevron-left"></i> &nbsp; Información general </a>
+                    </div>
                 </div>
 
             </div>
-            <div class="d-flex justify-content-center  pt-5">
+            <div class="d-flex justify-content-center  pt-4">
+
                 {{-- Boton para registrar informacion del personal --}}
                 <button type="submit" id="registrar-btn" class="btn btn-rojo btn-lg">Registrar</button>
             </div>

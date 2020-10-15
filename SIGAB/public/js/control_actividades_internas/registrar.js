@@ -30,6 +30,7 @@ function evtSubmit() {
 }
 
 function buscarResponsable() {
+
     if ($("#cedula-responsable").val() === "") {
         $("#mensaje-alerta").html("Campo vacio");
         $("#informacion-responsable").html("");
