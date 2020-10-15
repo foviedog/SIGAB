@@ -182,9 +182,9 @@ Registrar actividad interna
 
                         <div class="col-md-6 ">
                             <div class="input-group">
-                                <input type='text' id="cedula-responsable" class="form-control " required>
+                                <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " required>
                                 <div class="input-group-append">
-                                    <a class="btn btn-contorno-rojo" onclick="buscarResponsable()">Buscar</a>
+                                    <button id="buscar" class="btn btn-contorno-rojo">Buscar</button>
                                 </div>
 
                             </div>
