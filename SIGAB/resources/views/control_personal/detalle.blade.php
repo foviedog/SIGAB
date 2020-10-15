@@ -465,6 +465,16 @@ $idiomas = [];
                                                 </select>
 
                                             </div>
+                                        </div>
+
+                                            {{-- Campo: Trabajo--}}
+
+                                                <div class="form-group text-center mt-4">
+                                                    <label for="city"><strong>Carga académica</strong><br /></label>
+                                                    <div class="w-100 d-flex justify-content-center">
+                                                        <a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo" type="button">Ver carga académica</a>
+                                                    </div>
+                                                </div>
 
                                         </div>
                                     </div>
