@@ -10,7 +10,8 @@
     function cargaInicial(event) {
         ocultarAlertas();
         obtenerIdiomas();
-        eventos();
+        eventosRegistrar();
+
     }
 
     // =================================================================
@@ -37,7 +38,7 @@
     // =================================================================
     // Función que carga todos los eventos de la página
     // =================================================================
-    function eventos() {
+    function eventosRegistrar() {
         evtParticipaciones();
         evtAgregarIdiomas();
         evtEliminarIdiomas();

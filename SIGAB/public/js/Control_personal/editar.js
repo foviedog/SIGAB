@@ -7,7 +7,7 @@
 // ===============================================================================================
     function cargaInicial(event) {
         ocultarElementos();
-        eventos();
+        eventosEditar();
     }
 
 // =================================================================
@@ -24,7 +24,7 @@
 // =================================================================
 // Función que carga todos los eventos de la página
 // =================================================================
-    function eventos() {
+    function eventosEditar() {
         evtHabilitarEdicion();
         evtCancelarEdicion();
         evtEliminarIdiomas();

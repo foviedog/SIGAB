@@ -10,8 +10,8 @@ Detalle del personal {{ $personal->persona->nombre }}
 
 @section('scripts')
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-<script src="{{ asset('js/control_personal/registrar.js') }}"></script>
-<script src="{{ asset('js/control_personal/editar.js') }}"></script>
+<script src="{{ asset('js/control_personal/registrar.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/editar.js') }}" defer></script>
 
 @endsection
 {{-- Arreglos de opciones de los select utilizados --}}
@@ -22,7 +22,7 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
 $generos = ['Femenino','Masculino','Otro'];
 $cargos = ['Administrativo','Académico'];
 $grados_academicos = ["Bachillerato","Licenciatura","Master","Doctorado","Posdoctorado"];
-$jornadas = ["Por horas","Ciclo lectivo","Año"];
+$jornadas = ["Tiempo completo (40 horas)","Cuarto de tiempo (30 horas)","Medio tiempo (30 horas)","Un cuarto de tiempo (10 horas)"];
 $tipos_nombramientos = ["Interino","Propietario","Plazo fijo"];
 $tipos_puestos = ['Secretaría','Dirección','Subdirección','Docente','Profesional Ejecutivo','Participante de PPAA',
 'Responsable de PPAA','Técnico Auxiliar','Biblioteca infantil','Asistente administrativo(a)',
@@ -82,7 +82,7 @@ $idiomas = [];
                                 {{-- Foto del personal --}}
                                 <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" width="160" height="160" />
                                 {{-- Cedula del personal --}}
-                                <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
+                                <div class="mb-3" data-toggle="tooltip" data-placement="right" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
                                 <div id="cambiar-foto">
                                     <hr>
                                     <input type="file" name="avatar" class="border">
@@ -100,55 +100,46 @@ $idiomas = [];
                                 {{-- Campo: capacitacion_didactica --}}
                                 <div class="form-group">
                                     <label for="capacitacion_didactica"><strong>Capacitación didáctica</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="capacitacion_didactica" name="capacitacion_didactica" class="form-control" placeholder="" rows="4" disabled>{{ $personal->capacitacion_didactica }}</textarea>
                                 </div>
                                 {{-- Campo: Publicaciones --}}
                                 <div class="form-group">
                                     <label for="publicaciones"><strong>Publicaciones</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="publicaciones" name="publicaciones" class="form-control" placeholder="" rows="4" disabled>{{ $personal->publicaciones }}</textarea>
                                 </div>
                                 {{-- Campo: cursos_impartidos --}}
                                 <div class="form-group">
                                     <label for="cursos_impartidos"><strong>Cursos impartidos</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="cursos_impartidos" name="cursos_impartidos" class="form-control" placeholder="" rows="4" disabled> {{ $personal->cursos_impartidos }} </textarea>
                                 </div>
                                 {{-- Campo: miembro_comisiones --}}
                                 <div class="form-group">
                                     <label for="miembro_comisiones"><strong>Miembro de comisiones</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="miembro_comisiones" name="miembro_comisiones" class="form-control" placeholder="" rows="4" disabled> {{ $personal->miembro_comisiones }}</textarea>
                                 </div>
                                 {{-- Campo: miembro_prueba_grado --}}
                                 <div class="form-group">
                                     <label for="miembro_prueba_grado"><strong>Miembro prueba grado</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="miembro_prueba_grado" name="miembro_prueba_grado" class="form-control" placeholder="" rows="4" disabled> {{ $personal->miembro_prueba_grado }}</textarea>
                                 </div>
                                 {{-- Campo: evaluador_defensa_publica --}}
                                 <div class="form-group">
                                     <label for="evaluador_defensa_publica"><strong>Evaluador de defensa publica</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="evaluador_defensa_publica" name="evaluador_defensa_publica" class="form-control" placeholder="" rows="4" disabled> {{ $personal->evaluador_defensa_publica }} </textarea>
                                 </div>
                                 {{-- Campo: evaluacion_interna_ppaa --}}
                                 <div class="form-group">
                                     <label for="evaluacion_interna_ppaa"><strong>Evaluacion interna PPAA</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" class="form-control" placeholder="" rows="4" disabled> {{ $personal->evaluacion_interna_ppaa }}</textarea>
                                 </div>
                                 {{-- Campo: evaluacion_externa_ppaa --}}
                                 <div class="form-group">
                                     <label for="evaluacion_externa_ppaa"><strong>Evaluacion externa PPAA</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" class="form-control" placeholder="" rows="4" disabled> {{ $personal->evaluacion_externa_ppaa }}</textarea>
                                 </div>
                                 {{-- Campo: reconocimientos --}}
                                 <div class="form-group">
                                     <label for="reconocimientos"><strong>Reconocimientos</strong><br /></label>
-                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada uno con punto y coma (;))"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <textarea type="text" id="reconocimientos" name="reconocimientos" class="form-control" placeholder="" rows="4" disabled>{{ $personal->reconocimientos }}</textarea>
                                 </div>
 
@@ -210,7 +201,7 @@ $idiomas = [];
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="bottom" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_telefono_celular"></span>
                                                     <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $personal->persona->telefono_celular}}" disabled />
                                                 </div>
@@ -219,7 +210,7 @@ $idiomas = [];
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="bottom" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_telefono_fijo"></span>
                                                     <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $personal->persona->telefono_fijo }}" disabled />
                                                 </div>
@@ -270,9 +261,9 @@ $idiomas = [];
                                                 {{-- Campo: trabajo_externo --}}
                                                 <div class="form-group">
                                                     <label for="trabajo_externo"><strong>Lugar de Trabajo externo </strong></label>
-                                                    <span data-toggle="tooltip" data-placement="bottom" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_trabajo_externo"></span>
-                                                    <input type="text" name="trabajo_externo" id="trabajo_externo" class=" form-control" onkeyup="contarCaracteres(this,60)" placeholder="Lugar de trabajo externo" value="{{ $personal->lugar_trabajo_externo}}" disabled /> </input>
+                                                    <input type="text" name="trabajo_externo" id="trabajo_externo" class=" form-control" onkeyup="contarCaracteres(this,60)" placeholder="Solamente para docente interino" value="{{ $personal->lugar_trabajo_externo}}" disabled /> </input>
                                                 </div>
                                             </div>
                                             <div class="col-6 d-flex justify-content-center align-items-center mt-2">
@@ -298,7 +289,7 @@ $idiomas = [];
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="experiencia_profesional"><strong>Experiencia profesional</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada curso con punto y coma (;))"><i class="far fa-question-circle fa-lg"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Experiencia profesional que se obtuvo en otras entidades externas a la UNA."><i class=" far fa-question-circle fa-lg"></i></span>
                                                     <textarea type="text" name="experiencia_profesional" id="experiencia_profesional" class="form-control" placeholder="Experiencia Profesional" disabled>{{ $personal->experiencia_profesional }}</textarea>
                                                 </div>
                                             </div>
@@ -309,7 +300,7 @@ $idiomas = [];
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="experiencia_academica"><strong>Experiencia académica</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="bottom" title="separar cada curso con punto y coma (;))"><i class="far fa-question-circle fa-lg"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Experiencia académica en la UNA y en otras instituciones."><i class="far fa-question-circle fa-lg"></i></span>
                                                     <textarea type="text" name="experiencia_academica" id="experiencia_academica" class="form-control" placeholder="Experiencia académica" disabled>{{ $personal->experiencia_academica }}</textarea>
                                                 </div>
                                             </div>
@@ -333,15 +324,12 @@ $idiomas = [];
                                                     <td><button type="button" name="agregar-btn" id="agregar-btn" class="btn btn-contorno-rojo"> <i class="fas fa-plus-circle"></i> Agregar otro idioma</button></td>
                                                 </tr>
 
-
                                                 @for ($i = 1; $i < count($idiomas); $i++) <tr id="row{{ $i }}" class="idiomaRow">
                                                     <td><input type="text" name="name[]" placeholder="Nombre de idioma" class="form-control idioma" value="{{ $idiomas[$i]->nombre }}" disabled /></td>
                                                     <td><button type="button" name="eliminar-idioma" id="{{ $i }}" class="btn btn-gris eliminar-idioma-btn"><i class="fas fa-minus-circle"></i></button></td>
                                                     </tr>
                                                     @endfor
-
                                             </table>
-
                                         </div>
 
 
@@ -356,6 +344,36 @@ $idiomas = [];
 
                                         <div class="form-row d-flex justify-content-between">
                                             <div class="col-6">
+                                                {{-- Campo: tipo_puesto 1--}}
+                                                <div class="form-group">
+                                                    <div class="d-flex ">
+                                                        <label for="tipo_puesto_1"><strong>Tipo de puesto 1<i class="text-danger">* </i></strong></label>
+                                                        <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto PRINCIPAL que desempeña en la EBDI" class="ml-3"><i class="far fa-question-circle fa-lg "></i></span>
+                                                    </div>
+                                                    <select id="tipo_puesto_1" name="tipo_puesto_1" class="form-control" required disabled>
+                                                        @foreach($tipos_puestos as $tipo_puesto)
+                                                        <option value="{{ $tipo_puesto }}" @if ( $tipo_puesto==$personal->tipo_puesto_1) selected @endif> {{ $tipo_puesto }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                {{-- Campo: tipo_puesto 2--}}
+                                                <div class="form-group">
+                                                    <div class="d-flex ">
+                                                        <label for="tipo_puesto_2"><strong>Tipo de puesto 2<i class="text-danger">* </i></strong></label>
+                                                        <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto SECUNDARIO que desempeña en la EBDI" class="ml-3"><i class="far fa-question-circle fa-lg "></i></span>
+                                                    </div>
+                                                    <select id="tipo_puesto_2" name="tipo_puesto_2" class="form-control" required disabled>
+                                                        @foreach($tipos_puestos as $tipo_puesto)
+                                                        <option value="{{ $tipo_puesto }}" @if ( $tipo_puesto==$personal->tipo_puesto_2) selected @endif> {{ $tipo_puesto }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row d-flex justify-content-between">
+                                            <div class="col-4">
                                                 {{-- Campo: cargo --}}
                                                 <div class="form-group">
                                                     <label for="cargo"><strong>Tipo de cargo <i class="text-danger">* </i></strong></label>
@@ -367,31 +385,18 @@ $idiomas = [];
 
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                {{-- Campo: tipo_puesto --}}
-                                                <div class="form-group">
-                                                    <label for="tipo_puesto"><strong>Tipo de puesto <i class="text-danger">* </i></strong></label>
-                                                    <select id="tipo_puesto" name="tipo_puesto" class="form-control" required disabled>
-                                                        @foreach($tipos_puestos as $tipo_puesto)
-                                                        <option value="{{ $tipo_puesto }}" @if ( $tipo_puesto==$personal->tipo_puesto) selected @endif> {{ $tipo_puesto }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row d-flex justify-content-between">
                                             {{-- Campo: tipo_nombramiento --}}
-                                            <div class="col-6">
+                                            <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="tipo_nombramiento"><strong>Tipo de nombramiento <i class="text-danger">* </i></strong></label>
                                                     <select id="tipo_nombramiento" name="tipo_nombramiento" class="form-control" required disabled>
                                                         @foreach($tipos_nombramientos as $tipo_nombramiento)
-                                                        <option value="{{ $tipo_nombramiento }}" @if ( $tipo_nombramiento==$personal->tipo_nombramiento) selected @endif> {{ $tipo_puesto }}</option>
+                                                        <option value="{{ $tipo_nombramiento }}" @if ( $tipo_nombramiento==$personal->tipo_nombramiento) selected @endif> {{ $tipo_nombramiento }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-4">
                                                 {{-- Campo: jornada --}}
                                                 <div class="form-group">
                                                     <label for="jornada"><strong>Jornada laboral <i class="text-danger">* </i></strong></label>
@@ -421,7 +426,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="area_especializacion_1"><strong>Área de especialización 1 </strong><br /></label>
                                                     <span class="text-muted" id="mostrar_area_especializacion_1"></span>
-                                                    <input type="text" name="area_especializacion_1" id="area_especializacion_1" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Telefono Fijo" value="{{ $personal->area_especializacion_1 }}" disabled />
+                                                    <input type="text" name="area_especializacion_1" id="area_especializacion_1" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Area de especialización 1" value="{{ $personal->area_especializacion_1 }}" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -429,7 +434,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="area_especializacion_2"><strong>Area de especialización 2</strong><br /></label>
                                                     <span class="text-muted" id="mostrar_area_especializacion_2"></span>
-                                                    <input type="text" name="area_especializacion_2" id="area_especializacion_2" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Telefono Fijo" value="{{ $personal->area_especializacion_2 }}" disabled />
+                                                    <input type="text" name="area_especializacion_2" id="area_especializacion_2" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Area de especialización 2" value="{{ $personal->area_especializacion_2 }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -438,9 +443,9 @@ $idiomas = [];
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="anio_propiedad"><strong>Año de propiedad</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="bottom" title="Año en el que obtuvo la propiedad en la UNA"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que obtuvo la propiedad en la UNA"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_anio_propiedad"></span>
-                                                    <input type="text" name="anio_propiedad" id="anio_propiedad" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Telefono Fijo" value="{{ $personal->anio_propiedad }}" disabled />
+                                                    <input type="text" name="anio_propiedad" id="anio_propiedad" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Año de propiedad" value="{{ $personal->anio_propiedad }}" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -467,31 +472,31 @@ $idiomas = [];
                                             </div>
                                         </div>
 
-                                            {{-- Campo: Trabajo--}}
+                                        {{-- Campo: Trabajo--}}
 
-                                                <div class="form-group text-center mt-4">
-                                                    <label for="city"><strong>Carga académica</strong><br /></label>
-                                                    <div class="w-100 d-flex justify-content-center">
-                                                        <a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo" type="button">Ver carga académica</a>
-                                                    </div>
-                                                </div>
-
+                                        <div class="form-group text-center mt-4">
+                                            <label for="city"><strong>Carga académica</strong><br /></label>
+                                            <div class="w-100 d-flex justify-content-center">
+                                                <a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo" type="button">Ver carga académica</a>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                    {{-- Guarda oculto el ID del personal en el detalle --}}
-                    <input type="hidden" name="persona_id" value="{{ $personal->persona->persona_id }}"><br>
-                    {{-- Boton para enviar los cambios --}}
-                    <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
-                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                {{-- Guarda oculto el ID del personal en el detalle --}}
+                <input type="hidden" name="persona_id" value="{{ $personal->persona->persona_id }}"><br>
+                {{-- Boton para enviar los cambios --}}
+                <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
             </div>
         </div>
+    </div>
     </div>
 </form>
 @endsection

@@ -495,7 +495,6 @@ Registrar información del personal
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Experiencia académica en la UNA y en otras instituciones."><i class="far fa-question-circle fa-lg"></i></span>
-
                                 </div>
                             </div>
 
@@ -626,10 +625,10 @@ Registrar información del personal
 
             </div>
             <div class="d-flex justify-content-center  pt-4">
-
                 {{-- Boton para registrar informacion del personal --}}
                 <button type="submit" id="registrar-btn" class="btn btn-rojo btn-lg">Registrar</button>
             </div>
+
         </form>
     </div>
 </div>
