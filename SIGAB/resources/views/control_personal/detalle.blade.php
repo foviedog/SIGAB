@@ -21,7 +21,7 @@ Detalle del personal {{ $personal->persona->nombre }}
 $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
 $generos = ['Femenino','Masculino','Otro'];
 $cargos = ['Administrativo','Académico'];
-$grados_academicos = ["Bachillerato","Licenciatura","Master","Doctorado","Posdoctorado"];
+$grados_academicos = ["Bachillerato","Licenciatura","Maestría","Doctorado","Posdoctorado"];
 $jornadas = ["Tiempo completo (40 horas)","Cuarto de tiempo (30 horas)","Medio tiempo (30 horas)","Un cuarto de tiempo (10 horas)"];
 $tipos_nombramientos = ["Interino","Propietario","Plazo fijo"];
 $tipos_puestos = ['Secretaría','Dirección','Subdirección','Docente','Profesional Ejecutivo','Participante de PPAA',
@@ -237,6 +237,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="genero"><strong>Género <i class="text-danger">* </i></strong></label>
                                                     <select id="genero" name="genero" class="form-control w-100" required disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         <option value="M" @if( $personal->persona->genero == "M" ) selected @endif>Masculino</option>
                                                         <option value="F" @if( $personal->persona->genero == "F" ) selected @endif>Femenino</option>
                                                         <option value="Otro" @if( $personal->persona->genero == "Otro" ) selected @endif>Otro</option>
@@ -248,6 +249,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="estadoCivil"><strong>Estado Civil <i class="text-danger">* </i></strong></label>
                                                     <select id="estado_civil" name="estado_civil" class="form-control" required disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         @foreach($estadosCiviles as $estadoCivil)
                                                         <option value='{{ $estadoCivil }}' @if ( $estadoCivil==$personal->persona->estado_civil) selected @endif> {{ $estadoCivil }}</option>
                                                         @endforeach
@@ -361,10 +363,11 @@ $idiomas = [];
                                                 {{-- Campo: tipo_puesto 2--}}
                                                 <div class="form-group">
                                                     <div class="d-flex ">
-                                                        <label for="tipo_puesto_2"><strong>Tipo de puesto 2<i class="text-danger">* </i></strong></label>
+                                                        <label for="tipo_puesto_2"><strong>Tipo de puesto 2</strong></label>
                                                         <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto SECUNDARIO que desempeña en la EBDI" class="ml-3"><i class="far fa-question-circle fa-lg "></i></span>
                                                     </div>
-                                                    <select id="tipo_puesto_2" name="tipo_puesto_2" class="form-control" required disabled>
+                                                    <select id="tipo_puesto_2" name="tipo_puesto_2" class="form-control" disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         @foreach($tipos_puestos as $tipo_puesto)
                                                         <option value="{{ $tipo_puesto }}" @if ( $tipo_puesto==$personal->tipo_puesto_2) selected @endif> {{ $tipo_puesto }}</option>
                                                         @endforeach
@@ -378,6 +381,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="cargo"><strong>Tipo de cargo <i class="text-danger">* </i></strong></label>
                                                     <select id="cargo" name="cargo" class="form-control" required disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         @foreach($cargos as $cargo)
                                                         <option value="{{ $cargo }}" @if ( $cargo==$personal->cargo) selected @endif> {{ $cargo }}</option>
                                                         @endforeach
@@ -390,6 +394,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="tipo_nombramiento"><strong>Tipo de nombramiento <i class="text-danger">* </i></strong></label>
                                                     <select id="tipo_nombramiento" name="tipo_nombramiento" class="form-control" required disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         @foreach($tipos_nombramientos as $tipo_nombramiento)
                                                         <option value="{{ $tipo_nombramiento }}" @if ( $tipo_nombramiento==$personal->tipo_nombramiento) selected @endif> {{ $tipo_nombramiento }}</option>
                                                         @endforeach
@@ -401,6 +406,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="jornada"><strong>Jornada laboral <i class="text-danger">* </i></strong></label>
                                                     <select id="jornada" name="jornada" class="form-control" required disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         @foreach($jornadas as $jornada)
                                                         <option value="{{ $jornada }}" @if ( $jornada==$personal->jornada) selected @endif> {{ $jornada }}</option>
                                                         @endforeach
@@ -415,6 +421,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="grado_academico"><strong>Grado académico <i class="text-danger">* </i></strong></label>
                                                     <select id="grado_academico" name="grado_academico" class="form-control" required disabled>
+                                                        <option value="" selected>Sin seleccionar</option>
                                                         @foreach($grados_academicos as $grado_academico)
                                                         <option value="{{ $grado_academico }}" @if ( $grado_academico==$personal->grado_academico) selected @endif> {{ $grado_academico }}</option>
                                                         @endforeach
@@ -445,7 +452,7 @@ $idiomas = [];
                                                     <label for="anio_propiedad"><strong>Año de propiedad</strong><br /></label>
                                                     <span data-toggle="tooltip" data-placement="right" title="Año en el que obtuvo la propiedad en la UNA"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_anio_propiedad"></span>
-                                                    <input type="text" name="anio_propiedad" id="anio_propiedad" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Año de propiedad" value="{{ $personal->anio_propiedad }}" disabled />
+                                                    <input type="text" name="anio_propiedad" id="anio_propiedad" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Sin especificar" value="{{ $personal->anio_propiedad }}" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -453,6 +460,7 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="regimen_administrativo"><strong>Regimen administrativo </strong></label>
                                                     <select id="regimen_administrativo" name="regimen_administrativo" class="form-control" disabled>
+                                                        <option value="" selected>No aplica para docentes</option>
                                                         @foreach($regimenes_administrativos as $regimen_administrativo)
                                                         <option value="{{ $regimen_administrativo }}" @if ( $regimen_administrativo==$personal->regimen_administrativo) selected @endif> {{ $regimen_administrativo }}</option>
                                                         @endforeach
@@ -464,16 +472,16 @@ $idiomas = [];
                                                 {{-- Campo: regimen_docente --}}
                                                 <label for="regimen_docente"><strong>Regimen docente </strong></label>
                                                 <select id="regimen_docente" name="regimen_docente" class="form-control" disabled>
+                                                    <option value="" selected>No aplica para administrativos</option>
                                                     @foreach($regimenes_docentes as $regimen_docente)
-                                                    <option value="{{ $regimen_docente }}" @if ( $regimen_docente==$personal->regimen_docente) selected @endif> {{ $regimen_administrativo }}</option>
+                                                    <option value="{{ $regimen_docente }}" @if ( $regimen_docente==$personal->regimen_docente) selected @endif> {{ $regimen_docente }}</option>
                                                     @endforeach
                                                 </select>
 
                                             </div>
                                         </div>
 
-                                        {{-- Campo: Trabajo--}}
-
+                                        {{-- Campo: Carga académica--}}
                                         <div class="form-group text-center mt-4">
                                             <label for="city"><strong>Carga académica</strong><br /></label>
                                             <div class="w-100 d-flex justify-content-center">

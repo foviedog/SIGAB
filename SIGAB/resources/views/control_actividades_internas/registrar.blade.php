@@ -215,7 +215,7 @@ Registrar actividad interna
                                     <div class="d-flex justify-center">
                                         <div class="col d-flex justify-content-center">
                                             <div class="w-50  d-flex ">
-                                                <input type="number" value="0" min="0" max="24" step="1" name="duracion" id="duracion" />
+                                                <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" />
                                                 <span class="d-flex align-items-center ml-2 font-weight-bold"> h</span>
                                             </div>
 
@@ -268,7 +268,7 @@ Registrar actividad interna
                                             <option value="Lectorías">Lectorías</option>
                                             <option value="Simposio">Simposio</option>
                                             <option value="Charla">Charla</option>
-                                            <option value="Actividad co curricular">Actividad co curricular</option>
+                                            <option value="Actividad cocurricular">Actividad co curricular</option>
                                             <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
                                             <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
                                             <option value="Comisiones de trabajo">Comisiones de trabajo</option>

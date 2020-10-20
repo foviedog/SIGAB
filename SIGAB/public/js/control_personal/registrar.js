@@ -49,7 +49,6 @@
     // Evento del botón que hace aparecer la ventana de participaciones
     // =================================================================
     function evtParticipaciones() {
-
         $("#participaciones-ref").on("click", function (e) { // Evento activado por click
             e.preventDefault();// Debido a que el botón es una etiqueta anchor se le previene el default para validar los campos
             let $personalForm = $("#personal-form"); // Variable que contiene el form de información general del personal
