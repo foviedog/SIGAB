@@ -292,8 +292,7 @@ Registrar actividad interna
                                             <option value="Estudiantes de primer ingreso">Estudiantes de primer ingreso</option>
                                             <option value="Estudiantes regulares">Estudiantes regulares</option>
                                             <option value="Estudiantes graduados">Estudiantes graduados</option>
-                                            <option value="Académicos">Académicos</option>
-                                            <option value="Docentes">Docentes</option>
+                                            <option value="Personal Docente">Personal Docente</option>
                                             <option value="Personal Administrativo">Personal Administrativo</option>
                                         </select>
                                     </div>
