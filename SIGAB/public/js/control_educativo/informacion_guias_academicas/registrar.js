@@ -23,4 +23,3 @@ $("#docente").on("change", function () {
 function quitarArchivo() {
     $("#adjuntar-archivo").val(null);
 }
-
