@@ -500,7 +500,7 @@ Registrar actividad interna
                         <div class="col-5  d-flex justify-content-start align-items-center ">
                             <div class="d-flex justify-content-start align-items-center ">
                                 <div class="text-start mb-3">
-                                    <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable"> </span> <br>
+                                    <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> </span> <br>
                                     <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable"> </span> <br>
                                     <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> </span> <br>
                                     <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"></span> <br>

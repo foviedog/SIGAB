@@ -60,7 +60,7 @@ function eventos() {
             let src = fotosURL + "/" + responsable.imagen_perfil;
             $('#imagen-responsable').attr('src', src);
             $("#nombre-responsable").html(responsable.nombre +" " +responsable.apellido );
-            $("#cedula-responsable").html(responsable.persona_id);
+            $("#cedula-responsable-card").html(responsable.persona_id);
             $("#correo-responsable").html(responsable.correo_institucional);
             $("#num-telefono-responsable").html(responsable.telefono_fijo);
 
