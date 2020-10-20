@@ -58,6 +58,9 @@ Route::get('/estudiante/guia-academica/registrar/{id_estudiante}', 'GuiasAcademi
 Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@show')->name('guia-academica.show');
 Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');
 Route::get('/estudiante/guia-academica/{id_guia}/eliminar-archivo', 'GuiasAcademicaController@deleteFile')->name('guia-academica.delete_file');
+Route::get('/estudiante/guia-academica/download/{nombre}', 'GuiasAcademicaController@download')->name('guia-academica.download');
+
+
 
 /* Rutas para informacion de estudiantes */
 Route::get('/estudiante/registrar', 'EstudianteController@create')->name('estudiante.create');

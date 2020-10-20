@@ -68,7 +68,7 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
                 if (response.archivo_adjunto !== null) {
                     $("#archivo-adjunto-existente").addClass("card card-body");
                     $("#archivo-adjunto-existente").html(
-                        "<a href='/storage/guias_archivos/" + response.archivo_adjunto + "' target='_blank'>" +
+                        "<a href='"+ documentosURL + "/"+ response.archivo_adjunto + "' target='_blank'>" +
                         response.archivo_adjunto + "</a>")
                     $("#eliminar-archivo")
                         .html("<a href = '/estudiante/guia-academica/" + id + "/eliminar-archivo'>Eliminar archivo</a>");

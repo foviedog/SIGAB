@@ -249,7 +249,11 @@ class GuiasAcademicaController extends Controller
         return Redirect::back()
             ->with('exito', '¡El archivo se ha borrado exitosamente!');
     }
-
+    //Método que descarga un archivo
+    public function download($nombre_archivo)
+    {
+        return response()->download(storage_path("/app/public/guias_archivos/$nombre_archivo"));
+    }
 
     /* ====================================================================================
                 Métodos de búsquda de base de datos  utilizados en el index

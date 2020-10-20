@@ -342,8 +342,10 @@ Listado de Guías Académicas
 <script>
     // "global" vars, built using blade
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+    var documentosURL = "{{ URL::asset('/estudiante/guia-academica/download/') }}";
 
 </script>
+
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/listado.js') }}" defer></script>
 @endsection
