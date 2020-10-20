@@ -19,7 +19,12 @@ Registrar actividad interna
 
 <div class="card">
     <div class="card-body">
-        <h2>Registrar una actividad de tipo interna</h2>
+        <div class="d-flex justify-content-between">
+            <h2>Registrar una actividad de tipo interna</h2>
+            <div>
+                <a href="{{ route('listado-actividad-interna' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+            </div>
+        </div>
         <hr>
         {{-- Formulario para registrar informacion de la actividad --}}
         <form action="/actividad-interna" method="POST" enctype="multipart/form-data" id="actividad-interna">
@@ -99,7 +104,7 @@ Registrar actividad interna
                                     <div class="d-flex justify-content-between w-100">
                                         <div>
                                             <label for="tema">Tema <i class="text-danger">*</i></label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            <span data-toggle="tooltip" data-placement="right" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                         <span class="text-muted " id="mostrar_tema"></span>
                                     </div>
@@ -122,8 +127,6 @@ Registrar actividad interna
                                         </div>
                                         {{-- espacio donde se muestran los caracteres restantes  --}}
                                         <span class="text-muted" id="mostrar_lugar"></span>
-
-
                                     </div>
                                     <div class="d-flex">
                                         <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)">
@@ -140,7 +143,7 @@ Registrar actividad interna
                                         <div>
                                             <label for="facilitador_actividad">Facilitador de actividad<i class="text-danger">*</i>
                                             </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="En este campo se ingresa el nombre completo del facilitador de la actividad" class="mx-2"><i class="far fa-question-circle fa-lg"></i></span>
+                                            <span data-toggle="tooltip" data-placement="right" title="Ingrese el nombre completo del facilitador de la actividad" class="mx-2"><i class="far fa-question-circle fa-lg"></i></span>
                                             {{-- espacio donde se muestran los caracteres restantes  --}}
                                         </div>
                                         <span class="text-muted" id="mostrar_facilitador_actividad"></span>
@@ -166,7 +169,7 @@ Registrar actividad interna
                                         <div>
                                             <label for="fecha_actividad">Fecha de inicio<i class="text-danger">*</i>
                                             </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha y la hora de inicio de actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha de inicio de actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                     </div>
                                     <div class="d-flex">
@@ -184,7 +187,7 @@ Registrar actividad interna
                                         <div>
                                             <label for="fecha_actividad">Fecha final<i class="text-danger">*</i>
                                             </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha y la hora a finalizar la actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha a finalizar la actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
 
                                     </div>
@@ -202,8 +205,8 @@ Registrar actividad interna
                                 <div class="w-75">
                                     <div class="d-flex justify-content-between w-100">
                                         <div>
-                                            <label for="duracion">Duracion <i class="text-danger">*</i></label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Digite las horas de duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            <label for="duracion">Duración Total</label>
+                                            <span data-toggle="tooltip" data-placement="right" title="Se ingresa el número de horas totales de la duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-center">
@@ -221,14 +224,13 @@ Registrar actividad interna
 
 
                     </div>
-
+                    {{-- Campo: Proposito  --}}
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
                                     <div class="d-flex justify-content-between w-75">
                                         <label for="proposito">Propósito<i class="text-danger">*</i></label>
-
                                     </div>
                                     <div class="d-flex">
                                         <select class="form-control w-100" id="proposito" name="proposito" required>
@@ -237,17 +239,18 @@ Registrar actividad interna
                                             <option value="Capacitación">Capacitación</option>
                                             <option value="Actualización">Actualización</option>
                                             <option value="Involucramiento del personal">Involucramiento del personal</option>
+                                            <option value="Otro">Otro</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{-- Campo: Tipo de Actividad  --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
                                     <div class="d-flex justify-content-between w-75">
                                         <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
-
                                     </div>
                                     <div class="d-flex">
                                         <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
@@ -260,27 +263,32 @@ Registrar actividad interna
                                             <option value="Órgano colegiado">Órgano colegiado</option>
                                             <option value="Tutorías">Tutorías</option>
                                             <option value="Lectorías">Lectorías</option>
+                                            <option value="Simposio">Simposio</option>
+                                            <option value="Charla">Charla</option>
+                                            <option value="Actividad co curricular">Actividad co curricular</option>
                                             <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
                                             <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
                                             <option value="Comisiones de trabajo">Comisiones de trabajo</option>
                                             <option value="Externa">Externa</option>
+                                            <option value="Otro">Otro</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{-- Campo: Poblacion a la que va dirigida la actividad   --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
                                     <div class="d-flex justify-content-between w-75">
                                         <label for="publico_dirigido">Dirigido a <i class="text-danger">*</i></label>
-
                                     </div>
                                     <div class="d-flex">
                                         <select class="form-control w-100" id="publico_dirigido" name="publico_dirigido" required>
                                             <option value="">Seleccione</option>
-                                            <option value="Estudiantes">Estudiantes</option>
-                                            <option value="Graduados">Graduados</option>
+                                            <option value="Estudiantes de primer ingreso">Estudiantes de primer ingreso</option>
+                                            <option value="Estudiantes regulares">Estudiantes regulares</option>
+                                            <option value="Estudiantes graduados">Estudiantes graduados</option>
                                             <option value="Académicos">Académicos</option>
                                             <option value="Docentes">Docentes</option>
                                             <option value="Personal Administrativo">Personal Administrativo</option>
@@ -291,7 +299,7 @@ Registrar actividad interna
                         </div>
 
                     </div>
-
+                    {{-- Campo: Estado de actividad  --}}
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
@@ -310,17 +318,16 @@ Registrar actividad interna
                                 </div>
                             </div>
                         </div>
-
+                        {{-- Campo: Certificación  --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
                                     <div class="d-flex justify-content-between w-100">
                                         <div>
                                             <label for="certificacion">Certificación</label>
-                                            <span data-toggle="tooltip" data-placement="top" title="En este espacio se ingresa si la actividad ofrece certificación o no, si se conoce el título de la certificación puede ingresarlo"><i class="far fa-question-circle fa-lg"></i></span>
+                                            <span data-toggle="tooltip" data-placement="right" title="En este espacio se ingresa si la actividad ofrece certificación o no, si se conoce el título de la certificación puede ingresarlo"><i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                         <span class="text-muted" id="mostrar_certificacion_actividad"></span>
-
                                     </div>
                                     <div class="d-flex">
                                         <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" onkeyup="contarCaracteres(this,100)">
@@ -328,7 +335,7 @@ Registrar actividad interna
                                 </div>
                             </div>
                         </div>
-
+                        {{-- Campo: Ambito  --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
@@ -345,11 +352,8 @@ Registrar actividad interna
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-
                 <div class="row">
                     {{-- Campo: Objetivos --}}
                     <div class="col">
@@ -358,7 +362,7 @@ Registrar actividad interna
                                 <div class="d-flex justify-content-between w-75">
                                     <div>
                                         <label for="objetivos">Objetivos</label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Detalle de objetivos de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        <span data-toggle="tooltip" data-placement="right" title="Se describen los objetivos de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
@@ -375,7 +379,7 @@ Registrar actividad interna
                                 <div class="d-flex justify-content-between w-75">
                                     <div>
                                         <label for="agenda">Agenda </label>
-                                        <span data-toggle="tooltip" data-placement="top" title="Se describen los puntos a tratar en la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        <span data-toggle="tooltip" data-placement="right" title="Se describen los puntos a tratar en la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
@@ -395,7 +399,7 @@ Registrar actividad interna
                                 <div class="d-flex justify-content-between w-75">
                                     <div>
                                         <label for="descripcion">Descripción <i class="text-danger">*</i></label>
-                                        <span data-toggle="tooltip" data-placement="top" title="Descripción y detalles de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
@@ -412,14 +416,14 @@ Registrar actividad interna
                                 <div class="d-flex justify-content-between w-100">
                                     <div>
                                         <label for="evaluacion">Evaluación</label>
-                                        <span data-toggle="tooltip" data-placement="top" title="Se ingresa una evaluación o comentario corto sobre la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                     <div>
                                         <span class="text-muted" id="mostrar_evaluacion"></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" required></textarea>
+                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)"></textarea>
 
                                 </div>
                             </div>
@@ -434,7 +438,7 @@ Registrar actividad interna
                                 <div class="d-flex justify-content-between w-75">
                                     <div>
                                         <label for="recursos">Recursos </label>
-                                        <span data-toggle="tooltip" data-placement="top" title="Recursos necesarios para desarrollar la actividad "> <i class="far fa-question-circle fa-lg"></i></span>
+                                        <span data-toggle="tooltip" data-placement="right" title="Recursos necesarios para desarrollar la actividad "> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
@@ -451,7 +455,7 @@ Registrar actividad interna
                                 <div class="d-flex justify-content-between w-100">
                                     <div>
                                         <label for="instituciones_patrocinadoras">Instituciones patrocinadoras</label>
-                                        <span data-toggle="tooltip" data-placement="top" title="Se ingresa una evaluación o comentario corto sobre la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa el nombre de las instituciones o entidades patrocinadoras de la actividad si existen"> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                     <div>
                                         <span class="text-muted" id="mostrar_instituciones_patrocinadoras"></span>
@@ -479,7 +483,7 @@ Registrar actividad interna
                             <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " required>
                             <div class="input-group-append">
                                 <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
-                                <span data-toggle="tooltip" data-placement="right" title="Ingrese el número de cédula del responsable y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
                             </div>
                         </div>
                     </div>
