@@ -465,7 +465,7 @@ Registrar actividad interna
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)" required></textarea>
+                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)"></textarea>
 
                                 </div>
                             </div>
