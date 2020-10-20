@@ -401,12 +401,12 @@ Registrar actividad interna
                             <div class="w-100">
                                 <div class="d-flex justify-content-between w-75">
                                     <div>
-                                        <label for="descripcion">Descripción <i class="text-danger">*</i></label>
+                                        <label for="descripcion">Descripción </label>
                                         <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="descripcion" name="descripcion" rows="4" required></textarea>
+                                    <textarea type='text' class="form-control w-100" id="descripcion" name="descripcion" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>

@@ -69,7 +69,7 @@ function llenarTargetaResponsable(responsable) {
     );
     $("#cedula-responsable-card").html(responsable.persona_id);
     $("#correo-responsable").html(responsable.correo_institucional);
-    $("#num-telefono-responsable").html(responsable.telefono_fijo);
+    $("#num-telefono-responsable").html(responsable.telefono_celular);
 
     $("#targeta-responsable").show("d-flex");
 }
