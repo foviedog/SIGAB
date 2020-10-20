@@ -60,20 +60,21 @@ function evtBuscarResponsable() {
     });
 }
 
-        function llenarTargetaResponsable(responsable) {
-            $("#targeta-responsable").addClass("d-flex");
-            let src = fotosURL + "/" + responsable.imagen_perfil;
-            $('#imagen-responsable').attr('src', src);
-            $("#nombre-responsable").html(responsable.nombre +" " +responsable.apellido );
-            $("#cedula-responsable-card").html(responsable.persona_id);
-            $("#correo-responsable").html(responsable.correo_institucional);
-            $("#num-telefono-responsable").html(responsable.telefono_fijo);
-
-            $("#targeta-responsable").show("d-flex");
-        }
+function llenarTargetaResponsable(responsable) {
+    $("#targeta-responsable").addClass("d-flex");
+    let src = fotosURL + "/" + responsable.imagen_perfil;
+    $("#imagen-responsable").attr("src", src);
+    $("#nombre-responsable").html(
+        responsable.nombre + " " + responsable.apellido
+    );
+    $("#cedula-responsable-card").html(responsable.persona_id);
+    $("#correo-responsable").html(responsable.correo_institucional);
+    $("#num-telefono-responsable").html(responsable.telefono_fijo);
 
     $("#targeta-responsable").show("d-flex");
 }
+
+$("#targeta-responsable").show("d-flex");
 
 function desplegarAlerta(contenido) {
     $("#targeta-responsable").removeClass("d-flex");
