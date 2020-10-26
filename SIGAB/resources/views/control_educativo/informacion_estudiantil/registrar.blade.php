@@ -53,7 +53,7 @@ Registrar información del estudiante
                 $cedula = Session::get('cedula');
                 @endphp
 
-                Se insertó el estudiante con lo siguientes datos: <br> <br>
+                Se registró el estudiante con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
                         <b>Cédula:</b> {{ $cedula }} <br>

@@ -61,7 +61,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
             $graduado = Session::get('graduado_insertada');
             @endphp
 
-            Se insertó la graduación con los siguientes datos: <br> <br>
+            Se registró la graduación con los siguientes datos: <br> <br>
             <div class="row">
                 <div class="col-6 ">
                     <b>Cédula:</b> {{ $graduado->persona_id ?? "Error" }} <br>

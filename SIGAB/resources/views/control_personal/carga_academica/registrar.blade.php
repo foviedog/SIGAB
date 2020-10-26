@@ -61,7 +61,7 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
             $carga_academica = Session::get('carga_academica_insertada');
             @endphp
 
-            Se insertó la carga académica con los siguientes datos: <br> <br>
+            Se registró la carga académica con los siguientes datos: <br> <br>
             <div class="row">
                 <div class="col-12">
                     <b>Ciclo lectivo:</b> {{ $carga_academica->ciclo_lectivo }} <br>

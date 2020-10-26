@@ -61,7 +61,7 @@ Registrar actividad interna
                 $actividad_interna_insertada = Session::get('actividad_interna_insertada');
                 @endphp
                 {{-- //Datos ingresados de la actividad a mostrar en el mensaje de exito --}}
-                Se insertó la actividad interna con lo siguientes datos: <br> <br>
+                Se registró la actividad interna con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
                         <b>ID de actividad: </b> {{$actividad_insertada->id}} <br>
@@ -74,6 +74,16 @@ Registrar actividad interna
                         <b>Evaluación: </b> {{$actividad_insertada->evaluacion ?? "No se digitó"}} <br>
                         <b>Objetivos: </b> {{$actividad_insertada->objetivos ?? "No se digitó" }} <br>
                         <b>Responsable de coordinar: </b> {{$actividad_insertada->responsable_coordinar}} <br>
+
+                        {{-- Link directo al detalle de la actividad recien agregada --}}
+                        <br>
+                        <a clas="btn btn-rojo" href="#">
+                            <input type="button" value="Editar" class="btn btn-rojo">
+                        </a>
+                        <br>
+                    </div>
+
+                    <div class="col-6 text-justify">
                         <b>Tipo de actividad: </b> {{$actividad_interna_insertada->tipo_actividad}} <br>
                         <b>Propósito: </b> {{$actividad_interna_insertada->proposito}} <br>
                         <b>Facilitador: </b> {{$actividad_interna_insertada->facilitador_actividad ?? "No se digitó" }} <br>
@@ -84,13 +94,6 @@ Registrar actividad interna
                         <b>Público dirigido: </b> {{$actividad_interna_insertada->publico_dirigido}} <br>
                         <b>Instituciones Patrocinadoras: </b> {{$actividad_interna_insertada->instituciones_patrocinadoras ?? "No se digitó"}} <br>
                         <b>Recursos: </b> {{$actividad_interna_insertada->recursos ?? "No se digitó"}} <br>
-
-                        {{-- Link directo al detalle de la actividad recien agregada --}}
-                        <br>
-                        <a clas="btn btn-rojo" href="#">
-                            <input type="button" value="Editar" class="btn btn-rojo">
-                        </a>
-                        <br>
                     </div>
                 </div>
             </div>
