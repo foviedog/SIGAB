@@ -212,7 +212,7 @@ class PersonalController extends Controller
     private function guardarPersonal(&$personal, $request)
     {
         //se setean los atributos del objeto tipo personal
-        $personal->carga_academica = $request->carga_academica;
+        //$personal->carga_academica = $request->carga_academica;
         $personal->grado_academico = $request->grado_academico;
         $personal->cargo = $request->cargo;
         $personal->tipo_nombramiento = $request->tipo_nombramiento;
@@ -271,11 +271,11 @@ class PersonalController extends Controller
 
     public function edit($id_personal)
     {
-        $personal = Persona::find($id_personal); //se busca la persona con el id del personal requerido
+        $personal = Personal::find($id_personal); //se busca la persona con el id del personal requerido
         if ($personal === null) {
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         } else {
-            return response()->json($personal, 200); //si hay un personal registrado con ese id lo retorna
+            return response()->json($personal->persona, 200); //si hay un personal registrado con ese id lo retorna
         }
     }
 }

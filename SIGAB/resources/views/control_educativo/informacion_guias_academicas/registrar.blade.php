@@ -189,9 +189,7 @@ Registrar guía académica
 <script>
     // "global" vars, built using blade
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
-
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script>
     let est = {{$estudiante->persona->persona_id}}
