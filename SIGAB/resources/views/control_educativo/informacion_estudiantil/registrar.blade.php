@@ -53,7 +53,7 @@ Registrar información del estudiante
                 $cedula = Session::get('cedula');
                 @endphp
 
-                Se insertó el estudiante con lo siguientes datos: <br> <br>
+                Se registró el estudiante con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
                         <b>Cédula:</b> {{ $cedula }} <br>
@@ -67,7 +67,7 @@ Registrar información del estudiante
                         <b>Estado Civil:</b> {{ $persona_insertado->estado_civil ?? "No se digitó" }} <br>
                         <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
                         <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
-                        <b>Dirección lectivo:</b> {{ $estudiante_insertado->direccion_lectivo }} <br>
+                        <b>Dirección lectivo:</b> {{ $estudiante_insertado->direccion_lectivo ?? "No se digitó" }} <br>
                         <b>Cantidad de hijos:</b> {{ $estudiante_insertado->cant_hijos ?? "No se digitó" }} <br>
 
                         {{-- Link directo al estudiante recien agregado --}}
@@ -324,7 +324,7 @@ Registrar información del estudiante
                     {{-- Campo: Año de ingreso a la EBDI --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_ingreso_ebdi">Año ingreso a la EBDI: <i class="text-danger">*</i></label>
+                            <label for="anio_ingreso_ebdi">Año de ingreso a la EBDI: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,4)" required>
@@ -338,12 +338,12 @@ Registrar información del estudiante
                     {{-- Campo: Año de ingreso a la UNA --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="anio_ingreso_una">Año ingreso a la UNA: <i class="text-danger">*</i></label>
+                            <label for="anio_ingreso_una">Año de ingreso a la UNA: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
                             <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,4)" required>
                         </div>
-                        <span data-toggle=" tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_anio_ingreso_una"></span>
                         </div>

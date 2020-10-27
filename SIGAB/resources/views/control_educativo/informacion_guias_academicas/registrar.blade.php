@@ -44,7 +44,7 @@ Registrar guía académica
         $guia = Session::get('gua_academica_insertada');
         @endphp
 
-        Se insertó la guía académica con lo siguientes datos: <br> <br>
+        Se registró la guía académica con lo siguientes datos: <br> <br>
         <div class="row">
             <div class="col-12">
                 <b>Cédula:</b> {{ $guia->persona_id ?? "nope" }} <br>
@@ -189,9 +189,7 @@ Registrar guía académica
 <script>
     // "global" vars, built using blade
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
-
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script>
     let est = {{$estudiante->persona->persona_id}}

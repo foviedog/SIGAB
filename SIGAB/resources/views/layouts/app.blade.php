@@ -71,10 +71,7 @@
                 </a>
                 <ul class="collapse list-unstyled" id="controlPersonal">
                     <li>
-                        <a href="{{ route('personal.create' ) }}">Añadir personal</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('personal.listar' ) }}">Listar Personal</a>
+                        <a href="{{ route('personal.listar' ) }}">Personal de la EBDI</a>
                     </li>
                 </ul>
             </li>
@@ -88,12 +85,10 @@
                 </a>
                 <ul class="collapse list-unstyled" id="controlActividades">
                     <li>
-                        <a href="{{ route('actividad-interna.create' ) }}">Añadir actividad interna</a>
+                        <a href="{{ route('listado-actividad-interna' ) }}">Actividades internas</a>
                     </li>
-                </ul>
-                <ul class="collapse list-unstyled" id="controlActividades">
                     <li>
-                        <a href="{{ route('listado-actividad-interna' ) }}">Listar actividades internas</a>
+                        <a href="#">Actividades de promoción</a>
                     </li>
                 </ul>
             </li>

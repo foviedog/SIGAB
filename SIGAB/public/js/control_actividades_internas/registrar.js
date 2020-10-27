@@ -52,7 +52,7 @@ function evtBuscarResponsable() {
                 },
                 statusCode: {
                     404: function() {
-                        desplegarAlerta("La persona no existe");
+                        desplegarAlerta("No se encontró el personal");
                     }
                 }
             });

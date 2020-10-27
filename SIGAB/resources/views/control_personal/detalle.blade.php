@@ -82,7 +82,7 @@ $idiomas = [];
                                 {{-- Foto del personal --}}
                                 <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" width="160" height="160" />
                                 {{-- Cedula del personal --}}
-                                <div class="mb-3" data-toggle="tooltip" data-placement="right" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
+                                <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
                                 <div id="cambiar-foto">
                                     <hr>
                                     <input type="file" name="avatar" class="border">
@@ -201,7 +201,7 @@ $idiomas = [];
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_telefono_celular"></span>
                                                     <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $personal->persona->telefono_celular}}" disabled />
                                                 </div>
@@ -210,7 +210,7 @@ $idiomas = [];
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                                     <span class="text-muted" id="mostrar_telefono_fijo"></span>
                                                     <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $personal->persona->telefono_fijo }}" disabled />
                                                 </div>
@@ -259,7 +259,7 @@ $idiomas = [];
                                         </div>
 
                                         <div class="form-row d-flex justify-content-between ">
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                 {{-- Campo: trabajo_externo --}}
                                                 <div class="form-group">
                                                     <label for="trabajo_externo"><strong>Lugar de Trabajo externo </strong></label>
@@ -433,15 +433,15 @@ $idiomas = [];
                                                 <div class="form-group">
                                                     <label for="area_especializacion_1"><strong>Área de especialización 1 </strong><br /></label>
                                                     <span class="text-muted" id="mostrar_area_especializacion_1"></span>
-                                                    <input type="text" name="area_especializacion_1" id="area_especializacion_1" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Area de especialización 1" value="{{ $personal->area_especializacion_1 }}" disabled />
+                                                    <input type="text" name="area_especializacion_1" id="area_especializacion_1" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Área de especialización 1" value="{{ $personal->area_especializacion_1 }}" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 {{-- Campo: area_especializacion_2 --}}
                                                 <div class="form-group">
-                                                    <label for="area_especializacion_2"><strong>Area de especialización 2</strong><br /></label>
+                                                    <label for="area_especializacion_2"><strong>Área de especialización 2</strong><br /></label>
                                                     <span class="text-muted" id="mostrar_area_especializacion_2"></span>
-                                                    <input type="text" name="area_especializacion_2" id="area_especializacion_2" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Area de especialización 2" value="{{ $personal->area_especializacion_2 }}" disabled />
+                                                    <input type="text" name="area_especializacion_2" id="area_especializacion_2" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Área de especialización 2" value="{{ $personal->area_especializacion_2 }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -458,7 +458,7 @@ $idiomas = [];
                                             <div class="col-4">
                                                 {{-- Campo: regimen_administrativo --}}
                                                 <div class="form-group">
-                                                    <label for="regimen_administrativo"><strong>Regimen administrativo </strong></label>
+                                                    <label for="regimen_administrativo"><strong>Régimen administrativo </strong></label>
                                                     <select id="regimen_administrativo" name="regimen_administrativo" class="form-control" disabled>
                                                         <option value="" selected>No aplica para docentes</option>
                                                         @foreach($regimenes_administrativos as $regimen_administrativo)
@@ -470,7 +470,7 @@ $idiomas = [];
                                             </div>
                                             <div class="col-4">
                                                 {{-- Campo: regimen_docente --}}
-                                                <label for="regimen_docente"><strong>Regimen docente </strong></label>
+                                                <label for="regimen_docente"><strong>Régimen docente </strong></label>
                                                 <select id="regimen_docente" name="regimen_docente" class="form-control" disabled>
                                                     <option value="" selected>No aplica para administrativos</option>
                                                     @foreach($regimenes_docentes as $regimen_docente)

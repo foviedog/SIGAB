@@ -54,7 +54,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             $trabajo_insertado = Session::get('trabajo_insertado');
             @endphp
 
-            Se insertó el trabajo con lo siguientes datos: <br> <br>
+            Se registró el trabajo con lo siguientes datos: <br> <br>
             <b>Cédula de la persona:</b> {{ $trabajo_insertado->persona_id }} <br> <br>
             <div class="row">
                 <div class="col-6 text-justify">

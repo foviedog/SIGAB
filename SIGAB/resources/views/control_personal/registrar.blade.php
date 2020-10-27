@@ -68,6 +68,14 @@ Registrar información del personal
                     <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
                     <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
                     <b>Grado academico:</b> {{ $personal_registrado->grado_academico ?? "No se digitó" }} <br>
+
+                    {{-- Link para modificiar al personal recien agregado --}}
+                    <br>
+                    <a class="btn btn-rojo" href="{{ route('personal.show',$personal_registrado->persona_id ) }}">
+                        Editar
+                    </a>
+                    <br>
+
                 </div>
 
 
@@ -79,19 +87,14 @@ Registrar información del personal
                     <b>Lugar de trabajo externo:</b> {{ $personal_registrado->lugar_trabajo_externo ?? "No se digitó" }} <br>
                     <b>Experiencia profesional:</b> {{ $personal_registrado->experiencia_profesional ?? "No se digitó" }} <br>
                     <b>Experiencia academica:</b> {{ $personal_registrado->experiencia_academica ?? "No se digitó" }} <br>
-                    <b>Regimen administrativo:</b> {{ $personal_registrado->regimen_administrativo ?? "No se digitó" }} <br>
-                    <b>Regimen docente:</b> {{ $personal_registrado->regimen_docente ?? "No se digitó" }} <br>
-                    <b>Area de especialización 1:</b> {{ $personal_registrado->area_especializacion_1 ?? "No se digitó" }} <br>
-                    <b>Area de especialización 2:</b> {{ $personal_registrado->area_especializacion_2 ?? "No se digitó" }} <br>
+                    <b>Régimen administrativo:</b> {{ $personal_registrado->regimen_administrativo ?? "No se digitó" }} <br>
+                    <b>Régimen docente:</b> {{ $personal_registrado->regimen_docente ?? "No se digitó" }} <br>
+                    <b>Área de especialización 1:</b> {{ $personal_registrado->area_especializacion_1 ?? "No se digitó" }} <br>
+                    <b>Área de especialización 2:</b> {{ $personal_registrado->area_especializacion_2 ?? "No se digitó" }} <br>
                 </div>
 
             </div>
-            <div class="row d-flex justify-content-start py-3">
-                {{-- Link para modificiar al personal recien agregado --}}
-                <a clas="btn btn-lg btn-rojo my-3" href="{{ route('personal.show',$personal_registrado->persona_id ) }}">
-                    Editar
-                </a>
-            </div>
+
         </div>
 
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo personal:</div>
@@ -376,7 +379,7 @@ Registrar información del personal
                             {{-- Campo: Regimen administrativo  --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="regimen_administrativo">Regimen administrativo:</label>
+                                    <label for="regimen_administrativo">Régimen administrativo:</label>
                                 </div>
                                 <div class="col-6">
                                     <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form">
@@ -401,7 +404,7 @@ Registrar información del personal
                             {{-- Campo: Regimen docente  --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="regimen_docente">Regimen docente:</label>
+                                    <label for="regimen_docente">Régimen docente:</label>
                                 </div>
                                 <div class="col-6">
                                     <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form">
@@ -448,7 +451,7 @@ Registrar información del personal
                             {{-- Campo: Area de especialización 1 --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="area_especializacion_1">Area de especialización 1 :</label>
+                                    <label for="area_especializacion_1">Área de especialización 1 :</label>
                                 </div>
                                 <div class="col-6">
                                     <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)">
@@ -461,7 +464,7 @@ Registrar información del personal
                             {{-- Campo: Area de especialización 2  --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
-                                    <label for="area_especializacion_2">Area de especialización 2:</label>
+                                    <label for="area_especializacion_2">Área de especialización 2:</label>
                                 </div>
                                 <div class="col-6">
                                     <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCaracteres(this,100)">
@@ -521,8 +524,8 @@ Registrar información del personal
                         </div>
                         <div class="col pt-5 d-flex justify-content-center  align-items-center">
                             <div class="mb-3">
-                                <a class="btn btn-contorno-rojo " id="participaciones-ref" data-toggle="tooltip" data-placement="top" title="Esta sección es opcional y se puede editar luego de que se haya registrado el personal.">
-                                    Participaciones &nbsp;<i class="fas fa-chevron-right"></i></a>
+                                <a class="btn btn-contorno-rojo " id="participaciones-ref" data-toggle="tooltip" data-placement="top" title="Esta sección es opcional y se puede editar luego de que se haya registrado el personal">
+                                    Participaciones adicionales &nbsp;<i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -533,7 +536,7 @@ Registrar información del personal
                     <div id="participaciones">
                         <div class="row d-flex justify-content-between border-bottom pb-2">
                             <div class="col">
-                                <h4 class="font-weight-bold">Participaciones </h4>
+                                <h4 class="font-weight-bold">Participaciones adicionales</h4>
                             </div>
 
                         </div>
@@ -542,7 +545,7 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="capacitacion_didactica" class="d-flex justify-content-between">Capacitación didactica:
-                                            <i class="far fa-question-circle fa-lg"></i></span>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span>
                                         </label>
                                         <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal-form"></textarea>
                                     </div>
@@ -551,14 +554,14 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="publicaciones" class="d-flex justify-content-between">Publicaciones:
-                                            <i class="far fa-question-circle fa-lg"></i></span> </label>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span> </label>
                                         <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="cursos_impartidos" class="d-flex justify-content-between">Cursos impartidos:
-                                            <i class="far fa-question-circle fa-lg"></i></span>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span>
                                         </label>
                                         <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal-form"></textarea>
                                     </div>
@@ -567,7 +570,7 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="evaluacion_interna_ppaa" class="d-flex justify-content-between">Evaluación interna PPAA: <span data-toggle="tooltip" data-placement="top" title="separar cada uno con punto y coma (;))">
-                                                <i class="far fa-question-circle fa-lg"></i></span>
+                                                {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span>
                                         </label>
                                         <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal-form"></textarea>
                                     </div>
@@ -578,14 +581,14 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="miembro_comisiones" class="d-flex justify-content-between">Miembro comisiones:
-                                            <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
                                         <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="miembro_prueba_grado" class="d-flex justify-content-between">Miembro prueba de grado:
-                                            <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
                                         <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal-form"></textarea>
                                     </div>
 
@@ -594,14 +597,14 @@ Registrar información del personal
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="evaluador_defensa_publica" class="d-flex justify-content-between">Evaluador defensa pública:
-                                            <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
                                         <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="col">
                                         <label for="evaluacion_externa_ppaa" class="d-flex justify-content-between">Evaluación externa PPAA:
-                                            <i class="far fa-question-circle fa-lg"></i></span></label>
+                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
                                         <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal-form"></textarea>
                                     </div>
                                 </div>
@@ -612,7 +615,7 @@ Registrar información del personal
                         <div class="d-flex justify-content-center">
                             <div class="col-6">
                                 <label for="reconocimientos" class="d-flex justify-content-between">Reconocimientos: <span data-toggle="tooltip" data-placement="top" title="separar cada uno con punto y coma (;))">
-                                        <i class="far fa-question-circle fa-lg"></i></span></label>
+                                        {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
                                 <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal-form"></textarea>
                             </div>
                         </div>

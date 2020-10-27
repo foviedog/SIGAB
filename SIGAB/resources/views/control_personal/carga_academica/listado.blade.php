@@ -153,7 +153,7 @@ Cargas académicas de {{ $personal->persona->nombre }}
                             @endforeach
                             @else
                                 <tr class="cursor-pointer">
-                                    <td colspan="4" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                    <td colspan="5" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
                                 </tr
                             @endif
                         </tbody>
