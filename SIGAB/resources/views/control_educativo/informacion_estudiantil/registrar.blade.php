@@ -17,9 +17,14 @@ Registrar información del estudiante
 
 <div class="card">
     <div class="card-body">
-        <h2>Registrar información del estudiante</h2>
-        <hr>
+        <div class="d-flex justify-content-between">
+            <h2>Registrar información del estudiante</h2>
+            <div>
+                <div><a href="{{ route('listado-estudiantil' ) }}" class="btn btn-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Regresar </a></div>
 
+            </div>
+        </div>
+        <hr>
         {{-- Formulario para registrar informacion del estudiante --}}
         <form action="/estudiante" method="POST" enctype="multipart/form-data" id="estudiante">
             @csrf
@@ -296,7 +301,7 @@ Registrar información del estudiante
                         </div>
                         <div class="col-6">
                             <select class="form-control w-100" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" required>
-                                <option value="Liceo">Liceo</option>
+                                <option value="Público">Público</option>
                                 <option value="Técnico">Técnico</option>
                                 <option value="Científico">Científico</option>
                                 <option value="Bilingüe">Bilingüe</option>
@@ -462,7 +467,7 @@ Registrar información del estudiante
                             <label for="apoyo_educativo">Apoyo educativo:</label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeyup="contarCaracteres(this,150)"></textarea>
+                            <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeyup="contarCaracteres(this,500)"></textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">

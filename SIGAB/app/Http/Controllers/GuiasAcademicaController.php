@@ -122,7 +122,7 @@ class GuiasAcademicaController extends Controller
 
         //En caso de que el filtro de intervalo de fechas se encuentre dentro del request entonces se realiza un búsqueda en la base de datos con dichos datos.
         if (!is_null($fechaIni) && !is_null($fechaFin)) {
-            $guias = $this->filtroFechaNombre($fechaIni, $fechaFin, $filtro, $itemsPagina); //Retorna la lista de guías con respecto a las fechas especificadas
+            $guias =  $this->filtroFechaNombre($fechaIni, $fechaFin, $filtro, $itemsPagina); //Retorna la lista de guías con respecto a las fechas especificadas
         } else if (!is_null($filtro)) { // En caso de que se busque únicamente el nombre,apellido o cédula de la persona se ejecuta la búsqueda por nombre
             $guias = $this->filtroNombre($filtro, $itemsPagina); //Búsqueda en la BD del por nombre, apellido o cédula
         } else { //Si no se adjunta ningún filtro de búsqueda se devuelve un listado de los estudiantes
@@ -270,14 +270,17 @@ class GuiasAcademicaController extends Controller
         $fechaFin = date($fechaFin);
         //Convierte el filtro de string a una fecha
         $fechaIni = date($fechaIni);
+
+
         $guias = Guias_academica::join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
             ->join('estudiantes', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
             ->whereBetween('guias_academicas.fecha', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
             //Al agregar dentro de la sentencia [where] una función se logra crear una simulación de intersección entre los resultados anteriores con los que se encuentran dentro de la fucnión
+            //Al ser una función anónima no se puede acceder a los parámetros aceptados en la función por lo que se tiene que acceder directamente al request.
             ->Where(function ($query) { //En caso de que se incluya un nombre,apellido o cédula en específico se agregan las sentencias de búsqueda pertinentes a cada una de ellas
                 $query->join('estudiantes', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de estudiantes con guías académicas
-                    ->orWhere('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
-                    ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro  . "%'"); //Filtro para buscar por nombre completo
+                    ->orWhere('personas.persona_id', 'like', '%' .  request('nombreFiltro', '') . '%') // Filtro para buscar por nombre de persona
+                    ->orWhereRaw("concat(nombre, ' ', apellido) like '%" .  request('nombreFiltro', '')  . "%'"); //Filtro para buscar por nombre completo
             })
             ->orderBy('guias_academicas.fecha', 'desc') // Ordena con respecto al orden de  insercisión de guías académicas de manera descendente
             ->paginate($itemsPagina);  //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request

@@ -16,9 +16,14 @@ Listado de Personal
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control de Personal</h2>
-            <div>
-                {{-- //Botón para añadir personal --}}
-                <a href="{{ route('personal.create' ) }}" class="btn btn-rojo"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </a>
+            <div class="d-flex justify-content-between">
+                <div class="mr-2">
+                    <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
+                </div>
+                <div>
+                    {{-- //Botón para añadir personal --}}
+                    <a href="{{ route('personal.create') }}" class="btn btn-rojo"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                </div>
             </div>
         </div>
         {{-- // Contenedor de la tabla --}}
@@ -48,7 +53,7 @@ Listado de Personal
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del personal --}}
                                     <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o cargo"><i class="far fa-question-circle fa-lg"></i></span>
-                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable"  name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable" name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del personal --}}

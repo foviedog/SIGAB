@@ -29,7 +29,7 @@ class CreateEstudiantesTable extends Migration
             $table->integer('anio_desercion')->nullable()->nullable(); /* verificar tipo de dato */
             $table->string('tipo_beca', 70)->nullable()->nullable();
             $table->double('nota_admision')->nullable();
-            $table->string('apoyo_educativo', 150)->nullable();
+            $table->string('apoyo_educativo', 500)->nullable();
             $table->integer('residencias_UNA')->nullable();
             $table->timestamps();
         });

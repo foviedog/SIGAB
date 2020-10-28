@@ -191,12 +191,21 @@ Listado de Guías Académicas
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Académicas</h2>
-            <div>
-                {{-- Regresar al listado de estudiantes --}}
-                <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
-                <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
-                    Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
-                </button>
+
+            <div class="d-flex ">
+                <div class="mr-2">
+                    {{-- Regresar al listado de estudiantes --}}
+                    <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
+                </div>
+                <div class="mr-2">
+                    <a href="{{ route('guia-academica.listar') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
+                </div>
+                <div>
+                    <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
+                        Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
         {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}

@@ -62,7 +62,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <b>Jornada laboral:</b> {{ $trabajo_insertado->jornada_laboral }} <br>
                     <b>Jefe inmediato:</b> {{ $trabajo_insertado->jefe_inmediato ?? "No se digitó" }} <br>
                     <b>Tiempo desempleado:</b> {{ $trabajo_insertado->tiempo_desempleado ?? "No se digitó" }} <br>
-                    <b>Intereses capacitación:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
+                    <b>Intereses de capacitación:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
                 </div>
                 <div class="col-6 text-justify">
                     <b>Tipo de organización:</b> {{ $trabajo_insertado->tipo_organizacion }} <br>
@@ -176,7 +176,10 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             {{-- Campo: Intereses Capacitacion --}}
             <div class="d-flex justify-content-center flex-column ">
                 <div class="mb-3">
-                    <label for="interes_capacitacion">Intereses capacitación</label>
+                    <div class="d-flex">
+                        <label for="interes_capacitacion">Capacitaciones de interés </label>
+                        <div class="ml-2" data-toggle="tooltip" data-placement="right" title="Digitar los temas de interés de la persona en recibir capacitación y/o actualización."><i class="far fa-question-circle fa-lg"></i> </div>
+                    </div>
                     <textarea class="form-control w-100" id="interes_capacitacion" name="interes_capacitacion"></textarea>
                 </div>
             </div>

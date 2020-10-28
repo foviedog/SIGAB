@@ -18,7 +18,7 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
 @php
 $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
 $generos = ['Femenino','Masculino','Otro'];
-$colegiosProcedencias = ['Liceo','Técnico','Científico','Bilingüe','Nocturno','Privado'];
+$colegiosProcedencias = ['Público','Técnico','Científico','Bilingüe','Nocturno','Privado'];
 $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
 'Beca por participación en actividades artísticas y deportivas','Beca por participación en movimiento estudiantil',
 'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
@@ -319,6 +319,15 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col">
+                                                <div class="form-group text-center mt-4">
+                                                    <label for="city"><strong>Crear guía académica</strong><br /></label>
+                                                    <div class="w-100 d-flex justify-content-center">
+                                                        <a href=" {{ route('guia-academica.create', $estudiante->persona_id) }}" class="btn btn-rojo"> Crear guía </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 
                                         </div>
                                     </div>

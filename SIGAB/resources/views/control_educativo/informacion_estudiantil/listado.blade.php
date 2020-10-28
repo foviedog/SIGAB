@@ -18,9 +18,14 @@ Listado Estudiantil
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control Estudiantil</h2>
-            <div>
-                {{-- //Botón para añadir estudainte --}}
-                <a href="/estudiante/registrar" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
+            <div class="d-flex">
+                <div class="mr-2">
+                    <a href="{{ route('listado-estudiantil' ) }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
+                </div>
+                <div>
+                    {{-- //Botón para añadir estudainte --}}
+                    <a href="{{ route('estudiante.create' ) }}" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                </div>
             </div>
         </div>
         {{-- // Contenedor de la tabla --}}
