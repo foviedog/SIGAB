@@ -55,7 +55,7 @@ Listado Estudiantil
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
                                     <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
-                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
                                 </div>
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del estudiante --}}

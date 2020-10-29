@@ -323,7 +323,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Crear guía académica</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href=" {{ route('guia-academica.create', $estudiante->persona_id) }}" class="btn btn-rojo"> Crear guía </a>
+                                                        <a href=" {{ route('guia-academica.create', $estudiante->persona_id) }}?aceptado=true" class="btn btn-rojo"> Crear guía </a>
                                                     </div>
                                                 </div>
                                             </div>

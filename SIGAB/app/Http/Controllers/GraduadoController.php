@@ -58,7 +58,7 @@ class GraduadoController extends Controller
 
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
         //request se setea por defecto en 2 por página
-        $itemsPagina = request('itemsPagina', 10);
+        $itemsPagina = request('itemsPagina', 25);
 
         //Se recibe del request  el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
         $filtro = request('nombreFiltro', NULL);

@@ -90,13 +90,16 @@ Registrar actividad interna
                         <b>Agenda: </b> {{$actividad_interna_insertada->agenda ?? "No se digitó"}} <br>
                         <b>Ámbito: </b> {{$actividad_interna_insertada->ambito}} <br>
                         <b>Certificación: </b> {{$actividad_interna_insertada->certificacion_actividad ?? "No se digitó"}} <br>
-                        <b>Duración: </b> {{$actividad_insertada->duracion ?? "No se digitó"}} <br>
+                        <b>Duración: </b> {{$actividad_insertada->duracion." h" ?? "No se digitó"}} <br>
                         <b>Público dirigido: </b> {{$actividad_interna_insertada->publico_dirigido}} <br>
                         <b>Instituciones Patrocinadoras: </b> {{$actividad_interna_insertada->instituciones_patrocinadoras ?? "No se digitó"}} <br>
                         <b>Recursos: </b> {{$actividad_interna_insertada->recursos ?? "No se digitó"}} <br>
                     </div>
                 </div>
             </div>
+
+            <div class="h3 mb-5 mt-4 mx-3">Agregar una nueva actividad interna:</div>
+
             @endif
 
             <div class="container-fluid w-100">

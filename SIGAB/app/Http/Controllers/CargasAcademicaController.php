@@ -73,7 +73,7 @@ class CargasAcademicaController extends Controller
             'BGE407 - Planificación y evaluación de sistemas de información',
             'BGE408 - Auditoría de la información',
             'BGE409 - Evaluación de servicios y formación de usuarios',
-            'Investigación II'
+            'BG508 - Investigación II'
         ];
 
         //Se devuelve la vista

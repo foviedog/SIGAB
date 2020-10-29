@@ -53,7 +53,7 @@ Listado de Personal
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del personal --}}
                                     <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o cargo"><i class="far fa-question-circle fa-lg"></i></span>
-                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable" name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable" name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
                                 </div>
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del personal --}}
