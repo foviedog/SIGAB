@@ -96,7 +96,7 @@ Listado de Personal
                                 <td>{{ $perso->persona->telefono_celular }}<br /> </td>
                                 <td>
                                     <strong>
-                                        {{ $perso->persona->correo_personal }}
+                                        {{ $perso->persona->correo_institucional }}
                                     </strong>
                                 </td>
                                 <td>
