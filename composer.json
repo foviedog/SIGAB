@@ -16,7 +16,7 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
-        "moontoast/math": "1.1.2 as 1.999.999"
+        "brick/math": "1.1.2 as 1.999.999"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
