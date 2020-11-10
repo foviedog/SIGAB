@@ -58,7 +58,6 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         try { //se utiliza un try-catch para control de errores
-
             $persona = new Persona; //Se crea una nueva instacia de Persona
             $estudiante = new Estudiante; //Se crea una nueva instacia de estudiante
 
@@ -103,7 +102,7 @@ class EstudianteController extends Controller
                 ->with('cedula', $request->cedula); //Retorna un objeto en el response con la cedula, de otra manera no obtiene el dato de manera adecuada para imprimirlo en la vista
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro estudiante
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('error', "El registro ya existe"); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 

@@ -44,7 +44,6 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
                 $('#solicitud').val(response.solicitud);
 
                 //console.log($('#solicitud').val());
-
                 est = response.persona_id;
 
                 if (response.solicitud === est) {
