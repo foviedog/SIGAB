@@ -310,7 +310,7 @@ Listado de Guías Académicas
                                 <td>
                                     {{-- Botón para ver el detalle de la guía académica del estudiante --}}
                                     <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idguia="{{ $guia->id }}">
-                                        Ver detalle
+                                        Detalle
                                     </button>
                                 </td>
                             </tr>
