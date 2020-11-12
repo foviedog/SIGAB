@@ -58,7 +58,7 @@
                     <a href="{{ route('graduados.listar' ) }}">Estudiantes Graduados</a>
                 </li>
                 <li>
-                    <a href="{{ route('guia-academica.listar' ) }}">Guías adémicas</a>
+                    <a href="{{ route('guia-academica.listar' ) }}">Guías académicas</a>
                 </li>
             </ul>
             </li>
@@ -99,7 +99,7 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg ">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn btn-rojo">
                         <i class="fas fa-align-left"></i>
@@ -113,7 +113,7 @@
                         <i class="fas fa-align-justify"></i>
                     </button>
 
-                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto ">
 
                             <li class="nav-item active">
