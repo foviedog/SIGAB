@@ -61,7 +61,8 @@ Registrar guía académica
                 <b>Situación:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
                 <b>Recomendaciones:</b> {{ $guia->recomendaciones ?? "No se digitó" }} <br>
                 @if($guia->archivo_adjunto !== NULL)
-                <b>Archivo adjunto:</b> <a href='/storage/guias_archivos/{{ $guia->archivo_adjunto }}' target='_blank'>{{ $guia->archivo_adjunto }}</a>
+
+                <b>Archivo adjunto:</b> <a href='{{ URL::asset('/estudiante/guia-academica/download/') }}/{{ $guia->archivo_adjunto }}' target='_blank'>{{ $guia->archivo_adjunto }}</a>
                 @endif
             </div>
         </div>
@@ -138,16 +139,20 @@ Registrar guía académica
                     </div>
                 </div>
             </div>
-
             <div class="collapse mb-3" id="lista_docentes">
+                @if(count($docentes) == 0)
+                <span> No hay registros de personal todavía</span>
+                <select class="form-control mb-3" size="10" id="docente" disabled>
+                </select>
+                @else
                 Seleccione el docente
                 <select class="form-control mb-3" size="10" id="docente">
                     @foreach($docentes as $docente)
                     <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
                     @endforeach
                 </select>
+                @endif
             </div>
-
             {{-- Input oculto que envia si es la guía es solicitada por un estudiante o por un educador --}}
             <input type="hidden" name="solicitud" id="solicitud">
 
@@ -189,10 +194,12 @@ Registrar guía académica
 <script>
     // "global" vars, built using blade
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script>
-    let est = {{$estudiante->persona->persona_id}}
+    let est = "{{$estudiante->persona->persona_id}}"
+
 </script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>
 @endsection

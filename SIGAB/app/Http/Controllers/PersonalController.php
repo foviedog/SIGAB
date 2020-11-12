@@ -97,7 +97,7 @@ class PersonalController extends Controller
 
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro estudiante
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe"); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
