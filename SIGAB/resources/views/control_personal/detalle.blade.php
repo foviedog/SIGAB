@@ -44,6 +44,8 @@ $idiomas = [];
 
 @section('contenido')
 
+
+
 {{-- Formulario general de personal --}}
 <form action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form">
     @csrf
