@@ -21,22 +21,22 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
-<body class="bg-rojo-oscuro">
-    <div class="container">
-
-        <div class="row justify-content-center">
-            <div class="col-md-9 col-lg-12 col-xl-10">
+<body>
+    <div class="container p-5">
+        <div class="row justify-content-center pt-5">
+            <div class="col-md-10 col-xs-10">
                 <div class="card shadow-lg o-hidden border-0 my-5">
+
+                    <div class="card-header bg-rojo-oscuro">
+                        <div class="text-lext font-weight-bold text-white bg-rojo-oscuro">
+                            Registrar un nuevo usuario
+                        </div>
+                    </div>
+
                     <div class="card-body p-0">
-                        <div class="p-5 mt-5">
-                            <div class="text-center pb-3">
-                                <h1 class="ml1">
-                                    <span class="text-wrapper">
-                                        <span class="line line1"></span>
-                                            <span class="letters" id='letras'>SIGAB</span>
-                                        <span class="line line2"></span>
-                                    </span>
-                                </h1>
+                        <div class="p-5">
+                            <div class="text-center">
+                                <img class="mb-4" src="/img/logoSIGAB.png">
                             </div>
 
                             {{-- Esta sección se despliega si la persona que se desea agregar
@@ -112,6 +112,9 @@
                                         <a onclick="confirmar()" class="btn btn-rojo">
                                             {{ __('Registrar nuevo usuario') }}
                                         </a>
+                                        <a onclick="location.reload();" class="btn btn-rojo">
+                                            {{ __('Cancelar') }}
+                                        </a>
                                     </div>
                                 </div>
                             </form>
@@ -123,6 +126,11 @@
                                 la persona que se desea agregar como usuario. --}}
                             @else
 
+                            <div class="text-center mb-2">
+                                En este apartado se enlistan todas las personas previamente registradas en el sistema.<br>
+                                Por favor seleccione la persona a la cual se le desea crear un perfil de acceso.
+                            </div>
+
                             {{-- Mensajes de error al tratar de registrar el usuario --}}
                             @if(Session::has('error'))
                                 <div class="alert alert-danger" role="alert">
@@ -132,7 +140,7 @@
 
                             {{-- Mensajes de éxito al registrar el usuario --}}
                             @if(Session::has('exito'))
-                                <div class="alert alert-success" role="alert">
+                                <div class="alert alert-success" role="alert" id="mensaje-exito">
                                     {{ \Session::get('exito') }}
                                 </div>
                             @endif
@@ -141,7 +149,7 @@
                                 @csrf
 
                                 {{-- Se muestran todas las personas del sistema --}}
-                                <select multiple class="form-control mb-3" id="personas" name="persona" size="15">
+                                <select class="form-control mb-3" id="personas" name="persona" size="15">
                                     @foreach($personas as $persona)
                                         {{-- Se le da el siguiente formato: 'XXX - YYY YYY' donde X
                                             representa la cédula y Y representa el nombre completo de la persona.
@@ -166,12 +174,13 @@
             </div>
         </div>
 
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <script src="{{ asset('js/login/login.js') }}" defer></script>
     <script src="{{ asset('js/login/Tooltip.js') }}" defer></script>
     <script src="{{ asset('js/register/register.js') }}" defer></script>
+    <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
 
 </body>
 </html>
