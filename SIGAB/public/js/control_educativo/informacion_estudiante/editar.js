@@ -12,12 +12,6 @@ $("#editar-estudiante").on("click", function() {
     $("#cambiar-foto").show();
 });
 
-$("#cancelar-edi").on("click", function() {
-    $("input").attr("disabled", "disabled");
-    $("select").attr("disabled", "disabled");
-    $("textarea").attr("disabled", "disabled");
-    $("#editar-estudiante").show();
-    $("#cancelar-edi").hide();
-    $("#guardar-cambios").hide();
-    $("#cambiar-foto").hide();
+$("#cancelar-edi").on("click", function () {
+    location.reload(); // Recarga la página inicial para eliminar todos los cambios hechos y volver a bloquer todos los cambios
 });

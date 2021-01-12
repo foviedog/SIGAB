@@ -89,22 +89,29 @@
             </div>
         </div>
         <div class="bg-primary">
-            
+
         </div>
+
+        {{-- Inicio de bloque de información --}}
         <div class="container-fluid px-5">
+            {{-- Fila que sepera las dos columnas de resumenes--}}
             <div class="row d-flex justify-content-between">
-                <div class="col-6 ">
+
+                {{-- primera carta de resumen --}}
+                <div class="col-xl-6 col-lg-12 mb-4">
                     <div class="container">
                         <div class="row card shadow px-4 ">
                             <div class="card-body">
                                 <div class="border-bottom p-0">
                                     <h4 class="font-weight-bold">Resumen de estudiantes</h4>
                                 </div>
+                                {{-- contenedor de las cartas pequeñas de información
+                                horizonales --}}
                                 <div class="container">
                                     <div class="row">
-
-                                        <div class="col-6 py-3">
-
+                                        {{-- Carta de estudiantes totales
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6 py-3">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -114,16 +121,18 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Estudiantes totales</h5>
-                                                            <span class="p-0" style="font-size: 165%">{{ $estudiantesTotales }}</span>
+                                                            <span class="p-0"
+                                                                style="font-size: 165%">{{ $estudiantesTotales }}</span>
 
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="col-6 py-3">
 
+                                        {{-- Carta de conteo de graduados
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6 py-3">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -134,15 +143,17 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Graduados</h5>
-                                                            <span class="p-0" style="font-size: 165%">{{ $graduados }}</span>
-
+                                                            <span class="p-0"
+                                                                style="font-size: 165%">{{ $graduados }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="col-6 ">
+
+                                        {{-- Carta de graduaciones totales
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6  ">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -153,14 +164,16 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Graduaciones </h5>
-                                                            <span class="p-0" style="font-size: 165%">{{ $graduacionesTotales }}</span>
-
+                                                            <span class="p-0"
+                                                                style="font-size: 165%">{{ $graduacionesTotales }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6 ">
+                                        {{-- Carta de guías académicas totales
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6 ">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -170,24 +183,22 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Guías académicas</h5>
-                                                            <span class="p-0" style="font-size: 165%">{{ $guiasAcademicasTotales }}</span>
-
+                                                            <span class="p-0"
+                                                                style="font-size: 165%">{{ $guiasAcademicasTotales }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-6 ">
+                {{-- Segunda carta de información --}}
+                <div class="col-xl-6 col-lg-12 ">
                     <div class="container">
                         <div class="row card shadow px-4 ">
                             <div class="card-body">
@@ -196,9 +207,9 @@
                                 </div>
                                 <div class="container">
                                     <div class="row">
-
-                                        <div class="col-6 py-3">
-
+                                        {{-- Carta de personal total
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6 py-3">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -208,16 +219,16 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Personal total</h5>
-                                                            <span class="p-0" style="font-size: 165%"> {{ $personalTotal }} </span>
-
+                                                            <span class="p-0" style="font-size: 165%"> {{ $personalTotal }}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="col-6 py-3">
-
+                                        {{-- carta de cantidad de administrativos
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6 py-3">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -228,15 +239,16 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Administrativos</h5>
-                                                            <span class="p-0" style="font-size: 165%">{{ $administrativos }}</span>
-
+                                                            <span class="p-0"
+                                                                style="font-size: 165%">{{ $administrativos }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="col-6 ">
+                                        {{-- carta de cantidad de académicos
+                                        --}}
+                                        <div class="col-lg-12 col-xl-6 ">
                                             <div class="card mb-3 shadow">
                                                 <div class="row g-0 d-flex">
                                                     <div class="col-md-3 pl-4 pr-1">
@@ -247,16 +259,14 @@
                                                     <div class="col-md-9">
                                                         <div class="card-body p-0 text-center">
                                                             <h5 class="pt-3 m-0">Academicos </h5>
-                                                            <span class="p-0" style="font-size: 165%">{{ $academicos }}</span>
-
+                                                            <span class="p-0"
+                                                                style="font-size: 165%">{{ $academicos }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
 
                             </div>
