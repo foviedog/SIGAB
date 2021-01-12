@@ -20,9 +20,7 @@ Route::get('/', function () {
 });
 
 /* Ruta principal */
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 /* Ruta para registrar usuario */
 Route::get('/register', 'RegistroController@index')->name('register');
