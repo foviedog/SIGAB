@@ -55,7 +55,11 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                         <div class="card mb-3">
                             <div class="card-body text-center shadow-sm rounded pb-5">
                                 {{-- Foto del estudiante --}}
-                                <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width="160" height="160" />
+                                <div class="d-flex justify-content-center mb-3 mt-4">
+                                    <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
+                                        <img class="" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width:"160" height="200" />
+                                    </div>
+                                </div>
                                 {{-- Cedula del estudiante --}}
                                 <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del estudiante"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $estudiante->persona_id }} </strong></small></div>
                                 <div id="cambiar-foto">

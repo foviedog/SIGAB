@@ -173,7 +173,7 @@ class EstudianteController extends Controller
 
             $avatar = $request->file('avatar');
             $archivo = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->save(public_path('/img/fotos/' . $archivo));
+            Image::make($avatar)->resize(500, 640)->save(public_path('/img/fotos/' . $archivo));
 
             if ($estudiante->persona->imagen_perfil != "default.jpg")
                 File::delete(public_path('/img/fotos/' . $estudiante->persona->imagen_perfil)); //Elimina la foto anterior

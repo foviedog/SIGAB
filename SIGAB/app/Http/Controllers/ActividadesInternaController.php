@@ -32,6 +32,11 @@ class ActividadesInternaController extends Controller
             'itemsPagina' => $itemsPagina // Item que se desean por página.
         ]);
     }
+    //Retorna la vista de registrar actividades internas
+    public function show($id_actividad)
+    {
+        return view('control_actividades_internas.detalle');
+    }
 
     //Retorna la vista de registrar actividades internas
     public function create()

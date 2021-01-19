@@ -78,7 +78,11 @@ $idiomas = [];
                         <div class="card mb-3">
                             <div class="card-body text-center shadow-sm rounded pb-5">
                                 {{-- Foto del personal --}}
-                                <img class="rounded-circle mb-3 mt-4" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" width="160" height="160" />
+                                <div class="d-flex justify-content-center mb-3 mt-4">
+                                    <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
+                                        <img class="" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" width:"160" height="200" />
+                                    </div>
+                                </div>
                                 {{-- Cedula del personal --}}
                                 <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
                                 <div id="cambiar-foto">

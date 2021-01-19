@@ -20,7 +20,7 @@ Registrar actividad interna
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
-            <h2>Registrar una actividad de tipo interna</h2>
+            <h3>Registrar una actividad de tipo interna</h3>
             <div>
                 <a href="{{ route('listado-actividad-interna' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
             </div>
@@ -361,6 +361,7 @@ Registrar actividad interna
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="row">
                     {{-- Campo: Objetivos --}}
