@@ -80,7 +80,7 @@ $idiomas = [];
                                 {{-- Foto del personal --}}
                                 <div class="d-flex justify-content-center mb-3 mt-4">
                                     <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
-                                        <img class="" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" width:"160" height="200" />
+                                        <img class="" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" style="max-width: 100%;  " />
                                     </div>
                                 </div>
                                 {{-- Cedula del personal --}}

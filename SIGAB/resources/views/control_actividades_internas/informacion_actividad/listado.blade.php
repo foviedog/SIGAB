@@ -76,15 +76,15 @@ Actividades internas
                             @foreach($actividadesInternas as $actividadInterna)
                             <tr id="estudiante" class="cursor-pointer">
                                 <td>{{ $actividadInterna->actividad_id }}</td>
-                                <td>{{ $actividadInterna->actividades->tema}}</td>
-                                <td>{{ $actividadInterna->actividades->responsable_coordinar }} </td>
-                                <td>{{ $actividadInterna->actividades->estado }}</td>
+                                <td>{{ $actividadInterna->tema}}</td>
+                                <td>{{ $actividadInterna->responsable_coordinar }} </td>
+                                <td>{{ $actividadInterna->estado }}</td>
                                 <td>{{ $actividadInterna->proposito}} </td>
                                 <td>{{$actividadInterna->tipo_actividad}}</td>
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
-                                        <a href="#" class="btn btn-contorno-rojo"> Detalle </a>
+                                        <a href="{{ route('detalle-actividad-interna',$actividadInterna->actividad_id) }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
                             </tr>

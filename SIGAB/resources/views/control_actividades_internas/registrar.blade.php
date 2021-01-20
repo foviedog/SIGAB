@@ -507,7 +507,9 @@ Registrar actividad interna
                     <div class="p-3 w-50 d-flex border-top border-secondary  justify-content-center">
                         <div class="col-3">
                             <div class="d-flex justify-content-center mb-2">
-                                <img class="rounded mb-3" width="160" height="160" id="imagen-responsable" />
+                                <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
+                                    <img class="rounded mb-3" id="imagen-responsable" style="max-width: 100%;  " />
+                                </div>
                             </div>
                         </div>
                         <div class="col-5  d-flex justify-content-start align-items-center ">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Actividades;
+use App\Personal;
 use App\Actividades_interna;
 
 class ActividadesInternaController extends Controller
@@ -35,7 +36,12 @@ class ActividadesInternaController extends Controller
     //Retorna la vista de registrar actividades internas
     public function show($id_actividad)
     {
-        return view('control_actividades_internas.detalle');
+        $actividad = Actividades::findOrfail($id_actividad);
+        $personal = Personal::findOrFail($actividad->responsable_coordinar);
+        // dd($personal);
+        // dd($actividad);
+
+        return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
     }
 
     //Retorna la vista de registrar actividades internas

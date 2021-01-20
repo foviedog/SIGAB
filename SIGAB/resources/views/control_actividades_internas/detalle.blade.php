@@ -1,27 +1,31 @@
 @extends('layouts.app')
 
 @section('titulo')
-[[nombre de capacitacion]]
+{{ $actividad->tema }}
 @endsection
 
 @section('css')
 {{-- No hay --}}
 @endsection
 
-@section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
-@endsection
 
 @section('contenido')
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-$estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-$generos = ['Femenino','Masculino','Otro'];
-$colegiosProcedencias = ['Público','Técnico','Científico','Bilingüe','Nocturno','Privado'];
-$tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
-'Beca por participación en actividades artísticas y deportivas','Beca por participación en movimiento estudiantil',
-'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
+
+$propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
+
+$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conversatorio','Órgano colegiado',
+'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
+'Comisiones de trabajo','Externa','Otro'];
+
+$poblacion = ['Estudiantes de primer ingreso','Estudiantes regulares','Personal Docente','Personal Administrativo'];
+
+$estados = ['Para ejecución','En progreso','En progreso','Ejecutada'];
+
+$ambitos = ['Nacional','Internacional'];
+
 @endphp
 
 {{-- Formulario general de estudiante --}}
@@ -32,10 +36,19 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
-
-            <h3>[[ Nombre de la actividad ]]</h3>
+            {{-- Título  --}}
             <div>
+
+                <h3>{{ $actividad->tema }}</h3>
+            </div>
+            {{-- Botones superiores --}}
+            <div>
+                {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('listado-actividad-interna' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                {{-- Boton que habilita opcion de editar --}}
+                <button type="button" id="editar-estudiante" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
+                {{-- Boton de cancelar edicion --}}
+                <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
             </div>
         </div>
         <hr>
@@ -73,8 +86,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <span class="text-muted " id="mostrar_tema"></span>
                                         </div>
                                         <div class="d-flex">
-                                            <input type='text' class="form-control w-100" id="tema" name="tema" onkeyup="contarCaracteres(this,100)" required>
-
+                                            <input type='text' class="form-control w-100" id="tema" name="tema" onkeyup="contarCaracteres(this,100)" value="{{ $actividad->tema }}" required disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +105,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <span class="text-muted" id="mostrar_lugar"></span>
                                         </div>
                                         <div class="d-flex">
-                                            <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)">
+                                            <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)" value='{{ $actividad->lugar ?? "No especificado " }}' disabled>
 
                                         </div>
                                     </div>
@@ -115,7 +127,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                         </div>
 
                                         <div class="d-flex">
-                                            <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad" onkeyup="contarCaracteres(this,45)" required>
+                                            <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad" onkeyup="contarCaracteres(this,45)" value='{{ $actividad->actividadInterna->facilitador_actividad ?? "No especificado " }}' required disabled>
 
                                         </div>
                                     </div>
@@ -123,7 +135,6 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col">
                                 {{-- Campo: Fecha de actividad--}}
@@ -137,7 +148,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <input type='date' class="form-control w-100" id="fecha_inicio_actividad" name="fecha_inicio_actividad" required>
+                                            <input type='date' class="form-control w-100" id="fecha_inicio_actividad" name="fecha_inicio_actividad" value='{{ $actividad->fecha_inicio_actividad ?? "No especificado " }}' required disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +167,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 
                                         </div>
                                         <div class="d-flex">
-                                            <input type='date' class="form-control w-100" id="fecha_final_actividad" name="fecha_final_actividad" required>
+                                            <input type='date' class="form-control w-100" id="fecha_final_actividad" name="fecha_final_actividad" value='{{ $actividad->fecha_final_actividad ?? "No especificado " }}' required disabled>
 
                                         </div>
                                     </div>
@@ -176,7 +187,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                         <div class="d-flex justify-center">
                                             <div class="col d-flex justify-content-center">
                                                 <div class="w-50  d-flex ">
-                                                    <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" />
+                                                    <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" value='{{ $actividad->duracion ?? 0 }}' disabled />
                                                     <span class="d-flex align-items-center ml-2 font-weight-bold"> h</span>
                                                 </div>
 
@@ -197,13 +208,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <label for="proposito">Propósito<i class="text-danger">*</i></label>
                                         </div>
                                         <div class="d-flex">
-                                            <select class="form-control w-100" id="proposito" name="proposito" required>
-                                                <option value="">Seleccione</option>
-                                                <option value="Inducción">Inducción</option>
-                                                <option value="Capacitación">Capacitación</option>
-                                                <option value="Actualización">Actualización</option>
-                                                <option value="Involucramiento del personal">Involucramiento del personal</option>
-                                                <option value="Otro">Otro</option>
+                                            <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                @foreach($propositos as $proposito)
+                                                <option value="{{ $proposito }}" @if($proposito==$actividad->actividadInterna->proposito) selected @endif> {{ $proposito }} </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -217,24 +225,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
                                         </div>
                                         <div class="d-flex">
-                                            <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
-                                                <option value="">Seleccione</option>
-                                                <option value="Curso">Curso</option>
-                                                <option value="Conferencia">Conferencia</option>
-                                                <option value="Taller">Taller</option>
-                                                <option value="Seminario">Seminario</option>
-                                                <option value="Conversatorio">Conversatorio</option>
-                                                <option value="Órgano colegiado">Órgano colegiado</option>
-                                                <option value="Tutorías">Tutorías</option>
-                                                <option value="Lectorías">Lectorías</option>
-                                                <option value="Simposio">Simposio</option>
-                                                <option value="Charla">Charla</option>
-                                                <option value="Actividad cocurricular">Actividad co curricular</option>
-                                                <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
-                                                <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
-                                                <option value="Comisiones de trabajo">Comisiones de trabajo</option>
-                                                <option value="Externa">Externa</option>
-                                                <option value="Otro">Otro</option>
+                                            <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                @foreach($tiposActividad as $tipoActividad)
+                                                <option value="{{ $tipoActividad }}" @if($tipoActividad==$actividad->actividadInterna->tipo_actividad) selected @endif> {{ $tipoActividad }} </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -248,13 +242,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <label for="publico_dirigido">Dirigido a <i class="text-danger">*</i></label>
                                         </div>
                                         <div class="d-flex">
-                                            <select class="form-control w-100" id="publico_dirigido" name="publico_dirigido" required>
-                                                <option value="">Seleccione</option>
-                                                <option value="Estudiantes de primer ingreso">Estudiantes de primer ingreso</option>
-                                                <option value="Estudiantes regulares">Estudiantes regulares</option>
-                                                <option value="Estudiantes graduados">Estudiantes graduados</option>
-                                                <option value="Personal Docente">Personal Docente</option>
-                                                <option value="Personal Administrativo">Personal Administrativo</option>
+                                            <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                @foreach($poblacion as $dirigido)
+                                                <option value="{{ $dirigido }}" @if($dirigido==$actividad->actividadInterna->publico_dirigido) selected @endif> {{ $dirigido }} </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -271,11 +262,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <label for="estado">Estado <i class="text-danger">*</i></label>
                                         </div>
                                         <div class="d-flex">
-                                            <select class="form-control w-100" id="estado" name="estado" required>
-                                                <option value="">Seleccione</option>
-                                                <option value="Para ejecución">Para ejecución</option>
-                                                <option value="En progreso">En progreso</option>
-                                                <option value="Ejecutada">Ejecutada</option>
+                                            <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                @foreach($estados as $estado)
+                                                <option value="{{ $estado }}" @if($estado==$actividad->actividadInterna->estado) selected @endif> {{ $estado }} </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -293,7 +283,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <span class="text-muted" id="mostrar_certificacion_actividad"></span>
                                         </div>
                                         <div class="d-flex">
-                                            <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" onkeyup="contarCaracteres(this,100)">
+                                            <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" value='{{ $actividad->actividadInterna->certificado ?? "No se ha registrado ninguno" }}' onkeyup="contarCaracteres(this,100)" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -306,10 +296,10 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                             <label for="ambito">Ámbito<i class="text-danger">*</i></label>
                                         </div>
                                         <div class="d-flex">
-                                            <select class="form-control w-100" id="ambito" name="ambito" required>
-                                                <option value="">Seleccione</option>
-                                                <option value="Nacional">Nacional</option>
-                                                <option value="Internacional">Internacional</option>
+                                            <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                @foreach($ambitos as $ambito)
+                                                <option value="{{ $ambito }}" @if($ambito==$actividad->actividadInterna->ambito) selected @endif> {{ $ambito }} </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -320,55 +310,67 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                 </div>
 
                 <div class="border-top">
-                    <div class="row d-flex justify-content-center my-4">
-                        {{-- Campo: Responsable de coordinar --}}
-                        <div class="col-3 d-flex justify-content-end">
-                            <label for="responsable_coordinar">
-                                Responsable de coordinar<i class="text-danger">*</i>
-                            </label>
-                        </div>
-
-                        <div class="col-6 ">
-                            <div class="input-group w-50">
-                                <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " required>
-                                <div class="input-group-append">
-                                    <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
-                                    <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable-encontrado" value="false">
-                    </div>
 
                     <div class="row d-flex justify-content-center">
-                        <div class="alert alert-danger w-50 text-center" role="alert" id="mensaje-alerta"></div>
-                    </div>
-
-                    <div class="row justify-content-center pb-3" id="targeta-responsable">
-                        <div class="p-3 w-50 d-flex border-top border-secondary  justify-content-center">
-                            <div class="col-3">
-                                <div class="d-flex justify-content-center mb-2">
-                                    <img class="rounded mb-3" width="160" height="160" id="imagen-responsable" />
+                        <div class="col-6">
+                            <div class="card shadow-sm rounded pb-2">
+                                <div class="card-header py-3">
+                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                        Responsable de coordinar la actividad
+                                    </p>
                                 </div>
-                            </div>
-                            <div class="col-5  d-flex justify-content-start align-items-center ">
-                                <div class="d-flex justify-content-start align-items-center ">
-                                    <div class="text-start mb-3">
-                                        <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> </span> <br>
-                                        <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable"> </span> <br>
-                                        <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> </span> <br>
-                                        <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"></span> <br>
+                                <div class="card-body ">
+                                    <div class="row d-flex justify-content-center mb-2" id="campo-buscar">
+                                        {{-- Campo: Responsable de coordinar --}}
+                                        <div class="col-6 ">
+                                            <div class="input-group w-80">
+                                                <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " value='{{ $actividad->responsableCoordinar->persona_id }}' required>
+                                                <div class="input-group-append">
+                                                    <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar" class="ml-2 mt-2"> <i class="far fa-question-circle fa-lg "></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable-encontrado" value="false">
+                                    </div>
+
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta"></div>
+                                    </div>
+
+                                    <div class="row justify-content-center pb-3" id="tarjeta-responsable">
+                                        <div class="p-3 w-100 d-flex border-top justify-content-center" id="info-responsable">
+                                            <div class="col-3">
+                                                <div class="d-flex justify-content-center mb-2">
+                                                    <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
+                                                        <img class="rounded mb-3" id="imagen-responsable" src="{{ URL::asset('img/fotos/') }}/{{ $actividad->responsableCoordinar->persona->imagen_perfil }}" style="max-width: 100%; max-height:  100%; " />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-5  d-flex justify-content-start align-items-center ">
+                                                <div class="d-flex justify-content-start align-items-center ">
+                                                    <div class="text-start mb-3">
+                                                        <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> {{ $actividad->responsableCoordinar->persona_id }}</span> <br>
+                                                        <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable"> {{ $actividad->responsableCoordinar->persona->nombre }} </span> <br>
+                                                        <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> {!! $actividad->responsableCoordinar->persona->correo_institucional ?? "<i> - No registrado - <i />" !!}</span> <br>
+                                                        <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"> {!! $actividad->responsableCoordinar->persona->telefono_celular ?? '<i class="font-weight-light"> No registrado</i>' !!} </span> <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
+
             <div class="tab-pane fade" id="info-esp" role="tabpanel" aria-labelledby="info-esp-tab">
                 <div class="mt-4">
                     <div class="row">
-
                         {{-- Campo: Objetivos --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
@@ -531,7 +533,15 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 
 </div>
 {{-- </form> --}}
+
 @endsection
+
+@section('scripts')
+<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
+<script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
+
+@endsection
+
 
 @section('pie')
 Copyright

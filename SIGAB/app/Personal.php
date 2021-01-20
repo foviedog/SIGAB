@@ -25,8 +25,8 @@ class Personal extends Model
         return $this->hasMany('App\Idioma', 'persona_id');
     }
 
-    public function actividad()
+    public function actividades()
     {
-        return $this->belongsTo('App\Actividad', 'id'); /* Revisar */
+        return $this->hasMany('App\Actividades', 'responsable_coordinar');
     }
 }

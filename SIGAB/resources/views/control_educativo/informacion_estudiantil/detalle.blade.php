@@ -38,9 +38,8 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                         {{-- Nombre y apellido del estudiante, que son titulos del contenido --}}
                         <h3 class="texto-gris mb-4">{{ $estudiante->persona->nombre }} {{ $estudiante->persona->apellido }}</h3>
                     </div>
+                    {{-- Botones superiores --}}
                     <div>
-                        {{-- Botones superiores --}}
-
                         {{-- Regresar al listado de estudiantes --}}
                         <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         {{-- Boton que habilita opcion de editar --}}
@@ -57,7 +56,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                                 {{-- Foto del estudiante --}}
                                 <div class="d-flex justify-content-center mb-3 mt-4">
                                     <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
-                                        <img class="" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" width:"160" height="200" />
+                                        <img class="" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" style="max-width: 100%;  " />
                                     </div>
                                 </div>
                                 {{-- Cedula del estudiante --}}
