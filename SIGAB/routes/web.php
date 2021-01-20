@@ -113,4 +113,4 @@ Route::get('/actividad-interna', 'ActividadesInternaController@index')->name('ac
 // Detalle de actividad interna
 Route::get('/detalle-actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.show');
 // Actualización de los datos de la actividad
-Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.update');
+Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@update')->name('actividad-interna.update');

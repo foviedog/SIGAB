@@ -22,7 +22,7 @@ $tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conve
 
 $poblacion = ['Estudiantes de primer ingreso','Estudiantes regulares','Personal Docente','Personal Administrativo'];
 
-$estados = ['Para ejecución','En progreso','En progreso','Ejecutada'];
+$estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 
 $ambitos = ['Nacional','Internacional'];
 
@@ -30,9 +30,11 @@ $ambitos = ['Nacional','Internacional'];
 
 {{-- Formulario general de estudiante --}}
 <form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
-    @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
+    {{-- Seguridad de envío de datos --}}
+    @csrf
+
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between">
@@ -52,7 +54,17 @@ $ambitos = ['Nacional','Internacional'];
                 </div>
             </div>
             <hr>
-
+            {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
+            @if(Session::has('mensaje'))
+            <div class="alert alert-success text-center font-weight-bold" role="alert" id="mensaje_exito">
+                {!! \Session::get('mensaje') !!}
+            </div>
+            @endif
+            @if(Session::has('error'))
+            <div class="alert alert-danger text-center font-weight-bold" role="alert">
+                {{ "¡Oops! Algo ocurrió mal. ".$error }}
+            </div>
+            @endif
             {{-- Barra de navegación entre información genereal y bloques de texto  --}}
             <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
                 <li class="nav-item">
@@ -105,7 +117,7 @@ $ambitos = ['Nacional','Internacional'];
                                                 <span class="text-muted" id="mostrar_lugar"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)" value='{{ $actividad->lugar ?? "No especificado " }}' disabled>
+                                                <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)" value='{{ $actividad->lugar }}' placeholder="No especificado" disabled>
 
                                             </div>
                                         </div>
@@ -187,8 +199,8 @@ $ambitos = ['Nacional','Internacional'];
                                             <div class="d-flex justify-center">
                                                 <div class="col d-flex justify-content-center">
                                                     <div class="w-50  d-flex ">
-                                                        <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" value='{{ $actividad->duracion ?? 0 }}' disabled />
-                                                        <span class="d-flex align-items-center ml-2 font-weight-bold"> h</span>
+                                                        <input type="number" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
+                                                        <span class=" d-flex align-items-center ml-2 font-weight-bold"> h</span>
                                                     </div>
 
                                                 </div>
@@ -225,7 +237,7 @@ $ambitos = ['Nacional','Internacional'];
                                                 <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
                                             </div>
                                             <div class="d-flex">
-                                                <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                <select id="propositos" name="tipo_actividad" class="form-control" required disabled>
                                                     @foreach($tiposActividad as $tipoActividad)
                                                     <option value="{{ $tipoActividad }}" @if($tipoActividad==$actividad->actividadInterna->tipo_actividad) selected @endif> {{ $tipoActividad }} </option>
                                                     @endforeach
@@ -242,7 +254,7 @@ $ambitos = ['Nacional','Internacional'];
                                                 <label for="publico_dirigido">Dirigido a <i class="text-danger">*</i></label>
                                             </div>
                                             <div class="d-flex">
-                                                <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                <select id="propositos" name="publico_dirigido" class="form-control" required disabled>
                                                     @foreach($poblacion as $dirigido)
                                                     <option value="{{ $dirigido }}" @if($dirigido==$actividad->actividadInterna->publico_dirigido) selected @endif> {{ $dirigido }} </option>
                                                     @endforeach
@@ -262,9 +274,9 @@ $ambitos = ['Nacional','Internacional'];
                                                 <label for="estado">Estado <i class="text-danger">*</i></label>
                                             </div>
                                             <div class="d-flex">
-                                                <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                <select id="propositos" name="estado" class="form-control" required disabled>
                                                     @foreach($estados as $estado)
-                                                    <option value="{{ $estado }}" @if($estado==$actividad->actividadInterna->estado) selected @endif> {{ $estado }} </option>
+                                                    <option value="{{ $estado }}" @if($estado==$actividad->estado) selected @endif> {{ $estado }} </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -283,7 +295,7 @@ $ambitos = ['Nacional','Internacional'];
                                                 <span class="text-muted" id="mostrar_certificacion_actividad"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" value='{{ $actividad->actividadInterna->certificado ?? "No se ha registrado ninguno" }}' onkeyup="contarCaracteres(this,100)" disabled>
+                                                <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" value='{{ $actividad->actividadInterna->certificacion_actividad }}' onkeyup="contarCaracteres(this,100)" placeholder="No se ha registrado ningun" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -296,7 +308,7 @@ $ambitos = ['Nacional','Internacional'];
                                                 <label for="ambito">Ámbito<i class="text-danger">*</i></label>
                                             </div>
                                             <div class="d-flex">
-                                                <select id="propositos" name="proposito" class="form-control" required disabled>
+                                                <select id="propositos" name="ambito" class="form-control" required disabled>
                                                     @foreach($ambitos as $ambito)
                                                     <option value="{{ $ambito }}" @if($ambito==$actividad->actividadInterna->ambito) selected @endif> {{ $ambito }} </option>
                                                     @endforeach
@@ -411,7 +423,7 @@ $ambitos = ['Nacional','Internacional'];
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea class="form-control w-100" id="agenda" name="agenda" rows="4" disabled>{{ $actividad->actividadInterna->agenda }} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="agenda" name="agenda" rows="4" disabled>{{ $actividad->actividadInterna->agenda }} </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -440,7 +452,7 @@ $ambitos = ['Nacional','Internacional'];
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea class="form-control w-100" id="agenda" name="agenda" rows="4" disabled>{{ $actividad->descripcion }}</textarea>
+                                                    <textarea class="form-control w-100" id="descripcion" name="descripcion" rows="4" disabled>{{ $actividad->descripcion }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -491,7 +503,7 @@ $ambitos = ['Nacional','Internacional'];
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->actividadInterna->recursos }} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->actividadInterna->recursos }} </textarea>
                                                 </div>
                                             </div>
                                         </div>

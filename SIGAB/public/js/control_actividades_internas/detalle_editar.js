@@ -8,6 +8,7 @@ let editarActivido = false;
 function cargaInicial(event) {
     ocultarElementos();
     eventos();
+    AparecerMensajeExito();
 }
 
 function ocultarElementos() {
@@ -166,4 +167,11 @@ function validarInfo() {
         }
 
     });
+}
+function AparecerMensajeExito() {
+    $("#mensaje_exito")
+        .fadeTo(3000, 500)
+        .slideUp(500, function() {
+            $("#mensaje_exito").slideUp(800);
+        });
 }

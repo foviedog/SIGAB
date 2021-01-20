@@ -22,7 +22,7 @@ Registrar actividad interna
         <div class="d-flex justify-content-between">
             <h3>Registrar una actividad de tipo interna</h3>
             <div>
-                <a href="{{ route('listado-actividad-interna' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
             </div>
         </div>
         <hr>
@@ -77,7 +77,7 @@ Registrar actividad interna
 
                         {{-- Link directo al detalle de la actividad recien agregada --}}
                         <br>
-                        <a clas="btn btn-rojo" href="#">
+                        <a clas="btn btn-rojo" href="{{ route('actividad-interna.show',$actividad_insertada->id) }}">
                             <input type="button" value="Editar" class="btn btn-rojo">
                         </a>
                         <br>
@@ -321,6 +321,7 @@ Registrar actividad interna
                                             <option value="Para ejecución">Para ejecución</option>
                                             <option value="En progreso">En progreso</option>
                                             <option value="Ejecutada">Ejecutada</option>
+                                            <option value="Cancelada">Cancelada</option>
                                         </select>
                                     </div>
                                 </div>
