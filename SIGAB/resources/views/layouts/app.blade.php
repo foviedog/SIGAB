@@ -85,7 +85,7 @@
                 </a>
                 <ul class="collapse list-unstyled" id="controlActividades">
                     <li>
-                        <a href="{{ route('listado-actividad-interna' ) }}">Actividades internas</a>
+                        <a href="{{ route('actividad-interna.listado' ) }}">Actividades internas</a>
                     </li>
                     <li>
                         <a href="#">Actividades de promoción</a>

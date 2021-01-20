@@ -109,6 +109,8 @@ Route::patch('/personal/carga-academica/actualizar/{id_carga_academica}', 'Carga
 Route::get('/actividad-interna/registrar', 'ActividadesInternaController@create')->name('actividad-interna.create');
 Route::post('/actividad-interna', 'ActividadesInternaController@store');
 // Listado de actividades internas
-Route::get('/listado-actividad-interna', 'ActividadesInternaController@index')->name('listado-actividad-interna');
+Route::get('/actividad-interna', 'ActividadesInternaController@index')->name('actividad-interna.listado');
 // Detalle de actividad interna
-Route::get('/detalle-actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('detalle-actividad-interna');
+Route::get('/detalle-actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.show');
+// Actualización de los datos de la actividad
+Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.update');

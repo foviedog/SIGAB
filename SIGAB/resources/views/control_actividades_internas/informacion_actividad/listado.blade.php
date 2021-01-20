@@ -84,7 +84,7 @@ Actividades internas
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
-                                        <a href="{{ route('detalle-actividad-interna',$actividadInterna->actividad_id) }}" class="btn btn-contorno-rojo"> Detalle </a>
+                                        <a href="{{ route('actividad-interna.show',$actividadInterna->actividad_id) }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
                             </tr>
