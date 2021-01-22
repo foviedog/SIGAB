@@ -21,7 +21,7 @@ $generos = ['Femenino','Masculino','Otro'];
 $colegiosProcedencias = ['Público','Técnico','Científico','Bilingüe','Nocturno','Privado'];
 $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
 'Beca por participación en actividades artísticas y deportivas','Beca por participación en movimiento estudiantil',
-'Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
+'Beca de Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
 @endphp
 
 {{-- Formulario general de estudiante --}}
@@ -52,7 +52,7 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
                     <div class="col-lg-4 col-sm-12">
                         {{-- Tarjeta de foto perfil --}}
                         <div class="card mb-3">
-                            <div class="card-body text-center shadow-sm rounded pb-5">
+                            <div class="card-body text-center shaldow-sm rounded pb-5">
                                 {{-- Foto del estudiante --}}
                                 <div class="d-flex justify-content-center mb-3 mt-4">
                                     <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
