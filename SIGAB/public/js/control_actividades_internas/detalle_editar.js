@@ -15,8 +15,12 @@ function ocultarElementos() {
     $("#mensaje-alerta").hide();
     $("#campo-buscar").removeClass('d-flex');
     $("#campo-buscar").hide();
+    $("#cancelar-edi").hide();
     $("#info-responsable").removeClass('border-top');
+    $("#card-footer").hide();
+    $("#avatar").hide();
 }
+
 
 // ===============================================================================================
 //Función encargada de hacer llamar los metodos de eventos
@@ -27,13 +31,20 @@ function eventos() {
     evtBuscarResponsable();
     editar();
     validarInfo();
+    EvtCancelarEdicion();
 }
+
+function EvtCancelarEdicion() {
+    $("#cancelar-edi").on("click", function () {
+        location.reload(); // Recarga la página inicial para eliminar todos los cambios hechos y volver a bloquer todos los cambios
+    });
+}
+
 // ===============================================================================================
 //Función encargada de validar que se haya ingresado un personal
 // ===============================================================================================
 function evtSubmit() {
     $("#guardar-cambios").on("click", function (e) {
-
         if (editarActivido === true && $("#responsable-encontrado").val() === "false") {
             e.preventDefault();
             $("#cedula-responsable").val("");
@@ -125,6 +136,8 @@ function editar() {
         $("#campo-buscar").addClass('d-flex');
         $("#campo-buscar").show();
         $("#info-responsable").addClass('border-top');
+        $("#card-footer").show();
+        $("#avatar").show();
     });
 }
 

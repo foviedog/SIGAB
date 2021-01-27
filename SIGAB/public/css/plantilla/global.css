@@ -236,3 +236,14 @@ Fin de la paleta de colores
     background-image: url("/img/recursos/backgrounds/red_polygon2.png");
     background-repeat: no-repeat;
 }
+
+.info-card {
+    -webkit-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    -moz-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    border: 1px solid rgb(129, 129, 129);
+    border-radius: 5px;
+    color: #585757;
+    text-align: center;
+    padding-bottom: 5px;
+}

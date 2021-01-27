@@ -121,30 +121,25 @@
                             </li>
                             <li class="nav-item dropdown" style="max-width: 120px;">
                                 <a class="nav-link dropdown-toggle border-left border-secondary px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img class="border rounded-circle mr-2" src="{{ asset('img/fotos/'.Session::get('persona')->imagen_perfil) }}" style="max-width: 40%; " /><span> {{ Auth::user()->persona_id }}</span>
+                                    <img class="border rounded-circle mr-2" src="{{ asset('img/fotos/'.Session::get('persona')->imagen_perfil) }}" width="30px" height="30px" />
+                                    <span> {{ Auth::user()->persona_id }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
-
-
                                     <a class="dropdown-item" href="{{ route('perfil.show', Auth::user()->persona_id) }}">
                                         <i class="fas fa-user"></i> &nbsp; Mi perfil
-
                                     </a>
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-in-alt"></i> &nbsp; Salir
-
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
-
                             </li>
-
                         </ul>
                     </div>
                 </div>

@@ -39,7 +39,9 @@ Auth::routes([
 // ======================================================================================================================================
 
 /* Ruta de detalle del perfil*/
-Route::get('/perfil/{id_estudiante}', 'PersonaController@show')->name('perfil.show');
+Route::get('/perfil/{persona_id}', 'PersonaController@show')->name('perfil.show');
+/* Ruta de update del perfil*/
+Route::patch('/perfil/{persona_id}', 'PersonaController@update')->name('perfil.update');
 
 
 // ======================================================================================================================================
@@ -122,3 +124,8 @@ Route::get('/actividad-interna', 'ActividadesInternaController@index')->name('ac
 Route::get('/detalle-actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.show');
 // Actualización de los datos de la actividad
 Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@update')->name('actividad-interna.update');
+
+// ********************************************
+//      Control de listas de asistencia
+// ********************************************
+Route::get('/lista-asistencia', 'ListaAsistenciaController@show');

@@ -66,7 +66,6 @@ Listado Estudiantil
                     </div>
                 </form>
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
-
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>

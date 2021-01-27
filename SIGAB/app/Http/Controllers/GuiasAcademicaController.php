@@ -11,6 +11,7 @@ use App\Personal;
 use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use Illuminate\Support\Facades\Validator;
 
+
 class GuiasAcademicaController extends Controller
 {
 

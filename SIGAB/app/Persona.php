@@ -21,4 +21,8 @@ class Persona extends Model
     {
         return $this->hasOne('App\Personal', 'persona_id');
     }
+    public function listasAsistencias()
+    {
+        return $this->belongsToMany('App\ListaAsistencia', 'actividad_id');
+    }
 }
