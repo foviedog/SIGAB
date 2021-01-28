@@ -95,7 +95,7 @@ SIGAB
         <div class="row d-flex justify-content-between">
 
             {{-- primera carta de resumen --}}
-            <div class="col-xl-6 col-lg-12 mb-4">
+            <div class="col-xl-6 col-lg-12 ">
                 <div class="container">
                     <div class="row card shadow px-4 ">
                         <div class="card-body">

@@ -128,4 +128,5 @@ Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@
 // ********************************************
 //      Control de listas de asistencia
 // ********************************************
+Route::get('/lista-asistencia/participante/{id_participante}', 'ListaAsistenciaController@obtenerParticipante');
 Route::get('/lista-asistencia', 'ListaAsistenciaController@show');

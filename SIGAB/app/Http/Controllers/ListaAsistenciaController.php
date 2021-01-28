@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ListaAsistencia;
+use App\Persona;
 use Illuminate\Http\Request;
 
 class ListaAsistenciaController extends Controller
@@ -81,5 +82,16 @@ class ListaAsistenciaController extends Controller
     public function destroy(ListaAsistencia $listaAsistencia)
     {
         //
+    }
+    //Método que busca la cédula del participante que se desea agregar en
+    //la lista de asistencia y lo retorna por medio de un response como respuesta
+    //a un método AJAX.
+    public function obtenerParticipante($idParticipante)
+    {
+        $participante = Persona::find($idParticipante); //Busca al participante en la base de datos de personas
+        if (is_null($participante)) {
+            return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
+        }
+        return response()->json($participante, 200);
     }
 }

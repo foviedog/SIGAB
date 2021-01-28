@@ -272,7 +272,7 @@ class PersonalController extends Controller
     public function edit($id_personal)
     {
         $personal = Personal::find($id_personal); //se busca la persona con el id del personal requerido
-        if ($personal === null) {
+        if ($personal == null) {
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         } else {
             return response()->json($personal->persona, 200); //si hay un personal registrado con ese id lo retorna

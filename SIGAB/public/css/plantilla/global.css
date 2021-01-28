@@ -72,7 +72,7 @@ Colores de Letras
 }
 
 .texto-azul-una {
-    background-color: #034991 !important;
+    color: #034991 !important;
 }
 
 /* ------------------------
@@ -246,4 +246,19 @@ Fin de la paleta de colores
     color: #585757;
     text-align: center;
     padding-bottom: 5px;
+}
+
+.transicion-max-width {
+    transition: max-width 0.4s;
+    transition-timing-function: ease-in;
+}
+
+.transicion-padding {
+    transition: padding 0.4s;
+    transition-timing-function: ease-in;
+}
+
+.transicion-opacity {
+    transition: opacity 0.9s;
+    transition-timing-function: ease-in;
 }

@@ -23,9 +23,9 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
 {{-- Formulario general de estudiante --}}
 {{-- <form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form"> --}}
 {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
-@method('PATCH')
+{{-- @method('PATCH') --}}
 {{-- Seguridad de envío de datos --}}
-@csrf
+{{-- @csrf --}}
 
 <div class="card">
     <div class="card-body">
@@ -40,7 +40,7 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
                 {{-- Boton que habilita opcion de editar --}}
-                <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
+                <button href="" class="btn btn-rojo" id="btn-agregar-part"> Añadir participante &nbsp; <i class="fas fa-plus-circle"></i> </button>
                 {{-- Boton de cancelar edicion --}}
                 <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
             </div>
@@ -62,19 +62,19 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
             <div class="col-5">
                 <div class="card shadow">
 
-                    <div class="card-body">
+                    <div class="card-body  ">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-4">
-                                    <img src="{{ asset('img/logoEBDI.png') }}" alt="logo_ebdi" class="" style="max-width: 100%">
+                                <div class="col-4" id="img-actividad">
+                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 100%">
                                 </div>
-                                <div class="col-8 border-left d-flex align-items-center">
+                                <div class="col-7 border-left d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div>
-                                        <span>Nombre de actividad: Movimiento naranja</span> <br>
-                                        <span>Público dirigido: Estudiantes</span><br>
-                                        <span>Fecha de la actividad: 20-04-2021</span><br>
-                                        <span> Tipo de actividad: Charla </span><br>
-                                        <span> Estado:</span> <span class="badge bg-warning text-dark">En progreso</span>
+                                        <span class="my-1"> <strong>Nombre de actividad:</strong> Movimiento naranja</span> <br>
+                                        <span class="my-1"> <strong>Público dirigido:</strong> Estudiantes</span><br>
+                                        <span class="my-1"> <strong>Fecha de la actividad:</strong> 20-04-2021</span><br>
+                                        <span class="my-1"> <strong> Tipo de actividad:</strong> Charla </span><br>
+                                        <span class="my-1"> <strong>Estado:</strong></span> <span class="badge bg-warning text-dark">En progreso</span>
                                     </div>
 
 
@@ -85,18 +85,59 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
 
                 </div>
             </div>
-            <div class="col-7">
+            <div class="col-6 " id="agregar-participante-card" style="display:none;">
                 <div class="card shadow">
-                    <div class="card-header py-3">
-                        <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante </h6>
-                    </div>
-                    <div class="card-body d-flex justify-content-center" style="padding:59px;">
-                        <div class="input-group w-50">
-                            <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " required>
-                            <div class="input-group-append">
-                                <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
-                                <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
+                    <div class="card-header ">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante </h6>
                             </div>
+                            <div>
+                                <a href="#" class="texto-azul-una" id="invitado-btn">¿Es invidado?</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="d-flex justify-content-center ml-4" id="input-buscar-agregar">
+                            <div class="input-group w-50">
+                                <input type='text' id="cedula-participante" name="participante" class="form-control " required>
+                                <div class="input-group-append">
+                                    <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
+                                    <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del participante de coordinar la actividad y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                </div>
+                            </div>
+                            <input class="form-control" type='hidden' id="participante-encontrado" name="participante-encontrado" value="false">
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta" style="display:none;"></div>
+                        </div>
+                        <div class="row transicion-opacity" id="tarjeta-participante">
+                            <div class="p-3 w-100 d-flex border-top  mt-3 ">
+                                <div class="col-3">
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
+                                            <img class=" rounded mb-3" id="imagen-participante" style="max-width: 100%;  " />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5  d-flex justify-content-start align-items-center transicion-opacity" id="info-parti" style="opacity:0;">
+                                    <div class="d-flex justify-content-start align-items-center ">
+                                        <div class="text-start mb-3">
+                                            <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-participante-card"> </span> <br>
+                                            <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-participante"> </span> <br>
+                                            <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-participante"> </span> <br>
+                                            <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-participante"></span> <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center" id="agregar-participante-footer">
+                            <button href="" class="btn btn-rojo" id="agregar-submit"> Añadir participante &nbsp; <i class="fas fa-plus-circle"></i> </button>
+                            <button href="" class="btn btn-gris ml-2" id="cancelar-agregar-part"> Cancelar &nbsp; <i class="fas fa-times-circle"></i> </button>
                         </div>
                     </div>
                 </div>
@@ -106,7 +147,7 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
 
 
         <div class="row mt-2 d-flex justify-content-center">
-            <div class="col-10">
+            <div class="col-11">
                 <div class="card shadow">
                     <div class="card-header py-3">
                         <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Participaciones </h6>
@@ -178,8 +219,8 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                     </table>
                 </div>
             </div>
-            <div class="col-2">
-                <div class="info-card" style="padding: 2px 32px; max-width: 54%; ">
+            <div class="col-1">
+                <div class="info-card" style="padding: 2px 0; max-width: 100%; ">
                     <span style="font-size: 36px; font-weight: bolder;">28</span><br>
                     <span style="font-size: 20px; font-weight: light;  ">Total</span>
                 </div>
@@ -201,10 +242,9 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
 </script>
-<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
-<script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
+<script src="{{ asset('js/control_actividades_internas/lista_asistencia.js') }}"></script>
 <script>
     $("input[type='number']").inputSpinner();
 
