@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actividades;
+use App\Actividades_interna;
 use App\ListaAsistencia;
 use App\Persona;
 use Illuminate\Http\Request;
@@ -34,9 +36,18 @@ class ListaAsistenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        try {
+            $lista = new ListaAsistencia();
+            $lista->persona_id = request()->participante_id;
+            $lista->actividad_id = request()->actividad_id;
+            $lista->save();
+
+            return response(200);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return response("No existe", 404);
+        }
     }
 
     /**
@@ -45,9 +56,24 @@ class ListaAsistenciaController extends Controller
      * @param  \App\ListaAsistencia  $listaAsistencia
      * @return \Illuminate\Http\Response
      */
-    public function show(ListaAsistencia $listaAsistencia)
+    public function show($actividadId)
     {
-        return view('control_actividades_internas.lista_asistencia.detalle');
+        $paginaciones = [5, 10, 25, 50];
+        $itemsPagina = request('itemsPagina', 10);
+        $filtro = request('filtro', NULL);
+
+        $listaAsistencia = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
+            ->where('lista_asistencias.actividad_id', $actividadId)->get();
+        $actividad = Actividades::find($actividadId);
+
+        // dd($listaAsistencia);
+        return view('control_actividades_internas.lista_asistencia.detalle', [
+            'listaAsistencia' => $listaAsistencia,
+            'actividad' => $actividad,
+            'paginaciones' => $paginaciones,
+            'itemsPagina' => $itemsPagina,
+            'filtro' => $filtro,
+        ]);
     }
 
     /**

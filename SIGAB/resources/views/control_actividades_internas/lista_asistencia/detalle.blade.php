@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('meta')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@endsection
 @section('titulo')
 Asistencia
 {{-- {{ $actividad->tema }} --}}
@@ -57,6 +59,7 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
             {{ "¡Oops! Algo ocurrió mal. ".$error }}
         </div>
         @endif
+        <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
 
         <div class="row border-bottom pb-2">
             <div class="col-5">
@@ -69,12 +72,22 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                                     <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 100%">
                                 </div>
                                 <div class="col-7 border-left d-flex align-items-center transicion-padding" id="info-actividad">
-                                    <div>
-                                        <span class="my-1"> <strong>Nombre de actividad:</strong> Movimiento naranja</span> <br>
-                                        <span class="my-1"> <strong>Público dirigido:</strong> Estudiantes</span><br>
-                                        <span class="my-1"> <strong>Fecha de la actividad:</strong> 20-04-2021</span><br>
-                                        <span class="my-1"> <strong> Tipo de actividad:</strong> Charla </span><br>
-                                        <span class="my-1"> <strong>Estado:</strong></span> <span class="badge bg-warning text-dark">En progreso</span>
+                                    <div class="overflow-auto">
+                                        <span class="my-1" style='width: 134%; '> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
+                                        <span class="my-1" style='width: 134%; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
+                                        <span class="my-1" style='width: 120%; '> <strong>Fecha de la actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
+                                        <span class="my-1"> <strong> Tipo de actividad:</strong> {{ $actividad->actividadInterna->tipo_actividad }}</span><br>
+                                        <span class="my-1"> <strong>Estado:</strong></span>
+                                        @if ( $actividad->estado == 'Para ejecución' )
+                                        <span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'Cancelada')
+                                        <span class=" bg-danger text-white px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'En progreso')
+                                        <span class=" bg-warning text-dark px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'Ejecutada')
+                                        <span class=" bg-success text-white px-2 rounded">{{ $actividad->estado  }}</span>
+
+                                        @endif
                                     </div>
 
 
@@ -93,7 +106,7 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                                 <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante </h6>
                             </div>
                             <div>
-                                <a href="#" class="texto-azul-una" id="invitado-btn">¿Es invidado?</a>
+                                <a href="#" class="texto-azul-una" id="invitado-btn">¿Es invitado?</a>
                             </div>
                         </div>
                     </div>
@@ -142,6 +155,15 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                     </div>
                 </div>
             </div>
+            <div class="col-6 " id="loader" style="display:none;">
+                <div class="d-flex justify-content-center mt-2 mb-4">
+                    <h4 class="texto-rojo-oscuro">Agregando participante a la lista </h4>
+                </div>
+                <div class="loader-container d-flex justify-content-center">
+                    <div class="loader1"></div>
+                    <div class="loader2"> </div>
+                </div>
+            </div>
         </div>
 
 
@@ -158,9 +180,9 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                                 <label class="font-weight-bold">Mostrar &nbsp;
                                     {{-- Select con la cantidad de items por páginas--}}
                                     <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        {{-- @foreach($paginaciones as $paginacion) --}}
-                                        {{-- <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option> --}}
-                                        {{-- @endforeach --}}
+                                        @foreach($paginaciones as $paginacion)
+                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                        @endforeach
                                     </select>
                                 </label>
                             </div>
@@ -170,7 +192,7 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                                 <div class="text-md-right dataTables_filter input-group mb-3 ">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
                                     <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
-                                    {{-- @if (!is_null($filtro)) value="{{ $filtro }}" @endif --}}
+                                    @if (!is_null($filtro)) value="{{ $filtro }}" @endif
                                     &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" />
                                 </div>
                             </div>
@@ -186,34 +208,41 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
                             <tr>
                                 <th>N° de Cédula</th>
                                 <th>Nombre</th>
-                                <th>Carrera (Principal) matriculada</th>
                                 <th>Teléfono celular</th>
-                                <th>Correo</th>
-                                <td><strong>Ver detalle<br /></strong></td>
-                                <th>Guía Académica</th>
+                                <th>Correo institucional</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             {{-- En caso de que no existan registros --}}
-                            {{-- @if(count($estudiantes) == 0) --}}
+                            @if(count($listaAsistencia) == 0)
                             <tr class="cursor-pointer">
                                 <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
                             </tr>
-                            {{-- @endif --}}
+                            @endif
                             {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
+                            @foreach($listaAsistencia as $participante)
+                            <tr id="" class="cursor-pointer">
+                                <td>{{ $participante->persona_id }}</td>
+                                {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
+                                <td>{{ $participante->apellido.", ".  $participante->nombre }}</td>
+                                <td>{!! $participante->telefono_celular ?? '<i class="font-weight-light"> No registrado</i>' !!}<br /> </td>
+                                <td>
+                                    <strong>
+                                        {!! $participante->correo_institucional ?? '<i class="font-weight-light"> No registrado</i>'!!}
+                                    </strong>
+                                </td>
 
+                            </tr>
+                            @endforeach
                         </tbody>
-                        {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
+                        {{-- Nombre de las columnas en la parte de abajo de la tabla --}}
                         <tfoot>
                             <tr>
-                                <td><strong>N° de Cédula<br /></strong></td>
-                                <td><strong>Nombre<strong></td>
-                                <td><strong>Carrera (Principal) matriculada<br /></strong></td>
-                                <td><strong>Teléfono Celular</strong><br /></td>
-                                <td><strong>Correo<br /></strong></td>
-                                <td><strong>Ver detalle<br /></strong></td>
-                                <td><strong>Guia académica<br /></strong></td>
+                                <th>N° de Cédula</th>
+                                <th>Nombre</th>
+                                <th>Teléfono celular</th>
+                                <th>Correo institucional</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -245,10 +274,15 @@ $propositos = ['Inducción','Capacitación','Actualización','Involucramiento de
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script src="{{ asset('js/control_actividades_internas/lista_asistencia.js') }}"></script>
-<script>
-    $("input[type='number']").inputSpinner();
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
 </script>
+
 @endsection
 
 

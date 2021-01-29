@@ -129,4 +129,5 @@ Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@
 //      Control de listas de asistencia
 // ********************************************
 Route::get('/lista-asistencia/participante/{id_participante}', 'ListaAsistenciaController@obtenerParticipante');
-Route::get('/lista-asistencia', 'ListaAsistenciaController@show');
+Route::get('/lista-asistencia/{actividad_id}', 'ListaAsistenciaController@show')->name('lista-asistencia.show');
+Route::post('/lista-asistencia', 'ListaAsistenciaController@store')->name('lista-asistencia.store');

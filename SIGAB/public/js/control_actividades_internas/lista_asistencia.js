@@ -15,11 +15,12 @@ function ocultarElementos() {
     $("#mensaje-alerta").hide();
     $("#campo-buscar").removeClass('d-flex');
     $("#campo-buscar").hide();
-    $("#cancelar-edi").hide();
     $("#info-responsable").removeClass('border-top');
     $("#card-footer").hide();
     $("#avatar").hide();
+    $("#cancelar-edi").hide();
     $("#agregar-participante-card").hide();
+    $("#loader").hide();
     ocultarParticipanteInfo();
 }
 
@@ -28,7 +29,7 @@ function ocultarElementos() {
 //Función encargada de hacer llamar los metodos de eventos
 // =================================================================
 function eventos() {
-    evtSubmit();
+    evtAgregarParticipante();
     evtAgregarParticipanteShow();
     evtCancelarAgregarPart();
     evtBuscarParticipante();
@@ -80,23 +81,42 @@ function evtBuscarParticipante() {
     });
 }
 
-// ===============================================================
-//Función encargada de validar que se haya ingresado un personal
-// ===============================================================
-function evtSubmit() {
-    $("#guardar-cambios").on("click", function (e) {
-        if (editarActivido === true && $("#responsable-encontrado").val() === "false") {
-            e.preventDefault();
-            $("#cedula-responsable").val("");
-            $("#mensaje-alerta").html(
-                "Debe de designar un responsable"
-            );
-            $("#mensaje-alerta")
-                .fadeTo(2000, 1000)
-                .slideUp(1000, function() {
-                    $("#mensaje-alerta").slideUp(1000);
-                });
+// =================================================================
+//Función encargada de enviar los datos del participante a agregar
+// =================================================================
+function evtAgregarParticipante() {
+    $("#agregar-submit").on("click", function (e) {
+        if ($("#participante-encontrado").val() === "") {
+            errorNoEncontrado();
+        } else {
+            let participante = {
+                participante_id: $("#participante-encontrado").val(),
+                actividad_id: $("#actividad-id").val()
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "/lista-asistencia",
+                dataType: "json",
+                data: {
+                    "participante_id": $("#participante-encontrado").val(),
+                    "actividad_id": $("#actividad-id").val()
+                },
+                beforeSend: function() {
+                    $("#loader").show();
+                    $("#cancelar-agregar-part").trigger("click");
+                },
+                success: function () {
+                    location.reload();
+                },
+                statusCode: {
+                    404: function () {
+                        alert('Nope');
+                    }
+                }
+            });
         }
+
     });
 }
 
@@ -120,7 +140,7 @@ function llenarTarjetaParticipante(participante) {
     mostrarParticipanteInfo();
     aumentarTamanioInfo();
     $("#agregar-submit").show();
-    $("#participante-encontrado").val('true');
+    $("#participante-encontrado").val(participante.persona_id);
     let src = fotosURL + "/" + participante.imagen_perfil;
     $("#imagen-participante").attr("src", src);
     $("#nombre-participante").html(

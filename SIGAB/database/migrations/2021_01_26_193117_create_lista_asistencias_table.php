@@ -17,8 +17,8 @@ class CreateListaAsistenciasTable extends Migration
         Schema::create('lista_asistencias', function (Blueprint $table) {
             $table->id();
             $table->string('persona_id', 15);
-            $table->foreign('persona_id')->references('persona_id')->on('personal');
-            $table->bigInteger('actividad_id')->unsigned()->unique();
+            $table->foreign('persona_id')->references('persona_id')->on('personas');
+            $table->bigInteger('actividad_id')->unsigned();
             $table->foreign('actividad_id')->references('actividad_id')->on('actividades_internas');
 
             $table->timestamps();

@@ -28,7 +28,7 @@ $ambitos = ['Nacional','Internacional'];
 
 @endphp
 
-{{-- Formulario general de estudiante --}}
+{{-- Formulario general de actualización de datos de actividad --}}
 <form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
@@ -39,9 +39,8 @@ $ambitos = ['Nacional','Internacional'];
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 {{-- Título  --}}
-                <div>
-
-                    <h3>{{ $actividad->tema }}</h3>
+                <div class=" d-flex justify-content-start align-items-center">
+                    <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
                 </div>
                 {{-- Botones superiores --}}
                 <div>
@@ -81,7 +80,14 @@ $ambitos = ['Nacional','Internacional'];
 
                     <div class="card shadow-sm my-3 rounded pb-2">
                         <div class="card-header py-3">
-                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
+                                </div>
+                                <div>
+                                    <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-rojo"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
