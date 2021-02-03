@@ -263,6 +263,71 @@ Fin de la paleta de colores
     transition-timing-function: ease-in;
 }
 
+/* ********************************
+        Mensajes
+******************************** */
+
+.mensaje-container {
+    width: 18%;
+    height: 70px;
+    left: 78%;
+    top: 250px;
+    background-color: #ffffff;
+    position: fixed;
+    border: 1px solid #a7a7a7;
+    box-shadow: 7px 9px 17px -8px rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+    animation-duration: 0.8s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}
+
+.mensaje-container .icono-mensaje {
+    background-size: 100%;
+    background-position-y: 56%;
+}
+
+.mensaje-container .texto-mensaje {
+    font-size: 17px;
+    color: #b30808e8;
+}
+
+@keyframes mostrar-mensaje {
+    0% {
+        transform: skew(-53deg) translateX(200%);
+        opacity: 0;
+    }
+    60% {
+        transform: translateX(0px);
+    }
+    62% {
+        transform: skew(0deg) translateX(30px);
+    }
+    70% {
+        transform: skew(-5deg);
+        opacity: 1;
+    }
+    80% {
+        transform: skew(20deg);
+    }
+    100% {
+        transform: skew(0deg);
+    }
+}
+
+@keyframes esconder-mensaje {
+    30% {
+        transform: skew(0deg);
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        transform: skew(-20deg) translate(200%);
+        opacity: 0;
+    }
+}
+
 /* **********************************************
         Elementos de espera de ejecucución
 ********************************************** */

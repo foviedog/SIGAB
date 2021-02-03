@@ -43,8 +43,22 @@ class ListaAsistenciaController extends Controller
             $lista->persona_id = request()->participante_id;
             $lista->actividad_id = request()->actividad_id;
             $lista->save();
+            $paginaciones = [5, 10, 25, 50];
+            $filtro = request('filtro', NULL);
 
-            return response(200);
+            $itemsPagina = 5;
+            $actividad = Actividades::find(request()->actividad_id);
+
+            $listaAsistencia = $this->obtenerLista($lista->actividad_id, $itemsPagina, $filtro);
+            $tabla = view('control_actividades_internas.lista_asistencia.load',  [
+                'listaAsistencia' => $listaAsistencia,
+                'actividad' => $actividad,
+                'paginaciones' => $paginaciones,
+                'itemsPagina' => $itemsPagina,
+                'filtro' => $filtro,
+            ])->render();
+
+            return response()->json($tabla, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
             return response("No existe", 404);
         }
@@ -59,13 +73,17 @@ class ListaAsistenciaController extends Controller
     public function show($actividadId)
     {
         $paginaciones = [5, 10, 25, 50];
-        $itemsPagina = request('itemsPagina', 10);
+        $itemsPagina = request('itemsPagina', 5);
         $filtro = request('filtro', NULL);
 
-        $listaAsistencia = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
-            ->where('lista_asistencias.actividad_id', $actividadId)->get();
+        $mensaje = request('mensaje', NULL);
+
+        $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
         $actividad = Actividades::find($actividadId);
 
+        if (!is_null($mensaje)) {
+            return redirect()->route('lista-asistencia.show', $actividadId)->with('mensaje', $mensaje);
+        }
         // dd($listaAsistencia);
         return view('control_actividades_internas.lista_asistencia.detalle', [
             'listaAsistencia' => $listaAsistencia,
@@ -73,6 +91,7 @@ class ListaAsistenciaController extends Controller
             'paginaciones' => $paginaciones,
             'itemsPagina' => $itemsPagina,
             'filtro' => $filtro,
+            'mensaje' => $mensaje,
         ]);
     }
 
@@ -119,5 +138,24 @@ class ListaAsistenciaController extends Controller
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         }
         return response()->json($participante, 200);
+    }
+
+    public function obtenerLista($actividadId, $itemsPagina, $filtro)
+    {
+        $lista = NULL;
+        if (is_null($filtro)) {
+            $lista = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
+                ->where('lista_asistencias.actividad_id', $actividadId)->paginate($itemsPagina);
+        } else {
+            $lista = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
+                ->where('lista_asistencias.actividad_id', $actividadId)
+                ->Where(function ($query) {
+                    $query->orWhere('personas.persona_id', 'like', '%' .  request('filtro', '') . '%') // Filtro para buscar por nombre de persona
+                        ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . request('filtro', '')  . "%'"); //Filtro para buscar por nombre completo
+                })
+                ->paginate($itemsPagina);
+        }
+
+        return $lista;
     }
 }

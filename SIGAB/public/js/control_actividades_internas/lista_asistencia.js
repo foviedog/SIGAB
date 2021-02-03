@@ -2,13 +2,13 @@
 document.addEventListener("DOMContentLoaded", cargaInicial); //Se agrega el evento carga inicial al momento de cargar el documento
 
 let editarActivido = false;
+
 // ===============================================================================================
 //Función encargada de hacer el llamado  de todos los métodos utilizados en el registro.
 // ===============================================================================================
 function cargaInicial(event) {
     ocultarElementos();
     eventos();
-    AparecerMensajeExito();
 }
 
 function ocultarElementos() {
@@ -21,7 +21,10 @@ function ocultarElementos() {
     $("#cancelar-edi").hide();
     $("#agregar-participante-card").hide();
     $("#loader").hide();
+    $("#mensaje-info").removeClass('d-flex');
+    $("#mensaje-info").hide();
     ocultarParticipanteInfo();
+
 }
 
 
@@ -33,6 +36,8 @@ function eventos() {
     evtAgregarParticipanteShow();
     evtCancelarAgregarPart();
     evtBuscarParticipante();
+    mostrarMensaje();
+    evtListarTodo();
 }
 
 // ******************************************
@@ -55,6 +60,12 @@ function evtAgregarParticipanteShow() {
         $("#btn-agregar-part").hide();
         $("#agregar-submit").hide();
         $("#agregar-participante-card").show();
+    });
+}
+function evtListarTodo() {
+    $("#btn-listar-todo").on("click", function (e) {
+        $("#mensaje").val('');
+        $("#form-reload").trigger('submit');
     });
 }
 
@@ -106,12 +117,15 @@ function evtAgregarParticipante() {
                     $("#loader").show();
                     $("#cancelar-agregar-part").trigger("click");
                 },
-                success: function () {
-                    location.reload();
+                success: function (datos) {
+                    $("#mensaje").val('success');
+                    $("#form-reload").trigger('submit');
                 },
                 statusCode: {
                     404: function () {
-                        alert('Nope');
+                        $("#loader").hide();
+                        $("#mensaje").val('error');
+                        $("#form-reload").trigger('submit');
                     }
                 }
             });
@@ -119,6 +133,7 @@ function evtAgregarParticipante() {
 
     });
 }
+
 
 // ******************************************
 //   Declaración de funciones
@@ -174,17 +189,6 @@ function desplegarAlerta(contenido) {
         });
 }
 
-
-
-function AparecerMensajeExito() {
-    $("#mensaje_exito")
-        .fadeTo(3000, 500)
-        .slideUp(500, function() {
-            $("#mensaje_exito").slideUp(800);
-        });
-}
-
-
 function aumentarTamanioInfo() {
     $("#logo-EBDI").css("max-width", "141%");
     $("#img-actividad").css("padding-top", "8%");
@@ -208,3 +212,36 @@ function errorNoEncontrado() {
     desplegarAlerta("La cédula digitada no existe");
     $("#agregar-submit").hide();
 }
+
+function recargarTabla(personas) {
+    $("#lista-participantes").html(' ');
+    personas.forEach(persona => {
+        var fila = $('<tr>');
+        var cedula = $('<td>').text(persona.persona_id );
+        var nombre = $('<td>').text(persona.apellido + ', '+ persona.nombre );
+        var telefono = $('<td>').text(persona.telefono_celular );;
+        var correo = $('<td>').text(persona.correo_institucional );
+        fila.append(cedula);
+        fila.append(nombre);
+        fila.append(telefono);
+        fila.append(correo);
+        $("#lista-participantes").append(fila);
+    });
+}
+
+function mostrarMensaje() {
+
+    $('#mensaje-info').addClass('d-flex');
+    $('#mensaje-info').show();
+    $("#mensaje-info").css('animation-name', 'mostrar-mensaje');
+
+    setTimeout(function () {
+        $('#mensaje-info').css('animation-name', 'esconder-mensaje');
+    }, 4000);
+    setTimeout(function () {
+        $('#mensaje-info').removeClass('d-flex');
+        $('#mensaje-info').hide();
+        window.history.replaceState({}, "/"+window.location.href.split("?")[0]);
+    }, 4790);
+}
+

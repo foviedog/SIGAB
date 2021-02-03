@@ -20,6 +20,7 @@ class CreateListaAsistenciasTable extends Migration
             $table->foreign('persona_id')->references('persona_id')->on('personas');
             $table->bigInteger('actividad_id')->unsigned();
             $table->foreign('actividad_id')->references('actividad_id')->on('actividades_internas');
+            $table->unique(["persona_id", "actividad_id"], 'persona_actividad_unique');
 
             $table->timestamps();
         });
@@ -32,6 +33,7 @@ class CreateListaAsistenciasTable extends Migration
      */
     public function down()
     {
+        $table->dropUnique('persona_actividad_unique');
         Schema::dropIfExists('lista_asistencias');
     }
 }
