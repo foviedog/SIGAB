@@ -131,6 +131,7 @@ Botones contorno (outline)
 }
 
 .btn-contorno-rojo {
+    transition: all .4s ease;
     background-color: #ffffff !important;
     border-color: #aa1816 !important;
     color: #aa1816 !important;
@@ -148,6 +149,7 @@ Botones contorno (outline)
 }
 
 .btn-contorno-gris {
+    transition: all .4s ease;
     background-color: #ffffff !important;
     border-color: #2d2d2d !important;
     color: #2d2d2d !important;
@@ -159,6 +161,7 @@ Botones contorno (outline)
 }
 
 .btn-contorno-azul-una {
+    transition: all .4s ease;
     border-color: #034991 !important;
     background-color: #ffffff !important;
     color: #034991 !important;
@@ -376,4 +379,96 @@ Fin de la paleta de colores
     to {
         transform: rotate(-360deg);
     }
+}
+
+/* **********************************************
+        Subir una imagen
+********************************************** */
+
+.file-upload {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.file-upload-content {
+    display: none;
+    text-align: center;
+}
+
+.file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-upload-wrap {
+    border: 2px dashed #af0a0a;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.image-dropping, .image-upload-wrap:hover {
+    background-color: #af0a0ada;
+    border: 2px solid #af0a0a;
+}
+
+.image-dropping, .image-upload-wrap:hover .drag-text h4 {
+    color: #ffffff;
+}
+
+.image-title-wrap {
+    padding: 0 15px 15px 15px;
+    color: #222;
+}
+
+.drag-text {
+    text-align: center;
+}
+
+.drag-text h4 {
+    font-weight: 50;
+    text-transform: uppercase;
+    color: #af0a0a;
+    padding: 20px 0;
+}
+
+.file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.remove-image {
+    width: 200px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 3px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.remove-image:active {
+    border: 0;
+    transition: all .2s ease;
 }

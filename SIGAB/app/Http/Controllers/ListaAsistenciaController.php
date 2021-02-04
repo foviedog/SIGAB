@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Image;
 use App\Actividades;
 use App\Actividades_interna;
 use App\ListaAsistencia;
 use App\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+
 
 class ListaAsistenciaController extends Controller
 {
@@ -43,26 +46,32 @@ class ListaAsistenciaController extends Controller
             $lista->persona_id = request()->participante_id;
             $lista->actividad_id = request()->actividad_id;
             $lista->save();
-            $paginaciones = [5, 10, 25, 50];
-            $filtro = request('filtro', NULL);
 
-            $itemsPagina = 5;
-            $actividad = Actividades::find(request()->actividad_id);
-
-            $listaAsistencia = $this->obtenerLista($lista->actividad_id, $itemsPagina, $filtro);
-            $tabla = view('control_actividades_internas.lista_asistencia.load',  [
-                'listaAsistencia' => $listaAsistencia,
-                'actividad' => $actividad,
-                'paginaciones' => $paginaciones,
-                'itemsPagina' => $itemsPagina,
-                'filtro' => $filtro,
-            ])->render();
-
-            return response()->json($tabla, 200);
+            return response("success", 200);
         } catch (\Illuminate\Database\QueryException $ex) {
             return response("No existe", 404);
         }
     }
+    public function storeInvitado(Request $request)
+    {
+        try {
+            $persona = new Persona();
+            $persona = Persona::find($request->persona_id);   //Se busca en la BD si el participante ya se encontraba agregado anteriormente como persona
+
+            if (!is_null($persona)) {
+                return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "error");
+            } else {
+                $persona = new Persona();
+                $this->guardarPersona($persona, $request);
+                $this->registrarParticipante($request->persona_id, $request->actividad_id);
+            }
+
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "success");
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "error");
+        }
+    }
+
 
     /**
      * Display the specified resource.
@@ -157,5 +166,46 @@ class ListaAsistenciaController extends Controller
         }
 
         return $lista;
+    }
+
+    private function guardarPersona(&$persona, $request)
+    {
+        //se setean los atributos del objeto
+        $persona->persona_id = $request->persona_id;
+        $persona->nombre = $request->nombre;
+        $persona->apellido = $request->apellido;
+        $persona->fecha_nacimiento = $request->fecha_nacimiento;
+        $persona->telefono_fijo = $request->telefono_fijo;
+        $persona->telefono_celular = $request->telefono_celular;
+        $persona->correo_personal = $request->correo_personal;
+        $persona->correo_institucional = $request->correo_institucional;
+        $persona->estado_civil = $request->estado_civil;
+        $persona->direccion_residencia = $request->direccion_residencia;
+        $persona->genero = $request->genero;
+        $persona->save(); //se guarda el objeto en la base de datos
+        $this->update_avatar($request, $persona);
+    }
+    private function registrarParticipante($participante_id, $actividad_id)
+    {
+        $lista = new ListaAsistencia();
+        $lista->persona_id = $participante_id;
+        $lista->actividad_id = $actividad_id;
+        $lista->save();
+    }
+    private function update_avatar($request, &$persona)
+    {
+        //En caso de que se haya subido alguna foto con el request se procede a guardarlo en el repositorio de imagenes de perfil
+        if ($request->hasFile('avatar')) {
+
+            $avatar = $request->file('avatar'); // Se obtiene el objeto que viene en el request y se guarda dentro de una variable
+            $archivo = time() . '.' . $avatar->getClientOriginalExtension(); // Se toma la hora y la extensión del archivo que se subió (.jpg,png,etc..)
+            Image::make($avatar)->resize(500, 640)->save(public_path('/img/fotos/' . $archivo)); // Se utiliza la herramienta de Image para que todas las imágenes se guarden en el mismo formato
+
+            if ($persona->imagen_perfil != "default.jpg") // En caso de que *NO* se haya establecido una imagen por defecto
+                File::delete(public_path('/img/fotos/' . $persona->imagen_perfil)); //Elimina la foto anterior para que no queden archivos "basura"
+
+            $persona->imagen_perfil = $archivo; //Se le setea a la persona el nombre de la imagen de perfil con el formato especificado anteriormente (fecha.extension)
+            $persona->save(); //Se guarda el atributo en la BD
+        }
     }
 }

@@ -14,7 +14,7 @@ Asistencia a
 
 @section('contenido')
 
-
+@include('control_actividades_internas.lista_asistencia.modal')
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
@@ -106,7 +106,7 @@ Asistencia a
                                 <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante </h6>
                             </div>
                             <div>
-                                <a href="#" class="texto-azul-una" id="invitado-btn">¿Es invitado?</a>
+                                <a href="#" class="texto-azul-una" id="invitado-btn" data-toggle="modal" data-target="#agregar-invitado">¿Es invitado?</a>
                             </div>
                         </div>
                     </div>
@@ -294,6 +294,7 @@ Asistencia a
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script src="{{ asset('js/control_actividades_internas/lista_asistencia.js') }}"></script>
+<script src="{{ asset('js/global/subirArchivos.js') }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -302,7 +303,6 @@ Asistencia a
     });
 
 </script>
-
 @endsection
 
 
