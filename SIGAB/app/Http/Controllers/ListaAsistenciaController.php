@@ -46,8 +46,8 @@ class ListaAsistenciaController extends Controller
             $lista->persona_id = request()->participante_id;
             $lista->actividad_id = request()->actividad_id;
             $lista->save();
-
-            return response("success", 200);
+            $mensaje = "success";
+            return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
             return response("No existe", 404);
         }
@@ -133,9 +133,17 @@ class ListaAsistenciaController extends Controller
      * @param  \App\ListaAsistencia  $listaAsistencia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListaAsistencia $listaAsistencia)
+    public function destroy(Request $request, $particioanteId)
     {
-        //
+        try {
+
+            $lista = ListaAsistencia::where('persona_id', $particioanteId)
+                ->where('actividad_id', $request->actividad_id);
+            $lista->delete();
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', 'error');
+        }
     }
     //Método que busca la cédula del participante que se desea agregar en
     //la lista de asistencia y lo retorna por medio de un response como respuesta

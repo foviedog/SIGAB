@@ -122,7 +122,7 @@ function evtAgregarParticipante() {
                     $("#form-reload").trigger('submit');
                 },
                 statusCode: {
-                    404: function () {
+                    404: function(){
                         $("#loader").hide();
                         $("#mensaje").val('error');
                         $("#form-reload").trigger('submit');
@@ -134,7 +134,24 @@ function evtAgregarParticipante() {
     });
 }
 
+function mostrarInfo(boton) {
+    var id = boton.id.split("mostrar-")[1];
+    $.ajax({
+        url: "/lista-asistencia/participante/" + id,
+        dataType: "json",
+        method: "GET",
+        success: function (participante) {
+            llenarModalParticipante(participante);
+            $('#informacion-participante').modal('show');
+        },
+        statusCode: {
+            404: function () {
+                errorNoEncontrado();
+            }
+        }
+    });
 
+}
 // ******************************************
 //   Declaración de funciones
 // ******************************************
@@ -150,7 +167,30 @@ function mostrarParticipanteInfo() {
     $("#input-buscar-agregar").removeClass('my-2');
     $("#info-parti").css("opacity", "1");
 }
+function llenarModalParticipante(participante) {
+    let src = fotosURL + "/" + participante.imagen_perfil;
+    $("#imagen-perfil-modal").css("background-image", "url("+src+")");
 
+    $("#id-info").html(participante.persona_id);
+    $("#nombre-info").html(participante.nombre + " " + participante.apellido);
+    $("#correo-info").html(participante.correo_institucional);
+    $("#correo-personal-info").html(participante.correo_personal);
+    $("#telefono-info").html(participante.telefono_fijo);
+    $("#celular-info").html(participante.telefono_celular);
+    $("#estado-civil-info").html(participante.estado_civil);
+
+    if (!participante.correo_institucional)
+        $("#correo-info").html('<i class="font-weight-light"> No registrado</i>' );
+    if (!participante.telefono_celular)
+        $("#celular-info").html('<i class="font-weight-light"> No registrado</i>');
+    if (!participante.correo_personal)
+        $("#correo-personal-info").html('<i class="font-weight-light"> No registrado</i>');
+    if (!participante.telefono_fijo)
+        $("#telefono-info").html('<i class="font-weight-light"> No registrado</i>');
+    if (!participante.estado_civil)
+        $("#estado-civil-info").html('<i class="font-weight-light"> No registrado</i>');
+
+}
 function llenarTarjetaParticipante(participante) {
     mostrarParticipanteInfo();
     aumentarTamanioInfo();
@@ -230,7 +270,6 @@ function recargarTabla(personas) {
 }
 
 function mostrarMensaje() {
-
     $('#mensaje-info').addClass('d-flex');
     $('#mensaje-info').show();
     $("#mensaje-info").css('animation-name', 'mostrar-mensaje');

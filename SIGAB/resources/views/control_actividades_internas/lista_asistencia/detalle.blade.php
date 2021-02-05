@@ -14,7 +14,9 @@ Asistencia a
 
 @section('contenido')
 
-@include('control_actividades_internas.lista_asistencia.modal')
+@include('control_actividades_internas.lista_asistencia.invitado')
+@include('control_actividades_internas.lista_asistencia.info')
+
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
@@ -47,12 +49,19 @@ Asistencia a
             <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style="background-image: url('/img/recursos/iconos/success.png');"></div>
             <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; ">Participante agregado correctamente</div>
         </div>
-        @endif
-        @if($mensaje == 'error')
+        @elseif($mensaje == 'error')
         {{-- Mensaje de error --}}
         <div class="mensaje-container" id="mensaje-info" style="display:none; ">
             <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
             <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; ">Ocurrió un error al agregar el participante</div>
+        </div>
+        @endif
+
+        @if(Session::has('eliminado'))
+        {{-- Mensaje de exito al eliminar un participante de la lista --}}
+        <div class="mensaje-container" id="mensaje-info" style="display:none;  ">
+            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style="background-image: url('/img/recursos/iconos/success.png');"></div>
+            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; "> {{ Session::get('eliminado') }} </div>
         </div>
         @endif
 
@@ -217,6 +226,8 @@ Asistencia a
                                     <th>Nombre</th>
                                     <th>Teléfono celular</th>
                                     <th>Correo institucional</th>
+                                    <th>Informacion</th>
+                                    <th>Eliminar </th>
                                 </tr>
                             </thead>
                             <tbody id="lista-participantes">
@@ -239,6 +250,17 @@ Asistencia a
                                             {!! $participante->correo_institucional ?? '<i class="font-weight-light"> No registrado</i>'!!}
                                         </strong>
                                     </td>
+                                    <td>
+                                        <button id="mostrar-{{ $participante->persona_id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrarInfo(this)"><i class="fas fa-eye"></i> &nbsp;Detalle</button>
+                                    </td>
+                                    <form action="{{ route('lista-asistencia.destroy',$participante->persona_id) }}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <td>
+                                            <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                        </td>
+                                        <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
+                                    </form>
 
                                 </tr>
                                 @endforeach
@@ -250,6 +272,8 @@ Asistencia a
                                     <th>Nombre</th>
                                     <th>Teléfono celular</th>
                                     <th>Correo institucional</th>
+                                    <th>Informacion</th>
+                                    <th>Eliminar </th>
                                 </tr>
                             </tfoot>
                         </table>
