@@ -8,13 +8,27 @@ Actividades internas
 
 @endsection
 
-@section('scripts')
 
-@endsection
 
 @section('contenido')
 
 
+{{-- Arreglos de opciones de los select utilizados --}}
+@php
+
+$propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
+
+$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conversatorio','Órgano colegiado',
+'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
+'Comisiones de trabajo','Externa','Otro'];
+
+$poblacion = ['Estudiantes de primer ingreso','Estudiantes regulares','Personal Docente','Personal Administrativo'];
+
+$estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
+
+$ambitos = ['Nacional','Internacional'];
+
+@endphp
 <div class="card">
     <div class="card-body">
         {{-- Items de la parte superior--}}
@@ -34,20 +48,85 @@ Actividades internas
             </div>
             <div class="card-body">
                 {{-- Formulario para la paginación--}}
-                <form action="listado-actividad-interna" method="GET" role="form" id="item-pagina">
-                    <div class="row">
-                        <div class="col-md-6 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                <label class="font-weight-bold">Mostrar &nbsp;
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
+                <form action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina">
+                    <div class="row d-flex justify-content-between mb-2 ">
+                        <div class="col-6 d-flex justify-content-start">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad">
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="fas fa-bullhorn"></i></div>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-rojo  ml-3 mr-2 d-flex">Buscar <i class="fas fa-search ml-2 mt-1"></i> </button>
+                            </div>
+                            <div class="custom-control custom-checkbox mr-5">
+                                <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" onchange="mostrarBusquedaAvanzada(this);">
+                                <label class="custom-control-label" for="checkAvanzada">Busqueda avanzada</label>
                             </div>
                         </div>
+                        <div class="col-4 text-nowrap">
+                            <div class="d-flex justify-content-end">
+                                <label class="font-weight-bold" for="itemsPagina">Mostrar &nbsp;</label>
+                                <div class="w-25">
+                                    {{-- Select con la cantidad de items por páginas--}}
+                                    <select class="form-control  custom-select custom-select-sm" id="itemsPagina" name="itemsPagina" onchange="document.getElementById(' item-pagina').submit()">
+                                        @foreach($paginaciones as $paginacion)
+                                        <option value={{ $paginacion }} @if($itemsPagina==$paginacion) @endif>{{ $paginacion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row " id="busqAvanzada" style="display:none;">
+                        <div class="col-2">
+                            <div class="w-100">
+                                <div class="d-flex justify-content-between w-100">
+                                    <label for="tipo_filtro">Tipo de actividad</label>
+                                </div>
+                                <div class="d-flex">
+                                    <select class="custom-select" id="tipo_filtro" name="tipo_filtro" class="form-control">
+                                        <option value="">Sin Seleccionar</option>
+                                        @foreach($tiposActividad as $tipoActividad)
+                                        <option value="{{ $tipoActividad }}"> {{ $tipoActividad }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="w-100">
+                                <div class="d-flex justify-content-between w-100">
+                                    <label for="proposito_filtro">Propósito</label>
+                                </div>
+                                <div class="d-flex">
+                                    <select class="custom-select" id="proposito_filtro" name="proposito_filtro" class="form-control">
+                                        <option value="">Sin Seleccionar</option>
+                                        @foreach($propositos as $proposito)
+                                        <option value="{{ $proposito }}"> {{ $proposito }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="w-100">
+                                <div class="d-flex justify-content-between w-100">
+                                    <label for="estado_filtro">Estado </label>
+                                </div>
+                                <div class="d-flex">
+                                    <select class="custom-select" id="estado_filtro" name="estado_filtro" class="form-control">
+                                        <option value="">Sin Seleccionar</option>
+                                        @foreach($estados as $estado)
+                                        <option value="{{ $estado }}"> {{ $estado }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -120,6 +199,17 @@ Actividades internas
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/global/inputs.js') }}"></script>
+<script src="{{ asset('js/control_actividades_internas/listado.js') }}"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> --}}
+{{-- <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script> --}}
+{{-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" /> --}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
 
 @section('pie')
