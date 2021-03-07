@@ -130,6 +130,7 @@ trait AuthenticatesUsers
     {
         $persona =  Persona::findOrFail($user->persona_id);
         session(['persona' => $persona]);
+        dd($persona);
     }
 
     /**
