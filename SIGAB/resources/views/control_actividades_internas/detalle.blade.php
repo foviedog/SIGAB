@@ -85,6 +85,8 @@ $ambitos = ['Nacional','Internacional'];
                                     <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
                                 </div>
                                 <div>
+                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-rojo font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
+
                                     <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-rojo"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
                                 </div>
                             </div>

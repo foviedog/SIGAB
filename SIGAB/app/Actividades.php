@@ -21,4 +21,8 @@ class Actividades extends Model
     {
         return $this->hasOne('App\Actividades_interna', 'actividad_id');
     }
+    public function actividadPromocion()
+    {
+        return $this->hasOne('App\actividades_promocion', 'actividad_id');
+    }
 }
