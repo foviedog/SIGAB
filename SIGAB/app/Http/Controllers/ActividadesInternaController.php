@@ -48,7 +48,7 @@ class ActividadesInternaController extends Controller
         //     ->paginate($itemsPagina); //Paginación de los resultados
 
         //se devuelve la vista con los atributos de paginación de los estudiante
-        return view('control_actividades_internas.informacion_actividad.listado', [
+        return view('control_actividades_internas.listado', [
             'actividadesInternas' => $actividadesInternas, // Listado de actividades
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
             'itemsPagina' => $itemsPagina // Item que se desean por página.

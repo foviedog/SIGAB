@@ -133,3 +133,9 @@ Route::get('/lista-asistencia/participante/{participante_id}', 'ListaAsistenciaC
 Route::post('/lista-asistencia', 'ListaAsistenciaController@store')->name('lista-asistencia.store');
 Route::post('/lista-asistencia/invitado', 'ListaAsistenciaController@storeInvitado')->name('lista-asistencia.storeInvitado');
 Route::delete('/lista-asistencia/{participante_id}', 'ListaAsistenciaController@destroy')->name('lista-asistencia.destroy');
+
+
+// ********************************************
+//      Control de evidencias
+// ********************************************
+Route::get('/evidencias/{actividad_id}', 'EvidenciaController@show')->name('evidencias.show');

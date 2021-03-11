@@ -134,6 +134,7 @@ function evtAgregarParticipante() {
     });
 }
 
+
 function mostrarInfo(boton) {
     var id = boton.id.split("mostrar-")[1];
     $.ajax({

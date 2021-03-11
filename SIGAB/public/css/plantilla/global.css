@@ -386,7 +386,7 @@ Fin de la paleta de colores
 ********************************************** */
 
 .file-upload {
-    width: 600px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -416,7 +416,7 @@ Fin de la paleta de colores
 
 .image-dropping, .image-upload-wrap:hover {
     background-color: #af0a0ada;
-    border: 2px solid #af0a0a;
+    border: 2px dashed #ffffff;
 }
 
 .image-dropping, .image-upload-wrap:hover .drag-text h4 {
