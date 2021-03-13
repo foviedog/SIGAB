@@ -335,7 +335,29 @@ Fin de la paleta de colores
         Elementos de espera de ejecucución
 ********************************************** */
 
+.loader-wrapper {
+    height: 65%;
+}
+
+.loader-full-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #0000005c;
+    background-image: linear-gradient(315deg, #0000005c 0%, #00000041 74%);
+    z-index: 10;
+}
+
+.loader-full-page .loader-text {
+    position: absolute;
+    top: 27%;
+    color: #c01d1a;
+    font-size: 35px;
+    left: 40%;
+}
+
 .loader1 {
+    position: relative;
     width: 60px;
     height: 60px;
     border: 5px solid rgba(167, 167, 167, 0.979);
@@ -356,6 +378,48 @@ Fin de la paleta de colores
     border: 5px solid rgba(65, 65, 65, 0);
     border-top: 5px solid #c01d1a;
     border-right: 5px solid #c01d1a;
+    border-radius: 50%;
+    animation-name: girar2;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.loader-full-page .loader-container {
+    position: relative;
+    top: 14%;
+    /* background-color: #b8c6db;
+    background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%); */
+    background-color: #ffffff;
+    background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
+    padding: 110px 136px;
+    z-index: -1;
+    border-radius: 6%;
+}
+
+.loader-full-page .loader1 {
+    position: relative;
+    width: 175px;
+    height: 175px;
+    border: 10px solid rgba(167, 167, 167, 0.979);
+    border-top: 10px solid #990000;
+    border-left: 10px solid #990000;
+    border-radius: 50%;
+    animation-name: girar1;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.loader-full-page .loader2 {
+    position: absolute;
+    top: 34%;
+    right: 36%;
+    width: 129px;
+    height: 129px;
+    border: 10px solid rgba(65, 65, 65, 0);
+    border-top: 10px solid #c01d1a;
+    border-right: 10px solid #c01d1a;
     border-radius: 50%;
     animation-name: girar2;
     animation-duration: 1s;
@@ -407,23 +471,23 @@ Fin de la paleta de colores
     cursor: pointer;
 }
 
-.image-upload-wrap {
+.file-upload-wrap {
     border: 2px dashed #af0a0a;
     position: relative;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-.image-dropping, .image-upload-wrap:hover {
+.file-dropping, .file-upload-wrap:hover {
     background-color: #af0a0ada;
     border: 2px dashed #ffffff;
 }
 
-.image-dropping, .image-upload-wrap:hover .drag-text h4 {
+.file-dropping, .file-upload-wrap:hover .drag-text h4 {
     color: #ffffff;
 }
 
-.image-title-wrap {
+.file-title-wrap {
     padding: 0 15px 15px 15px;
     color: #222;
 }
@@ -446,7 +510,7 @@ Fin de la paleta de colores
     padding: 20px;
 }
 
-.remove-image {
+.remove-file {
     width: 200px;
     margin: 0;
     color: #fff;
@@ -461,14 +525,14 @@ Fin de la paleta de colores
     font-weight: 600;
 }
 
-.remove-image:hover {
+.remove-file:hover {
     background: #c13b2a;
     color: #ffffff;
     transition: all .2s ease;
     cursor: pointer;
 }
 
-.remove-image:active {
+.remove-file:active {
     border: 0;
     transition: all .2s ease;
 }

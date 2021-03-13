@@ -192,6 +192,7 @@ function llenarModalParticipante(participante) {
         $("#estado-civil-info").html('<i class="font-weight-light"> No registrado</i>');
 
 }
+
 function llenarTarjetaParticipante(participante) {
     mostrarParticipanteInfo();
     aumentarTamanioInfo();
@@ -270,18 +271,5 @@ function recargarTabla(personas) {
     });
 }
 
-function mostrarMensaje() {
-    $('#mensaje-info').addClass('d-flex');
-    $('#mensaje-info').show();
-    $("#mensaje-info").css('animation-name', 'mostrar-mensaje');
 
-    setTimeout(function () {
-        $('#mensaje-info').css('animation-name', 'esconder-mensaje');
-    }, 4000);
-    setTimeout(function () {
-        $('#mensaje-info').removeClass('d-flex');
-        $('#mensaje-info').hide();
-        window.history.replaceState({}, "/"+window.location.href.split("?")[0]);
-    }, 4790);
-}
 

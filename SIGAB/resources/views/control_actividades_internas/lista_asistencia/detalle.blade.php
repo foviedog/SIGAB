@@ -319,6 +319,7 @@ Asistencia a
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script src="{{ asset('js/control_actividades_internas/lista_asistencia.js') }}"></script>
 <script src="{{ asset('js/global/subirArchivos.js') }}"></script>
+<script src="{{ asset('js/global/mensajes.js') }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {

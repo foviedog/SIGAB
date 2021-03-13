@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actividades;
 use App\Actividades_interna;
+use App\Evidencia;
+use Storage;
+use Illuminate\Support\Facades\File;
+
 
 class EvidenciaController extends Controller
 {
@@ -35,36 +39,25 @@ class EvidenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         try {
-            $lista = new ListaAsistencia();
-            $lista->persona_id = request()->participante_id;
-            $lista->actividad_id = request()->actividad_id;
-            $lista->save();
+            $evidencia = new Evidencia();
+            $evidencia->actividad_id = $request->actividad_id;
+            $evidencia->nombre_archivo = $request->nombre_archivo;
+
+            $video = request()->check_video;
+
+            if ($video == "on")
+                $this->guardarVideo($request, $evidencia);
+            else
+                $this->guardarDocumento($request, $evidencia);
+
             $mensaje = "success";
-            return response()->json($mensaje, 200);
-        } catch (\Illuminate\Database\QueryException $ex) {
-            return response("No existe", 404);
-        }
-    }
-    public function storeInvitado(Request $request)
-    {
-        try {
-            $persona = new Persona();
-            $persona = Persona::find($request->persona_id);   //Se busca en la BD si el participante ya se encontraba agregado anteriormente como persona
 
-            if (!is_null($persona)) {
-                return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "error");
-            } else {
-                $persona = new Persona();
-                $this->guardarPersona($persona, $request);
-                $this->registrarParticipante($request->persona_id, $request->actividad_id);
-            }
-
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "success");
+            return redirect()->route('evidencias.show', request()->actividad_id)->with('mensaje', $mensaje);;
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "error");
+            return abort(500, 'No se ha podido registrar la evidencia');
         }
     }
 
@@ -72,21 +65,21 @@ class EvidenciaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ListaAsistencia  $listaAsistencia
+     * @param  \App\evidencias  $evidencias
      * @return \Illuminate\Http\Response
      */
     public function show($actividadId)
     {
         $paginaciones = [5, 10, 25, 50];
         $itemsPagina = request('itemsPagina', 5);
-        $filtro = request('filtro', NULL);
+        $nombreFiltro = request('nombre_filtro', NULL);
+        $tipoFiltro = request('tipo_filtro', NULL);
 
         $mensaje = request('mensaje', NULL);
-        //!AQUI VA LA LISTA DE DOCUMENTOS
-        //$listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
+
+        $evidencias = $this->obtenerLista($actividadId, $itemsPagina, $nombreFiltro, $tipoFiltro);
         $actividad = Actividades::find($actividadId);
 
-        //!Cambiar la ruta de lista de asistencia
         if (!is_null($mensaje)) {
             return redirect()->route('evidencias.show', $actividadId)->with('mensaje', $mensaje);
         }
@@ -95,18 +88,20 @@ class EvidenciaController extends Controller
             'actividad' => $actividad,
             'paginaciones' => $paginaciones,
             'itemsPagina' => $itemsPagina,
-            'filtro' => $filtro,
+            'nombre_filtro' => $nombreFiltro,
+            'tipo_filtro' => $tipoFiltro,
             'mensaje' => $mensaje,
+            'evidencias' => $evidencias
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ListaAsistencia  $listaAsistencia
+     * @param  \App\evidencias  $evidencias
      * @return \Illuminate\Http\Response
      */
-    public function edit(ListaAsistencia $listaAsistencia)
+    public function edit(evidencias $evidencias)
     {
         //
     }
@@ -115,10 +110,10 @@ class EvidenciaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ListaAsistencia  $listaAsistencia
+     * @param  \App\evidencias  $evidencias
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListaAsistencia $listaAsistencia)
+    public function update(Request $request, Evidencia $evidencia)
     {
         //
     }
@@ -126,57 +121,99 @@ class EvidenciaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ListaAsistencia  $listaAsistencia
+     * @param  \App\evidencias  $evidencias
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $particioanteId)
+    public function destroy(Request $request, $evidenciaId)
     {
         try {
 
-            $lista = ListaAsistencia::where('persona_id', $particioanteId)
-                ->where('actividad_id', $request->actividad_id);
-            $lista->delete();
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+            $evidencia = Evidencia::where('id', $evidenciaId)->first();
+            if ($evidencia->tipo_documento != "video") {
+                File::delete(public_path('storage/evidencias/' . $request->actividad_id . "/" . $evidencia->id_repositorio));
+            }
+            $evidencia->delete();
+
+            return redirect()->route('evidencias.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', 'error');
+            return redirect()->route('lista-asistencias.show', $request->actividad_id)->with('mensaje', 'error');
         }
     }
-
-    public function obtenerLista($actividadId, $itemsPagina, $filtro)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\evidencias  $evidencias
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Request $request,  $evidenciaId)
     {
-        $lista = NULL;
-        if (is_null($filtro)) {
-            $lista = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
-                ->where('lista_asistencias.actividad_id', $actividadId)->paginate($itemsPagina);
-        } else {
-            $lista = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
-                ->where('lista_asistencias.actividad_id', $actividadId)
-                ->Where(function ($query) {
-                    $query->orWhere('personas.persona_id', 'like', '%' .  request('filtro', '') . '%') // Filtro para buscar por nombre de persona
-                        ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . request('filtro', '')  . "%'"); //Filtro para buscar por nombre completo
-                })
-                ->paginate($itemsPagina);
+        $evidencia = Evidencia::where('id', $evidenciaId)->first();
+        $ruta = 'storage/evidencias/' . $request->actividad_id . '/' . $evidencia->id_repositorio;
+        return response()->download(public_path($ruta));
+    }
+
+    public function obtenerLista($actividadId, $itemsPagina, $nombreFiltro, $tipoFiltro)
+    {
+        try {
+            $lista = NULL;
+            if (!is_null($nombreFiltro || $tipoFiltro)) {
+                $lista = Evidencia::where('actividad_id', $actividadId)
+                    ->where('nombre_archivo', 'like', '%' . $nombreFiltro . '%')
+                    ->where('tipo_documento', 'like', '%' . $tipoFiltro . '%')
+                    ->paginate($itemsPagina);
+            } else {
+                $lista = Evidencia::where('actividad_id', $actividadId)
+                    ->paginate($itemsPagina);
+            }
+        } catch (\Illuminate\Database\QueryException $ex) {
+            report($ex);
         }
 
         return $lista;
     }
 
-
-
-    private function update_avatar($request, &$persona)
+    private function guardarVideo($request, &$evidencia)
     {
-        //En caso de que se haya subido alguna foto con el request se procede a guardarlo en el repositorio de imagenes de perfil
-        if ($request->hasFile('avatar')) {
+        $evidencia->id_repositorio = request()->url_video;
+        $evidencia->tipo_documento = "video";
+        $evidencia->save();
+    }
 
-            $avatar = $request->file('avatar'); // Se obtiene el objeto que viene en el request y se guarda dentro de una variable
-            $archivo = time() . '.' . $avatar->getClientOriginalExtension(); // Se toma la hora y la extensión del archivo que se subió (.jpg,png,etc..)
-            Image::make($avatar)->resize(500, 640)->save(public_path('/img/fotos/' . $archivo)); // Se utiliza la herramienta de Image para que todas las imágenes se guarden en el mismo formato
+    private function guardarDocumento($request, &$evidencia)
+    {
+        if ($request->hasFile('evidencia')) {
+            $evidenciaArchivo = $request->file('evidencia');
+            $evidencia->tipo_documento = $this->obtenerTipoDocumento($evidenciaArchivo->getClientOriginalExtension());
+            $id_repositorio = time() . '_' . preg_replace('/\s+/', '', $request->nombre_archivo) . "." . $evidenciaArchivo->getClientOriginalExtension();
+            $file =  $request->file('evidencia');
+            //Se guarda el documento en el repositorio PUBLICO para luego poder acceder a él para su previsualización
+            $file->storeAs('/evidencias/' . $request->actividad_id, $id_repositorio, ['disk' => 'public_storage']);
 
-            if ($persona->imagen_perfil != "default.jpg") // En caso de que *NO* se haya establecido una imagen por defecto
-                File::delete(public_path('/img/fotos/' . $persona->imagen_perfil)); //Elimina la foto anterior para que no queden archivos "basura"
+            // ? En caso de que se desee guardar de manera privada se puede hacer de la forma de abajo
+            // $ruta = $request->file('evidencia')->storeAs('evidencias/' . $request->actividad_id, $id_repositorio, 'public');
 
-            $persona->imagen_perfil = $archivo; //Se le setea a la persona el nombre de la imagen de perfil con el formato especificado anteriormente (fecha.extension)
-            $persona->save(); //Se guarda el atributo en la BD
+            $evidencia->id_repositorio = $id_repositorio;
+
+            $evidencia->save();
+        }
+    }
+
+    private function obtenerTipoDocumento($extension)
+    {
+        $extension = strtolower($extension);
+        if (strcmp($extension, "pdf") == 0) {
+            return "pdf";
+        } elseif (strcmp($extension, "docx") == 0 || strcmp($extension, "odt") ==  0 || strcmp($extension, "doc") == 0) {
+            return "documento";
+        } elseif (strcmp($extension, "rar") == 0 || strcmp($extension, "zip") == 0 || strcmp($extension, "7z") == 0 || strcmp($extension, "rar5") == 0) {
+            return "comprimido";
+        } elseif (strcmp($extension, "xls") == 0 || strcmp($extension, "xlsm") == 0 || strcmp($extension, "xlsx") == 0 || strcmp($extension, "ods") == 0) {
+            return "excel";
+        } elseif (strcmp($extension, "pps") == 0 || strcmp($extension, "ppt") == 0 || strcmp($extension, "ppsx") == 0 || strcmp($extension, "pptm") == 0 || strcmp($extension, "potx") == 0 || strcmp($extension, "odp") == 0) {
+            return "presentacion";
+        } else {
+            return "imagen";
         }
     }
 }

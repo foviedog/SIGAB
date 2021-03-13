@@ -14,10 +14,12 @@ class CreateEvidenciasTable extends Migration
     public function up()
     {
         Schema::create('evidencias', function (Blueprint $table) {
-            $table->bigInteger('actividad_id')->unsigned()->primary();
+            $table->id();
+            $table->bigInteger('actividad_id')->unsigned();
             $table->foreign('actividad_id')->references('id')->on('actividades')->onDelete('cascade');
-            $table->string('nombre', 40);
-            $table->string('tipo_documento', 40);
+            $table->string('nombre_archivo', 100); //Este nombre es otorgado por el usuario al momento de subir el archivo
+            $table->string('id_repositorio'); //Este id se utiliza para evitar confictos de documentos con el mismo nombre en el repositrio
+            $table->string('tipo_documento', 10);
             $table->timestamps();
         });
     }

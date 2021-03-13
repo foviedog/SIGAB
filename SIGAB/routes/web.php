@@ -138,4 +138,7 @@ Route::delete('/lista-asistencia/{participante_id}', 'ListaAsistenciaController@
 // ********************************************
 //      Control de evidencias
 // ********************************************
-Route::get('/evidencias/{actividad_id}', 'EvidenciaController@show')->name('evidencias.show');
+Route::get('/evidencias/{evidencia_id}', 'EvidenciaController@show')->name('evidencias.show');
+Route::post('/evidencias', 'EvidenciaController@store')->name('evidencias.store');
+Route::delete('/evidencias/{evidencia_id}', 'EvidenciaController@destroy')->name('evidencias.destroy');
+Route::get('/evidencias/download/{evidencia_id}', 'EvidenciaController@download')->name('evidencias.download');
