@@ -156,3 +156,5 @@ Route::post('/actividad-promocion', 'ActividadesPromocionController@store');
 Route::get('/actividad-promocion', 'ActividadesPromocionController@index')->name('actividad-promocion.listado');
 // Detalle de actividad promocion
 Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');
+// Actualización de los datos de la actividad
+Route::patch('/actividad-promocion/{id_actividad}', 'ActividadesPromocionaController@update')->name('actividad-promocion.update');
