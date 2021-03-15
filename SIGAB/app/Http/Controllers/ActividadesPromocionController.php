@@ -12,7 +12,38 @@ class ActividadesPromocionController extends Controller
 
     public function index()
     {
-        //
+         // Array que devuelve los items que se cargan por página
+        $paginaciones = [5, 10, 25, 50];
+
+         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+         //request se setea por defecto en 25 por página
+        $itemsPagina = request('itemsPagina', 5);
+        $tema_filtro = request('tema_filtro', NULL);
+        $tipo_filtro = request('tipo_filtro', NULL);
+        $estado_filtro = request('estado_filtro', NULL);
+        $rango_fechas = request('rango_fechas', NULL);
+        $fecha_inicio  = NULL;
+        $fecha_final = NULL;
+        if (!is_null($rango_fechas)) {
+            $fecha_inicio = substr($rango_fechas, 0, 10);
+            $fecha_final = substr($rango_fechas, -10);
+        }
+        $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
+             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+            ->Where('actividades.fecha_inicio_actividad', 'like', '%' .   $fecha_inicio . '%')
+            ->Where('actividades.fecha_final_actividad', 'like', '%' .   $fecha_final . '%')
+            ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
+            ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
+            ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
+             ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
+             ->paginate($itemsPagina); //Paginación de los resultados
+
+         //se devuelve la vista con los atributos de paginación de actividades
+        return view('control_actividades_promocion.listado', [
+             'actividadesPromocion' => $actividadesPromocion, // Listado de actividades
+             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+             'itemsPagina' => $itemsPagina // Item que se desean por página.
+        ]);
     }
 
 
@@ -67,7 +98,7 @@ class ActividadesPromocionController extends Controller
     {
         $actividad = Actividades::findOrfail($id_actividad);
         //$personal = Personal::findOrFail($actividad->responsable_coordinar);
-       
+
         return view('control_actividades_promocion.detalle', ['actividad' => $actividad]);
     }
 

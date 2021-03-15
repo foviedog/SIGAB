@@ -152,5 +152,7 @@ Route::get('/evidencias/download/{evidencia_id}', 'EvidenciaController@download'
 //Registrar una actividad de promocion
 Route::get('/actividad-promocion/registrar', 'ActividadesPromocionController@create')->name('actividad-promocion.create');
 Route::post('/actividad-promocion', 'ActividadesPromocionController@store');
+// Listado de actividades de promocion
+Route::get('/actividad-promocion', 'ActividadesPromocionController@index')->name('actividad-promocion.listado');
 // Detalle de actividad promocion
 Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');

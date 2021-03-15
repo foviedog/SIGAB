@@ -89,7 +89,7 @@
                         <a href="{{ route('actividad-interna.listado' ) }}">Actividades internas</a>
                     </li>
                     <li>
-                        <a href="#">Actividades de promoción</a>
+                        <a href="{{ route('actividad-promocion.listado' ) }}">Actividades de promoción</a>
                     </li>
                 </ul>
             </li>

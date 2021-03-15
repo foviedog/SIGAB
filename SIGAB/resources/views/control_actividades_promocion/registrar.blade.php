@@ -22,7 +22,7 @@ Registrar actividad de promocion
         <div class="d-flex justify-content-between">
             <h3>Registrar una actividad de promocion de la carrera</h3>
             <div>
-                <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-promocion.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
             </div>
         </div>
         <hr>
@@ -84,7 +84,7 @@ Registrar actividad de promocion
                     </div>
 
                     <div class="col-6 text-justify">
-                        <b>Tipo de actividad: </b> {{$actividad_promocion_insertada->tipo_actividad}} <br>                        
+                        <b>Tipo de actividad: </b> {{$actividad_promocion_insertada->tipo_actividad}} <br>
                         <b>Instituciones Patrocinadoras: </b> {{$actividad_promocion_insertada->instituciones_patrocinadoras ?? "No se digitó"}} <br>
                         <b>Recursos: </b> {{$actividad_promocion_insertada->recursos ?? "No se digitó"}} <br>
                     </div>
@@ -137,38 +137,38 @@ Registrar actividad de promocion
                                 </div>
                             </div>
                         </div>
-                                                {{-- Campo: Tipo de Actividad  --}}
-                                                <div class="col">
-                                                    <div class="d-flex justify-content-center mb-3">
-                                                        <div class="w-75">
-                                                            <div class="d-flex justify-content-between w-75">
-                                                                <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
-                                                                    <option value="">Seleccione</option>
-                                                                    <option value="Curso">Curso</option>
-                                                                    <option value="Conferencia">Conferencia</option>
-                                                                    <option value="Taller">Taller</option>
-                                                                    <option value="Seminario">Seminario</option>
-                                                                    <option value="Conversatorio">Conversatorio</option>
-                                                                    <option value="Órgano colegiado">Órgano colegiado</option>
-                                                                    <option value="Tutorías">Tutorías</option>
-                                                                    <option value="Lectorías">Lectorías</option>
-                                                                    <option value="Simposio">Simposio</option>
-                                                                    <option value="Charla">Charla</option>
-                                                                    <option value="Actividad cocurricular">Actividad co curricular</option>
-                                                                    <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
-                                                                    <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
-                                                                    <option value="Comisiones de trabajo">Comisiones de trabajo</option>
-                                                                    <option value="Externa">Externa</option>
-                                                                    <option value="Otro">Otro</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                
+                        {{-- Campo: Tipo de Actividad  --}}
+                        <div class="col">
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="w-75">
+                                    <div class="d-flex justify-content-between w-75">
+                                        <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="d-flex">
+                                        <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Curso">Curso</option>
+                                            <option value="Conferencia">Conferencia</option>
+                                            <option value="Taller">Taller</option>
+                                            <option value="Seminario">Seminario</option>
+                                            <option value="Conversatorio">Conversatorio</option>
+                                            <option value="Órgano colegiado">Órgano colegiado</option>
+                                            <option value="Tutorías">Tutorías</option>
+                                            <option value="Lectorías">Lectorías</option>
+                                            <option value="Simposio">Simposio</option>
+                                            <option value="Charla">Charla</option>
+                                            <option value="Actividad cocurricular">Actividad co curricular</option>
+                                            <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
+                                            <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
+                                            <option value="Comisiones de trabajo">Comisiones de trabajo</option>
+                                            <option value="Externa">Externa</option>
+                                            <option value="Otro">Otro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="row">
@@ -237,7 +237,7 @@ Registrar actividad de promocion
                     </div>
                     {{-- Campo: Proposito  --}}
                     <div class="row">
-  
+
 
                         {{-- Campo: Poblacion a la que va dirigida la actividad   --}}
 
@@ -289,7 +289,7 @@ Registrar actividad de promocion
                     </div>
 
                     {{-- Campo: Agenda --}}
- 
+
 
                 </div>
 

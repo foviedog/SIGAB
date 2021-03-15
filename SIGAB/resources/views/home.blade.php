@@ -72,13 +72,13 @@ SIGAB
                     <a href="/actividad-interna/registrar">
                         <h6 class="card-subtitle mb-2 link-inicio">Añadir actividades Internas</h6>
                     </a>
-                    <a href="#">
+                    <a href="/actividad-promocion/registrar">
                         <h6 class="card-subtitle mb-2 link-inicio">Añadir actividades de promoción</h6>
                     </a>
                     <a href="{{ route('actividad-interna.listado') }}">
                         <h6 class="card-subtitle mb-2 link-inicio">Actividades Internas</h6>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('actividad-promocion.listado') }}">
                         <h6 class="card-subtitle mb-2 link-inicio">Actividades de promoción</h6>
                     </a>
                 </div>
