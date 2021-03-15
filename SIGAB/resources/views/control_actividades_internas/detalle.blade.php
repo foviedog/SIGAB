@@ -566,7 +566,7 @@ $ambitos = ['Nacional','Internacional'];
 
 </script>
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
-<script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
+<script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>

@@ -142,3 +142,15 @@ Route::get('/evidencias/{evidencia_id}', 'EvidenciaController@show')->name('evid
 Route::post('/evidencias', 'EvidenciaController@store')->name('evidencias.store');
 Route::delete('/evidencias/{evidencia_id}', 'EvidenciaController@destroy')->name('evidencias.destroy');
 Route::get('/evidencias/download/{evidencia_id}', 'EvidenciaController@download')->name('evidencias.download');
+
+
+// ======================================================================================================================================
+//                                                           Control de Actividades de promocion
+// ======================================================================================================================================
+
+/* Rutas para informacion de actividades de promocion */
+//Registrar una actividad de promocion
+Route::get('/actividad-promocion/registrar', 'ActividadesPromocionController@create')->name('actividad-promocion.create');
+Route::post('/actividad-promocion', 'ActividadesPromocionController@store');
+// Detalle de actividad promocion
+Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');
