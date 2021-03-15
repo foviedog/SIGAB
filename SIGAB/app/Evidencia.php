@@ -11,4 +11,14 @@ class Evidencia extends Model
     {
         return $this->hasOne('App\Avitividades_interna', 'actividad_id');
     }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d/m/Y (H:i:s)', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d/m/Y (H:i:s)', strtotime($value));
+    }
 }
