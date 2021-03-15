@@ -46,8 +46,7 @@ class EvidenciaController extends Controller
             $evidencia->actividad_id = $request->actividad_id;
             $evidencia->nombre_archivo = $request->nombre_archivo;
 
-            $video = request()->check_video;
-
+            $video = $request->check_video;
             if ($video == "on")
                 $this->guardarVideo($request, $evidencia);
             else

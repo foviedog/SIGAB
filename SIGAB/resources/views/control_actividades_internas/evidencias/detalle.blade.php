@@ -131,6 +131,7 @@ $tiposDocumentos =
             <div class="col-6 mb-3 " id="agregar-evidencia-card">
                 <form method="POST" action="{{ route('evidencias.store') }}" id="form-evidencia" enctype="multipart/form-data">
                     @csrf
+
                     <div class="card shadow">
                         <div class="card-header ">
                             <div class="s d-flex justify-content-between">
@@ -149,8 +150,9 @@ $tiposDocumentos =
                                     </div>
                                 </div>
                                 <div class="custom-control custom-checkbox mr-5" id="wrap-chec-video">
-                                    <input type="checkbox" class="custom-control-input" id="check-video" name="check_video" onclick="mostrarUrlVideo(this)">
-                                    <label class="custom-control-label" for="check-video">Es un video</label>
+                                    <input type="checkbox" class="custom-control-input" id="es-video" onclick="mostrarUrlVideo(this)">
+                                    <input type="hidden" id="check_video" name="check_video">
+                                    <label class="custom-control-label" for="es-video">Es un video</label>
                                 </div>
                             </div>
                             {{-- Input para registrar el url del video --}}
@@ -275,7 +277,7 @@ $tiposDocumentos =
                                 <tr id="" class="cursor-pointer">
                                     <td class="d-flex justify-content-center"><span data-toggle="tooltip" data-placement="right" title="{{ $evidencia->tipo_documento }}">{!! $tiposDocumentos[$evidencia->tipo_documento] !!} </span></td>
                                     @if($evidencia->tipo_documento != "video" && $evidencia->tipo_documento != "imagen" && $evidencia->tipo_documento != "pdf" )
-                                    <td colspan="4">{{ $evidencia->nombre_archivo }}</td>
+                                    <td colspan="4" style="max-width: 200px;">{{ $evidencia->nombre_archivo }}</td>
                                     @else
                                     <td colspan="4"> <span data-toggle="modal" data-target="#detalle-documento" class="text-primary" data-repositorio="{{ $evidencia->id_repositorio }}" data-tipo="{{ $evidencia->tipo_documento }}" style="cursor: pointer;">{{ $evidencia->nombre_archivo }}</span> </td>
                                     @endif
