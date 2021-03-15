@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Actividades_interna;
 use App\Personal;
+use App\ActividadesPromocion;
 
 
 class Actividades extends Model
@@ -23,6 +24,6 @@ class Actividades extends Model
     }
     public function actividadPromocion()
     {
-        return $this->hasOne('App\actividades_promocion', 'actividad_id');
+        return $this->hasOne('App\ActividadesPromocion', 'actividad_id');
     }
 }

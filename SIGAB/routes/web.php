@@ -157,4 +157,4 @@ Route::get('/actividad-promocion', 'ActividadesPromocionController@index')->name
 // Detalle de actividad promocion
 Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');
 // Actualización de los datos de la actividad
-Route::patch('/actividad-promocion/{id_actividad}', 'ActividadesPromocionaController@update')->name('actividad-promocion.update');
+Route::patch('/actividad-promocion/{id_actividad}', 'ActividadesPromocionController@update')->name('actividad-promocion.update');

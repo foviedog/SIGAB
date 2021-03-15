@@ -244,8 +244,11 @@ Registrar actividad de promocion
 
                     </div>
                     {{-- Campo: Estado de actividad  --}}
-                    <div class="row">
-                        <div class="col">
+                    <div class="row d-felx justify-content-center">
+
+
+                        
+                        <div class="col-4">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
                                     <div class="d-flex justify-content-between w-75">
@@ -262,11 +265,7 @@ Registrar actividad de promocion
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {{-- Campo: Certificación  --}}
-                        <div class="col"></div>
-                        {{-- Campo: Ambito  --}}
-                        <div class="col"></div>
+                        </div>            
                     </div>
 
                 </div>

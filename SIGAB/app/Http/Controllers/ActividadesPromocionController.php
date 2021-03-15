@@ -109,9 +109,43 @@ class ActividadesPromocionController extends Controller
     }
 
 
-    public function update(Request $request, ListaAsistencia $listaAsistencia)
+    public function update($id_actividad, Request $request)
     {
-        //
+        try { //se utiliza un try-catch para control de errores
+
+            $actividad = Actividades::findOrFail($id_actividad);
+            $actividad_promocion = ActividadesPromocion::findOrFail($id_actividad);
+
+            //se setean los atributos del objeto
+            $actividad->tema = $request->tema;
+            $actividad->lugar = $request->lugar;
+            $actividad->estado = $request->estado;
+            $actividad->fecha_inicio_actividad = $request->fecha_inicio_actividad;
+            $actividad->fecha_final_actividad = $request->fecha_final_actividad;
+            $actividad->descripcion = $request->descripcion;
+            $actividad->evaluacion = $request->evaluacion;
+            $actividad->objetivos = $request->objetivos;
+            $actividad->responsable_coordinar = $request->responsable_coordinar;
+            $actividad->duracion = $request->duracion;
+            $actividad->save(); //se guarda el objeto en la base de datos
+
+            //se setean los atributos del objeto
+            $actividad_promocion->actividad_id = $actividad->id;
+            $actividad_promocion->tipo_actividad = $request->tipo_actividad;
+            $actividad_promocion->instituciones_patrocinadoras = $request->instituciones_patrocinadoras;
+            $actividad_promocion->recursos = $request->recursos;
+
+            $actividad_promocion->save(); //se guarda el objeto en la base de datos
+
+            //se redirecciona a la pagina de registro de actividad con un mensaje de exito
+            return redirect("/detalle-actividad-promocion/{$actividad->id}")
+                ->with('mensaje', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('actividad_insertada', $actividad);
+                //->with('actividad_promocion_insertada', $actividad_promocion);
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return redirect("/detalle-actividad-promocion/{$actividad->id}") //se redirecciona a la pagina de registro
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
 

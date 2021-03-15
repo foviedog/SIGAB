@@ -59,7 +59,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
             @endif
             @if(Session::has('error'))
             <div class="alert alert-danger text-center font-weight-bold" role="alert">
-                {{ "¡Oops! Algo ocurrió mal. ".$error }}
+                {{ "¡Oops! Algo ocurrió mal"  }}
             </div>
             @endif
             {{-- Barra de navegación entre información genereal y bloques de texto  --}}
@@ -215,9 +215,9 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                             </div>
 
 
-                            <div class="row">
+                            <div class="row d-felx justify-content-center">
 
-                                <div class="col">
+                                <div class="col-4">
                                     <div class="d-flex justify-content-center mb-3">
                                         <div class="w-75">
                                             <div class="d-flex justify-content-between w-75">
@@ -234,8 +234,6 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                     </div>
                                 </div>
 
-                                <div class="col"></div>
-                                <div class="col"></div>
 
                             </div>
 
@@ -407,7 +405,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->recursos }} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->actividadPromocion->recursos }} </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -431,7 +429,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)" disabled>{{ $actividad->instituciones_patrocinadoras}} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)" disabled>{{ $actividad->actividadPromocion->instituciones_patrocinadoras}} </textarea>
                                                 </div>
                                             </div>
                                         </div>
