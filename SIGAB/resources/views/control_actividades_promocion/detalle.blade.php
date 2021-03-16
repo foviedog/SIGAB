@@ -140,7 +140,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                             <div class="d-flex">
                                                 <select id="propositos" name="tipo_actividad" class="form-control" required disabled>
                                                     @foreach($tiposActividad as $tipoActividad)
-                                                    <option value="{{ $tipoActividad }}" @if($tipoActividad==$actividad->tipo_actividad) selected @endif> {{ $tipoActividad }} </option>
+                                                    <option value="{{ $tipoActividad }}" @if($tipoActividad==$actividad->actividadPromocion->tipo_actividad) selected @endif> {{ $tipoActividad }} </option>
                                                     @endforeach
                                                 </select>
                                             </div>

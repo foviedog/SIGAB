@@ -120,11 +120,10 @@ $ambitos = ['Nacional','Internacional'];
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>
                             <tr>
-                                <th>ID Actividad</th>
                                 <th>Tema</th>
                                 <th>ID Coordinador</th>
+                                <th>Fecha de inicio</th>
                                 <th>Estado</th>
-                                <th>Propósito</th>
                                 <th>Tipo de actividad</th>
                                 <td><strong>Ver detalle<br /></strong></td>
                             </tr>
@@ -139,12 +138,11 @@ $ambitos = ['Nacional','Internacional'];
                             @endif
                             {{-- Inserción iterativa de las actividades a la tabla --}}
                             @foreach($actividadesPromocion as $actividadPromocion)
-                            <tr id="estudiante" class="cursor-pointer">
-                                <td>{{ $actividadPromocion->actividad_id }}</td>
+                            <tr id="promocion" class="cursor-pointer">
                                 <td>{{ $actividadPromocion->tema}}</td>
                                 <td>{{ $actividadPromocion->responsable_coordinar }} </td>
+                                <td>{{ $actividadPromocion->fecha_inicio_actividad}} </td>
                                 <td>{{ $actividadPromocion->estado }}</td>
-                                <td>{{ $actividadPromocion->proposito}} </td>
                                 <td>{{$actividadPromocion->tipo_actividad}}</td>
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
@@ -158,11 +156,10 @@ $ambitos = ['Nacional','Internacional'];
                         {{-- Nombre de las columnas en la parte de abajode la tabla --}}
                         <tfoot>
                             <tr>
-                                <th>ID Actividad</th>
                                 <th>Tema</th>
                                 <th>ID Coordinador</th>
+                                <th>Fecha de inicio</th>
                                 <th>Estado</th>
-                                <th>Propósito</th>
                                 <th>Tipo de actividad</th>
                                 <td><strong>Ver detalle<br /></strong></td>
                             </tr>
