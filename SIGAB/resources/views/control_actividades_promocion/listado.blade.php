@@ -22,11 +22,8 @@ $tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conve
 'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
 'Comisiones de trabajo','Externa','Otro'];
 
-$poblacion = ['Estudiantes de primer ingreso','Estudiantes regulares','Personal Docente','Personal Administrativo'];
-
 $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 
-$ambitos = ['Nacional','Internacional'];
 
 @endphp
 
