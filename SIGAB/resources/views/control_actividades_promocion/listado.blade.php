@@ -33,7 +33,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
         {{-- Items de la parte superior--}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
-            <h2 class="texto-gris-oscuro ml-3 mb-4">Control Actividades </h2>
+            <h2 class="texto-gris-oscuro ml-3 mb-4">Control Actividades de Promoción</h2>
             <div>
                 {{-- Botón para añadir actividad de promocion--}}
                 <a href="/actividad-promocion/registrar" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>

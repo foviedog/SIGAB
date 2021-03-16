@@ -34,7 +34,7 @@ $ambitos = ['Nacional','Internacional'];
         {{-- Items de la parte superior--}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
-            <h2 class="texto-gris-oscuro ml-3 mb-4">Control Actividades </h2>
+            <h2 class="texto-gris-oscuro ml-3 mb-4">Control Actividades Internas</h2>
             <div>
                 {{-- Botón para añadir actividad interna--}}
                 <a href="/actividad-interna/registrar" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
@@ -153,7 +153,7 @@ $ambitos = ['Nacional','Internacional'];
                             @endif
                             {{-- Inserción iterativa de las actividades a la tabla --}}
                             @foreach($actividadesInternas as $actividadInterna)
-                            <tr id="estudiante" class="cursor-pointer">
+                            <tr id="internas" class="cursor-pointer">
                                 <td>{{ $actividadInterna->actividad_id }}</td>
                                 <td>{{ $actividadInterna->tema}}</td>
                                 <td>{{ $actividadInterna->responsable_coordinar }} </td>
