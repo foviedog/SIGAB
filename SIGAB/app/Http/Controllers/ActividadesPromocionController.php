@@ -35,7 +35,7 @@ class ActividadesPromocionController extends Controller
             ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
             ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
-             ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
+             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
              ->paginate($itemsPagina); //Paginación de los resultados
 
          //se devuelve la vista con los atributos de paginación de actividades
