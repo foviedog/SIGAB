@@ -14,7 +14,6 @@ class ActividadesPromocionController extends Controller
     {
          // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
-
          //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
          //request se setea por defecto en 25 por página
         $itemsPagina = request('itemsPagina', 5);

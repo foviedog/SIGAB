@@ -59,6 +59,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                             <div>
                                 <button type="submit" class="btn btn-rojo  ml-3 mr-2 d-flex">Buscar <i class="fas fa-search ml-2 mt-1"></i> </button>
                             </div>
+                            {{-- Checkbox para escoger la busqueda avanzada --}}
                             <div class="custom-control custom-checkbox mr-5">
                                 <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" onchange="mostrarBusquedaAvanzada(this);">
                                 <label class="custom-control-label" for="checkAvanzada">Busqueda avanzada</label>
@@ -106,6 +107,25 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                         <option value="{{ $estado }}"> {{ $estado }} </option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="w-100">
+                                <label for="fecha_filtro">&nbsp; &nbsp; Rango fechas de inicio</label>
+                                <div class="d-flex">
+                                    <div class="mx-2 ">
+                                        <div class="d-flex">
+                                            <span id="fecha_inicio_filtro" class="fecha_inicio_filtro" data-toggle="tooltip" data-placement="bottom" title="Limpiar inicio"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                            <input type="date" class="form-control form-control-sm" name="fecha_inicio_filtro" id="fecha-inicio">
+                                        </div>
+                                    </div>
+                                    <div class=" mx-3 ">
+                                        <div class="d-flex">
+                                            <span id="fecha_final_filtro" class="fecha_final_filtro" data-toggle="tooltip" data-placement="bottom" title="Limpiar final"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
+                                            <input type="date" class="form-control form-control-sm" name="fecha_final_filtro" id="fecha-final">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
