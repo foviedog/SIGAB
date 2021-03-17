@@ -117,6 +117,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>
                             <tr>
+                                <th>ID Actividad</th>
                                 <th>Tema</th>
                                 <th>ID Coordinador</th>
                                 <th>Fecha de inicio</th>
@@ -136,6 +137,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                             {{-- Inserción iterativa de las actividades a la tabla --}}
                             @foreach($actividadesPromocion as $actividadPromocion)
                             <tr id="promocion" class="cursor-pointer">
+                                <td>{{ $actividadPromocion->actividad_id}}</td>
                                 <td>{{ $actividadPromocion->tema}}</td>
                                 <td>{{ $actividadPromocion->responsable_coordinar }} </td>
                                 <td>{{ $actividadPromocion->fecha_inicio_actividad}} </td>
@@ -153,6 +155,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                         {{-- Nombre de las columnas en la parte de abajode la tabla --}}
                         <tfoot>
                             <tr>
+                                <th>ID Actividad</th>
                                 <th>Tema</th>
                                 <th>ID Coordinador</th>
                                 <th>Fecha de inicio</th>
