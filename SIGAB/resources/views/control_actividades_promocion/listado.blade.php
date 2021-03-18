@@ -111,21 +111,13 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                             </div>
                         </div>
                         <div class="col-2">
-                            <div class="w-100">
-                                <label for="fecha_filtro">&nbsp; &nbsp; Rango fechas de inicio</label>
-                                <div class="d-flex">
-                                    <div class="mx-2 ">
-                                        <div class="d-flex">
-                                            <span id="fecha_inicio_filtro" class="fecha_inicio_filtro" data-toggle="tooltip" data-placement="bottom" title="Limpiar inicio"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
-                                            <input type="date" class="form-control form-control-sm" name="fecha_inicio_filtro" id="fecha-inicio">
-                                        </div>
-                                    </div>
-                                    <div class=" mx-3 ">
-                                        <div class="d-flex">
-                                            <span id="fecha_final_filtro" class="fecha_final_filtro" data-toggle="tooltip" data-placement="bottom" title="Limpiar final"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
-                                            <input type="date" class="form-control form-control-sm" name="fecha_final_filtro" id="fecha-final">
-                                        </div>
-                                    </div>
+                            <div class="d-flex justify-content-between w-100">
+                                <label for="rango_fechas"> Rango de fechas</label>
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas">
+                                <div class="input-group-append">
+                                    <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Búsqueda por medio de fechas de inicio "><i class="far fa-calendar-alt fa-lg"></i></span>
                                 </div>
                             </div>
                         </div>
