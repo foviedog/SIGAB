@@ -27,6 +27,8 @@ class ActividadesPromocionController extends Controller
             $fecha_inicio = substr($rango_fechas, 0, 10);
             $fecha_final = substr($rango_fechas, -10);
             $actividadesPromocion = $this->filtroFecha($itemsPagina, $estado_filtro, $tipo_filtro, $fecha_inicio, $fecha_final, $tema_filtro);
+        } else {
+            $actividadesPromocion = $this->filtroTema();
         }
 
         //se devuelve la vista con los atributos de paginación de actividades
