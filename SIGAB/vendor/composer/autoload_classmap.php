@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Acceso' => $baseDir . '/app/Acceso.php',
     'App\\Actividades' => $baseDir . '/app/Actividades.php',
     'App\\ActividadesPromocion' => $baseDir . '/app/ActividadesPromocion.php',
     'App\\Actividades_interna' => $baseDir . '/app/Actividades_interna.php',
@@ -16,6 +17,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Graduado' => $baseDir . '/app/Graduado.php',
     'App\\Guias_academica' => $baseDir . '/app/Guias_academica.php',
+    'App\\Http\\Controllers\\AccesoController' => $baseDir . '/app/Http/Controllers/AccesoController.php',
     'App\\Http\\Controllers\\ActividadeController' => $baseDir . '/app/Http/Controllers/ActividadeController.php',
     'App\\Http\\Controllers\\ActividadesInternaController' => $baseDir . '/app/Http/Controllers/ActividadesInternaController.php',
     'App\\Http\\Controllers\\ActividadesPromocionController' => $baseDir . '/app/Http/Controllers/ActividadesPromocionController.php',
@@ -38,6 +40,7 @@ return array(
     'App\\Http\\Controllers\\PersonaController' => $baseDir . '/app/Http/Controllers/PersonaController.php',
     'App\\Http\\Controllers\\PersonalController' => $baseDir . '/app/Http/Controllers/PersonalController.php',
     'App\\Http\\Controllers\\RegistroController' => $baseDir . '/app/Http/Controllers/RegistroController.php',
+    'App\\Http\\Controllers\\RolController' => $baseDir . '/app/Http/Controllers/RolController.php',
     'App\\Http\\Controllers\\TrabajoController' => $baseDir . '/app/Http/Controllers/TrabajoController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
@@ -59,6 +62,8 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Providers\\TelescopeServiceProvider' => $baseDir . '/app/Providers/TelescopeServiceProvider.php',
+    'App\\Rol' => $baseDir . '/app/Rol.php',
+    'App\\Tarea' => $baseDir . '/app/Tarea.php',
     'App\\Trabajo' => $baseDir . '/app/Trabajo.php',
     'App\\User' => $baseDir . '/app/User.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Cors.php',

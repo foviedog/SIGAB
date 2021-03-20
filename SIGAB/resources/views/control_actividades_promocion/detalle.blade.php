@@ -24,6 +24,7 @@ $tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conve
 $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 
 
+
 @endphp
 
 {{-- Formulario general de actualización de datos de actividad --}}

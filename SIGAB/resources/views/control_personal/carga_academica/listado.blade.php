@@ -37,8 +37,8 @@ Cargas académicas de {{ $personal->persona->nombre }}
 
                         {{-- Formulario para actualizar informacion de la graduación --}}
                         <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
-                        @csrf
-                        @method('PATCH')
+                            @csrf
+                            @method('PATCH')
 
                             <div class="d-flex justify-content-center flex-column">
                                 {{-- Campo: Ciclo lectivo --}}
@@ -66,7 +66,7 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                 <label for="nombre_curso">Nombre del curso <i class="text-danger">*</i></label>
                                 <select class="form-control mb-3" id="nombre_curso" name="nombre_curso" size="10" disabled required>
                                     @foreach($cursos as $curso)
-                                        <option>{{ $curso }}</option>
+                                    <option>{{ $curso }}</option>
                                     @endforeach
                                 </select>
 
@@ -99,17 +99,20 @@ Cargas académicas de {{ $personal->persona->nombre }}
             <div>
                 {{-- Regresar al detalle del personal --}}
                 <a href="/personal/detalle/{{ $personal->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @if(accesos.contains(Auth::user->rol, 34)
                 {{-- //Botón para añadir carga académica --}}
                 <a href="/personal/carga-academica/registrar/{{ $personal->persona->persona_id }}" class="btn btn-rojo"> Añadir nueva carga académica &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                @endif
+
             </div>
         </div>
 
         {{-- Mensaje de exito
             (solo se muestra si ha sido exitoso la edicion) --}}
         @if(Session::has('exito'))
-            <div class="alert alert-success" role="alert" id="mensaje-exito">
-                {!! \Session::get('exito') !!}
-            </div>
+        <div class="alert alert-success" role="alert" id="mensaje-exito">
+            {!! \Session::get('exito') !!}
+        </div>
         @endif
 
         {{-- Contenedor de la tabla --}}
@@ -133,7 +136,7 @@ Cargas académicas de {{ $personal->persona->nombre }}
                             </tr>
                         </thead>
                         <tbody>
-                    {{-- Si no vienen registros --}}
+                            {{-- Si no vienen registros --}}
                             @if(count($cargas_academicas))
                             {{-- Inserción iterativa de las cargas academicas dentro de la tabla --}}
                             @foreach($cargas_academicas as $carga_academica)
@@ -152,12 +155,10 @@ Cargas académicas de {{ $personal->persona->nombre }}
                             </tr>
                             @endforeach
                             @else
-                                <tr class="cursor-pointer">
-                                    <td colspan="5" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
-                                </tr
-                            @endif
-                        </tbody>
-                        {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
+                            <tr class="cursor-pointer">
+                                <td colspan="5"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                            </tr @endif </tbody>
+                            {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <tfoot>
                             <tr>
                                 <th>Nombre del curso</th>

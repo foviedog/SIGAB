@@ -518,6 +518,7 @@ class ComposerStaticInit58fe449763bc199f47d6424cb02a3be6
     );
 
     public static $classMap = array (
+        'App\\Acceso' => __DIR__ . '/../..' . '/app/Acceso.php',
         'App\\Actividades' => __DIR__ . '/../..' . '/app/Actividades.php',
         'App\\ActividadesPromocion' => __DIR__ . '/../..' . '/app/ActividadesPromocion.php',
         'App\\Actividades_interna' => __DIR__ . '/../..' . '/app/Actividades_interna.php',
@@ -528,6 +529,7 @@ class ComposerStaticInit58fe449763bc199f47d6424cb02a3be6
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Graduado' => __DIR__ . '/../..' . '/app/Graduado.php',
         'App\\Guias_academica' => __DIR__ . '/../..' . '/app/Guias_academica.php',
+        'App\\Http\\Controllers\\AccesoController' => __DIR__ . '/../..' . '/app/Http/Controllers/AccesoController.php',
         'App\\Http\\Controllers\\ActividadeController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActividadeController.php',
         'App\\Http\\Controllers\\ActividadesInternaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActividadesInternaController.php',
         'App\\Http\\Controllers\\ActividadesPromocionController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActividadesPromocionController.php',
@@ -550,6 +552,7 @@ class ComposerStaticInit58fe449763bc199f47d6424cb02a3be6
         'App\\Http\\Controllers\\PersonaController' => __DIR__ . '/../..' . '/app/Http/Controllers/PersonaController.php',
         'App\\Http\\Controllers\\PersonalController' => __DIR__ . '/../..' . '/app/Http/Controllers/PersonalController.php',
         'App\\Http\\Controllers\\RegistroController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegistroController.php',
+        'App\\Http\\Controllers\\RolController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolController.php',
         'App\\Http\\Controllers\\TrabajoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TrabajoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -571,6 +574,8 @@ class ComposerStaticInit58fe449763bc199f47d6424cb02a3be6
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Providers\\TelescopeServiceProvider' => __DIR__ . '/../..' . '/app/Providers/TelescopeServiceProvider.php',
+        'App\\Rol' => __DIR__ . '/../..' . '/app/Rol.php',
+        'App\\Tarea' => __DIR__ . '/../..' . '/app/Tarea.php',
         'App\\Trabajo' => __DIR__ . '/../..' . '/app/Trabajo.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
