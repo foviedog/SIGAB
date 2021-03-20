@@ -41,9 +41,14 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
         </div>
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
-            <div class="card-header py-3">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 {{-- Título de la tabla --}}
-                <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades de promoción </p>
+                <h5 class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades de promoción </h5>
+                <div>
+                    <form action="{{ route('actividad-promocion.listado') }}" method="GET" id="form-busqueda">
+                        <button type="submit" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 {{-- Formulario para la paginación--}}
@@ -110,15 +115,18 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 p-0">
                             <div class="d-flex justify-content-between w-100">
                                 <label for="rango_fechas"> Rango de fechas</label>
                             </div>
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas">
-                                <div class="input-group-append">
-                                    <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Búsqueda por medio de fechas de inicio "><i class="far fa-calendar-alt fa-lg"></i></span>
+                                <div class="input-group-prepend">
+                                    <sapn class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></sapn>
                                 </div>
+                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY">
+                                {{-- <div class="input-group-append">
+                                    <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Búsqueda por medio de fechas de inicio "><i class="far fa-calendar-alt fa-lg"></i></span>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -148,11 +156,12 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                             @endif
                             {{-- Inserción iterativa de las actividades a la tabla --}}
                             @foreach($actividadesPromocion as $actividadPromocion)
+
                             <tr id="promocion" class="cursor-pointer">
                                 <td>{{ $actividadPromocion->actividad_id}}</td>
                                 <td>{{ $actividadPromocion->tema}}</td>
                                 <td>{{ $actividadPromocion->responsable_coordinar }} </td>
-                                <td>{{ $actividadPromocion->fecha_inicio_actividad}} </td>
+                                <td>{{ date("d-m-Y",strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
                                 <td>{{ $actividadPromocion->estado }}</td>
                                 <td>{{$actividadPromocion->tipo_actividad}}</td>
                                 <td>
@@ -198,7 +207,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 
 @section('scripts')
 <script src="{{ asset('js/global/inputs.js') }}"></script>
-<script src="{{ asset('js/control_actividades_promocion/listado.js') }}"></script>
+<script src="{{ asset('js/control_actividades_internas/listado.js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> --}}
 {{-- <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script> --}}
 {{-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" /> --}}

@@ -304,7 +304,7 @@ Listado de Guías Académicas
                                 {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
                                 <td>{{ $guia->apellido.", ". $guia->nombre }}</td>
                                 <td> {{ $guia->tipo }}  </td>
-                                <td> {{ $guia->fecha }} </td>
+                                <td> {{ date("d-m-Y",strtotime($guia->fecha)) }} </td>
                                 <td> {{ $guia->ciclo_lectivo }} </td>
                                 <td> {{ $guia->lugar_atencion }}</td>
                                 <td>

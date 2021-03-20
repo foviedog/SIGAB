@@ -9,7 +9,7 @@ class ActividadesPromocion extends Model
 {
     protected $primaryKey = 'actividad_id';
     public $table = 'actividades_promocion';
-    public function actividades()
+    public function actividad()
     {
         return $this->belongsTo('App\Actividades', 'id');
     }

@@ -1,8 +1,11 @@
-
 function mostrarBusquedaAvanzada(checkbox) {
-    if(checkbox.checked == true){
+    if (checkbox.checked == true) {
         $("#busqAvanzada").show();
-    }else{
-    $("#busqAvanzada").hide();
+    } else {
+        $("#busqAvanzada").hide();
+    }
 }
+
+function eliminarFechas(input) {
+    $("#rango_fechas").val("");
 }
