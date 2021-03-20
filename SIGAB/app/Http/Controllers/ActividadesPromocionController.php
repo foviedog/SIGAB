@@ -16,19 +16,19 @@ class ActividadesPromocionController extends Controller
         $paginaciones = [5, 10, 25, 50];
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
         //request se setea por defecto en 25 por página
-        $itemsPagina = request('itemsPagina', 5);
+        $itemsPagina = request('itemsPagina', 25);
         $tema_filtro = request('tema_filtro', NULL);
         $tipo_filtro = request('tipo_filtro', NULL);
         $estado_filtro = request('estado_filtro', NULL);
         $rango_fechas = request('rango_fechas', NULL);
-        $fecha_inicio  = NULL;
-        $fecha_final = NULL;
+        $fechaIni = NULL;
+        $fechaFin = NULL;
         if (!is_null($rango_fechas)) {
-            $fecha_inicio = substr($rango_fechas, 0, 10);
-            $fecha_final = substr($rango_fechas, -10);
-            $actividadesPromocion = $this->filtroFecha($itemsPagina, $estado_filtro, $tipo_filtro, $fecha_inicio, $fecha_final, $tema_filtro);
-        } else {
-            $actividadesPromocion = $this->filtroTema();
+            $fechaIni = substr($rango_fechas, 0, 10);
+            $fechaFin= substr($rango_fechas, -10);
+            $actividadesPromocion = $this->filtroFecha($itemsPagina, $estado_filtro, $tipo_filtro, $fechaIni, $fechaFin, $tema_filtro);
+        } else { //Si no se adjunta ningún filtro de búsqueda se devuelve un listado completo de actividades de promocion
+            $actividadesPromocion = $this->obtenerActividadesPromocion($itemsPagina, $estado_filtro, $tipo_filtro, $fechaIni, $fechaFin, $tema_filtro);
         }
 
         //se devuelve la vista con los atributos de paginación de actividades
@@ -150,14 +150,42 @@ class ActividadesPromocionController extends Controller
     private function filtroFecha($itemsPagina, $estado_filtro, $tipo_filtro, $fechaIni, $fechaFin, $tema_filtro)
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
-            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
-            ->whereBetween('actividades.fecha_inicio', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->whereBetween('actividades.fecha_inicio_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
             ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
             ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
             ->paginate($itemsPagina); //Paginación de los resultados
 
+            return $actividadesPromocion;
+    }
+
+    //Función que realiza la búsqueda respecto al tema ingresado
+    // private function filtroTema($itemsPagina, $tema_filtro)
+    // {
+    //     $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id') //Inner join de actividades de promocion
+    //         ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+    //         ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
+    //         ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
+    //         ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
+
+    //     return $actividadesPromocion;
+    // }
+
+    private function obtenerActividadesPromocion($itemsPagina, $estado_filtro, $tipo_filtro, $fechaIni, $fechaFin, $tema_filtro)
+    {
+        $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
+        ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+        ->Where('actividades.fecha_inicio_actividad', 'like', '%' .   $fechaIni . '%')
+        ->Where('actividades.fecha_final_actividad', 'like', '%' .   $fechaFin . '%')
+        ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+        ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
+        ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
+        ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
+        ->paginate($itemsPagina); //Paginación de los resultados
+
         return $actividadesPromocion;
     }
+
 }
