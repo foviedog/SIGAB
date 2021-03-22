@@ -24,22 +24,24 @@ class ActividadesPromocionController extends Controller
         $checkAvanzada = request('checkAvanzada', NULL);
         $fechaIni = NULL;
         $fechaFin = NULL;
-
-        //si entro a busqueda avanzada pero no quiero buscar fecha
+        //si se realiza una búsqueda sin seleccionar la fecha
         if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
-            $actividadesPromocion = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro,$tipo_filtro, $estado_filtro);
-        }else if(!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si entro a busqueda avanzada y utilizo fechas
+            $actividadesPromocion = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $estado_filtro);
+        } else if (!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si se realiza una búsqueda y se coloca la fecha
             $actividadesPromocion = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro);
-        }else{
+        } else {
             $actividadesPromocion = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
         }
-
 
         //se devuelve la vista con los atributos de paginación de actividades
         return view('control_actividades_promocion.listado', [
             'actividadesPromocion' => $actividadesPromocion, // Listado de actividades
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
-            'itemsPagina' => $itemsPagina // Item que se desean por página.
+            'itemsPagina' => $itemsPagina, // Item que se desean por página.
+            'tema_filtro' => $tema_filtro,
+            'tipo_filtro' => $tipo_filtro,
+            'estado_filtro' => $estado_filtro,
+            'rango_fechas' => $rango_fechas
         ]);
     }
 
@@ -155,8 +157,8 @@ class ActividadesPromocionController extends Controller
     {
         $fechaIni = substr($rango_fechas, 0, 10);
         $fechaFin = substr($rango_fechas, -10);
-        $fechaIni = date("Y-m-d", strtotime($fechaIni));
-        $fechaFin = date("Y-m-d", strtotime($fechaFin));
+        $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+        $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
 
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')

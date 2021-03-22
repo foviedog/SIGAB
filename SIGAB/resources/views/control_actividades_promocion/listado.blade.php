@@ -56,8 +56,8 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad">
-                                <div class="input-group-append">
+                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad" value="{{ $tema_filtro ?? ''  }}">
+                                <div class=" input-group-append">
                                     <div class="input-group-text"><i class="fas fa-bullhorn"></i></div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                     <select class="custom-select" id="tipo_filtro" name="tipo_filtro" class="form-control">
                                         <option value="">Sin Seleccionar</option>
                                         @foreach($tiposActividad as $tipoActividad)
-                                        <option value="{{ $tipoActividad }}"> {{ $tipoActividad }} </option>
+                                        <option value="{{ $tipoActividad }}" @if($tipo_filtro==$tipoActividad) selected @endif> {{ $tipoActividad }} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -109,7 +109,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                     <select class="custom-select" id="estado_filtro" name="estado_filtro" class="form-control">
                                         <option value="">Sin Seleccionar</option>
                                         @foreach($estados as $estado)
-                                        <option value="{{ $estado }}"> {{ $estado }} </option>
+                                        <option value="{{ $estado }}" @if($estado_filtro==$estado) selected @endif> {{ $estado }} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -123,10 +123,8 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                 <div class="input-group-prepend">
                                     <sapn class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></sapn>
                                 </div>
-                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY">
-                                {{-- <div class="input-group-append">
-                                    <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Búsqueda por medio de fechas de inicio "><i class="far fa-calendar-alt fa-lg"></i></span>
-                                </div> --}}
+                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+
                             </div>
                         </div>
 

@@ -42,9 +42,14 @@ $ambitos = ['Nacional','Internacional'];
         </div>
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
-            <div class="card-header py-3">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 {{-- Título de la tabla --}}
-                <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades internas </p>
+                <h5 class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades internas</h5>
+                <div>
+                    <form action="{{ route('actividad-interna.listado') }}" method="GET" id="form-busqueda">
+                        <button type="submit" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 {{-- Formulario para la paginación--}}

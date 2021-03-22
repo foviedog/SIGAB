@@ -5,7 +5,8 @@ $(function() {
         linkedCalendars: false,
         opens: "right",
         locale: {
-            format: "DD/MM/YYYY"
+            format: "DD/MM/YYYY",
+            cancelLabel: "Clear"
         }
     });
 });
