@@ -18,7 +18,7 @@ Actividades internas
 
 $propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
 
-$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conversatorio','Órgano colegiado',
+$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Conversatorio','Órgano colegiado',
 'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
 'Comisiones de trabajo','Externa','Otro'];
 

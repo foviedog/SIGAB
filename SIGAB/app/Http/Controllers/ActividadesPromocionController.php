@@ -25,11 +25,15 @@ class ActividadesPromocionController extends Controller
         $fechaIni = NULL;
         $fechaFin = NULL;
 
-        if (!is_null($checkAvanzada)) {
+        //si entro a busqueda avanzada pero no quiero buscar fecha
+        if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
+            $actividadesPromocion = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro,$tipo_filtro, $estado_filtro);
+        }else if(!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si entro a busqueda avanzada y utilizo fechas
             $actividadesPromocion = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro);
-        } else { //Si no se adjunta ningún filtro de búsqueda se devuelve un listado completo de actividades de promocion
-            $actividadesPromocion = $this->obtenerActividadesPromocion($itemsPagina, $estado_filtro, $tipo_filtro, $fechaIni, $fechaFin, $tema_filtro);
+        }else{
+            $actividadesPromocion = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
         }
+
 
         //se devuelve la vista con los atributos de paginación de actividades
         return view('control_actividades_promocion.listado', [
@@ -166,19 +170,21 @@ class ActividadesPromocionController extends Controller
         return $actividadesPromocion;
     }
 
-    //Función que realiza la búsqueda respecto al tema ingresado
-    // private function filtroTema($itemsPagina, $tema_filtro)
-    // {
-    //     $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id') //Inner join de actividades de promocion
-    //         ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
-    //         ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
-    //         ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
-    //         ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
+    //
+    private function filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $estado_filtro)
+    {
+        $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+            ->Where('actividades_promocion.tipo_actividad',  'like', '%' . $tipo_filtro . '%')
+            ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
+            ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
+            ->paginate($itemsPagina); //Paginación de los resultados
 
-    //     return $actividadesPromocion;
-    // }
+        return $actividadesPromocion;
+    }
 
-    private function obtenerActividadesPromocion($itemsPagina, $estado_filtro, $tipo_filtro, $fechaIni, $fechaFin, $tema_filtro)
+    private function filtroTema($itemsPagina, $tema_filtro)
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
