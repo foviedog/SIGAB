@@ -152,7 +152,7 @@ class ActividadesPromocionController extends Controller
     {
         //
     }
-
+//Filtro para hacer busquedas avanzadas, rangos de fecha de inicio, tema, tipo de actividad y estado
     private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro)
     {
         $fechaIni = substr($rango_fechas, 0, 10);
@@ -168,11 +168,10 @@ class ActividadesPromocionController extends Controller
             ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
             ->paginate($itemsPagina); //Paginación de los resultados
-        // dd($actividadesPromocion);
         return $actividadesPromocion;
     }
 
-    //
+    //Filtro de busqueda avanzada en caso de no necesitar fechas
     private function filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $estado_filtro)
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
@@ -185,11 +184,11 @@ class ActividadesPromocionController extends Controller
 
         return $actividadesPromocion;
     }
-
+//Filtro solo por tema de actividad
     private function filtroTema($itemsPagina, $tema_filtro)
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
-            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
             ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
             ->paginate($itemsPagina); //Paginación de los resultados
