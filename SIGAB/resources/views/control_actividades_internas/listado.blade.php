@@ -57,7 +57,7 @@ $ambitos = ['Nacional','Internacional'];
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad">
+                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad" value="{{ $tema_filtro ?? ''  }}">
                                 <div class="input-group-append">
                                     <div class="input-group-text"><i class="fas fa-bullhorn"></i></div>
                                 </div>
@@ -95,7 +95,7 @@ $ambitos = ['Nacional','Internacional'];
                                     <select class="custom-select" id="tipo_filtro" name="tipo_filtro" class="form-control">
                                         <option value="">Sin Seleccionar</option>
                                         @foreach($tiposActividad as $tipoActividad)
-                                        <option value="{{ $tipoActividad }}"> {{ $tipoActividad }} </option>
+                                        <option value="{{ $tipoActividad }}" @if($tipo_filtro==$tipoActividad) selected @endif> {{ $tipoActividad }} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -110,7 +110,7 @@ $ambitos = ['Nacional','Internacional'];
                                     <select class="custom-select" id="proposito_filtro" name="proposito_filtro" class="form-control">
                                         <option value="">Sin Seleccionar</option>
                                         @foreach($propositos as $proposito)
-                                        <option value="{{ $proposito }}"> {{ $proposito }} </option>
+                                        <option value="{{ $proposito }}" @if($proposito_filtro==$proposito) selected @endif> {{ $proposito }} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -125,10 +125,22 @@ $ambitos = ['Nacional','Internacional'];
                                     <select class="custom-select" id="estado_filtro" name="estado_filtro" class="form-control">
                                         <option value="">Sin Seleccionar</option>
                                         @foreach($estados as $estado)
-                                        <option value="{{ $estado }}"> {{ $estado }} </option>
+                                        <option value="{{ $estado }}" @if($estado_filtro==$estado) selected @endif> {{ $estado }} </option>
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-2 p-0">
+                            <div class="d-flex justify-content-between w-100">
+                                <label for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="right" title="Buscar por fecha de INICIO de la actividad"></i></label>
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <sapn class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></sapn>
+                                </div>
+                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+
                             </div>
                         </div>
 
@@ -145,6 +157,7 @@ $ambitos = ['Nacional','Internacional'];
                                 <th>Estado</th>
                                 <th>Propósito</th>
                                 <th>Tipo de actividad</th>
+                                <th>Fecha de inicio</th>
                                 <td><strong>Ver detalle<br /></strong></td>
                             </tr>
                         </thead>
@@ -165,6 +178,7 @@ $ambitos = ['Nacional','Internacional'];
                                 <td>{{ $actividadInterna->estado }}</td>
                                 <td>{{ $actividadInterna->proposito}} </td>
                                 <td>{{$actividadInterna->tipo_actividad}}</td>
+                                <td>{{ date("d / m / Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
@@ -183,6 +197,7 @@ $ambitos = ['Nacional','Internacional'];
                                 <th>Estado</th>
                                 <th>Propósito</th>
                                 <th>Tipo de actividad</th>
+                                <th>Fecha de inicio</th>
                                 <td><strong>Ver detalle<br /></strong></td>
                             </tr>
                         </tfoot>

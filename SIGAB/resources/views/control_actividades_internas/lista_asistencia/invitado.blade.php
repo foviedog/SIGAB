@@ -17,32 +17,37 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                 <div class="modal-body">
 
                     <div class="container">
+                        <span class="text-danger">
 
-                        <div class="file-upload">
-                            <button class="file-upload-btn btn btn-contorno-rojo w-100" type="button" onclick="$('.file-upload-input').trigger( 'click' )">AGREGAR IMAGEN</button>
-
-                            <div class="image-upload-wrap">
-                                <input class="file-upload-input" name="avatar" type='file' onchange="readURL(this);" accept="image/*" />
+                        </span>
+                        <div class="file-upload" id="file-upload">
+                            <button class="file-upload-btn btn btn-contorno-rojo w-100" type="button" onclick="$('.file-upload-input').trigger( 'click' )" data-toggle="tooltip" data-placement="top" title="Formatos permitidos: JPG , PNG, JPEG , SVG.">
+                                AGREGAR IMAGEN
+                            </button>
+                            <div class="file-upload-wrap" data-toggle="tooltip" data-placement="bottom" title="Formatos permitidos: JPG , PNG, JPEG , SVG.">
+                                <input type='file' class="file-upload-input" id="avatar" name="avatar" onchange="readURL(this);" accept="image/*" />
                                 <div class="drag-text">
-                                    <h4>Selecciona la imagen de la persona</h4>
+                                    <h4>SELECCIONE LA IMAGEN DE PERFIL</h4>
                                 </div>
                             </div>
                             <div class="file-upload-content">
-                                <img class="file-upload-image rounded" src="#" alt="Imagen de participante invitado" />
-                                <div class="image-title-wrap">
-                                    <button type="button" onclick="removeUpload()" class="remove-image"><i class="fas fa-ban"></i> &nbsp; <span class="image-title">Subir imagen</span></button>
+                                <img class="file-upload-image rounded" src="#" alt="Previsualizacion de avatar" />
+                                <div class="file-title-wrap">
+                                    <button type="button" class="remove-file" onclick="removeUpload()"><i class="fas fa-ban"></i> &nbsp; <span class="file-title">Subir imagen</span></button>
                                 </div>
                             </div>
                         </div>
-
                         {{-- Id, nombre, apellido --}}
                         <div class="form-row px-5">
                             {{-- Campo: Nombre Completo de usuario --}}
                             <div class="col">
                                 <div class="form-group">
                                     <label for="persona_id"><strong>Identificacion <i class="text-danger">* </i> </strong></label>
+                                    <span id="mostrar_persona_id" class="ml-2 text-muted"></span>
+
                                     <span class="text-muted" id="mostrar_persona_id"></span>
-                                    <input type="text" id="persona_id" name="persona_id" class="form-control" placeholder="Identificación " required />
+                                    <input type="text" id="persona_id" name="persona_id" class="form-control" placeholder="Identificación " onkeypress="contarCaracteres(this,15)" required />
+
                                 </div>
                             </div>
                             {{-- Campo: Nombre Completo de usuario --}}
@@ -50,7 +55,7 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                                 <div class="form-group">
                                     <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
                                     <span class="text-muted" id="mostrar_nombre"></span>
-                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre " required />
+                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre " onkeypress="contarCaracteres(this, 50)" required />
                                 </div>
                             </div>
                             {{-- Campo: Apellidos --}}
@@ -58,7 +63,7 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                                 <div class="form-group">
                                     <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
                                     <span class="text-muted" id="mostrar_apellido"></span>
-                                    <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Apellidos" required /> </input>
+                                    <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Apellidos" onkeypress="contarCaracteres(this,50)" required /> </input>
                                 </div>
                             </div>
                         </div>
@@ -108,8 +113,8 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                             {{-- Estado civil --}}
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="estadoCivil"><strong>Estado Civil <i class="text-danger">* </i></strong></label>
-                                    <select id="estado_civil" name="estado_civil" class="form-control" required>
+                                    <label for="estadoCivil"><strong>Estado Civil</strong></label>
+                                    <select id="estado_civil" name="estado_civil" class="form-control">
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($estadosCiviles as $estadoCivil)
                                         <option value='{{ $estadoCivil }}'> {{ $estadoCivil }}</option>
@@ -131,7 +136,7 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento <i class="text-danger">* </i></strong><br /></label><input type='date' name="fecha_nacimiento" class="form-control" placeholder="Fecha Nacimiento" required />
+                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento </strong><br /></label><input type='date' name="fecha_nacimiento" class="form-control" placeholder="Fecha Nacimiento" />
                                 </div>
                             </div>
                         </div>
@@ -140,10 +145,10 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                             <div class="col-12">
                                 {{-- Campo: Direccion Residencia --}}
                                 <div class="form-group">
-                                    <label for="DireccionResidencia"><strong>Dirección Residencia <i class="text-danger">* </i></strong></label>
+                                    <label for="DireccionResidencia"><strong>Dirección Residencia </strong></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del personal "><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_direccion_residencia"> </span>
-                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" required /></textarea>
+                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" /></textarea>
                                 </div>
                             </div>
                         </div>

@@ -24,34 +24,31 @@ class ActividadesInternaController extends Controller
         $proposito_filtro = request('proposito_filtro', NULL);
         $estado_filtro = request('estado_filtro', NULL);
         $rango_fechas = request('rango_fechas', NULL);
+        $checkAvanzada = request('checkAvanzada', NULL);
         $fecha_inicio  = NULL;
         $fecha_final = NULL;
-        if (!is_null($rango_fechas)) {
-            $fecha_inicio = substr($rango_fechas, 0, 10);
-            $fecha_final = substr($rango_fechas, -10);
-        }
-        $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
-            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
-            ->Where('actividades.fecha_inicio_actividad', 'like', '%' .   $fecha_inicio . '%')
-            ->Where('actividades.fecha_final_actividad', 'like', '%' .   $fecha_final . '%')
-            ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
-            ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
-            ->Where('actividades_internas.proposito', 'like', '%' .   $proposito_filtro . '%')
-            ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
-            ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
-            ->paginate($itemsPagina); //Paginación de los resultados
 
-        //Inner join de actividades internas con actividades
-        // $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
-        //     ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
-        //     ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
-        //     ->paginate($itemsPagina); //Paginación de los resultados
+
+        //si se realiza una búsqueda sin seleccionar la fecha
+        if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
+            $actividadesInternas = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $proposito_filtro, $estado_filtro);
+        } else if (!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si se realiza una búsqueda y se coloca la fecha
+            $actividadesInternas = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro);
+        } else {
+            $actividadesInternas = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
+        }
+
 
         //se devuelve la vista con los atributos de paginación de los estudiante
         return view('control_actividades_internas.listado', [
             'actividadesInternas' => $actividadesInternas, // Listado de actividades
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
-            'itemsPagina' => $itemsPagina // Item que se desean por página.
+            'itemsPagina' => $itemsPagina, // Item que se desean por página.
+            'tema_filtro' => $tema_filtro,
+            'tipo_filtro' => $tipo_filtro,
+            'estado_filtro' => $estado_filtro,
+            'proposito_filtro' => $proposito_filtro,
+            'rango_fechas' => $rango_fechas
         ]);
     }
     //Retorna la vista de registrar actividades internas
@@ -159,5 +156,47 @@ class ActividadesInternaController extends Controller
             return redirect("/detalle-actividad-interna/{$actividad->id}") //se redirecciona a la pagina de registro
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
+    }
+
+    private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro)
+    {
+        $fechaIni = substr($rango_fechas, 0, 10);
+        $fechaFin = substr($rango_fechas, -10);
+        $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+        $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
+
+        $actividades_internas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->whereBetween('actividades.fecha_inicio_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
+            ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
+            ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
+            ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
+            ->Where('actividades_internas.proposito', 'like', '%' .   $proposito_filtro . '%')
+            ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
+            ->paginate($itemsPagina); //Paginación de los resultados
+        return $actividades_internas;
+    }
+
+    //
+    private function filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $proposito_filtro, $estado_filtro)
+    {
+        $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+            ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
+            ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
+            ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
+            ->Where('actividades_internas.proposito', 'like', '%' .   $proposito_filtro . '%')
+            ->orderBy('actividades.tema', 'asc') // Ordena por tema de manera ascendente
+            ->paginate($itemsPagina); //Paginación de los resultados
+        return $actividadesInternas;
+    }
+    private function filtroTema($itemsPagina, $tema_filtro)
+    {
+        $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+            ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+            ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
+            ->paginate($itemsPagina); //Paginación de los resultados
+        return $actividadesInternas;
     }
 }

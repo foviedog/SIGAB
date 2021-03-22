@@ -144,16 +144,22 @@ $tiposDocumentos =
                             <div class="d-flex justify-content-between">
                                 {{-- Input para colocar el nombre que se le desea poner al archivo --}}
                                 <div class="input-group px-2 mb-3 w-75 ml-1 pl-3">
-                                    <input type="text" id="nombre-archivo" name="nombre_archivo" aria-label="Nombre archivo" class="form-control" placeholder="Nombre del archivo" required>
+                                    <input type="text" id="nombre-archivo" name="nombre_archivo" aria-label="Nombre archivo" class="form-control" placeholder="Nombre del archivo" onkeyup="contarCaracteres(this,99)" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Nombre con el que quiere guardar el archivo"><i class="far fa-edit texto-azul-una"></i></span>
                                     </div>
+                                    <span class="ml-1 text-muted d-flex align-items-center" id="mostrar_nombre-archivo"></span>
+
                                 </div>
+
                                 <div class="custom-control custom-checkbox mr-5" id="wrap-chec-video">
                                     <input type="checkbox" class="custom-control-input" id="es-video" onclick="mostrarUrlVideo(this)">
                                     <input type="hidden" id="check_video" name="check_video">
                                     <label class="custom-control-label" for="es-video">Es un video</label>
                                 </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="alert alert-danger w-75 text-center font-weight-bold" role="alert" id="mensaje-alerta" style="display: none;"> <i class="fas fa-exclamation-triangle"></i> No ha agregado ninguna evidencia </div>
                             </div>
                             {{-- Input para registrar el url del video --}}
                             <div class="input-group px-2 mb-3 ml-1 pl-3" id="wrap-url-video">
@@ -162,10 +168,16 @@ $tiposDocumentos =
                                     <span class="input-group-text" data-toggle="tooltip" data-placement="right" title="Coloque el url del video de youtube"><i class="fab fa-youtube texto-rojo-medio"></i></span>
                                 </div>
                             </div>
+
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="file-upload" id="file-upload">
+                                <span class="text-danger">
+                                    Los formatos permitidos son: <b>csv, xlx, xls, pdf, docx, rar, zip, 7zip, pptx, ppsx, pptm, jpg , jpeg, png ,svg</b>.
+                                    <br>El archivo no debe pesar más de <b>30MB</b>.
+                                </span>
                                 <button class="file-upload-btn btn btn-contorno-rojo w-100" type="button" onclick="$('.file-upload-input').trigger( 'click' )">AGREGAR EVIDENCIA</button>
                                 <div class="file-upload-wrap">
-                                    <input class="file-upload-input" name="evidencia" type='file' onchange="readURL(this);" />
+                                    <input class="file-upload-input" id="evidencia-file" name="evidencia" type='file' onchange="readURL(this);" />
                                     <div class="drag-text">
                                         <h4>SELECCIONE LA EVIDENCIA</h4>
                                     </div>
@@ -186,6 +198,7 @@ $tiposDocumentos =
                         </div>
                     </div>
                     <input type='hidden' class="form-control" id="actividad-id" name="actividad_id" value="{{ $actividad->id }}">
+                    <button type="submit" id="hidden-submit" style="display: none;"> </button>
                 </form>
             </div>
             <div class="col-6 " id="loader" style="display: none;">
@@ -289,7 +302,7 @@ $tiposDocumentos =
                                     </form>
                                     <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
                                     @else
-                                    <td><a class="btn btn-contorno-rojo" href="{{ $evidencia->id_repositorio }}" target="_blank"><i class="fas fa-globe"></i> &nbsp; Redireccionar</a></td>
+                                    <td><a class="btn btn-contorno-rojo" href="{{ $evidencia->id_repositorio }}" target="_blank"><i class="fas fa-globe"></i> &nbsp; Visualizar</a></td>
                                     @endif
                                     <form action="{{ route('evidencias.destroy',$evidencia->id) }}" method="post">
                                         @method('DELETE')
@@ -359,6 +372,7 @@ $tiposDocumentos =
 <script src="{{ asset('js/control_actividades_internas/evidencias.js') }}"></script>
 <script src="{{ asset('js/global/subirArchivos.js') }}"></script>
 <script src="{{ asset('js/global/mensajes.js') }}"></script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {

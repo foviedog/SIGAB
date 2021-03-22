@@ -117,7 +117,8 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                         </div>
                         <div class="col-2 p-0">
                             <div class="d-flex justify-content-between w-100">
-                                <label for="rango_fechas"> Rango de fechas</label>
+                                <label for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="right" title="Buscar por fecha de INICIO de la actividad"></i></label>
+
                             </div>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
@@ -159,7 +160,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                 <td>{{ $actividadPromocion->actividad_id}}</td>
                                 <td>{{ $actividadPromocion->tema}}</td>
                                 <td>{{ $actividadPromocion->responsable_coordinar }} </td>
-                                <td>{{ date("d-m-Y",strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
+                                <td>{{ date("d / m / Y",strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
                                 <td>{{ $actividadPromocion->estado }}</td>
                                 <td>{{$actividadPromocion->tipo_actividad}}</td>
                                 <td>
