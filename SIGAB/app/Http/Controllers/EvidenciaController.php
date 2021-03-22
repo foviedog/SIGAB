@@ -203,13 +203,13 @@ class EvidenciaController extends Controller
         $extension = strtolower($extension);
         if (strcmp($extension, "pdf") == 0) {
             return "pdf";
-        } elseif (strcmp($extension, "docx") == 0 || strcmp($extension, "odt") ==  0 || strcmp($extension, "doc") == 0) {
+        } elseif (strcmp($extension, "docx") == 0 || strcmp($extension, "odt") ==  0 || strcmp($extension, "doc") == 0 || strcmp($extension, "txt") == 0) {
             return "documento";
         } elseif (strcmp($extension, "rar") == 0 || strcmp($extension, "zip") == 0 || strcmp($extension, "7z") == 0 || strcmp($extension, "rar5") == 0) {
             return "comprimido";
-        } elseif (strcmp($extension, "xls") == 0 || strcmp($extension, "xlsm") == 0 || strcmp($extension, "xlsx") == 0 || strcmp($extension, "ods") == 0) {
+        } elseif (strcmp($extension, "xls") == 0 || strcmp($extension, "xlsm") == 0 || strcmp($extension, "xlsx") == 0 || strcmp($extension, "csv") == 0) {
             return "excel";
-        } elseif (strcmp($extension, "pps") == 0 || strcmp($extension, "ppt") == 0 || strcmp($extension, "ppsx") == 0 || strcmp($extension, "pptm") == 0 || strcmp($extension, "potx") == 0 || strcmp($extension, "odp") == 0) {
+        } elseif (strcmp($extension, "pps") == 0 || strcmp($extension, "ppt") == 0 || strcmp($extension, "ppsx") == 0 || strcmp($extension, "pptm") == 0 || strcmp($extension, "potx") == 0 || strcmp($extension, "pptx") == 0) {
             return "presentacion";
         } else {
             return "imagen";

@@ -1,5 +1,4 @@
 $('#solicitud').val(est);
-//console.log($('#solicitud').val());
 $(function () {
     $("input[type='radio']").on("click", function () {
             var radioValue = $("input[name='radio']:checked").val();
@@ -17,7 +16,6 @@ $(function () {
 
 $("#docente").on("change", function () {
     $('#solicitud').val($("#docente").val().split(" ")[0]);
-    //console.log($('#solicitud').val());
 });
 
 function quitarArchivo() {

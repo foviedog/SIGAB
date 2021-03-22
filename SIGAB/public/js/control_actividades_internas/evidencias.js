@@ -21,6 +21,8 @@ function eventos() {
     evtAgregarEvid();
     evtCancelarAgregarEvid();
     detalleDocumento();
+    evtSubmitAgregarEvid();
+    evtCancelarReproduccion();
 }
 // ******************************************
 //   Declaración de eventos
@@ -44,13 +46,31 @@ function evtAgregarEvid() {
         $("#agregar-evidencia-card").show();
         $("#btn-agregar-evid").hide();
     });
-    $("#agregar-submit").on("click", function() {
-        $("#btn-cancelar-agregar").trigger("click");
-        $(".loader-text").html("Agregando evidencia");
-        $("#loader-full").show();
-        $("#form-evidencia").trigger("submit");
+}
+
+function evtSubmitAgregarEvid() {
+    $("#agregar-submit").on("click", function(e) {
+        var evidenciaFile = $("#evidencia-file").get(0).files.length === 0;
+        var urlVideo = $("#url-video").val() === "";
+        var checkVideo = $("#es-video").prop("checked");
+        if ((evidenciaFile && !checkVideo) || (urlVideo && checkVideo)) {
+            let idMensaje = "mensaje-alerta";
+            let textoMensaje =
+                '<i class="fas fa-exclamation-triangle"></i> &nbsp; No ha agregado ninguna evidencia ';
+            mostrarMensajePersonalizado(idMensaje, textoMensaje);
+        } else {
+            console.log($("#form-evidencia")[0].checkValidity());
+            if ($("#form-evidencia")[0].checkValidity()) {
+                $("#btn-cancelar-agregar").trigger("click");
+                $(".loader-text").html("Agregando evidencia");
+                $("#loader-full").show();
+            } else {
+                $("#hidden-submit").trigger("click");
+            }
+        }
     });
 }
+
 function evtCancelarAgregarEvid() {
     $("#btn-cancelar-agregar").on("click", function() {
         $("#agregar-evidencia-card").hide();
@@ -59,9 +79,13 @@ function evtCancelarAgregarEvid() {
             $("#es-video").trigger("click");
     });
 }
+function evtCancelarReproduccion() {
+    $("#cerrar-modal-detalle").on("click", function() {
+        $("iframe").attr("src", $("iframe").attr("src"));
+    });
+}
 
 function detalleDocumento() {
-    console.log({ storageURL });
     $("#detalle-documento").on("show.bs.modal", function(event) {
         var button = $(event.relatedTarget); // Button que accionó el modal
         var url = button.data("repositorio"); // Extraer la información del elemento data-repositorio
@@ -124,6 +148,8 @@ function iframeYoutube(url) {
         src: "https://www.youtube.com/embed/" + videoID,
         id: "youtube_PV",
         frameborder: 0,
+        title: "YouTube video PLAYER",
+        frameborder: "0",
         allow:
             "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
         allowFullscreen: true,

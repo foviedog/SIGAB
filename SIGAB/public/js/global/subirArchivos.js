@@ -12,6 +12,10 @@ function readURL(input) {
 
         $('.file-upload-content').show();//Muestra la imagen
         $('.file-title').html(input.files[0].name);//Toma el nombre del archivo y lo coloca en el botón de eliminar
+        if (obtenerURL(input.files[0].name) == null) {
+            alert("El formato del archivo no es aceptado");
+            removeUpload();
+        }
     };
     reader.readAsDataURL(input.files[0]);//Inicializa el modo de buffer como URL (De esta manera el ".result" devolverá la ruta del archivo)
     } else {
@@ -50,7 +54,7 @@ function removeUpload() {
     function colocarImagen(fileName) {
         extension = obtenerExtension(fileName);
         url = obtenerURL(extension);
-        if (url != "img") {
+        if (url != "img" && url != null) {
             $('.file-upload-image').attr('src',url );
         }
     }
@@ -61,14 +65,26 @@ function obtenerURL(extension) {
     extension = extension.toLowerCase();
     if (extension.includes("pdf")) {
         return iconosURL + "/" + "pdf.png";
-    } else if (extension.includes("docx") || extension.includes("odt") || extension.includes("doc"))
+    } else if (extension.includes("docx") || extension.includes("odt") || extension.includes("doc") ||  extension.includes("txt"))
         return iconosURL + "/" + "doc.png";
     else if (extension.includes("rar") || extension.includes("zip") || extension.includes("7z") || extension.includes("rar5"))
         return iconosURL + "/" + "comprimido.png";
     else if (extension.includes("xls") || extension.includes("xlsm") || extension.includes("xlsx") || extension.includes("ods"))
         return iconosURL + "/" + "excel.png";
-    else if (extension.includes("pps") || extension.includes("ppt") || extension.includes("ppsx") || extension.includes("pptm") || extension.includes("potx") || extension.includes("odp"))
+    else if (extension.includes("pps") || extension.includes("ppt") || extension.includes("ppsx") || extension.includes("pptm") || extension.includes("potx") || extension.includes("pptx"))
         return iconosURL + "/" + "powerPoint.png";
-    else
+    else if(extension.includes("jpg") || extension.includes("png") || extension.includes("svg") || extension.includes("jpeg"))
         return "img";
-    }
+    else
+        return null
+}
+
+function validarExtension(){
+    $("input[type='submit']").on("click",function(){
+        var $fileUpload = $("input[type='file']");
+        if (parseInt($fileUpload.get(0).files.length)>2){
+            alert("You can only upload a maximum of 1 files");
+        }
+    });
+}
+

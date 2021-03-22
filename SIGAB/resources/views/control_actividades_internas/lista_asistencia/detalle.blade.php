@@ -115,7 +115,7 @@ Asistencia a
                                 <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante </h6>
                             </div>
                             <div>
-                                <a href="#" class="texto-azul-una" id="invitado-btn" data-toggle="modal" data-target="#agregar-invitado">¿Es invitado?</a>
+                                <a href="#" class="btn btn-contorno-azul-una texto-azul-una" id="invitado-btn" data-toggle="modal" data-target="#agregar-invitado">Agregar invitado</a>
                             </div>
                         </div>
                     </div>
@@ -319,6 +319,7 @@ Asistencia a
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script src="{{ asset('js/control_actividades_internas/lista_asistencia.js') }}"></script>
 <script src="{{ asset('js/global/subirArchivos.js') }}"></script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
 <script src="{{ asset('js/global/mensajes.js') }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
