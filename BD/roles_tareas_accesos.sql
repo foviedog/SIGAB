@@ -73,7 +73,22 @@ DELIMITER ;
 
 call GET_TAREAS(1);
 
+select
+  *
+from
+  `actividades_promocion`
+  inner join `actividades` on `actividades_promocion`.`actividad_id` = `actividades`.`id`
+  inner join `personal` on `actividades`.`responsable_coordinar` = `personal`.`persona_id`
+where
+  `actividades`.`fecha_inicio_actividad` like '%2021-03-16%'
+  and `actividades`.`fecha_final_actividad` like '%%'
 
-	
-
+select
+  count(*) as aggregate
+from
+  `actividades_promocion`
+  inner join `actividades` on `actividades_promocion`.`actividad_id` = `actividades`.`id`
+  inner join `personal` on `actividades`.`responsable_coordinar` = `personal`.`persona_id`
+where
+  `actividades`.`fecha_inicio_actividad` between '' and ''
 
