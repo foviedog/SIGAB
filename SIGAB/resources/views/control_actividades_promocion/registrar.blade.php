@@ -20,7 +20,7 @@ Registrar actividad de promocion
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
-            <h3>Registrar una actividad de promocion de la carrera</h3>
+            <h3>Registrar una actividad de promoción de la carrera</h3>
             <div>
                 <a href="{{ route('actividad-promocion.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
             </div>
@@ -61,7 +61,7 @@ Registrar actividad de promocion
                 $actividad_promocion_insertada = Session::get('actividad_promocion_insertada');
                 @endphp
                 {{-- //Datos ingresados de la actividad a mostrar en el mensaje de exito --}}
-                Se registró la actividad de promocion de la carrera con lo siguientes datos: <br> <br>
+                Se registró la actividad de promoción de la carrera con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
                         <b>ID de actividad: </b> {{$actividad_insertada->id}} <br>
@@ -91,7 +91,7 @@ Registrar actividad de promocion
                 </div>
             </div>
 
-            <div class="h3 mb-5 mt-4 mx-3">Agregar una nueva actividad de promocion de la carrera:</div>
+            <div class="h3 mb-5 mt-4 mx-3">Agregar una nueva actividad de promoción de la carrera:</div>
 
             @endif
 
@@ -247,7 +247,7 @@ Registrar actividad de promocion
                     <div class="row d-felx justify-content-center">
 
 
-                        
+
                         <div class="col-4">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-75">
@@ -265,7 +265,7 @@ Registrar actividad de promocion
                                     </div>
                                 </div>
                             </div>
-                        </div>            
+                        </div>
                     </div>
 
                 </div>
