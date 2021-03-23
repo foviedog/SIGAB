@@ -142,3 +142,13 @@ Route::get('/evidencias/{evidencia_id}', 'EvidenciaController@show')->name('evid
 Route::post('/evidencias', 'EvidenciaController@store')->name('evidencias.store');
 Route::delete('/evidencias/{evidencia_id}', 'EvidenciaController@destroy')->name('evidencias.destroy');
 Route::get('/evidencias/download/{evidencia_id}', 'EvidenciaController@download')->name('evidencias.download');
+
+// ======================================================================================================================================
+//                                                           Manejo de Documentación
+// ======================================================================================================================================
+
+Route::get('/manejo-documentacion', 'DocumentoController@index')->name('documento.index');
+Route::get('/categorias/{cat_id}/subcategorias/', 'CategoriaDocumentoController@sub')->name('categoria.sub');
+Route::post('/categorias', 'CategoriaDocumentoController@store')->name('categoria.store');
+Route::get('/subcategorias/{subcat_id}/documentos/', 'SubCategoriaDocumentoController@doc')->name('subcategoria.doc');
+Route::post('/subcategorias', 'SubCategoriaDocumentoController@store')->name('subcategoria.store');
