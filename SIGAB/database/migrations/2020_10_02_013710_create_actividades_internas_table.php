@@ -24,7 +24,6 @@ class CreateActividadesInternasTable extends Migration
             $table->string('certificacion_actividad', 100)->nullable();
             $table->string('publico_dirigido', 45)->nullable();
             $table->string('recursos', 200)->nullable();
-            $table->string('instituciones_patrocinadoras', 200)->nullable();
             $table->timestamps();
         });
     }

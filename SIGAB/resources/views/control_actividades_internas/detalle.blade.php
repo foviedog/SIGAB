@@ -498,7 +498,7 @@ $ambitos = ['Nacional','Internacional'];
                             {{-- Campo: Recursos --}}
                             <div class="col">
                                 <div class="d-flex justify-content-center mb-3">
-                                    <div class="w-100">
+                                    <div class="w-50">
                                         <div class="card shadow-sm rounded pb-2">
                                             <div class="card-header py-3">
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
@@ -519,30 +519,7 @@ $ambitos = ['Nacional','Internacional'];
                                 </div>
                             </div>
 
-                            {{-- Campo: Instituciones patrocinadoras --}}
-                            <div class="col">
-                                <div class="d-flex justify-content-center mb-3">
-                                    <div class="w-100">
-                                        <div class="card shadow-sm rounded pb-2">
-                                            <div class="card-header py-3">
-                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                    <i class="far fa-building fa-2x"></i> &nbsp;&nbsp
-                                                    Instiuciones patrocinadoras &nbsp;&nbsp
-                                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa el nombre de las instituciones o entidades patrocinadoras de la actividad si existen">
-                                                        <i class="far fa-question-circle fa-lg"></i>
-                                                    </span>
-                                                </p>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)" disabled>{{ $actividad->actividadInterna->instituciones_patrocinadoras}} </textarea>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

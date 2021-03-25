@@ -98,7 +98,6 @@ class ActividadesInternaController extends Controller
             $actividad_interna->ambito = $request->ambito;
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
-            $actividad_interna->instituciones_patrocinadoras = $request->instituciones_patrocinadoras;
             $actividad_interna->recursos = $request->recursos;
             $actividad_interna->save(); //se guarda el objeto en la base de datos
 
@@ -142,7 +141,6 @@ class ActividadesInternaController extends Controller
             $actividad_interna->ambito = $request->ambito;
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
-            $actividad_interna->instituciones_patrocinadoras = $request->instituciones_patrocinadoras;
             $actividad_interna->recursos = $request->recursos;
 
             $actividad_interna->save(); //se guarda el objeto en la base de datos

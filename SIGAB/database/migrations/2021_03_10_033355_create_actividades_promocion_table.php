@@ -16,7 +16,7 @@ class CreateActividadesPromocionTable extends Migration
         Schema::create('actividades_promocion', function (Blueprint $table) {
             $table->bigInteger('actividad_id')->unsigned()->primary();
             $table->foreign('actividad_id')->references('id')->on('actividades')->onDelete('cascade');
-            $table->string('tipo_actividad', 45)->nullable();
+            $table->string('tipo_actividad', 70)->nullable();
             $table->string('recursos', 500)->nullable();
             $table->string('instituciones_patrocinadoras', 500)->nullable();
             $table->timestamps();

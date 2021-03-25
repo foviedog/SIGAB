@@ -133,8 +133,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 @endsection
 
 @section('scripts')
-{{-- Link al script de registro de registro de estudiantes
-    --}}
+{{-- Link al script de registro de registro de estudiantes --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
 @endsection

@@ -444,7 +444,7 @@ Registrar actividad interna
                     {{-- Campo: Recursos --}}
                     <div class="col">
                         <div class="d-flex justify-content-center mb-3">
-                            <div class="w-100">
+                            <div class="w-50">
                                 <div class="d-flex justify-content-between w-75">
                                     <div>
                                         <label for="recursos">Recursos </label>
@@ -458,26 +458,7 @@ Registrar actividad interna
                         </div>
                     </div>
 
-                    {{-- Campo: Instituciones patrocinadoras --}}
-                    <div class="col">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="w-100">
-                                <div class="d-flex justify-content-between w-100">
-                                    <div>
-                                        <label for="instituciones_patrocinadoras">Instituciones patrocinadoras</label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa el nombre de las instituciones o entidades patrocinadoras de la actividad si existen"> <i class="far fa-question-circle fa-lg"></i></span>
-                                    </div>
-                                    <div>
-                                        <span class="text-muted" id="mostrar_instituciones_patrocinadoras"></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)"></textarea>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row d-flex justify-content-center my-4">

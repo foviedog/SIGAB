@@ -147,21 +147,14 @@ Registrar actividad de promocion
                                     <div class="d-flex">
                                         <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
                                             <option value="">Seleccione</option>
-                                            <option value="Curso">Curso</option>
-                                            <option value="Conferencia">Conferencia</option>
-                                            <option value="Taller">Taller</option>
-                                            <option value="Seminario">Seminario</option>
-                                            <option value="Conversatorio">Conversatorio</option>
-                                            <option value="Órgano colegiado">Órgano colegiado</option>
-                                            <option value="Tutorías">Tutorías</option>
-                                            <option value="Lectorías">Lectorías</option>
-                                            <option value="Simposio">Simposio</option>
-                                            <option value="Charla">Charla</option>
-                                            <option value="Actividad cocurricular">Actividad co curricular</option>
-                                            <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
-                                            <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
-                                            <option value="Comisiones de trabajo">Comisiones de trabajo</option>
-                                            <option value="Externa">Externa</option>
+                                            <option value="Ferias">Ferias</option>
+                                            <option value="Participación en congresos nacionales e internacionales">Participación en congresos nacionales e internacionales</option>
+                                            <option value="Puertas abiertas">Puertas abiertas</option>
+                                            <option value="Promoción por redes sociales">Promoción por redes sociales</option>
+                                            <option value="Visitas a comunidades">Visitas a comunidades</option>
+                                            <option value="Visitas a colegios">Visitas a colegios</option>
+                                            <option value="Envío de paquetes promocionales por correo electrónico">Envío de paquetes promocionales por correo electrónico</option>
+                                            <option value="Charlas">Charlas</option>
                                             <option value="Otro">Otro</option>
                                         </select>
                                     </div>
