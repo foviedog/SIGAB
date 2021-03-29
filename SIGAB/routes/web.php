@@ -158,3 +158,10 @@ Route::get('/actividad-promocion', 'ActividadesPromocionController@index')->name
 Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');
 // Actualización de los datos de la actividad
 Route::patch('/actividad-promocion/{id_actividad}', 'ActividadesPromocionController@update')->name('actividad-promocion.update');
+
+// ********************************************
+//      Control de listas de asistencia PC
+// ********************************************
+Route::get('/lista-asistencia-promocion/{actividad_id}', 'AsistenciaPromocionController@show')->name('asistencia-promocion.show');
+Route::get('/lista-asistencia-promocion/participante/{participante_id}', 'AsistenciaPromocionController@obtenerParticipante');
+Route::post('/lista-asistencia-promocion', 'AsistenciaPromocionController@store')->name('asistencia-promocion.store');

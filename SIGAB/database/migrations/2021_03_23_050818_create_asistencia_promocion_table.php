@@ -20,9 +20,9 @@ class CreateAsistenciaPromocionTable extends Migration
             $table->string('cedula', 30);
             $table->string('nombre', 50);
             $table->string('apellidos', 100);
-            $table->string('correo', 100);
-            $table->string('numero_telefono', 30);
-            $table->string('procedencia', 250);
+            $table->string('correo', 100)->nullable();
+            $table->string('numero_telefono', 30)->nullable();
+            $table->string('procedencia', 250)->nullable();
 
             $table->unique(["cedula", "actividad_id"], 'asistencia_promocion_unique');
 

@@ -86,7 +86,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                                 <div>
                                     <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-rojo font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
 
-                                    <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-rojo"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                                    <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-rojo"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
                                 </div>
                             </div>
                         </div>
