@@ -7,6 +7,7 @@ use App\ActividadesPromocion;
 use App\asistenciaPromocion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AsistenciaPromocionController extends Controller
 {
@@ -14,13 +15,14 @@ class AsistenciaPromocionController extends Controller
 
     public function show($actividadId)
     {
+
         $paginaciones = [5, 10, 25, 50];
         $itemsPagina = request('itemsPagina', 5);
         $filtro = request('filtro', NULL);
 
         $mensaje = request('mensaje', NULL);
 
-        //$listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
+        $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
         $actividad = Actividades::find($actividadId);
 
         if (!is_null($mensaje)) {
@@ -28,7 +30,7 @@ class AsistenciaPromocionController extends Controller
         }
         // dd($listaAsistencia);
         return view('control_actividades_promocion.lista_asistencia.detalle', [
-            //'listaAsistencia' => $listaAsistencia,
+            'listaAsistencia' => $listaAsistencia,
             'actividad' => $actividad,
             'paginaciones' => $paginaciones,
             'itemsPagina' => $itemsPagina,
@@ -41,28 +43,30 @@ class AsistenciaPromocionController extends Controller
     {
         $lista = NULL;
         if (is_null($filtro)) {
-            $lista = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
-                ->where('lista_asistencias.actividad_id', $actividadId)->paginate($itemsPagina);
+            $lista = asistenciaPromocion::where('asistencia_promocion.actividad_id', $actividadId)->paginate($itemsPagina);
         } else {
-            $lista = Persona::join('lista_asistencias', 'personas.persona_id', '=', 'lista_asistencias.persona_id')
-                ->where('lista_asistencias.actividad_id', $actividadId)
+            $lista = asistenciaPromocion::where('asistencia_promocion.actividad_id', $actividadId)
                 ->Where(function ($query) {
-                    $query->orWhere('personas.persona_id', 'like', '%' .  request('filtro', '') . '%') // Filtro para buscar por nombre de persona
-                        ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . request('filtro', '')  . "%'"); //Filtro para buscar por nombre completo
+                    $query->orWhere('asistencia_promocion.actividad_id', 'like', '%' .  request('filtro', '') . '%') // Filtro para buscar por nombre de persona
+                        ->orWhereRaw("concat(nombre, ' ', apellidos) like '%" . request('filtro', '')  . "%'") //Filtro para buscar por nombre completo
+                        ->orWhereRaw("cedula like '%" . request('filtro', '')  . "%'") //Filtro para buscar por cedula
+                        ->orWhereRaw("correo like '%" . request('filtro', '')  . "%'"); //Filtro para buscar por cedula
                 })
                 ->paginate($itemsPagina);
         }
 
+
         return $lista;
     }
 
-
-    public function store($actividadId)
+    public function store()
     {
-        dd(request());
+       // dd(\request()->cedula);
         try {
             $lista = new asistenciaPromocion();
-            $lista->actividad_id = request()->actividadId;
+            
+            //$lista->id=1;
+            $lista->actividad_id = request()->acitividad_id;
             $lista->cedula = request()->cedula;
             $lista->nombre = request()->nombre;
             $lista->apellidos = request()->apellidos;
@@ -70,10 +74,11 @@ class AsistenciaPromocionController extends Controller
             $lista->numero_telefono = request()->telefono;
             $lista->procedencia = request()->procedencia;
             $lista->save();
+            
             $mensaje = "success";
-            return Redirect::back();
+            return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
-            return Redirect::back();
+            return response("No existe", 404);
         }
     }
 

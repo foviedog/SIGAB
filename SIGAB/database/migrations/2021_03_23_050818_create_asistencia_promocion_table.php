@@ -16,7 +16,7 @@ class CreateAsistenciaPromocionTable extends Migration
         Schema::create('asistencia_promocion', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('actividad_id')->unsigned();
-            $table->foreign('actividad_id')->references('actividad_id')->on('actividades_internas');
+            $table->foreign('actividad_id')->references('actividad_id')->on('actividades_promocion');
             $table->string('cedula', 30);
             $table->string('nombre', 50);
             $table->string('apellidos', 100);
