@@ -35,15 +35,7 @@ function eventos() {
 //   Declaración de eventos
 // ******************************************
 
-
-
-
-
-
-
-
-
-
+// Detalle del participante de la actividad
 
 function llenarModalParticipante(participante) {
     let src = fotosURL + "/" + participante.imagen_perfil;
@@ -52,10 +44,8 @@ function llenarModalParticipante(participante) {
     $("#id-info").html(participante.persona_id);
     $("#nombre-info").html(participante.nombre + " " + participante.apellido);
     $("#correo-info").html(participante.correo_institucional);
-    $("#correo-personal-info").html(participante.correo_personal);
     $("#telefono-info").html(participante.telefono_fijo);
-    $("#celular-info").html(participante.telefono_celular);
-    $("#estado-civil-info").html(participante.estado_civil);
+    $("#procedencia-info").html(participante.telefono_celular); //revisar
 
     if (!participante.correo_institucional)
         $("#correo-info").html(
@@ -66,19 +56,29 @@ function llenarModalParticipante(participante) {
             '<i class="font-weight-light"> No registrado</i>'
         );
     if (!participante.correo_personal)
-        $("#correo-personal-info").html(
-            '<i class="font-weight-light"> No registrado</i>'
-        );
-    if (!participante.telefono_fijo)
-        $("#telefono-info").html(
-            '<i class="font-weight-light"> No registrado</i>'
-        );
-    if (!participante.estado_civil)
-        $("#estado-civil-info").html(
+        $("#procedencia-info").html(
             '<i class="font-weight-light"> No registrado</i>'
         );
 }
+function mostrarInfo(boton) {
+    var id = boton.id.split("mostrar-")[1];
+    $.ajax({
+        url: "/lista-asistencia-promocion/participante/" + id,
+        dataType: "json",
+        method: "GET",
+        success: function(participante) {
+            llenarModalParticipante(participante);
+            $("#informacion-participante").modal("show");
+        },
+        statusCode: {
+            404: function() {
+                errorNoEncontrado();
+            }
+        }
+    });
+}
 
+//-------------------------------------
 
 function evtListarTodo() {
     $("#btn-listar-todo").on("click", function(e) {
@@ -127,6 +127,7 @@ function evtAgregarParticipante() {
         }
     });
 }
+<<<<<<< Updated upstream
 
 
 
@@ -146,3 +147,5 @@ function recargarTabla(personas) {
         $("#lista-participantes").append(fila);
     });
 }
+=======
+>>>>>>> Stashed changes
