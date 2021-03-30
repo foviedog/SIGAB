@@ -127,10 +127,6 @@ function evtAgregarParticipante() {
         }
     });
 }
-<<<<<<< Updated upstream
-
-
-
 
 function recargarTabla(personas) {
     $("#lista-participantes").html(" ");
@@ -147,5 +143,3 @@ function recargarTabla(personas) {
         $("#lista-participantes").append(fila);
     });
 }
-=======
->>>>>>> Stashed changes
