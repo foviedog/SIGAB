@@ -21,7 +21,6 @@ function ocultarElementos() {
     $("#loader").hide();
     $("#mensaje-info").removeClass("d-flex");
     $("#mensaje-info").hide();
-    ocultarParticipanteInfo();
 }
 
 // =================================================================
@@ -29,10 +28,6 @@ function ocultarElementos() {
 // =================================================================
 function eventos() {
     evtAgregarParticipante();
-    evtAgregarParticipanteShow();
-    evtCancelarAgregarPart();
-    evtBuscarParticipante();
-    mostrarMensaje();
     evtListarTodo();
 }
 
@@ -107,7 +102,7 @@ function evtAgregarParticipante() {
 
             $.ajax({
                 method: "POST",
-                url: "/lista-asistencia",
+                url: "/lista-asistencia-promocion",
                 dataType: "json",
                 data: {
                     participante_id: $("#participante-encontrado").val(),
@@ -130,5 +125,24 @@ function evtAgregarParticipante() {
                 }
             });
         }
+    });
+}
+
+
+
+
+function recargarTabla(personas) {
+    $("#lista-participantes").html(" ");
+    personas.forEach(persona => {
+        var fila = $("<tr>");
+        var cedula = $("<td>").text(persona.persona_id);
+        var nombre = $("<td>").text(persona.apellido + ", " + persona.nombre);
+        var telefono = $("<td>").text(persona.telefono_celular);
+        var correo = $("<td>").text(persona.correo_institucional);
+        fila.append(cedula);
+        fila.append(nombre);
+        fila.append(telefono);
+        fila.append(correo);
+        $("#lista-participantes").append(fila);
     });
 }
