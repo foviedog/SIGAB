@@ -76,7 +76,7 @@ Reportes y estadísticas
 
         {{--Grafico --}}
         Grafico
-        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <div id="chart"></div>
     </div>
 </div>
 
@@ -90,7 +90,6 @@ Reportes y estadísticas
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
 </script>
-<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 <script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
 
 
