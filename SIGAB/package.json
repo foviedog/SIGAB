@@ -31,6 +31,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
         "@popperjs/core": "^2.4.4",
+        "apexcharts": "^3.26.0",
         "font-awesome": "^4.7.0",
         "webpack-mix": "^3.0.0"
     }
