@@ -44,7 +44,7 @@ function llenarModalParticipante(participante) {
     $("#id-info").html(participante.persona_id);
     $("#nombre-info").html(participante.nombre + " " + participante.apellido);
     $("#correo-info").html(participante.correo_institucional);
-    $("#telefono-info").html(participante.telefono_fijo);
+    $("#celular-info").html(participante.telefono_fijo);
     $("#procedencia-info").html(participante.telefono_celular); //revisar
 
     if (!participante.correo_institucional)

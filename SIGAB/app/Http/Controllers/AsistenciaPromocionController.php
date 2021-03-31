@@ -82,6 +82,18 @@ class AsistenciaPromocionController extends Controller
         }
     }
 
+    // public function destroy(Request $request, $particioanteId)
+    // {
+    //     try {
+
+    //         $lista = asistenciaPromocion::where('persona_id', $particioanteId)
+    //             ->where('actividad_id', $request->actividad_id);
+    //         $lista->delete();
+    //         return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+    //     } catch (\Illuminate\Database\QueryException $ex) {
+    //         return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', 'error');
+    //     }
+    // }
     public function obtenerParticipanteLista($idActividad, $cedula )
     {
 
