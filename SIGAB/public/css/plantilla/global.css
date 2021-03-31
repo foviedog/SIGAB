@@ -560,5 +560,16 @@ Fin de la paleta de colores
 }
 
 /* **********************************************
-        Intervalo de fechas
+        TABS DE NAVEGACIÓN
 ********************************************** */
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #990000;
+    background-color: #ffffff00;
+    border-color: #990000 #990000 #fff #990000;
+    font-weight: bold;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #990000;
+}

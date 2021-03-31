@@ -158,3 +158,10 @@ Route::get('/actividad-promocion', 'ActividadesPromocionController@index')->name
 Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');
 // Actualización de los datos de la actividad
 Route::patch('/actividad-promocion/{id_actividad}', 'ActividadesPromocionController@update')->name('actividad-promocion.update');
+
+
+
+// ======================================================================================================================================
+//                                                              GENERACIÓN DE DATOS Y ESTADÍSTICAS
+// ======================================================================================================================================
+Route::get('/reportes', 'ReportesController@show')->name('reportes.show');

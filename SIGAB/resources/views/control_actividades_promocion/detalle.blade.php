@@ -75,8 +75,6 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab">
-
-
                     <div class="card shadow-sm my-3 rounded pb-2">
                         <div class="card-header py-3">
                             <div class="d-flex justify-content-between">
