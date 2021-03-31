@@ -59,7 +59,7 @@ function evtSubmitAgregarEvid() {
                 '<i class="fas fa-exclamation-triangle"></i> &nbsp; No ha agregado ninguna evidencia ';
             mostrarMensajePersonalizado(idMensaje, textoMensaje);
         } else {
-            console.log($("#form-evidencia")[0].checkValidity());
+        
             if ($("#form-evidencia")[0].checkValidity()) {
                 $("#btn-cancelar-agregar").trigger("click");
                 $(".loader-text").html("Agregando evidencia");
