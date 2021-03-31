@@ -43,6 +43,7 @@ use phpseclib3\Exception\UnsupportedAlgorithmException;
 use phpseclib3\File\ASN1\Element;
 use phpseclib3\File\ASN1\Maps;
 use phpseclib3\Math\BigInteger;
+use phpseclib3\Crypt\PublicKeyLoader;
 
 /**
  * Pure-PHP X.509 Parser
@@ -62,54 +63,76 @@ class X509
      */
     const VALIDATE_SIGNATURE_BY_CA = 1;
 
-    /**#@+
-     * @access public
-     * @see \phpseclib3\File\X509::getDN()
-    */
     /**
      * Return internal array representation
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::getDN()
      */
     const DN_ARRAY = 0;
     /**
      * Return string
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::getDN()
      */
     const DN_STRING = 1;
     /**
      * Return ASN.1 name string
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::getDN()
      */
     const DN_ASN1 = 2;
     /**
      * Return OpenSSL compatible array
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::getDN()
      */
     const DN_OPENSSL = 3;
     /**
      * Return canonical ASN.1 RDNs string
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::getDN()
      */
     const DN_CANON = 4;
     /**
      * Return name hash for file indexing
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::getDN()
      */
     const DN_HASH = 5;
-    /**#@-*/
 
-    /**#@+
-     * @access public
-     * @see \phpseclib3\File\X509::saveX509()
-     * @see \phpseclib3\File\X509::saveCSR()
-     * @see \phpseclib3\File\X509::saveCRL()
-    */
     /**
      * Save as PEM
      *
      * ie. a base64-encoded PEM with a header and a footer
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::saveX509()
+     * @see \phpseclib3\File\X509::saveCSR()
+     * @see \phpseclib3\File\X509::saveCRL()
      */
     const FORMAT_PEM = 0;
     /**
      * Save as DER
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::saveX509()
+     * @see \phpseclib3\File\X509::saveCSR()
+     * @see \phpseclib3\File\X509::saveCRL()
      */
     const FORMAT_DER = 1;
     /**
      * Save as a SPKAC
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::saveX509()
+     * @see \phpseclib3\File\X509::saveCSR()
+     * @see \phpseclib3\File\X509::saveCRL()
      *
      * Only works on CSRs. Not currently supported.
      */
@@ -118,9 +141,13 @@ class X509
      * Auto-detect the format
      *
      * Used only by the load*() functions
+     *
+     * @access public
+     * @see \phpseclib3\File\X509::saveX509()
+     * @see \phpseclib3\File\X509::saveCSR()
+     * @see \phpseclib3\File\X509::saveCRL()
      */
     const FORMAT_AUTO_DETECT = 3;
-    /**#@-*/
 
     /**
      * Attribute value disposition.
@@ -242,6 +269,12 @@ class X509
     private $challenge;
 
     /**
+     * @var array
+     * @access private
+     */
+    private $extensionValues = [];
+
+    /**
      * OIDs loaded
      *
      * @var bool
@@ -264,6 +297,24 @@ class X509
      * @access private
      */
     private static $disable_url_fetch = false;
+
+    /**
+     * @var array
+     * @access private
+     */
+    private static $extensions = [];
+
+    /**
+     * @var ?array
+     * @access private
+     */
+    private $ipAddresses = null;
+
+    /**
+     * @var ?array
+     * @access private
+     */
+    private $domains = null;
 
     /**
      * Default Constructor.
@@ -532,6 +583,10 @@ class X509
         $filters['distributionPoint']['fullName']['directoryName']['rdnSequence']['value'] = $type_utf8_string;
         $filters['directoryName']['rdnSequence']['value'] = $type_utf8_string;
 
+        foreach (self::$extensions as $extension) {
+            $filters['tbsCertificate']['extensions'][] = $extension;
+        }
+
         /* in the case of policyQualifiers/qualifier, the type has to be \phpseclib3\File\ASN1::TYPE_IA5_STRING.
            \phpseclib3\File\ASN1::TYPE_PRINTABLE_STRING will cause OpenSSL's X.509 parser to spit out random
            characters.
@@ -615,6 +670,13 @@ class X509
      */
     private function mapOutExtensions(&$root, $path)
     {
+        foreach ($this->extensionValues as $id => $value) {
+            $root['tbsCertificate']['extensions'][] = [
+                'extnId' => $id,
+                'extnValue' => $value,
+            ];
+        }
+
         $extensions = &$this->subArray($root, $path);
 
         if (is_array($extensions)) {
@@ -822,6 +884,10 @@ class X509
     {
         if (!is_string($extnId)) { // eg. if it's a \phpseclib3\File\ASN1\Element object
             return true;
+        }
+
+        if (isset(self::$extensions[$extnId])) {
+            return self::$extensions[$extnId];
         }
 
         switch ($extnId) {
@@ -2042,6 +2108,17 @@ class X509
     }
 
     /**
+     * Returns the current cert
+     *
+     * @access public
+     * @return array|bool
+     */
+    public function &getCurrentCert()
+    {
+        return $this->currentCert;
+    }
+
+    /**
      * Set public key
      *
      * Key needs to be a \phpseclib3\Crypt\RSA object
@@ -3035,7 +3112,7 @@ class X509
 
           -- http://tools.ietf.org/html/rfc5280#section-4.1.2.5
         */
-        if (strtolower($date) == 'lifetime') {
+        if (is_string($date) && strtolower($date) === 'lifetime') {
             $temp = '99991231235959Z';
             $temp = chr(ASN1::TYPE_GENERALIZED_TIME) . ASN1::encodeLength(strlen($temp)) . $temp;
             $this->endDate = new Element($temp);
@@ -3637,14 +3714,11 @@ class X509
                     return false;
                 }
                 // If the key is private, compute identifier from its corresponding public key.
-                $key = new RSA();
-                if (!$key->load($raw)) {
-                    return false;   // Not an unencrypted RSA key.
-                }
-                if ($key->getPrivateKey() !== false) {  // If private.
+                $key = PublicKeyLoader::load($raw);
+                if ($key instanceof PrivateKey) {  // If private.
                     return $this->computeKeyIdentifier($key, $method);
                 }
-                $key = $raw;    // Is a public key.
+                $key = $raw; // Is a public key.
                 break;
             case $key instanceof X509:
                 if (isset($key->publicKey)) {
@@ -3969,5 +4043,45 @@ class X509
         }
 
         return false;
+    }
+
+    /**
+     * Register the mapping for a custom/unsupported extension.
+     *
+     * @param string $id
+     * @param array $mapping
+     */
+    public static function registerExtension($id, array $mapping)
+    {
+        if (isset(self::$extensions[$id]) && self::$extensions[$id] !== $mapping) {
+            throw new \RuntimeException(
+                'Extension ' . $id . ' has already been defined with a different mapping.'
+            );
+        }
+
+        self::$extensions[$id] = $mapping;
+    }
+
+    /**
+     * Register the mapping for a custom/unsupported extension.
+     *
+     * @param string $id
+     *
+     * @return array|null
+     */
+    public static function getRegisteredExtension($id)
+    {
+        return isset(self::$extensions[$id]) ? self::$extensions[$id] : null;
+    }
+
+    /**
+     * Register the mapping for a custom/unsupported extension.
+     *
+     * @param string $id
+     * @param mixed $value
+     */
+    public function setExtensionValue($id, $value)
+    {
+        $this->extensionValues[$id] = $value;
     }
 }

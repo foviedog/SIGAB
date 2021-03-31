@@ -16,7 +16,7 @@
  * <?php
  *    include 'vendor/autoload.php';
  *
- *    $rc2 = new \phpseclib3\Crypt\RC2();
+ *    $rc2 = new \phpseclib3\Crypt\RC2('ctr');
  *
  *    $rc2->setKey('abcdefgh');
  *
@@ -116,23 +116,26 @@ class RC2 extends BlockCipher
     /**
      * The key length in bits.
      *
+     * {@internal Should be in range [1..1024].}
+     *
+     * {@internal Changing this value after setting the key has no effect.}
+     *
      * @see self::setKeyLength()
      * @see self::setKey()
      * @var int
      * @access private
-     * @internal Should be in range [1..1024].
-     * @internal Changing this value after setting the key has no effect.
      */
     private $default_key_length = 1024;
 
     /**
      * The key length in bits.
      *
+     * {@internal Should be in range [1..1024].}
+     *
      * @see self::isValidEnine()
      * @see self::setKey()
      * @var int
      * @access private
-     * @internal Should be in range [1..1024].
      */
     private $current_key_length;
 

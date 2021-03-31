@@ -37,9 +37,10 @@
 
 namespace phpseclib3\Net;
 
-use ParagonIE\ConstantTime\Hex;
 use phpseclib3\Exception\FileNotFoundException;
 use phpseclib3\Common\Functions\Strings;
+use phpseclib3\Crypt\Common\AsymmetricKey;
+use phpseclib3\System\SSH\Agent;
 
 /**
  * Pure-PHP implementations of SFTP.
@@ -61,33 +62,43 @@ class SFTP extends SSH2
      */
     const CHANNEL = 0x100;
 
-    /**#@+
-     * @access public
-     * @see \phpseclib3\Net\SFTP::put()
-    */
     /**
      * Reads data from a local file.
+     *
+     * @access public
+     * @see \phpseclib3\Net\SFTP::put()
      */
     const SOURCE_LOCAL_FILE = 1;
     /**
      * Reads data from a string.
+     *
+     * @access public
+     * @see \phpseclib3\Net\SFTP::put()
      */
     // this value isn't really used anymore but i'm keeping it reserved for historical reasons
     const SOURCE_STRING = 2;
     /**
      * Reads data from callback:
      * function callback($length) returns string to proceed, null for EOF
+     *
+     * @access public
+     * @see \phpseclib3\Net\SFTP::put()
      */
     const SOURCE_CALLBACK = 16;
     /**
      * Resumes an upload
+     *
+     * @access public
+     * @see \phpseclib3\Net\SFTP::put()
      */
     const RESUME = 4;
     /**
      * Append a local file to an already existing remote file
+     *
+     * @access public
+     * @see \phpseclib3\Net\SFTP::put()
      */
     const RESUME_START = 8;
-    /**#@-*/
 
     /**
      * Packet Types
@@ -420,7 +431,7 @@ class SFTP extends SSH2
      * Login
      *
      * @param string $username
-     * @param string[] ...$args
+     * @param string|AsymmetricKey|array[]|Agent|null ...$args
      * @throws \UnexpectedValueException on receipt of unexpected packets
      * @return bool
      * @access public
@@ -970,7 +981,7 @@ class SFTP extends SSH2
             uasort($contents, [&$this, 'comparator']);
         }
 
-        return $raw ? $contents : array_keys($contents);
+        return $raw ? $contents : array_map('strval', array_keys($contents));
     }
 
     /**
@@ -1843,6 +1854,8 @@ class SFTP extends SSH2
      *
      * Setting $local_start to > 0 or $mode | self::RESUME_START doesn't do anything unless $mode | self::SOURCE_LOCAL_FILE.
      *
+     * {@internal ASCII mode for SFTPv4/5/6 can be supported by adding a new function - \phpseclib3\Net\SFTP::setMode().}
+     *
      * @param string $remote_file
      * @param string|resource $data
      * @param int $mode
@@ -1854,7 +1867,6 @@ class SFTP extends SSH2
      * @throws \phpseclib3\Exception\FileNotFoundException if you're uploading via a file and the file doesn't exist
      * @return bool
      * @access public
-     * @internal ASCII mode for SFTPv4/5/6 can be supported by adding a new function - \phpseclib3\Net\SFTP::setMode().
      */
     public function put($remote_file, $data, $mode = self::SOURCE_STRING, $start = -1, $local_start = -1, $progressCallback = null)
     {
@@ -2085,7 +2097,7 @@ class SFTP extends SSH2
      * $offset and $length can be used to download files in chunks.
      *
      * @param string $remote_file
-     * @param string|bool|resource $local_file
+     * @param string|bool|resource|callable $local_file
      * @param int $offset
      * @param int $length
      * @param callable|null $progressCallback

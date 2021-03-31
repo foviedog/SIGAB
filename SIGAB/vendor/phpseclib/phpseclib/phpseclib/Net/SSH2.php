@@ -80,21 +80,15 @@ use phpseclib3\Common\Functions\Strings;
  */
 class SSH2
 {
-    /**#@+
-     * Execution Bitmap Masks
-     *
-     * @see \phpseclib3\Net\SSH2::bitmap
-     * @access private
-     */
+    // Execution Bitmap Masks
     const MASK_CONSTRUCTOR   = 0x00000001;
     const MASK_CONNECTED     = 0x00000002;
     const MASK_LOGIN_REQ     = 0x00000004;
     const MASK_LOGIN         = 0x00000008;
     const MASK_SHELL         = 0x00000010;
     const MASK_WINDOW_ADJUST = 0x00000020;
-    /**#@-*/
 
-    /**#@+
+    /*
      * Channel constants
      *
      * RFC4254 refers not to client and server channels but rather to sender and recipient channels.  we don't refer
@@ -109,50 +103,61 @@ class SSH2
      * @see \phpseclib3\Net\SSH2::send_channel_packet()
      * @see \phpseclib3\Net\SSH2::get_channel_packet()
      * @access private
-    */
+     */
     const CHANNEL_EXEC          = 1; // PuTTy uses 0x100
     const CHANNEL_SHELL         = 2;
     const CHANNEL_SUBSYSTEM     = 3;
     const CHANNEL_AGENT_FORWARD = 4;
     const CHANNEL_KEEP_ALIVE    = 5;
-    /**#@-*/
 
-    /**#@+
-     * @access public
-     * @see \phpseclib3\Net\SSH2::getLog()
-    */
     /**
      * Returns the message numbers
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::getLog()
      */
     const LOG_SIMPLE = 1;
     /**
      * Returns the message content
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::getLog()
      */
     const LOG_COMPLEX = 2;
     /**
      * Outputs the content real-time
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::getLog()
      */
     const LOG_REALTIME = 3;
     /**
      * Dumps the content real-time to a file
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::getLog()
      */
     const LOG_REALTIME_FILE = 4;
     /**
      * Make sure that the log never gets larger than this
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::getLog()
      */
     const LOG_MAX_SIZE = 1048576; // 1024 * 1024
-    /**#@-*/
 
-    /**#@+
-     * @access public
-     * @see \phpseclib3\Net\SSH2::read()
-    */
     /**
      * Returns when a string matching $expect exactly is found
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::read()
      */
     const READ_SIMPLE = 1;
     /**
      * Returns when a string matching the regular expression $expect is found
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::read()
      */
     const READ_REGEX = 2;
     /**
@@ -160,9 +165,11 @@ class SSH2
      *
      * Some data packets may only contain a single character so it may be necessary
      * to call read() multiple times when using this option
+     *
+     * @access public
+     * @see \phpseclib3\Net\SSH2::read()
      */
     const READ_NEXT = 3;
-    /**#@-*/
 
     /**
      * The SSH identifier
@@ -178,7 +185,7 @@ class SSH2
      * @var object
      * @access private
      */
-    protected $fsock;
+    public $fsock;
 
     /**
      * Execution Bitmap
@@ -2100,14 +2107,15 @@ class SSH2
     /**
      * Login Helper
      *
+     * {@internal It might be worthwhile, at some point, to protect against {@link http://tools.ietf.org/html/rfc4251#section-9.3.9 traffic analysis}
+     *           by sending dummy SSH_MSG_IGNORE messages.}
+     *
      * @param string $username
      * @param string $password
      * @return bool
      * @throws \UnexpectedValueException on receipt of unexpected packets
      * @throws \RuntimeException on other errors
      * @access private
-     * @internal It might be worthwhile, at some point, to protect against {@link http://tools.ietf.org/html/rfc4251#section-9.3.9 traffic analysis}
-     *           by sending dummy SSH_MSG_IGNORE messages.
      */
     private function login_helper($username, $password = null)
     {
@@ -2403,13 +2411,14 @@ class SSH2
     /**
      * Login with an RSA private key
      *
+     * {@internal It might be worthwhile, at some point, to protect against {@link http://tools.ietf.org/html/rfc4251#section-9.3.9 traffic analysis}
+     *           by sending dummy SSH_MSG_IGNORE messages.}
+     *
      * @param string $username
      * @param \phpseclib3\Crypt\Common\PrivateKey $privatekey
      * @return bool
      * @throws \RuntimeException on connection error
      * @access private
-     * @internal It might be worthwhile, at some point, to protect against {@link http://tools.ietf.org/html/rfc4251#section-9.3.9 traffic analysis}
-     *           by sending dummy SSH_MSG_IGNORE messages.
      */
     private function privatekey_login($username, PrivateKey $privatekey)
     {
@@ -2500,6 +2509,13 @@ class SSH2
                 // we'll just take it on faith that the public key blob and the public key algorithm name are as
                 // they should be
                 $this->updateLogHistory('UNKNOWN (60)', 'NET_SSH2_MSG_USERAUTH_PK_OK');
+                break;
+            case NET_SSH2_MSG_USERAUTH_SUCCESS:
+                $this->bitmap |= self::MASK_LOGIN;
+                return true;
+            default:
+                $this->disconnect_helper(NET_SSH2_DISCONNECT_BY_APPLICATION);
+                throw new ConnectionClosedException('Unexpected response to publickey authentication pt 1');
         }
 
         $packet = $part1 . chr(1) . $part2;
@@ -2528,7 +2544,8 @@ class SSH2
                 return true;
         }
 
-        return false;
+        $this->disconnect_helper(NET_SSH2_DISCONNECT_BY_APPLICATION);
+        throw new ConnectionClosedException('Unexpected response to publickey authentication pt 2');
     }
 
     /**
@@ -2550,7 +2567,7 @@ class SSH2
      *
      * Sends an SSH2_MSG_IGNORE message every x seconds, if x is a positive non-zero number.
      *
-     * @param mixed $timeout
+     * @param int $interval
      * @access public
      */
     function setKeepAlive($interval)

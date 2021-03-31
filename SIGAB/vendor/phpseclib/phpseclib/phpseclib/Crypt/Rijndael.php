@@ -30,7 +30,7 @@
  * <?php
  *    include 'vendor/autoload.php';
  *
- *    $rijndael = new \phpseclib3\Crypt\Rijndael();
+ *    $rijndael = new \phpseclib3\Crypt\Rijndael('ctr');
  *
  *    $rijndael->setKey('abcdefghijklmnop');
  *
@@ -59,6 +59,7 @@ use phpseclib3\Crypt\Common\BlockCipher;
 use phpseclib3\Common\Functions\Strings;
 use phpseclib3\Exception\BadModeException;
 use phpseclib3\Exception\InsufficientSetupException;
+use phpseclib3\Exception\InconsistentSetupException;
 use phpseclib3\Exception\BadDecryptionException;
 
 /**
@@ -107,26 +108,28 @@ class Rijndael extends BlockCipher
     /**
      * The Block Length divided by 32
      *
+     * {@internal The max value is 256 / 32 = 8, the min value is 128 / 32 = 4.  Exists in conjunction with $block_size
+     *    because the encryption / decryption / key schedule creation requires this number and not $block_size.  We could
+     *    derive this from $block_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
+     *    of that, we'll just precompute it once.}
+     *
      * @see self::setBlockLength()
      * @var int
      * @access private
-     * @internal The max value is 256 / 32 = 8, the min value is 128 / 32 = 4.  Exists in conjunction with $block_size
-     *    because the encryption / decryption / key schedule creation requires this number and not $block_size.  We could
-     *    derive this from $block_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
-     *    of that, we'll just precompute it once.
      */
     private $Nb = 4;
 
     /**
      * The Key Length (in bytes)
      *
+     * {@internal The max value is 256 / 8 = 32, the min value is 128 / 8 = 16.  Exists in conjunction with $Nk
+     *    because the encryption / decryption / key schedule creation requires this number and not $key_length.  We could
+     *    derive this from $key_length or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
+     *    of that, we'll just precompute it once.}
+     *
      * @see self::setKeyLength()
      * @var int
      * @access private
-     * @internal The max value is 256 / 8 = 32, the min value is 128 / 8 = 16.  Exists in conjunction with $Nk
-     *    because the encryption / decryption / key schedule creation requires this number and not $key_length.  We could
-     *    derive this from $key_length or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
-     *    of that, we'll just precompute it once.
      */
     protected $key_length = 16;
 
@@ -143,9 +146,10 @@ class Rijndael extends BlockCipher
     /**
      * The Number of Rounds
      *
+     * {@internal The max value is 14, the min value is 10.}
+     *
      * @var int
      * @access private
-     * @internal The max value is 14, the min value is 10.
      */
     private $Nr;
 
@@ -485,6 +489,45 @@ class Rijndael extends BlockCipher
         }
 
         return pack('N*', ...$temp);
+    }
+
+    /**
+     * Setup the self::ENGINE_INTERNAL $engine
+     *
+     * (re)init, if necessary, the internal cipher $engine and flush all $buffers
+     * Used (only) if $engine == self::ENGINE_INTERNAL
+     *
+     * _setup() will be called each time if $changed === true
+     * typically this happens when using one or more of following public methods:
+     *
+     * - setKey()
+     *
+     * - setIV()
+     *
+     * - disableContinuousBuffer()
+     *
+     * - First run of encrypt() / decrypt() with no init-settings
+     *
+     * {@internal setup() is always called before en/decryption.}
+     *
+     * {@internal Could, but not must, extend by the child Crypt_* class}
+     *
+     * @see self::setKey()
+     * @see self::setIV()
+     * @see self::disableContinuousBuffer()
+     * @access private
+     */
+    protected function setup()
+    {
+        if (!$this->changed) {
+            return;
+        }
+
+        parent::setup();
+
+        if (is_string($this->iv) && strlen($this->iv) != $this->block_size) {
+            throw new InconsistentSetupException('The IV length (' . strlen($this->iv) . ') does not match the block size (' . $this->block_size . ')');
+        }
     }
 
     /**
