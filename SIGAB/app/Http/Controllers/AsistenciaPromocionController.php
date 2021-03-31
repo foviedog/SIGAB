@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class AsistenciaPromocionController extends Controller
 {
-    
+
 
     public function show($actividadId)
     {
@@ -64,7 +64,7 @@ class AsistenciaPromocionController extends Controller
        // dd(\request()->cedula);
         try {
             $lista = new asistenciaPromocion();
-            
+
             //$lista->id=1;
             $lista->actividad_id = request()->acitividad_id;
             $lista->cedula = request()->cedula;
@@ -74,7 +74,7 @@ class AsistenciaPromocionController extends Controller
             $lista->numero_telefono = request()->telefono;
             $lista->procedencia = request()->procedencia;
             $lista->save();
-            
+
             $mensaje = "success";
             return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
@@ -82,6 +82,22 @@ class AsistenciaPromocionController extends Controller
         }
     }
 
+    // public function destroy(Request $request, $particioanteId)
+    // {
+    //     try {
+
+    //         $lista = asistenciaPromocion::where('persona_id', $particioanteId)
+    //             ->where('actividad_id', $request->actividad_id);
+    //         $lista->delete();
+    //         return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+    //     } catch (\Illuminate\Database\QueryException $ex) {
+    //         return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', 'error');
+    //     }
+    // }
+    public function obtenerParticipanteLista($idActividad, $cedula )
+    {
+
+    }
 
 
 }
