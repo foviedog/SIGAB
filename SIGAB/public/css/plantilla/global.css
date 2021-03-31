@@ -564,12 +564,25 @@ Fin de la paleta de colores
 ********************************************** */
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-    color: #990000;
+    color: #aa1816;
     background-color: #ffffff00;
-    border-color: #990000 #990000 #fff #990000;
+    border-color: #aa1816 #aa1816 #fff #aa1816;
     font-weight: bold;
 }
 
+.nav-tabs .nav-link, .nav-tabs .nav-item.show .nav-link {
+    border-color: #e6e5e1 #e6e5e1 rgba(255, 255, 255, 0) #e6e5e1;
+    margin-left: 1rem;
+    transition: border-color ease-out 0.5s, background-color ease-out 0.2s;
+    color: #585858;
+}
+
+.nav-tabs .nav-link:hover, .nav-tabs .nav-item.show .nav-link {
+    background-color: #6d6d6d28;
+    color: #aa1816;
+    border-color: #aa1816 #aa1816 #fff #aa1816;
+}
+
 .nav-tabs {
-    border-bottom: 1px solid #990000;
+    border-bottom: 1px solid #aa1816;
 }
