@@ -23,7 +23,7 @@ Asistencia a
             {{-- Título --}}
             <div>
 
-                <h3>Lista de asistencia de Promocion</h3>
+                <h3>Lista de asistencia de Promoción</h3>
             </div>
             {{-- Botones superiores --}}
             <div>
