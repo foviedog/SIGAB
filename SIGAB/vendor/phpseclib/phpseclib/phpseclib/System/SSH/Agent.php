@@ -3,6 +3,8 @@
 /**
  * Pure-PHP ssh-agent client.
  *
+ * {@internal See http://api.libssh.org/rfc/PROTOCOL.agent}
+ *
  * PHP version 5
  *
  * Here are some examples of how to use this library:
@@ -28,7 +30,6 @@
  * @copyright 2014 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
- * @internal  See http://api.libssh.org/rfc/PROTOCOL.agent
  */
 
 namespace phpseclib3\System\SSH;
@@ -52,11 +53,8 @@ class Agent
 {
     use Common\Traits\ReadBytes;
 
-    /**#@+
-     * Message numbers
-     *
-     * @access private
-     */
+    // Message numbers
+
     // to request SSH1 keys you have to use SSH_AGENTC_REQUEST_RSA_IDENTITIES (1)
     const SSH_AGENTC_REQUEST_IDENTITIES = 11;
     // this is the SSH2 response; the SSH1 response is SSH_AGENT_RSA_IDENTITIES_ANSWER (2).
@@ -65,20 +63,15 @@ class Agent
     const SSH_AGENTC_SIGN_REQUEST = 13;
     // the SSH1 response is SSH_AGENT_RSA_RESPONSE (4)
     const SSH_AGENT_SIGN_RESPONSE = 14;
-    /**#@-*/
 
-    /**@+
-     * Agent forwarding status
-     *
-     * @access private
-     */
+    // Agent forwarding status
+
     // no forwarding requested and not active
     const FORWARD_NONE = 0;
     // request agent forwarding when opportune
     const FORWARD_REQUEST = 1;
     // forwarding has been request and is active
     const FORWARD_ACTIVE = 2;
-    /**#@-*/
 
     /**
      * Unused

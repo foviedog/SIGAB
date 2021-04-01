@@ -16,7 +16,7 @@
  * <?php
  *    include 'vendor/autoload.php';
  *
- *    $blowfish = new \phpseclib3\Crypt\Blowfish();
+ *    $blowfish = new \phpseclib3\Crypt\Blowfish('ctr');
  *
  *    $blowfish->setKey('12345678901234567890123456789012');
  *
@@ -274,14 +274,14 @@ class Blowfish extends BlockCipher
 
     /**
      * The Key Length (in bytes)
+     * {@internal The max value is 256 / 8 = 32, the min value is 128 / 8 = 16.  Exists in conjunction with $Nk
+     *    because the encryption / decryption / key schedule creation requires this number and not $key_length.  We could
+     *    derive this from $key_length or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
+     *    of that, we'll just precompute it once.}
      *
      * @see \phpseclib3\Crypt\Common\SymmetricKey::setKeyLength()
      * @var int
      * @access private
-     * @internal The max value is 256 / 8 = 32, the min value is 128 / 8 = 16.  Exists in conjunction with $Nk
-     *    because the encryption / decryption / key schedule creation requires this number and not $key_length.  We could
-     *    derive this from $key_length or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
-     *    of that, we'll just precompute it once.
      */
     protected $key_length = 16;
 

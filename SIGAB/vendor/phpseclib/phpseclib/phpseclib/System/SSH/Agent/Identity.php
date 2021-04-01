@@ -3,6 +3,8 @@
 /**
  * Pure-PHP ssh-agent client.
  *
+ * {@internal See http://api.libssh.org/rfc/PROTOCOL.agent}
+ *
  * PHP version 5
  *
  * @category  System
@@ -11,7 +13,6 @@
  * @copyright 2009 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
- * @internal  See http://api.libssh.org/rfc/PROTOCOL.agent
  */
 
 namespace phpseclib3\System\SSH\Agent;
@@ -41,16 +42,10 @@ class Identity implements PrivateKey
 {
     use \phpseclib3\System\SSH\Common\Traits\ReadBytes;
 
-    /**@+
-     * Signature Flags
-     *
-     * See https://tools.ietf.org/html/draft-miller-ssh-agent-00#section-5.3
-     *
-     * @access private
-     */
+    // Signature Flags
+    // See https://tools.ietf.org/html/draft-miller-ssh-agent-00#section-5.3
     const SSH_AGENT_RSA2_256 = 2;
     const SSH_AGENT_RSA2_512 = 4;
-    /**#@-*/
 
     /**
      * Key Object
@@ -124,7 +119,7 @@ class Identity implements PrivateKey
      */
     public function withPublicKey($key)
     {
-        if ($key instanceof ECDSA) {
+        if ($key instanceof EC) {
             if (is_array($key->getCurve()) || !isset(self::$curveAliases[$key->getCurve()])) {
                 throw new UnsupportedAlgorithmException('The only supported curves are nistp256, nistp384, nistp512 and Ed25519');
             }
