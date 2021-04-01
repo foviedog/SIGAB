@@ -87,7 +87,7 @@ Reportes y estadísticas
                             </div>
                             <div class="content-info">
                                 <div>
-                                    <div class="texto-info"> promocion</div>
+                                    <div class="texto-info">Promoción</div>
                                     <div class="numero-info"> 150 </div>
                                 </div>
                             </div>
@@ -119,48 +119,51 @@ Reportes y estadísticas
                             </div>
                         </div>
                     </div>
+
                     {{--Grafico --}}
-                    <div class="row d-flex justify-content-center mt-4">
+                    <div class="row d-flex justify-content-center pt-5 pb-5">
                         <div class="w-50">
                             <div id="chart"></div>
                         </div>
                     </div>
-                    <div class="row  d-flex justify-content-center align-items-center">
-                        <div class="w-75  d-flex justify-content-between">
-                            <select class="custom-select mr-3" id="tipo_grafico" name="tipo_grafico" class="form-control">
-                                <option value="1">Activida interna</option>
-                                <option value="2">Actividad de promoción</option>
+
+                    <form action="/reportes/resultado" method="GET" enctype="multipart/form-data" id="formulario-reporte">
+
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="w-75 d-flex justify-content-between">
+                            <select class="custom-select mr-3" id="actividad" name="actividad" class="form-control">
+                                <option value="Seleccionar">Seleccionar actividad</option>
+                                <option value="Actividad interna">Actividad interna</option>
+                                <option value="Actividad de promoción">Actividad de promoción</option>
                             </select>
 
-                            <select class="custom-select mr-3" id="tipo_grafico" name="tipo_grafico" class="form-control">
-                                <option selected>Tipo actividad</option>
-                                <option value="1">Capacitación</option>
-                                <option value="2">Simposio</option>
-                                <option value="3">Reunión</option>
+                            <select class="custom-select mr-3" id="tipo-actividad" name="tipo-actividad" class="form-control">
+                                <option selected>Seleccionar tipo actividad</option>
                             </select>
 
                             <div class="input-group mr-3">
                                 <div class="input-group-prepend">
-                                    <sapn class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></sapn>
+                                    <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
-                                <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                <input type="text" class="form-control datetimepicker" name="rango-fechas" id="rango-fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
                             </div>
-                            <select class="custom-select mr-3" id="tipo_grafico" name="tipo_grafico" class="form-control">
-                                <option value="">Sin Seleccionar</option>
-                                <option selected>Tipo gráfico</option>
-                                <option value="1">Barras</option>
-                                <option value="2">Area</option>
-                                <option value="3">Dona</option>
-                                <option value="3">Lineas</option>
-                                <option value="3">Pie</option>
+                            <select class="custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
+                                <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
+                                <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas</option>
+                                <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
+                                <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Dona</option>
+                                <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Pie</option>
                             </select>
 
                         </div>
                     </div>
-                    <div class="row  d-flex justify-content-center align-items-center py-4">
-                        <div class="btn btn-rojo"><i class="fas fa-chart-line"></i> Generar gráfico</div>
+                    <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
+                        <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
                     </div>
-                    <div class="row  d-flex justify-content-center align-items-center py-4">
+
+                    </form>
+
+                    <div class="row  d-flex justify-content-center align-items-center">
                         <div class="bs-example w-100">
                             <div class="accordion " id="accordionExample">
                                 <div class="card ">
@@ -250,8 +253,13 @@ Reportes y estadísticas
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
+    let x = ['Noviembre', 'Diciembre', 'Enero'];
+    let y = [50, 17, 26];
+    let total = 93;
 </script>
+
 <script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
+<script src="{{ asset('js/reportes/'.$chart.'.js') }}" defer></script>
 
 
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}

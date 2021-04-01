@@ -172,3 +172,5 @@ Route::post('/lista-asistencia-promocion', 'AsistenciaPromocionController@store'
 //                                                              GENERACIÓN DE DATOS Y ESTADÍSTICAS
 // ======================================================================================================================================
 Route::get('/reportes', 'ReportesController@show')->name('reportes.show');
+Route::get('/tipos-actividad/{act}', 'ReportesController@devolverTipos')->name('reportes.tipos');
+Route::get('/reportes/resultado', 'ReportesController@resultado')->name('reportes.resultado');
