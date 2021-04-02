@@ -129,37 +129,36 @@ Reportes y estadísticas
 
                     <form action="/reportes/resultado" method="GET" enctype="multipart/form-data" id="formulario-reporte">
 
-                    <div class="row d-flex justify-content-center align-items-center">
-                        <div class="w-75 d-flex justify-content-between">
-                            <select class="custom-select mr-3" id="actividad" name="actividad" class="form-control">
-                                <option value="Seleccionar">Seleccionar actividad</option>
-                                <option value="Actividad interna">Actividad interna</option>
-                                <option value="Actividad de promoción">Actividad de promoción</option>
-                            </select>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="w-75 d-flex justify-content-between">
+                                <select class="custom-select mr-3" id="actividad" name="actividad" class="form-control">
+                                    <option value="Seleccionar">Seleccionar actividad</option>
+                                    <option value="Actividad interna">Actividad interna</option>
+                                    <option value="Actividad de promoción">Actividad de promoción</option>
+                                </select>
 
-                            <select class="custom-select mr-3" id="tipo-actividad" name="tipo-actividad" class="form-control">
-                                <option selected>Seleccionar tipo actividad</option>
-                            </select>
+                                <select class="custom-select mr-3" id="tipo-actividad" name="tipo-actividad" class="form-control">
+                                    <option selected>Seleccionar tipo actividad</option>
+                                </select>
 
-                            <div class="input-group mr-3">
-                                <div class="input-group-prepend">
-                                    <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
+                                <div class="input-group mr-3">
+                                    <div class="input-group-prepend">
+                                        <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control datetimepicker" name="rango-fechas" id="rango-fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
                                 </div>
-                                <input type="text" class="form-control datetimepicker" name="rango-fechas" id="rango-fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                <select class="custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
+                                    <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
+                                    <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas</option>
+                                    <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
+                                    <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Dona</option>
+                                    <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Pie</option>
+                                </select>
                             </div>
-                            <select class="custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
-                                <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
-                                <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas</option>
-                                <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
-                                <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Dona</option>
-                                <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Pie</option>
-                            </select>
-
                         </div>
-                    </div>
-                    <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
-                        <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
-                    </div>
+                        <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
+                            <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
+                        </div>
 
                     </form>
 
@@ -190,9 +189,7 @@ Reportes y estadísticas
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-
                                                         {{-- Inserción iterativa de las actividades a la tabla --}}
-
                                                         <tr id="promocion" class="cursor-pointer">
                                                             <td>200</td>
                                                             <td>Un tema de actividad</td>
@@ -256,6 +253,7 @@ Reportes y estadísticas
     let x = ['Noviembre', 'Diciembre', 'Enero'];
     let y = [50, 17, 26];
     let total = 93;
+
 </script>
 
 <script src="{{ asset('js/reportes/reportes.js') }}" defer></script>

@@ -597,7 +597,7 @@ Fin de la paleta de colores
     box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
     border-radius: 5px;
     color: #585757;
-    width: 15%;
+    width: 19%;
     height: 6rem;
     background-color: #fff;
     border-left: 5px solid rgb(214, 214, 214);
@@ -606,7 +606,7 @@ Fin de la paleta de colores
 }
 
 .card-info .icon-info {
-    width: 35%;
+    width: 45%;
     height: auto;
     color: #aa1816;
     display: flex;
@@ -630,6 +630,7 @@ Fin de la paleta de colores
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 1rem;
 }
 
 .card-info .texto-info {

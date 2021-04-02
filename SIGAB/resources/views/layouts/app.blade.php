@@ -93,6 +93,18 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="#controlReportes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
+                    <i class="fas fa-chart-line"></i>
+                    Reportes
+                </a>
+                <ul class="collapse list-unstyled" id="controlReportes">
+                    <li>
+                        <a href="{{ route('reportes.show' ) }}">Involucramiento y actividades </a>
+                    </li>
+
+                </ul>
+            </li>
             </ul>
 
         </nav>
