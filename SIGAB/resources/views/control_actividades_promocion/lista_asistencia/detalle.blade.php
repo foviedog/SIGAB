@@ -103,7 +103,7 @@ Asistencia a
                 <form action="{{ route('asistencia-promocion.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
-
+                    <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">
                     <div class="card shadow">
                         <div class="card-header ">
                             <div class="d-flex justify-content-between">
@@ -232,8 +232,8 @@ Asistencia a
 
                         </div>
                         <div class="card-footer">
-                            <div class="d-flex justify-content-center" id="agregar-participante-footer">
-                                <input type="submit" id="agregar-submit" value="Agregar" class="btn btn-rojo btn-lg">
+                            <div class="d-flex justify-content-center" >
+                                <input type="submit" id="agregar-submit2" value="Agregar" class="btn btn-rojo btn-lg">
 
                             </div>
                         </div>
@@ -326,10 +326,10 @@ Asistencia a
                                         </strong>
                                     </td>
                                     <td>
-                                        <button id="" class="btn btn-contorno-rojo" type="button" onclick="mostrarInfo(this)"><i class="fas fa-eye"></i>
+                                        <button id="mostrar2-{{ $participante->cedula }}" class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
                                             &nbsp;Detalle</button>
                                     </td>
-                                    <form action="" method="post">
+                                    <form action="{{ route('asistencia-promocion.destroy' ,$participante->cedula) }}" method="post">
                                         @method('DELETE')
                                         @csrf
                                         <td>

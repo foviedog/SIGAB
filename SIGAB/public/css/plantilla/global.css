@@ -586,3 +586,62 @@ Fin de la paleta de colores
 .nav-tabs {
     border-bottom: 1px solid #aa1816;
 }
+
+/* **********************************************
+        CARTAS DE INFORMACIÓN PARA LOS REPORTES
+********************************************** */
+
+.card-info {
+    -webkit-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    -moz-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    border-radius: 5px;
+    color: #585757;
+    width: 19%;
+    height: 6rem;
+    background-color: #fff;
+    border-left: 5px solid rgb(214, 214, 214);
+    border-color: #aa1816;
+    display: flex;
+}
+
+.card-info .icon-info {
+    width: 45%;
+    height: auto;
+    color: #aa1816;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-info .icon-info .icon-inner {
+    height: 75%;
+    border-right: 1px solid #cccccc;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-info .content-info {
+    width: 55%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.card-info .texto-info {
+    font-size: 14px;
+    color: #5f5f5f;
+    position: relative;
+    top: 14px;
+}
+
+.card-info .numero-info {
+    font-size: 35px;
+    font-weight: bold;
+    color: #222;
+}

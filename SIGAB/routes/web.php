@@ -166,9 +166,12 @@ Route::patch('/actividad-promocion/{id_actividad}', 'ActividadesPromocionControl
 Route::get('/lista-asistencia-promocion/{actividad_id}', 'AsistenciaPromocionController@show')->name('asistencia-promocion.show');
 Route::get('/lista-asistencia-promocion/participante/{participante_id}', 'AsistenciaPromocionController@obtenerParticipante');
 Route::post('/lista-asistencia-promocion', 'AsistenciaPromocionController@store')->name('asistencia-promocion.store');
-
+Route::delete('/lista-asistencia-promocion/{participante_id}', 'AsistenciaPromocionController@destroy')->name('asistencia-promocion.destroy');
+Route::get('/lista-asistencia-promocion/participante/{participante_id}', 'AsistenciaPromocionController@obtenerParticipante');
 
 // ======================================================================================================================================
 //                                                              GENERACIÓN DE DATOS Y ESTADÍSTICAS
 // ======================================================================================================================================
 Route::get('/reportes', 'ReportesController@show')->name('reportes.show');
+Route::get('/tipos-actividad/{act}', 'ReportesController@devolverTipos')->name('reportes.tipos');
+Route::get('/reportes/resultado', 'ReportesController@resultado')->name('reportes.resultado');

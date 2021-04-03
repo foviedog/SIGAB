@@ -17,7 +17,6 @@ function ocultarElementos() {
     $("#info-responsable").removeClass("border-top");
     $("#card-footer").hide();
     $("#cancelar-edi").hide();
-    $("#agregar-participante-card").hide();
     $("#loader").hide();
     $("#mensaje-info").removeClass("d-flex");
     $("#mensaje-info").hide();
@@ -27,7 +26,7 @@ function ocultarElementos() {
 //Función encargada de hacer llamar los metodos de eventos
 // =================================================================
 function eventos() {
-    evtAgregarParticipante();
+    evtAgregarParticipante2();
     evtListarTodo();
 }
 
@@ -38,30 +37,31 @@ function eventos() {
 // Detalle del participante de la actividad
 
 function llenarModalParticipante(participante) {
-    let src = fotosURL + "/" + participante.imagen_perfil;
-    $("#imagen-perfil-modal").css("background-image", "url(" + src + ")");
+    console.log(5);
+    $("#id-info").html(participante.cedula);
+    $("#nombre-info").html(participante.nombre + " " + participante.apellidos);
+    $("#correo-info").html(participante.correo);
+    $("#celular-info").html(participante.numero_telefono);
+    $("#procedencia-info").html(participante.procedencia); //revisar
 
-    $("#id-info").html(participante.persona_id);
-    $("#nombre-info").html(participante.nombre + " " + participante.apellido);
-    $("#correo-info").html(participante.correo_institucional);
-    $("#celular-info").html(participante.telefono_fijo);
-    $("#procedencia-info").html(participante.telefono_celular); //revisar
-
-    if (!participante.correo_institucional)
+    if (!participante.correo)
         $("#correo-info").html(
             '<i class="font-weight-light"> No registrado</i>'
         );
-    if (!participante.telefono_celular)
+    if (!participante.numero_telefono)
         $("#celular-info").html(
             '<i class="font-weight-light"> No registrado</i>'
         );
-    if (!participante.correo_personal)
+    if (!participante.procedencia)
         $("#procedencia-info").html(
             '<i class="font-weight-light"> No registrado</i>'
         );
 }
-function mostrarInfo(boton) {
-    var id = boton.id.split("mostrar-")[1];
+
+function mostrar2Info(boton) {
+    
+    var id = boton.id.split("mostrar2-")[1];
+    console.log(id);
     $.ajax({
         url: "/lista-asistencia-promocion/participante/" + id,
         dataType: "json",
@@ -90,13 +90,14 @@ function evtListarTodo() {
 // =================================================================
 //Función encargada de enviar los datos del participante a agregar
 // =================================================================
-function evtAgregarParticipante() {
-    $("#agregar-submit").on("click", function(e) {
-        if ($("#participante-encontrado").val() === "") {
+function evtAgregarParticipante2() {
+    console.log(5);
+    $("#agregar-submit2").on("click", function(e) {
+        if ($("#participante-encontrado2").val() === "") {
             errorNoEncontrado();
         } else {
             let participante = {
-                participante_id: $("#participante-encontrado").val(),
+                participante_id: $("#participante-encontrado2").val(),
                 actividad_id: $("#actividad-id").val()
             };
 
@@ -105,7 +106,6 @@ function evtAgregarParticipante() {
                 url: "/lista-asistencia-promocion",
                 dataType: "json",
                 data: {
-                    participante_id: $("#participante-encontrado").val(),
                     actividad_id: $("#actividad-id").val()
                 },
                 beforeSend: function() {
