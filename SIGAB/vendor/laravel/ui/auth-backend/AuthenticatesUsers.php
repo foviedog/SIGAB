@@ -6,7 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-
+use App\Persona;
+use App\Acceso;
 trait AuthenticatesUsers
 {
     use RedirectsUsers, ThrottlesLogins;
@@ -125,7 +126,9 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        $accesos = Acceso::where('rol_id', $user->rol)->get();
+        $persona =  Persona::findOrFail($user->persona_id);
+        session(['persona' => $persona]);
     }
 
     /**
