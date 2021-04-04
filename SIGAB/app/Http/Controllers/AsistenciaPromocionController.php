@@ -25,9 +25,7 @@ class AsistenciaPromocionController extends Controller
         $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
         $actividad = Actividades::find($actividadId);
 
-        if (!is_null($mensaje)) {
-            return redirect()->route('lista-asistencia.show', $actividadId)->with('mensaje', $mensaje);
-        }
+
         // dd($listaAsistencia);
         return view('control_actividades_promocion.lista_asistencia.detalle', [
             'listaAsistencia' => $listaAsistencia,
@@ -73,9 +71,10 @@ class AsistenciaPromocionController extends Controller
             $lista->save();
             $mensaje = "success";
 
-            return response()->json($mensaje, 200);
+                return redirect()->route('asistencia-promocion.show', request()->acitividad_id)->with('mensaje', $mensaje);
+           // return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
-            return response("No existe", 404);
+           // return response("No existe", 404);
         }
     }
 
@@ -84,7 +83,6 @@ class AsistenciaPromocionController extends Controller
     public function destroy(Request $request, $particioanteId)
     {
         try {
-
             $lista = asistenciaPromocion::where('cedula', $particioanteId)
                 ->where('actividad_id', $request->actividad_id);
             $lista->delete();
@@ -99,14 +97,13 @@ class AsistenciaPromocionController extends Controller
     }
 
 
-        //Método que busca la cédula del participante que se desea agregar en
+    //Método que busca la cédula del participante que se desea agregar en
     //la lista de asistencia y lo retorna por medio de un response como respuesta
     //a un método AJAX.
-    public function obtenerParticipante($idParticipante)
+    public function obtenerParticipante($idParticipante,Request $request)
     {
-        dd('hjsagd');
-        $participante = asistenciaPromocion::find($idParticipante); //Busca al participante en la base de datos de personas
-        dd($participante);
+        $participante = asistenciaPromocion::where("cedula",$idParticipante)
+        ->where("actividad_id",$request->actividadId)->first(); //Busca al participante en la base de datos de personas
         if (is_null($participante)) {
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         }

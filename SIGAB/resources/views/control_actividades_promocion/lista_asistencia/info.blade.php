@@ -12,8 +12,7 @@
                     <div class=" col-9 d-flex justify-content-start align-items-center ">
                         <div class=" d-flex justify-content-start align-items-center ">
                             <div class=" text-start my-3" style="font-size: 17px;">
-                                <span class="my-1" style='width: 134%; '><strong>Actividad id:</strong> &nbsp;&nbsp;<span id="id-actividad-info"> </span> </span><br>
-                                <span class="my-1" style='width: 134%; '><strong>Persona id:</strong> &nbsp;&nbsp;<span id="id-info"> </span> </span><br>
+                                <span class="my-1" style='width: 134%; '><strong>Identificación:</strong> &nbsp;&nbsp;<span id="id-info"> </span> </span><br>
                                 <span class="my-1" style='width: 134%; '><strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-info"> </span> </span> <br>
                                 <span class="my-1" style='width: 134%; '><strong>Correo: </strong> &nbsp;&nbsp;<span id="correo-info"></span> </span> <br>
                                 <span class="my-1" style='width: 134%; '><strong>Número celular: </strong> &nbsp;&nbsp;<span id="celular-info"></span></span> <br>

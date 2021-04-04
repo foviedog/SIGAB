@@ -14,8 +14,7 @@ Asistencia a
 
 @section('contenido')
 
-@include('control_actividades_internas.lista_asistencia.invitado')
-@include('control_actividades_internas.lista_asistencia.info')
+@include('control_actividades_promocion.lista_asistencia.info')
 
 <div class="card">
     <div class="card-body">
@@ -75,7 +74,7 @@ Asistencia a
                         <div class="container-fluid">
                             <div class="row d-flex justify-content-center align-items-center">
                                 <div class="col d-flex justify-content-center align-items-center" id="img-actividad">
-                                    <img src="http://127.0.0.1:8000/img/logoEBDI.png" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" style="max-width: 40%">
+                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" style="max-width: 40%">
                                 </div>
                                 <div class="col-12 border-top d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div class="w-100">
@@ -233,10 +232,10 @@ Asistencia a
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-center" >
-                                <input type="submit" id="agregar-submit2" value="Agregar" class="btn btn-rojo btn-lg">
-
+                                <input type="button" id="agregar-submit2" value="Agregar" class="btn btn-rojo btn-lg">
                             </div>
                         </div>
+                        <input type="submit" id="submitStore"value="" style="display: none;">
                     </div>
                 </form>
             </div>
@@ -326,7 +325,7 @@ Asistencia a
                                         </strong>
                                     </td>
                                     <td>
-                                        <button id="mostrar2-{{ $participante->cedula }}" class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
+                                        <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}"class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
                                             &nbsp;Detalle</button>
                                     </td>
                                     <form action="{{ route('asistencia-promocion.destroy' ,$participante->cedula) }}" method="post">

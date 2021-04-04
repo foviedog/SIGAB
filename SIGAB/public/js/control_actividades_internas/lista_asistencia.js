@@ -258,19 +258,3 @@ function errorNoEncontrado() {
     desplegarAlerta("La cédula digitada no existe");
     $("#agregar-submit").hide();
 }
-
-function recargarTabla(personas) {
-    $("#lista-participantes").html(" ");
-    personas.forEach(persona => {
-        var fila = $("<tr>");
-        var cedula = $("<td>").text(persona.persona_id);
-        var nombre = $("<td>").text(persona.apellido + ", " + persona.nombre);
-        var telefono = $("<td>").text(persona.telefono_celular);
-        var correo = $("<td>").text(persona.correo_institucional);
-        fila.append(cedula);
-        fila.append(nombre);
-        fila.append(telefono);
-        fila.append(correo);
-        $("#lista-participantes").append(fila);
-    });
-}

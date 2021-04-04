@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", cargaInicial); //Se agrega el evento carga inicial al momento de cargar el documento
 
 let editarActivido = false;
@@ -8,6 +9,7 @@ let editarActivido = false;
 function cargaInicial(event) {
     ocultarElementos();
     eventos();
+    mostrarMensaje();
 }
 
 function ocultarElementos() {
@@ -27,6 +29,7 @@ function ocultarElementos() {
 // =================================================================
 function eventos() {
     evtAgregarParticipante2();
+
     evtListarTodo();
 }
 
@@ -37,8 +40,7 @@ function eventos() {
 // Detalle del participante de la actividad
 
 function llenarModalParticipante(participante) {
-    console.log(5);
-    $("#id-info").html(participante.cedula);
+    $("#id-info").html(participante.id);
     $("#nombre-info").html(participante.nombre + " " + participante.apellidos);
     $("#correo-info").html(participante.correo);
     $("#celular-info").html(participante.numero_telefono);
@@ -59,20 +61,20 @@ function llenarModalParticipante(participante) {
 }
 
 function mostrar2Info(boton) {
-    
+    var idBtn =  boton.id;
     var id = boton.id.split("mostrar2-")[1];
-    console.log(id);
+    var idActividad = $("#"+idBtn).data("idactividad");
     $.ajax({
-        url: "/lista-asistencia-promocion/participante/" + id,
-        dataType: "json",
+        url: "/lista-asistencia-promocion/participante/" + id +"?actividadId="+idActividad,
         method: "GET",
         success: function(participante) {
             llenarModalParticipante(participante);
+            console.log(participante);
             $("#informacion-participante").modal("show");
         },
         statusCode: {
             404: function() {
-                errorNoEncontrado();
+                console.log(error);
             }
         }
     });
@@ -91,55 +93,9 @@ function evtListarTodo() {
 //Función encargada de enviar los datos del participante a agregar
 // =================================================================
 function evtAgregarParticipante2() {
-    console.log(5);
+
     $("#agregar-submit2").on("click", function(e) {
-        if ($("#participante-encontrado2").val() === "") {
-            errorNoEncontrado();
-        } else {
-            let participante = {
-                participante_id: $("#participante-encontrado2").val(),
-                actividad_id: $("#actividad-id").val()
-            };
-
-            $.ajax({
-                method: "POST",
-                url: "/lista-asistencia-promocion",
-                dataType: "json",
-                data: {
-                    actividad_id: $("#actividad-id").val()
-                },
-                beforeSend: function() {
-                    $("#loader").show();
-                    $("#cancelar-agregar-part").trigger("click");
-                },
-                success: function(datos) {
-                    $("#mensaje").val("success");
-                    $("#form-reload").trigger("submit");
-                },
-                statusCode: {
-                    404: function() {
-                        $("#loader").hide();
-                        $("#mensaje").val("error");
-                        $("#form-reload").trigger("submit");
-                    }
-                }
-            });
-        }
-    });
-}
-
-function recargarTabla(personas) {
-    $("#lista-participantes").html(" ");
-    personas.forEach(persona => {
-        var fila = $("<tr>");
-        var cedula = $("<td>").text(persona.persona_id);
-        var nombre = $("<td>").text(persona.apellido + ", " + persona.nombre);
-        var telefono = $("<td>").text(persona.telefono_celular);
-        var correo = $("<td>").text(persona.correo_institucional);
-        fila.append(cedula);
-        fila.append(nombre);
-        fila.append(telefono);
-        fila.append(correo);
-        $("#lista-participantes").append(fila);
+        $("#loader").show();
+        $("#submitStore").trigger("click");
     });
 }
