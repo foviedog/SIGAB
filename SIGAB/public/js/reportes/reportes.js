@@ -3,44 +3,38 @@
 //-----------------------------------------
 
 cargarTipos();
+mostrarTipos(0);
 
 function cargarTipos(){
     let select = $("#actividad");
-    let selectTipos = $("#tipo-actividad");
-    let act;
     select.on('change', function() {   
         let val = select.val();
         if(val === "Seleccionar") limpiarTipos();
         else {
-            if(val === "Actividad interna") act = 0;
-            if(val === "Actividad de promoción") act = 1;
-            $.ajax({
-                url: "/tipos-actividad/" + act,
-                type: "GET",
-                success: function(tipos) {
-                    limpiarTipos();
-                    console.log(tipos);
-                    for(let i = 0; i < tipos.length; i++){
-                        let option = $("<option />");
-                        option.html(tipos[i]);
-                        option.attr('value', tipos[i]);
-                        selectTipos.append(option);
-                    }
-                },
-                statusCode: {
-                    404: function() {
-                        console.log("Error al cargar tipos");
-                    }
-                }
-            });
+            if(val === "Actividad interna") {
+                mostrarTipos(0);
+            }
+                
+            if(val === "Actividad de promoción") 
+                mostrarTipos(1);
         }
 
     });
 }
 
-function limpiarTipos(){
-    $("#tipo-actividad").html("");
-    $("#tipo-actividad").append("<option selected>Seleccionar tipo actividad</option>");
+function mostrarTipos(tipo){
+    switch(tipo){
+        case 0:
+            $("#tipo-actividad-prom").hide();
+            $("#tipo-actividad-int").show();
+            break;
+        
+        case 1: 
+            $("#tipo-actividad-int").hide();
+            $("#tipo-actividad-prom").show();
+            break;
+        
+    }
 }
 
 function enviar(){
