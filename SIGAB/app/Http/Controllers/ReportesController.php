@@ -12,8 +12,28 @@ class ReportesController extends Controller
     public function show()
     {
         $chart = "bar";
+        $tip_act_int = $this->devolverTipos(0);
+        $tip_act_prom = $this->devolverTipos(1);
+        
         return view('reportes.detalle', [
             'chart' => $chart,
+            'tip_act_int' => $tip_act_int,
+            'tip_act_prom' => $tip_act_prom
+        ]);
+    }
+
+    public function resultado(Request $request){
+
+        $chart = $request->tipo_grafico;
+        $tip_act_int = $this->devolverTipos(0);
+        $tip_act_prom = $this->devolverTipos(1);
+
+        
+
+        return view('reportes.detalle', [
+            'chart' => $chart,
+            'tip_act_int' => $tip_act_int,
+            'tip_act_prom' => $tip_act_prom
         ]);
     }
 
@@ -27,16 +47,6 @@ class ReportesController extends Controller
             "Promoción por redes sociales","Visitas a comunidades","Visitas a colegios",
             "Envío de paquetes promocionales por correo electrónico","Charlas","Otro"];
         }
-    }
-
-
-    public function resultado(Request $request){
-
-        $chart = $request->tipo_grafico;
-
-        return view('reportes.detalle', [
-            'chart' => $chart,
-        ]);
     }
 
 }

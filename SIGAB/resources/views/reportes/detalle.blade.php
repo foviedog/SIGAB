@@ -129,31 +129,49 @@ Reportes y estadísticas
 
                     <form action="/reportes/resultado" method="GET" enctype="multipart/form-data" id="formulario-reporte">
 
-                        <div class="row d-flex justify-content-center align-items-center">
-                            <div class="w-75 d-flex justify-content-between">
-                                <select class="custom-select mr-3" id="actividad" name="actividad" class="form-control">
-                                    <option value="Seleccionar">Seleccionar actividad</option>
-                                    <option value="Actividad interna">Actividad interna</option>
-                                    <option value="Actividad de promoción">Actividad de promoción</option>
-                                </select>
+                        <div class="row d-flex justify-content-center mb-3">
+                            <div class="w-75">
+                                <div class="row d-flex justify-content-center mb-3">
+                                    <select class="col-4 custom-select mr-3" id="actividad" name="actividad" class="form-control">
+                                        <option value="Actividad interna">Actividad interna</option>
+                                        <option value="Actividad de promoción">Actividad de promoción</option>
+                                    </select>
 
-                                <select class="custom-select mr-3" id="tipo-actividad" name="tipo-actividad" class="form-control">
-                                    <option selected>Seleccionar tipo actividad</option>
-                                </select>
-
-                                <div class="input-group mr-3">
-                                    <div class="input-group-prepend">
-                                        <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control datetimepicker" name="rango-fechas" id="rango-fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-int" name="tipo-actividad" class="form-control">
+                                        @foreach($tip_act_int as $tipo)
+                                        <option value={{ $tipo }}>{{ $tipo }}</option>
+                                        @endforeach
+                                    </select>
+                                
+                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-prom" name="tipo-actividad" class="form-control">
+                                        @foreach($tip_act_prom as $tipo)
+                                        <option value={{ $tipo }}>{{ $tipo }}</option>
+                                        @endforeach
+                                    </select>
+                                    <select class="col-2 custom-select mr-3" id="estado" name="tipo-actividad" class="form-control">
+                                        <option value="Para ejecución">Para ejecución</option>
+                                        <option value="En progreso">En progreso</option>
+                                        <option value="Ejecutada">Ejecutada</option>
+                                        <option value="Cancelada">Cancelada</option>
+                                    </select>
                                 </div>
-                                <select class="custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
-                                    <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
-                                    <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas</option>
-                                    <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
-                                    <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Dona</option>
-                                    <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Pie</option>
-                                </select>
+                                
+                                <div class="row d-flex justify-content-center">
+
+                                    <div class="col-7 input-group mr-3">
+                                        <input type="month" class="form-control">
+                                        <input type="month" class="form-control">
+                                    </div>
+
+                                    <select class="col-3 custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
+                                        <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
+                                        <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas</option>
+                                        <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
+                                        <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Dona</option>
+                                        <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Pie</option>
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                         <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
@@ -251,6 +269,8 @@ Reportes y estadísticas
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
     let x = ['Noviembre', 'Diciembre', 'Enero'];
+    //let tipActInt = @json($tip_act_int);
+    //let tipActProm = @json($tip_act_prom);
     let y = [50, 17, 26];
     let total = 93;
 
