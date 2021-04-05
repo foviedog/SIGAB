@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use App\Acceso;
+use App\Persona;
 
 
 class LoginController extends Controller
@@ -50,4 +53,10 @@ class LoginController extends Controller
         return 'persona_id';
     }
 
+    function authenticated(Request $request, $user)
+    {
+        $accesos = Acceso::where('rol_id', $user->rol)->get();
+        $persona =  Persona::findOrFail($user->persona_id);
+        session(['persona' => $persona]);
+    }
 }

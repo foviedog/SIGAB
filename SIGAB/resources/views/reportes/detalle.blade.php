@@ -137,7 +137,7 @@ Reportes y estadísticas
                                     <option value="Actividad de promoción">Actividad de promoción</option>
                                 </select>
 
-                                <select class="custom-select mr-3" id="tipo-actividad" name="tipo-actividad" class="form-control">
+                                <select class="custom-select mr-3" id="tipo-actividad" name="tipo_actividad" class="form-control">
                                     <option selected>Seleccionar tipo actividad</option>
                                 </select>
 
