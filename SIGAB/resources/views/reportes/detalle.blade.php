@@ -132,23 +132,23 @@ Reportes y estadísticas
                         <div class="row d-flex justify-content-center mb-3">
                             <div class="w-75">
                                 <div class="row d-flex justify-content-center mb-3">
-                                    <select class="col-4 custom-select mr-3" id="actividad" name="actividad" class="form-control">
+                                    <select class="col-4 custom-select mr-3" id="actividad" name="actividad_naturaleza" class="form-control">
                                         <option value="Actividad interna">Actividad interna</option>
                                         <option value="Actividad de promoción">Actividad de promoción</option>
                                     </select>
 
-                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-int" name="tipo-actividad" class="form-control">
+                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-int" name="tipo_actividad_int" class="form-control">
                                         @foreach($tip_act_int as $tipo)
                                         <option value={{ $tipo }}>{{ $tipo }}</option>
                                         @endforeach
                                     </select>
 
-                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-prom" name="tipo-actividad" class="form-control">
+                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-prom" name="tipo_actividad_prom" class="form-control">
                                         @foreach($tip_act_prom as $tipo)
                                         <option value={{ $tipo }}>{{ $tipo }}</option>
                                         @endforeach
                                     </select>
-                                    <select class="col-2 custom-select mr-3" id="estado" name="tipo-actividad" class="form-control">
+                                    <select class="col-2 custom-select mr-3" id="estado" name="estado_actividad" class="form-control">
                                         <option value="Para ejecución">Para ejecución</option>
                                         <option value="En progreso">En progreso</option>
                                         <option value="Ejecutada">Ejecutada</option>
@@ -159,8 +159,8 @@ Reportes y estadísticas
                                 <div class="row d-flex justify-content-center">
 
                                     <div class="col-7 input-group mr-3">
-                                        <input type="month" class="form-control">
-                                        <input type="month" class="form-control">
+                                        <input type="month" name="mes_inicio" class="form-control">
+                                        <input type="month" name="mes_final" class="form-control">
                                     </div>
 
                                     <select class="col-3 custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
