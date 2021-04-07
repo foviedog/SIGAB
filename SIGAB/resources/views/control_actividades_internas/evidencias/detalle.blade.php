@@ -51,7 +51,7 @@ $tiposDocumentos =
             {{-- Botones superiores --}}
             <div>
                 {{-- Botón para regresar al listado de actividades --}}
-                <a href="{{ route('evidencias.show',$actividad->id ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 {{-- Boton que habilita opcion de agregar evidencia --}}
                 <button href="" class="btn btn-rojo" id="btn-agregar-evid"> Añadir evidencia &nbsp; <i class="fas fa-plus-circle"></i> </button>
             </div>
