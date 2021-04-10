@@ -191,7 +191,6 @@ class EvidenciaController extends Controller
 
             // ? En caso de que se desee guardar de manera privada se puede hacer de la forma de abajo
             // $ruta = $request->file('evidencia')->storeAs('evidencias/' . $request->actividad_id, $id_repositorio, 'public');
-
             $evidencia->id_repositorio = $id_repositorio;
 
             $evidencia->save();
