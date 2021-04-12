@@ -105,22 +105,23 @@ Asistencia a
 
                 </div>
             </div>
-            <div class="col-6 ">
+            <div class="col-6"   id="nuevoParticipante">
                 <form action="{{ route('asistencia-promocion.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
                     <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">
-                    <div class="card shadow">
-                        <div class="card-header ">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
-                                    </h6>
-                                </div>
-
+                    
+                    <div class="card-header ">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
+                                </h6>
                             </div>
+
                         </div>
-                        <div class="card-body ">
+                    </div>
+                    <div class="card shadow" >
+                        <div class="card-body"  >
 
                             <div class="row">
                                 <div class="col">
@@ -246,7 +247,15 @@ Asistencia a
                     </div>
                 </form>
             </div>
-
+            <div class="col-6 " id="loader" style="display:none;">
+                <div class="d-flex justify-content-center mt-2 mb-4">
+                    <h4 class="texto-rojo-oscuro">Agregando participante a la lista </h4>
+                </div>
+                <div class="loader-container d-flex justify-content-center">
+                    <div class="loader1"></div>
+                    <div class="loader2"> </div>
+                </div>
+            </div>
 
 
         </div>
