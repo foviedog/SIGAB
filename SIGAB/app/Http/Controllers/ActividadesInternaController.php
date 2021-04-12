@@ -150,10 +150,12 @@ class ActividadesInternaController extends Controller
                 ->with('mensaje', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_interna_insertada', $actividad_interna);
+
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect("/detalle-actividad-interna/{$actividad->id}") //se redirecciona a la pagina de registro
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
+
     }
 
     private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro)
