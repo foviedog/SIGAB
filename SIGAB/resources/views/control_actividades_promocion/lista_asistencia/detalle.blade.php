@@ -79,15 +79,22 @@ Asistencia a
                                 <div class="col-12 border-top d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div class="w-100">
                                         <span class="my-1"> <strong>Nombre de actividad:</strong>
-                                            ghdgdsrf</span> <br>
+                                            {{ $actividad->tema }}</span> <br>
                                         <span class="my-1"> <strong>Fecha de la
-                                                actividad:</strong> 2021-03-11 <i class="far fa-arrow-alt-circle-right" aria-hidden="true"></i>
-                                            2021-03-05</span><br>
+                                                actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
                                         <span class="my-1"> <strong> Tipo de actividad:</strong>
-                                            Puertas abiertas</span><br>
-                                        <span class="my-1"> <strong>Estado:</strong></span>
-                                        <span class=" bg-info text-dark font-weight-bold px-2 rounded">Para
-                                            ejecución</span>
+                                            {{ $actividad->actividadPromocion->tipo_actividad }}</span><br>
+                                        <span class="my-1"> <strong>Estado:</strong> </span>
+                                        @if ( $actividad->estado == 'Para ejecución' )
+                                        <span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'Cancelada')
+                                        <span class=" bg-danger text-white px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'En progreso')
+                                        <span class=" bg-warning text-dark px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'Ejecutada')
+                                        <span class=" bg-success text-white px-2 rounded">{{ $actividad->estado  }}</span>
+
+                                        @endif
                                     </div>
 
 
@@ -231,11 +238,11 @@ Asistencia a
 
                         </div>
                         <div class="card-footer">
-                            <div class="d-flex justify-content-center" >
+                            <div class="d-flex justify-content-center">
                                 <input type="button" id="agregar-submit2" value="Agregar" class="btn btn-rojo btn-lg">
                             </div>
                         </div>
-                        <input type="submit" id="submitStore"value="" style="display: none;">
+                        <input type="submit" id="submitStore" value="" style="display: none;">
                     </div>
                 </form>
             </div>
@@ -325,7 +332,7 @@ Asistencia a
                                         </strong>
                                     </td>
                                     <td>
-                                        <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}"class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
+                                        <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
                                             &nbsp;Detalle</button>
                                     </td>
                                     <form action="{{ route('asistencia-promocion.destroy' ,$participante->cedula) }}" method="post">
