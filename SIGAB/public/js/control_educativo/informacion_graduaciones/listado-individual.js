@@ -45,7 +45,7 @@ $("#terminar-edicion").hide();
 
 $("#habilitar-edicion").on("click", function() {
     $("input").removeAttr("disabled");
-    $("select").removeAttr("disabled"); //agregado
+    $("select").removeAttr("disabled");
     $("textarea").removeAttr("disabled");
     $("#terminar-edicion").show();
     $("#cancelar-edicion").show();
