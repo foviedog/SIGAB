@@ -1,15 +1,17 @@
 /* Desaparece el mensaje de éxito */
-$("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
-    $("#mensaje-exito").slideUp(500);
-});
+$("#mensaje-exito")
+    .fadeTo(2000, 500)
+    .slideUp(500, function() {
+        $("#mensaje-exito").slideUp(500);
+    });
 
 /* Botón cancelar y cerrar campos */
 function cancelarEdicion() {
-    $("input").attr('disabled', "disabled");
-    $("textarea").attr('disabled', "disabled");
-    $('#terminar-edicion').hide();
-    $('#cancelar-edicion').hide();
-    $('#habilitar-edicion').show();
+    $("input").attr("disabled", "disabled");
+    $("textarea").attr("disabled", "disabled");
+    $("#terminar-edicion").hide();
+    $("#cancelar-edicion").hide();
+    $("#habilitar-edicion").show();
 }
 
 /* Variable global que guarda el id de la graduación que se va a
@@ -18,10 +20,10 @@ let id_graduacion;
 
 /* Petición al servidor de la información sobre la graduación a desplegar
    en el modal */
-$('#detalle-graduacion-modal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Botón que abre el modal
-    var id = button.data('idgraduacion')   // Se estrae el id de la graduación
-    id_graduacion = id;                    // Se guarda el id de la graduación abierta en la variable global
+$("#detalle-graduacion-modal").on("show.bs.modal", function(event) {
+    var button = $(event.relatedTarget); // Botón que abre el modal
+    var id = button.data("idgraduacion"); // Se estrae el id de la graduación
+    id_graduacion = id; // Se guarda el id de la graduación abierta en la variable global
 
     //Método en AJAX que trae la información de la graduación desde el servidor
     $.ajax({
@@ -29,41 +31,42 @@ $('#detalle-graduacion-modal').on('show.bs.modal', function (event) {
         type: "GET",
         success: function(response) {
             if (response) {
-
-                $('#grado_academico').val(response.grado_academico);
-                $('#carrera_cursada').val(response.carrera_cursada);
-                $('#anio_graduacion').val(response.anio_graduacion);
-
+                $("#grado_academico").val(response.grado_academico);
+                $("#carrera_cursada").val(response.carrera_cursada);
+                $("#anio_graduacion").val(response.anio_graduacion);
             }
         }
     });
-
 });
 
 /* Funcionalidades para habilitar y deshaibilitar los campos de texto del modal */
-$('#cancelar-edicion').hide();
-$('#terminar-edicion').hide();
+$("#cancelar-edicion").hide();
+$("#terminar-edicion").hide();
 
-$('#habilitar-edicion').on('click', function () {
-    $("input").removeAttr('disabled');
-    $("textarea").removeAttr('disabled');
-    $('#terminar-edicion').show();
-    $('#cancelar-edicion').show();
-    $('#habilitar-edicion').hide();
+$("#habilitar-edicion").on("click", function() {
+    $("input").removeAttr("disabled");
+    $("select").removeAttr("disabled"); //agregado
+    $("textarea").removeAttr("disabled");
+    $("#terminar-edicion").show();
+    $("#cancelar-edicion").show();
+    $("#habilitar-edicion").hide();
 });
 
-$('#cancelar-edicion').on('click', function () {
-    $("input").attr('disabled',"disabled");
-    $("textarea").attr('disabled', "disabled");
-    $('#terminar-edicion').hide();
-    $('#cancelar-edicion').hide();
-    $('#habilitar-edicion').show();
+$("#cancelar-edicion").on("click", function() {
+    $("input").attr("disabled", "disabled");
+    $("textarea").attr("disabled", "disabled");
+    $("#terminar-edicion").hide();
+    $("#cancelar-edicion").hide();
+    $("#habilitar-edicion").show();
 });
 
 /* Funcion que actualiza los datos ingresados */
 function actualizar() {
-    $('#form-actualizar').attr('action', '/estudiante/graduacion/actualizar/' + id_graduacion);
-    $('#form-actualizar').trigger("submit");
+    $("#form-actualizar").attr(
+        "action",
+        "/estudiante/graduacion/actualizar/" + id_graduacion
+    );
+    $("#form-actualizar").trigger("submit");
 }
 
 /*Contador de caracteres de Grado Académico */
