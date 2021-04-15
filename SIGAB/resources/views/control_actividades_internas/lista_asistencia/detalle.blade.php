@@ -21,9 +21,8 @@ Asistencia a
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
-            <div>
-
-                <h3>Lista de asistencia </h3>
+            <div class=" d-flex justify-content-start align-items-center">
+                <h3>Lista de asistencia</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
             </div>
             {{-- Botones superiores --}}
             <div>

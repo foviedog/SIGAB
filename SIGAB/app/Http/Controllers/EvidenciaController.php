@@ -83,7 +83,7 @@ class EvidenciaController extends Controller
             return redirect()->route('evidencias.show', $actividadId)->with('mensaje', $mensaje);
         }
 
-        return view('control_actividades_internas.evidencias.detalle', [
+        return view('evidencias.detalle', [
             'actividad' => $actividad,
             'paginaciones' => $paginaciones,
             'itemsPagina' => $itemsPagina,

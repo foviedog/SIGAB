@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Reportes y estadísticas
+Reportes actividades
 @endsection
 
 
@@ -18,9 +18,7 @@ Reportes y estadísticas
 @php
 
 
-
-
-
+$estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 @endphp
 
@@ -35,7 +33,7 @@ Reportes y estadísticas
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
-                <h3>Reportes y estadísticas</span>
+                <h3>Reportes y estadísticas de actividades</span>
             </div>
         </div>
         <hr>
@@ -55,17 +53,12 @@ Reportes y estadísticas
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#actividades-tab">Actividades</a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#involucramiento-tab">Involucramiento</a>
-            </li>
         </ul>
 
         <div class="container-fluid pb-5">
             <div class="tab-content pb-5">
                 <div role="tabpanel" class="tab-pane fade in active show" id="actividades-tab">
                     <div id="cartas-activida" class="row d-flex justify-content-between px-3 mt-4">
-
                         <div class="card-info">
                             <div class="icon-info">
                                 <div class="icon-inner">
@@ -75,7 +68,7 @@ Reportes y estadísticas
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info">Internas</div>
-                                    <div class="numero-info">288</div>
+                                    <div class="numero-info">{{ $datosCuantitativos[0] ?? 0 }}</div>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +81,7 @@ Reportes y estadísticas
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info">Promoción</div>
-                                    <div class="numero-info"> 150 </div>
+                                    <div class="numero-info"> {{ $datosCuantitativos[1] ?? 0 }} </div>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +94,7 @@ Reportes y estadísticas
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info"> Total </div>
-                                    <div class="numero-info"> 438 </div>
+                                    <div class="numero-info"> {{ $datosCuantitativos[0] + $datosCuantitativos[2] ?? 0 }} </div>
                                 </div>
                             </div>
                         </div>
@@ -114,53 +107,83 @@ Reportes y estadísticas
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info"> Responsables </div>
-                                    <div class="numero-info"> 14 </div>
+                                    <div class="numero-info">{{ $datosCuantitativos[2] ?? 0 }} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid mt-5 pt-2 graficos-especificos">
+                        <div class="row ">
+                            <div class="col d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio">
+                                    <h3>Propósitos de actividades 2021</h3>
+                                </div>
+                                <div class=" grafico-container w-100">
+                                    <div id="grafico_proposito">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col d-flex flex-column justify-content-start align-items-center">
+                                <div class="display-5 w-75 texto-rojo-medio">
+                                    <h3>Estados de actividades 2021</h3>
+                                </div>
+                                <div class="grafico-container w-75">
+                                    <div id="grafico_estados">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {{--Grafico --}}
-                    <div class="row d-flex justify-content-center pt-5 pb-5">
-                        <div class="w-50">
+                    <div class="row d-flex justify-content-center pt-5 pb-5 border-top">
+                        <div class="display-5 w-75 texto-rojo-medio" id="graficoGenerado">
+                            <h2>Generación de gráficos y reportes</h2>
+                        </div>
+                        <div class="w-75">
                             <div id="chart"></div>
                         </div>
                     </div>
 
                     <form action="/reportes/resultado" method="GET" enctype="multipart/form-data" id="formulario-reporte">
-
                         <div class="row d-flex justify-content-center mb-3">
                             <div class="w-75">
                                 <div class="row d-flex justify-content-center mb-3">
                                     <select class="col-4 custom-select mr-3" id="actividad" name="actividad_naturaleza" class="form-control">
-                                        <option value="Actividad interna">Actividad interna</option>
-                                        <option value="Actividad de promoción">Actividad de promoción</option>
+                                        <option value="Actividad interna" @if ($naturalezaAct=="Actividad interna" ) selected @endif>Actividad interna</option>
+                                        <option value="Actividad de promoción" @if ($naturalezaAct=="Actividad de promoción" ) selected @endif>Actividad de promoción</option>
                                     </select>
 
                                     <select class="col-4 custom-select mr-3" id="tipo-actividad-int" name="tipo_actividad_int" class="form-control">
+                                        <option value="">Todos los tipos</option>
                                         @foreach($tip_act_int as $tipo)
-                                        <option value={{ $tipo }}>{{ $tipo }}</option>
+                                        <option value='{{ $tipo }}' @if ($tipoAct==$tipo) selected @endif>{{ $tipo }}</option>
                                         @endforeach
                                     </select>
 
                                     <select class="col-4 custom-select mr-3" id="tipo-actividad-prom" name="tipo_actividad_prom" class="form-control">
+                                        <option value="">Todos los tipos</option>
                                         @foreach($tip_act_prom as $tipo)
-                                        <option value={{ $tipo }}>{{ $tipo }}</option>
+                                        <option value='{{ $tipo }}' @if ($tipoAct==$tipo) selected @endif>{{ $tipo }}</option>
                                         @endforeach
                                     </select>
+
                                     <select class="col-2 custom-select mr-3" id="estado" name="estado_actividad" class="form-control">
-                                        <option value="Para ejecución">Para ejecución</option>
-                                        <option value="En progreso">En progreso</option>
-                                        <option value="Ejecutada">Ejecutada</option>
-                                        <option value="Cancelada">Cancelada</option>
+                                        <option value="">Todos los estados</option>
+                                        @foreach($estados as $estado)
+                                        <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
                                 <div class="row d-flex justify-content-center">
 
                                     <div class="col-7 input-group mr-3">
-                                        <input type="month" name="mes_inicio" class="form-control">
-                                        <input type="month" name="mes_final" class="form-control">
+                                        <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}'>
+                                        <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}'>
                                     </div>
 
                                     <select class="col-3 custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
@@ -243,11 +266,6 @@ Reportes y estadísticas
                             </div>
                         </div>
                     </div>
-
-                </div>
-
-                <div role="tabpanel" class="tab-pane fade" id="involucramiento-tab">
-                    <div class="alert alert-info">involucramiento-tab</div>
                 </div>
             </div>
         </div>
@@ -258,25 +276,47 @@ Reportes y estadísticas
 
     </div>
 </div>
-
-
 @endsection
 
 
 @section('scripts')
+@if(!is_null($datos))
+//Datos que se renderisan en caso de que se haya realizado una búsqueda para generar el gráfico dinámico
 <script>
+    let dataSet = JSON.parse('{!! $datos !!}');
+    console.log(dataSet[1]);
+    let x = [];
+    let y = [];
+    let naturalezaActividad = '{{ $naturalezaAct }}';
+
+    // Ciclo que recorre cada uno de los resultados de la búsqueda y los coloca en posiciones
+    //'X' y 'Y' para que se pueda renderizar el gráfico correspondiente
+    var total = 0;
+    for (const atributo in dataSet) {
+        if (dataSet[atributo] != 0) {
+            x.push(atributo);
+            y.push(dataSet[atributo]);
+            total++;
+        }
+    }
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+    var url = window.location.href;
+    window.location.href = url + "#graficoGenerado";
 
-    let x = ['Noviembre', 'Diciembre', 'Enero'];
-    //let tipActInt = @json($tip_act_int);
-    //let tipActProm = @json($tip_act_prom);
-    let y = [50, 17, 26];
-    let total = 93;
+</script>
+@else //En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados
+<script>
+    let dataSet = [];
+    let naturalezaActividad = "Actividad interna";
+    let total = 0;
 
 </script>
 
+@endif
 <script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
+<script src="{{ asset('js/reportes/graficos_predeterminados.js') }}" defer></script>
+
 <script src="{{ asset('js/reportes/'.$chart.'.js') }}" defer></script>
 
 

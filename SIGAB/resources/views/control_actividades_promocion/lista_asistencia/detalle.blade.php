@@ -20,15 +20,13 @@ Asistencia a
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título --}}
-            <div>
-
-                <h3>Lista de asistencia de Promoción</h3>
+            <div class=" d-flex justify-content-start align-items-center">
+                <h3>Lista de asistencia</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
             </div>
             {{-- Botones superiores --}}
             <div>
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-promocion.show', $actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
-
             </div>
         </div>
         <hr>
@@ -231,11 +229,11 @@ Asistencia a
 
                         </div>
                         <div class="card-footer">
-                            <div class="d-flex justify-content-center" >
+                            <div class="d-flex justify-content-center">
                                 <input type="button" id="agregar-submit2" value="Agregar" class="btn btn-rojo btn-lg">
                             </div>
                         </div>
-                        <input type="submit" id="submitStore"value="" style="display: none;">
+                        <input type="submit" id="submitStore" value="" style="display: none;">
                     </div>
                 </form>
             </div>
@@ -325,7 +323,7 @@ Asistencia a
                                         </strong>
                                     </td>
                                     <td>
-                                        <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}"class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
+                                        <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
                                             &nbsp;Detalle</button>
                                     </td>
                                     <form action="{{ route('asistencia-promocion.destroy' ,$participante->cedula) }}" method="post">

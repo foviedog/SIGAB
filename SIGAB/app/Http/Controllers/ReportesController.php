@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actividades_interna;
 use App\ActividadesPromocion;
+use App\Actividades;
 
 class ReportesController extends Controller
 {
@@ -14,11 +15,27 @@ class ReportesController extends Controller
         $chart = "bar";
         $tip_act_int = $this->devolverTipos(0);
         $tip_act_prom = $this->devolverTipos(1);
+        $datos = null;
+        $datosCuantitativos = $this->datosCuantitativosActividades();
+        $naturalezaAct = request('actividad_naturaleza', null);
+        $estadoActividad = request('estado_actividad', null);
+        $mesInicio = request('mes_inicio', null);
+        $mesFinal = request('mes_final', null);
+        $chart = request('tipo_grafico', null);
+        $tipoAct = request('tipo_actividad_int', null);
 
         return view('reportes.detalle', [
             'chart' => $chart,
             'tip_act_int' => $tip_act_int,
-            'tip_act_prom' => $tip_act_prom
+            'tip_act_prom' => $tip_act_prom,
+            'datos' => $datos,
+            'datosCuantitativos' => $datosCuantitativos,
+            'naturalezaAct' => $naturalezaAct,
+            'tipoAct' => $tipoAct,
+            'mesInicio' => $mesInicio,
+            'mesFinal' => $mesFinal,
+            'estadoActividad' => $estadoActividad,
+            'chart' => $chart,
         ]);
     }
 
@@ -32,25 +49,34 @@ class ReportesController extends Controller
 
 
         $naturalezaAct = $request->actividad_naturaleza;
-        $estado_actividad = $request->estado_actividad;
-        $mes_inicio = $request->mes_inicio;
-        $mes_final = $request->mes_final;
+        $estadoActividad = $request->estado_actividad;
+        $mesInicio = $request->mes_inicio;
+        $mesFinal = $request->mes_final;
         $chart = $request->tipo_grafico;
-        $tipoAct = null;
+
         if ($naturalezaAct == "Actividad interna") {
             $tipoAct = $request->tipo_actividad_int;
         } else {
             $tipoAct = $request->tipo_actividad_prom;
         }
-        $datos = $this->obtenerDatos($mes_inicio, $mes_final, $naturalezaAct, $tipoAct, $estado_actividad);
 
+        $datos = $this->obtenerDatos($mesInicio, $mesFinal, $naturalezaAct, $tipoAct, $estadoActividad);
+        $datosCuantitativos = $this->datosCuantitativosActividades();
         return view('reportes.detalle', [
             'chart' => $chart,
             'tip_act_int' => $tip_act_int,
             'tip_act_prom' => $tip_act_prom,
-            'datos' => $datos
+            'datos' => json_encode($datos, JSON_UNESCAPED_SLASHES),
+            'datosCuantitativos' => $datosCuantitativos,
+            'naturalezaAct' => $naturalezaAct,
+            'tipoAct' => $tipoAct,
+            'mesInicio' => $mesInicio,
+            'mesFinal' => $mesFinal,
+            'estadoActividad' => $estadoActividad,
+            'chart' => $chart,
         ]);
     }
+
     public function obtenerDatos($mes_inicio, $mes_final, $naturalezaAct, $tipo, $estado)
     {
         $anio_ini = (int)substr($mes_inicio, 0, 4);
@@ -69,17 +95,16 @@ class ReportesController extends Controller
         } else if ($DA >= 1) {
             $anios_completos = $DA - 1;
             $anio = $anio_ini;
-
             //? Primer extremo
             for ($i = $mes_ini; $i <= 12; $i++) {
                 $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos);
             }
-            $anio++; //?Se amuenta el año
 
+            $anio++; //?Se amuenta el año
             //?Años intermedios que se deben contar COMPLETOS (Todos los 12 meses del año)
             for ($i = 1; $i <= $anios_completos; $i++) {
-                for ($j = 1; $j <= 12; $i++) {
-                    $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos);
+                for ($j = 1; $j <= 12; $j++) {
+                    $this->agregarDatos($j, $naturalezaAct, $anio, $estado, $tipo, $datos);
                 }
                 $anio++;
             }
@@ -89,18 +114,19 @@ class ReportesController extends Controller
                 $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos);
             }
         }
-        dd($datos);
+
+        // dd($datos);
         return $datos;
     }
 
-    private function agregarDatos($mes, $naturalezaAct, $anio, $estado, $tipo, &$datos)
+    private function agregarDatos($mes, $naturalezaAct, &$anio, $estado, $tipo, &$datos)
     {
         if ($naturalezaAct == "Actividad interna") {
             $actvidadesPorMes = $this->cantActividadInterPorMes($mes, $anio, $estado, $tipo);
         } else {
             $actvidadesPorMes = $this->cantActividadPromPorMes($mes, $anio, $estado, $tipo);
         }
-        array_push($datos, $anio . "-" . $mes, $actvidadesPorMes);
+        $datos[$anio . "-" . $mes] =  $actvidadesPorMes;
     }
 
 
@@ -119,10 +145,8 @@ class ReportesController extends Controller
         $fecha_fin = $anio  . "-" . $mesStrFin . "-01";
 
         if ($mes == 12) {
-            $mesStrFin = "01";
-            $fecha_fin =  $anio + 1 . "-01" . "-01";
+            $fecha_fin =  $anio . "-12" . "-31";
         }
-
         $cantAct = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->Where('actividades.estado', 'like', '%' .   $estado . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
@@ -131,22 +155,33 @@ class ReportesController extends Controller
             ->count();
         return $cantAct;
     }
-    //!ARREGLAR ESTO
+
     public function cantActividadPromPorMes($mes, $anio, $estado, $tipo)
     {
-        $fecha_ini = $anio . "-0" . $mes . "-01";
-        $fecha_fin = $anio . "-0" . $mes . 1 . "-01";
+        $mesIni = (int)$mes;
+        $mesFin = $mesIni + 1;
+        $mesStr = (string)$mes;
+        $mesStrFin = (string)($mesFin);
 
-        $$cantAct = ActividadesPromocion::join('actividades', 'activiades_promocion.actividad_id', '=', 'actividades.id')
+        if ($mes < 9) {
+            $mesStr = "0" . $mesStr;
+            $mesStrFin = "0" . $mesFin;
+        }
+        $fecha_ini = $anio . "-" . $mesStr . "-01";
+        $fecha_fin = $anio  . "-" . $mesStrFin . "-01";
+
+        if ($mes == 12) {
+            $fecha_fin =  $anio . "-12" . "-31";
+        }
+        $cantAct = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->Where('actividades.estado', 'like', '%' .   $estado . '%')
-            ->Where('activiades_promocion.tipo_actividad', 'like', '%' .   $tipo . '%')
+            ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo . '%')
             ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
             ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
             ->count();
 
         return  $cantAct;
     }
-
 
 
 
@@ -167,5 +202,15 @@ class ReportesController extends Controller
                     "Envío de paquetes promocionales por correo electrónico", "Charlas", "Otro"
                 ];
         }
+    }
+
+    private function datosCuantitativosActividades()
+    {
+        $cantPromocion = ActividadesPromocion::count(); //Obtiene la cantidad de acitvidades de promoción que se han realizado
+        $cantInternas = Actividades_interna::count(); //Obtiene la cantidad de actividades internas que se han realizado
+        $cantResponsables = Actividades::distinct('responsable_coordinar')
+            ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->count('responsable_coordinar'); //Obtiene la cantidad de responsables de actividades a lo largo del tiempo, únicamente
+        return [$cantPromocion, $cantInternas, $cantResponsables];
     }
 }

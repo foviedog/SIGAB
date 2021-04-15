@@ -2,9 +2,7 @@
     DEMO STYLE
 */
 
-a,
-a:hover,
-a:focus {
+a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
@@ -15,7 +13,6 @@ a:focus {
     background: #fff;
     border: none;
     border-radius: 0;
-    margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -32,8 +29,7 @@ a:focus {
     margin: 40px 0;
 }
 
-i,
-span {
+i, span {
     display: inline-block;
 }
 
@@ -47,6 +43,7 @@ span {
 }
 
 /* Barra de lado desplegada */
+
 #sidebar {
     min-width: 230px;
     max-width: 230px;
@@ -55,6 +52,7 @@ span {
 }
 
 /* Barra de lado sin desplegar */
+
 #sidebar.active {
     min-width: 130px;
     max-width: 130px;
@@ -62,12 +60,13 @@ span {
 }
 
 /* Eliminar formato de elementos */
-#sidebar.active .sidebar-header h3,
-#sidebar.active .CTAs {
+
+#sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
     display: none;
 }
 
 /* Cambiar la forma en la que se ven los componentes cuando no está desplegada */
+
 #sidebar.active .sidebar-header strong {
     display: block;
 }
@@ -75,6 +74,7 @@ span {
 /*----------------------------------------
  Formato de letras con menú sin desplegar
  ----------------------------------------*/
+
 #sidebar ul li a {
     text-align: left;
 }
@@ -106,45 +106,54 @@ span {
 }
 
 /* Encabezado de la barra de lado desplegada*/
+
 #sidebar .sidebar-header {
     padding: 20px;
 }
 
 /* Encabezado de la barra de lado sin desplegar */
+
 #sidebar .sidebar-header .short {
     display: none;
     font-size: 1.8em;
 }
 
 /* Linea separadora */
+
 #sidebar ul.components {
     padding: 20px 0;
     /*border-bottom: 1px solid #d4d4d4;*/
 }
 
 /* Items del navbar */
+
 #sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
+
 /* Cambio de color en items del navbar */
+
 #sidebar ul li a:hover {
     color: #e3302d;
     background: #fff;
 }
 
 /* Felcha del desplegable */
+
 #sidebar ul li a i {
     margin-right: 10px;
 }
 
 /* Desplegar barra lateral */
+
 a[data-toggle="collapse"] {
     position: relative;
 }
 
 /* Animación y cambio en el menú sin desplegar */
+
 .link-drop-sidebar::after {
     display: block;
     position: absolute;
@@ -154,11 +163,13 @@ a[data-toggle="collapse"] {
 }
 
 /* Subitems de menú */
+
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #680c0d;
 }
+
 .logo {
     max-width: 60px;
     margin-left: 10px;
@@ -171,7 +182,7 @@ Estilo del body
 
 #content {
     width: 100%;
-    padding: 20px;
+    padding: 1rem;
     min-height: 100vh;
     transition: all 0.3s;
 }
@@ -179,6 +190,7 @@ Estilo del body
 /* -------------------------------------------------------
     Letras de SIGAB de la barra de información de arriba
 ---------------------------------------------------------- */
+
 .texto-SIGAB {
     font-weight: 700;
     font-size: 25px;
@@ -189,6 +201,7 @@ Estilo del body
 .logo-una-horizontal {
     max-width: 180px !important;
 }
+
 /* ---------------------------------------------------
     MEDIAQUERIES - Responsive
 ----------------------------------------------------- */
@@ -211,8 +224,7 @@ Estilo del body
     #sidebar.active {
         margin-left: 0 !important;
     }
-    #sidebar .sidebar-header h3,
-    #sidebar .CTAs {
+    #sidebar .sidebar-header h3, #sidebar .CTAs {
         display: none;
     }
     #sidebar .sidebar-header strong {

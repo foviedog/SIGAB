@@ -7,6 +7,14 @@ html, body, html * {
     font-family: "Roboto", sans-serif;
 }
 
+td {
+    font-size: 17px;
+}
+
+th {
+    font-size: 17px;
+}
+
 /* ====================================================
 Paleta de colores para todo SIGAB
 ==================================================== */
@@ -645,3 +653,7 @@ Fin de la paleta de colores
     font-weight: bold;
     color: #222;
 }
+
+/* **********************************************
+        SECCIÓN DE GRÁFICOS Y REPORTES
+********************************************** */

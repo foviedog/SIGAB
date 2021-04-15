@@ -2,42 +2,50 @@
 // Funcionalidades basicas
 //-----------------------------------------
 
-cargarTipos();
-mostrarTipos(0);
 
-function cargarTipos(){
+if (naturalezaActividad === undefined) {
+    naturalezaActividad = "Actividad interna";
+}
+if (naturalezaActividad === 'Actividad interna') {
+    mostrarTipos(0);
+} else {
+    mostrarTipos(1);
+}
+
+cargarTipos();
+
+
+function cargarTipos() {
     let select = $("#actividad");
-    select.on('change', function() {   
+    select.on('change', function () {
         let val = select.val();
-        if(val === "Seleccionar") limpiarTipos();
+        if (val === "Seleccionar") limpiarTipos();
         else {
-            if(val === "Actividad interna") {
+            if (val === "Actividad interna") {
                 mostrarTipos(0);
             }
-                
-            if(val === "Actividad de promoción") 
+            if (val === "Actividad de promoción")
                 mostrarTipos(1);
         }
 
     });
 }
 
-function mostrarTipos(tipo){
-    switch(tipo){
+function mostrarTipos(tipo) {
+    switch (tipo) {
         case 0:
             $("#tipo-actividad-prom").hide();
             $("#tipo-actividad-int").show();
             break;
-        
-        case 1: 
+        case 1:
             $("#tipo-actividad-int").hide();
             $("#tipo-actividad-prom").show();
             break;
-        
+
     }
 }
 
-function enviar(){
+function enviar() {
     $("#formulario-reporte").submit();
 }
 
@@ -49,11 +57,11 @@ let locales = [{
     "name": "es",
     "options": {
         "months": [
-            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
         ],
         "shortMonths": [
-            "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+            "Ene", "Feb", "Mar", "Abr", "May", "Jun",
             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
         ],
         "days": [
@@ -61,7 +69,7 @@ let locales = [{
             "Jueves", "Viernes", "Sábado"
         ],
         "shortDays": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-            "toolbar": {
+        "toolbar": {
             "exportToSVG": "Descargar SVG",
             "exportToPNG": "Descargar PNG",
             "exportToCSV": "Descargar CSV",
@@ -85,7 +93,7 @@ let grid = {
         lines: {
             show: true
         }
-    },   
+    },
     yaxis: {
         lines: {
             show: true
@@ -94,3 +102,5 @@ let grid = {
 };
 
 let nameSeries = "Total"
+
+

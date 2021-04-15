@@ -26,7 +26,7 @@ $tiposDocumentos =
 
 @endphp
 
-@include('control_actividades_internas.evidencias.info')
+@include('evidencias.info')
 <div class="card">
     <div class="loader-full-page" id="loader-full" style="display: none;">
         <div class="loader-wrapper d-flex justify-content-center align-items-center">
@@ -44,14 +44,18 @@ $tiposDocumentos =
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
-            <div>
-
-                <h3>Lista de evidencias </h3>
+            <div class=" d-flex justify-content-start align-items-center">
+                <h3>Lista de evidencias </h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
             </div>
             {{-- Botones superiores --}}
             <div>
+                @if(!is_null($actividad->actividadInterna))
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @else
+                {{-- Botón para regresar al listado de actividades --}}
+                <a href="{{ route('actividad-promocion.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @endif
                 {{-- Boton que habilita opcion de agregar evidencia --}}
                 <button href="" class="btn btn-rojo" id="btn-agregar-evid"> Añadir evidencia &nbsp; <i class="fas fa-plus-circle"></i> </button>
             </div>
@@ -104,9 +108,11 @@ $tiposDocumentos =
                                 <div class="col-7 border-left d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div class="overflow-auto">
                                         <span class="my-1" style='width: 134%; '> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
+                                        @if(!is_null($actividad->actividadInterna))
                                         <span class="my-1" style='width: 134%; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
+                                        <span class="my-1"> <strong> Tipo de actividad:</strong> {{$actividad->actividadInterna->tipo_actividad }}</span><br>
+                                        @endif
                                         <span class="my-1" style='width: 120%; '> <strong>Fecha de la actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
-                                        <span class="my-1"> <strong> Tipo de actividad:</strong> {{ $actividad->actividadInterna->tipo_actividad }}</span><br>
                                         <span class="my-1"> <strong>Estado:</strong></span>
                                         @if ( $actividad->estado == 'Para ejecución' )
                                         <span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividad->estado  }}</span>

@@ -11,7 +11,7 @@ var options = {
         locales: locales,
         defaultLocale: "es"
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: y
