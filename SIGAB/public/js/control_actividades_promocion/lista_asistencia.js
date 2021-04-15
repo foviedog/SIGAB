@@ -29,7 +29,6 @@ function ocultarElementos() {
 // =================================================================
 function eventos() {
     evtAgregarParticipante2();
-
     evtListarTodo();
 }
 
@@ -40,7 +39,7 @@ function eventos() {
 // Detalle del participante de la actividad
 
 function llenarModalParticipante(participante) {
-    $("#id-info").html(participante.id);
+    $("#id-info").html(participante.cedula);
     $("#nombre-info").html(participante.nombre + " " + participante.apellidos);
     $("#correo-info").html(participante.correo);
     $("#celular-info").html(participante.numero_telefono);
@@ -93,9 +92,10 @@ function evtListarTodo() {
 //Función encargada de enviar los datos del participante a agregar
 // =================================================================
 function evtAgregarParticipante2() {
-
+    console.log(5);
     $("#agregar-submit2").on("click", function(e) {
-        $("#loader").show();
+        $("#nuevoParticipante").hide();////
+        $("#loader").show();      
         $("#submitStore").trigger("click");
     });
 }

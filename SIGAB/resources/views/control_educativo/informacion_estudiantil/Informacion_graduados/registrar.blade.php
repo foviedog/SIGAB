@@ -90,7 +90,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
                         <label for="grado_academico">Grado académico <i class="text-danger">*</i></label>
                         <span class="text-muted ml-2" id="mostrar_grado_academico"></span>
                     </div>
-                    <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal-form" required>
+                    <select class="form-control w-100" id="grado_academico" name="grado_academico" required>
                         <option value="" selected>Seleccione</option>
                         <option value="Diplomado"> Diplomado</option>
                         <option value="Bachillerato"> Bachillerato </option>

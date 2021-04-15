@@ -77,15 +77,22 @@ Asistencia a
                                 <div class="col-12 border-top d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div class="w-100">
                                         <span class="my-1"> <strong>Nombre de actividad:</strong>
-                                            ghdgdsrf</span> <br>
+                                            {{ $actividad->tema }}</span> <br>
                                         <span class="my-1"> <strong>Fecha de la
-                                                actividad:</strong> 2021-03-11 <i class="far fa-arrow-alt-circle-right" aria-hidden="true"></i>
-                                            2021-03-05</span><br>
+                                                actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
                                         <span class="my-1"> <strong> Tipo de actividad:</strong>
-                                            Puertas abiertas</span><br>
-                                        <span class="my-1"> <strong>Estado:</strong></span>
-                                        <span class=" bg-info text-dark font-weight-bold px-2 rounded">Para
-                                            ejecución</span>
+                                            {{ $actividad->actividadPromocion->tipo_actividad }}</span><br>
+                                        <span class="my-1"> <strong>Estado:</strong> </span>
+                                        @if ( $actividad->estado == 'Para ejecución' )
+                                        <span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'Cancelada')
+                                        <span class=" bg-danger text-white px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'En progreso')
+                                        <span class=" bg-warning text-dark px-2 rounded">{{ $actividad->estado  }}</span>
+                                        @elseif($actividad->estado == 'Ejecutada')
+                                        <span class=" bg-success text-white px-2 rounded">{{ $actividad->estado  }}</span>
+
+                                        @endif
                                     </div>
 
 
@@ -96,22 +103,23 @@ Asistencia a
 
                 </div>
             </div>
-            <div class="col-6 ">
+            <div class="col-6"   id="nuevoParticipante">
                 <form action="{{ route('asistencia-promocion.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
                     <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">
-                    <div class="card shadow">
-                        <div class="card-header ">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
-                                    </h6>
-                                </div>
-
+                    
+                    <div class="card-header ">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
+                                </h6>
                             </div>
+
                         </div>
-                        <div class="card-body ">
+                    </div>
+                    <div class="card shadow" >
+                        <div class="card-body"  >
 
                             <div class="row">
                                 <div class="col">
@@ -237,7 +245,15 @@ Asistencia a
                     </div>
                 </form>
             </div>
-
+            <div class="col-6 " id="loader" style="display:none;">
+                <div class="d-flex justify-content-center mt-2 mb-4">
+                    <h4 class="texto-rojo-oscuro">Agregando participante a la lista </h4>
+                </div>
+                <div class="loader-container d-flex justify-content-center">
+                    <div class="loader1"></div>
+                    <div class="loader2"> </div>
+                </div>
+            </div>
 
 
         </div>

@@ -74,6 +74,8 @@ class AsistenciaPromocionController extends Controller
                 return redirect()->route('asistencia-promocion.show', request()->acitividad_id)->with('mensaje', $mensaje);
            // return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
+            $mensaje = "error";
+            return redirect()->route('asistencia-promocion.show', request()->acitividad_id)->with('mensaje', $mensaje);
            // return response("No existe", 404);
         }
     }

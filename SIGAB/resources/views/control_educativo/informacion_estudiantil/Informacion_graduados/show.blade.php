@@ -35,8 +35,8 @@ Graduaciones de {{ $estudiante->persona->nombre }}
 
                         {{-- Formulario para actualizar informacion de la graduación --}}
                         <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
-                        @csrf
-                        @method('PATCH')
+                            @csrf
+                            @method('PATCH')
 
                             <div class="d-flex justify-content-center flex-column">
                                 {{-- Campo: Grado académico --}}
@@ -45,7 +45,15 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                         <label for="grado_academico">Grado académico <i class="text-danger">*</i></label>
                                         <span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span>
                                     </div>
-                                    <input type='text' class="form-control" id="grado_academico" name="grado_academico" onkeyup="contarCarGradoAcademico(this)" required disabled>
+                                    {{-- <input type='text' class="form-control" id="grado_academico" name="grado_academico" onkeyup="contarCarGradoAcademico(this)" required disabled>  --}}
+                                    <select class="form-control w-100" id="grado_academico" name="grado_academico" required disabled>
+                                        <option value="" selected>Seleccione</option>
+                                        <option value="Diplomado"> Diplomado</option>
+                                        <option value="Bachillerato"> Bachillerato </option>
+                                        <option value="Licenciatura"> Licenciatura </option>
+                                        <option value="Maestría"> Maestría </option>
+                                        <option value="Doctorado"> Doctorado </option>
+                                    </select>
                                 </div>
 
                                 {{-- Campo: Carrera cursada--}}
@@ -94,9 +102,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
         {{-- Mensaje de exito
             (solo se muestra si ha sido exitoso la edicion) --}}
         @if(Session::has('exito'))
-            <div class="alert alert-success" role="alert" id="mensaje-exito">
-                {!! \Session::get('exito') !!}
-            </div>
+        <div class="alert alert-success" role="alert" id="mensaje-exito">
+            {!! \Session::get('exito') !!}
+        </div>
         @endif
 
         {{-- Contenedor de la tabla --}}
@@ -119,7 +127,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                         </thead>
                         <tbody>
-                    {{-- Si no vienen registros --}}
+                            {{-- Si no vienen registros --}}
                             @if(count($graduaciones))
                             {{-- Inserción iterativa de las graduaciones dentro de la tabla --}}
                             @foreach($graduaciones as $graduacion)
@@ -137,12 +145,10 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                             </tr>
                             @endforeach
                             @else
-                                <tr class="cursor-pointer">
-                                    <td colspan="4" > <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
-                                </tr
-                            @endif
-                        </tbody>
-                        {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
+                            <tr class="cursor-pointer">
+                                <td colspan="4"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                            </tr @endif </tbody>
+                            {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <tfoot>
                             <tr>
                                 <th>Grado Académico</th>
