@@ -171,6 +171,14 @@ Route::delete('/lista-asistencia-promocion/{participante_id}', 'AsistenciaPromoc
 // ======================================================================================================================================
 //                                                              GENERACIÓN DE DATOS Y ESTADÍSTICAS
 // ======================================================================================================================================
-Route::get('/reportes', 'ReportesController@show')->name('reportes.show');
-Route::get('/tipos-actividad/{act}', 'ReportesController@devolverTipos')->name('reportes.tipos');
-Route::get('/reportes/resultado', 'ReportesController@resultado')->name('reportes.resultado');
+// ********************************************************
+//        Reportes de actividades
+// ********************************************************
+Route::get('/reportes/actividades', 'ReportesActividadesController@show')->name('reportes-actividades.show');
+Route::get('/reportes/tipos-actividad/{act}', 'ReportesActividadesController@devolverTipos')->name('reportes-actividades.tipos');
+Route::get('/reportes/activdades/resultado', 'ReportesActividadesController@resultado')->name('reportes-actividades.resultado');
+
+// ********************************************************
+//      Reportes de involucramiento del personal
+// ********************************************************
+Route::get('/reportes/involucramiento', 'ReportesInvolucramientoController@show')->name('reportes-involucramiento.show');

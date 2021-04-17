@@ -152,7 +152,7 @@ $ambitos = ['Nacional','Internacional'];
                         <thead>
                             <tr>
                                 <th>ID Actividad</th>
-                                <th>Tema</th>
+                                <th style="width: 19rem;">Tema</th>
                                 <th>ID Coordinador</th>
                                 <th>Estado</th>
                                 <th>Propósito</th>

@@ -138,7 +138,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                         <thead>
                             <tr>
                                 <th>ID Actividad</th>
-                                <th>Tema</th>
+                                <th style="width: 21rem;">Tema</th>
                                 <th>ID Coordinador</th>
                                 <th>Fecha de inicio</th>
                                 <th>Estado</th>

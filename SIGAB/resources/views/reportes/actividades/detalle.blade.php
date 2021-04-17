@@ -22,12 +22,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 @endphp
 
-{{-- Formulario general de actualización de datos de actividad --}}
-{{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
-@method('PATCH')
-{{-- Seguridad de envío de datos --}}
-@csrf
-
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
@@ -116,8 +110,9 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     <div class="container-fluid mt-5 pt-2 graficos-especificos">
                         <div class="row ">
                             <div class="col d-flex flex-column justify-content-center align-items-center">
-                                <div class="header-grafico w-100 texto-rojo-medio">
-                                    <h3>Propósitos de actividades 2021</h3>
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex ">
+                                    <h3>Propósitos de actividades {{ date("Y") }}</h3>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades que se terminan en el 2021 según el propósito" style="font-size: 18px;"></i>
                                 </div>
                                 <div class=" grafico-container w-100">
                                     <div id="grafico_proposito">
@@ -126,8 +121,9 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                                 </div>
                             </div>
                             <div class="col d-flex flex-column justify-content-start align-items-center">
-                                <div class="display-5 w-75 texto-rojo-medio">
-                                    <h3>Estados de actividades 2021</h3>
+                                <div class="display-5 w-75 texto-rojo-medio d-flex">
+                                    <h3>Estados de actividades {{ date("Y") }}</h3>&nbsp;
+                                    <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Gráfico cantidad de actividades según los estados (Incluyendo actividades internas y actividades de promoción)" style="font-size: 18px;"></i>
                                 </div>
                                 <div class="grafico-container w-75">
                                     <div id="grafico_estados">
@@ -148,7 +144,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                         </div>
                     </div>
 
-                    <form action="/reportes/resultado" method="GET" enctype="multipart/form-data" id="formulario-reporte">
+                    <form action="{{ route('reportes-actividades.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
                         <div class="row d-flex justify-content-center mb-3">
                             <div class="w-75">
                                 <div class="row d-flex justify-content-center mb-3">
@@ -200,72 +196,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                         <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
                             <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
                         </div>
-
                     </form>
-
-                    <div class="row  d-flex justify-content-center align-items-center">
-                        <div class="bs-example w-100">
-                            <div class="accordion " id="accordionExample">
-                                <div class="card ">
-                                    <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne">
-                                        <div class="mb-0 display-5 texto-azul-una d-flex justify-content-between align-items-center">
-                                            <h5>Actividades relacionadas</h5>
-                                            <i class="fas fa-chevron-down"></i>
-                                        </div>
-                                    </div>
-                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                                <table class="table my-0" id="dataTable">
-                                                    {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID Actividad</th>
-                                                            <th>Tema</th>
-                                                            <th>ID Coordinador</th>
-                                                            <th>Fecha de inicio</th>
-                                                            <th>Estado</th>
-                                                            <th>Tipo de actividad</th>
-                                                            <td><strong>Ver detalle<br /></strong></td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {{-- Inserción iterativa de las actividades a la tabla --}}
-                                                        <tr id="promocion" class="cursor-pointer">
-                                                            <td>200</td>
-                                                            <td>Un tema de actividad</td>
-                                                            <td>117380366 </td>
-                                                            <td>20 / 03 / 2021 </td>
-                                                            <td>En progreso</td>
-                                                            <td>Simposio</td>
-                                                            <td>
-                                                                {{-- Botón para ver el detalle de la actividad --}}
-                                                                <strong>
-                                                                    <a href="{{ route('actividad-promocion.show',1) }}" class="btn btn-contorno-rojo"> Detalle </a>
-                                                                </strong><br />
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    {{-- Nombre de las columnas en la parte de abajode la tabla --}}
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>ID Actividad</th>
-                                                            <th>Tema</th>
-                                                            <th>ID Coordinador</th>
-                                                            <th>Fecha de inicio</th>
-                                                            <th>Estado</th>
-                                                            <th>Tipo de actividad</th>
-                                                            <td><strong>Ver detalle<br /></strong></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -280,11 +211,11 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 
 @section('scripts')
+
 @if(!is_null($datos))
-//Datos que se renderisan en caso de que se haya realizado una búsqueda para generar el gráfico dinámico
 <script>
+    //Datos que se renderisan en caso de que se haya realizado una búsqueda para generar el gráfico dinámico
     let dataSet = JSON.parse('{!! $datos !!}');
-    console.log(dataSet[1]);
     let x = [];
     let y = [];
     let naturalezaActividad = '{{ $naturalezaAct }}';
@@ -312,12 +243,37 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
     let total = 0;
 
 </script>
-
 @endif
-<script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
-<script src="{{ asset('js/reportes/graficos_predeterminados.js') }}" defer></script>
+<script>
+    let propositosDelAnio = JSON.parse('{!! $propositosDelAnio !!}');
+    let xPropositos = [];
+    let yPropositos = [];
+    let totalPropositos = 0;
+    for (const proposito in propositosDelAnio) {
+        xPropositos.push(proposito); //Se inserta el nombre del pospósito en el eje X ("Para ejecución, en progreso, etc...")
+        var cantProp = propositosDelAnio[proposito];
+        yPropositos.push(cantProp); //Se inserta en el eje Y la cantidad de actividades con dicho propósito
+        totalPropositos += cantProp;
+    }
+    let estadosDelAnio = JSON.parse('{!! $estadosDelAnio !!}');
+    let xEstados = [];
+    let yEstados = [];
+    let totalEstados = 0;
+    for (const estado in estadosDelAnio) {
+        xEstados.push(estado); //Se inserta el nombre del pospósito en el eje X ("Para ejecución, en progreso, etc...")
+        var cantEstados = estadosDelAnio[estado];
+        yEstados.push(cantEstados); //Se inserta en el eje Y la cantidad de actividades con dicho propósito
+        totalEstados += cantEstados;
+    }
 
+</script>
+
+<script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
+<script src="{{ asset('js/reportes/graficosPredeterminados.js') }}" defer></script>
+
+@if(!is_null($chart))
 <script src="{{ asset('js/reportes/'.$chart.'.js') }}" defer></script>
+@endif
 
 
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}

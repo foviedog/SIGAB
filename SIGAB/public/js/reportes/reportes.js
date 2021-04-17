@@ -46,7 +46,7 @@ function mostrarTipos(tipo) {
 }
 
 function enviar() {
-    $("#formulario-reporte").submit();
+    $("#formulario-reporte").trigger("submit");
 }
 
 //-----------------------------------------

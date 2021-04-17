@@ -100,9 +100,11 @@
                 </a>
                 <ul class="collapse list-unstyled" id="controlReportes">
                     <li>
-                        <a href="{{ route('reportes.show' ) }}">Involucramiento y actividades </a>
+                        <a href="{{ route('reportes-actividades.show' ) }}">Actividades </a>
                     </li>
-
+                    <li>
+                        <a href="{{ route('reportes-involucramiento.show' ) }}">Involucramiento </a>
+                    </li>
                 </ul>
             </li>
             </ul>

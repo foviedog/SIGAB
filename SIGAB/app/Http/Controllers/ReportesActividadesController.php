@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Actividades_interna;
 use App\ActividadesPromocion;
 use App\Actividades;
+use Carbon\Carbon;
 
-class ReportesController extends Controller
+class ReportesActividadesController extends Controller
 {
+
     public function show()
     {
         $chart = "bar";
@@ -23,8 +25,10 @@ class ReportesController extends Controller
         $mesFinal = request('mes_final', null);
         $chart = request('tipo_grafico', null);
         $tipoAct = request('tipo_actividad_int', null);
+        $propositosDelAnio = $this->propositosActividad();
+        $estadosDelAnio = $this->estadosActividades();
 
-        return view('reportes.detalle', [
+        return view('reportes.actividades.detalle', [
             'chart' => $chart,
             'tip_act_int' => $tip_act_int,
             'tip_act_prom' => $tip_act_prom,
@@ -35,7 +39,8 @@ class ReportesController extends Controller
             'mesInicio' => $mesInicio,
             'mesFinal' => $mesFinal,
             'estadoActividad' => $estadoActividad,
-            'chart' => $chart,
+            'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES),
+            'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES),
         ]);
     }
 
@@ -53,16 +58,17 @@ class ReportesController extends Controller
         $mesInicio = $request->mes_inicio;
         $mesFinal = $request->mes_final;
         $chart = $request->tipo_grafico;
-
         if ($naturalezaAct == "Actividad interna") {
             $tipoAct = $request->tipo_actividad_int;
         } else {
             $tipoAct = $request->tipo_actividad_prom;
         }
-
         $datos = $this->obtenerDatos($mesInicio, $mesFinal, $naturalezaAct, $tipoAct, $estadoActividad);
         $datosCuantitativos = $this->datosCuantitativosActividades();
-        return view('reportes.detalle', [
+        $propositosDelAnio = $this->propositosActividad();
+        $estadosDelAnio = $this->estadosActividades();
+
+        return view('reportes.actividades.detalle', [
             'chart' => $chart,
             'tip_act_int' => $tip_act_int,
             'tip_act_prom' => $tip_act_prom,
@@ -73,6 +79,8 @@ class ReportesController extends Controller
             'mesInicio' => $mesInicio,
             'mesFinal' => $mesFinal,
             'estadoActividad' => $estadoActividad,
+            'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES),
+            'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES),
             'chart' => $chart,
         ]);
     }
@@ -115,7 +123,6 @@ class ReportesController extends Controller
             }
         }
 
-        // dd($datos);
         return $datos;
     }
 
@@ -212,5 +219,43 @@ class ReportesController extends Controller
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
             ->count('responsable_coordinar'); //Obtiene la cantidad de responsables de actividades a lo largo del tiempo, únicamente
         return [$cantPromocion, $cantInternas, $cantResponsables];
+    }
+
+    private function propositosActividad()
+    {
+        $propositos = ["Capacitación", "Indución", "Actualización", "Involucramiento del personal", "Otro"];
+        $anioActual = (string) Carbon::now()->format('Y');
+        $fechaIni = $anioActual . "-01-01";
+        $fechaFin = $anioActual . "-12-31";
+        $dataSet = [];
+        $cont = 0;
+
+        foreach ($propositos as &$proposito) {
+            $propositosActividades = Actividades_interna::select("fecha_final_actividad as fecha_fin")
+                ->join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+                ->Where('actividades_internas.proposito', 'like', '%' .   $proposito . '%')
+                ->whereBetween('fecha_final_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
+                ->count(); //Obtiene la cantidad de actividades internas que se realizan o se van a realzar en el 2021
+            $dataSet[$proposito] = $propositosActividades;
+        }
+        return $dataSet;
+    }
+    private function estadosActividades()
+    {
+        $estados = ["En progreso", "Para ejecución", "Ejecutada", "Cancelada"];
+        $anioActual = (string) Carbon::now()->format('Y');
+        $fechaIni = $anioActual . "-01-01";
+        $fechaFin = $anioActual . "-12-31";
+        $dataSet = [];
+        $cont = 0;
+
+        foreach ($estados as &$estado) {
+            $estadosActividades = Actividades::select("fecha_final_actividad as fecha_fin")
+                ->Where('actividades.estado', 'like', '%' .   $estado . '%')
+                ->whereBetween('fecha_final_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
+                ->count(); //Obtiene la cantidad de actividades que cuentan con el estado en el que se está iterando
+            $dataSet[$estado] = $estadosActividades;
+        }
+        return $dataSet;
     }
 }
