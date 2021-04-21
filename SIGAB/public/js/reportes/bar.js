@@ -15,7 +15,13 @@ var options = {
         type: 'bar',
         labels: [],
         locales: locales,
-        defaultLocale: "es"
+        defaultLocale: "es",
+        id: "grafico",
+    },
+    plotOptions: {
+        bar: {
+            distributed: true
+        }
     },
     grid: grid,    
     series: [{
@@ -25,4 +31,4 @@ var options = {
 }
 
 var chart = new ApexCharts(document.querySelector('#chart'), options)
-chart.render()
+chart.render();

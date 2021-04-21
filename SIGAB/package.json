@@ -33,6 +33,7 @@
         "@popperjs/core": "^2.4.4",
         "apexcharts": "^3.26.0",
         "artisan": "^0.1.2",
+        "fix-utf8": "^1.1.1",
         "font-awesome": "^4.7.0",
         "webpack-mix": "^3.0.0"
     }

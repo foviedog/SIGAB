@@ -9,7 +9,8 @@ var options = {
         type: 'line',
         labels: [],
         locales: locales,
-        defaultLocale: "es"
+        defaultLocale: "es",
+        id: "grafico"
     },
     grid: grid,
     series: [{

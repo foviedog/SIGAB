@@ -5,11 +5,12 @@
 
 var options = {
     chart: {
-        width: '100%',
+        width: '80%',
         type: 'pie',
         labels: [],
         locales: locales,
-        defaultLocale: "es"
+        defaultLocale: "es",
+        id: "grafico"
     },
     grid: grid,    
     series: y,

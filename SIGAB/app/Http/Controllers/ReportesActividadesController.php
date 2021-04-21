@@ -8,6 +8,10 @@ use App\Actividades_interna;
 use App\ActividadesPromocion;
 use App\Actividades;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
+use DateTime;
+use PDF;
 
 class ReportesActividadesController extends Controller
 {
@@ -52,7 +56,6 @@ class ReportesActividadesController extends Controller
         $tip_act_int = $this->devolverTipos(0);
         $tip_act_prom = $this->devolverTipos(1);
 
-
         $naturalezaAct = $request->actividad_naturaleza;
         $estadoActividad = $request->estado_actividad;
         $mesInicio = $request->mes_inicio;
@@ -67,6 +70,14 @@ class ReportesActividadesController extends Controller
         $datosCuantitativos = $this->datosCuantitativosActividades();
         $propositosDelAnio = $this->propositosActividad();
         $estadosDelAnio = $this->estadosActividades();
+
+        $this->generarTextoReporte(
+            $request->actividad_naturaleza, 
+            $tipoAct, 
+            $request->estado_actividad, 
+            $mesInicio, 
+            $mesFinal
+        );
 
         return view('reportes.actividades.detalle', [
             'chart' => $chart,
@@ -257,5 +268,64 @@ class ReportesActividadesController extends Controller
             $dataSet[$estado] = $estadosActividades;
         }
         return $dataSet;
+    }
+
+    public function generarTextoReporte($naturaleza, $tipo, $estado, $mesInicio, $mesFinal){
+        
+        if ($naturaleza == "Actividad interna") {
+            $naturaleza = 'Actividades Internas';
+        } else {
+            $naturaleza = 'Actividades de Promoción';
+        }
+
+        if(!$tipo) 
+            $tipo = 'Todos los tipos';
+
+        if(!$estado) 
+            $estado = 'Todos los estados';
+
+        $tempMI = new \DateTime($mesInicio);
+        $tempFN = new \DateTime($mesFinal);
+
+        $mInicio = $tempMI->format('m/Y');
+        $mFinal = $tempFN->format('m/Y');
+
+        $reporteTexto = 'Reporte estadístico de '. $naturaleza. ' del tipo de «'.$tipo.'» con el estado «'.$estado.'» desde el mes de '.$mInicio.' hasta el mes de '.$mFinal.'.';
+        
+        Session::put("reporteTexto", $reporteTexto);
+    }
+
+    public function obtReporte(){
+
+        $logoUNA = 'data:image/png;base64,' . base64_encode(File::get(public_path(). '/img/logo-UNA.png'));
+        $logoEBDI = 'data:image/png;base64,' . base64_encode(File::get(public_path(). '/img/logoEBDI.png'));
+        $annioActual = date("Y");
+        date_default_timezone_set("America/Costa_Rica");
+        $consultado = 'Consultado el '.date("d/m/Y"). ' a las '.date('h:i:sa').'.';
+
+        /*return view('reportes.actividades.reporte', [
+            'imgUri' => Session::get("imgUri"),
+            'reporteTexto' => Session::get("reporteTexto"),
+            'logoUNA' => $logoUNA,
+            'logoEBDI' => $logoEBDI,
+            'annioActual' => $annioActual,
+            'consultado' => $consultado
+        ]);*/
+
+        $pdf = PDF::loadView('reportes.actividades.reporte', [
+            'imgUri' => Session::get("imgUri"),
+            'reporteTexto' => Session::get("reporteTexto"),
+            'logoUNA' => $logoUNA,
+            'logoEBDI' => $logoEBDI,
+            'annioActual' => $annioActual,
+            'consultado' => $consultado
+        ]);
+        //Session::forget("reporteTexto");
+        Session::forget('imgUri');
+        return $pdf->download('reporte_'.date("d/m/Y").'_'.date('h:i').'.pdf');
+    }
+
+    public function genReporte(Request $request){
+        Session::put("imgUri", $request->imgURI);
     }
 }

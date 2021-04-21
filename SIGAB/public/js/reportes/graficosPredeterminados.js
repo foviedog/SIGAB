@@ -19,6 +19,11 @@ var options = {
         locales: locales,
         defaultLocale: "es"
     },
+    plotOptions: {
+        bar: {
+            distributed: true
+        }
+    },
     grid: grid,
     series: [{
         name: nameSeries,
@@ -38,7 +43,10 @@ var opcionesEstado = {
         type: 'donut',
         labels: [],
         locales: locales,
-        defaultLocale: "es"
+        defaultLocale: "es",
+        toolbar: {
+            show: true
+        }
     },
     grid: grid,
     series: yEstados,

@@ -2,6 +2,7 @@
 // Funcionalidades basicas
 //-----------------------------------------
 
+$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
 
 if (naturalezaActividad === undefined) {
     naturalezaActividad = "Actividad interna";
@@ -47,6 +48,22 @@ function mostrarTipos(tipo) {
 
 function enviar() {
     $("#formulario-reporte").trigger("submit");
+}
+
+async function reporte(){
+    ApexCharts.exec("grafico", "dataURI").then(({ imgURI }) => {
+        let data  = { imgURI: imgURI }
+        $.ajax({
+            url: "/reportes/actividades/reporte",
+            method: "POST",
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(response) {
+                window.location.href = '/reportes/actividades/reporte';
+            }
+        });
+
+    });
 }
 
 //-----------------------------------------
@@ -103,4 +120,4 @@ let grid = {
 
 let nameSeries = "Total"
 
-
+let svg;

@@ -9,7 +9,9 @@ var options = {
         type: 'area',
         labels: [],
         locales: locales,
-        defaultLocale: "es"
+        defaultLocale: "es",
+        id: "grafico",
+        
     },
     grid: grid,    
     series: [{
