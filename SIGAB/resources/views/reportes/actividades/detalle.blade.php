@@ -4,10 +4,8 @@
 Reportes actividades
 @endsection
 
-
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
 @endsection
 
 
@@ -16,14 +14,9 @@ Reportes actividades
 
 @section('contenido')
 
-
-
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-
-
 $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
-
 @endphp
 
 <div class="card">
@@ -140,7 +133,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                         </div>
                     </div>
 
-                    {{--Grafico --}}
                     <div class="row d-flex justify-content-center pt-5 pb-5 border-top">
                         <div class="display-5 w-75 texto-rojo-medio" id="graficoGenerado">
                             <h2>Generación de gráficos y reportes</h2>
@@ -212,8 +204,8 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 </div>
 @endsection
 
-
 @section('scripts')
+
 @if(!is_null($datos))
 <script>
     //Datos que se renderisan en caso de que se haya realizado una búsqueda para generar el gráfico dinámico
@@ -253,6 +245,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 </script>
 @endif
+
 <script>
     let propositosDelAnio = JSON.parse('{!! $propositosDelAnio !!}');
     let xPropositos = [];
@@ -274,7 +267,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
         yEstados.push(cantEstados); //Se inserta en el eje Y la cantidad de actividades con dicho propósito
         totalEstados += cantEstados;
     }
-
 </script>
 
 <script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
@@ -284,13 +276,11 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 <script src="{{ asset('js/reportes/'.$chart.'.js') }}" defer></script>
 @endif
 
-
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="{{ asset('js/global/inputs.js') }}"></script>
-
 
 <script>
     $("input[type='number']").inputSpinner();

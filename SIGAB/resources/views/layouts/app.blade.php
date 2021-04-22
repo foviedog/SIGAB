@@ -184,8 +184,13 @@
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> --}}
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
-
-
 </body>
+
+<footer>
+    <div class="footer-img"></div>
+    <div class="copyrigth">
+        Copyright © {{ now()->year }} Escuela de Bibliotecología Documentación e Información.
+    </div>
+</footer>
 
 </html>
