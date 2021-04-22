@@ -10,6 +10,10 @@ Reportes actividades
 
 @endsection
 
+
+
+
+
 @section('contenido')
 
 
@@ -23,6 +27,8 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 @endphp
 
 <div class="card">
+
+
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
@@ -139,7 +145,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                         <div class="display-5 w-75 texto-rojo-medio" id="graficoGenerado">
                             <h2>Generación de gráficos y reportes</h2>
                         </div>
-                        <div class="w-75 mt-3">
+                        <div class="w-50 mt-3">
                             <div id="chart"></div>
                         </div>
                     </div>
@@ -195,7 +201,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                         </div>
                         <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
                             <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
-                            <div class="btn btn-lg btn-contorno-rojo ml-2" onclick="reporte('')"><i class="far fa-file-pdf"></i> Generar reporte</div>
+                            <div class="btn btn-lg btn-contorno-rojo ml-2" onclick="reporte()"><i class="far fa-file-pdf"></i> Generar reporte</div>
                         </div>
                     </form>
                 </div>
@@ -217,8 +223,9 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
     let naturalezaActividad = '{{ $naturalezaAct }}';
 
     //Meses para agregar al formateo
-    let meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
-    "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre",];
+    let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"
+        , "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    , ];
 
     // Ciclo que recorre cada uno de los resultados de la búsqueda y los coloca en posiciones
     //'X' y 'Y' para que se pueda renderizar el gráfico correspondiente
@@ -227,7 +234,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
     for (const atributo in dataSet) {
         if (dataSet[atributo] != 0) {
             let aux = new Date(atributo);
-            x.push(meses[aux.getMonth()] +" del "+ aux.getFullYear());
+            x.push(meses[aux.getMonth()] + " del " + aux.getFullYear());
             y.push(dataSet[atributo]);
             total++;
         }
@@ -287,6 +294,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 
 @endsection

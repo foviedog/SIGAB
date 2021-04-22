@@ -28,19 +28,8 @@ $tiposDocumentos =
 
 @include('evidencias.info')
 <div class="card">
-    <div class="loader-full-page" id="loader-full" style="display: none;">
-        <div class="loader-wrapper d-flex justify-content-center align-items-center">
-            <div class="loader-text" id="loader-text">
-                Eliminando documento
-            </div>
-            <div class="loader-container ">
-                <div class="loader1"></div>
-                <div class="loader2"> </div>
-            </div>
-        </div>
 
 
-    </div>
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}

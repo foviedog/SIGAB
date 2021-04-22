@@ -27,6 +27,17 @@
 </head>
 
 <body>
+    <div class="loader-full-page" id="loader-full" style="display: none;">
+        <div class="loader-wrapper d-flex justify-content-center align-items-center">
+            <div class="loader-container ">
+                <div class="loader-text" id="loader-text">
+                    Texto
+                </div>
+                <div class="loader1"></div>
+                <div class="loader2"> </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper bg-gris-claro">
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-rojo-oscuro">
@@ -168,6 +179,8 @@
     </div>
 
     @yield('scripts')
+    <script src="{{ asset('js/global/mensajes.js') }}" crossorigin="anonymous"></script>
+
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> --}}
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
