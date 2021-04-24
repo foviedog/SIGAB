@@ -61,7 +61,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info">Internas</div>
-                                    <div class="numero-info">{{ $datosCuantitativos[0] ?? 0 }}</div>
+                                    <div class="numero-info">{{ $datosCuantitativos[1] ?? 0 }}</div>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info">Promoción</div>
-                                    <div class="numero-info"> {{ $datosCuantitativos[1] ?? 0 }} </div>
+                                    <div class="numero-info"> {{ $datosCuantitativos[0] ?? 0 }} </div>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                             <div class="content-info">
                                 <div>
                                     <div class="texto-info"> Total </div>
-                                    <div class="numero-info"> {{ $datosCuantitativos[0] + $datosCuantitativos[2] ?? 0 }} </div>
+                                    <div class="numero-info"> {{ $datosCuantitativos[0] + $datosCuantitativos[1] ?? 0 }} </div>
                                 </div>
                             </div>
                         </div>
@@ -267,6 +267,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
         yEstados.push(cantEstados); //Se inserta en el eje Y la cantidad de actividades con dicho propósito
         totalEstados += cantEstados;
     }
+
 </script>
 
 <script src="{{ asset('js/reportes/reportes.js') }}" defer></script>

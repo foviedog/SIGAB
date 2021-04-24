@@ -296,23 +296,22 @@ class ReportesActividadesController extends Controller
         Session::put("reporteTexto", $reporteTexto);
     }
 
-    public function obtReporte()
+    public function obtReporte(Request $request)
     {
-
         $logoUNA = 'data:image/png;base64,' . base64_encode(File::get(public_path() . '/img/logo-UNA.png'));
         $logoEBDI = 'data:image/png;base64,' . base64_encode(File::get(public_path() . '/img/logoEBDI.png'));
         $annioActual = date("Y");
         date_default_timezone_set("America/Costa_Rica");
         $consultado = 'Consultado el ' . date("d/m/Y") . ' a las ' . date('h:i:sa') . '.';
 
-        // return view('reportes.actividades.reporte', [
-        //     'imgUri' => Session::get("imgUri"),
-        //     'reporteTexto' => Session::get("reporteTexto"),
-        //     'logoUNA' => $logoUNA,
-        //     'logoEBDI' => $logoEBDI,
-        //     'annioActual' => $annioActual,
-        //     'consultado' => $consultado
-        // ]);
+        return view('reportes.actividades.reporte', [
+            'imgUri' => $request->data,
+            'reporteTexto' => Session::get("reporteTexto"),
+            'logoUNA' => $logoUNA,
+            'logoEBDI' => $logoEBDI,
+            'annioActual' => $annioActual,
+            'consultado' => $consultado
+        ]);
 
         $pdf = PDF::loadView('reportes.actividades.reporte', [
             'imgUri' => Session::get("imgUri"),
@@ -325,10 +324,5 @@ class ReportesActividadesController extends Controller
         //Session::forget("reporteTexto");
         Session::forget('imgUri');
         return $pdf->download('reporte_' . date("d/m/Y") . '_' . date('h:i') . '.pdf');
-    }
-
-    public function genReporte(Request $request)
-    {
-        Session::put("imgUri", $request->imgURI);
     }
 }

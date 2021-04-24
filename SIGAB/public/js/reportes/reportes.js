@@ -51,20 +51,13 @@ function enviar() {
 }
 
 async function reporte() {
-    ApexCharts.exec("grafico", "dataURI").then(({ imgURI }) => {
-        let data = { imgURI: imgURI }
+    ApexCharts.exec("grafico", "dataURI").then(({ imgURI, blob }) => {
         activarLoader("Creando reporte");
-        $.ajax({
-            url: "/reportes/actividades/reporte",
-            method: "POST",
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            success: function () {
-                $("#loader-full").hide();
-                window.location.href = '/reportes/actividades/reporte';
-            }
-        });
-
+        const { jsPDF } = window.jspdf
+        const pdf = new jsPDF();
+        pdf.addImage(imgURI, 'PNG', 0, 0);
+        pdf.save("pdf-chart.pdf");
+        // window.location.href = '/reportes/actividades/reporte?data=' + "data";
     });
 }
 
