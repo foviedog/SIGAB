@@ -158,7 +158,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                                         <option value="Coordinacion">Coordinación</option>
                                     </select>
 
-                                    <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar"><i class="fas fa-chart-line"></i> Generar gráficos</button>
+                                    <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando gráficos');"><i class="fas fa-chart-line"></i> Generar gráficos</button>
 
                                 </div>
                             </div>

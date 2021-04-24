@@ -40,6 +40,9 @@ function llenarInformacionPersonal(persona, personal){
 }
 
 function buscarPersonal(){
+    if(!flagInfoPersonal){
+        activarLoader("Buscando personal");
+    }
     if ($("#cedula-personal").val() === "") {
         $("#seccion-graficos").html("");
         errorNoEncontrado();
@@ -51,6 +54,7 @@ function buscarPersonal(){
             dataType: "json",
             method: "GET",
             success: function(datos) {
+                $("#loader-full").hide();
                 if(!flagInfoPersonal){
                     $("#seccion-graficos").html("");
                 }
@@ -59,6 +63,7 @@ function buscarPersonal(){
             },
             statusCode: {
                 404: function() {
+                    $("#loader-full").hide();
                     errorNoEncontrado();
                 }
             }
