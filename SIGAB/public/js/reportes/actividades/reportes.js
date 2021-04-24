@@ -114,5 +114,3 @@ let grid = {
 };
 
 let nameSeries = "Total"
-
-let svg;
