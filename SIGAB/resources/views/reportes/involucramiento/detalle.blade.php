@@ -93,6 +93,33 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
             </div>
         </div>
 
+        <div class="container-fluid pb-5">
+            <div class="row">
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso. Se toman en cuenta las actividades en ejecución y ejecutadas." style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-3">
+                        <div id="grafico_porc_act">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas por ámbito</h4>&nbsp;
+                        <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso por ámbito. Se toman en cuenta las actividades en ejecución y ejecutadas." style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-3 ml-3">
+                        <div id="grafico_porc_amb">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <hr>
 
         <form action="{{ route('reportes-involucramiento.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
@@ -275,27 +302,10 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
     @else
         let flagInfoPersonal = false;
     @endif
-    /*let propositosDelAnio = {{-- JSON.parse('{!! $propositosDelAnio !!}'); --}}
-    let xPropositos = [];
-    let yPropositos = [];
-    let totalPropositos = 0;
-    for (const proposito in propositosDelAnio) {
-        xPropositos.push(proposito); //Se inserta el nombre del pospósito en el eje X ("Para ejecución, en progreso, etc...")
-        var cantProp = propositosDelAnio[proposito];
-        yPropositos.push(cantProp); //Se inserta en el eje Y la cantidad de actividades con dicho propósito
-        totalPropositos += cantProp;
-    }
-    let estadosDelAnio = {{-- JSON.parse('{!! $estadosDelAnio !!}'); --}}
-    let xEstados = [];
-    let yEstados = [];
-    let totalEstados = 0;
-    for (const estado in estadosDelAnio) {
-        xEstados.push(estado); //Se inserta el nombre del pospósito en el eje X ("Para ejecución, en progreso, etc...")
-        var cantEstados = estadosDelAnio[estado];
-        yEstados.push(cantEstados); //Se inserta en el eje Y la cantidad de actividades con dicho propósito
-        totalEstados += cantEstados;
-    }*/
 
+    let porcentajeParticipacionActual = JSON.parse('{!! $porcentajeActualParticipacion !!}');
+    let porcentajeAmbitoActual = JSON.parse('{!! $porcentajeActualAmbito !!}');
+    
 </script>
 
 <script src="{{ asset('js/reportes/involucramiento/reportes.js') }}" defer></script>
