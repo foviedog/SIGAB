@@ -224,6 +224,8 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
             total++;
         }
     }
+    console.log(dataSet);
+
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     var url = window.location.href;
@@ -262,8 +264,8 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
     }
 </script>
 
-<script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
-<script src="{{ asset('js/reportes/graficosPredeterminados.js') }}" defer></script>
+<script src="{{ asset('js/reportes/actividades/reportes.js') }}" defer></script>
+<script src="{{ asset('js/reportes/actividades/graficosPredeterminados.js') }}" defer></script>
 
 @if(!is_null($chart))
 <script src="{{ asset('js/reportes/'.$chart.'.js') }}" defer></script>

@@ -93,6 +93,174 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
             </div>
         </div>
 
+        <hr>
+
+        <form action="{{ route('reportes-involucramiento.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
+
+            <div class="row d-flex justify-content-center my-3">
+                <div class="display-5 w-75 texto-rojo-medio pb-5">
+                    <h2>Generación de gráficos y reportes</h2>
+                </div>
+                <div class="w-75">
+                    <div class="row d-flex justify-content-center mb-3">
+                        
+                        <div class="col-6">
+                        
+                            <div class="card">
+                                <div class="justify-content-center align-items-center p-3" style="text-align:center">
+                                    <img src="{{ asset('img/fotos/default.jpg') }}" class="mb-3" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 100%;"/>
+                                    <div class="text-start mt-2" id="info-personal">
+                                        <strong>Nombre:</strong> &nbsp;&nbsp;<span id="nombre-personal">Sin seleccionar</span><br>
+                                        <strong>Tipo de puesto 1:</strong> &nbsp;&nbsp;<span id="tipo-puesto1-personal">Sin seleccionar</span><br>
+                                        <strong>Tipo de puesto 2: </strong>&nbsp;&nbsp; <span id="tipo-puesto2-personal">Sin seleccionar</span><br>
+                                        <strong>Jornada Laboral: </strong> &nbsp;&nbsp;<span id="jornada-laboral-personal">Sin seleccionar</span><br>
+                                    </div>
+                                    <div id="no-seleccionado">
+                                        No se ha seleccionado un personal
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="col-6">
+                        
+                            <div class="row d-flex justify-content-left">
+                                <div class="col-11">
+                                    <div class="d-flex justify-content-left" id="input-buscar-agregar">
+                                        <div class="input-group w-75">
+                                            <input type='text' id="cedula-personal" name="personal" class="form-control" @if(!is_null($personal)) value={{ $personal }} @endif required>
+                                            <div class="input-group-append">
+                                                <button type="button" onclick="buscarPersonal()" class="btn btn-contorno-rojo">Buscar</button>
+                                                <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del personal" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                            </div>
+                                        </div>
+                                        <input class="form-control" type='hidden' id="personal-encontrado" name="personal_encontrado" value="false">
+                                    </div>
+                                    <div class="row d-flex justify-content-left mt-3">
+                                        <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta" style="display:none;"></div>
+                                    </div>
+
+                                    <div class="col-9 input-group pl-0">
+                                        <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}' required>
+                                        <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}' required>
+                                    </div>
+
+                                    <select class="col-8 mt-3 form-control" id="estado" name="estado_actividad" class="form-control">
+                                        <option value="">Todos los estados</option>
+                                        @foreach($estados as $estado)
+                                        <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif >{{ $estado }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select class="col-8 mt-3 form-control" id="estado" name="tipo_consulta" class="form-control" required>
+                                        <option value="Asistencia">Asistencia</option>
+                                        <option value="Coordinacion">Coordinación</option>
+                                    </select>
+
+                                    <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar"><i class="fas fa-chart-line"></i> Generar gráficos</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="container-fluid mt-5 mb-5 pt-2 pb-5" id="seccion-graficos" style="width: 90%">
+
+            <div class="display-5 w-75 texto-rojo-medio pb-1">
+                <h2>Gráficos para medir el involucramiento de {{ $nombre }}</h2>
+            </div>
+
+            <hr>
+            
+            <div class="row mt-5">
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Asistencia en actividades internas por tipos</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia" style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-1">
+                        <div id="grafico_asis_tipos">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Coordinación de actividades internas por tipos</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación" style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-1">
+                        <div id="grafico_coord_tipos">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row mt-5 mb-5">
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Asistencia en actividades internas por fechas</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia en un rango de fechas" style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-1">
+                        <div id="grafico_asis_fecha">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Coordinación de actividades internas por fechas</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación en un rango de fechas" style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-1">
+                        <div id="grafico_coord_fecha">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row mt-5 mb-5">
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Asistencia en actividades internas por ámbito</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia por su ámbito" style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-1">
+                        <div id="grafico_asis_ambito">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                        <h4>Coordinación de actividades internas por ámbito</h4>&nbsp;
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación por su ámbito" style="font-size: 18px;"></i>
+                    </div>
+                    <div class="grafico-container w-100 mt-1">
+                        <div id="grafico_coord_ambito">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+        </div>
+
     </div>
 </div>
 @endsection
@@ -100,39 +268,13 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 @section('scripts')
 
-{{-- @if(!is_null($datos)) --}}
 <script>
-    //Datos que se renderisan en caso de que se haya realizado una búsqueda para generar el gráfico dinámico
-    //let dataSet =  {{-- JSON.parse('{!! $datos !!}'); --}}
-    let x = [];
-    let y = [];
-    //let naturalezaActividad = '{{-- $naturalezaAct --}}';
-
-    // Ciclo que recorre cada uno de los resultados de la búsqueda y los coloca en posiciones
-    //'X' y 'Y' para que se pueda renderizar el gráfico correspondiente
-    var total = 0;
-    for (const atributo in dataSet) {
-        if (dataSet[atributo] != 0) {
-            x.push(atributo);
-            y.push(dataSet[atributo]);
-            total++;
-        }
-    }
-    // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-    var url = window.location.href;
-    window.location.href = url + "#graficoGenerado";*/
-
-</script>
- {{--@else En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados --}}
-<script>
-    let dataSet = [];
-    let naturalezaActividad = "Actividad interna";
-    let total = 0;
-
-</script>
-{{-- @endif --}}
-<script>
+    @if(!is_null($personal))
+        let flagInfoPersonal = true;
+    @else
+        let flagInfoPersonal = false;
+    @endif
     /*let propositosDelAnio = {{-- JSON.parse('{!! $propositosDelAnio !!}'); --}}
     let xPropositos = [];
     let yPropositos = [];
@@ -156,31 +298,35 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 </script>
 
-<script src="{{ asset('js/reportes/reportes.js') }}" defer></script>
-<script src="{{ asset('js/reportes/graficosPredeterminados.js') }}" defer></script>
+<script src="{{ asset('js/reportes/involucramiento/reportes.js') }}" defer></script>
+<script src="{{ asset('js/reportes/involucramiento/graficosPredeterminados.js') }}" defer></script>
 
-{{-- 
-    
-    @if(!is_null($chart))
-<script src="{{ asset('js/reportes/'.$chart.'.js') }}" defer></script>
+@if(!is_null($datos))
+<script>
+    //Datos generales para los gráficos
+    let dataSet = JSON.parse('{!! $datos !!}');
+
+    //Mostrar espacio para los gráficos
+    $("#seccion-graficos").show();
+
+    // Variable global utilizada para obtener el url de las imágenes con js.
+    var url = window.location.href;
+    window.location.href = url + "#formulario-reporte";
+
+</script>
+<script src="{{ asset('js/reportes/involucramiento/graficosDinamicos.js') }}" defer></script>
+@else  {{--En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados --}}
+<script>
+    //Ocultar espacio para los gráficos
+    $("#seccion-graficos").hide();
+</script>
 @endif
-
-    --}}
-
-
 
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="{{ asset('js/global/inputs.js') }}"></script>
-
-
-<script>
-   // $("input[type='number']").inputSpinner();
-
-</script>
-
 
 @endsection
 

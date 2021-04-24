@@ -9,6 +9,8 @@ use App\ActividadesPromocion;
 use App\Actividades;
 use Carbon\Carbon;
 use App\Personal;
+use App\Persona;
+use App\ListaAsistencia;
 
 class ReportesInvolucramientoController extends Controller
 {
@@ -16,12 +18,21 @@ class ReportesInvolucramientoController extends Controller
     public function show()
     {
         $datosCuantitativos = $this->datosCuntitativosPersonal();
+        $datos = null;
+        $personal = null;
+        $nombre = null;
+        $estadoActividad = request('estado_actividad', null);
         return view('reportes.involucramiento.detalle', [
-            'datosCuantitativos' => $datosCuantitativos
+            'datosCuantitativos' => $datosCuantitativos,
+            'datos' => $datos,
+            'personal' => $personal,
+            'estadoActividad' => $estadoActividad,
+            'nombre' => $nombre,
         ]);
     }
 
-    public function datosCuntitativosPersonal(){
+    public function datosCuntitativosPersonal()
+    {
         $interinos = Personal::where("tipo_nombramiento", "Interino")->count();
         $propietarios = Personal::where("tipo_nombramiento", "Propietario")->count();
         $fijo = Personal::where("tipo_nombramiento", "Plazo fijo")->count();
@@ -29,13 +40,331 @@ class ReportesInvolucramientoController extends Controller
         return [$interinos, $propietarios, $fijo, $total];
     }
 
-    public function tiposCargo(){
-        $tiposCargo = ["Administrativo", "Académico"];
+    public function resultado(Request $request){
+        $personal = Personal::find($request->personal_encontrado);
+        $persona = Persona::find($request->personal_encontrado);
+        $nombre = $persona->nombre." ".$persona->apellido; 
+        $mesInicio = $request->mes_inicio;
+        $mesFinal = $request->mes_final;
+        $estadoActividad = $request->estado_actividad;
+        $dataSet = array();
+
+        /*if($request->tipo_consulta == "Asistencia"){
+            $actividadesPorTipos = array_combine($this->devolverTiposActividades(0), $this->activadesPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad));
+            $actividadesPorFechas = $this->activadesPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
+            $actividadesPorAmbito = $this->activadesPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
+            array_push($dataSet, $actividadesPorTipos);
+            array_push($dataSet, $actividadesPorFechas);
+            array_push($dataSet, $actividadesPorAmbito);
+        } else {
+            $actividadesCoorPorTipos = array_combine($this->devolverTiposActividades(0), $this->actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad));
+            $actividadesCoorPorFechas = $this->activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
+            $actividadesCoorPorAmbito = $this->activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
+            array_push($dataSet, $actividadesCoorPorTipos);
+            array_push($dataSet, $actividadesCoorPorFechas);
+            array_push($dataSet, $actividadesCoorPorAmbito);
+        }*/
+
+        $actividadesPorTipos = $this->activadesPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
+        $actividadesPorFechas = $this->activadesPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
+        $actividadesPorAmbito = $this->activadesPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
+        array_push($dataSet, $actividadesPorTipos);
+        array_push($dataSet, $actividadesPorFechas);
+        array_push($dataSet, $actividadesPorAmbito);
+        $actividadesCoorPorTipos = $this->actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
+        $actividadesCoorPorFechas = $this->activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
+        $actividadesCoorPorAmbito = $this->activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
+        array_push($dataSet, $actividadesCoorPorTipos);
+        array_push($dataSet, $actividadesCoorPorFechas);
+        array_push($dataSet, $actividadesCoorPorAmbito);
+
+        $datosCuantitativos = $this->datosCuntitativosPersonal();
         
+        //dd($dataSet);
+        
+        return view('reportes.involucramiento.detalle', [
+            'datos' => json_encode($dataSet, JSON_UNESCAPED_SLASHES),
+            'datosCuantitativos' => $datosCuantitativos,
+            'personal' => $request->personal_encontrado,
+            'nombre' => $nombre,
+            'estadoActividad' => $estadoActividad,
+            'mesInicio' => $mesInicio,
+            'mesFinal' => $mesFinal,
+        ]);
     }
 
-    public function jornadaLaboral(){
-    
+    public function activadesPorTipos($personal, $mesInicio, $mesFinal, $estado){
+        $dataSet = array();
+
+        $fecha_ini = $mesInicio . "-01";
+        $fecha_fin = $mesFinal . "-01";
+        $tipos = $this->devolverTiposActividades(0);
+
+        foreach($tipos as &$tipo){
+            $count = ListaAsistencia::join('actividades', 'actividades.id', '=', 'lista_asistencias.actividad_id')
+            ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where('persona_id', '=', $personal->persona_id)
+            ->where('actividades.estado', 'like', '%' .   $estado . '%')
+            ->where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
+            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->count();
+            array_push($dataSet, $count);
+        }
+        
+        return array_combine($tipos, $dataSet);
+    }
+
+    public function actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estado){
+        $dataSet = array();
+
+        $fecha_ini = $mesInicio . "-01";
+        $fecha_fin = $mesFinal . "-01";
+        $tipos = $this->devolverTiposActividades(0);
+
+        foreach($tipos as &$tipo){
+            $count = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where('actividades.responsable_coordinar', '=', $personal->persona_id)
+            ->where('actividades.estado', 'like', '%' .   $estado . '%')
+            ->where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
+            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->count();
+            array_push($dataSet, $count);
+        }
+        
+        return array_combine($tipos, $dataSet);
+    }
+
+    public function activadesPorFechas($personal, $mesInicio, $mesFinal, $estado){
+        $dataSet = [];
+
+        $anio_ini = (int)substr($mesInicio, 0, 4);
+        $anio_fin = (int)substr($mesFinal, 0, 4);
+        $mes_ini = (int)substr($mesInicio, 5, strlen($mesFinal));
+        $mes_fin = (int)substr($mesFinal, 5, strlen($mesFinal));
+        
+        $DA = $anio_fin - $anio_ini;
+        $DM = $mes_fin - $mes_ini;
+        $cont = 1;
+
+        if ($DA == 0) {
+            for ($i = $mes_ini; $i <= $mes_fin; $i++) {
+                $actvidadesPorMes = $this->cantActAsisPorMes($i, $personal, $anio_ini, $estado, $dataSet);
+                $dataSet[$anio_ini . "-" . $i] =  $actvidadesPorMes;
+            }
+        } else if ($DA >= 1) {
+            $anios_completos = $DA - 1;
+            $anio = $anio_ini;
+            //? Primer extremo
+            for ($i = $mes_ini; $i <= 12; $i++) {
+                $actvidadesPorMes = $this->cantActAsisPorMes($i, $personal, $anio, $estado, $dataSet);
+                $dataSet[$anio . "-" . $i] =  $actvidadesPorMes;
+            }
+
+            $anio++; //?Se amuenta el año
+            //?Años intermedios que se deben contar COMPLETOS (Todos los 12 meses del año)
+            for ($i = 1; $i <= $anios_completos; $i++) {
+                for ($j = 1; $j <= 12; $j++) {
+                    $actvidadesPorMes = $this->cantActAsisPorMes($j, $personal, $anio, $estado, $dataSet);
+                    $dataSet[$anio . "-" . $j] =  $actvidadesPorMes;
+                }
+                $anio++;
+            }
+
+            //? Segundo extremo
+            for ($i = 1; $i <= $mes_fin; $i++) {
+                $actvidadesPorMes = $this->cantActAsisPorMes($i, $personal, $anio, $estado, $dataSet);
+                $dataSet[$anio . "-" . $i] =  $actvidadesPorMes;
+            }
+        }
+
+        return $dataSet;
+    }
+
+    public function cantActAsisPorMes($mes, $personal, $anio, $estado, &$dataSet){
+        
+        $mesIni = (int)$mes;
+        $mesFin = $mesIni + 1;
+        $mesStr = (string)$mes;
+        $mesStrFin = (string)($mesFin);
+
+        if ($mes < 9) {
+            $mesStr = "0" . $mesStr;
+            $mesStrFin = "0" . $mesFin;
+        }
+        $fecha_ini = $anio . "-" . $mesStr . "-01";
+        $fecha_fin = $anio  . "-" . $mesStrFin . "-01";
+
+        if ($mes == 12) {
+            $fecha_fin =  $anio . "-12" . "-31";
+        }
+
+        $cantAct = ListaAsistencia::join('actividades', 'actividades.id', '=', 'lista_asistencias.actividad_id')
+        ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+        ->where('persona_id', '=', $personal->persona_id)
+        ->where('actividades.estado', 'like', '%' .   $estado . '%')
+        ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+        ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+        ->count();
+        
+        return $cantAct;
+    }
+
+    public function activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estado){
+        $dataSet = [];
+
+        $anio_ini = (int)substr($mesInicio, 0, 4);
+        $anio_fin = (int)substr($mesFinal, 0, 4);
+        $mes_ini = (int)substr($mesInicio, 5, strlen($mesFinal));
+        $mes_fin = (int)substr($mesFinal, 5, strlen($mesFinal));
+        
+        $DA = $anio_fin - $anio_ini;
+        $DM = $mes_fin - $mes_ini;
+        $cont = 1;
+
+        if ($DA == 0) {
+            for ($i = $mes_ini; $i <= $mes_fin; $i++) {
+                $actvidadesPorMes = $this->cantActCoorPorMes($i, $personal, $anio_ini, $estado, $dataSet);
+                $dataSet[$anio_ini . "-" . $i] =  $actvidadesPorMes;
+            }
+        } else if ($DA >= 1) {
+            $anios_completos = $DA - 1;
+            $anio = $anio_ini;
+            //? Primer extremo
+            for ($i = $mes_ini; $i <= 12; $i++) {
+                $actvidadesPorMes = $this->cantActCoorPorMes($i, $personal, $anio, $estado, $dataSet);
+                $dataSet[$anio . "-" . $i] =  $actvidadesPorMes;
+            }
+
+            $anio++; //?Se amuenta el año
+            //?Años intermedios que se deben contar COMPLETOS (Todos los 12 meses del año)
+            for ($i = 1; $i <= $anios_completos; $i++) {
+                for ($j = 1; $j <= 12; $j++) {
+                    $actvidadesPorMes = $this->cantActCoorPorMes($j, $personal, $anio, $estado, $dataSet);
+                    $dataSet[$anio . "-" . $j] =  $actvidadesPorMes;
+                }
+                $anio++;
+            }
+
+            //? Segundo extremo
+            for ($i = 1; $i <= $mes_fin; $i++) {
+                $actvidadesPorMes = $this->cantActCoorPorMes($i, $personal, $anio, $estado, $dataSet);
+                $dataSet[$anio . "-" . $i] =  $actvidadesPorMes;
+            }
+        }
+
+        return $dataSet;
+    }
+
+    public function cantActCoorPorMes($mes, $personal, $anio, $estado, &$dataSet){
+        
+        $mesIni = (int)$mes;
+        $mesFin = $mesIni + 1;
+        $mesStr = (string)$mes;
+        $mesStrFin = (string)($mesFin);
+
+        if ($mes < 9) {
+            $mesStr = "0" . $mesStr;
+            $mesStrFin = "0" . $mesFin;
+        }
+        $fecha_ini = $anio . "-" . $mesStr . "-01";
+        $fecha_fin = $anio  . "-" . $mesStrFin . "-01";
+
+        if ($mes == 12) {
+            $fecha_fin =  $anio . "-12" . "-31";
+        }
+
+        $cantAct = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+        ->where('actividades.responsable_coordinar', '=', $personal->persona_id)
+        ->where('actividades.estado', 'like', '%' .   $estado . '%')
+        ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+        ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+        ->count();
+
+        return $cantAct;
+    }
+
+    public function activadesPorAmbito($personal, $mesInicio, $mesFinal, $estado){
+        $dataSet = array();
+
+        $ambitos = ["Nacional", "Internacional"];
+        $fecha_ini = $mesInicio . "-01";
+        $fecha_fin = $mesFinal . "-01";
+
+        foreach($ambitos as &$ambito){
+            $count = ListaAsistencia::join('actividades', 'actividades.id', '=', 'lista_asistencias.actividad_id')
+            ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where('persona_id', '=', $personal->persona_id)
+            ->where('actividades.estado', 'like', '%' .   $estado . '%')
+            ->where('actividades_internas.ambito', '=', $ambito)
+            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->count();
+            array_push($dataSet, $count);
+        }
+
+        return array_combine($ambitos, $dataSet);
+    }
+
+    public function activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estado){
+        $dataSet = array();
+
+        $ambitos = ["Nacional", "Internacional"];
+        $fecha_ini = $mesInicio . "-01";
+        $fecha_fin = $mesFinal . "-01";
+
+        foreach($ambitos as &$ambito){
+            $count = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where('actividades.responsable_coordinar', '=', $personal->persona_id)
+            ->where('actividades.estado', 'like', '%' .   $estado . '%')
+            ->where('actividades_internas.ambito', '=', $ambito)
+            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->count();
+            array_push($dataSet, $count);
+        }
+
+        return array_combine($ambitos, $dataSet);
+    }
+
+    public function devolverTiposActividades($act)
+    {
+        switch ($act) {
+            case 0:
+                return [
+                    "Curso", "Conferencia", "Taller", "Seminario", "Conversatorio",
+                    "Órgano colegiado", "Tutorías", "Lectorías", "Simposio", "Charla", "Actividad cocurricular",
+                    "Tribunales de prueba de grado", "Tribunales de defensas públicas",
+                    "Comisiones de trabajo", "Externa", "Otro"
+                ];
+            case 1:
+                return [
+                    "Ferias", "Participación en congresos nacionales e internacionales", "Puertas abiertas",
+                    "Promoción por redes sociales", "Visitas a comunidades", "Visitas a colegios",
+                    "Envío de paquetes promocionales por correo electrónico", "Charlas", "Otro"
+                ];
+        }
+    }
+
+    public function obtenerPersonal($idPersonal)
+    {
+        $datos = array();
+
+        $persona = Persona::find($idPersonal); //Busca a la persona en la base de datos de personas
+        if (is_null($persona)) {
+            return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
+        }
+
+        $personal = Personal::find($idPersonal); //Busca al personal en la base de datos de personas
+        if (is_null($personal)) {
+            return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
+        }
+
+        array_push($datos, $persona);
+        array_push($datos, $personal);
+
+        return response()->json($datos, 200);
     }
 
 }

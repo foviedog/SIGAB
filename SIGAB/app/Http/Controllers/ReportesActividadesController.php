@@ -91,8 +91,7 @@ class ReportesActividadesController extends Controller
             'mesFinal' => $mesFinal,
             'estadoActividad' => $estadoActividad,
             'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES),
-            'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES),
-            'chart' => $chart,
+            'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES)
         ]);
     }
 

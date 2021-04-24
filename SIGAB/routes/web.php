@@ -184,3 +184,5 @@ Route::post('/reportes/actividades/reporte', 'ReportesActividadesController@genR
 //      Reportes de involucramiento del personal
 // ********************************************************
 Route::get('/reportes/involucramiento', 'ReportesInvolucramientoController@show')->name('reportes-involucramiento.show');
+Route::get('/reportes/involucramiento/resultado', 'ReportesInvolucramientoController@resultado')->name('reportes-involucramiento.resultado');
+Route::get('/reportes/involucramiento/personal/{personal_id}', 'ReportesInvolucramientoController@obtenerPersonal')->name('reportes-involucramiento.personal');;

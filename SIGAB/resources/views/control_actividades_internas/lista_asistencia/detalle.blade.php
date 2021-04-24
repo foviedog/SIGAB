@@ -119,9 +119,10 @@ Asistencia a
                         </div>
                     </div>
                     <div class="card-body ">
+
                         <div class="d-flex justify-content-center ml-4" id="input-buscar-agregar">
                             <div class="input-group w-50">
-                                <input type='text' id="cedula-participante" name="participante" class="form-control " required>
+                                <input type='text' id="cedula-participante" name="participante" class="form-control" required>
                                 <div class="input-group-append">
                                     <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
                                     <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del participante de coordinar la actividad y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
