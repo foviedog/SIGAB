@@ -50,15 +50,17 @@ function enviar() {
     $("#formulario-reporte").trigger("submit");
 }
 
-async function reporte(){
+async function reporte() {
     ApexCharts.exec("grafico", "dataURI").then(({ imgURI }) => {
-        let data  = { imgURI: imgURI }
+        let data = { imgURI: imgURI }
+        activarLoader("Creando reporte");
         $.ajax({
             url: "/reportes/actividades/reporte",
             method: "POST",
             data: JSON.stringify(data),
             contentType: 'application/json',
-            success: function(response) {
+            success: function () {
+                $("#loader-full").hide();
                 window.location.href = '/reportes/actividades/reporte';
             }
         });
