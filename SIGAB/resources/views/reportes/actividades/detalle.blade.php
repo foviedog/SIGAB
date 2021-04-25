@@ -10,8 +10,6 @@ Reportes actividades
 
 
 
-
-
 @section('contenido')
 
 {{-- Arreglos de opciones de los select utilizados --}}
@@ -19,9 +17,39 @@ Reportes actividades
 $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 @endphp
 
+{{-- Modal para agregar el título de la imagen  --}}
+<form id="reporteForm" method="post" action="{{ route('reportes-actividades.reporte') }}" target="_blank">
+    @csrf
+    <input type="hidden" name="image" id="image">
+    <div class="modal fade" id="reporte-modal" tabindex="-1" aria-labelledby="reporte-modal" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title texto-rojo-medio" id="reporte-modal">Crear reporte</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" id="insertar-titulo" style="display:none;">
+                        <strong>Digete un título</strong>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="titulo" id="titulo-grafico" placeholder="Título del gráfico" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-rojo" id="crear-guia-modal" onclick="reporte()">Crear reporte</button>
+                    <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
 <div class="card">
-
-
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
@@ -193,7 +221,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                         </div>
                         <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
                             <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
-                            <div class="btn btn-lg btn-contorno-rojo ml-2" onclick="reporte()"><i class="far fa-file-pdf"></i> Generar reporte</div>
+                            <div class="btn btn-lg btn-contorno-rojo ml-2" id="reporte-trigger" data-toggle="modal" data-target="#reporte-modal"><i class="far fa-file-pdf"></i> Generar reporte</div>
                         </div>
                     </form>
                 </div>
@@ -202,6 +230,9 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
     </div>
 </div>
+
+
+
 @endsection
 
 @section('scripts')
@@ -231,12 +262,14 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
             total++;
         }
     }
-    console.log(dataSet);
 
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     var url = window.location.href;
+    var indexHref = url.indexOf("#graficoGenerado");
+    url = url.substr(0, indexHref)
     window.location.href = url + "#graficoGenerado";
+    $("#reporte-trigger").show();
 
 </script>
 @else {{-- En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados --}}
@@ -244,6 +277,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
     let dataSet = [];
     let naturalezaActividad = "Actividad interna";
     let total = 0;
+    $("#reporte-trigger").hide();
 
 </script>
 @endif
