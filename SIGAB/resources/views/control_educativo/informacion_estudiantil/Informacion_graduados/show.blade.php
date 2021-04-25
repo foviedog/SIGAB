@@ -37,6 +37,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                         <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                             @csrf
                             @method('PATCH')
+                            <div class="alert alert-danger" role="alert" id="validar-edicion" style="display:none;">
+                                <strong>No deben quedar espacios vacios al editar la graduacion</strong> 
+                            </div>
 
                             <div class="d-flex justify-content-center flex-column">
                                 {{-- Campo: Grado académico --}}
@@ -45,7 +48,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                         <label for="grado_academico">Grado académico <i class="text-danger">*</i></label>
                                         <span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span>
                                     </div>
-                                    {{-- <input type='text' class="form-control" id="grado_academico" name="grado_academico" onkeyup="contarCarGradoAcademico(this)" required disabled>  --}}
+                                    
                                     <select class="form-control w-100" id="grado_academico" name="grado_academico" required disabled>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Diplomado"> Diplomado</option>

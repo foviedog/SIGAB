@@ -14,6 +14,7 @@ use App\Guias_academica;
 class EstudianteController extends Controller
 {
 
+
     //Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
     {
@@ -103,7 +104,9 @@ class EstudianteController extends Controller
                 ->with('cedula', $request->cedula); //Retorna un objeto en el response con la cedula, de otra manera no obtiene el dato de manera adecuada para imprimirlo en la vista
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro estudiante
-                ->with('error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe"); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('error', "Ha ocurrido un error con el registro del estudiante con la cédula  " . "$request->cedula" . ". Es posible que el estudiante ya se encuentre agregado.") //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
+                ->with('estudiante_no_insertado', $estudiante); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
         }
     }
 

@@ -65,7 +65,11 @@ function actualizar() {
     
     if(document. getElementById("grado_academico"). value. length == 0 || document. getElementById("carrera_cursada"). value. length == 0 || document. getElementById("anio_graduacion"). value. length == 0)
     {
-    alert("No deben quedar espacios vacios al editar la graduacion")
+        $("#validar-edicion")
+        .fadeTo(2000, 500)
+        .slideUp(500, function () {
+            $("#mensaje-exito").slideUp(500);
+        });
     }
     else{
     $("#form-actualizar").attr(
