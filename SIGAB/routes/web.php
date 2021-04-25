@@ -33,6 +33,8 @@ Auth::routes([
     'reset' => false, // Desactivado el auth con el reset de contraseñas
     'verify' => false, // Desactivado el auth con la verificación de email
 ]);
+Route::group(['middleware' => ['auth']], function() {
+    // your routes
 
 // ======================================================================================================================================
 //                                                           Control de perfil
@@ -191,3 +193,5 @@ Route::get('/reportes/involucramiento/personal/{personal_id}', 'ReportesInvolucr
 
 
 Route::get('/reportes/cant', 'ReportesInvolucramientoController@cantActividadesXPersonal');
+
+});

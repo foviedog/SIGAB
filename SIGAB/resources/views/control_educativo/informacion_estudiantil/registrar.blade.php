@@ -13,6 +13,12 @@ Registrar información del estudiante
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 @endsection
 
+@php
+$persona_no_insertada = Session::get('persona_no_insertada');
+$estudiante_no_insertado = Session::get('estudiante_no_insertado');
+@endphp
+
+
 @section('contenido')
 
 <div class="card">
@@ -122,7 +128,7 @@ Registrar información del estudiante
                             <label for="cedula">Cédula: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,15)" required>
+                            <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,15)" value="{{ $persona_no_insertada->persona_id ?? '' }}" required>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_cedula"></span>
