@@ -30,6 +30,10 @@ function activarLoader(mensaje) {
     $("#form-evidencia").trigger("submit");
 }
 
+function ocultarLoader() {
+    $("#loader-full").hide();
+}
+
 function mostrarMensajePersonalizado(mensajeId, textoMensaje) {
     $("#" + mensajeId).html(textoMensaje);
     $("#" + mensajeId)

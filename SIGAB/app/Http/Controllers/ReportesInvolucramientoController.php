@@ -10,6 +10,7 @@ use App\Actividades;
 use App\ListaAsistencia;
 use Carbon\Carbon;
 use App\Personal;
+use App\Persona;
 
 class ReportesInvolucramientoController extends Controller
 {
@@ -22,17 +23,21 @@ class ReportesInvolucramientoController extends Controller
 
     public function show()
     {
+        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal());
+        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito());
         $datosCuantitativos = $this->datosCuntitativosPersonal();
         $datos = null;
         $personal = null;
         $nombre = null;
         $estadoActividad = request('estado_actividad', null);
         return view('reportes.involucramiento.detalle', [
+            'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
+            'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
             'datosCuantitativos' => $datosCuantitativos,
             'datos' => $datos,
             'personal' => $personal,
             'estadoActividad' => $estadoActividad,
-            'nombre' => $nombre,
+            'nombre' => $nombre
         ]);
     }
 
@@ -57,7 +62,7 @@ class ReportesInvolucramientoController extends Controller
     public function cantActividadesXPersonal()
     {
         $tipos = ReportesInvolucramientoController::TIPOS_ACT_INTERNAS;
-        $personal = DB::table('personal')
+        $personal = \DB::table('personal')
             ->select('persona_id')->get();
         $dataSet = [];
         foreach ($personal as &$persona) {
@@ -114,17 +119,22 @@ class ReportesInvolucramientoController extends Controller
         array_push($dataSet, $actividadesCoorPorAmbito);
 
         $datosCuantitativos = $this->datosCuntitativosPersonal();
+        
+        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal());
+        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito());
 
         //dd($dataSet);
 
         return view('reportes.involucramiento.detalle', [
+            'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
+            'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
             'datos' => json_encode($dataSet, JSON_UNESCAPED_SLASHES),
             'datosCuantitativos' => $datosCuantitativos,
             'personal' => $request->personal_encontrado,
             'nombre' => $nombre,
             'estadoActividad' => $estadoActividad,
             'mesInicio' => $mesInicio,
-            'mesFinal' => $mesFinal,
+            'mesFinal' => $mesFinal
         ]);
     }
 
@@ -403,6 +413,7 @@ class ReportesInvolucramientoController extends Controller
         if (is_null($personal)) {
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         }
+        
 
         array_push($datos, $persona);
         array_push($datos, $personal);
@@ -445,11 +456,73 @@ class ReportesInvolucramientoController extends Controller
                     $porcentajesParticipacion[$tipo] = 0;
                 }
                 if ($personal[$tipo] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
-                    $porcentajesParticipacion[$tipo] = $porcentajesParticipacion[$tipo] +  (1 / $cantPersonal); //Se actualiza el array de porcentajes
+                    $porcentajesParticipacion[$tipo] = $porcentajesParticipacion[$tipo] +  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
                 }
             }
         }
         // dd($porcentajesParticipacion);
         return $porcentajesParticipacion;
     }
+
+    public function cantActividadesXPersonalAmbito()
+    {
+        $ambitos = ["Nacional", "Internacional"];
+        $personal = \DB::table('personal')
+            ->select('persona_id')->get();
+        $dataSet = [];
+
+        foreach ($personal as &$persona) {
+            $personaAmbito = [];
+            foreach ($ambitos as &$ambito) {
+                $cant = $this->cantActividadesInternasXAmbito($persona->persona_id, $ambito, '2021');
+                $personaAmbito[$ambito] =  $cant;
+            }
+            $dataSet[$persona->persona_id] = $personaAmbito;
+        }
+        // dd($dataSet);
+        $this->porcentajeParticipacionAmbito($dataSet);
+
+        return $dataSet;
+    }
+
+    public function cantActividadesInternasXAmbito($persona_id, $ambito, $anio)
+    {
+        $cant = Actividades::join('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+            ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where(function ($query) use ($persona_id) {
+                $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                    ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
+            })
+            ->Where('actividades_internas.ambito', 'like', '%' .   $ambito . '%')
+            ->where(function ($query) {
+                $query->where('actividades.estado', '=', 'Ejecutada')
+                    ->orWhere('actividades.estado', '=', 'En progreso');
+            })
+            ->whereYear('actividades.fecha_inicio_actividad', $anio)
+            ->distinct()
+            ->count('actividades.id');
+        return $cant;
+    }
+
+    public function porcentajeParticipacionAmbito($actividadesXPersonal)
+    {
+        $ambitos =["Nacional", "Internacional"];
+        $porcentajesParticipacion = [];
+        $cantPersonal = count($actividadesXPersonal);
+
+        foreach ($actividadesXPersonal as &$personal) {
+
+            foreach ($ambitos as &$ambito) { //Se reccorre el array de los tipos de actividades internas
+                if (!isset($porcentajesParticipacion[$ambito])) { //Se inicializa el porcentaje de parcipación según el ambito de actividad en 0
+                    $porcentajesParticipacion[$ambito] = 0;
+                }
+                if ($personal[$ambito] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
+                    $porcentajesParticipacion[$ambito] = $porcentajesParticipacion[$ambito] +  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
+                }
+            }
+        }
+        //dd($porcentajesParticipacion);
+        return $porcentajesParticipacion;
+    }
+
 }

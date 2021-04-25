@@ -288,6 +288,7 @@ Listado de Guías Académicas
                                 <th>Ciclo lectivo</th>
                                 <th>Lugar de atención</th>
                                 <th>Ver detalle</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -312,6 +313,14 @@ Listado de Guías Académicas
                                         Detalle
                                     </button>
                                 </td>
+                                <form action="{{ route('guia-academica.delete',$guia->id) }}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <td>
+                                        <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                    </td>
+
+                                </form>
                             </tr>
                             @endforeach
                         </tbody>
@@ -325,6 +334,7 @@ Listado de Guías Académicas
                                 <th>Ciclo lectivo</th>
                                 <th>Lugar de atención</th>
                                 <th>Ver detalle</th>
+                                <th>Eliminar</th>
                             </tr>
                         </tfoot>
                     </table>

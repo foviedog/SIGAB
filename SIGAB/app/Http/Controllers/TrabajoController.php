@@ -125,4 +125,23 @@ class TrabajoController extends Controller
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
     }
+
+
+    public function destroy( $id_trabajo)
+    {
+        try {
+            
+            $trabajo = Trabajo::find($id_trabajo); 
+            $trabajo->delete();
+            return Redirect::back()
+            ->with('exito', '¡Se ha eliminado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return Redirect::back()
+            ->with('error', 'ha ocurrido un error');
+        }
+    }
+
+
+
+
 }

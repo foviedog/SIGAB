@@ -312,4 +312,22 @@ class GuiasAcademicaController extends Controller
 
         return $guias; //Retorna el resultado de todas las guías
     }
+
+
+    public function destroy( $id_guia)
+    {
+        try {
+            
+            $guia = Guias_academica::find($id_guia); 
+            $guia->delete();
+            return Redirect::back()
+            ->with('exito', '¡Se ha eliminado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return Redirect::back()
+            ->with('error', 'ha ocurrido un error');
+        }
+    }
+
+
+
 }

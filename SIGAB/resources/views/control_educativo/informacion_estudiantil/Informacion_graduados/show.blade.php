@@ -124,6 +124,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                 <th>Carrera Cursada</th>
                                 <th>Año de graduación</th>
                                 <th>Ver más</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,6 +143,14 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                     </button>
                                     <br />
                                 </td>
+                                <form action="{{ route('graduado.delete',$graduacion->id) }}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <td>
+                                        <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                    </td>
+
+                                </form>
                             </tr>
                             @endforeach
                             @else
@@ -155,6 +164,7 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                 <th>Carrera Cursada</th>
                                 <th>Año de graduación</th>
                                 <th>Ver más</th>
+                                <th>Eliminar</th>
                             </tr>
                         </tfoot>
                     </table>

@@ -172,4 +172,22 @@ class GraduadoController extends Controller
 
         return $graduados; //Retorna el resultado de todas las guías
     }
+
+
+    public function destroy( $id_graduacion)
+    {
+        try {
+            
+            $graduacion = Graduado::find($id_graduacion); 
+            $graduacion->delete();
+            return Redirect::back()
+            ->with('exito', '¡Se ha eliminado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return Redirect::back()
+            ->with('error', 'ha ocurrido un error');
+        }
+    }
+
+
+
 }

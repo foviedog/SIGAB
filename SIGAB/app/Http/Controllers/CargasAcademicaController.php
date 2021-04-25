@@ -212,4 +212,22 @@ class CargasAcademicaController extends Controller
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
     }
+
+
+
+    public function destroy( $id_carga_academica)
+    {
+        try {
+            
+            $carga_academica = Cargas_academica::find($id_carga_academica); 
+            $carga_academica->delete();
+            return Redirect::back()
+            ->with('exito', '¡Se ha eliminado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return Redirect::back()
+            ->with('error', 'ha ocurrido un error');
+        }
+    }
+
+
 }
