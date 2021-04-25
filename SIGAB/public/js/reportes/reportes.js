@@ -51,20 +51,18 @@ function enviar() {
 }
 
 async function reporte() {
-    console.log(x);
-    console.log(y);
-    if ($("#titulo-grafico").val() !== "") {
-        ApexCharts.exec("grafico", "dataURI").then(({ imgURI, blob }) => {
-            $("#image").val(imgURI);
-            $("#reporteForm").trigger("submit");
-        });
-    } else {
-        $("#insertar-titulo")
-            .fadeTo(2000, 500)
-            .slideUp(500, function () {
-                $("#mensaje-exito").slideUp(500);
-            });
-    }
+    // ApexCharts.exec("grafico", "dataURI").then(({ imgURI, blob }) => {
+    //     const jspdf = require('jspdf');
+    //     let doc = new jspdf();
+
+    //     doc.setFontSize(40);
+    //     doc.text(35, 25, 'PDF with jsPDF!');
+    //     const { jsPDF } = window.jspdf
+    //     const pdf = new jsPDF();
+    //     pdf.addImage(imgURI, 'PNG', 0, 0);
+    //     pdf.save("pdf-chart.pdf");
+    //     window.location.href = '/reportes/actividades/reporte?data=' + "data";
+    // });
 }
 
 //-----------------------------------------
@@ -120,3 +118,5 @@ let grid = {
 };
 
 let nameSeries = "Total"
+
+let svg;

@@ -205,7 +205,6 @@ Listado de Guías Académicas
                         Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
                     </button>
                 </div>
-
             </div>
         </div>
         {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
