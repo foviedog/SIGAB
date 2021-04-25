@@ -67,7 +67,7 @@ Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@sho
 Route::post('/estudiante/guia-academica', 'GuiasAcademicaController@store')->name('guia-academica.store');
 Route::get('/estudiante/guia-academica/{id_guia}/eliminar-archivo', 'GuiasAcademicaController@deleteFile')->name('guia-academica.delete_file');
 Route::get('/estudiante/guia-academica/download/{nombre}', 'GuiasAcademicaController@download')->name('guia-academica.download');
-
+Route::delete('/estudiante/guia-academica/eliminar/{id_guia}', 'GuiasAcademicaController@destroy')->name('guia-academica.delete');
 
 
 /* Rutas para informacion de estudiantes */
@@ -80,6 +80,7 @@ Route::patch('/estudiante/trabajo/registrar', 'TrabajoController@store')->name('
 Route::get('/estudiante/trabajo/registrar/{id_estudiante}', 'TrabajoController@create');
 Route::get('/estudiante/trabajo/obtener/{id_trabajo}', 'TrabajoController@edit');
 Route::patch('/estudiante/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update');
+Route::delete('/estudiante/trabajo/eliminar/{id_trabajo}', 'TrabajoController@destroy')->name('trabajo.delete');
 
 /* Rutas para informacion de Graduados */
 Route::get('/estudiante/graduacion/{id_estudiante}', 'GraduadoController@show')->name('graduado.show');
@@ -87,6 +88,7 @@ Route::get('/estudiante/graduacion/registrar/{id_estudiante}', 'GraduadoControll
 Route::patch('/estudiante/graduacion', 'GraduadoController@store')->name('graduado.store');
 Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@edit');
 Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update');
+Route::delete('/estudiante/graduacion/eliminar/{id_graduacion}', 'GraduadoController@destroy')->name('graduado.delete');
 
 // ======================================================================================================================================
 //                                                           Control de Personal
@@ -109,6 +111,7 @@ Route::get('/personal/carga-academica/registrar/{id_personal}', 'CargasAcademica
 Route::patch('/personal/carga-academica', 'CargasAcademicaController@store')->name('cargaacademica.store');
 Route::get('/personal/carga-academica/obtener/{id_carga_academica}', 'CargasAcademicaController@edit')->name('cargaacademica.edit');
 Route::patch('/personal/carga-academica/actualizar/{id_carga_academica}', 'CargasAcademicaController@update')->name('cargaacademica.update');
+Route::delete('/personal/carga-academica/eliminar/{id_carga_academica}', 'CargasAcademicaController@destroy')->name('cargaacademica.delete');
 
 // ======================================================================================================================================
 //                                                           Control de Actividades Internas

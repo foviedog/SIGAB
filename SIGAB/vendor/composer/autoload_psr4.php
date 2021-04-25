@@ -9,7 +9,7 @@ return array(
     'voku\\' => array($vendorDir . '/voku/portable-ascii/src/voku'),
     'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
     'phpseclib3\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'bcmath_compat\\' => array($vendorDir . '/phpseclib/bcmath_compat/src'),
     'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),

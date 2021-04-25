@@ -247,6 +247,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                 <th>Cargo actual</th>
                                 <th>Jornada laboral</th>
                                 <th>Ver más</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -264,6 +265,14 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                     </button>
                                     <br />
                                 </td>
+                                <form action="{{ route('trabajo.delete',$trabajo->id) }}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <td>
+                                        <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                    </td>
+
+                                </form>
                             </tr>
                             @endforeach
                             @else
@@ -279,6 +288,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                 <th>Cargo actual</th>
                                 <th>Jornada laboral</th>
                                 <th>Ver más</th>
+                                <th>Eliminar</th>
                             </tr>
                         </tfoot>
                     </table>

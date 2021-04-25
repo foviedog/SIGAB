@@ -22,7 +22,7 @@ let id_graduacion;
    en el modal */
 $("#detalle-graduacion-modal").on("show.bs.modal", function(event) {
     var button = $(event.relatedTarget); // Botón que abre el modal
-    var id = button.data("idgraduacion"); // Se estrae el id de la graduación
+    var id = button.data("idgraduacion"); // Se extrae el id de la graduación
     id_graduacion = id; // Se guarda el id de la graduación abierta en la variable global
 
     //Método en AJAX que trae la información de la graduación desde el servidor
@@ -62,11 +62,18 @@ $("#cancelar-edicion").on("click", function() {
 
 /* Funcion que actualiza los datos ingresados */
 function actualizar() {
+    
+    if(document. getElementById("grado_academico"). value. length == 0 || document. getElementById("carrera_cursada"). value. length == 0 || document. getElementById("anio_graduacion"). value. length == 0)
+    {
+    alert("No deben quedar espacios vacios al editar la graduacion")
+    }
+    else{
     $("#form-actualizar").attr(
         "action",
         "/estudiante/graduacion/actualizar/" + id_graduacion
     );
-    $("#form-actualizar").trigger("submit");
+    $("#form-actualizar").trigger("submit"); 
+    }
 }
 
 /*Contador de caracteres de Grado Académico */
@@ -98,3 +105,7 @@ function contarCarAnioGraduacion(val) {
         $("#mostrar_cant_anio_graduacion").text(4 - len);
     }
 }
+
+
+
+

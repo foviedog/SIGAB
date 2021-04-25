@@ -132,6 +132,7 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                 <th>Año</th>
                                 <th>NRC</th>
                                 <th>Ver más</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -151,6 +152,14 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                     </button>
                                     <br />
                                 </td>
+                                <form action="{{ route('cargaacademica.delete',$carga_academica->id) }}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <td>
+                                        <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                    </td>
+
+                                </form>
                             </tr>
                             @endforeach
                             @else
@@ -165,6 +174,7 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                 <th>Año</th>
                                 <th>NRC</th>
                                 <th>Ver más</th>
+                                <th>Eliminar</th>
                             </tr>
                         </tfoot>
                     </table>
