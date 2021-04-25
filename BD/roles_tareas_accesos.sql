@@ -55,7 +55,7 @@ DROP PROCEDURE IF EXISTS sigab.GET_TAREAS;
 
 
 DELIMITER //
-create procedure GET_TAREAS(ArgId INT)
+create procedure INSERTAR_TODAS_LAS_TAREAS(ArgId INT)
 BEGIN
 	DECLARE done BOOLEAN DEFAULT 0;
 	DECLARE tarea_id INT;
@@ -71,7 +71,7 @@ END;
  //
 DELIMITER ;
 
-call GET_TAREAS(1);
+call INSERTAR_TODAS_LAS_TAREAS(1);
 
 select
   *

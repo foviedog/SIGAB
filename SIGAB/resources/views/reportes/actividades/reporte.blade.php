@@ -95,6 +95,7 @@
         background-color: #990000;
         border-color: #990000;
         color: #ffffff;
+        cursor: pointer;
     }
 
     .img-container {

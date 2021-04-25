@@ -58,5 +58,6 @@ class LoginController extends Controller
         $accesos = Acceso::where('rol_id', $user->rol)->get();
         $persona =  Persona::findOrFail($user->persona_id);
         session(['persona' => $persona]);
+        session(['accesos_usuario' => $accesos]);
     }
 }
