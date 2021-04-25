@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
+Mi perfil
 @endsection
 
 @section('css')
@@ -120,6 +121,8 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
                             <div>
                                 {{-- Botón para regresar al listado de actividades --}}
                                 <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
+                                {{-- Botón para acceder a las notificaciones --}}
+                                <a href="{{ route('perfil.notifications') }}" class="btn btn-contorno-rojo"><i class="fas fa-bell"></i> &nbsp; Notificaciones </a>
                                 {{-- Boton que habilita opcion de editar --}}
                                 <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                                 {{-- Boton de cancelar edicion --}}

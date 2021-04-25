@@ -23,8 +23,9 @@ class ReportesInvolucramientoController extends Controller
 
     public function show()
     {
-        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal());
-        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito());
+        $anio = date('Y');
+        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
+        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
         $datosCuantitativos = $this->datosCuntitativosPersonal();
         $datos = null;
         $personal = null;
@@ -59,7 +60,7 @@ class ReportesInvolucramientoController extends Controller
     {
     }
 
-    public function cantActividadesXPersonal()
+    public function cantActividadesXPersonal($anio)
     {
         $tipos = ReportesInvolucramientoController::TIPOS_ACT_INTERNAS;
         $personal = \DB::table('personal')
@@ -68,13 +69,11 @@ class ReportesInvolucramientoController extends Controller
         foreach ($personal as &$persona) {
             $personaTipos = [];
             foreach ($tipos as &$tipo) {
-                $cant = $this->cantActividadesInternasXTipo($persona->persona_id, $tipo, '2021');
+                $cant = $this->cantActividadesInternasXTipo($persona->persona_id, $tipo, $anio);
                 $personaTipos[$tipo] =  $cant;
             }
             $dataSet[$persona->persona_id] = $personaTipos;
         }
-        // dd($dataSet);
-        $this->porcentajeParticipacion($dataSet);
 
         return $dataSet;
     }
@@ -120,8 +119,9 @@ class ReportesInvolucramientoController extends Controller
 
         $datosCuantitativos = $this->datosCuntitativosPersonal();
         
-        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal());
-        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito());
+        $anio = date('Y');
+        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
+        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
 
         //dd($dataSet);
 
@@ -464,7 +464,7 @@ class ReportesInvolucramientoController extends Controller
         return $porcentajesParticipacion;
     }
 
-    public function cantActividadesXPersonalAmbito()
+    public function cantActividadesXPersonalAmbito($anio)
     {
         $ambitos = ["Nacional", "Internacional"];
         $personal = \DB::table('personal')
@@ -474,7 +474,7 @@ class ReportesInvolucramientoController extends Controller
         foreach ($personal as &$persona) {
             $personaAmbito = [];
             foreach ($ambitos as &$ambito) {
-                $cant = $this->cantActividadesInternasXAmbito($persona->persona_id, $ambito, '2021');
+                $cant = $this->cantActividadesInternasXAmbito($persona->persona_id, $ambito, $anio);
                 $personaAmbito[$ambito] =  $cant;
             }
             $dataSet[$persona->persona_id] = $personaAmbito;

@@ -54,7 +54,7 @@ function buscarPersonal(){
             dataType: "json",
             method: "GET",
             success: function(datos) {
-                $("#loader-full").hide();
+                ocultarLoader();
                 if(!flagInfoPersonal){
                     $("#seccion-graficos").html("");
                 }
@@ -78,6 +78,7 @@ function errorNoEncontrado() {
     $("#imagen-personal").attr("src", src);
     desplegarAlerta("La cédula digitada no corresponde a ningún miembro del personal");
     $("#seccion-graficos").html("");
+    ocultarLoader();
 }
 
 function desplegarAlerta(contenido) {

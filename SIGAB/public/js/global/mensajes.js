@@ -10,7 +10,7 @@ function mostrarMensaje() {
     $("#mensaje-info").show();
     $("#mensaje-info").css("animation-name", "mostrar-mensaje");
 
-    setTimeout(function() {
+    setTimeout(function() { 
         $("#mensaje-info").css("animation-name", "esconder-mensaje");
     }, 4000);
     setTimeout(function() {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\notificarAgregarTrabajo;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Estudiante;
@@ -83,6 +85,9 @@ class TrabajoController extends Controller
 
         //Se guarda en la base de datos
         $trabajo->save();
+
+        //Generar la notificacion
+        event(new notificarAgregarTrabajo($trabajo));
 
         //Se reedirige a la página anterior con la información digitada un mensaje de éxito
         return Redirect::back()

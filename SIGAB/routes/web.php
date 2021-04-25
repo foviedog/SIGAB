@@ -40,11 +40,12 @@ Route::group(['middleware' => ['auth']], function() {
 //                                                           Control de perfil
 // ======================================================================================================================================
 
+/* Ruta para acceder a las notificaciones */
+Route::get('/perfil/notificaciones', 'PersonaController@notifications')->name('perfil.notifications');
 /* Ruta de detalle del perfil*/
 Route::get('/perfil/{persona_id}', 'PersonaController@show')->name('perfil.show');
 /* Ruta de update del perfil*/
 Route::patch('/perfil/{persona_id}', 'PersonaController@update')->name('perfil.update');
-
 
 // ======================================================================================================================================
 //                                                           Control Estudiantil

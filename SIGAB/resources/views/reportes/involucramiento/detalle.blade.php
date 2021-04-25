@@ -98,7 +98,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                 <div class="col-6 d-flex flex-column justify-content-center align-items-center">
                     <div class="header-grafico w-100 texto-rojo-medio d-flex">
                         <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso. Se toman en cuenta las actividades en ejecución y ejecutadas." style="font-size: 18px;"></i>
+                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso. Se toman en cuenta las actividades en ejecución y ejecutadas. El cálculo toma en cuenta la participación en lista de asistencia como coordinación." style="font-size: 18px;"></i>
                     </div>
                     <div class="grafico-container w-100 mt-3">
                         <div id="grafico_porc_act">
@@ -109,7 +109,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                 <div class="col-6 d-flex flex-column justify-content-center align-items-center">
                     <div class="header-grafico w-100 texto-rojo-medio d-flex">
                         <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas por ámbito</h4>&nbsp;
-                        <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso por ámbito. Se toman en cuenta las actividades en ejecución y ejecutadas." style="font-size: 18px;"></i>
+                        <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso por ámbito. Se toman en cuenta las actividades en ejecución y ejecutadas. El cálculo toma en cuenta la participación en lista de asistencia como coordinación." style="font-size: 18px;"></i>
                     </div>
                     <div class="grafico-container w-100 mt-3 ml-3">
                         <div id="grafico_porc_amb">
