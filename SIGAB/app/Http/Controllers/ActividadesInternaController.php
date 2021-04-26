@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Actividades;
 use App\Personal;
 use App\Actividades_interna;
+use App\Helper\GlobalFunctions;
+
+use App\Events\EventActividadParaAutorizar;
 
 class ActividadesInternaController extends Controller
 {
@@ -56,8 +59,6 @@ class ActividadesInternaController extends Controller
     {
         $actividad = Actividades::findOrfail($id_actividad);
         $personal = Personal::findOrFail($actividad->responsable_coordinar);
-        // dd($personal);
-        // dd($actividad);
 
         return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
     }
@@ -87,6 +88,7 @@ class ActividadesInternaController extends Controller
             $actividad->objetivos = $request->objetivos;
             $actividad->responsable_coordinar = $request->responsable_coordinar;
             $actividad->duracion = $request->duracion;
+            $actividad->creada_por = auth()->user()->persona_id;
             $actividad->save(); //se guarda el objeto en la base de datos
 
             //se setean los atributos del objeto
@@ -100,6 +102,9 @@ class ActividadesInternaController extends Controller
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
             $actividad_interna->save(); //se guarda el objeto en la base de datos
+
+            //Generar la notificacion
+            event(new EventActividadParaAutorizar($actividad));
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/actividad-interna/registrar")
@@ -198,5 +203,9 @@ class ActividadesInternaController extends Controller
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
             ->paginate($itemsPagina); //Paginación de los resultados
         return $actividadesInternas;
+    }
+
+    private function autorizarActividad(Request $request){
+        dd($request);
     }
 }

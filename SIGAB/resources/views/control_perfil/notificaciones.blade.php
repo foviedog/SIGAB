@@ -5,7 +5,12 @@ Notificaciones
 @endsection
 
 @section('css')
-{{-- No hay --}}
+<style>
+    .header-collapse{
+        text-align: center;
+        cursor: pointer;
+    }
+</style>
 @endsection
 
 @section('contenido')
@@ -33,21 +38,89 @@ Notificaciones
                 </div>
                 
                 <div class="card-body">
-                    <table class="table">
+                    
+                    <div class="py-3" style="text-align: center;">
+                        <h4>Notificaciones nuevas</h4>
+                    </div>
+
+                    <table class="table table-hover">
                         <thead>
                             <tr>
-                            <th scope="col">Nombre Organizacion</th>
+                            <th scope="col">Información</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Ver</th>
+                            <th scope="col">Marcar como leído</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            @foreach($notifiaciones as $notifiacion)
+                            {{-- En caso de que no existan registros --}}
+                            @if(count($notificacionesNoLeidas) == 0)
+                            <tr class="cursor-pointer">
+                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg">
+                                    </i> &nbsp; No existen registros</td>
+                            </tr>
+                            @endif
+                            @foreach($notificacionesNoLeidas as $notifiacion)
                             <tr>
-                                <th>{{ $notifiacion->data['nombre_organizacion'] }}</th>
+                                <td>{{ $notifiacion->data['mensaje'] }}</td>
+                                <td>{{ $notifiacion->created_at }}</td>
+                                @if($notifiacion->data['idActividad'])
+                                    <td><a href="/detalle-actividad-interna/{{ $notifiacion->data['idActividad'] }}">Detalle</a></td>
+                                @endif
+                                <td>Marcar como leído</td>
                             <tr>
                             @endforeach
+                            
                         </tbody>
-                        </table>
+                    </table>
+
+                    <div class="header-collapse" id="accordion" data-toggle="collapse" data-target="#collapseNotificaciones" aria-expanded="false" aria-controls="collapseNotificaciones">
+                        <div class="card">
+                            <div class="card-header" id="collapse-notificaciones">
+                                <h4 class="mb-0">
+                                    Ver notificaciones leídas
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="collapseNotificaciones" class="collapse" aria-labelledby="collapse-notificaciones" data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Información</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Ver</th>
+                                    <th scope="col">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- En caso de que no existan registros --}}
+                                    @if(count($notificacionesLeidas) == 0)
+                                    <tr class="cursor-pointer">
+                                        <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg">
+                                            </i> &nbsp; No existen registros</td>
+                                    </tr>
+                                    @endif
+                                    @foreach($notificacionesLeidas as $notifiacion)
+                                    <tr>
+                                        <td>{{ $notifiacion->data['mensaje'] }}</td>
+                                        <td>{{ $notifiacion->created_at }}</td>
+                                        @if($notifiacion->data['idActividad'])
+                                            <td>{{ $notifiacion->data['idActividad'] }}</td>
+                                        @endif
+                                        <td>Eliminar</td>
+                                    <tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+
+
+
                 </div>
 
             </div>

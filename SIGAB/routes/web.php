@@ -128,6 +128,8 @@ Route::post('/actividad-interna', 'ActividadesInternaController@store');
 Route::get('/actividad-interna', 'ActividadesInternaController@index')->name('actividad-interna.listado');
 // Detalle de actividad interna
 Route::get('/detalle-actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.show');
+// Autorizar actividad interna
+Route::patch('/actividad-interna/autorizar', 'ActividadesInternaController@autorizarActividad')->name('actividad-interna.autorizar');
 // Actualización de los datos de la actividad
 Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@update')->name('actividad-interna.update');
 

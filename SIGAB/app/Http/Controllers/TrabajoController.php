@@ -86,9 +86,6 @@ class TrabajoController extends Controller
         //Se guarda en la base de datos
         $trabajo->save();
 
-        //Generar la notificacion
-        event(new notificarAgregarTrabajo($trabajo));
-
         //Se reedirige a la página anterior con la información digitada un mensaje de éxito
         return Redirect::back()
             ->with('mensaje', '¡El registro ha sido exitoso!')

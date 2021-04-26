@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Acceso;
 use App\Persona;
 
-
 class LoginController extends Controller
 {
     /*

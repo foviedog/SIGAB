@@ -24,8 +24,11 @@ class CreateActividadesTable extends Migration
             $table->longText('descripcion')->nullable();
             $table->string('evaluacion', 500)->nullable();
             $table->longText('objetivos')->nullable();
+            $table->integer('autorizada')->default(0);
             $table->string('responsable_coordinar', 15);
             $table->foreign('responsable_coordinar')->references('persona_id')->on('personal');
+            $table->string('creada_por', 15);
+            $table->foreign('creada_por')->references('persona_id')->on('personas');
             $table->timestamps();
         });
     }

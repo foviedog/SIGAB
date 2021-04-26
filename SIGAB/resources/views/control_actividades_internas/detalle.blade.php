@@ -28,52 +28,65 @@ $ambitos = ['Nacional','Internacional'];
 
 @endphp
 
-{{-- Formulario general de actualización de datos de actividad --}}
-<form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
-    {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
-    @method('PATCH')
-    {{-- Seguridad de envío de datos --}}
-    @csrf
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            {{-- Título  --}}
+            <div class=" d-flex justify-content-start align-items-center">
+                <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
+            
+            {{-- Botones superiores --}}
+            @if(GlobalFunctions::verificarAcceso(21))
+                {{-- Botón para autorizar actividad --}}
 
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                {{-- Título  --}}
-                <div class=" d-flex justify-content-start align-items-center">
-                    <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
-                </div>
-                {{-- Botones superiores --}}
-                <div>
-                    {{-- Botón para regresar al listado de actividades --}}
-                    <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
-                    {{-- Boton que habilita opcion de editar --}}
-                    <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
-                    {{-- Boton de cancelar edicion --}}
-                    <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
-                </div>
-            </div>
-            <hr>
-            {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-            @if(Session::has('mensaje'))
-            <div class="alert alert-success text-center font-weight-bold" role="alert" id="mensaje_exito">
-                {!! \Session::get('mensaje') !!}
-            </div>
+                <form action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PATCH')
+                    <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
+                    <button type="submit" class="btn btn-contorno-rojo"><i class="fas fa-check-double "></i> &nbsp; Autorizar actividad </button>
+                </form>
             @endif
-            @if(Session::has('error'))
-            <div class="alert alert-danger text-center font-weight-bold" role="alert">
-                {{ "¡Oops! Algo ocurrió mal. ".$error }}
             </div>
-            @endif
-            {{-- Barra de navegación entre información genereal y bloques de texto  --}}
-            <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="info-gen-tab" href="#info-gen">Información general</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
-                </li>
 
-            </ul>
+            <div>
+
+                {{-- Botón para regresar al listado de actividades --}}
+                <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                {{-- Boton que habilita opcion de editar --}}
+                <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
+                {{-- Boton de cancelar edicion --}}
+                <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
+            </div>
+        </div>
+        <hr>
+        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
+        @if(Session::has('mensaje'))
+        <div class="alert alert-success text-center font-weight-bold" role="alert" id="mensaje_exito">
+            {!! \Session::get('mensaje') !!}
+        </div>
+        @endif
+        @if(Session::has('error'))
+        <div class="alert alert-danger text-center font-weight-bold" role="alert">
+            {{ "¡Oops! Algo ocurrió mal. ".$error }}
+        </div>
+        @endif
+        {{-- Barra de navegación entre información genereal y bloques de texto  --}}
+        <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="info-gen-tab" href="#info-gen">Información general</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
+            </li>
+
+        </ul>
+
+        {{-- Formulario general de actualización de datos de actividad --}}
+        <form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
+            {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
+            @method('PATCH')
+            {{-- Seguridad de envío de datos --}}
+            @csrf
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab">
 
@@ -524,15 +537,16 @@ $ambitos = ['Nacional','Internacional'];
                     </div>
                 </div>
             </div>
-            <div class="row d-flex justify-content-center mt-3">
-                {{-- Boton para enviar los cambios --}}
-                <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
-            </div>
+        </form>
 
+        <div class="row d-flex justify-content-center mt-3">
+            {{-- Boton para enviar los cambios --}}
+            <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
         </div>
-    </div>
 
-</form>
+    </div>
+</div>
+
 
 @endsection
 

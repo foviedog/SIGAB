@@ -2,13 +2,14 @@
 
 namespace App\Listeners;
 
-use App\User;
-use App\Events\notificarAgregarTrabajo;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Notifications\notificacionAgregarTrabajo;
 
-class notificarAgregarTrabajoListener
+use App\User;
+use App\Notifications\NotificacionActividadParaAutorizar;
+use App\Events\EventActividadParaAutorizar;
+
+class ListenerActividadParaAutorizar
 {
     /**
      * Create the event listener.
@@ -26,12 +27,13 @@ class notificarAgregarTrabajoListener
      * @param  object  $event
      * @return void
      */
-    public function handle(notificarAgregarTrabajo $event)
+    public function handle(EventActividadParaAutorizar $event)
     {
-        $usuarios = User::where('persona_id', '=', '5678')->get();
+
+        $usuarios = User::where('rol', '=', '1')->get();
 
         foreach ($usuarios as $usuario) {
-            $usuario->notify(new notificacionAgregarTrabajo($event->trabajo));
+            $usuario->notify(new NotificacionActividadParaAutorizar($event->actividad));
         }
     }
 }

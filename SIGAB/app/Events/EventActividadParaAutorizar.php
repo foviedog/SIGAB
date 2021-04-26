@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Trabajo;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +10,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class notificarAgregarTrabajo
+use App\Actividades;
+
+class EventActividadParaAutorizar
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,12 +21,12 @@ class notificarAgregarTrabajo
      *
      * @return void
      */
-    
-    public $trabajo;
 
-    public function __construct(Trabajo $trabajo)
+    public $actividad;
+
+    public function __construct(Actividades $actividad)
     {
-        $this->trabajo = $trabajo;
+        $this->actividad = $actividad;
     }
 
     /**

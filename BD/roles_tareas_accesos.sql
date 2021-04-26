@@ -1,6 +1,12 @@
+use sigab;
 select * from roles;
 select * from tareas;
 select * from accesos;
+select * from personas;
+select * from users;
+select * from notifications;
+
+update users set rol = '7' where persona_id = '5678';
 
 insert into roles(nombre) values("Dirección");
 insert into roles(nombre) values("Subdirección");
@@ -11,7 +17,6 @@ insert into roles(nombre) values("Secretaria");
 insert into roles(nombre) values("Estudiante asistente académica");
 
 						
-
 insert into tareas(nombre) values("Realizar búsquedas de actividades");
 insert into tareas(nombre) values("Visualizar información detallada de actividad");
 insert into tareas(nombre) values("Visualizar lista de participantes (asistencia) en actividades");
@@ -52,8 +57,6 @@ insert into tareas(nombre) values("Agregar cargas académicas");
 insert into tareas(nombre) values("Modificar cargas académicas");
 
 DROP PROCEDURE IF EXISTS sigab.GET_TAREAS;
-
-
 DELIMITER //
 create procedure INSERTAR_TODAS_LAS_TAREAS(ArgId INT)
 BEGIN
@@ -73,22 +76,25 @@ DELIMITER ;
 
 call INSERTAR_TODAS_LAS_TAREAS(1);
 
-select
-  *
-from
-  `actividades_promocion`
-  inner join `actividades` on `actividades_promocion`.`actividad_id` = `actividades`.`id`
-  inner join `personal` on `actividades`.`responsable_coordinar` = `personal`.`persona_id`
-where
-  `actividades`.`fecha_inicio_actividad` like '%2021-03-16%'
-  and `actividades`.`fecha_final_actividad` like '%%'
-
-select
-  count(*) as aggregate
-from
-  `actividades_promocion`
-  inner join `actividades` on `actividades_promocion`.`actividad_id` = `actividades`.`id`
-  inner join `personal` on `actividades`.`responsable_coordinar` = `personal`.`persona_id`
-where
-  `actividades`.`fecha_inicio_actividad` between '' and ''
+-- SECRETARIA
+insert into accesos(rol_id, tarea_id) values (7, 3);
+insert into accesos(rol_id, tarea_id) values (7, 5);
+insert into accesos(rol_id, tarea_id) values (7, 7);
+insert into accesos(rol_id, tarea_id) values (7, 9);
+insert into accesos(rol_id, tarea_id) values (7, 10);
+insert into accesos(rol_id, tarea_id) values (7, 13);
+insert into accesos(rol_id, tarea_id) values (7, 14);
+insert into accesos(rol_id, tarea_id) values (7, 16);
+insert into accesos(rol_id, tarea_id) values (7, 17);
+insert into accesos(rol_id, tarea_id) values (7, 19);
+-- insert into accesos(rol_id, tarea_id) values (7, 21);
+insert into accesos(rol_id, tarea_id) values (7, 24);
+insert into accesos(rol_id, tarea_id) values (7, 25);
+insert into accesos(rol_id, tarea_id) values (7, 28);
+insert into accesos(rol_id, tarea_id) values (7, 30);
+insert into accesos(rol_id, tarea_id) values (7, 31);
+insert into accesos(rol_id, tarea_id) values (7, 32);
+insert into accesos(rol_id, tarea_id) values (7, 33);
+insert into accesos(rol_id, tarea_id) values (7, 35);
+insert into accesos(rol_id, tarea_id) values (7, 38);
 

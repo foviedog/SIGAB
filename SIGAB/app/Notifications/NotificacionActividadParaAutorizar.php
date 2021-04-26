@@ -7,7 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class notificacionAgregarTrabajo extends Notification
+use App\Persona;
+
+class NotificacionActividadParaAutorizar extends Notification
 {
     use Queueable;
 
@@ -16,9 +18,9 @@ class notificacionAgregarTrabajo extends Notification
      *
      * @return void
      */
-    public function __construct($trabajo)
+    public function __construct($actividad)
     {
-        $this->trabajo = $trabajo;
+        $this->actividad = $actividad;
     }
 
     /**
@@ -40,9 +42,11 @@ class notificacionAgregarTrabajo extends Notification
      */
     public function toArray($notifiable)
     {
+        $persona = Persona::find($this->actividad->creada_por);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha enviado una actividad para autorización.";
         return [
-            'nombre_organizacion' => $this->trabajo->nombre_organizacion,
-            'mensaje' => 'Se ha ingresado un trabajo'
+            'idActividad' => $this->actividad->id,
+            'mensaje' => $mensaje
         ];
     }
 }
