@@ -120,12 +120,14 @@ Botones rellenos
 
 .btn-azul-una {
     background-color: #034991 !important;
+    color: #ffffff !important;
     border-color: #034991 !important;
 }
 
 .btn-azul-una:hover {
     background-color: #176cc2 !important;
     border-color: #176cc2 !important;
+    color: #ffffff !important;
 }
 
 /* ***********************
@@ -456,25 +458,42 @@ Fin de la paleta de colores
 }
 
 /* FOOTER */
-.footer-img {
-    background-image: url('../../img/facultad.jpg');
+
+.footer {
+    width: 102%;
+    position: relative;
+    right: 1rem;
+    top: 1rem;
+    margin-top: 8rem;
+}
+
+.footer-img-container {
+    overflow: hidden;
+    height: 10rem;
+}
+
+.footer-img-container .footer-img {
+    width: 100%;
+    background-image: url('../../img/facultad.png');
     background-color: #e6e6e6;
     background-attachment: fixed;
     background-position: top;
-    padding: 4%;
+    height: 10rem;
     filter: grayscale(25%);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.copyrigth{
+.copyrigth {
     color: white;
     text-align: center;
     justify-content: center;
     padding: 1%;
-    background: linear-gradient(176deg, #990000 45%, rgba(153,0,0,1)  100%);
+    background: linear-gradient(176deg, #990000 45%, rgba(153, 0, 0, 1) 100%);
     font-size: medium;
 }
 
-.linea-footer{
+.linea-footer {
     width: 100%;
     height: 2rem;
     background-color: #990000;

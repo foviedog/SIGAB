@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -54,7 +55,7 @@ class LoginController extends Controller
 
     function authenticated(Request $request, $user)
     {
-        $accesos = Acceso::where('rol_id', $user->rol)->get();
+        $accesos = DB::table('accesos')->where('rol_id', $user->rol)->get();
         $persona =  Persona::findOrFail($user->persona_id);
         session(['persona' => $persona]);
         session(['accesos_usuario' => $accesos]);

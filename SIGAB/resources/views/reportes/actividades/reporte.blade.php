@@ -113,17 +113,12 @@
         box-shadow: 0px 0px 7px 0px #cfcfcf;
     }
 
-    .universidad {
-        font-size: 20px !important;
-        margin-bottom: 2rem !important;
-        color: #990000 !important;
-    }
-
     .titulo {
-        color: #990000;
-        font-size: 18px;
+        font-size: 20px;
         width: 85%;
-        margin-top: 1rem;
+        margin-top: 2rem;
+        font-weight: bold;
+        text-align: center;
     }
 
 </style>
@@ -138,7 +133,7 @@
         </header>
         <div class="container-body">
             <div style="float: none;">
-                <p class="universidad">UNIVERSIDAD NACIONAL</p>
+                <p>UNIVERSIDAD NACIONAL</p>
                 <p>Facultad de Filosofía y Letras</p>
                 <p>Escuela de Bibliotecología, Documentación e Información</p>
                 <p>Programa Aseguramiento de la calidad y mejora continua de la carrera de Bibliotecología y</p>

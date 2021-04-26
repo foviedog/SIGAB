@@ -175,6 +175,17 @@
                     @yield('contenido')
                 </div>
             </div>
+            <footer>
+                <div class="footer">
+                    <div class="footer-img-container">
+                        <div class="footer-img"></div>
+                    </div>
+
+                    <div class="copyrigth">
+                        Copyright © {{ now()->year }} Escuela de Bibliotecología Documentación e Información.
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 
@@ -186,11 +197,6 @@
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
 </body>
 
-<footer>
-    <div class="footer-img"></div>
-    <div class="copyrigth">
-        Copyright © {{ now()->year }} Escuela de Bibliotecología Documentación e Información.
-    </div>
-</footer>
+
 
 </html>

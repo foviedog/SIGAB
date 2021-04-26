@@ -34,18 +34,18 @@ $ambitos = ['Nacional','Internacional'];
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
                 <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
-            
-            {{-- Botones superiores --}}
-            @if(GlobalFunctions::verificarAcceso(21))
+
+                {{-- Botones superiores --}}
+                @if(GlobalFunctions::verificarAcceso(21))
                 {{-- Botón para autorizar actividad --}}
 
                 <form action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+                    @csrf
+                    @method('PATCH')
                     <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
-                    <button type="submit" class="btn btn-contorno-rojo"><i class="fas fa-check-double "></i> &nbsp; Autorizar actividad </button>
+                    <button type="submit" class="btn btn-contorno-rojo" style="display:none;"><i class="fas fa-check-double "></i> &nbsp; Autorizar actividad </button>
                 </form>
-            @endif
+                @endif
             </div>
 
             <div>
@@ -73,12 +73,11 @@ $ambitos = ['Nacional','Internacional'];
         {{-- Barra de navegación entre información genereal y bloques de texto  --}}
         <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="info-gen-tab" href="#info-gen">Información general</a>
+                <a class="nav-link active" id="info-gen-tab" href="#">Información general</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
             </li>
-
         </ul>
 
         {{-- Formulario general de actualización de datos de actividad --}}
@@ -537,12 +536,11 @@ $ambitos = ['Nacional','Internacional'];
                     </div>
                 </div>
             </div>
+            <div class="row d-flex justify-content-center mt-3">
+                {{-- Boton para enviar los cambios --}}
+                <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
+            </div>
         </form>
-
-        <div class="row d-flex justify-content-center mt-3">
-            {{-- Boton para enviar los cambios --}}
-            <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
-        </div>
 
     </div>
 </div>
