@@ -88,22 +88,6 @@ class ReportesInvolucramientoController extends Controller
         $estadoActividad = $request->estado_actividad;
         $dataSet = array();
 
-        /*if($request->tipo_consulta == "Asistencia"){
-            $actividadesPorTipos = array_combine($this->devolverTiposActividades(0), $this->activadesPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad));
-            $actividadesPorFechas = $this->activadesPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
-            $actividadesPorAmbito = $this->activadesPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
-            array_push($dataSet, $actividadesPorTipos);
-            array_push($dataSet, $actividadesPorFechas);
-            array_push($dataSet, $actividadesPorAmbito);
-        } else {
-            $actividadesCoorPorTipos = array_combine($this->devolverTiposActividades(0), $this->actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad));
-            $actividadesCoorPorFechas = $this->activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
-            $actividadesCoorPorAmbito = $this->activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
-            array_push($dataSet, $actividadesCoorPorTipos);
-            array_push($dataSet, $actividadesCoorPorFechas);
-            array_push($dataSet, $actividadesCoorPorAmbito);
-        }*/
-
         $actividadesPorTipos = $this->activadesPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesPorFechas = $this->activadesPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesPorAmbito = $this->activadesPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
@@ -122,8 +106,6 @@ class ReportesInvolucramientoController extends Controller
         $anio = date('Y');
         $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
         $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
-
-        //dd($dataSet);
 
         return view('reportes.involucramiento.detalle', [
             'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),

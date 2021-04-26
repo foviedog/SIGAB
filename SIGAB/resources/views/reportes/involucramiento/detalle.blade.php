@@ -180,11 +180,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                                         @endforeach
                                     </select>
 
-                                    <select class="col-8 mt-3 form-control" id="estado" name="tipo_consulta" class="form-control" required>
-                                        <option value="Asistencia">Asistencia</option>
-                                        <option value="Coordinacion">Coordinación</option>
-                                    </select>
-
                                     <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando gráficos');"><i class="fas fa-chart-line"></i> Generar gráficos</button>
 
                                 </div>
