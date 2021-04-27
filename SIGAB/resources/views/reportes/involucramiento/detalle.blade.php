@@ -102,7 +102,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-3">
                         <div id="grafico_porc_act">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-3 ml-3">
                         <div id="grafico_porc_amb">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -130,12 +130,12 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                 </div>
                 <div class="w-75">
                     <div class="row d-flex justify-content-center mb-3">
-                        
+
                         <div class="col-6">
-                        
+
                             <div class="card">
                                 <div class="justify-content-center align-items-center p-3" style="text-align:center">
-                                    <img src="{{ asset('img/fotos/default.jpg') }}" class="mb-3" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 100%;"/>
+                                    <img src="{{ asset('img/fotos/default.jpg') }}" class="mb-3" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 100%;" />
                                     <div class="text-start mt-2" id="info-personal">
                                         <strong>Nombre:</strong> &nbsp;&nbsp;<span id="nombre-personal">Sin seleccionar</span><br>
                                         <strong>Tipo de puesto 1:</strong> &nbsp;&nbsp;<span id="tipo-puesto1-personal">Sin seleccionar</span><br>
@@ -147,11 +147,11 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                                     </div>
                                 </div>
                             </div>
-                        
+
                         </div>
 
                         <div class="col-6">
-                        
+
                             <div class="row d-flex justify-content-left">
                                 <div class="col-11">
                                     <div class="d-flex justify-content-left" id="input-buscar-agregar">
@@ -176,7 +176,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                                     <select class="col-8 mt-3 form-control" id="estado" name="estado_actividad" class="form-control">
                                         <option value="">Todos los estados</option>
                                         @foreach($estados as $estado)
-                                        <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif >{{ $estado }}</option>
+                                        <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
                                         @endforeach
                                     </select>
 
@@ -199,7 +199,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
             </div>
 
             <hr>
-            
             <div class="row mt-5">
                 <div class="col-6 d-flex flex-column justify-content-center align-items-center">
                     <div class="header-grafico w-100 texto-rojo-medio d-flex">
@@ -208,7 +207,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-1">
                         <div id="grafico_asis_tipos">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -219,7 +218,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-1">
                         <div id="grafico_coord_tipos">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -235,7 +234,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-1">
                         <div id="grafico_asis_fecha">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -246,7 +245,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-1">
                         <div id="grafico_coord_fecha">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -262,7 +261,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-1">
                         <div id="grafico_asis_ambito">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -273,7 +272,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                     </div>
                     <div class="grafico-container w-100 mt-1">
                         <div id="grafico_coord_ambito">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -293,14 +292,14 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 <script>
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     @if(!is_null($personal))
-        let flagInfoPersonal = true;
+    let flagInfoPersonal = true;
     @else
-        let flagInfoPersonal = false;
+    let flagInfoPersonal = false;
     @endif
 
     let porcentajeParticipacionActual = JSON.parse('{!! $porcentajeActualParticipacion !!}');
     let porcentajeAmbitoActual = JSON.parse('{!! $porcentajeActualAmbito !!}');
-    
+
 </script>
 
 <script src="{{ asset('js/reportes/involucramiento/reportes.js') }}" defer></script>
@@ -320,10 +319,11 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 </script>
 <script src="{{ asset('js/reportes/involucramiento/graficosDinamicos.js') }}" defer></script>
-@else  {{--En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados --}}
+@else {{--En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados --}}
 <script>
     //Ocultar espacio para los gráficos
     $("#seccion-graficos").hide();
+
 </script>
 @endif
 

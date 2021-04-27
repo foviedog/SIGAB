@@ -19,9 +19,8 @@ Actividades de promoción
 
 $propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
 
-$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Conversatorio','Órgano colegiado',
-'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
-'Comisiones de trabajo','Externa','Otro'];
+$tiposActividad = ['Ferias','Participación en congresos nacionales e internacionales','Puertas abiertas','Promoción por redes sociales','Visitas a comunidades','Visitas a colegios',
+'Envío de paquetes promocionales por correo electrónico','Charlas','Otro'];
 
 $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 
