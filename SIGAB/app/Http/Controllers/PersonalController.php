@@ -79,8 +79,7 @@ class PersonalController extends Controller
             $persona->persona_id = $request->persona_id;
 
 
-            $this->guardarPersona($persona, $request); //Se llama al método genérico para guardar una persona
-            $this->guardarPersonal($personal, $request); //Se llama al método genérico para guardar un personal
+            $this->guardarPersonal($persona, $personal, $request); //Se llama al método genérico para guardar un personal
 
             //Antes de guardar las participaciones se crea un registro de participaciones en la base de datos para luego ser actualizadas
             $participacion->persona_id = $request->persona_id;
@@ -140,8 +139,7 @@ class PersonalController extends Controller
             ->where('personal.persona_id', '=', $id_personal)
             ->first();
 
-        $this->guardarPersona($persona, $request); //Se llama al método genérico para guardar una persona
-        $this->guardarPersonal($personal, $request); //Se llama al método genérico para guardar un personal
+        $this->guardarPersonal($persona, $personal, $request); //Se llama al método genérico para guardar un personal
         $this->guardarParticipaciones($personal, $request); //Se llama al método genérico para guardar las participaciones
 
         Idioma::where('persona_id', $id_personal)->delete(); // Antes de guardar los idiommas de la persona, se eliminan todos los registros de idomas referentes a esa persona para que sea posible actualizarlo
@@ -187,11 +185,12 @@ class PersonalController extends Controller
     // Para que los métodos de guardado o actualizados genéricos funcionen, el request debe de mantener
     // siempre los mismos nombres que en la base de datos.
 
-    // ===========================================================================================
-    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* una persona
-    //============================================================================================
 
-    private function guardarPersona(&$persona, $request)
+
+    // ===========================================================================================
+    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* un personal
+    //============================================================================================
+    private function guardarPersonal(&$persona, &$personal, $request)
     {
         //se setean los atributos del objeto
         $persona->nombre = $request->nombre;
@@ -204,17 +203,8 @@ class PersonalController extends Controller
         $persona->estado_civil = $request->estado_civil;
         $persona->direccion_residencia = $request->direccion_residencia;
         $persona->genero = $request->genero;
-        $persona->save(); //se guarda el objeto en la base de datos
-
-    }
-
-    // ===========================================================================================
-    // Métodos genérico que toma los datos del request y *guarda* o *actualiza* un personal
-    //============================================================================================
-    private function guardarPersonal(&$personal, $request)
-    {
+        
         //se setean los atributos del objeto tipo personal
-        //$personal->carga_academica = $request->carga_academica;
         $personal->grado_academico = $request->grado_academico;
         $personal->cargo = $request->cargo;
         $personal->tipo_nombramiento = $request->tipo_nombramiento;
@@ -229,6 +219,8 @@ class PersonalController extends Controller
         $personal->regimen_docente = $request->regimen_docente;
         $personal->area_especializacion_1 = $request->area_especializacion_1;
         $personal->area_especializacion_2 = $request->area_especializacion_2;
+
+        $persona->save(); //se guarda el objeto en la base de datos
         $personal->save();
     }
 

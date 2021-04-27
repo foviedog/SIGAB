@@ -269,7 +269,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                     @method('DELETE')
                                     @csrf
                                     <td>
-                                        <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando trabajo');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
 
                                 </form>

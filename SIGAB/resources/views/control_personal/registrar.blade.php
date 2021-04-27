@@ -433,7 +433,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="trabajo_externo">Lugar de trabajo externo: </label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" value="{{ $personal_no_insertado->trabajo_externo ?? '' }}">
+                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" value="{{ $personal_no_insertado->lugar_trabajo_externo ?? '' }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
