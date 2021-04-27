@@ -139,7 +139,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                             <div class="col d-flex flex-column justify-content-center align-items-center">
                                 <div class="header-grafico w-100 texto-rojo-medio d-flex ">
                                     <h3>Propósitos de actividades {{ date("Y") }}</h3>&nbsp;
-                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades que se terminan en el 2021 según el propósito" style="font-size: 18px;"></i>
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades internas que finalizan en el 2021 según el propósito" style="font-size: 18px;"></i>
                                 </div>
                                 <div class=" grafico-container w-100">
                                     <div id="grafico_proposito">
@@ -150,7 +150,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
                             <div class="col d-flex flex-column justify-content-start align-items-center">
                                 <div class="display-5 w-75 texto-rojo-medio d-flex">
                                     <h3>Estados de actividades {{ date("Y") }}</h3>&nbsp;
-                                    <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Gráfico cantidad de actividades según los estados (Incluyendo actividades internas y actividades de promoción)" style="font-size: 18px;"></i>
+                                    <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Gráfico que muestra cantidad total de actividades según los estados (Incluye actividades internas y actividades de promoción)" style="font-size: 18px;"></i>
                                 </div>
                                 <div class="grafico-container w-75">
                                     <div id="grafico_estados">
@@ -210,10 +210,10 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
                                     <select class="col-3 custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
                                         <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
-                                        <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas</option>
+                                        <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas de dispersión</option>
                                         <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
-                                        <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Dona</option>
-                                        <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Pie</option>
+                                        <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Anillo</option>
+                                        <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Circular</option>
                                     </select>
                                 </div>
 

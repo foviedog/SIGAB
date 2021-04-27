@@ -31,7 +31,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
         "@popperjs/core": "^2.4.4",
-        "apexcharts": "^3.26.0",
+        "apexcharts": "^3.26.1",
         "artisan": "^0.1.2",
         "fix-utf8": "^1.1.1",
         "font-awesome": "^4.7.0",
