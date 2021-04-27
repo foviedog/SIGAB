@@ -103,12 +103,12 @@ Asistencia a
 
                 </div>
             </div>
-            <div class="col-6"   id="nuevoParticipante">
+            <div class="col-6" id="nuevoParticipante">
                 <form action="{{ route('asistencia-promocion.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
                     <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">
-                    
+
                     <div class="card-header ">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -118,8 +118,8 @@ Asistencia a
 
                         </div>
                     </div>
-                    <div class="card shadow" >
-                        <div class="card-body"  >
+                    <div class="card shadow">
+                        <div class="card-body">
 
                             <div class="row">
                                 <div class="col">
@@ -222,10 +222,12 @@ Asistencia a
                                             <div class="d-flex justify-content-between w-100">
                                                 <div>
                                                     <label for="procedencia">Procedencia </label>
+                                                    <span data-toggle="tooltip" data-placement="bottom" title="Se ingresa el nombre del colegio de procedencia o colegio del cual es egresado(a)"><i class="far fa-question-circle fa-lg"></i></span>
                                                 </div>
                                                 {{-- espacio donde se muestran los caracteres restantes --}}
                                                 <span class="text-muted" id="mostrar_procedencia"></span>
                                             </div>
+
                                             <div class="d-flex">
                                                 <input type='text' class="form-control w-100" id="procedencia" name="procedencia" onkeyup="contarCaracteres(this,60)">
                                             </div>
