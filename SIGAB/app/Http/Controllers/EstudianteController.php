@@ -75,7 +75,6 @@ class EstudianteController extends Controller
             $persona->estado_civil = $request->estado_civil;
             $persona->direccion_residencia = $request->direccion_residencia;
             $persona->genero = $request->genero;
-            $persona->save(); //se guarda el objeto en la base de datos
 
             //se setean los atributos del objeto
             $estudiante->persona_id = $request->cedula;
@@ -94,6 +93,8 @@ class EstudianteController extends Controller
             $estudiante->nota_admision = $request->nota_admision;
             $estudiante->apoyo_educativo = $request->apoyo_educativo;
             $estudiante->residencias_UNA = $request->residencias;
+
+            $persona->save(); //se guarda el objeto en la base de datos
             $estudiante->save(); //se guarda el objeto en la base de datos
 
             //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado

@@ -9,6 +9,12 @@ Registrar información del personal
 @endsection
 
 
+@php
+$persona_no_insertada = Session::get('persona_no_insertada');
+$personal_no_insertado = Session::get('personal_no_insertado');
+@endphp
+
+
 @section('contenido')
 
 
@@ -119,7 +125,7 @@ Registrar información del personal
 
                                 </div>
                                 <div class="col-6 ">
-                                    <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" required>
+                                    <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" value="{{ $persona_no_insertada->persona_id ?? '' }}" required>
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -133,7 +139,7 @@ Registrar información del personal
                                     <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" required>
+                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)"  value="{{ $persona_no_insertada->nombre ?? '' }}" required>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_nombre"></span>
@@ -146,7 +152,7 @@ Registrar información del personal
                                     <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" required>
+                                    <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->apellido ?? '' }}" required>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_apellido"></span>
@@ -159,7 +165,7 @@ Registrar información del personal
                                     <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}"  required>
                                 </div>
                             </div>
 
@@ -169,7 +175,7 @@ Registrar información del personal
                                     <label for="telefono_fijo">Teléfono fijo:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)">
+                                    <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)" value="{{ $persona_no_insertada->telefono_fijo ?? '' }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -183,7 +189,7 @@ Registrar información del personal
                                     <label for="telefono_celular">Teléfono celular:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)">
+                                    <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)" value="{{ $persona_no_insertada->telefono_celular ?? '' }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -197,7 +203,7 @@ Registrar información del personal
                                     <label for="correo_personal">Correo personal:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,45)" multiple>
+                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,45)" value="{{ $persona_no_insertada->correo_personal ?? '' }}" multiple>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_correo_personal"></span>
@@ -210,7 +216,7 @@ Registrar información del personal
                                     <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,45)" multiple required>
+                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,45)" multiple value="{{ $persona_no_insertada->correo_institucional ?? '' }}" required>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_cant_correo_institucional"></span>
@@ -223,7 +229,7 @@ Registrar información del personal
                                     <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal-form" required>
+                                    <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal-form" value="{{ $persona_no_insertada->estado_civil ?? '' }}"  required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Soltero(a)"> Soltero(a)</option>
                                         <option value="Casado(a)"> Casado(a) </option>
@@ -240,7 +246,7 @@ Registrar información del personal
                                     <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required></textarea>
+                                    <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required>{{ $persona_no_insertada->direccion_residencia ?? '' }}</textarea>
                                 </div>
                                 <span data-toggle="tooltip" data-placement="top" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                                 <div class="col-1">
@@ -254,7 +260,7 @@ Registrar información del personal
                                     <label for="genero">Género: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="genero" name="genero" form="personal-form" required>
+                                    <select class="form-control w-100" id="genero" name="genero" form="personal-form" value="{{ $persona_no_insertada->genero ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Femenino</option>
@@ -269,7 +275,7 @@ Registrar información del personal
                                     <label for="grado_academico">Grado académico: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal-form" required>
+                                    <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal-form" value="{{ $personal_no_insertado->grado_academico ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Bachillerato">Bachillerato</option>
                                         <option value="Licenciatura">Licenciatura</option>
@@ -285,7 +291,7 @@ Registrar información del personal
                                     <label for="tipo_nombramiento">Tipo de nombramiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_nombramiento" name="tipo_nombramiento" form="personal-form" required>
+                                    <select class="form-control w-100" id="tipo_nombramiento" name="tipo_nombramiento" form="personal-form" value="{{ $personal_no_insertado->tipo_nombramiento ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Interino">Interino</option>
                                         <option value="Propietario">Propietario</option>
@@ -305,7 +311,7 @@ Registrar información del personal
                                     <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="cargo" name="cargo" form="personal-form" required>
+                                    <select class="form-control w-100" id="cargo" name="cargo" form="personal-form" value="{{ $personal_no_insertado->cargo ?? '' }}"  required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Administrativo">Administrativo</option>
                                         <option value="Académico">Académico</option>
@@ -318,7 +324,7 @@ Registrar información del personal
                                     <label for="tipo_puesto_1">Tipo de puesto 1: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_puesto_1" name="tipo_puesto_1" form="personal-form" required>
+                                    <select class="form-control w-100" id="tipo_puesto_1" name="tipo_puesto_1" form="personal-form" value="{{ $personal_no_insertado->tipo_puesto_1 ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Secretaría">Secretaría</option>
                                         <option value="Dirección">Dirección</option>
@@ -342,7 +348,7 @@ Registrar información del personal
                                     <label for="tipo_puesto_2">Tipo de puesto 2: </label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_puesto_2" name="tipo_puesto_2" form="personal-form">
+                                    <select class="form-control w-100" id="tipo_puesto_2" name="tipo_puesto_2" form="personal-form" value="{{ $personal_no_insertado->tipo_puesto_2 ?? '' }}">
                                         <option value="" selected>Seleccione</option>
                                         <option value="Secretaría">Secretaría</option>
                                         <option value="Dirección">Dirección</option>
@@ -367,7 +373,7 @@ Registrar información del personal
                                     <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="jornada" name="jornada" form="personal-form" required>
+                                    <select class="form-control w-100" id="jornada" name="jornada" form="personal-form" value="{{ $personal_no_insertado->jornada ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Tiempo completo (40 horas)">Tiempo completo (40 horas)</option>
                                         <option value="Cuarto de tiempo (30 horas)">Cuarto de tiempo (30 horas)</option>
@@ -382,7 +388,7 @@ Registrar información del personal
                                     <label for="regimen_administrativo">Régimen administrativo:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form">
+                                    <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form" value="{{ $personal_no_insertado->regimen_administrativo ?? '' }}">
                                         <option value="" selected>Seleccione</option>
                                         <option value="Categoría 21 (Técnico Auxiliar)">Categoría 21 (Técnico Auxiliar)</option>
                                         <option value="Categoría 23 (Técnico General 1-2-3)">Categoría 23 (Técnico General 1-2-3)</option>
@@ -407,7 +413,7 @@ Registrar información del personal
                                     <label for="regimen_docente">Régimen docente:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form">
+                                    <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form" value="{{ $personal_no_insertado->regimen_docente ?? '' }}">
                                         <option value="" selected>Seleccione</option>
                                         <option value="Categoría 87 (Profesor Instructor Bachiller)">Categoría 87 (Profesor Instructor Bachiller)</option>
                                         <option value="Categoría 88 (Profesor Instructor Licenciado)">Categoría 88 (Profesor Instructor Licenciado)</option>
@@ -427,7 +433,7 @@ Registrar información del personal
                                     <label for="trabajo_externo">Lugar de trabajo externo: </label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)">
+                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" value="{{ $personal_no_insertado->trabajo_externo ?? '' }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -441,7 +447,7 @@ Registrar información del personal
                                     <label for="anio_propiedad">Año de propiedad:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" min="1990" max="{{ date("Y") }}" />
+                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" value="{{ $personal_no_insertado->anio_propiedad ?? '' }}" min="1990" max="{{ date("Y") }}" />
                                 </div>
                                 <div class=" col-2">
                                     <span data-toggle="tooltip" data-placement="top" title="Año en el que obtuvo la propiedad en la UNA (Aplica para profesores propietarios) (Rango: 1990 - Año actual)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -454,7 +460,7 @@ Registrar información del personal
                                     <label for="area_especializacion_1">Área de especialización 1 :</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)">
+                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)" value="{{ $personal_no_insertado->area_especializacion_1 ?? '' }}">
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_area_especializacion_1"></span>
@@ -467,7 +473,7 @@ Registrar información del personal
                                     <label for="area_especializacion_2">Área de especialización 2:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCaracteres(this,100)">
+                                    <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCaracteres(this,100)" value="{{ $personal_no_insertado->area_especializacion_2 ?? '' }}">
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_area_especializacion_2"></span>
@@ -480,7 +486,7 @@ Registrar información del personal
                                     <label for="experiencia_profesional"> Experiencia profesional:</label>
                                 </div>
                                 <div class="col-6">
-                                    <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3"></textarea>
+                                    <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3">{{ $personal_no_insertado->experiencia_profesional ?? '' }}</textarea>
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digite la experiencia profesional que se obtuvo en otras entidades externas a la UNA."><i class=" far fa-question-circle fa-lg"></i></span>
@@ -494,7 +500,7 @@ Registrar información del personal
                                     <label for="experiencia_academica">Experiencia académica:</label>
                                 </div>
                                 <div class="col-6">
-                                    <textarea class="form-control w-100" id="experiencia_academica" name="experiencia_academica" rows="3"></textarea>
+                                    <textarea class="form-control w-100" id="experiencia_academica" name="experiencia_academica" rows="3">{{ $personal_no_insertado->experiencia_academica ?? '' }}</textarea>
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Experiencia académica en la UNA y en otras instituciones."><i class="far fa-question-circle fa-lg"></i></span>

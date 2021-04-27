@@ -96,8 +96,10 @@ class PersonalController extends Controller
                 ->with('personal_registrado', $personal); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
 
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina de registro estudiante
-                ->with('error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe"); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            return Redirect::back() //se redirecciona a la pagina de registro personal
+                ->with('error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe")  //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto           
+                ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
+                ->with('personal_no_insertado', $personal); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente 
         }
     }
 
