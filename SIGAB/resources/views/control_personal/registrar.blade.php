@@ -135,7 +135,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)"  value="{{ $persona_no_insertada->nombre ?? '' }}" required>
+                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->nombre ?? '' }}" required>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_nombre"></span>
@@ -161,7 +161,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}"  required>
+                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}" required>
                                 </div>
                             </div>
 
@@ -225,7 +225,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal-form" value="{{ $persona_no_insertada->estado_civil ?? '' }}"  required>
+                                    <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal-form" value="{{ $persona_no_insertada->estado_civil ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Soltero(a)"> Soltero(a)</option>
                                         <option value="Casado(a)"> Casado(a) </option>
@@ -307,7 +307,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="cargo" name="cargo" form="personal-form" value="{{ $personal_no_insertado->cargo ?? '' }}"  required>
+                                    <select class="form-control w-100" id="cargo" name="cargo" form="personal-form" value="{{ $personal_no_insertado->cargo ?? '' }}" required>
                                         <option value="" selected>Seleccione</option>
                                         <option value="Administrativo">Administrativo</option>
                                         <option value="Académico">Académico</option>
@@ -636,7 +636,6 @@ $personal_no_insertado = Session::get('personal_no_insertado');
 
         </form>
     </div>
-</div>
 </div>
 @endsection
 

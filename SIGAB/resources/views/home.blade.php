@@ -10,27 +10,27 @@ SIGAB
 
 @section('contenido')
 
-<div class="card-body">
+<div class="card-body  ">
 
-    <div class="row px-5 ">
+    <div class="row px-5">
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h4 class="font-weight-bold">Control estudiantil</h4><i class="fas fa-graduation-cap ml-4 fa-2x"></i>
+                        <h4 class="font-weight-bold mr-3">Control estudiantil</h4><i class="fas fa-book texto-rojo-medio  fa-2x"></i>
                     </div>
                     <hr>
                     <a href="{{ route('estudiante.create') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Añadir estudiantes</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir estudiantes</h6>
                     </a>
                     <a href="{{ route('listado-estudiantil') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Estudiantes</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes</h6>
                     </a>
                     <a href="{{ route('graduados.listar') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Estudiantes Graduados</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes Graduados</h6>
                     </a>
                     <a href="{{ route('guia-academica.listar') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Guías académicas</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Guías académicas</h6>
                     </a>
                 </div>
             </div>
@@ -39,20 +39,20 @@ SIGAB
             <div class="card shadow p-3 mb-5 rounded">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h4 class="font-weight-bold">Control del personal</h4><i class="far fa-address-book ml-4 fa-2x" style="width: 32px;"></i>
+                        <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
                     </div>
                     <hr>
                     <a href="{{ route('personal.create') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Añadir personal</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir personal</h6>
                     </a>
                     <a href="{{ route('personal.listar') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Personal de la EBDI</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Personal de la EBDI</h6>
                     </a>
                     <a href="#">
-                        <h6 class="card-subtitle mb-2 link-inicio">&nbsp;</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio">&nbsp;</h6>
                     </a>
                     <a href="#">
-                        <h6 class="card-subtitle mb-2 link-inicio">&nbsp;</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio">&nbsp;</h6>
                     </a>
                 </div>
             </div>
@@ -61,20 +61,20 @@ SIGAB
             <div class="card shadow p-3 mb-5 rounded">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h4 class="font-weight-bold">Control de actividades</h4><i class="fas fa-chalkboard-teacher ml-4 fa-2x" style="width: 32px;"></i>
+                        <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
                     </div>
                     <hr>
                     <a href="/actividad-interna/registrar">
-                        <h6 class="card-subtitle mb-2 link-inicio">Añadir actividades Internas</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades Internas</h6>
                     </a>
                     <a href="/actividad-promocion/registrar">
-                        <h6 class="card-subtitle mb-2 link-inicio">Añadir actividades de promoción</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades de promoción</h6>
                     </a>
                     <a href="{{ route('actividad-interna.listado') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Actividades Internas</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades Internas</h6>
                     </a>
                     <a href="{{ route('actividad-promocion.listado') }}">
-                        <h6 class="card-subtitle mb-2 link-inicio">Actividades de promoción</h6>
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades de promoción</h6>
                     </a>
                 </div>
             </div>
@@ -98,21 +98,18 @@ SIGAB
                                 <h4 class="font-weight-bold">Resumen de estudiantes</h4>
                             </div>
                             {{-- contenedor de las cartas pequeñas de información horizonales --}}
-                            <div class="container">
+                            <div class="container  py-3">
                                 <div class="row">
                                     {{-- Carta de estudiantes totales --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/user.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Estudiantes totales</h5>
-                                                        <span class="p-0" style="font-size: 165%">{{ $estudiantesTotales }}</span>
-
-                                                    </div>
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-school fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Estudiantes</div>
+                                                    <div class="ml-2 numero-info">{{ $estudiantesTotales }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -120,49 +117,44 @@ SIGAB
 
                                     {{-- Carta de conteo de graduados --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/graduado.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Graduados</h5>
-                                                        <span class="p-0" style="font-size: 165%">{{ $graduados }}</span>
-                                                    </div>
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-user-graduate fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Graduados</div>
+                                                    <div class="ml-2 numero-info">{{ $graduados }}</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     {{-- Carta de graduaciones totales --}}
-                                    <div class="col-lg-12 col-xl-6  ">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/graduadoSombrero.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Graduaciones </h5>
-                                                        <span class="p-0" style="font-size: 165%">{{ $graduacionesTotales }}</span>
-                                                    </div>
+                                    <div class="col-lg-12 col-xl-6 py-3">
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-graduation-cap fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Graduaciones</div>
+                                                    <div class="ml-2 numero-info">{{ $graduacionesTotales }}</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     {{-- Carta de guías académicas totales --}}
-                                    <div class="col-lg-12 col-xl-6 ">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/hoja.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Guías académicas</h5>
-                                                        <span class="p-0" style="font-size: 165%">{{ $guiasAcademicasTotales }}</span>
-                                                    </div>
+                                    <div class="col-lg-12 col-xl-6 py-3">
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-comments fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Guías académica</div>
+                                                    <div class="ml-2 numero-info">{{ $guiasAcademicasTotales }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,53 +174,48 @@ SIGAB
                             <div class="border-bottom p-0">
                                 <h4 class="font-weight-bold">Resumen de personal</h4>
                             </div>
-                            <div class="container">
+                            <div class="container py-3">
                                 <div class="row">
                                     {{-- Carta de personal total --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/user.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Personal total</h5>
-                                                        <span class="p-0" style="font-size: 165%"> {{ $personalTotal }}
-                                                        </span>
-                                                    </div>
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-user fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Personal total</div>
+                                                    <div class="ml-2 numero-info">{{ $personalTotal }}</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     {{-- Carta de cantidad de administrativos --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/administrativo.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Administrativos</h5>
-                                                        <span class="p-0" style="font-size: 165%">{{ $administrativos }}</span>
-                                                    </div>
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-briefcase fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Administrativos</div>
+                                                    <div class="ml-2 numero-info">{{ $administrativos }}</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     {{-- Carta de cantidad de académicos --}}
-                                    <div class="col-lg-12 col-xl-6 ">
-                                        <div class="card mb-3 shadow">
-                                            <div class="row g-0 d-flex">
-                                                <div class="col-md-3 pl-4 pr-1">
-                                                    <img class="rounded-circle py-3 " src="/img/recursos/iconos/academico.png" style="max-width: 150%;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="card-body p-0 text-center">
-                                                        <h5 class="pt-3 m-0">Academicos </h5>
-                                                        <span class="p-0" style="font-size: 165%">{{ $academicos }}</span>
-                                                    </div>
+                                    <div class="col-lg-12 col-xl-6 py-3">
+                                        <div class="row card-info  ">
+                                            <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                                <i class="fas fa-chalkboard-teacher fa-2x texto-rojo-medio"></i>
+                                            </div>
+                                            <div class="col-8 p-0 ">
+                                                <div class="border-left">
+                                                    <div class="ml-2 texto-info">Academicos</div>
+                                                    <div class="ml-2 numero-info">{{ $academicos }}</div>
                                                 </div>
                                             </div>
                                         </div>

@@ -170,10 +170,8 @@
                     </div>
                 </div>
             </nav>
-            <div class="">
-                <div class="card-body">
-                    @yield('contenido')
-                </div>
+            <div class="card-body" style="padding: 1rem 0rem 0rem 0rem;">
+                @yield('contenido')
             </div>
             <footer>
                 <div class="footer">

@@ -55,7 +55,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             {{-- Barra de navegación entre información genereal y bloques de texto  --}}
             <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="info-gen-tab" href="#info-gen">Información general</a>
+                    <a class="nav-link active" id="info-gen-tab" href="#">Información general</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
@@ -71,9 +71,9 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                     <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
                                 </div>
                                 <div>
-                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-rojo font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
+                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
 
-                                    <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-rojo"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                                    <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                             </div>
 
 
-                            
+
                         </div>
                     </div>
 
@@ -443,6 +443,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
@@ -450,5 +451,6 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 @endsection

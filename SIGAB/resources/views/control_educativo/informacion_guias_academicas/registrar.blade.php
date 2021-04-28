@@ -193,6 +193,7 @@ Registrar guía académica
     // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     let est = "{{$estudiante->persona->persona_id}}"
+
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>

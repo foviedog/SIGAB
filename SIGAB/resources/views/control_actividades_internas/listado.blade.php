@@ -49,12 +49,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                             <div class="input-group mb-2">
                                 <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad" value="{{ $tema_filtro ?? ''  }}">
                                 <div class="input-group-append">
-                                    <div class="input-group-text"><i class="fas fa-bullhorn"></i></div>
+                                    <div class="input-group-text"><i class="fas fa-bullhorn texto-azul-una"></i></div>
+                                    <button type="submit" class="btn btn-rojo  ml-3 mr-2 d-flex">Buscar <i class="fas fa-search ml-2 mt-1"></i> </button>
                                 </div>
                             </div>
-                            <div>
-                                <button type="submit" class="btn btn-rojo  ml-3 mr-2 d-flex">Buscar <i class="fas fa-search ml-2 mt-1"></i> </button>
-                            </div>
+
                             <div class="custom-control custom-checkbox mr-5">
                                 <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" onchange="mostrarBusquedaAvanzada(this);">
                                 <label class="custom-control-label" for="checkAvanzada">Busqueda avanzada</label>
@@ -141,8 +140,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>
                             <tr>
-                                <th>ID Actividad</th>
-                                <th style="width: 19rem;">Tema</th>
+                                <th>Código</th>
+                                <th style=" width: 15rem;">Tema</th>
                                 <th>ID Coordinador</th>
                                 <th>Estado</th>
                                 <th>Propósito</th>
@@ -168,7 +167,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <td>{{ $actividadInterna->estado }}</td>
                                 <td>{{ $actividadInterna->proposito}} </td>
                                 <td>{{$actividadInterna->tipo_actividad}}</td>
-                                <td>{{ date("d / m / Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
+                                <td style="padding: 0px; font-size: 16px">{{ date("d / m / Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
@@ -181,7 +180,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                         {{-- Nombre de las columnas en la parte de abajode la tabla --}}
                         <tfoot>
                             <tr>
-                                <th>ID Actividad</th>
+                                <th>Código</th>
                                 <th>Tema</th>
                                 <th>ID Coordinador</th>
                                 <th>Estado</th>

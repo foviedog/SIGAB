@@ -9,6 +9,7 @@ Registrar actividad de promocion
     input[type=time]::-webkit-datetime-edit-ampm-field {
         display: none;
     }
+
 </style>
 @endsection
 
@@ -416,16 +417,13 @@ Registrar actividad de promocion
     </div>
 </div>
 
-
-</div>
-</div>
-
 @endsection
 
 @section('scripts')
 <script>
     // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 {{-- Link al script de registro de actividades promocion --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
@@ -433,5 +431,6 @@ Registrar actividad de promocion
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 @endsection
