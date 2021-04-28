@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 /* Ruta para acceder a las notificaciones */
 Route::get('/perfil/notificaciones', 'PersonaController@notifications')->name('perfil.notifications');
+/* Ruta para acceder a las notificaciones */
+Route::get('/perfil/cant-notificaciones', 'PersonaController@obtenerNotificaciones')->name('perfil.cant.notifications');
 /* Ruta de detalle del perfil*/
 Route::get('/perfil/{persona_id}', 'PersonaController@show')->name('perfil.show');
 /* Ruta de update del perfil*/
@@ -126,10 +128,10 @@ Route::get('/actividad-interna/registrar', 'ActividadesInternaController@create'
 Route::post('/actividad-interna', 'ActividadesInternaController@store');
 // Listado de actividades internas
 Route::get('/actividad-interna', 'ActividadesInternaController@index')->name('actividad-interna.listado');
+// Autorizar actividad interna
+Route::patch('/actividad-interna/autorizar', 'ActividadesInternaController@autorizar')->name('actividad-interna.autorizar');
 // Detalle de actividad interna
 Route::get('/detalle-actividad-interna/{id_actividad}', 'ActividadesInternaController@show')->name('actividad-interna.show');
-// Autorizar actividad interna
-Route::patch('/actividad-interna/autorizar', 'ActividadesInternaController@autorizarActividad')->name('actividad-interna.autorizar');
 // Actualización de los datos de la actividad
 Route::patch('/actividad-interna/{id_actividad}', 'ActividadesInternaController@update')->name('actividad-interna.update');
 

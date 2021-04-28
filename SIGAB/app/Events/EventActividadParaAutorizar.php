@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Actividades;
 
-class EventActividadParaAutorizar
+class EventActividadParaAutorizar implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -34,8 +34,8 @@ class EventActividadParaAutorizar
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn()
+    public function broadcastOn(): Channel
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('events');
     }
 }

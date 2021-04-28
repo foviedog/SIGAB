@@ -6,6 +6,6 @@ use Illuminate\Support\Facades\Session;
 class GlobalFunctions
 {
     public static function verificarAcceso($tarea){
-        return in_array($tarea, array_column(Session::get('accesos_usuario')->toArray(), 'tarea_id'));
+        return isset(Session::get('accesos_usuario')[$tarea]);
     }
 }

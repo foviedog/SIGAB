@@ -27,15 +27,18 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
 
                 {{-- Botones superiores --}}
-                @if(GlobalFunctions::verificarAcceso(21))
-                {{-- Botón para autorizar actividad --}}
-
-                <form action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
-                    <button type="submit" class="btn btn-contorno-rojo" style="display:none;"><i class="fas fa-check-double "></i> &nbsp; Autorizar actividad </button>
-                </form>
+                @if(GlobalFunctions::verificarAcceso(21)) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+                    @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+                    {{-- Botón para autorizar actividad --}}
+                    <form action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
+                        <button type="submit" class="btn btn-info ml-4"><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
+                    </form>
+                    @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
+                    <button class="btn btn-success ml-4" disabled><i class="fas fa-check-double"></i> &nbsp; Actividad autorizada </button>
+                    @endif
                 @endif
             </div>
 

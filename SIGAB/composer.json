@@ -10,15 +10,19 @@
     "require": {
         "php": "^7.2.5",
         "barryvdh/laravel-dompdf": "^0.9.0",
+        "beyondcode/laravel-websockets": "^1.12",
         "carlos-meneses/laravel-mpdf": "^2.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.3",
         "intervention/image": "^2.5",
         "laravel/framework": "^7.24",
         "laravel/telescope": "^3.5",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.2"
+        "laravel/ui": "^2.2",
+        "paragonie/sodium_compat": "^1.15",
+        "psr/log": "^1.1",
+        "pusher/pusher-php-server": "~3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

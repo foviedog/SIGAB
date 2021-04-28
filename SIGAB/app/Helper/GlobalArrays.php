@@ -33,8 +33,8 @@ class GlobalArrays
         'Promoción por redes sociales',
         'Visitas a comunidades',
         'Visitas a colegios',
-        'Envío de paquetes promocionales por correo electrónico','
-        Charlas',
+        'Envío de paquetes promocionales por correo electrónico',
+        'Charlas',
         'Otro'
     ];
 
@@ -146,6 +146,7 @@ class GlobalArrays
         "Propietario",
         "Plazo fijo"
     ];
+    
     public const TIPOS_PUESTOS_PERSONAL = [
         'Secretaría',
         'Dirección',
@@ -184,7 +185,7 @@ class GlobalArrays
         "Categoría 91 (Catedrático)"
     ];
 
-    public const CURSOS  = [
+    public const CURSOS = [
         'BGC400 - Introducción a la Bibliotecología y Gestión de la Información',
         'BGC401 - Metodología de la investigación I',
         'BGC402 - Aplicaciones informáticas a la Bibliotecología',
