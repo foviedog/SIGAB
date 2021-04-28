@@ -29,10 +29,13 @@ function cargarNotificaciones(){
                 $("#numero-notificaciones").html(notificaciones.length);
                 if(notificaciones.length > 5){
                     for(let i = 0; i < 5; i++){
-                        mensaje = notificaciones[i].data.mensaje.substring(0, 60);
+                        if(notificaciones[i].data.mensaje.length > 60)
+                            mensaje = notificaciones[i].data.mensaje.substring(0, 60) + "...";
+                        else
+                            mensaje = notificaciones[i].data.mensaje;
                         div = $("<div>")
                             .addClass("dropdown-item")
-                            .html(""+mensaje+"...");
+                            .html(""+mensaje);
                         $("#espacio-notificaciones").append(div);
                     }
                     cant = notificaciones.length - 5;
@@ -64,8 +67,9 @@ Echo.private('App.User.'+ user_id)
             method: "GET",
             success: function(notificaciones) {
                 if(notificaciones.length == 0){
-                    $("#numero-notificaciones").html("");
-                    div = $("<div>").addClass("dropdown-item").html("<a href='/perfil/notificaciones'>Ver notificaciones</a>");
+                    $("#numero-notificaciones").html("0");
+                    div = $("<div>").addClass("dropdown-item ver-mas-notificaciones")
+                            .html("<a href='/perfil/notificaciones'>Ver notificaciones</a>");
                     $("#espacio-notificaciones").append(div);
                 } else {
                     $("#espacio-notificaciones").html("");
@@ -73,19 +77,24 @@ Echo.private('App.User.'+ user_id)
                     if(notificaciones.length > 5){
                         for(let i = 0; i < 5; i++){
                             mensaje = notificaciones[i].data.mensaje.substring(0, 60);
-                            div = $("<div>").addClass("dropdown-item").html(""+mensaje+"...");
+                            div = $("<div>")
+                                .addClass("dropdown-item")
+                                .html(""+mensaje+"...");
                             $("#espacio-notificaciones").append(div);
                         }
                         cant = notificaciones.length - 5;
-                        div = $("<div>").addClass("dropdown-item").html("<a href='/perfil/notificaciones'>Ver "+cant+" notificaciones más...</a>");
+                        div = $("<div>").addClass("dropdown-item ver-mas-notificaciones")
+                                        .html("<a href='/perfil/notificaciones'>Ver "+cant+" notificaciones más...</a>");
                         $("#espacio-notificaciones").append(div);
                     } else {
-                        for(let i = 0; notificaciones.length < 5; i++){
+                        for(let i = 0; i < notificaciones.length ; i++){
                             mensaje = notificaciones[i].data.mensaje.substring(0, 60);
-                            div = $("<div>").addClass("dropdown-item").html(""+mensaje+"...");
+                            div = $("<div>")
+                                .addClass("dropdown-item")
+                                .html(""+mensaje+"...");
                             $("#espacio-notificaciones").append(div);
                         }
-                        div = $("<div>").addClass("dropdown-item").html("<a href='/perfil/notificaciones'>Ver todas las notificaciones...</a>");
+                        div = $("<div>").addClass("dropdown-item ver-mas-notificaciones").html("<a href='/perfil/notificaciones'>Ver todas las notificaciones...</a>");
                         $("#espacio-notificaciones").append(div);
                     }
                 }
