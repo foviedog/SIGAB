@@ -13,7 +13,6 @@ use App\Events\EventActividadParaAutorizar;
 
 class ActividadesInternaController extends Controller
 {
-
     //Devuevle el listado de las actividades internas.
     public function index()
     {
@@ -206,7 +205,19 @@ class ActividadesInternaController extends Controller
         return $actividadesInternas;
     }
 
-    private function autorizarActividad(Request $request){
-        dd($request);
+    public function autorizar(Request $request)
+    {
+        try { //se utiliza un try-catch para control de errores
+            $actividad = Actividades::findOrfail($request->id_actividad);
+            $actividad->autorizada = 1;
+            $actividad->save(); //se guarda el objeto en la base de datos
+            //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
+            return redirect("/detalle-actividad-interna/{$actividad->id}")
+                ->with('mensaje', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return redirect("/detalle-actividad-interna/{$request->id_actividad}") //se redirecciona a la pagina de registro
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
+        }
     }
+
 }
