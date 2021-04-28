@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Costa_Rica',
 
     /*
     |--------------------------------------------------------------------------
@@ -232,8 +232,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'GlobalFunctions' => App\Helper\GlobalFunctions::class
-
+        'GlobalFunctions' => App\Helper\GlobalFunctions::class,
+        'GlobalArrays' => App\Helper\GlobalArrays::class
     ],
 
 ];

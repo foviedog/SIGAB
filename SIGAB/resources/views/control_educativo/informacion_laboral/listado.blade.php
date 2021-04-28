@@ -8,10 +8,6 @@ Trabajos de {{ $estudiante->persona->nombre }}
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_laboral/listado.js') }}" defer></script>
-@endsection
-
 @section('contenido')
 <div class="card">
     <div class="card-body">
@@ -309,6 +305,6 @@ Trabajos de {{ $estudiante->persona->nombre }}
 </div>
 @endsection
 
-@section('pie')
-Copyright
+@section('scripts')
+<script src="{{ asset('js/control_educativo/informacion_laboral/listado.js') }}" defer></script>
 @endsection

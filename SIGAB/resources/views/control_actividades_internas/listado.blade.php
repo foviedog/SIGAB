@@ -5,30 +5,20 @@ Actividades internas
 @endsection
 
 @section('css')
-
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
-
-
-@section('contenido')
-
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-
-$propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
-
-$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Conversatorio','Órgano colegiado',
-'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
-'Comisiones de trabajo','Externa','Otro'];
-
-$poblacion = ['Estudiantes de primer ingreso','Estudiantes regulares','Personal Docente','Personal Administrativo'];
-
-$estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
-
-$ambitos = ['Nacional','Internacional'];
-
+$tiposActividad = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
+$propositos = GlobalArrays::PROPOSITOS_ACTIVIDAD_INTERNA;
+$poblacion = GlobalArrays::POBLACION_DIRIGIDA;
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
+$ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 @endphp
+
+@section('contenido')
+
 <div class="card">
     <div class="card-body">
         {{-- Items de la parte superior--}}
@@ -230,8 +220,4 @@ $ambitos = ['Nacional','Internacional'];
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
-
-@section('pie')
-Copyright
 @endsection

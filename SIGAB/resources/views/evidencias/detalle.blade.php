@@ -1,18 +1,17 @@
 @extends('layouts.app')
+
 @section('meta')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
+
 @section('titulo')
-Evidencias de
-{{ $actividad->tema }}
+Evidencias de {{ $actividad->tema }}
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-
-@section('contenido')
 @php
 $tiposDocumentos =
 ['video' => '<i class="fab fa-youtube fa-3x texto-rojo-medio"></i>',
@@ -22,9 +21,9 @@ $tiposDocumentos =
 'presentacion' => '<i class="far fa-file-powerpoint fa-3x " style="color:#cb4424 !important"></i>',
 'comprimido' => '<i class="far fa-file-archive fa-3x" style="color:#522d83 !important"></i>',
 'imagen'=>'<i class="far fa-file-image fa-3x text-info"></i>'];
-
-
 @endphp
+
+@section('contenido')
 
 @include('evidencias.info')
 <div class="card">
@@ -355,15 +354,12 @@ $tiposDocumentos =
 @endsection
 
 @section('scripts')
-
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = " {{ URL::asset('img/fotos/') }}";
     var iconosURL = "{{ URL::asset('img/recursos/iconos/') }}";
     var storageURL = "{{ URL::asset('storage/evidencias/'. $actividad->id . '/') }}";
-
 </script>
-
 <script src="{{ asset('js/control_actividades_internas/evidencias.js') }}"></script>
 <script src="{{ asset('js/global/subirArchivos.js') }}"></script>
 <script src="{{ asset('js/global/mensajes.js') }}"></script>
@@ -374,11 +370,5 @@ $tiposDocumentos =
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
 </script>
-@endsection
-
-
-@section('pie')
-Copyright
 @endsection

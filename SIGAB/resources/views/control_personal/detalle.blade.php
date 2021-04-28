@@ -5,41 +5,23 @@ Detalle del personal {{ $personal->persona->nombre }}
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('scripts')
-<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-<script src="{{ asset('js/control_personal/registrar.js') }}" defer></script>
-<script src="{{ asset('js/control_personal/editar.js') }}" defer></script>
-
-@endsection
 {{-- Arreglos de opciones de los select utilizados --}}
-
-
 @php
-$estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-$generos = ['Femenino','Masculino','Otro'];
-$cargos = ['Administrativo','Académico'];
-$grados_academicos = ["Bachillerato","Licenciatura","Maestría","Doctorado","Posdoctorado"];
-$jornadas = ["Tiempo completo (40 horas)","Cuarto de tiempo (30 horas)","Medio tiempo (30 horas)","Un cuarto de tiempo (10 horas)"];
-$tipos_nombramientos = ["Interino","Propietario","Plazo fijo"];
-$tipos_puestos = ['Secretaría','Dirección','Subdirección','Docente','Profesional Ejecutivo','Participante de PPAA',
-'Responsable de PPAA','Técnico Auxiliar','Biblioteca infantil','Asistente administrativo(a)',
-'Profesional Asistencial en Desarrollo Tecnológico','Profesional Ejecutivo en Desarrollo Documental'];
-
-$regimenes_administrativos = ['Categoría 21 (Técnico Auxiliar)','Categoría 23 (Técnico General 1-2-3)','Categoría 24 (Técnico Analista 1-2-3)',
-'Categoría 32 (Profesional Asistencial 1-2-3-4-5)','Categoría 34 (Profesional Ejecutivo 1-2-3-4)','Categoría 35 (Profesional Analista 1-2-3)',
-'Categoría 36 (Profesional Especialista)','Categoría 37 (Profesional Asesor de Procesos 1-2)','Categoría 38 (Profesional Asesor General)',
-'Categoría 42 (Director Ejecutivo)','Categoría 43 (Director Especialista)','Categoría 44 (Director Asesor)'];
-
-$regimenes_docentes = ["Categoría 87 (Profesor Instructor Bachiller)","Categoría 88 (Profesor Instructor Licenciado)","Categoría 89 (Profesor I)",
-"Categoría 90 (Profesor II)","Categoría 91 (Catedrático)"];
-
+$estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
+$generos = GlobalArrays::GENEROS;
+$cargos = GlobalArrays::CARGOS_PERSONAL;
+$grados_academicos = GlobalArrays::GRADOS_ACADEMICOS;
+$jornadas = GlobalArrays::JORNADAS_PERSONAL;
+$tipos_nombramientos = GlobalArrays::TIPOS_NOMBRAMIENTO_PERSONAL;
+$tipos_puestos = GlobalArrays::TIPOS_PUESTOS_PERSONAL;
+$regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
+$regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
 if(is_null($idiomas)){
-$idiomas = [];
+    $idiomas = [];
 }
-
 @endphp
 
 @section('contenido')
@@ -510,6 +492,8 @@ $idiomas = [];
 </form>
 @endsection
 
-@section('pie')
-Copyright
+@section('scripts')
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/registrar.js') }}" defer></script>
+<script src="{{ asset('js/control_personal/editar.js') }}" defer></script>
 @endsection

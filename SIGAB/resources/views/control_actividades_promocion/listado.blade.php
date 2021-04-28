@@ -6,27 +6,15 @@ Actividades de promoción
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
 @endsection
-
-
-
-@section('contenido')
-
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-
-$propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
-
-$tiposActividad = ['Ferias','Participación en congresos nacionales e internacionales','Puertas abiertas','Promoción por redes sociales','Visitas a comunidades','Visitas a colegios',
-'Envío de paquetes promocionales por correo electrónico','Charlas','Otro'];
-
-$estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
-
-
+$tiposActividad = GlobalArrays::TIPOS_ACTIVIDAD_PROMOCION;
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 @endphp
 
+@section('contenido')
 
 <div class="card">
     <div class="card-body">
@@ -207,9 +195,4 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 @section('scripts')
 <script src="{{ asset('js/global/inputs.js') }}"></script>
 <script src="{{ asset('js/control_actividades_internas/listado.js') }}"></script>
-
-@endsection
-
-@section('pie')
-Copyright
 @endsection

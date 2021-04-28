@@ -31,8 +31,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
         </div>
     </div>
 
-    {{-- Formulario para registrar informacion de la graduación
-        --}}
+    {{-- Formulario para registrar informacion de la graduación --}}
     <form action="/estudiante/graduacion" method="POST" enctype="multipart/form-data" id="estudiante">
         @csrf
         @method('PATCH')
@@ -133,11 +132,6 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 @endsection
 
 @section('scripts')
-{{-- Link al script de registro de registro de estudiantes --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
-@endsection
-
-@section('pie')
-Copyright
 @endsection

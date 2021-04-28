@@ -8,14 +8,12 @@ Reportes actividades
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
 
-
-
-@section('contenido')
-
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-$estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 @endphp
+
+@section('contenido')
 
 {{-- Modal para agregar el título de la imagen  --}}
 <form id="reporteForm" method="post" action="{{ route('reportes-actividades.reporte') }}" target="_blank">
@@ -321,12 +319,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
 <script>
     $("input[type='number']").inputSpinner();
-
 </script>
 
-@endsection
-
-
-@section('pie')
-Copyright
 @endsection

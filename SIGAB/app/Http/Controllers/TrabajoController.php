@@ -128,7 +128,6 @@ class TrabajoController extends Controller
             ->with('exito', '¡Se ha actualizado correctamente!');
     }
 
-
     public function destroy( $id_trabajo)
     {
         try {
@@ -142,8 +141,5 @@ class TrabajoController extends Controller
             ->with('error', 'ha ocurrido un error');
         }
     }
-
-
-
 
 }

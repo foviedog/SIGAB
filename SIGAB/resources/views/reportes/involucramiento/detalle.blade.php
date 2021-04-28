@@ -4,18 +4,16 @@
 Reportes de involucramiento
 @endsection
 
-
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
 @endsection
-
-@section('contenido')
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-$estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 @endphp
+
+@section('contenido')
 
 <div class="card">
     <div class="card-body">
@@ -286,9 +284,7 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 </div>
 @endsection
 
-
 @section('scripts')
-
 <script>
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     @if(!is_null($personal))
@@ -299,7 +295,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 
     let porcentajeParticipacionActual = JSON.parse('{!! $porcentajeActualParticipacion !!}');
     let porcentajeAmbitoActual = JSON.parse('{!! $porcentajeActualAmbito !!}');
-
 </script>
 
 <script src="{{ asset('js/reportes/involucramiento/reportes.js') }}" defer></script>
@@ -323,7 +318,6 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 <script>
     //Ocultar espacio para los gráficos
     $("#seccion-graficos").hide();
-
 </script>
 @endif
 
@@ -332,11 +326,5 @@ $estados = ["Para ejecución","En progreso","Ejecutada","Cancelada"];
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="{{ asset('js/global/inputs.js') }}"></script>
-
 @endsection
 
-
-
-@section('pie')
-Copyright
-@endsection

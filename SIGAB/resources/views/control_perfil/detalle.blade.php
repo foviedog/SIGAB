@@ -5,19 +5,16 @@ Mi perfil
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
-
-@section('contenido')
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-$generos = ['Femenino','Masculino','Otro'];
-$estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-
+$generos = GlobalArrays::GENEROS;
+$estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 @endphp
 
+@section('contenido')
 
 <header class="page-header page-header-dark bg-red-polygon py-5 overflow-hidden">
     <div class="container py-5">
@@ -255,14 +252,7 @@ $estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión l
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
 <script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/detalle_editar.js') }}" defer></script>
-
-@endsection
-
-
-@section('pie')
-Copyright
 @endsection

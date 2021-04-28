@@ -8,10 +8,6 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('scripts')
-<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-@endsection
-
 @section('contenido')
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
     <div class="d-flex justify-content-between">
@@ -211,9 +207,6 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 
 @section('scripts')
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
-@endsection
-
-@section('pie')
-Copyright
 @endsection

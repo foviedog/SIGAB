@@ -5,17 +5,12 @@ SIGAB
 @endsection
 
 @section('css')
-
-@endsection
-
-@section('scripts')
-
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
 @section('contenido')
 
 <div class="card-body">
-
 
     <div class="row px-5 ">
         <div class="col">
@@ -102,12 +97,10 @@ SIGAB
                             <div class="border-bottom p-0">
                                 <h4 class="font-weight-bold">Resumen de estudiantes</h4>
                             </div>
-                            {{-- contenedor de las cartas pequeñas de información
-                                horizonales --}}
+                            {{-- contenedor de las cartas pequeñas de información horizonales --}}
                             <div class="container">
                                 <div class="row">
-                                    {{-- Carta de estudiantes totales
-                                        --}}
+                                    {{-- Carta de estudiantes totales --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -125,8 +118,7 @@ SIGAB
                                         </div>
                                     </div>
 
-                                    {{-- Carta de conteo de graduados
-                                        --}}
+                                    {{-- Carta de conteo de graduados --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -143,8 +135,7 @@ SIGAB
                                         </div>
                                     </div>
 
-                                    {{-- Carta de graduaciones totales
-                                        --}}
+                                    {{-- Carta de graduaciones totales --}}
                                     <div class="col-lg-12 col-xl-6  ">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -160,8 +151,7 @@ SIGAB
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- Carta de guías académicas totales
-                                        --}}
+                                    {{-- Carta de guías académicas totales --}}
                                     <div class="col-lg-12 col-xl-6 ">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -194,8 +184,7 @@ SIGAB
                             </div>
                             <div class="container">
                                 <div class="row">
-                                    {{-- Carta de personal total
-                                        --}}
+                                    {{-- Carta de personal total --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -212,8 +201,7 @@ SIGAB
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- carta de cantidad de administrativos
-                                        --}}
+                                    {{-- Carta de cantidad de administrativos --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -229,8 +217,7 @@ SIGAB
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- carta de cantidad de académicos
-                                        --}}
+                                    {{-- Carta de cantidad de académicos --}}
                                     <div class="col-lg-12 col-xl-6 ">
                                         <div class="card mb-3 shadow">
                                             <div class="row g-0 d-flex">
@@ -260,6 +247,6 @@ SIGAB
 
 @endsection
 
-@section('pie')
-Copyright
+@section('scripts')
+{{-- Ningún script por el momento --}}
 @endsection

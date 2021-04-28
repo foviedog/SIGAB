@@ -5,27 +5,16 @@
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
-
-@section('contenido')
-
-
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-
-
-$tiposActividad = ['Ferias','Participación en congresos nacionales e internacionales','Puertas abiertas',
-'Promoción por redes sociales','Visitas a comunidades','Visitas a colegios',
-'Envío de paquetes promocionales por correo electrónico','Charlas','Otro'];
-
-$estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
-
-
-
+$tiposActividad = GlobalArrays::TIPOS_ACTIVIDAD_PROMOCION;
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 @endphp
+
+@section('contenido')
 
 {{-- Formulario general de actualización de datos de actividad --}}
 <form action="{{ route('actividad-promocion.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
@@ -237,10 +226,7 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
                             </div>
 
 
-
-
-
-
+                            
                         </div>
                     </div>
 
@@ -451,15 +437,12 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 
 </form>
 
-
 @endsection
-
 
 @section('scripts')
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
@@ -467,12 +450,5 @@ $estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
-
 </script>
-@endsection
-
-
-
-@section('pie')
-Copyright
 @endsection

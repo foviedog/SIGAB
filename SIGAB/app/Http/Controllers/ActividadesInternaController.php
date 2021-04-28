@@ -7,6 +7,7 @@ use App\Actividades;
 use App\Personal;
 use App\Actividades_interna;
 use App\Helper\GlobalFunctions;
+use App\Helper\GlobalArrays;
 
 use App\Events\EventActividadParaAutorizar;
 

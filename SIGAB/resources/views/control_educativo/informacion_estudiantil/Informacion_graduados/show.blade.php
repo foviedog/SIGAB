@@ -8,10 +8,6 @@ Graduaciones de {{ $estudiante->persona->nombre }}
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_graduaciones/listado-individual.js') }}" defer></script>
-@endsection
-
 @section('contenido')
 <div class="card">
     <div class="card-body">
@@ -182,6 +178,6 @@ Graduaciones de {{ $estudiante->persona->nombre }}
 </div>
 @endsection
 
-@section('pie')
-Copyright
+@section('scripts')
+<script src="{{ asset('js/control_educativo/informacion_graduaciones/listado-individual.js') }}" defer></script>
 @endsection

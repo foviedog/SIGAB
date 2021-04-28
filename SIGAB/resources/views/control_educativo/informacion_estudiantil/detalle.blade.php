@@ -5,24 +5,18 @@ Detalle del estudiante {{ $estudiante->persona->nombre }}
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
-@section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
-@endsection
-
-@section('contenido')
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-$estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-$generos = ['Femenino','Masculino','Otro'];
-$colegiosProcedencias = ['Público','Técnico','Científico','Bilingüe','Nocturno','Privado'];
-$tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo (Residencia estudiantil)','Becas de posgrado',
-'Beca por participación en actividades artísticas y deportivas','Beca por participación en movimiento estudiantil',
-'Beca de Honor','Estudiante Asistente Académico y Paracadémico','Intercambio estudiantil','Préstamos estudiantiles','Giras'];
+$estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
+$generos = GlobalArrays::GENEROS;
+$colegiosProcedencias = GlobalArrays::COLEGIOS_PROCEDENCIA;
+$tiposBecas = GlobalArrays::TIPOS_BECA;
 @endphp
+
+@section('contenido')
 
 {{-- Formulario general de estudiante --}}
 <form action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
@@ -351,6 +345,6 @@ $tiposBecas = ['No tiene','Beca por condición socioeconómica','Beca Omar Dengo
 </form>
 @endsection
 
-@section('pie')
-Copyright
+@section('scripts')
+<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 @endsection

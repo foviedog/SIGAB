@@ -1,16 +1,16 @@
 @extends('layouts.app')
+
 @section('meta')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
+
 @section('titulo')
-Asistencia a
-{{ $actividad->tema }}
+Asistencia a {{ $actividad->tema }}
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
 
 @section('contenido')
 
@@ -411,7 +411,6 @@ Asistencia a
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
@@ -425,11 +424,5 @@ Asistencia a
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
 </script>
-@endsection
-
-
-@section('pie')
-Copyright
 @endsection

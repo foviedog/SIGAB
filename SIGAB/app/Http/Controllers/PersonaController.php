@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use Illuminate\Http\Request;
 use App\Persona;
 use Image;
-
-
+use App\Helper\GlobalArrays;
 
 class PersonaController extends Controller
 {

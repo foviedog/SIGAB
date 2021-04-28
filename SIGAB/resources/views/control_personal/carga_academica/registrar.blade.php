@@ -132,11 +132,6 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 @endsection
 
 @section('scripts')
-{{-- Link al script de registro de personal --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
-@endsection
-
-@section('pie')
-Copyright
 @endsection

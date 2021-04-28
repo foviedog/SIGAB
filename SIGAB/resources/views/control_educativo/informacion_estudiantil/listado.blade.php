@@ -5,10 +5,8 @@ Listado Estudiantil
 @endsection
 
 @section('css')
-
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
-
 
 @section('contenido')
 
@@ -145,14 +143,8 @@ Listado Estudiantil
     </div>
 </div>
 
-
 @endsection
-
 
 @section('scripts')
-
-@endsection
-
-@section('pie')
-Copyright
+{{-- Ningún script por el momento --}}
 @endsection

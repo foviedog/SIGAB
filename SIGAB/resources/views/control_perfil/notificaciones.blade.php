@@ -131,5 +131,5 @@ Notificaciones
 @endsection
 
 @section('scripts')
-
+{{-- Ningún script por el momento --}}
 @endsection

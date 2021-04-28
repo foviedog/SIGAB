@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use DateTime;
 use PDF;
+use App\Helper\GlobalArrays;
 
 class ReportesActividadesController extends Controller
 {
-
 
     // ========================================================================================================================================
     // Función utilizada para procesar el request de mostrar la vista de reportes de actividades

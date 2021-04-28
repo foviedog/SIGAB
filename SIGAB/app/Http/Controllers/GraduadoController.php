@@ -173,7 +173,6 @@ class GraduadoController extends Controller
         return $graduados; //Retorna el resultado de todas las guías
     }
 
-
     public function destroy( $id_graduacion)
     {
         try {
@@ -187,7 +186,5 @@ class GraduadoController extends Controller
             ->with('error', 'ha ocurrido un error');
         }
     }
-
-
 
 }

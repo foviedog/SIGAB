@@ -1,9 +1,9 @@
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-$generos = ['Femenino','Masculino','Otro'];
-$estadosCiviles = ['Soltero(a)','Casado(a)','Viudo(a)','Divorciado(a)','Unión libre'];
-
+$generos = GlobalArrays::GENEROS;
+$estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 @endphp
+
 {{-- MODAL para agregar una persona que no se encuentra registrada en el sistema --}}
 <form method="POST" action="{{ route('lista-asistencia.storeInvitado') }}" id="form-actualizar" enctype="multipart/form-data">
     @csrf

@@ -5,14 +5,21 @@ Listado de Graduados
 @endsection
 
 @section('css')
-
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('contenido') <div class="card">
+@php
+$anios = array();
+for ($anio = 2000; $anio <= date("Y"); $anio++) { 
+    array_push($anios,$anio); 
+} 
+@endphp 
 
-    @php
-    $anios = array();
-    for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios,$anio) ; } @endphp <div class="card-body">
+@section('contenido') 
+
+<div class="card">
+    
+    <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
@@ -163,15 +170,8 @@ Listado de Graduados
 
 </div>
 </div>
-
-
 @endsection
-
 
 @section('scripts')
-
-@endsection
-
-@section('pie')
-Copyright
+{{-- Ningún script por el momento --}}
 @endsection

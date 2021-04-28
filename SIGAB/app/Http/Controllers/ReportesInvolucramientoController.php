@@ -11,15 +11,10 @@ use App\ListaAsistencia;
 use Carbon\Carbon;
 use App\Personal;
 use App\Persona;
+use App\Helper\GlobalArrays;
 
 class ReportesInvolucramientoController extends Controller
 {
-    const TIPOS_ACT_INTERNAS = [
-        "Curso", "Conferencia", "Taller", "Seminario", "Conversatorio",
-        "Órgano colegiado", "Tutorías", "Lectorías", "Simposio", "Charla", "Actividad cocurricular",
-        "Tribunales de prueba de grado", "Tribunales de defensas públicas",
-        "Comisiones de trabajo", "Externa", "Otro"
-    ];
 
     public function show()
     {
@@ -62,7 +57,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function cantActividadesXPersonal($anio)
     {
-        $tipos = ReportesInvolucramientoController::TIPOS_ACT_INTERNAS;
+        $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
         $personal = \DB::table('personal')
             ->select('persona_id')->get();
         $dataSet = [];
@@ -322,7 +317,7 @@ class ReportesInvolucramientoController extends Controller
     {
         $dataSet = array();
 
-        $ambitos = ["Nacional", "Internacional"];
+        $ambitos =  GlobalArrays::AMBITOS_ACTIVIDAD;
         $fecha_ini = $mesInicio . "-01";
         $fecha_fin = $mesFinal . "-01";
 
@@ -345,7 +340,7 @@ class ReportesInvolucramientoController extends Controller
     {
         $dataSet = array();
 
-        $ambitos = ["Nacional", "Internacional"];
+        $ambitos =  GlobalArrays::AMBITOS_ACTIVIDAD;
         $fecha_ini = $mesInicio . "-01";
         $fecha_fin = $mesFinal . "-01";
 
@@ -427,7 +422,7 @@ class ReportesInvolucramientoController extends Controller
     }
     public function porcentajeParticipacion($actividadesXPersonal)
     {
-        $tipos = ReportesInvolucramientoController::TIPOS_ACT_INTERNAS;
+        $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
         $porcentajesParticipacion = [];
         $cantPersonal = count($actividadesXPersonal);
 

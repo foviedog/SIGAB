@@ -9,6 +9,7 @@ use App\ListaAsistencia;
 use App\Persona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+use App\Helper\GlobalArrays;
 
 
 class ListaAsistenciaController extends Controller

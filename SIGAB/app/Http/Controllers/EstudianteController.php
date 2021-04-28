@@ -10,10 +10,10 @@ use Image;
 use App\Persona;
 use App\Estudiante;
 use App\Guias_academica;
+use App\Helper\GlobalArrays;
 
 class EstudianteController extends Controller
 {
-
 
     //Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
@@ -119,7 +119,6 @@ class EstudianteController extends Controller
             'estudiante' => $estudiante,
         ]);
     }
-
 
     //Metodo para actualizar los datos del estudiante
     public function update($id_estudiante, Request $request)

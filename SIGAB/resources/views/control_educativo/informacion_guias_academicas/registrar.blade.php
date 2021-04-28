@@ -188,22 +188,12 @@ Registrar guía académica
 
 @endsection
 
-
-{{-- Link al script de registro de registro guias academicas de estudiantes --}}
 @section('scripts')
 <script>
-    // "global" vars, built using blade
+    // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
+    let est = "{{$estudiante->persona->persona_id}}"
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-<script>
-    let est = "{{$estudiante->persona->persona_id}}"
-
-</script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>
-@endsection
-
-@section('pie')
-Copyright
 @endsection

@@ -11,13 +11,10 @@ use App\Persona;
 use App\Personal;
 use App\Idioma;
 use App\Participacion;
-
-
+use App\Helper\GlobalArrays;
 
 class PersonalController extends Controller
 {
-
-
 
     //Devuevle el listado del personal ordenados por su apellido.
     public function index()

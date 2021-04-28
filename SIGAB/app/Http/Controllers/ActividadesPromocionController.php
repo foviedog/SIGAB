@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actividades;
 use App\ActividadesPromocion;
+use App\Helper\GlobalArrays;
 
 class ActividadesPromocionController extends Controller
 {

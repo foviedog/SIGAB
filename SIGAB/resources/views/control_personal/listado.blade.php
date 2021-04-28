@@ -5,7 +5,7 @@ Listado de Personal
 @endsection
 
 @section('css')
-
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
 @section('contenido')
@@ -139,14 +139,8 @@ Listado de Personal
     </div>
 </div>
 
-
 @endsection
-
 
 @section('scripts')
-
-@endsection
-
-@section('pie')
-Copyright
+{{-- Ningún script por el momento --}}
 @endsection

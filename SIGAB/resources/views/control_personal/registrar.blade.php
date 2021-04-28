@@ -8,16 +8,12 @@ Registrar información del personal
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-
 @php
 $persona_no_insertada = Session::get('persona_no_insertada');
 $personal_no_insertado = Session::get('personal_no_insertado');
 @endphp
 
-
 @section('contenido')
-
-
 
 <div class="card">
     <div class="card-body">
@@ -645,11 +641,6 @@ $personal_no_insertado = Session::get('personal_no_insertado');
 @endsection
 
 @section('scripts')
-{{-- Link al script de registro de registro de personal --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_personal/registrar.js') }}" defer></script>
-@endsection
-
-@section('pie')
-Copyright
 @endsection

@@ -5,28 +5,19 @@
 @endsection
 
 @section('css')
-{{-- No hay --}}
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
-
-@section('contenido')
 
 {{-- Arreglos de opciones de los select utilizados --}}
 @php
-
-$propositos = ['Inducción','Capacitación','Actualización','Involucramiento del personal','Otro'];
-
-$tiposActividad = ['Curso','Conferencia','Taller','Seminario','Seminario','Conversatorio','Órgano colegiado',
-'Tutorías','Lectorías','Simposio','Charla','Actividad cocurricular','Tribunales de prueba de grado','Tribunales de defensas públicas',
-'Comisiones de trabajo','Externa','Otro'];
-
-$poblacion = ['Estudiantes de primer ingreso','Estudiantes regulares','Personal Docente','Personal Administrativo'];
-
-$estados = ['Para ejecución','En progreso','Ejecutada','Cancelada'];
-
-$ambitos = ['Nacional','Internacional'];
-
+$tiposActividad = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
+$propositos = GlobalArrays::PROPOSITOS_ACTIVIDAD_INTERNA;
+$poblacion = GlobalArrays::POBLACION_DIRIGIDA;
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
+$ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 @endphp
+
+@section('contenido')
 
 <div class="card">
     <div class="card-body">
@@ -552,7 +543,6 @@ $ambitos = ['Nacional','Internacional'];
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
@@ -560,11 +550,6 @@ $ambitos = ['Nacional','Internacional'];
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
-
 </script>
 @endsection
 
-
-@section('pie')
-Copyright
-@endsection

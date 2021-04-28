@@ -5,9 +5,8 @@ Listado de Guías Académicas
 @endsection
 
 @section('css')
-
+{{-- Ninguna hoja de estilo por el momento --}}
 @endsection
-
 
 @section('contenido')
 <div class="card">
@@ -355,19 +354,12 @@ Listado de Guías Académicas
 </div>
 @endsection
 
-
 @section('scripts')
 <script>
-    // "global" vars, built using blade
+    // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     var documentosURL = "{{ URL::asset('/estudiante/guia-academica/download/') }}";
-
 </script>
-
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/listado.js') }}" defer></script>
-@endsection
-
-@section('pie')
-Copyright
 @endsection

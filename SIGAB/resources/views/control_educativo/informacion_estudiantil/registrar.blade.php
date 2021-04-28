@@ -8,16 +8,10 @@ Registrar información del estudiante
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
-@section('scripts')
-{{-- Link al script de registro de registro de estudiantes --}}
-<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-@endsection
-
 @php
 $persona_no_insertada = Session::get('persona_no_insertada');
 $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 @endphp
-
 
 @section('contenido')
 
@@ -511,6 +505,6 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 </div>
 @endsection
 
-@section('pie')
-Copyright
+@section('scripts')
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 @endsection

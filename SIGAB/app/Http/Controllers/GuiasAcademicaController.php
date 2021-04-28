@@ -10,7 +10,7 @@ use App\Guias_academica;
 use App\Personal;
 use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use Illuminate\Support\Facades\Validator;
-
+use App\Helper\GlobalArrays;
 
 class GuiasAcademicaController extends Controller
 {
@@ -24,7 +24,7 @@ class GuiasAcademicaController extends Controller
         $estudiante = Estudiante::findOrFail($id_estudiante);
 
         //Tipos de guías académicas
-        $tipos = $this->tiposDeGuia();
+        $tipos = GlobalArrays::TIPOS_GUIA_ACADEMICA;
 
         //Docentes
         $docentes = Personal::where('cargo', 'Académico')->get();
@@ -108,7 +108,7 @@ class GuiasAcademicaController extends Controller
     public function index()
     {
         //Tipos de guías académicas
-        $tipos = $this->tiposDeGuia();
+        $tipos = GlobalArrays::TIPOS_GUIA_ACADEMICA;
 
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
@@ -144,31 +144,6 @@ class GuiasAcademicaController extends Controller
             'tipos' => $tipos,
             'docentes' => $docentes
         ]);
-    }
-
-    //Método que devuelve los tipos de guías académicas
-    public function tiposDeGuia()
-    {
-        //Tipos de guías académicas
-        $tipos = [
-            'Constancia de estudio',
-            'Trámite de Graduación',
-            'Verificación de avance en el plan de estudio',
-            'Referencias de atención solicitada por docentes',
-            'Consejos de abordaje de alguna situación particular solicitada por docentes',
-            'Atención solicitada por los estudiantes para atender su condición educativa',
-            'Solicitud de mediación por conflictos entre docentes-estudiantes',
-            'Solicitud de atención o seguimiento por conflictos entre estudiantes',
-            'Atención de consultas sobre TFG',
-            'Trámites de empadronamiento',
-            'Cupos para cursos de Inglés integrado',
-            'Proceso de pre matrícula',
-            'Atención de consultas vía correo electrónico sobre información variada',
-            'Atención de consultas del equipo de Mentorías',
-            'Ayuda económica inmediata',
-            'Proceso de Inducción a la vida universitaria',
-        ];
-        return $tipos;
     }
 
     // Método que muestra una guía específica de un estudiante.
