@@ -74,11 +74,14 @@ class PersonaController extends Controller
     {
         $notificacionesNoLeidas = auth()->user()->unreadNotifications;
         $notificacionesLeidas = auth()->user()->readNotifications;
-        //dd($notificaciones);
 
         return view('control_perfil.notificaciones', [
             'notificacionesNoLeidas'=> $notificacionesNoLeidas,
             'notificacionesLeidas'=> $notificacionesLeidas
         ]);
+    }
+
+    public function obtenerNotificaciones(){
+        return auth()->user()->unreadNotifications;
     }
 }

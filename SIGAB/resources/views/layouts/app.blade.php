@@ -18,7 +18,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plantilla/layout.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
     <!-- Scripts globales -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,8 +45,6 @@
                 <a href="{{ route('home') }}" class="d-flex justify-content-center">
                     <img src="{{ asset('img/login/logo_EBDI_Blanco.png') }}" alt="SIGAB" class="logo">
                 </a>
-
-
             </div>
 
             <ul class="list-unstyled components">
@@ -134,7 +132,6 @@
 
                     <img src="{{ asset('img/login/UNA_horizontal.png') }}" alt="logo_universidad" class="logo-una-horizontal border-left border-secondary mx-3" id="img-UNA">
 
-
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
@@ -146,7 +143,15 @@
                                 <span class="texto-SIGAB pr-3" id="letras-SIGAB">SIGAB</span>
                             </li>
                             <li class="nav-item dropdown" style="max-width: 120px;">
-                                <a class="nav-link dropdown-toggle border-left border-secondary px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle border-left border-secondary px-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="far fa-bell"></i> <span class="numero-notificaciones" id="numero-notificaciones">0</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" id="espacio-notificaciones">
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown" style="max-width: 120px;">
+                                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img class="border rounded-circle mr-2" src="{{ asset('img/fotos/'.Session::get('persona')->imagen_perfil) }}" width="30px" height="30px" />
                                     <span> {{ Auth::user()->persona_id }}</span>
                                 </a>
@@ -190,8 +195,11 @@
     </div>
 
     @yield('scripts')
+    <script>
+        let user_id = {{ Auth::user()->id }};
+    </script>
+    <script src="{{ asset('js/global/notificaciones.js') }}"></script>
     <script src="{{ asset('js/global/mensajes.js') }}" crossorigin="anonymous"></script>
-
     <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> --}}
     <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>

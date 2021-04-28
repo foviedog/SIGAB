@@ -240,6 +240,21 @@ Fin de la paleta de colores
     color: rojo;
 }
 
+.numero-notificaciones{
+    color: white;
+    background-color: rgb(180, 0, 0);
+    border-radius: 25%;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.ver-mas-notificaciones{
+    font-weight: bold;
+    text-align: center;
+}
+
 /* ====================================================
         Personalización de elementos
 ==================================================== */

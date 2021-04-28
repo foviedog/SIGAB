@@ -7,8 +7,6 @@ import "jquery-ui/ui/widgets/datepicker.js";
 
 import 'jquery-ui/ui/widgets/dialog.js';
 
-
-
 import ApexCharts from 'apexcharts';
 window.ApexCharts = ApexCharts;
 
@@ -17,3 +15,6 @@ window.fixUtf8 = fixutf8;
 
 import jsPDF from 'jspdf';
 window.jsPDF = jsPDF;
+
+import toastr from 'toastr';
+window.toastr = toastr;

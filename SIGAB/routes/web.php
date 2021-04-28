@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 /* Ruta para acceder a las notificaciones */
 Route::get('/perfil/notificaciones', 'PersonaController@notifications')->name('perfil.notifications');
+/* Ruta para acceder a las notificaciones */
+Route::get('/perfil/cant-notificaciones', 'PersonaController@obtenerNotificaciones')->name('perfil.cant.notifications');
 /* Ruta de detalle del perfil*/
 Route::get('/perfil/{persona_id}', 'PersonaController@show')->name('perfil.show');
 /* Ruta de update del perfil*/
