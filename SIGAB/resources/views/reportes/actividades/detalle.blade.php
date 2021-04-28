@@ -78,55 +78,60 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             <div class="tab-content pb-5">
                 <div role="tabpanel" class="tab-pane fade in active show" id="actividades-tab">
                     <div id="cartas-activida" class="row d-flex justify-content-between px-3 mt-4">
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-school fa-3x"></i>
+                        {{-- Cantidad total de actividades internas registratas en el sistema --}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-school fa-2x texto-rojo-medio"></i>
                                 </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info">Internas</div>
-                                    <div class="numero-info">{{ $datosCuantitativos[1] ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-bullhorn fa-3x"></i>
-                                </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info">Promoción</div>
-                                    <div class="numero-info"> {{ $datosCuantitativos[0] ?? 0 }} </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Internas</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[1] ?? 0 }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-calculator fa-3x"></i>
+                        {{-- Cantidad total de actividades de promoción registratas en el sistema --}}
+
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-bullhorn fa-2x texto-rojo-medio"></i>
                                 </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info"> Total </div>
-                                    <div class="numero-info"> {{ $datosCuantitativos[0] + $datosCuantitativos[1] ?? 0 }} </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Promoción</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[0] ?? 0 }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-briefcase fa-3x"></i>
+                        {{-- Cantidad total de actividades registratas en el sistema suma de actividades de promoción y actividades internas--}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-calculator fa-2x texto-rojo-medio"></i>
+                                </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Total</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[0] + $datosCuantitativos[1] ?? 0 }} </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info"> Responsables </div>
-                                    <div class="numero-info">{{ $datosCuantitativos[2] ?? 0 }} </div>
+                        </div>
+                        {{-- Cantidad total de responsables de activdades registrados en el sistema--}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-briefcase fa-2x texto-rojo-medio"></i>
+                                </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Responsables</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[2] ?? 0 }} </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +139,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
                     <div class="container-fluid mt-5 pt-2 graficos-especificos">
                         <div class="row ">
-                            <div class="col d-flex flex-column justify-content-center align-items-center">
+                            <div class="col-lg-12 col-xl-6 d-flex flex-column justify-content-center align-items-center mb-lg-5">
                                 <div class="header-grafico w-100 texto-rojo-medio d-flex ">
                                     <h3>Propósitos de actividades {{ date("Y") }}</h3>&nbsp;
                                     <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades internas que finalizan en el 2021 según el propósito" style="font-size: 18px;"></i>
@@ -319,6 +324,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 
 @endsection
