@@ -6,6 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 trait AuthenticatesUsers
 {
@@ -31,6 +33,8 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
+        try{
+            DB::connection()->getPdo();
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -53,6 +57,13 @@ trait AuthenticatesUsers
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    } catch (\Exception $ex) {
+        return Redirect::back()//se redirecciona a la pagina anteriror
+        ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /**
@@ -65,10 +76,20 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
+        try{
+            DB::connection()->getPdo();
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }  
+    catch (\Exception $ex) {
+    return Redirect::back()//se redirecciona a la pagina anteriror
+    ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+}
     }
 
     /**
@@ -79,9 +100,15 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
+        try {
+            DB::connection()->getPdo();
         return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );
+    } catch (\Exception $ex) {
+        return Redirect::back()//se redirecciona a la pagina anteriror
+        ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /**

@@ -15,7 +15,7 @@ class AsistenciaPromocionController extends Controller
 
     public function show($actividadId)
     {
-
+        try{
         $paginaciones = [5, 10, 25, 50];
         $itemsPagina = request('itemsPagina', 5);
         $filtro = request('filtro', NULL);
@@ -35,6 +35,14 @@ class AsistenciaPromocionController extends Controller
             'filtro' => $filtro,
             'mensaje' => $mensaje,
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     public function obtenerLista($actividadId, $itemsPagina, $filtro)
@@ -78,6 +86,7 @@ class AsistenciaPromocionController extends Controller
             return redirect()->route('asistencia-promocion.show', request()->acitividad_id)->with('mensaje', $mensaje);
            // return response("No existe", 404);
         }
+        
     }
 
 

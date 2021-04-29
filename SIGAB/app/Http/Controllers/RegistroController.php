@@ -22,16 +22,22 @@ class RegistroController extends Controller
     /* Método que devuelve la página con la información
        de todas las personas ingresadas en el sistema */
     public function index(){
+        try{
         $personas = Persona::all();
         return view('auth.register', [
             'personas' => $personas,
         ]);
+    }   
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /* Método que devuelve la persona que se desea
        registrar como usuario/a del sistema */
     public function show(Request $request){
-
+try{
         /*  Extrae el id del request (recordar que se
             está recuperando de un value que tiene el
             siguiente formato: 'XXX - YYYY YYYY', donde X representa
@@ -72,12 +78,16 @@ class RegistroController extends Controller
             return Redirect::back()
                 ->with('error', 'La persona ya está registrada en el sistema.');
         }
-
+    }   
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /* Método que registra un nuevo usuario */
     public function register(Request $request){
-
+try{
         /* Verifica que la contraseña contenga los requisitos mínimos de seguridad */
         if($this->verificarContrasenna($request->password)){
 
@@ -99,7 +109,14 @@ class RegistroController extends Controller
             return Redirect::back()
                     ->with('error', 'La contraseña no cumple con los estándares mínimos de seguridad.');
         }
-
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /* Método que verifica si la contraseña cumple con los estándares */

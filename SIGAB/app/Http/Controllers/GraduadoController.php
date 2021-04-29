@@ -16,12 +16,16 @@ class GraduadoController extends Controller
     //Método que obtiene una cedula por medio del request, devuelve ese estudiante espefico junto con la vista para crear una guia academica
     public function create($id_estudiante)
     {
-
+try{
         $estudiante = Estudiante::findOrFail($id_estudiante);
 
         return view('control_educativo.informacion_estudiantil.informacion_graduados.registrar', [
             'estudiante' => $estudiante,
-        ]);
+        ]); 
+        }   catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     //Método que inserta una guia academica de un estudiante especifico en la base de datos
@@ -53,6 +57,7 @@ class GraduadoController extends Controller
     //Método iniciaal que devuelve el listado de guías con respecto a filtros
     public function index()
     {
+        try{
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
 
@@ -84,10 +89,19 @@ class GraduadoController extends Controller
             'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página,
             'anio' => $anio // Valor del filtro de año de graduación
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     public function show($id_estudiante)
     {
+        try{
         // Estudiante al que se le quiere añadir una graduación
         $estudiante = Estudiante::findOrFail($id_estudiante);
 
@@ -99,21 +113,31 @@ class GraduadoController extends Controller
             'estudiante' => $estudiante,       // Estudiante
             'graduaciones' => $graduaciones,   // Graduaciones
         ]);
+         } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     // Método que muestra una graduación específica
     public function edit($id_graduacion)
     {
+        try{
         //Busca la graduación en la base de datos
         $graduacion = Graduado::find($id_graduacion);
 
         //Retorna la graduación en formato JSON y con un código de éxito de 200
         return response()->json($graduacion, 200);
+        }    catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     // Método que actualiza la información de la graduación
     public function update($id_graduacion, Request $request)
     {
+        try{
         //Busca la graduación en la base de datos
         $graduacion = Graduado::find($id_graduacion);
 
@@ -128,6 +152,14 @@ class GraduadoController extends Controller
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     /* ====================================================================================
@@ -184,7 +216,11 @@ class GraduadoController extends Controller
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
             ->with('error', 'ha ocurrido un error');
+        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
+        
     }
 
 }

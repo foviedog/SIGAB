@@ -19,7 +19,7 @@ class PersonalController extends Controller
     //Devuevle el listado del personal ordenados por su apellido.
     public function index()
     {
-
+try{
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
@@ -47,6 +47,14 @@ class PersonalController extends Controller
             'itemsPagina' => $itemsPagina, // Item que se desean por página.
             'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     // ===========================================================================================
@@ -104,6 +112,7 @@ class PersonalController extends Controller
     //============================================================================================
     public function show($id_personal)
     {
+        try{
         //Busca en la base de datos al personal con la cédula indicada y obtiene también las participaciones asociadas a él.
         $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
             ->where('personal.persona_id', '=', $id_personal)
@@ -116,6 +125,11 @@ class PersonalController extends Controller
             'personal' => $personal,
             'idiomas' => $idiomas
         ]);
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 
@@ -124,6 +138,7 @@ class PersonalController extends Controller
     //============================================================================================
     public function update($id_personal, Request $request)
     {
+        try{
         //Se crean instancias de persona y personal para crear inicializar los atributos de cada objeto
         $persona = new Persona();
         $personal = new Personal();
@@ -147,6 +162,14 @@ class PersonalController extends Controller
 
         //Se retorna el detalle del personal ya modificado
         return redirect("/personal/detalle/{$personal->persona_id}");
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 
@@ -262,11 +285,20 @@ class PersonalController extends Controller
 
     public function edit($id_personal)
     {
+        try{
         $personal = Personal::find($id_personal); //se busca la persona con el id del personal requerido
         if ($personal == null) {
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         } else {
             return response()->json($personal->persona, 200); //si hay un personal registrado con ese id lo retorna
         }
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 }

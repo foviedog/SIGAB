@@ -55596,3 +55596,14 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*!******************************************************************************************!*\
   !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/toastr.scss ***!
   \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! E:\Oscar\Documents\GitHub\SIGAB\SIGAB\SIGAB\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Oscar\Documents\GitHub\SIGAB\SIGAB\SIGAB\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! E:\Oscar\Documents\GitHub\SIGAB\SIGAB\SIGAB\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+
+
+/***/ })
+
+/******/ });

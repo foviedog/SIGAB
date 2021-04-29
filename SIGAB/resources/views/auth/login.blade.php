@@ -34,6 +34,9 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="container">
+
+
+
                             <div class="row d-flex justify-content-between px-4">
                                 <img src="{{ asset('img/login/logo.jpg') }}" alt="" class="logo">
                                 <img src="{{ asset('img/login/UNA.png') }}" alt="" class="logo">
@@ -54,6 +57,20 @@
                                             </span>
                                         </h1>
                                     </div>
+
+
+            {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
+            @php
+            $error = Session::get('error');
+            @endphp
+
+            @if(Session::has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ "No se pudo establecer conección con la base de datos!"}}
+            </div>
+            @endif
+
+
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
 

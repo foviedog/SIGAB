@@ -22,6 +22,7 @@ class ReportesActividadesController extends Controller
     // ========================================================================================================================================
     public function show()
     {
+        try{
         //Se obtienen los datos que sean necesarios para la generación de estadísticas
         //(A pesar de que no sean necesarios en un inicio es para evitar confictos con la recuperación de datos digitados en la elaboración de un request al servidor)
         $chart = "bar";
@@ -52,6 +53,14 @@ class ReportesActividadesController extends Controller
             'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
             'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES) //Se formatea el gráfico a JSON para utilizarlo en la API de JS
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 
@@ -60,6 +69,7 @@ class ReportesActividadesController extends Controller
     // ========================================================================================================================================
     public function resultado(Request $request)
     {
+        try{
         //Se setean los tipos según la naturaleza de la actividad (Interna o promoción)
         $tip_act_int = $this->devolverTipos(0);
         $tip_act_prom = $this->devolverTipos(1);
@@ -97,6 +107,14 @@ class ReportesActividadesController extends Controller
             'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
             'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES) //Se formatea el gráfico a JSON para utilizarlo en la API de JS
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 

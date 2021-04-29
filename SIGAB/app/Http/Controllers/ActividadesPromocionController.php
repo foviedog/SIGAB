@@ -13,6 +13,7 @@ class ActividadesPromocionController extends Controller
 
     public function index()
     {
+        try{
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
         //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
@@ -44,6 +45,10 @@ class ActividadesPromocionController extends Controller
             'estado_filtro' => $estado_filtro,
             'rango_fechas' => $rango_fechas
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 
@@ -96,10 +101,13 @@ class ActividadesPromocionController extends Controller
     //Retorna la vista de detalle actividades de promocion
     public function show($id_actividad)
     {
+        try{
         $actividad = Actividades::findOrfail($id_actividad);
-        //$personal = Personal::findOrFail($actividad->responsable_coordinar);
-
         return view('control_actividades_promocion.detalle', ['actividad' => $actividad]);
+    } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 
