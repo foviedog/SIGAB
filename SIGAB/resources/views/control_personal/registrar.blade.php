@@ -23,10 +23,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                 <a href="{{ route('personal.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de personal </a>
             </div>
         </div>
-
         <hr>
-
-
         {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
         @if(Session::has('mensaje'))
         <div class="alert alert-success" role="alert">
@@ -70,17 +67,13 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                     <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
                     <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
                     <b>Grado academico:</b> {{ $personal_registrado->grado_academico ?? "No se digitó" }} <br>
-
                     {{-- Link para modificiar al personal recien agregado --}}
                     <br>
                     <a class="btn btn-rojo" href="{{ route('personal.show',$personal_registrado->persona_id ) }}">
                         Editar
                     </a>
                     <br>
-
                 </div>
-
-
                 <div class="col-6 ">
                     <b>Tipo de cargo:</b> {{ $personal_registrado->cargo?? "No se digitó" }} <br>
                     <b>Tipo de nombramiento:</b> {{ $personal_registrado->tipo_nombramiento ?? "No se digitó" }} <br>

@@ -8,9 +8,6 @@ for (const tipo in porcentajeParticipacionActual) {
     yPorcentajeActual.push(cantParticipacion);
     totalPorcentaje += cantParticipacion;
 }
-console.log(xPorcentajeActual);
-console.log(yPorcentajeActual);
-console.log(totalPorcentaje);
 
 
 xPorcentajeActualAmbito = [];
@@ -22,9 +19,6 @@ for (const ambito in porcentajeAmbitoActual) {
     yPorcentajeActualAmbito.push(cantParticipacionAmbito);
     totalPorcentajeAmbito++;
 }
-console.log(xPorcentajeActualAmbito);
-console.log(yPorcentajeActualAmbito);
-console.log(totalPorcentajeAmbito);
 
 //---------------------------------------------------------------------------------------------
 // GRAFICO PARA MEDIR EL PROCENTAJE DE PARTICIPACION EN ACTIVIDADES INTERNAS DEL ANNIO EN CURSO
@@ -41,7 +35,7 @@ var optionsPorcentaje = {
             show: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: 'Porcentaje',
         data: yPorcentajeActual
@@ -78,7 +72,7 @@ var optionsPorcentaje = {
         axisBorder: {
             show: false
         },
-        labels:{
+        labels: {
             minHeight: 150,
         },
         axisTicks: {
@@ -100,7 +94,7 @@ var optionsPorcentaje = {
             enabled: true,
         }
     },
-    grid: grid,    
+    grid: grid,
 };
 
 let plotOptionsPorcentaje = {
@@ -131,7 +125,7 @@ var optionsPorcentajeAmbito = {
             show: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: yPorcentajeActualAmbito,
     labels: xPorcentajeActualAmbito
 }
@@ -139,16 +133,16 @@ var optionsPorcentajeAmbito = {
 let plotOptionsPorcentajeAmbito = {
     radialBar: {
         dataLabels: {
-        name: {
-            fontSize: '22px',
-        },
-        value: {
-            fontSize: '16px',
-        },
-        total: {
-            show: true,
-            label: 'Ámbitos',
-            formatter: function (w) {
+            name: {
+                fontSize: '22px',
+            },
+            value: {
+                fontSize: '16px',
+            },
+            total: {
+                show: true,
+                label: 'Ámbitos',
+                formatter: function (w) {
                     return 'Nacional - Internacional'
                 }
             }

@@ -1,6 +1,6 @@
 
 //-----------------------------------------
-// GRAFICO
+// GRAFICO DE AREA
 //-----------------------------------------
 
 var options = {
@@ -11,9 +11,9 @@ var options = {
         locales: locales,
         defaultLocale: "es",
         id: "grafico",
-        
+
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: y

@@ -112,7 +112,10 @@
                         <a href="{{ route('reportes-actividades.show' ) }}">Actividades </a>
                     </li>
                     <li>
-                        <a href="{{ route('reportes-involucramiento.show' ) }}">Involucramiento </a>
+                        <a href="{{ route('reportes-involucramiento.show' ) }}">Involucramiento general </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('reportes-involucramiento.anual' ) }}">Involucramiento anual </a>
                     </li>
                 </ul>
             </li>
@@ -194,7 +197,12 @@
 
     @yield('scripts')
     <script>
-        let user_id = {{ Auth::user()->id }};
+        let user_id = {
+            {
+                Auth::user() - > id
+            }
+        };
+
     </script>
     <script src="{{ asset('js/global/notificaciones.js') }}"></script>
     <script src="{{ asset('js/global/mensajes.js') }}" crossorigin="anonymous"></script>

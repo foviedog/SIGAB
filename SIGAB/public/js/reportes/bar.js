@@ -1,11 +1,11 @@
 
 //-----------------------------------------
-// GRAFICO
+// GRAFICO DE BARRAS
 //-----------------------------------------
 
 let data = [];
-for(let i = 0; i < x.length; i++){
-    let obj = {x: x[i], y: y[i]}
+for (let i = 0; i < x.length; i++) {
+    let obj = { x: x[i], y: y[i] }
     data.push(obj);
 }
 
@@ -23,7 +23,7 @@ var options = {
             distributed: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: data
