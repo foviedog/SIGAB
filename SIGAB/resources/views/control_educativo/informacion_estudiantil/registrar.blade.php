@@ -171,7 +171,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}" required>
+                            <input type='date' class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
                         </div>
 
                     </div>
@@ -338,7 +338,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_ebdi">Año de ingreso a la EBDI: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? '' }}" required>
+                            <input type='date' class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? null }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -352,7 +352,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_una">Año de ingreso a la UNA: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? '' }}"  required>
+                            <input type='date'  class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? null  }}"  required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">

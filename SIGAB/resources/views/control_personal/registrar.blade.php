@@ -178,7 +178,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}" required>
+                                    <input type='date'  class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento"   value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
                                 </div>
                             </div>
 
