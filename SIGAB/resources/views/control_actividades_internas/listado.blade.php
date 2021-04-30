@@ -126,7 +126,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                             </div>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
-                                    <sapn class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></sapn>
+                                    <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
                                 <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
 
@@ -141,13 +141,16 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th style=" width: 15rem;">Tema</th>
+                                <th style="width: 21rem;">Tema</th>
                                 <th>ID Coordinador</th>
-                                <th>Estado</th>
-                                <th>Propósito</th>
                                 <th>Tipo de actividad</th>
+                                <th>Propósito</th>
+                                <th>Estado</th>
                                 <th>Fecha de inicio</th>
-                                <td><strong>Ver detalle<br /></strong></td>
+                                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                                <th>Autorización</th>
+                                @endif
+                                <th>Ver detalle</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -164,10 +167,25 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <td>{{ $actividadInterna->actividad_id }}</td>
                                 <td>{{ $actividadInterna->tema}}</td>
                                 <td>{{ $actividadInterna->responsable_coordinar }} </td>
-                                <td>{{ $actividadInterna->estado }}</td>
-                                <td>{{ $actividadInterna->proposito}} </td>
                                 <td>{{$actividadInterna->tipo_actividad}}</td>
-                                <td style="padding: 0px; font-size: 16px">{{ date("d / m / Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
+                                <td>{{ $actividadInterna->proposito}} </td>
+                                @if ( $actividadInterna->estado == 'Para ejecución' )
+                                <td><span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividadInterna->estado }}</span></td>
+                                @elseif($actividadInterna->estado == 'Cancelada')
+                                <td><span class=" bg-danger text-white px-2 rounded">{{ $actividadInterna->estado }}</span></td>
+                                @elseif($actividadInterna->estado == 'En progreso')
+                                <td><span class=" bg-warning text-dark px-2 rounded">{{ $actividadInterna->estado }}</span></td>
+                                @elseif($actividadInterna->estado == 'Ejecutada')
+                                <td><span class=" bg-success text-white px-2 rounded">{{ $actividadInterna->estado }}</span></td>
+                                @endif
+                                <td>{{ date("d/m/Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
+                                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                                    @if($actividadInterna->autorizada == 0)
+                                    <td><span class="bg-info text-dark font-weight-bold px-3 py-2 rounded">Pendiente</span></td>
+                                    @else
+                                    <td><span class="bg-success text-white font-weight-bold px-3 py-2 rounded">Autorizada</span></td>
+                                    @endif
+                                @endif
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
@@ -181,13 +199,16 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                         <tfoot>
                             <tr>
                                 <th>Código</th>
-                                <th>Tema</th>
+                                <th style="width: 21rem;">Tema</th>
                                 <th>ID Coordinador</th>
-                                <th>Estado</th>
-                                <th>Propósito</th>
                                 <th>Tipo de actividad</th>
+                                <th>Propósito</th>
+                                <th>Estado</th>
                                 <th>Fecha de inicio</th>
-                                <td><strong>Ver detalle<br /></strong></td>
+                                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                                <th>Autorización</th>
+                                @endif
+                                <th>Ver detalle</th>
                             </tr>
                         </tfoot>
                     </table>

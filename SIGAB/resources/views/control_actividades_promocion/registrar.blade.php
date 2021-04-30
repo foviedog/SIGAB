@@ -62,7 +62,7 @@ Registrar actividad de promocion
                 Se registró la actividad de promoción de la carrera con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
-                        <b>ID de actividad: </b> {{$actividad_insertada->id}} <br>
+                        <b>Código: </b> {{$actividad_insertada->id}} <br>
                         <b>Tema: </b> {{$actividad_insertada->tema}} <br>
                         <b>Lugar: </b> {{$actividad_insertada->lugar ?? "No se digitó"}} <br>
                         <b>Estado: </b> {{$actividad_insertada->estado}} <br>
@@ -410,7 +410,13 @@ Registrar actividad de promocion
 
                 <div class="d-flex justify-content-center">
                     {{-- Boton para agregar informacion de la actividad --}}
-                    <button type="submit" class="btn btn-rojo btn-lg" id="agregar-actividad">Agregar</button>
+                    <button type="submit" class="btn btn-rojo btn-lg mt-2" id="agregar-actividad" onclick="activarLoader('Enviando actividad');">
+                        @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                        Enviar actividad autorizada
+                        @else
+                        Enviar actividad para autorización
+                        @endif
+                    </button>
                 </div>
             </div>
         </form>

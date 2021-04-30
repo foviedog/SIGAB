@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use Illuminate\Http\Request;
 use App\Persona;
 use Image;
+use App\Actividades_interna;
+use App\ActividadesPromocion;
 use App\Helper\GlobalArrays;
 
 class PersonaController extends Controller
@@ -98,5 +100,17 @@ class PersonaController extends Controller
 
     public function obtenerNotificaciones(){
         return auth()->user()->unreadNotifications;
+    }
+
+    public function misActividades(){
+        $actividadesInternas =  Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+        ->where('actividades.creada_por', '=', auth()->user()->persona_id)->get();
+        $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
+        ->where('actividades.creada_por', '=', auth()->user()->persona_id)->get();
+        
+        return view('control_perfil.actividades', [
+            'actividadesInternas' => $actividadesInternas,
+            'actividadesPromocion' => $actividadesPromocion
+        ]);
     }
 }

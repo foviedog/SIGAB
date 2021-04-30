@@ -42,8 +42,10 @@ Route::group(['middleware' => ['auth']], function() {
 
 /* Ruta para acceder a las notificaciones */
 Route::get('/perfil/notificaciones', 'PersonaController@notifications')->name('perfil.notifications');
-/* Ruta para acceder a las notificaciones */
+/* Ruta para obtener la cantidad de notificaciones */
 Route::get('/perfil/cant-notificaciones', 'PersonaController@obtenerNotificaciones')->name('perfil.cant.notifications');
+/* Ruta para acceder a mis actividades */
+Route::get('/perfil/mis-actividades', 'PersonaController@misActividades')->name('perfil.mis-actividades');
 /* Ruta de detalle del perfil*/
 Route::get('/perfil/{persona_id}', 'PersonaController@show')->name('perfil.show');
 /* Ruta de update del perfil*/
@@ -164,6 +166,8 @@ Route::get('/actividad-promocion/registrar', 'ActividadesPromocionController@cre
 Route::post('/actividad-promocion', 'ActividadesPromocionController@store');
 // Listado de actividades de promocion
 Route::get('/actividad-promocion', 'ActividadesPromocionController@index')->name('actividad-promocion.listado');
+// Autorizar actividad interna
+Route::patch('/actividad-promocion/autorizar', 'ActividadesPromocionController@autorizar')->name('actividad-promocion.autorizar');
 // Detalle de actividad promocion
 Route::get('/detalle-actividad-promocion/{id_actividad}', 'ActividadesPromocionController@show')->name('actividad-promocion.show');
 // Actualización de los datos de la actividad

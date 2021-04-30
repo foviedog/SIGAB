@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Helper;
-use Illuminate\Support\Facades\Session;
 
 class GlobalArrays
 {

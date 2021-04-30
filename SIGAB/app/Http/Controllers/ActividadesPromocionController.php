@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actividades;
 use App\ActividadesPromocion;
+use App\Helper\Accesos;
 use App\Helper\GlobalArrays;
+
+use App\Events\EventActividadParaAutorizar;
 
 class ActividadesPromocionController extends Controller
 {
@@ -76,7 +79,10 @@ class ActividadesPromocionController extends Controller
             $actividad->evaluacion = $request->evaluacion;
             $actividad->objetivos = $request->objetivos;
             $actividad->responsable_coordinar = $request->responsable_coordinar;
+            $actividad->creada_por = auth()->user()->persona_id;
             $actividad->duracion = $request->duracion;
+            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) //Si se tiene el acceso para autorizar, al registrar una actividad se autoriza automaticamente
+                $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
 
             //se setean los atributos del objeto
@@ -86,9 +92,19 @@ class ActividadesPromocionController extends Controller
             $actividad_promocion->recursos = $request->recursos;
             $actividad_promocion->save(); //se guarda el objeto en la base de datos
 
+            //Generar la notificacion
+            event(new EventActividadParaAutorizar($actividad));
+
+            //Mensaje dependiendo del acceso
+            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                $mensaje = "¡El registro ha sido exitoso!";
+            } else {
+                $mensaje = "¡La actividad fue enviada para autorización correctamente! Puede verificar la actividad en el listado de Mis actividades que encontrará en el perfil personal";
+            }
+
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/actividad-promocion/registrar")
-                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_promocion_insertada', $actividad_promocion);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
@@ -103,13 +119,21 @@ class ActividadesPromocionController extends Controller
     {
         try{
         $actividad = Actividades::findOrfail($id_actividad);
-        return view('control_actividades_promocion.detalle', ['actividad' => $actividad]);
+            //Las actividades se acceden si se cumple al menos uno de los siguientes parámetros:
+            //1. Se tiene el acceso para autorizar la actividad
+            //2. La actividad fue registrada por la persona que está en sesión
+            //3. La actividad ya se encuentra autorizada
+            //dd($actividad->creada_por." ".auth()->user()->persona_id);
+            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD() || $actividad->creada_por == auth()->user()->persona_id || $actividad->autorizada == 1){
+                return view('control_actividades_promocion.detalle', ['actividad' => $actividad]);
+            } else {
+                return redirect('/home');
+            }
     } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
-    }
-
 
     public function edit(ListaAsistencia $listaAsistencia)
     {
@@ -161,7 +185,8 @@ class ActividadesPromocionController extends Controller
     {
         //
     }
-//Filtro para hacer busquedas avanzadas, rangos de fecha de inicio, tema, tipo de actividad y estado
+    
+    //Filtro para hacer busquedas avanzadas, rangos de fecha de inicio, tema, tipo de actividad y estado
     private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro)
     {
         $fechaIni = substr($rango_fechas, 0, 10);
@@ -171,6 +196,12 @@ class ActividadesPromocionController extends Controller
 
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->where(function($query){
+                //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
+                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                    $query->where('actividades.autorizada', '=', '1');
+                }
+            })
             ->whereBetween('actividades.fecha_inicio_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
             ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
@@ -185,6 +216,12 @@ class ActividadesPromocionController extends Controller
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->where(function($query){
+                //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
+                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                    $query->where('actividades.autorizada', '=', '1');
+                }
+            })
             ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
             ->Where('actividades_promocion.tipo_actividad',  'like', '%' . $tipo_filtro . '%')
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
@@ -198,9 +235,30 @@ class ActividadesPromocionController extends Controller
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->where(function($query){
+                //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
+                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                    $query->where('actividades.autorizada', '=', '1');
+                }
+            })
             ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
             ->paginate($itemsPagina); //Paginación de los resultados
         return $actividadesPromocion;
+    }
+
+    public function autorizar(Request $request)
+    {
+        try { //se utiliza un try-catch para control de errores
+            $actividad = Actividades::findOrfail($request->id_actividad);
+            $actividad->autorizada = 1;
+            $actividad->save(); //se guarda el objeto en la base de datos
+            //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
+            return redirect("/detalle-actividad-promocion/{$actividad->id}")
+                ->with('mensaje', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return redirect("/detalle-actividad-promocion/{$request->id_actividad}") //se redirecciona a la pagina de registro
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
+        }
     }
 }

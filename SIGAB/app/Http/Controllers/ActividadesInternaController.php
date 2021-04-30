@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Actividades;
 use App\Personal;
 use App\Actividades_interna;
-use App\Helper\GlobalFunctions;
+use App\Helper\Accesos;
 use App\Helper\GlobalArrays;
 
 use App\Events\EventActividadParaAutorizar;
@@ -65,12 +65,20 @@ class ActividadesInternaController extends Controller
     {
         try{
         $actividad = Actividades::findOrfail($id_actividad);
-        $personal = Personal::findOrFail($actividad->responsable_coordinar);
-        return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
+        //Las actividades se acceden si se cumple al menos uno de los siguientes parámetros:
+        //1. Se tiene el acceso para autorizar la actividad
+        //2. La actividad fue registrada por la persona que está en sesión
+        //3. La actividad ya se encuentra autorizada
+        if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD() || $actividad->creada_por == auth()->user()->persona_id || $actividad->autorizada == 1){
+            $personal = Personal::findOrFail($actividad->responsable_coordinar);
+            return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
+        } else {
+            return redirect('/home');
+        }
     } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+        }
     }
 
     //Retorna la vista de registrar actividades internas
@@ -99,6 +107,8 @@ class ActividadesInternaController extends Controller
             $actividad->responsable_coordinar = $request->responsable_coordinar;
             $actividad->duracion = $request->duracion;
             $actividad->creada_por = auth()->user()->persona_id;
+            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) //Si se tiene el acceso para autorizar, al registrar una actividad se autoriza automaticamente
+                $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
 
             //se setean los atributos del objeto
@@ -116,9 +126,16 @@ class ActividadesInternaController extends Controller
             //Generar la notificacion
             event(new EventActividadParaAutorizar($actividad));
 
+            //Mensaje dependiendo del acceso
+            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                $mensaje = "¡El registro ha sido exitoso!";
+            } else {
+                $mensaje = "¡La actividad fue enviada para autorización correctamente! Puede verificar la actividad en el listado de Mis actividades que encontrará en el perfil personal";
+            }
+
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/actividad-interna/registrar")
-                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_interna_insertada', $actividad_interna);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
@@ -182,6 +199,12 @@ class ActividadesInternaController extends Controller
 
         $actividades_internas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
+            ->where(function($query){
+                //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
+                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                    $query->where('actividades.autorizada', '=', '1');
+                }
+            })
             ->whereBetween('actividades.fecha_inicio_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
             ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
@@ -197,6 +220,12 @@ class ActividadesInternaController extends Controller
     {
         $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+            ->where(function($query){
+                //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
+                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                    $query->where('actividades.autorizada', '=', '1');
+                }
+            })
             ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
@@ -209,9 +238,16 @@ class ActividadesInternaController extends Controller
     {
         $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
+            ->where(function($query){
+                //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
+                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                    $query->where('actividades.autorizada', '=', '1');
+                }
+            })
             ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
             ->paginate($itemsPagina); //Paginación de los resultados
+
         return $actividadesInternas;
     }
 
