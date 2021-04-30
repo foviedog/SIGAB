@@ -15,6 +15,9 @@ class TrabajoController extends Controller
     /* Devuevle el listado de los estudiantes ordenados por su apellido */
     public function index($id_estudiante)
     {
+        try{
+
+        
         // Estudiante al que se le quiere añadir un trabajo
         $estudiante = Estudiante::findOrFail($id_estudiante);
 
@@ -48,22 +51,39 @@ class TrabajoController extends Controller
             'paginaciones' => $paginaciones,  // Listado de items de paginaciones
             'itemsPagina' => $itemsPagina,   // Items que se desean por página
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /* Devuelve la página para registrar un trabajo de un estudiante en específico */
     public function create($id_estudiante)
     {
+        try{
         $estudiante = Estudiante::findOrFail($id_estudiante);
-        //dd($estudiante);
         return view('control_educativo.informacion_laboral.registrar', [
             'estudiante' => $estudiante,
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /* Recoge los datos desde el request e inserta en la base de datos, al
         final devuelve a la página anterior */
     public function store(Request $request)
     {
+        try{
         //Se crea un nuevo trabajo
         $trabajo = new Trabajo;
 
@@ -90,6 +110,10 @@ class TrabajoController extends Controller
         return Redirect::back()
             ->with('mensaje', '¡El registro ha sido exitoso!')
             ->with('trabajo_insertado', $trabajo);
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
     }
 
     // Método que muestra un trabajo específico
@@ -105,6 +129,7 @@ class TrabajoController extends Controller
     // Método que actualiza la información laboral
     public function update(Request $request)
     {
+        try{
         //Busca el trabajo en la base de datos
         $trabajo = Trabajo::find($request->id_trabajo);
 
@@ -126,6 +151,14 @@ class TrabajoController extends Controller
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     public function destroy( $id_trabajo)
@@ -139,7 +172,11 @@ class TrabajoController extends Controller
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
             ->with('error', 'ha ocurrido un error');
-        }
+        }   
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
 }

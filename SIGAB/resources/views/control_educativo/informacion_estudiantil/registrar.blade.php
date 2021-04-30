@@ -8,7 +8,17 @@ Registrar información del estudiante
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
+
 @php
+$estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
+$generos = GlobalArrays::GENEROS;
+$colegiosProcedencias = GlobalArrays::COLEGIOS_PROCEDENCIA;
+$tiposBecas = GlobalArrays::TIPOS_BECA;
+@endphp
+
+@php
+$persona_no_insertada = null;
+$personal_no_insertado = null ;
 $persona_no_insertada = Session::get('persona_no_insertada');
 $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 @endphp
@@ -161,7 +171,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}" required>
+                            <input type='date' class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
                         </div>
 
                     </div>
@@ -224,12 +234,11 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="estado_civil" name="estado_civil" form="estudiante" value="{{ $persona_no_insertada->estado_civil ?? '' }}" required>
-                                <option value="Soltero(a)">Soltero(a)</option>
-                                <option value="Casado(a)">Casado(a)</option>
-                                <option value="Viudo(a)">Viudo(a)</option>
-                                <option value="Divorciado(a)">Divorciado(a)</option>
-                                <option value="Unión libre">Unión libre</option>
+                            <select id="estado_civil" name="estado_civil" class="form-control" required >
+                                <option value="" selected>Sin seleccionar</option>
+                                @foreach($estadosCiviles as $estadoCivil)
+                                <option value='{{ $estadoCivil }}'  @if ( $persona_no_insertada != null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif >  {{ $estadoCivil }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -254,10 +263,11 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="genero">Género: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="genero" name="genero" form="estudiante" value="{{ $persona_no_insertada->genero ?? '' }}" required>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                                <option value="Otro">Otro</option>
+                            <select id="genero" name="genero" class="form-control w-100" required >
+                                <option value="" selected>Sin seleccionar</option>
+                                <option value="M" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
+                                <option value="F" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
+                                <option value="Otro" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
                             </select>
                         </div>
                     </div>
@@ -300,14 +310,10 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="tipo_colegio_procedencia">Tipo colegio de procedencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" form="estudiante" value="{{ $estudiante_no_insertado->tipo_colegio_procedencia ?? '' }}" required>
-                                <option value="Público">Público</option>
-                                <option value="Técnico">Técnico</option>
-                                <option value="Científico">Científico</option>
-                                <option value="Bilingüe">Bilingüe</option>
-                                <option value="Nocturno">Nocturno</option>
-                                <option value="Privado">Privado</option>
-                                <option value="Semiprivado">Semiprivado</option>
+                            <select id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" class="form-control" required >
+                                @foreach($colegiosProcedencias as $colegioProcedencia)
+                                <option value="{{ $colegioProcedencia }}" @if ( $estudiante_no_insertado != null) @if ( $colegioProcedencia==$estudiante_no_insertado->tipo_colegio_procedencia) selected @endif @endif > {{ $colegioProcedencia }} </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -332,7 +338,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_ebdi">Año de ingreso a la EBDI: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? '' }}" required>
+                            <input type='date' class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? null }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -346,7 +352,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_una">Año de ingreso a la UNA: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' value="2020-08-15" class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? '' }}"  required>
+                            <input type='date'  class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? null  }}"  required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -374,19 +380,10 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="tipo_beca">Tipo de beca: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select class="form-control w-100" id="tipo_beca" name="tipo_beca" form="estudiante" value="{{ $estudiante_no_insertado->tipo_beca ?? '' }}" required>
-                                <option value="No tiene">No tiene</option>
-                                <option value="Beca por condición socioeconómica">Beca por condición socioeconómica</option>
-                                <option value="Beca Luis Felipe González Flores">Beca Luis Felipe González Flores</option>
-                                <option value="Beca Omar Dengo (Residencia estudiantil)">Beca Omar Dengo (Residencia estudiantil)</option>
-                                <option value="Becas de posgrado">Becas de posgrado</option>
-                                <option value="Beca por participación en actividades artísticas y deportivas">Beca por participación en actividades artísticas y deportivas</option>
-                                <option value="Beca por participación en movimiento estudiantil">Beca por participación en movimiento estudiantil</option>
-                                <option value="Honor">Honor</option>
-                                <option value="Estudiante Asistente Académico y Paracadémico ">Estudiante Asistente Académico y Paracadémico </option>
-                                <option value="Intercambio estudiantil">Intercambio estudiantil</option>
-                                <option value="Préstamos estudiantiles">Préstamos estudiantiles</option>
-                                <option value="Giras">Giras</option>
+                            <select id="tipo_beca" name="tipo_beca" class="form-control" required >
+                                @foreach($tiposBecas as $tipoBeca)
+                                <option value="{{ $tipoBeca }}" @if ( $estudiante_no_insertado != null) @if ( $tipoBeca==$estudiante_no_insertado->tipo_beca) selected @endif @endif > {{ $tipoBeca }} </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

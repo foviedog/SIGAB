@@ -18,6 +18,7 @@ class GuiasAcademicaController extends Controller
     //Método que obtiene una cedula por medio del request, devuelve ese estudiante espefico junto con la vista para crear una guia academica
     public function create($id_estudiante)
     {
+        try{
         //Se obtiene el atributo de cédula que viene en el request y en caso de que no se encuentre seteado se pone en blanco
         $aceptado = request('aceptado', false);
 
@@ -37,6 +38,14 @@ class GuiasAcademicaController extends Controller
             ]);
         }
         return response()->json($estudiante, 200);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     //Método que inserta una guia academica de un estudiante especifico en la base de datos
@@ -107,6 +116,7 @@ class GuiasAcademicaController extends Controller
     //Método inicial que devuelve el listado de guías con respecto a filtros
     public function index()
     {
+        try{
         //Tipos de guías académicas
         $tipos = GlobalArrays::TIPOS_GUIA_ACADEMICA;
 
@@ -144,11 +154,20 @@ class GuiasAcademicaController extends Controller
             'tipos' => $tipos,
             'docentes' => $docentes
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     // Método que muestra una guía específica de un estudiante.
     public function show($id_guia)
     {
+        try{
         // Se realiza una búsqueda en la BD respecto a la guía específica del estudiante que se alla seleccionado.
         $guia = Guias_academica::join('estudiantes', 'guias_academicas.persona_id', '=', 'estudiantes.persona_id') //Inner join de guias con personas
             ->join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de estudiantes con guías académicas
@@ -156,10 +175,16 @@ class GuiasAcademicaController extends Controller
             ->first(); // Obtener únicamente a la guía a la que se ha consultado.
 
         return response()->json($guia, 200); // Retorna el resultado por medio de un atributo JSON en la respuesta al AJAX del documento js/control_educativo/información_guias_academicas/listado.js
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     public function update($id_guia, Request $request)
     {
+        try{
         //Busca la graduación en la base de datos
         $guia = Guias_academica::find($id_guia);
 
@@ -204,11 +229,20 @@ class GuiasAcademicaController extends Controller
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('exito', '¡Se ha actualizado correctamente!');
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     //Método que elimina un archivo
     public function deleteFile($id_guia)
     {
+        try{
         //Busca la graduación en la base de datos
         $guia = Guias_academica::find($id_guia);
 
@@ -224,6 +258,11 @@ class GuiasAcademicaController extends Controller
 
         return Redirect::back()
             ->with('exito', '¡El archivo se ha borrado exitosamente!');
+        }    
+         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
     //Método que descarga un archivo
     public function download($nombre_archivo)

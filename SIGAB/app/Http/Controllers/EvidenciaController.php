@@ -69,6 +69,7 @@ class EvidenciaController extends Controller
      */
     public function show($actividadId)
     {
+        try{
         $paginaciones = [5, 10, 25, 50];
         $itemsPagina = request('itemsPagina', 5);
         $nombreFiltro = request('nombre_filtro', NULL);
@@ -92,6 +93,14 @@ class EvidenciaController extends Controller
             'mensaje' => $mensaje,
             'evidencias' => $evidencias
         ]);
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     /**
@@ -146,10 +155,18 @@ class EvidenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function download(Request $request,  $evidenciaId)
-    {
+    {try{
         $evidencia = Evidencia::where('id', $evidenciaId)->first();
         $ruta = 'storage/evidencias/' . $request->actividad_id . '/' . $evidencia->id_repositorio;
         return response()->download(public_path($ruta));
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     public function obtenerLista($actividadId, $itemsPagina, $nombreFiltro, $tipoFiltro)
@@ -174,13 +191,19 @@ class EvidenciaController extends Controller
 
     private function guardarVideo($request, &$evidencia)
     {
+        try{
         $evidencia->id_repositorio = request()->url_video;
         $evidencia->tipo_documento = "video";
         $evidencia->save();
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
     }
 
     private function guardarDocumento($request, &$evidencia)
     {
+        try{
         if ($request->hasFile('evidencia')) {
             $evidenciaArchivo = $request->file('evidencia');
             $evidencia->tipo_documento = $this->obtenerTipoDocumento($evidenciaArchivo->getClientOriginalExtension());
@@ -195,6 +218,10 @@ class EvidenciaController extends Controller
 
             $evidencia->save();
         }
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
     }
 
     private function obtenerTipoDocumento($extension)

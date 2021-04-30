@@ -18,6 +18,7 @@ class EstudianteController extends Controller
     //Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
     {
+        try{
         // Array que devuelve los items que se cargan por página
         $paginaciones = [5, 10, 25, 50];
 
@@ -46,7 +47,15 @@ class EstudianteController extends Controller
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
             'itemsPagina' => $itemsPagina, // Item que se desean por página.
             'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
-        ]);
+        ]);   
+     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     //Retorna la vista para crear un estudiante
@@ -114,15 +123,22 @@ class EstudianteController extends Controller
     // Toma al estudiante por el id para mostrar su informacion detallada
     public function show($id_estudiante)
     {
+        try{
         $estudiante = Estudiante::findOrFail($id_estudiante);
         return view('control_educativo.informacion_estudiantil.detalle', [
             'estudiante' => $estudiante,
         ]);
+    }    
+     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }
     }
 
     //Metodo para actualizar los datos del estudiante
     public function update($id_estudiante, Request $request)
     {
+        try{
         //Se obtiene la persona en base al ID
         $persona = Persona::find($id_estudiante);
 
@@ -168,10 +184,15 @@ class EstudianteController extends Controller
 
         //Se retorna el detalle del estudiante ya modificado
         return redirect("/estudiante/detalle/{$estudiante->persona_id}");
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
     }
 
     public function update_avatar($request, $estudiante)
     {
+        try{
         if ($request->hasFile('avatar')) {
 
             $avatar = $request->file('avatar');
@@ -186,5 +207,13 @@ class EstudianteController extends Controller
         }
 
         return \Redirect::back();
+    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        return Redirect::back()//se redirecciona a la pagina anteriror
+            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+    }    
     }
+    
+
+
+
 }

@@ -8,7 +8,24 @@ Registrar información del personal
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
+{{-- Arreglos de opciones de los select utilizados --}}
 @php
+$estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
+$generos = GlobalArrays::GENEROS;
+$cargos = GlobalArrays::CARGOS_PERSONAL;
+$grados_academicos = GlobalArrays::GRADOS_ACADEMICOS;
+$jornadas = GlobalArrays::JORNADAS_PERSONAL;
+$tipos_nombramientos = GlobalArrays::TIPOS_NOMBRAMIENTO_PERSONAL;
+$tipos_puestos = GlobalArrays::TIPOS_PUESTOS_PERSONAL;
+$regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
+$regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
+
+@endphp
+
+
+@php
+$persona_no_insertada = null;
+$personal_no_insertado = null ;
 $persona_no_insertada = Session::get('persona_no_insertada');
 $personal_no_insertado = Session::get('personal_no_insertado');
 @endphp
@@ -154,7 +171,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='date' value="2020-08-15" class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? '' }}" required>
+                                    <input type='date'  class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento"   value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
                                 </div>
                             </div>
 
@@ -218,13 +235,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="estado_civil" name="estado_civil" form="personal-form" value="{{ $persona_no_insertada->estado_civil ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Soltero(a)"> Soltero(a)</option>
-                                        <option value="Casado(a)"> Casado(a) </option>
-                                        <option value="Viudo(a)"> Viudo(a) </option>
-                                        <option value="Divorciado(a)"> Divorciado(a) </option>
-                                        <option value="Unión libre"> Unión libre </option>
+                                    <select id="estado_civil" name="estado_civil" class="form-control" required >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($estadosCiviles as $estadoCivil)
+                                        <option value='{{ $estadoCivil }}'  @if ( $persona_no_insertada != null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif >  {{ $estadoCivil }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -249,11 +264,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="genero">Género: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="genero" name="genero" form="personal-form" value="{{ $persona_no_insertada->genero ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Femenino</option>
-                                        <option value="Otro">Otro</option>
+                                    <select id="genero" name="genero" class="form-control w-100" required >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        <option value="M" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
+                                        <option value="F" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
+                                        <option value="Otro" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
                                     </select>
                                 </div>
                             </div>
@@ -264,13 +279,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="grado_academico">Grado académico: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="grado_academico" name="grado_academico" form="personal-form" value="{{ $personal_no_insertado->grado_academico ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Bachillerato">Bachillerato</option>
-                                        <option value="Licenciatura">Licenciatura</option>
-                                        <option value="Maestría">Maestría</option>
-                                        <option value="Doctorado">Doctorado</option>
-                                        <option value="Posdoctorado">Posdoctorado</option>
+                                    <select id="grado_academico" name="grado_academico" class="form-control" required >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($grados_academicos as $grado_academico)
+                                        <option value="{{ $grado_academico }}" @if ( $personal_no_insertado != null) @if ( $grado_academico==$personal_no_insertado->grado_academico) selected @endif @endif> {{ $grado_academico }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -280,11 +293,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="tipo_nombramiento">Tipo de nombramiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_nombramiento" name="tipo_nombramiento" form="personal-form" value="{{ $personal_no_insertado->tipo_nombramiento ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Interino">Interino</option>
-                                        <option value="Propietario">Propietario</option>
-                                        <option value="Plazo fijo">Plazo fijo</option>
+                                    <select id="tipo_nombramiento" name="tipo_nombramiento" class="form-control" required >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($tipos_nombramientos as $tipo_nombramiento)
+                                        <option value="{{ $tipo_nombramiento }}" @if ( $personal_no_insertado != null) @if ( $tipo_nombramiento==$personal_no_insertado->tipo_nombramiento) selected @endif @endif> {{ $tipo_nombramiento }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -300,10 +313,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="cargo" name="cargo" form="personal-form" value="{{ $personal_no_insertado->cargo ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Administrativo">Administrativo</option>
-                                        <option value="Académico">Académico</option>
+                                    <select id="cargo" name="cargo" class="form-control" required >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($cargos as $cargo)
+                                        <option value="{{ $cargo }}" @if ( $personal_no_insertado != null) @if ( $cargo==$personal_no_insertado->cargo) selected @endif @endif> {{ $cargo }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -313,20 +327,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="tipo_puesto_1">Tipo de puesto 1: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_puesto_1" name="tipo_puesto_1" form="personal-form" value="{{ $personal_no_insertado->tipo_puesto_1 ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Secretaría">Secretaría</option>
-                                        <option value="Dirección">Dirección</option>
-                                        <option value="Subdirección">Subdirección</option>
-                                        <option value="Docente">Docente</option>
-                                        <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
-                                        <option value="Participante de PPAA">Participante de PPAA</option>
-                                        <option value="Responsable de PPAA">Responsable de PPAA</option>
-                                        <option value="Técnico Auxiliar">Técnico Auxiliar</option>
-                                        <option value="Biblioteca infantil">Biblioteca infantil</option>
-                                        <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
-                                        <option value="Profesional Asistencial en Desarrollo Tecnológico">Profesional Asistencial en Desarrollo Tecnológico</option>
-                                        <option value="Profesional Ejecutivo en Desarrollo Documental">Profesional Ejecutivo en Desarrollo Documental</option>
+                                    <select id="tipo_puesto_1" name="tipo_puesto_1" class="form-control" required >
+                                        @foreach($tipos_puestos as $tipo_puesto)
+                                        <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado != null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_1) selected @endif @endif> {{ $tipo_puesto }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto PRINCIPAL que desempeña en la EBDI"><i class="far fa-question-circle fa-lg "></i></span>
@@ -337,20 +341,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="tipo_puesto_2">Tipo de puesto 2: </label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="tipo_puesto_2" name="tipo_puesto_2" form="personal-form" value="{{ $personal_no_insertado->tipo_puesto_2 ?? '' }}">
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Secretaría">Secretaría</option>
-                                        <option value="Dirección">Dirección</option>
-                                        <option value="Subdirección">Subdirección</option>
-                                        <option value="Docente">Docente</option>
-                                        <option value="Profesional Ejecutivo">Profesional Ejecutivo</option>
-                                        <option value="Participante de PPAA">Participante de PPAA</option>
-                                        <option value="Responsable de PPAA">Responsable de PPAA</option>
-                                        <option value="Técnico Auxiliar">Técnico Auxiliar</option>
-                                        <option value="Biblioteca infantil">Biblioteca infantil</option>
-                                        <option value="Asistente administrativo(a)">Asistente administrativo(a)</option>
-                                        <option value="Profesional Asistencial en Desarrollo Tecnológico">Profesional Asistencial en Desarrollo Tecnológico</option>
-                                        <option value="Profesional Ejecutivo en Desarrollo Documental">Profesional Ejecutivo en Desarrollo Documental</option>
+                                    <select id="tipo_puesto_2" name="tipo_puesto_2" class="form-control" >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($tipos_puestos as $tipo_puesto)
+                                        <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado != null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_2) selected @endif @endif> {{ $tipo_puesto }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto SECUNDARIO que desempeña en la EBDI"><i class="far fa-question-circle fa-lg "></i></span>
@@ -362,12 +357,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="jornada" name="jornada" form="personal-form" value="{{ $personal_no_insertado->jornada ?? '' }}" required>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Tiempo completo (40 horas)">Tiempo completo (40 horas)</option>
-                                        <option value="Cuarto de tiempo (30 horas)">Cuarto de tiempo (30 horas)</option>
-                                        <option value="Medio tiempo (30 horas)">Medio tiempo (30 horas)</option>
-                                        <option value="Un cuarto de tiempo (10 horas)">Un cuarto de tiempo (10 horas)</option>
+                                    <select id="jornada" name="jornada" class="form-control" required >
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($jornadas as $jornada)
+                                        <option value="{{ $jornada }}" @if ( $personal_no_insertado != null) @if ( $jornada==$personal_no_insertado->jornada) selected @endif @endif> {{ $jornada }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -377,20 +371,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="regimen_administrativo">Régimen administrativo:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="regimen_administrativo" name="regimen_administrativo" form="personal-form" value="{{ $personal_no_insertado->regimen_administrativo ?? '' }}">
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Categoría 21 (Técnico Auxiliar)">Categoría 21 (Técnico Auxiliar)</option>
-                                        <option value="Categoría 23 (Técnico General 1-2-3)">Categoría 23 (Técnico General 1-2-3)</option>
-                                        <option value="Categoría 24 (Técnico Analista 1-2-3)">Categoría 24 (Técnico Analista 1-2-3)</option>
-                                        <option value="Categoría 32 (Profesional Asistencial 1-2-3-4-5)">Categoría 32 (Profesional Asistencial 1-2-3-4-5)</option>
-                                        <option value="Categoría 34 (Profesional Ejecutivo 1-2-3-4)">Categoría 34 (Profesional Ejecutivo 1-2-3-4)</option>
-                                        <option value="Categoría 35 (Profesional Analista 1-2-3)">Categoría 35 (Profesional Analista 1-2-3)</option>
-                                        <option value="Categoría 36 (Profesional Especialista)">Categoría 36 (Profesional Especialista)</option>
-                                        <option value="Categoría 37 (Profesional Asesor de Procesos 1-2)">Categoría 37 (Profesional Asesor de Procesos 1-2)</option>
-                                        <option value="Categoría 38 (Profesional Asesor General)">Categoría 38 (Profesional Asesor General)</option>
-                                        <option value="Categoría 42 (Director Ejecutivo)">Categoría 42 (Director Ejecutivo)</option>
-                                        <option value="Categoría 43 (Director Especialista)">Categoría 43 (Director Especialista)</option>
-                                        <option value="Categoría 44 (Director Asesor)">Categoría 44 (Director Asesor)</option>
+                                    <select id="regimen_administrativo" name="regimen_administrativo" class="form-control" >
+                                        <option value="" selected>No aplica para docentes</option>
+                                        @foreach($regimenes_administrativos as $regimen_administrativo)
+                                        <option value="{{ $regimen_administrativo }}" @if ( $personal_no_insertado != null) @if ( $regimen_administrativo==$personal_no_insertado->regimen_administrativo) selected @endif @endif> {{ $regimen_administrativo }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -402,13 +387,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="regimen_docente">Régimen docente:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-control w-100" id="regimen_docente" name="regimen_docente" form="personal-form" value="{{ $personal_no_insertado->regimen_docente ?? '' }}">
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Categoría 87 (Profesor Instructor Bachiller)">Categoría 87 (Profesor Instructor Bachiller)</option>
-                                        <option value="Categoría 88 (Profesor Instructor Licenciado)">Categoría 88 (Profesor Instructor Licenciado)</option>
-                                        <option value="Categoría 89 (Profesor I)">Categoría 89 (Profesor I)</option>
-                                        <option value="Categoría 90 (Profesor II)">Categoría 90 (Profesor II) </option>
-                                        <option value="Categoría 91 (Catedrático)">Categoría 91 (Catedrático)</option>
+                                    <select id="regimen_docente" name="regimen_docente" class="form-control" >
+                                        <option value="" selected>No aplica para administrativos</option>
+                                        @foreach($regimenes_docentes as $regimen_docente)
+                                        <option value="{{ $regimen_docente }}" @if ( $personal_no_insertado != null) @if ( $regimen_docente==$personal_no_insertado->regimen_docente) selected @endif @endif> {{ $regimen_docente }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
