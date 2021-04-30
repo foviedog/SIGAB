@@ -90,13 +90,13 @@ class GlobalArrays
         'Divorciado(a)',
         'Unión libre'
     ];
-    
+
     public const GENEROS = [
         'Femenino',
         'Masculino',
         'Otro'
     ];
-    
+
     public const COLEGIOS_PROCEDENCIA = [
         'Público',
         'Técnico',
@@ -105,7 +105,7 @@ class GlobalArrays
         'Nocturno',
         'Privado'
     ];
-    
+
     public const TIPOS_BECA = [
         'No tiene',
         'Beca por condición socioeconómica',
@@ -145,7 +145,7 @@ class GlobalArrays
         "Propietario",
         "Plazo fijo"
     ];
-    
+
     public const TIPOS_PUESTOS_PERSONAL = [
         'Secretaría',
         'Dirección',
@@ -241,5 +241,4 @@ class GlobalArrays
         'BGE409 - Evaluación de servicios y formación de usuarios',
         'BG508 - Investigación II'
     ];
-
 }

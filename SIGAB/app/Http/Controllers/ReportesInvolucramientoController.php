@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Personal;
 use App\Persona;
 use App\Helper\GlobalArrays;
+use DB;
 
 class ReportesInvolucramientoController extends Controller
 {
@@ -55,6 +56,44 @@ class ReportesInvolucramientoController extends Controller
         return [$interinos, $propietarios, $fijo, $total];
     }
 
+    public function reporteAnual()
+    {
+        $anioInicio = request('anio_inicio', null);
+        $anioFinal = request('anio_final', null);
+        $actividadesXAnio  = null;
+        $graficosInvolucramiento  = null;
+
+        if (!is_null($anioInicio) && !is_null($anioFinal)) {
+            $dataSet = $this->involucramientoAnual($anioInicio, $anioFinal);
+            $actividadesXAnio = $dataSet[0];
+            $graficosInvolucramiento = $dataSet[1];
+        }
+
+        $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')->get()->keyBy('persona_id'); //Inner join de personal con personas
+        return view('reportes.involucramiento.reporte_anual', [
+            'graficosInvolucramiento' => json_encode($graficosInvolucramiento, JSON_UNESCAPED_SLASHES),
+            'actividadesXAnio' => $actividadesXAnio,
+            'personal' => $personal,
+            'anioInicio' => $anioInicio,
+            'anioFinal' => $anioFinal,
+        ]);
+    }
+    public function involucramientoAnual($anioInicio, $anioFinal)
+    {
+
+        $actividadesAnio = []; //Colección para guarfar todas los conjuntos de datos referentes al id de la persona y las actividades en las que se ha involucrado
+        $graficosInvolucramiento = []; //Colección para guardar los porcentajes de participación del año determinado
+
+        //Se realiza la búsqueda según el rango de años que se haya digitado
+        //Por efectos de tiempo de ejecución se decide devolver un array que contenga los dos tados (actividadesXPersonal y porcentajeParticipación)
+        //De esta manera el método "cantActividadesXPersonal" solamente se ejecuta 1 vez.
+        for ($anio = $anioInicio; $anio <= $anioFinal; $anio++) {
+            $actividadesPersonal =  $this->cantActividadesXPersonal($anio); //Se obtien la cantidad de actividades por personal
+            $actividadesAnio[$anio] = $actividadesPersonal; //Se almacena el dato según el año consultado
+            $graficosInvolucramiento[$anio] = $this->porcentajeParticipacion($actividadesPersonal); //Se consulta sobre el porcentaje de todo el personal y se guarda en formato JSON según el año
+        }
+        return [$actividadesAnio, $graficosInvolucramiento];
+    }
     public function tiposCargo()
     {
         $tiposCargo = ["Administrativo", "Académico"];
@@ -67,8 +106,7 @@ class ReportesInvolucramientoController extends Controller
     public function cantActividadesXPersonal($anio)
     {
         $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
-        $personal = \DB::table('personal')
-            ->select('persona_id')->get();
+        $personal = DB::table("personal")->select("persona_id")->get(); //Inner join de personal con personas
         $dataSet = [];
         foreach ($personal as &$persona) {
             $personaTipos = [];
@@ -98,6 +136,7 @@ class ReportesInvolucramientoController extends Controller
         array_push($dataSet, $actividadesPorTipos);
         array_push($dataSet, $actividadesPorFechas);
         array_push($dataSet, $actividadesPorAmbito);
+        //!! Esto no está duplicado?
         $actividadesCoorPorTipos = $this->actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesCoorPorFechas = $this->activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesCoorPorAmbito = $this->activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
@@ -106,7 +145,7 @@ class ReportesInvolucramientoController extends Controller
         array_push($dataSet, $actividadesCoorPorAmbito);
 
         $datosCuantitativos = $this->datosCuntitativosPersonal();
-        
+
         $anio = date('Y');
         $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
         $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
@@ -127,7 +166,6 @@ class ReportesInvolucramientoController extends Controller
     public function activadesPorTipos($personal, $mesInicio, $mesFinal, $estado)
     {
         $dataSet = array();
-
         $fecha_ini = $mesInicio . "-01";
         $fecha_fin = $mesFinal . "-01";
         $tipos = $this->devolverTiposActividades(0);
@@ -399,7 +437,7 @@ class ReportesInvolucramientoController extends Controller
         if (is_null($personal)) {
             return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
         }
-        
+
 
         array_push($datos, $persona);
         array_push($datos, $personal);
@@ -436,7 +474,6 @@ class ReportesInvolucramientoController extends Controller
         $cantPersonal = count($actividadesXPersonal);
 
         foreach ($actividadesXPersonal as &$personal) {
-
             foreach ($tipos as &$tipo) { //Se reccorre el array de los tipos de actividades internas
                 if (!isset($porcentajesParticipacion[$tipo])) { //Se inicializa el porcentaje de parcipación según el tipo de actividad en 0
                     $porcentajesParticipacion[$tipo] = 0;
@@ -492,7 +529,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function porcentajeParticipacionAmbito($actividadesXPersonal)
     {
-        $ambitos =["Nacional", "Internacional"];
+        $ambitos = ["Nacional", "Internacional"];
         $porcentajesParticipacion = [];
         $cantPersonal = count($actividadesXPersonal);
 
@@ -510,5 +547,4 @@ class ReportesInvolucramientoController extends Controller
         //dd($porcentajesParticipacion);
         return $porcentajesParticipacion;
     }
-
 }

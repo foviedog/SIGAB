@@ -26,260 +26,265 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
         <hr>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab">Involucramiento</a>
+                <a class="nav-link active" href="#general" data-toggle="tab">Involucramiento general</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#reporte-anual-tab">Reporte anual</a>
             </li>
         </ul>
 
         <div class="container-fluid pb-5">
             <div class="tab-content pb-5">
-                <div role="tabpanel" class="tab-pane fade in active show" id="actividades-tab">
-                    <div id="cartas-activida" class="row d-flex justify-content-between px-3 mt-4">
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                <div role="tabpanel" class="tab-pane fade-in active show" id="general">
+                    <div id="cartas-actividad" class="row d-flex justify-content-between px-3 mt-4">
+                        {{-- Cantidad total de responsables de activdades registrados en el sistema--}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-chalkboard-teacher fa-3x texto-rojo-medio"></i>
                                 </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info">Interinos</div>
-                                    <div class="numero-info">{{ $datosCuantitativos[0] ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-university fa-3x"></i>
-                                </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info">Propietarios</div>
-                                    <div class="numero-info">{{ $datosCuantitativos[1] ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-briefcase fa-3x"></i>
-                                </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info">Plazo fijo</div>
-                                    <div class="numero-info">{{ $datosCuantitativos[2] ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-info">
-                            <div class="icon-info">
-                                <div class="icon-inner">
-                                    <i class="fas fa-calculator fa-3x"></i>
-                                </div>
-                            </div>
-                            <div class="content-info">
-                                <div>
-                                    <div class="texto-info">Total</div>
-                                    <div class="numero-info">{{ $datosCuantitativos[3] ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-fluid pb-5">
-            <div class="row">
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso. Se toman en cuenta las actividades en ejecución y ejecutadas. El cálculo toma en cuenta la participación en lista de asistencia como coordinación." style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-3">
-                        <div id="grafico_porc_act">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas por ámbito</h4>&nbsp;
-                        <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso por ámbito. Se toman en cuenta las actividades en ejecución y ejecutadas. El cálculo toma en cuenta la participación en lista de asistencia como coordinación." style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-3 ml-3">
-                        <div id="grafico_porc_amb">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <form action="{{ route('reportes-involucramiento.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
-
-            <div class="row d-flex justify-content-center my-3">
-                <div class="display-5 w-75 texto-rojo-medio pb-5">
-                    <h2>Generación de gráficos y reportes</h2>
-                </div>
-                <div class="w-75">
-                    <div class="row d-flex justify-content-center mb-3">
-
-                        <div class="col-6">
-
-                            <div class="card">
-                                <div class="justify-content-center align-items-center p-3" style="text-align:center">
-                                    <img src="{{ asset('img/fotos/default.jpg') }}" class="mb-3" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 100%;" />
-                                    <div class="text-start mt-2" id="info-personal">
-                                        <strong>Nombre:</strong> &nbsp;&nbsp;<span id="nombre-personal">Sin seleccionar</span><br>
-                                        <strong>Tipo de puesto 1:</strong> &nbsp;&nbsp;<span id="tipo-puesto1-personal">Sin seleccionar</span><br>
-                                        <strong>Tipo de puesto 2: </strong>&nbsp;&nbsp; <span id="tipo-puesto2-personal">Sin seleccionar</span><br>
-                                        <strong>Jornada Laboral: </strong> &nbsp;&nbsp;<span id="jornada-laboral-personal">Sin seleccionar</span><br>
-                                    </div>
-                                    <div id="no-seleccionado">
-                                        No se ha seleccionado un personal
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Interinos</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[0] ?? 0 }} </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+                        {{-- Cantidad total de responsables de activdades registrados en el sistema--}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-university fa-3x texto-rojo-medio"></i>
+                                </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Propietarios</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[1] ?? 0 }} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Cantidad total de responsables de activdades registrados en el sistema--}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-briefcase fa-3x texto-rojo-medio"></i>
+                                </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Plazo fijo</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[2] ?? 0 }} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Cantidad total de responsables de activdades registrados en el sistema--}}
+                        <div class="col-lg-6 col-xl-3 py-3">
+                            <div class="row card-info  ">
+                                <div class="col-3 py-4 px-0 d-flex justify-content-center">
+                                    <i class="fas fa-calculator  fa-3x texto-rojo-medio"></i>
+                                </div>
+                                <div class="col-8 p-0 ">
+                                    <div class="border-left">
+                                        <div class="ml-2 texto-info">Total</div>
+                                        <div class="ml-2 numero-info">{{ $datosCuantitativos[3] ?? 0 }} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="col-6">
+                    {{-- Sección para gráficos generados por el año en curso --}}
+                    <div class="container-fluid pb-5 mt-5">
+                        <div class="row">
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso. Se toman en cuenta las actividades en ejecución y ejecutadas. El cálculo toma en cuenta la participación en lista de asistencia como coordinación." style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-3">
+                                    <div id="grafico_porc_act">
 
-                            <div class="row d-flex justify-content-left">
-                                <div class="col-11">
-                                    <div class="d-flex justify-content-left" id="input-buscar-agregar">
-                                        <div class="input-group w-75">
-                                            <input type='text' id="cedula-personal" name="personal" class="form-control" @if(!is_null($personal)) value={{ $personal }} @endif required>
-                                            <div class="input-group-append">
-                                                <button type="button" onclick="buscarPersonal()" class="btn btn-contorno-rojo">Buscar</button>
-                                                <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del personal" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Porcentaje de participación del {{ date("Y") }} en actividades internas por ámbito</h4>&nbsp;
+                                    <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas del año en curso por ámbito. Se toman en cuenta las actividades en ejecución y ejecutadas. El cálculo toma en cuenta la participación en lista de asistencia como coordinación." style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-3 ml-3">
+                                    <div id="grafico_porc_amb">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <form action="{{ route('reportes-involucramiento.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
+
+                        <div class="row d-flex justify-content-center my-3">
+                            <div class="display-5 w-75 texto-rojo-medio pb-5">
+                                <h2>Generación de gráficos y reportes</h2>
+                            </div>
+                            <div class="w-75">
+                                <div class="row d-flex justify-content-center mb-3">
+
+                                    <div class="col-6">
+
+                                        <div class="card">
+                                            <div class="justify-content-center align-items-center p-3" style="text-align:center">
+                                                <img src="{{ asset('img/fotos/default.jpg') }}" class="mb-3" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 100%;" />
+                                                <div class="text-start mt-2" id="info-personal">
+                                                    <strong>Nombre:</strong> &nbsp;&nbsp;<span id="nombre-personal">Sin seleccionar</span><br>
+                                                    <strong>Tipo de puesto 1:</strong> &nbsp;&nbsp;<span id="tipo-puesto1-personal">Sin seleccionar</span><br>
+                                                    <strong>Tipo de puesto 2: </strong>&nbsp;&nbsp; <span id="tipo-puesto2-personal">Sin seleccionar</span><br>
+                                                    <strong>Jornada Laboral: </strong> &nbsp;&nbsp;<span id="jornada-laboral-personal">Sin seleccionar</span><br>
+                                                </div>
+                                                <div id="no-seleccionado">
+                                                    No se ha seleccionado un personal
+                                                </div>
                                             </div>
                                         </div>
-                                        <input class="form-control" type='hidden' id="personal-encontrado" name="personal_encontrado" value="false">
-                                    </div>
-                                    <div class="row d-flex justify-content-left mt-3">
-                                        <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta" style="display:none;"></div>
+
                                     </div>
 
-                                    <div class="col-9 input-group pl-0">
-                                        <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}' required>
-                                        <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}' required>
+                                    <div class="col-6">
+
+                                        <div class="row d-flex justify-content-left">
+                                            <div class="col-11">
+                                                <div class="d-flex justify-content-left" id="input-buscar-agregar">
+                                                    <div class="input-group w-75">
+                                                        <input type='text' id="cedula-personal" name="personal" class="form-control" @if(!is_null($personal)) value={{ $personal }} @endif required>
+                                                        <div class="input-group-append">
+                                                            <button type="button" onclick="buscarPersonal()" class="btn btn-contorno-rojo">Buscar</button>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del personal" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <input class="form-control" type='hidden' id="personal-encontrado" name="personal_encontrado" value="false">
+                                                </div>
+                                                <div class="row d-flex justify-content-left mt-3">
+                                                    <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta" style="display:none;"></div>
+                                                </div>
+
+                                                <div class="col-9 input-group pl-0">
+                                                    <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}' required>
+                                                    <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}' required>
+                                                </div>
+
+                                                <select class="col-8 mt-3 form-control" id="estado" name="estado_actividad" class="form-control">
+                                                    <option value="">Todos los estados</option>
+                                                    @foreach($estados as $estado)
+                                                    <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando gráficos');"><i class="fas fa-chart-line"></i> Generar gráficos</button>
+
+                                            </div>
+                                        </div>
+
                                     </div>
-
-                                    <select class="col-8 mt-3 form-control" id="estado" name="estado_actividad" class="form-control">
-                                        <option value="">Todos los estados</option>
-                                        @foreach($estados as $estado)
-                                        <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando gráficos');"><i class="fas fa-chart-line"></i> Generar gráficos</button>
 
                                 </div>
                             </div>
+                        </div>
+                    </form>
 
+                    <div class="container-fluid mt-5 mb-5 pt-2 pb-5" id="seccion-graficos" style="width: 90%">
+
+                        <div class="display-5 w-75 texto-rojo-medio pb-1">
+                            <h2>Gráficos para medir el involucramiento de {{ $nombre }}</h2>
                         </div>
 
+                        <hr>
+                        <div class="row mt-5">
+                            <div class="col-6 d-flex flex-column ">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Asistencia en actividades internas por tipos</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_asis_tipos">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Coordinación de actividades internas por tipos</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_coord_tipos">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mt-5 mb-5">
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Asistencia en actividades internas por fechas</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia en un rango de fechas" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_asis_fecha">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Coordinación de actividades internas por fechas</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación en un rango de fechas" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_coord_fecha">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mt-5 mb-5">
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Asistencia en actividades internas por ámbito</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia por su ámbito" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_asis_ambito">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Coordinación de actividades internas por ámbito</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación por su ámbito" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_coord_ambito">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
-        </form>
-
-        <div class="container-fluid mt-5 mb-5 pt-2 pb-5" id="seccion-graficos" style="width: 90%">
-
-            <div class="display-5 w-75 texto-rojo-medio pb-1">
-                <h2>Gráficos para medir el involucramiento de {{ $nombre }}</h2>
-            </div>
-
-            <hr>
-            <div class="row mt-5">
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Asistencia en actividades internas por tipos</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia" style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-1">
-                        <div id="grafico_asis_tipos">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Coordinación de actividades internas por tipos</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación" style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-1">
-                        <div id="grafico_coord_tipos">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row mt-5 mb-5">
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Asistencia en actividades internas por fechas</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia en un rango de fechas" style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-1">
-                        <div id="grafico_asis_fecha">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Coordinación de actividades internas por fechas</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación en un rango de fechas" style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-1">
-                        <div id="grafico_coord_fecha">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row mt-5 mb-5">
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Asistencia en actividades internas por ámbito</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según lista de asistencia por su ámbito" style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-1">
-                        <div id="grafico_asis_ambito">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-                    <div class="header-grafico w-100 texto-rojo-medio d-flex">
-                        <h4>Coordinación de actividades internas por ámbito</h4>&nbsp;
-                        <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de coordinación por su ámbito" style="font-size: 18px;"></i>
-                    </div>
-                    <div class="grafico-container w-100 mt-1">
-                        <div id="grafico_coord_ambito">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
         </div>
-
     </div>
 </div>
 @endsection
@@ -295,6 +300,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
     let porcentajeParticipacionActual = JSON.parse('{!! $porcentajeActualParticipacion !!}');
     let porcentajeAmbitoActual = JSON.parse('{!! $porcentajeActualAmbito !!}');
+
 </script>
 
 <script src="{{ asset('js/reportes/involucramiento/reportes.js') }}" defer></script>
@@ -318,6 +324,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 <script>
     //Ocultar espacio para los gráficos
     $("#seccion-graficos").hide();
+
 </script>
 @endif
 
@@ -326,5 +333,5 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="{{ asset('js/global/inputs.js') }}"></script>
+<script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
 @endsection
-

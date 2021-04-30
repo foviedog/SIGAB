@@ -82,7 +82,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <div class="col-lg-6 col-xl-3 py-3">
                             <div class="row card-info  ">
                                 <div class="col-3 py-4 px-0 d-flex justify-content-center">
-                                    <i class="fas fa-school fa-2x texto-rojo-medio"></i>
+                                    <i class="fas fa-school fa-3x texto-rojo-medio"></i>
                                 </div>
                                 <div class="col-8 p-0 ">
                                     <div class="border-left">
@@ -97,7 +97,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <div class="col-lg-6 col-xl-3 py-3">
                             <div class="row card-info  ">
                                 <div class="col-3 py-4 px-0 d-flex justify-content-center">
-                                    <i class="fas fa-bullhorn fa-2x texto-rojo-medio"></i>
+                                    <i class="fas fa-bullhorn fa-3x texto-rojo-medio"></i>
                                 </div>
                                 <div class="col-8 p-0 ">
                                     <div class="border-left">
@@ -111,7 +111,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <div class="col-lg-6 col-xl-3 py-3">
                             <div class="row card-info  ">
                                 <div class="col-3 py-4 px-0 d-flex justify-content-center">
-                                    <i class="fas fa-calculator fa-2x texto-rojo-medio"></i>
+                                    <i class="fas fa-calculator fa-3x texto-rojo-medio"></i>
                                 </div>
                                 <div class="col-8 p-0 ">
                                     <div class="border-left">
@@ -125,7 +125,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <div class="col-lg-6 col-xl-3 py-3">
                             <div class="row card-info  ">
                                 <div class="col-3 py-4 px-0 d-flex justify-content-center">
-                                    <i class="fas fa-briefcase fa-2x texto-rojo-medio"></i>
+                                    <i class="fas fa-briefcase fa-3x texto-rojo-medio"></i>
                                 </div>
                                 <div class="col-8 p-0 ">
                                     <div class="border-left">

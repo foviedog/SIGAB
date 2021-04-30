@@ -1,6 +1,6 @@
 
 //-----------------------------------------
-// GRAFICO
+// GRAFICO DE DONA
 //-----------------------------------------
 
 var options = {
@@ -12,7 +12,7 @@ var options = {
         defaultLocale: "es",
         id: "grafico"
     },
-    grid: grid,    
+    grid: grid,
     series: y,
     labels: x
 }
@@ -27,7 +27,7 @@ let plotOptions = {
                     fontSize: '35px',
                     label: 'Total',
                     color: '#373d3f',
-                    formatter: function(){ return total }
+                    formatter: function () { return total }
                 }
             }
         }

@@ -36,11 +36,10 @@ function cargaInicial(event) {
     cargarInformacionArrays();
 }
 
-function cargarInformacionArrays(){
-    console.log(dataSet)
+function cargarInformacionArrays() {
     //Meses para agregar al formateo
-    let meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
-    "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre",];
+    let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",];
 
     //Tipos Asistencia
     for (const atributo in tiposAsistencia) {
@@ -50,24 +49,16 @@ function cargarInformacionArrays(){
             totalTiposAsistencia++;
         }
     }
-    console.log(tiposAsistenciaX)
-    console.log(tiposAsistenciaY)
-    console.log(totalTiposAsistencia)
 
     //Fechas Asistencia
     for (const atributo in fechasAsistencia) {
         if (fechasAsistencia[atributo] != 0) {
             let aux = new Date(atributo);
-            fechasAsistenciaX.push(meses[aux.getMonth()] +" del "+ aux.getFullYear());
+            fechasAsistenciaX.push(meses[aux.getMonth()] + " del " + aux.getFullYear());
             fechasAsistenciaY.push(fechasAsistencia[atributo]);
             totalFechasAsistencia++;
         }
     }
-
-    console.log(fechasAsistenciaX)
-    console.log(fechasAsistenciaY)
-    console.log(totalFechasAsistencia)
-
     //Ámbito Asistencia
     for (const atributo in ambitoAsistencia) {
         if (ambitoAsistencia[atributo] != 0) {
@@ -77,10 +68,6 @@ function cargarInformacionArrays(){
         }
     }
 
-    console.log(ambitoAsistenciaX);
-    console.log(ambitoAsistenciaY);
-    console.log(totalAmbitoAsistencia);
-
     //Tipos Coordinacion
     for (const atributo in tiposCoordinacion) {
         if (tiposCoordinacion[atributo] != 0) {
@@ -89,22 +76,16 @@ function cargarInformacionArrays(){
             totalTiposCoordinacion += tiposCoordinacion[atributo];
         }
     }
-    console.log(tiposCoordinacionX)
-    console.log(tiposCoordinacionY)
-    console.log(totalTiposCoordinacion)
 
     //Fechas Coordinacion
     for (const atributo in fechasCoordinacion) {
         if (fechasCoordinacion[atributo] != 0) {
             let aux = new Date(atributo);
-            fechasCoordinacionX.push(meses[aux.getMonth()] +" del "+ aux.getFullYear());
+            fechasCoordinacionX.push(meses[aux.getMonth()] + " del " + aux.getFullYear());
             fechasCoordinacionY.push(fechasCoordinacion[atributo]);
             totalFechasCoordinacion++;
         }
     }
-    console.log(fechasCoordinacionX)
-    console.log(fechasCoordinacionY)
-    console.log(totalFechasCoordinacion)
 
     //Ambito Coordinacion
     for (const atributo in ambitoCoordinacion) {
@@ -115,9 +96,6 @@ function cargarInformacionArrays(){
         }
     }
 
-    console.log(ambitoAsistenciaX);
-    console.log(ambitoAsistenciaY);
-    console.log(totalAmbitoCoordinacion);
 }
 
 
@@ -137,7 +115,7 @@ var optionsAsisTip = {
             show: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: tiposAsistenciaY,
     labels: tiposAsistenciaX
 }
@@ -152,7 +130,7 @@ let plotOptionsAsisTip = {
                     fontSize: '35px',
                     label: 'Total',
                     color: '#373d3f',
-                    formatter: function(){ return totalTiposAsistencia }
+                    formatter: function () { return totalTiposAsistencia }
                 }
             }
         }
@@ -179,7 +157,7 @@ var optionsCoorTip = {
             show: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: tiposCoordinacionY,
     labels: tiposCoordinacionX
 }
@@ -194,7 +172,7 @@ let plotOptionsCoorTip = {
                     fontSize: '35px',
                     label: 'Total',
                     color: '#373d3f',
-                    formatter: function(){ return totalTiposCoordinacion }
+                    formatter: function () { return totalTiposCoordinacion }
                 }
             }
         }
@@ -229,7 +207,7 @@ var optionsAsisFecha = {
             distributed: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: fechasAsistenciaY
@@ -260,7 +238,7 @@ var optionsCoorFecha = {
             distributed: true
         }
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: fechasCoordinacionY
@@ -294,7 +272,7 @@ var optionsAsisAmbito = {
     dataLabels: {
         enabled: false
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: ambitoAsistenciaY,
@@ -329,7 +307,7 @@ var optionsAsisAmbito = {
     dataLabels: {
         enabled: false
     },
-    grid: grid,    
+    grid: grid,
     series: [{
         name: nameSeries,
         data: ambitoCoordinacionY,
