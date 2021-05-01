@@ -55695,13 +55695,17 @@
                 wsPort: 6001
             });
 
-            /***/
-}),
+window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  broadcaster: 'pusher',
+  key: "feQuIpAu6rZJLYmiXSChA2OPETeDn9Q3",
+  cluster: "mt1",
+  forceTLS: false,
+  wsHost: window.location.hostname,
+  wsPort: 6001
+});
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+/***/ }),
+
 /*! no static exports found */
 /***/ (function (module, exports) {
 
@@ -55727,7 +55731,12 @@
   !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/toastr.scss ***!
   \******************************************************************************************/
 /*! no static exports found */
-/***/ (function (module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\Users\ivane\OneDrive\Documentos\GitHub\SIGAB\SIGAB\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\ivane\OneDrive\Documentos\GitHub\SIGAB\SIGAB\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\ivane\OneDrive\Documentos\GitHub\SIGAB\SIGAB\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+
 
             __webpack_require__(/*! C:\Users\david\OneDrive\Documents\GitHub\SIGAB\SIGAB\resources\sass\app.scss */"./resources/sass/app.scss");
             module.exports = __webpack_require__(/*! C:\Users\david\OneDrive\Documents\GitHub\SIGAB\SIGAB\resources\sass\toastr.scss */"./resources/sass/toastr.scss");

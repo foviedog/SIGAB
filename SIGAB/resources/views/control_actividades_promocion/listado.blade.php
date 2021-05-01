@@ -110,7 +110,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                             </div>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
-                                    <sapn class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></sapn>
+                                    <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
                                 <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
 
@@ -124,13 +124,16 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>
                             <tr>
-                                <th>ID Actividad</th>
+                                <th>Código</th>
                                 <th style="width: 21rem;">Tema</th>
                                 <th>ID Coordinador</th>
-                                <th>Fecha de inicio</th>
-                                <th>Estado</th>
                                 <th>Tipo de actividad</th>
-                                <td><strong>Ver detalle<br /></strong></td>
+                                <th>Estado</th>
+                                <th>Fecha de inicio</th>
+                                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                                <th>Autorización</th>
+                                @endif
+                                <th>Ver detalle</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,9 +151,24 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 <td>{{ $actividadPromocion->actividad_id}}</td>
                                 <td>{{ $actividadPromocion->tema}}</td>
                                 <td>{{ $actividadPromocion->responsable_coordinar }} </td>
-                                <td>{{ date("d / m / Y",strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
-                                <td>{{ $actividadPromocion->estado }}</td>
                                 <td>{{$actividadPromocion->tipo_actividad}}</td>
+                                @if ( $actividadPromocion->estado == 'Para ejecución' )
+                                <td><span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividadPromocion->estado }}</span></td>
+                                @elseif($actividadPromocion->estado == 'Cancelada')
+                                <td><span class=" bg-danger text-white px-2 rounded">{{ $actividadPromocion->estado }}</span></td>
+                                @elseif($actividadPromocion->estado == 'En progreso')
+                                <td><span class=" bg-warning text-dark px-2 rounded">{{ $actividadPromocion->estado }}</span></td>
+                                @elseif($actividadPromocion->estado == 'Ejecutada')
+                                <td><span class=" bg-success text-white px-2 rounded">{{ $actividadPromocion->estado }}</span></td>
+                                @endif
+                                <td>{{ date("d/m/Y", strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
+                                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                                    @if($actividadPromocion->autorizada == 0)
+                                    <td><span class="bg-info text-dark font-weight-bold px-3 py-2 rounded">Pendiente</span></td>
+                                    @else
+                                    <td><span class="bg-success text-white font-weight-bold px-3 py-2 rounded">Autorizada</span></td>
+                                    @endif
+                                @endif
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
@@ -163,13 +181,16 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         {{-- Nombre de las columnas en la parte de abajode la tabla --}}
                         <tfoot>
                             <tr>
-                                <th>ID Actividad</th>
-                                <th>Tema</th>
+                                <th>Código</th>
+                                <th style="width: 21rem;">Tema</th>
                                 <th>ID Coordinador</th>
-                                <th>Fecha de inicio</th>
-                                <th>Estado</th>
                                 <th>Tipo de actividad</th>
-                                <td><strong>Ver detalle<br /></strong></td>
+                                <th>Estado</th>
+                                <th>Fecha de inicio</th>
+                                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
+                                <th>Autorización</th>
+                                @endif
+                                <th>Ver detalle</th>
                             </tr>
                         </tfoot>
                     </table>

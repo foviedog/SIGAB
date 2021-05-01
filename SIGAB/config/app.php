@@ -233,7 +233,8 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'GlobalFunctions' => App\Helper\GlobalFunctions::class,
-        'GlobalArrays' => App\Helper\GlobalArrays::class
+        'GlobalArrays' => App\Helper\GlobalArrays::class,
+        'Accesos' => App\Helper\Accesos::class
     ],
 
 ];

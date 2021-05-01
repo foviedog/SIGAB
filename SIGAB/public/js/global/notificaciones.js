@@ -6,7 +6,7 @@ toastr.options = {
     "onclick": null,
     "fadeIn": 300,
     "fadeOut": 1000,
-    "timeOut": 5000,
+    "timeOut": 10000,
     "extendedTimeOut": 1000
 }
 
