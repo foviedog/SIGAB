@@ -12,101 +12,32 @@ Cargas académicas de {{ $personal->persona->nombre }}
 <div class="card">
     <div class="card-body">
 
+        @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
         {{-- Modal para ver el detalle de la gradución --}}
-        <div class="modal fade" id="detalle-carga_academica-modal" tabindex="-1" aria-labelledby="detalle-carga_academica-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title font-weight-bold" id="detalle-carga_academica-modal">Detalle de la carga académica</h5>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-rojo" id="habilitar-edicion">
-                                    Habilitar edición
-                                </button>
-                                <button type="button" class="btn btn-rojo" id="cancelar-edicion">
-                                    Cancelar
-                                </button>
-                            </div>
-                    </div>
-                    <div class="modal-body">
-
-                        {{-- Formulario para actualizar informacion de la graduación --}}
-                        <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
-                            @csrf
-                            @method('PATCH')
-
-                            <div class="d-flex justify-content-center flex-column">
-                                {{-- Campo: Ciclo lectivo --}}
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="ciclo_lectivo">Ciclo lectivo <i class="text-danger">*</i></label>
-                                        <span class="text-muted ml-2" id="mostrar_ciclo_lectivo"></span>
-                                    </div>
-                                    <select class="form-control" name="ciclo_lectivo" id="ciclo_lectivo" disabled required>
-                                        <option>I Ciclo</option>
-                                        <option>II Ciclo</option>
-                                    </select>
-                                </div>
-
-                                {{-- Campo: Año de graduación --}}
-                                <div class=" mb-3">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="anio">Año <i class="text-danger">*</i></label>
-                                        <span class="text-muted ml-2" id="mostrar_anio"></span>
-                                    </div>
-                                    <input type='number' class="form-control" id="anio" name="anio" onkeyup="contarCaracteres(this,4)" min="1975" disabled required>
-                                </div>
-
-                                {{-- Campo: Nombre del curso--}}
-                                <label for="nombre_curso">Nombre del curso <i class="text-danger">*</i></label>
-                                <select class="form-control mb-3" id="nombre_curso" name="nombre_curso" size="10" disabled required>
-                                    @foreach($cursos as $curso)
-                                    <option>{{ $curso }}</option>
-                                    @endforeach
-                                </select>
-
-                                {{-- Campo: NRC--}}
-                                <div class=" mb-3">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="nrc">NRC <i class="text-danger">*</i></label>
-                                        <span class="text-muted ml-2" id="mostrar_nrc"></span>
-                                    </div>
-                                    <input type='number' class="form-control" id="nrc" name="nrc" onkeyup="contarCaracteres(this,7)" min="0" disabled required>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-                    {{-- Botones para cerrar el modal o para guardar la edición --}}
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal" onclick="cancelarEdicion()">Cerrar</button>
-                        <button onclick="actualizar()" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('modal.detalle-carga-academica')
+        @endif
 
         {{-- Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro mb-4">Cargas académicas de {{ $personal->persona->nombre." ".$personal->persona->apellido }}</h2>
             <div>
+
+                @if(Accesos::ACCESO_VISUALIZAR_PERSONAL())
                 {{-- Regresar al detalle del personal --}}
                 <a href="/personal/detalle/{{ $personal->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @endif
 
+                @if(Accesos::ACCESO_REGISTRAR_CARGAS_ACADEMICAS())
                 {{-- //Botón para añadir carga académica --}}
                 <a href="/personal/carga-academica/registrar/{{ $personal->persona->persona_id }}" class="btn btn-rojo"> Añadir nueva carga académica &nbsp; <i class="fas fa-plus-circle"></i> </a>
-
+                @endif
+                
             </div>
         </div>
 
-        {{-- Mensaje de exito
-            (solo se muestra si ha sido exitoso la edicion) --}}
-        @if(Session::has('exito'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('exito') !!}
-        </div>
-        @endif
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
@@ -125,8 +56,12 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                 <th>Ciclo lectivo</th>
                                 <th>Año</th>
                                 <th>NRC</th>
+                                @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
                                 <th>Ver más</th>
+                                @endif
+                                @if(Accesos::ACCESO_ELIMINAR_CARGAS_ACADEMICAS())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -139,6 +74,8 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                 <td>{{ $carga_academica->ciclo_lectivo }} </td>
                                 <td>{{ $carga_academica->anio }} </td>
                                 <td>{{ $carga_academica->nrc }}<br /> </td>
+
+                                @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
                                 <td>
                                     {{-- Botón para ver información de la gradución --}}
                                     <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-carga_academica-modal" data-idcarga_academica="{{ $carga_academica->id }}">
@@ -146,29 +83,38 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                     </button>
                                     <br />
                                 </td>
+                                @endif
+
+                                @if(Accesos::ACCESO_ELIMINAR_CARGAS_ACADEMICAS())
                                 <form action="{{ route('cargaacademica.delete',$carga_academica->id) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <td>
                                         <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando carga academica');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
-
                                 </form>
+                                @endif
+
                             </tr>
                             @endforeach
                             @else
                             <tr class="cursor-pointer">
                                 <td colspan="5"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
-                            </tr @endif </tbody>
-                            {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
+                            </tr> @endif 
+                        </tbody>
+                        {{-- Nombre de las columnas en la parte de abajo de la tabla --}}
                         <tfoot>
                             <tr>
                                 <th>Nombre del curso</th>
                                 <th>Ciclo lectivo</th>
                                 <th>Año</th>
                                 <th>NRC</th>
+                                @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
                                 <th>Ver más</th>
+                                @endif
+                                @if(Accesos::ACCESO_ELIMINAR_CARGAS_ACADEMICAS())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

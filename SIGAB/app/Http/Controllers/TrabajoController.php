@@ -53,11 +53,11 @@ class TrabajoController extends Controller
         ]);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -71,11 +71,11 @@ class TrabajoController extends Controller
         ]);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -108,11 +108,11 @@ class TrabajoController extends Controller
 
         //Se reedirige a la página anterior con la información digitada un mensaje de éxito
         return Redirect::back()
-            ->with('mensaje', '¡El registro ha sido exitoso!')
+            ->with('mensaje-exito', '¡El registro ha sido exitoso!')
             ->with('trabajo_insertado', $trabajo);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }    
     }
 
@@ -150,14 +150,14 @@ class TrabajoController extends Controller
 
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
-            ->with('exito', '¡Se ha actualizado correctamente!');
+            ->with('mensaje-exito', '¡Se ha actualizado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }    
          catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -168,14 +168,14 @@ class TrabajoController extends Controller
             $trabajo = Trabajo::find($id_trabajo); 
             $trabajo->delete();
             return Redirect::back()
-            ->with('exito', '¡Se ha eliminado correctamente!');
+            ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
-            ->with('error', 'ha ocurrido un error');
+            ->with('mensaje-error', 'Ha ocurrido un error al eliminar.');
         }   
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 

@@ -47,12 +47,13 @@ class ListaAsistenciaController extends Controller
             $lista->persona_id = request()->participante_id;
             $lista->actividad_id = request()->actividad_id;
             $lista->save();
-            $mensaje = "success";
+            $mensaje = "mensaje-exito";
             return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
             return response("No existe", 404);
         }
     }
+
     public function storeInvitado(Request $request)
     {
         try {
@@ -60,16 +61,19 @@ class ListaAsistenciaController extends Controller
             $persona = Persona::find($request->persona_id);   //Se busca en la BD si el participante ya se encontraba agregado anteriormente como persona
 
             if (!is_null($persona)) {
-                return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "error");
+                return redirect()->route('lista-asistencia.show', $request->actividad_id)
+                ->with('mensaje-error', "Ocurrió un error al agregar el participante");
             } else {
                 $persona = new Persona();
                 $this->guardarPersona($persona, $request);
                 $this->registrarParticipante($request->persona_id, $request->actividad_id);
             }
 
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "success");
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)
+            ->with('mensaje-exito', "Participante agregado correctamente");
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', "error");
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)
+            ->with('mensaje-error', "Ocurrió un error al agregar el participante");
         }
     }
 
@@ -93,7 +97,13 @@ class ListaAsistenciaController extends Controller
         $actividad = Actividades::find($actividadId);
 
         if (!is_null($mensaje)) {
-            return redirect()->route('lista-asistencia.show', $actividadId)->with('mensaje', $mensaje);
+            if($mensaje == "success"){
+                return redirect()->route('lista-asistencia.show', $actividadId)
+                    ->with('mensaje-exito', "Participante agregado correctamente");
+            }else{
+                return redirect()->route('lista-asistencia.show', $actividadId)
+                    ->with('mensaje-error', "Ocurrió un error al agregar el participante");
+            }
         }
         // dd($listaAsistencia);
         return view('control_actividades_internas.lista_asistencia.detalle', [
@@ -106,11 +116,11 @@ class ListaAsistenciaController extends Controller
         ]);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -146,13 +156,14 @@ class ListaAsistenciaController extends Controller
     public function destroy(Request $request, $particioanteId)
     {
         try {
-
             $lista = ListaAsistencia::where('persona_id', $particioanteId)
                 ->where('actividad_id', $request->actividad_id);
             $lista->delete();
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)
+            ->with('mensaje-exito', 'Participante eliminado correctamente');
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)->with('mensaje', 'error');
+            return redirect()->route('lista-asistencia.show', $request->actividad_id)
+            ->with('mensaje-error', 'Ocurrió un error al eliminar el participante');
         }
     }
     //Método que busca la cédula del participante que se desea agregar en

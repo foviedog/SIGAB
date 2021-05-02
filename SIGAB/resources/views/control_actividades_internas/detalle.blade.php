@@ -27,7 +27,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
 
                 {{-- Botones superiores --}}
-                @if(GlobalFunctions::verificarAcceso(37)) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
                     @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
                     {{-- Botón para autorizar actividad --}}
                     <form action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
@@ -43,27 +43,27 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             </div>
 
             <div>
+
+                @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                @endif
+
+                @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
                 {{-- Boton que habilita opcion de editar --}}
                 <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                 {{-- Boton de cancelar edicion --}}
                 <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
+                @endif
+
             </div>
         </div>
         <hr>
-        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-        @if(Session::has('mensaje'))
-        <div class="alert alert-success text-center font-weight-bold" role="alert" id="mensaje_exito">
-            {!! \Session::get('mensaje') !!}
-        </div>
-        @endif
-        @if(Session::has('error'))
-        <div class="alert alert-danger text-center font-weight-bold" role="alert">
-            {{ "¡Oops! Algo ocurrió mal. ".$error }}
-        </div>
-        @endif
-        {{-- Barra de navegación entre información genereal y bloques de texto  --}}
+
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
+
+        {{-- Barra de navegación entre información general y bloques de texto  --}}
         <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="info-gen-tab" href="#">Información general</a>
@@ -73,12 +73,15 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             </li>
         </ul>
 
+        @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
         {{-- Formulario general de actualización de datos de actividad --}}
         <form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
             {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
             @method('PATCH')
             {{-- Seguridad de envío de datos --}}
             @csrf
+        @endif
+
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab">
 
@@ -90,9 +93,15 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                     <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
                                 </div>
                                 <div>
-                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
 
+                                    @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
+                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
+                                    @endif
+
+                                    @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
                                     <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -529,16 +538,17 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                     </div>
                 </div>
             </div>
+
+            @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
             <div class="row d-flex justify-content-center mt-3">
                 {{-- Boton para enviar los cambios --}}
                 <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
             </div>
         </form>
+            @endif
 
     </div>
 </div>
-
-
 @endsection
 
 @section('scripts')

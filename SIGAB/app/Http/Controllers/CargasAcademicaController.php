@@ -28,14 +28,13 @@ class CargasAcademicaController extends Controller
             'cargas_academicas' => $cargas_academicas, // Cargas académicas
             'cursos' => $cursos //Cursos
         ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     //Método que obtiene una cedula por medio del request, devuelve ese Personal espefico junto con la vista para crear una guia academica
@@ -51,14 +50,14 @@ class CargasAcademicaController extends Controller
             'personal' => $personal,
             'cursos' => $cursos //Cursos
         ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+        catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     //Método que inserta una carga academica para un personal especifico en la base de datos
@@ -81,11 +80,11 @@ class CargasAcademicaController extends Controller
 
             //se redirecciona a la pagina de registro de cargas academicas con un mensaje de exito y los datos específicos del objeto insertado
             return Redirect::back()
-                ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('carga_academica_insertada', $carga_academica); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro cargas academicas
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -116,7 +115,7 @@ class CargasAcademicaController extends Controller
 
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
-            ->with('exito', '¡Se ha actualizado correctamente!');
+            ->with('mensaje-exito', '¡Se ha actualizado correctamente!');
     }
 
     public function destroy( $id_carga_academica)
@@ -126,10 +125,10 @@ class CargasAcademicaController extends Controller
             $carga_academica = Cargas_academica::find($id_carga_academica); 
             $carga_academica->delete();
             return Redirect::back()
-            ->with('exito', '¡Se ha eliminado correctamente!');
+            ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
-            ->with('error', 'ha ocurrido un error');
+            ->with('mensaje-error', 'ha ocurrido un error');
         }
     }
 

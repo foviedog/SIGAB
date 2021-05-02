@@ -26,48 +26,30 @@ Asistencia a {{ $actividad->tema }}
             </div>
             {{-- Botones superiores --}}
             <div>
+                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-interna.show',$actividad->id ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
-                {{-- Boton que habilita opcion de editar --}}
+                @endif
+                
+                @if(Accesos::ACCESO_REGISTRAR_PARTICIPANTES())
+                {{-- Boton que habilita opcion de agregar participante --}}
                 <button href="" class="btn btn-rojo" id="btn-agregar-part"> Añadir participante &nbsp; <i class="fas fa-plus-circle"></i> </button>
-                {{-- Boton de cancelar edicion --}}
+                {{-- Boton de cancelar --}}
                 <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
+                @endif
+
             </div>
         </div>
         <hr>
+        
         <form action="{{ route('lista-asistencia.show',$actividad->id) }}" method="GET" id="form-reload" style="display: none">
             <input type="hidden" id="mensaje" name="mensaje" value="" />
         </form>
-        {{-- Boton de cancelar edicion --}}
-        @php
-        $mensaje = Session::get('mensaje');
-        @endphp
-        @if($mensaje == 'success')
-        {{-- Mensaje de exito  --}}
-        <div class="mensaje-container" id="mensaje-info" style="display:none;  ">
-            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style="background-image: url('/img/recursos/iconos/success.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; ">Participante agregado correctamente</div>
-        </div>
-        @elseif($mensaje == 'error')
-        {{-- Mensaje de error --}}
-        <div class="mensaje-container" id="mensaje-info" style="display:none; ">
-            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; ">Ocurrió un error al agregar el participante</div>
-        </div>
-        @endif
 
-        @if(Session::has('eliminado'))
-        {{-- Mensaje de exito al eliminar un participante de la lista --}}
-        <div class="mensaje-container" id="mensaje-info" style="display:none;  ">
-            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style="background-image: url('/img/recursos/iconos/success.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; "> {{ Session::get('eliminado') }} </div>
-        </div>
-        @endif
-
-
+        {{-- Mensajes sticky --}}
+        @include('layouts.messages.sticky')
 
         <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
-
 
         <div class="row border-bottom pb-2">
 
@@ -76,10 +58,13 @@ Asistencia a {{ $actividad->tema }}
                     <div class="card-body  ">
                         <div class="container-fluid">
                             <div class="row">
+
                                 <div class="col-4" id="img-actividad">
                                     <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 100%">
                                 </div>
+                                
                                 <div class="col-7 border-left d-flex align-items-center transicion-padding" id="info-actividad">
+                                    
                                     <div class="overflow-auto">
                                         <span class="my-1" style='width: 134%; '> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
                                         <span class="my-1" style='width: 134%; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
@@ -94,18 +79,19 @@ Asistencia a {{ $actividad->tema }}
                                         <span class=" bg-warning text-dark px-2 rounded">{{ $actividad->estado  }}</span>
                                         @elseif($actividad->estado == 'Ejecutada')
                                         <span class=" bg-success text-white px-2 rounded">{{ $actividad->estado  }}</span>
-
                                         @endif
                                     </div>
 
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
+
+            @if(Accesos::ACCESO_REGISTRAR_PARTICIPANTES())
             <div class="col-6 " id="agregar-participante-card" style="display:none;">
                 <div class="card shadow">
                     <div class="card-header ">
@@ -164,6 +150,7 @@ Asistencia a {{ $actividad->tema }}
                     </div>
                 </div>
             </div>
+            
             <div class="col-6 " id="loader" style="display:none;">
                 <div class="d-flex justify-content-center mt-2 mb-4">
                     <h4 class="texto-rojo-oscuro">Agregando participante a la lista </h4>
@@ -173,8 +160,9 @@ Asistencia a {{ $actividad->tema }}
                     <div class="loader2"> </div>
                 </div>
             </div>
-        </div>
+            @endif
 
+        </div>
 
         <div id="table_data">
             <div class="row mt-2 d-flex justify-content-center">
@@ -227,7 +215,9 @@ Asistencia a {{ $actividad->tema }}
                                     <th>Teléfono celular</th>
                                     <th>Correo institucional</th>
                                     <th>Informacion</th>
-                                    <th>Eliminar </th>
+                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                    <th>Eliminar</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody id="lista-participantes">
@@ -253,6 +243,8 @@ Asistencia a {{ $actividad->tema }}
                                     <td>
                                         <button id="mostrar-{{ $participante->persona_id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrarInfo(this)"><i class="fas fa-eye"></i> &nbsp;Detalle</button>
                                     </td>
+
+                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
                                     <form action="{{ route('lista-asistencia.destroy',$participante->persona_id) }}" method="post">
                                         @method('DELETE')
                                         @csrf
@@ -261,6 +253,7 @@ Asistencia a {{ $actividad->tema }}
                                         </td>
                                         <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
                                     </form>
+                                    @endif
 
                                 </tr>
                                 @endforeach
@@ -273,7 +266,9 @@ Asistencia a {{ $actividad->tema }}
                                     <th>Teléfono celular</th>
                                     <th>Correo institucional</th>
                                     <th>Informacion</th>
+                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
                                     <th>Eliminar </th>
+                                    @endif
                                 </tr>
                             </tfoot>
                         </table>

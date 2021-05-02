@@ -241,4 +241,5 @@ class GlobalArrays
         'BGE409 - Evaluación de servicios y formación de usuarios',
         'BG508 - Investigación II'
     ];
+    
 }

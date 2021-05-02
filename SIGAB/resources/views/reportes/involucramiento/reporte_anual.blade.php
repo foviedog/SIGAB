@@ -8,13 +8,14 @@ Involucramiento Anual
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
 
-
+@php
+$anios = array();
+for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } 
+@endphp {{-- @if ($anio==$estado) selected @endif --}} 
 
 @section('contenido')
 
-@php
-$anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp {{-- @if ($anio==$estado) selected @endif --}} <div class="card pb-5">
+<div class="card pb-5">
     <div class="card-body pb-5">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
@@ -227,18 +228,16 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
         </div>
     </div>
 
+@endsection
 
 
-    @endsection
+@section('scripts')
+<script>
+    var fotosURL = "{{ URL::asset('img/fotos/') }}";
+    let graficosInvolucramiento = JSON.parse('{!! $graficosInvolucramiento !!}');
 
+</script>
 
-    @section('scripts')
-    <script>
-        var fotosURL = "{{ URL::asset('img/fotos/') }}";
-        let graficosInvolucramiento = JSON.parse('{!! $graficosInvolucramiento !!}');
-
-    </script>
-
-    <script src="{{ asset('js/global/variablesGraficos.js') }}"></script>
-    <script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
-    @endsection
+<script src="{{ asset('js/global/variablesGraficos.js') }}"></script>
+<script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
+@endsection

@@ -1,21 +1,20 @@
-/* Desaparece el mensaje de éxito */
-$("#mensaje-exito")
-    .fadeTo(2000, 500)
+$("#alert")
+    .fadeTo(5000, 500)
     .slideUp(500, function() {
-        $("#mensaje-exito").slideUp(500);
-    });
+        $("#alert").slideUp(500);
+});
 
-function mostrarMensaje() {
-    $("#mensaje-info").addClass("d-flex");
-    $("#mensaje-info").show();
-    $("#mensaje-info").css("animation-name", "mostrar-mensaje");
+function mostrarMensajeSticky() {
+    $("#mensaje-sticky").addClass("d-flex");
+    $("#mensaje-sticky").show();
+    $("#mensaje-sticky").css("animation-name", "mostrar-mensaje");
 
     setTimeout(function() { 
-        $("#mensaje-info").css("animation-name", "esconder-mensaje");
+        $("#mensaje-sticky").css("animation-name", "esconder-mensaje");
     }, 4000);
     setTimeout(function() {
-        $("#mensaje-info").removeClass("d-flex");
-        $("#mensaje-info").hide();
+        $("#mensaje-sticky").removeClass("d-flex");
+        $("#mensaje-sticky").hide();
         window.history.replaceState(
             {},
             "/" + window.location.href.split("?")[0]

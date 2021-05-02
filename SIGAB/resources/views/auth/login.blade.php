@@ -58,18 +58,8 @@
                                         </h1>
                                     </div>
 
-
-            {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-            @php
-            $error = Session::get('error');
-            @endphp
-
-            @if(Session::has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ "No se pudo establecer conección con la base de datos!"}}
-            </div>
-            @endif
-
+                                    {{-- Alerts --}}
+                                    @include('layouts.messages.alerts')
 
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf

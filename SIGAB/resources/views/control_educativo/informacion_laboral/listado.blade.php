@@ -13,201 +13,28 @@ Trabajos de {{ $estudiante->persona->nombre }}
     <div class="card-body">
 
         {{-- Modal para ver el detalle del trabajo --}}
-        <div class="modal fade" id="detalle-trabajo-modal" tabindex="-1" aria-labelledby="detalle-trabajo-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog  modal-dialog-scrollable modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title font-weight-bold" id="detalle-trabajo-modal">Detalle del trabajo</h5>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-rojo" id="habilitar-edicion">
-                                    Habilitar edición
-                                </button>
-                                <button type="button" class="btn btn-rojo" id="cancelar-edicion">
-                                    Cancelar
-                                </button>
-                            </div>
-                    </div>
-                    <div class="modal-body">
-
-                        {{-- Formulario para actualizar informacion laboral --}}
-                        <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
-                            @csrf
-                            @method('PATCH')
-
-                            <div class="row">
-
-                                {{-- Campos de la izquierda --}}
-                                <div class="col">
-
-                                    {{-- Campo: Nombre de la organizacion --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="nombre_organizacion">Nombre de la organización:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeyup="contarCarNomOrg(this)" required disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_nom_org"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Jornada laboral --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="jornada_laboral">Jornada laboral:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCarJornLab(this)" required disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_jorn_lab"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Jefe inmediato --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="jefe_inmediato">Jefe inmediato:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeyup="contarCarJefInme(this)" disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_jef_inme"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Tiempo desempleado --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="tiempo_desempleado">Tiempo desempleado:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCarTiempDesempl(this)" disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_tiemp_desmp"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Intereses Capacitacion --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="interes_capacitacion">Intereses capacitación:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <textarea class="form-control w-100" id="interes_capacitacion" name="interes_capacitacion" disabled></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                {{-- Campos de la derecha --}}
-                                <div class="col">
-
-                                    {{-- Campo: Tipo de organizacion --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="tipo_organizacion">Tipo de organización:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            {{-- <input type='text' class="form-control w-100" id="tipo_organizacion" name="tipo_organizacion" onkeyup="contarCarTipOrg(this)" required> --}}
-                                            <select name="tipo_organizacion" class="form-control w-100" id="tipo_organizacion" disabled>
-                                                <option value="Instituciones públicas">Instituciones públicas</option>
-                                                <option value="Instituciones privadas">Instituciones privadas</option>
-                                                <option value="Instituciones autónomas">Instituciones autónomas</option>
-                                                <option value="Instituciones semiautónomas">Instituciones semiautónomas</option>
-                                                <option value="Organismos internacionales (ONGs)">Organismos internacionales (ONGs)</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_tip_org"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Cargo actual --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="cargo_actual">Cargo actual:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCarCargAct(this)" required disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_carg_act"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Telefono trabajo --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="telefono_trabajo">Teléfono trabajo:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeyup="contarCarTelfTrbj(this)" disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_tel_trbj"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Correo trabajo --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="correo_trabajo">Correo trabajo:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type='text' class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeyup="contarCarCorrTrbj(this)" disabled>
-                                        </div>
-                                        <div class="col-1">
-                                            <span class="text-muted" id="mostrar_cant_corr_trbj"></span>
-                                        </div>
-                                    </div>
-
-                                    {{-- Campo: Otros estudios --}}
-                                    <div class="d-flex justify-content-start mb-3">
-                                        <div class="col-4">
-                                            <label for="otros_estudios">Otros estudios:</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <textarea class="form-control w-100" id="otros_estudios" name="otros_estudios" disabled></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    {{-- Botones para cerrar el modal o para guardar la edición --}}
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal" onclick="cancelarEdicion()">Cerrar</button>
-                        <button onclick="actualizar()" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('modal.detalle-trabajo')
 
         {{-- Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro mb-4">Trabajos de {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
             <div>
+                @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
                 {{-- Regresar al detalle del estudiante --}}
                 <a href="/estudiante/detalle/{{ $estudiante->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @endif
+
+                @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
                 {{-- //Botón para añadir trabajo --}}
                 <a href="/estudiante/trabajo/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nuevo trabajo &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                @endif
+
             </div>
         </div>
 
-        {{-- Mensaje de exito
-            (solo se muestra si ha sido exitoso la edicion) --}}
-        @if(Session::has('exito'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('exito') !!}
-        </div>
-        @endif
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
@@ -243,7 +70,9 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                 <th>Cargo actual</th>
                                 <th>Jornada laboral</th>
                                 <th>Ver más</th>
+                                @if(Accesos::ACCESO_ELIMINAR_TRABAJOS())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -261,14 +90,17 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                     </button>
                                     <br />
                                 </td>
+                                
+                                @if(Accesos::ACCESO_ELIMINAR_TRABAJOS())
                                 <form action="{{ route('trabajo.delete',$trabajo->id) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <td>
                                         <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando trabajo');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
-
                                 </form>
+                                @endif
+                                
                             </tr>
                             @endforeach
                             @else
@@ -284,7 +116,9 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                 <th>Cargo actual</th>
                                 <th>Jornada laboral</th>
                                 <th>Ver más</th>
+                                @if(Accesos::ACCESO_ELIMINAR_TRABAJOS())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

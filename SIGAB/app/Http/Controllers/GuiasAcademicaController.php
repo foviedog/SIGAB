@@ -40,11 +40,11 @@ class GuiasAcademicaController extends Controller
         return response()->json($estudiante, 200);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -76,7 +76,7 @@ class GuiasAcademicaController extends Controller
 
                 if ($validacion->fails()) {
                     return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                        ->with('error', "El archivo no cumple con las especificaciones establecidas: " . $validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                        ->with('mensaje-error', "El archivo no cumple con las especificaciones establecidas: " . $validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 }
 
                 $archivo = new File;
@@ -99,17 +99,17 @@ class GuiasAcademicaController extends Controller
 
                 //se redirecciona a la pagina de registro de guias academicas con un mensaje de exito y los datos específicos del objeto insertado
                 return Redirect::back()
-                    ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                    ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                     ->with('gua_academica_insertada', $guia) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                     ->with('docente', $docente); //devuelve la información del docente
             } else {
                 return Redirect::back()
-                    ->with('mensaje', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                    ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                     ->with('gua_academica_insertada', $guia); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
             }
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -156,11 +156,11 @@ class GuiasAcademicaController extends Controller
         ]);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -178,7 +178,7 @@ class GuiasAcademicaController extends Controller
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -207,7 +207,7 @@ class GuiasAcademicaController extends Controller
 
             if ($validacion->fails()) {
                 return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                    ->with('error', "El archivo no cumple con las especificaciones establecidas: " . $validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                    ->with('mensaje-error', "El archivo no cumple con las especificaciones establecidas: " . $validacion->errors()->first()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
             }
 
             if ($guia->archivo_adjunto != NULL) {
@@ -228,14 +228,14 @@ class GuiasAcademicaController extends Controller
 
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
-            ->with('exito', '¡Se ha actualizado correctamente!');
+            ->with('mensaje-exito', '¡Se ha actualizado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }    
          catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -251,17 +251,17 @@ class GuiasAcademicaController extends Controller
             $guia->archivo_adjunto = NULL;
         } else {
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                ->with('error', "El archivo no exite");
+                ->with('mensaje-error', "El archivo no exite");
         }
 
         $guia->save();
 
         return Redirect::back()
-            ->with('exito', '¡El archivo se ha borrado exitosamente!');
+            ->with('mensaje-exito', '¡El archivo se ha borrado exitosamente!');
         }    
          catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
     //Método que descarga un archivo
@@ -335,10 +335,10 @@ class GuiasAcademicaController extends Controller
             $guia = Guias_academica::find($id_guia); 
             $guia->delete();
             return Redirect::back()
-            ->with('exito', '¡Se ha eliminado correctamente!');
+            ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
-            ->with('error', 'ha ocurrido un error');
+            ->with('mensaje-error', 'ha ocurrido un error');
         }
     }
 

@@ -11,217 +11,49 @@ Listado de Guías Académicas
 @section('contenido')
 <div class="card">
     <div class="card-body">
-        {{-- MODAL para agregar una guía académica --}}
-        <div class="modal fade" id="agregar-guia-modal" tabindex="-1" aria-labelledby="agregar-guia-modal" aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
 
-                        <h5 class="modal-title" id="agregar-guia-modal"><strong>Añadir Guía Académica</strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @csrf
-                    <div class="modal-body">
-                        <div class="alert alert-danger" role="alert" id="no-existe-estudiante">
-                            El estudiante ingresado no existe.
-                        </div>
-                        <div class="form-group">
-                            <label for="id-estudiante" class="col-form-label">Cédula del estudiante:</label>
-                            <input type="text" class="form-control" name="cedula" id="id-estudiante" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-rojo" id="crear-guia-modal">Crear Guía Académica</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
+        {{-- Modal para agregar una guía académica --}}
+        @include('modal.agregar-guia-academica')
+        @endif
 
-        {{-- MODAL para ver el detalle de una guía académica--}}
-        <div class="modal fade" id="detalle-guia-modal" tabindex="-1" aria-labelledby="detalle-guia-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog   modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title font-weight-bold" id="detalle-guia-modal">Detalle de Guía Académica</h5>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-rojo" id="habilitar-edicion">
-                                    Habilitar edición
-                                </button>
-                                <button type="button" class="btn btn-rojo" id="cancelar-edicion">
-                                    Cancelar edición
-                                </button>
-                            </div>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="container">
-                            <div class="d-flex justify-content-center mb-2">
-                                <img class="rounded mb-3" width="160" height="160" id="imagen-modal" />
-                            </div>
-                            <div class="d-flex justify-content-center align-items-center border-bottom">
-                                <div class="text-center mb-3">
-                                    <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula"></span> <br>
-                                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"></span> <br>
-                                    <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"></span> <br>
-                                </div>
-                            </div>
-
-                            <form action="" method="post" id="form-actualizar" enctype="multipart/form-data">
-                                @csrf
-                                @method('PATCH')
-
-                                <div class="form-group">
-                                    <label for="motivo" class="col-form-label mt-3">Tipo &nbsp;<i class="text-danger">*</i></label>
-                                    <select class="form-control mb-3" id="tipo" name="tipo" size="10" required disabled>
-                                        @foreach($tipos as $tipo)
-                                        <option>{{ $tipo }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div id="tipo-mostrar"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i></label>
-                                        <span class="text-muted" id="mostrar_lugar"></span>
-                                    </div>
-                                    <input type="text" class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,44)" required disabled>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="fecha" class="col-form-label">Fecha &nbsp;<i class="text-danger">*</i></label>
-                                            <input type="date" class="form-control" id="fecha" name="fecha" required disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-2">
-                                        <div class="form-group">
-                                            <label for="ciclo">Ciclo lectivo &nbsp;<i class="text-danger">*</i></label>
-                                            <select class="form-control" id="ciclo" name="ciclo" required disabled>
-                                                <option value="Ciclo I">Ciclo I </option>
-                                                <option value="Ciclo II">Ciclo II </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <label class="col-form-label">Solicitado por &nbsp;<i class="text-danger">*</i></label><br>
-                                <div class="row my-3 mx-1">
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radio" id="radio1" value="est" disabled>
-                                            <label class="form-check-label" for="radio">
-                                                Estudiante
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radio" id="radio2" value="docen" disabled>
-                                            <label class="form-check-label" for="radio">
-                                                Docente
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="collapse mb-3" id="lista_docentes">
-                                    Seleccione el docente
-                                    <select class="form-control mb-3" size="10" id="docente" disabled>
-                                        @foreach($docentes as $docente)
-                                        <option>{{ $docente->persona->persona_id." - ".$docente->persona->nombre." ".$docente->persona->apellido }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                                <div id="docente-mostrar"></div>
-
-                                {{-- Input oculto que envia si es la guía es solicitada por un estudiante o por un educador --}}
-                                <input type="hidden" name="solicitud" id="solicitud">
-
-                                <div class="form-group">
-                                    <label for="situacion" class="col-form-label">Situación &nbsp;<i class="text-danger">*</i></label>
-                                    <textarea class="form-control" id="situacion" rows="2" cols="50" name="situacion" disabled required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label" for="recomendaciones">Recomendaciones </label>
-                                    <textarea class="form-control" id="recomendaciones" rows="4" cols="50" name="recomendaciones" disabled></textarea>
-                                    <span class="text-muted" id="mostrar_cant_recomendaciones"></span>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
-                                    <input type="file" name="archivo" class="border" id="adjuntar-archivo" disabled> &nbsp;
-                                    <span data-toggle="tooltip" id="tooltip" data-placement="bottom" title="Si el archivo adjunto ya existe, se reemplazará al elegir otro"><i class="far fa-question-circle fa-lg"></i></span>
-                                    <br><span style="cursor: pointer" onclick="quitarArchivo()" id="quitar-archivo">Quitar archivo</span>
-                                    <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, zip, rar, 7zip</b>.
-                                        <br>El archivo no debe pesar más de <b>30MB</b>.</div>
-
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                </div>
-
-                                <div id="archivo-adjunto-existente"></div>
-                                <div id="eliminar-archivo"></div>
-
-                                <div class="alert alert-danger text-center" role="alert" id="rellenar-campos-modificar">
-                                    Hay campos vacíos que son obligatorios.
-                                </div>
-
-                        </div>
-
-                        </form>
-                    </div>
-                    <input type="hidden" name="id-guia-modal" id="id-guia-modal">
-
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal" id="cerrar-modal-edicion">Cerrar</button>
-                        <button type="button" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS()) 
+        {{-- Modal para ver el detalle de una guía académica--}}
+        @include('modal.detalle-guia-academica')
+        @endif
 
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Lista de Guías Académicas</h2>
 
-            <div class="d-flex ">
+            <div class="d-flex">
+
+                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) 
                 <div class="mr-2">
                     {{-- Regresar al listado de estudiantes --}}
                     <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
                 </div>
+                @endif
+
                 <div class="mr-2">
                     <a href="{{ route('guia-academica.listar') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
                 </div>
+
+                @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
                 <div>
                     <button class="btn btn-rojo" data-toggle="modal" data-target="#agregar-guia-modal" data-whatever="Añadir Guía">
                         Añadir Guía Académica &nbsp; <i class="fas fa-plus-circle"></i>
                     </button>
                 </div>
+                @endif
+
             </div>
         </div>
-        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-        @if(Session::has('exito'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('exito') !!}
-        </div>
-        @endif
-        {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-        @php
-        $error = Session::get('error');
-        @endphp
 
-        @if(Session::has('error'))
-        <div class="alert alert-danger" role="alert">
-            {{ "¡Oops! Algo ocurrió. ".$error }}
-        </div>
-        @endif
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
+        
         {{-- // Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">
@@ -287,7 +119,9 @@ Listado de Guías Académicas
                                 <th>Ciclo lectivo</th>
                                 <th>Lugar de atención</th>
                                 <th>Ver detalle</th>
+                                @if(Accesos::ACCESO_ELIMINAR_GUIAS_ACADEMICAS())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -306,18 +140,24 @@ Listado de Guías Académicas
                                 <td> {{ date("d-m-Y",strtotime($guia->fecha)) }} </td>
                                 <td> {{ $guia->ciclo_lectivo }} </td>
                                 <td> {{ $guia->lugar_atencion }}</td>
+
+                                @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS()) 
                                 <td>
                                     {{-- Botón para ver el detalle de la guía académica del estudiante --}}
                                     <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idguia="{{ $guia->id }}">
                                         Detalle
                                     </button>
                                 </td>
+                                @endif
+
+                                @if(Accesos::ACCESO_ELIMINAR_GUIAS_ACADEMICAS())
                                 <form action="{{ route('guia-academica.delete',$guia->id) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <td>
                                         <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando guia');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
+                                @endif
 
                                 </form>
                             </tr>
@@ -333,7 +173,9 @@ Listado de Guías Académicas
                                 <th>Ciclo lectivo</th>
                                 <th>Lugar de atención</th>
                                 <th>Ver detalle</th>
+                                @if(Accesos::ACCESO_ELIMINAR_GUIAS_ACADEMICAS())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

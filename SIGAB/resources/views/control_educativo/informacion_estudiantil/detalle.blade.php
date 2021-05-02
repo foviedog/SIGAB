@@ -19,10 +19,14 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
 @section('contenido')
 
 {{-- Formulario general de estudiante --}}
+
+@if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
 <form action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
+@endif
+
     <div class="card">
         <div class="card-body">
             {{-- Contenido total del detalle --}}
@@ -34,14 +38,25 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                     </div>
                     {{-- Botones superiores --}}
                     <div>
+
+                        @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
                         {{-- Regresar al listado de estudiantes --}}
                         <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        @endif
+                        
+                        @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-estudiante" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}
                         <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
+                        @endif
+                        
                     </div>
                 </div>
+
+                {{-- Alerts --}}
+                @include('layouts.messages.alerts')
+
                 <div class="row mb-3">
                     <div class="col-lg-4 col-sm-12">
                         {{-- Tarjeta de foto perfil --}}
@@ -289,8 +304,11 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- Campo: Trabajo--}}
+
                                         <div class="form-row">
+
+                                            @if(Accesos::ACCESO_VISUALIZAR_TRABAJOS())
+                                            {{-- Campo: Trabajo--}}
                                             <div class="col">
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Información Laboral</strong><br /></label>
@@ -299,6 +317,9 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
+                                            
+                                            @if(Accesos::ACCESO_LISTAR_TITULACIONES())
                                             {{-- Segmento asociado al estudiante cuando ya es graduado --}}
                                             <div class="col">
                                                 <div class="form-group text-center mt-4">
@@ -308,6 +329,10 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
+
+                                            @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
+                                            {{-- Guias academicas --}}
                                             <div class="col">
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Guías académicas</strong><br /></label>
@@ -316,6 +341,9 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
+
+                                            @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
                                             <div class="col">
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Crear guía académica</strong><br /></label>
@@ -324,7 +352,7 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            @endif
 
                                         </div>
                                     </div>
@@ -336,13 +364,21 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                 <div class="d-flex justify-content-center">
                     {{-- Guarda oculto el ID del estudiante en el detalle --}}
                     <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}"><br>
+
                     {{-- Boton para enviar los cambios --}}
+                    @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
                     <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
+                    @endif
+
                 </div>
             </div>
         </div>
     </div>
+
+@if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
 </form>
+@endif
+
 @endsection
 
 @section('scripts')

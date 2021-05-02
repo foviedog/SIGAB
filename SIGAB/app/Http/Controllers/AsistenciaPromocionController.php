@@ -8,6 +8,7 @@ use App\asistenciaPromocion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class AsistenciaPromocionController extends Controller
 {
@@ -20,28 +21,50 @@ class AsistenciaPromocionController extends Controller
         $itemsPagina = request('itemsPagina', 5);
         $filtro = request('filtro', NULL);
 
-        $mensaje = request('mensaje', NULL);
+        $mensaje = Session::get('mensaje');
 
         $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
         $actividad = Actividades::find($actividadId);
-
-
-        // dd($listaAsistencia);
+        
+        if (!is_null($mensaje)) {
+            if($mensaje == "success"){
+                $mensajeExito = "Participante agregado correctamente";
+                return view('control_actividades_promocion.lista_asistencia.detalle', [
+                    'listaAsistencia' => $listaAsistencia,
+                    'actividad' => $actividad,
+                    'paginaciones' => $paginaciones,
+                    'itemsPagina' => $itemsPagina,
+                    'filtro' => $filtro,
+                    'mensajeExito' => $mensajeExito,
+                ]);
+            }else{
+                $mensajeError = "Ocurrió un error al agregar el participante";
+                return view('control_actividades_promocion.lista_asistencia.detalle', [
+                    'listaAsistencia' => $listaAsistencia,
+                    'actividad' => $actividad,
+                    'paginaciones' => $paginaciones,
+                    'itemsPagina' => $itemsPagina,
+                    'filtro' => $filtro,
+                    'mensajeError' => $mensajeError,
+                ]);
+            }
+        }
+        
         return view('control_actividades_promocion.lista_asistencia.detalle', [
             'listaAsistencia' => $listaAsistencia,
             'actividad' => $actividad,
             'paginaciones' => $paginaciones,
             'itemsPagina' => $itemsPagina,
             'filtro' => $filtro,
-            'mensaje' => $mensaje,
         ]);
+    
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -77,13 +100,15 @@ class AsistenciaPromocionController extends Controller
             $lista->numero_telefono = request()->telefono;
             $lista->procedencia = request()->procedencia;
             $lista->save();
-            $mensaje = "success";
 
-                return redirect()->route('asistencia-promocion.show', request()->acitividad_id)->with('mensaje', $mensaje);
+            $mensaje = "success";
+            return redirect()->route('asistencia-promocion.show', request()->acitividad_id)
+                ->with('mensaje', $mensaje);
            // return response()->json($mensaje, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
             $mensaje = "error";
-            return redirect()->route('asistencia-promocion.show', request()->acitividad_id)->with('mensaje', $mensaje);
+            return redirect()->route('asistencia-promocion.show', request()->acitividad_id)
+                ->with('mensaje', $mensaje);
            // return response("No existe", 404);
         }
         
@@ -97,9 +122,11 @@ class AsistenciaPromocionController extends Controller
             $lista = asistenciaPromocion::where('cedula', $particioanteId)
                 ->where('actividad_id', $request->actividad_id);
             $lista->delete();
-            return redirect()->route('asistencia-promocion.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+            return redirect()->route('asistencia-promocion.show', $request->actividad_id)
+                ->with('mensaje-exito', 'Participante eliminado correctamente');
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('asistencia-promocion.show', $request->actividad_id)->with('mensaje', 'error');
+            return redirect()->route('asistencia-promocion.show', $request->actividad_id)
+                ->with('mensaje-error', 'Ocurrió un error al eliminar el participante');
         }
     }
     public function obtenerParticipanteLista($idActividad, $cedula )

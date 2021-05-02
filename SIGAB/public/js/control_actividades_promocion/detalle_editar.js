@@ -166,12 +166,18 @@ function validarInfo() {
     $("#info-esp-tab").on("click", function (e) {
         e.preventDefault();
         let $actividadForm = $("#actividad-form"); // Variable que contiene el form de información general del personal
+        if($actividadForm.length > 0){
+            if (!$actividadForm[0].checkValidity() ||  $("#responsable-encontrado").val() === "false") { // Valida el form antes de que se proceda a la siguiente página para evitar que se envíen datos incorrectos
+                $("#guardar-cambios").trigger("click"); // Fuerza el envío de datos en el form para que realice la validación automática de los campos
+                $("#info-gen-tab").addClass('active');
+                $("#info-esp-tab").removeClass('active');
 
-        if (!$actividadForm[0].checkValidity() ||  $("#responsable-encontrado").val() === "false") { // Valida el form antes de que se proceda a la siguiente página para evitar que se envíen datos incorrectos
-            $("#guardar-cambios").trigger("click"); // Fuerza el envío de datos en el form para que realice la validación automática de los campos
-            $("#info-gen-tab").addClass('active');
-            $("#info-esp-tab").removeClass('active');
-
+            } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
+                $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
+                $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
+                $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
+                $("#info-esp").tab("show"); // Muestra la vista de participaciones.
+            }
         } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
             $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
             $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general

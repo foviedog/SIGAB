@@ -30,35 +30,25 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
         <div class="d-flex justify-content-between">
             <h2>Registrar información del estudiante</h2>
             <div>
-                <div><a href="{{ route('listado-estudiantil' ) }}" class="btn btn-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Regresar </a></div>
+
+                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) 
+                <div><a href="{{ route('listado-estudiantil') }}" class="btn btn-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Regresar</a></div>
+                @endif
 
             </div>
         </div>
         <hr>
+
+        @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
         {{-- Formulario para registrar informacion del estudiante --}}
         <form action="/estudiante" method="POST" enctype="multipart/form-data" id="estudiante">
             @csrf
+        @endif
 
-            {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-            @if(Session::has('mensaje'))
-            <div class="alert alert-success" role="alert">
-                {!! \Session::get('mensaje') !!}
-            </div>
-            @endif
+            {{-- Alerts --}}
+            @include('layouts.messages.alerts')
 
-            {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-            @php
-            $error = Session::get('error');
-            @endphp
-
-            @if(Session::has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ "¡Oops! Algo ocurrió. ".$error }}
-            </div>
-            @endif
-
-            {{-- Mensaje de que muestra el objeto insertado
-        (solo se muestra si ha sido exitoso el registro)  --}}
+            {{-- Mensaje de que muestra el objeto insertado (solo se muestra si ha sido exitoso el registro)  --}}
             @if(Session::has('estudiante_insertado'))
             <div class="alert alert-dark" role="alert">
 
@@ -88,7 +78,13 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
                         <a clas="btn btn-rojo" href="/estudiante/detalle/{{ $cedula }}">
-                            <input type="button" value="Editar" class="btn btn-rojo">
+                            <input type="button"
+                            @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) 
+                            value="Editar" 
+                            @else
+                            value="Detalle"
+                            @endif
+                            class="btn btn-rojo">
                         </a>
                         <br>
 
@@ -492,12 +488,14 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 
             </div>
 
+            @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
             <div class="d-flex justify-content-center">
                 {{-- Boton para agregar informacion del estudiante --}}
                 <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
             </div>
-
         </form>
+            @endif
+
     </div>
 </div>
 @endsection

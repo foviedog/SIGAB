@@ -58,23 +58,20 @@ class LoginController extends Controller
     {
         try{
             DB::connection()->getPdo();
-        $accesos = DB::table('accesos')->where('rol_id', $user->rol)->get();
-        $persona =  Persona::findOrFail($user->persona_id);
-        session(['persona' => $persona]);
-        session(['accesos_usuario' => $accesos]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            $accesos = DB::table('accesos')->where('rol_id', $user->rol)->get();
+            $persona =  Persona::findOrFail($user->persona_id);
+            session(['persona' => $persona]);
+            session(['accesos_usuario' => $accesos]);
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return redirect()->route('login')//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         } catch (\Exception $ex) {
             return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
-
-
 
 }

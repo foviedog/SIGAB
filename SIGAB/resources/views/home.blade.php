@@ -10,86 +10,17 @@ SIGAB
 
 @section('contenido')
 
-<div class="card-body  ">
+<div class="card-body ">
 
-    <div class="row px-5">
-        <div class="col">
-            <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <h4 class="font-weight-bold mr-3">Control estudiantil</h4><i class="fas fa-book texto-rojo-medio  fa-2x"></i>
-                    </div>
-                    <hr>
-                    <a href="{{ route('estudiante.create') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir estudiantes</h6>
-                    </a>
-                    <a href="{{ route('listado-estudiantil') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes</h6>
-                    </a>
-                    <a href="{{ route('graduados.listar') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes Graduados</h6>
-                    </a>
-                    <a href="{{ route('guia-academica.listar') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Guías académicas</h6>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
-                    </div>
-                    <hr>
-                    <a href="{{ route('personal.create') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir personal</h6>
-                    </a>
-                    <a href="{{ route('personal.listar') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Personal de la EBDI</h6>
-                    </a>
-                    <a href="#">
-                        <h6 class="card-subtitle mb-3 link-inicio">&nbsp;</h6>
-                    </a>
-                    <a href="#">
-                        <h6 class="card-subtitle mb-3 link-inicio">&nbsp;</h6>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
-                    </div>
-                    <hr>
-                    <a href="/actividad-interna/registrar">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades Internas</h6>
-                    </a>
-                    <a href="/actividad-promocion/registrar">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades de promoción</h6>
-                    </a>
-                    <a href="{{ route('actividad-interna.listado') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades Internas</h6>
-                    </a>
-                    <a href="{{ route('actividad-promocion.listado') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades de promoción</h6>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="bg-primary">
-
-    </div>
+    {{-- Alerts --}}
+    @include('layouts.messages.alerts')
 
     {{-- Inicio de bloque de información --}}
     <div class="container-fluid px-5">
         {{-- Fila que sepera las dos columnas de resumenes--}}
         <div class="row d-flex justify-content-between">
 
-            {{-- primera carta de resumen --}}
+            {{-- Primera carta de resumen --}}
             <div class="col-xl-6 col-lg-12 ">
                 <div class="container">
                     <div class="row card shadow px-4 ">
@@ -97,7 +28,7 @@ SIGAB
                             <div class="border-bottom p-0">
                                 <h4 class="font-weight-bold">Resumen de estudiantes</h4>
                             </div>
-                            {{-- contenedor de las cartas pequeñas de información horizonales --}}
+                            {{-- Contenedor de las cartas pequeñas de información horizonales --}}
                             <div class="container  py-3">
                                 <div class="row">
                                     {{-- Carta de estudiantes totales --}}
@@ -225,6 +156,119 @@ SIGAB
 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {{-- Cartas de resumen --}}
+    <div class="row px-5 mt-5">
+        <div class="col">
+            <div class="card shadow p-3 mb-5 rounded">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h4 class="font-weight-bold mr-3">Control estudiantil</h4><i class="fas fa-book texto-rojo-medio  fa-2x"></i>
+                    </div>
+                    <hr>
+
+                    @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
+                    <a href="{{ route('estudiante.create') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir estudiantes</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
+                    <a href="{{ route('listado-estudiantil') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_LISTAR_GRADUADOS())
+                    <a href="{{ route('graduados.listar') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes Graduados</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
+                    <a href="{{ route('guia-academica.listar') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Guías académicas</h6>
+                    </a>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow p-3 mb-5 rounded" >
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
+                    </div>
+                    <hr>
+
+                    @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
+                    <a href="{{ route('personal.create') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir personal</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_LISTAR_PERSONAL())
+                    <a href="{{ route('personal.listar') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Personal de la EBDI</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
+                    <a href="{{ route('reportes-involucramiento.show') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte general </h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
+                    <a href="{{ route('reportes-involucramiento.anual') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte anual</h6>
+                    </a>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="card shadow p-3 mb-5 rounded">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
+                    </div>
+                    <hr>
+
+                    @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
+                    <a href="/actividad-interna/registrar">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades Internas</h6>
+                    </a>
+                    
+                    <a href="/actividad-promocion/registrar">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades de promoción</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
+                    <a href="{{ route('actividad-interna.listado') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades Internas</h6>
+                    </a>
+
+                    <a href="{{ route('actividad-promocion.listado') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades de promoción</h6>
+                    </a>
+                    @endif
+
+                    @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
+                    <a href="{{ route('reportes-actividades.show') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reportes </h6>
+                    </a>
+                    @endif
+
                 </div>
             </div>
         </div>

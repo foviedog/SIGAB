@@ -13,7 +13,7 @@ use App\Events\EventActividadParaAutorizar;
 
 class ActividadesInternaController extends Controller
 {
-    //Devuevle el listado de las actividades internas.
+    //Devuelve el listado de las actividades internas.
     public function index()
     {
         try { //se utiliza un try-catch para control de errores
@@ -33,7 +33,6 @@ class ActividadesInternaController extends Controller
         $fecha_inicio  = NULL;
         $fecha_final = NULL;
 
-
         //si se realiza una búsqueda sin seleccionar la fecha
         if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
             $actividadesInternas = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $proposito_filtro, $estado_filtro);
@@ -42,7 +41,6 @@ class ActividadesInternaController extends Controller
         } else {
             $actividadesInternas = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
         }
-
 
         //se devuelve la vista con los atributos de paginación de los estudiante
         return view('control_actividades_internas.listado', [
@@ -55,11 +53,12 @@ class ActividadesInternaController extends Controller
             'proposito_filtro' => $proposito_filtro,
             'rango_fechas' => $rango_fechas
         ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensjase-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
-    }
+
     //Retorna la vista de registrar actividades internas
     public function show($id_actividad)
     {
@@ -73,11 +72,11 @@ class ActividadesInternaController extends Controller
             $personal = Personal::findOrFail($actividad->responsable_coordinar);
             return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
         } else {
-            return redirect('/home');
+            return redirect('/home')->with('mensaje-advertencia', 'La actividad no se ha autorizado aún.');
         }
     } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -135,12 +134,12 @@ class ActividadesInternaController extends Controller
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/actividad-interna/registrar")
-                ->with('mensaje', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_interna_insertada', $actividad_interna);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return \Redirect::back()
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
     //Método que inserta una actividad interna en la base de datos
@@ -179,13 +178,13 @@ class ActividadesInternaController extends Controller
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/detalle-actividad-interna/{$actividad->id}")
-                ->with('mensaje', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_interna_insertada', $actividad_interna);
 
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect("/detalle-actividad-interna/{$actividad->id}") //se redirecciona a la pagina de registro
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
 
     }
@@ -259,10 +258,10 @@ class ActividadesInternaController extends Controller
             $actividad->save(); //se guarda el objeto en la base de datos
             //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
             return redirect("/detalle-actividad-interna/{$actividad->id}")
-                ->with('mensaje', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect("/detalle-actividad-interna/{$request->id_actividad}") //se redirecciona a la pagina de registro
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
         }
     }
 
