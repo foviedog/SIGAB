@@ -19,7 +19,6 @@ class AccesosMiddleware
     {
         $accesoGarantizado = false;
         $roles = preg_split('/\s*\n(\s*\n)*\s*/', trim($roles));
-        dd($roles);
         foreach ($roles as $rol){
             if($this->verificarAccesos($rol)){
                 $accesoGarantizado = true;
