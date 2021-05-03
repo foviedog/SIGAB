@@ -145,7 +145,7 @@ class Accesos
         return GlobalFunctions::verificarAcceso(35);
     }
     
-    public static function ACCESO_MODIFICAR_ACTIVIDADES_() { 
+    public static function ACCESO_MODIFICAR_ACTIVIDADES() { 
         return GlobalFunctions::verificarAcceso(36);
     }
     

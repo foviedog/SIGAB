@@ -32,7 +32,7 @@ function eventos() {
     evtAgregarParticipanteShow();
     evtCancelarAgregarPart();
     evtBuscarParticipante();
-    mostrarMensaje();
+    mostrarMensajeSticky();
     evtListarTodo();
 }
 

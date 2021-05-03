@@ -38,14 +38,26 @@ $tiposDocumentos =
             {{-- Botones superiores --}}
             <div>
                 @if(!is_null($actividad->actividadInterna))
-                {{-- Botón para regresar al listado de actividades --}}
-                <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+
+                    @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
+                    {{-- Botón para regresar al listado de actividades --}}
+                    <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                    @endif
+
                 @else
-                {{-- Botón para regresar al listado de actividades --}}
-                <a href="{{ route('actividad-promocion.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+
+                    @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
+                    {{-- Botón para regresar al listado de actividades --}}
+                    <a href="{{ route('actividad-promocion.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                    @endif
+
                 @endif
+
+                @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
                 {{-- Boton que habilita opcion de agregar evidencia --}}
                 <button href="" class="btn btn-rojo" id="btn-agregar-evid"> Añadir evidencia &nbsp; <i class="fas fa-plus-circle"></i> </button>
+                @endif
+
             </div>
         </div>
 
@@ -78,8 +90,6 @@ $tiposDocumentos =
             <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; "> {{ Session::get('eliminado') }} </div>
         </div>
         @endif
-
-
 
 
 
@@ -122,10 +132,11 @@ $tiposDocumentos =
 
                 </div>
             </div>
+
             <div class="col-6 mb-3 " id="agregar-evidencia-card">
+            @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
                 <form method="POST" action="{{ route('evidencias.store') }}" id="form-evidencia" enctype="multipart/form-data">
                     @csrf
-
                     <div class="card shadow">
                         <div class="card-header ">
                             <div class="s d-flex justify-content-between">
@@ -143,7 +154,6 @@ $tiposDocumentos =
                                         <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Nombre con el que quiere guardar el archivo"><i class="far fa-edit texto-azul-una"></i></span>
                                     </div>
                                     <span class="ml-1 text-muted d-flex align-items-center" id="mostrar_nombre-archivo"></span>
-
                                 </div>
 
                                 <div class="custom-control custom-checkbox mr-5" id="wrap-chec-video">
@@ -194,6 +204,7 @@ $tiposDocumentos =
                     <input type='hidden' class="form-control" id="actividad-id" name="actividad_id" value="{{ $actividad->id }}">
                     <button type="submit" id="hidden-submit" style="display: none;"> </button>
                 </form>
+                @endif
             </div>
             <div class="col-6 " id="loader" style="display: none;">
                 <div class="d-flex justify-content-center mt-2 mb-4">
@@ -205,7 +216,6 @@ $tiposDocumentos =
                 </div>
             </div>
         </div>
-
 
         <div id="table_data">
             <div class="row mt-2 d-flex justify-content-center">
@@ -221,6 +231,7 @@ $tiposDocumentos =
                                 </form>
                             </div>
                         </div>
+                        
                         <form action="{{ route('evidencias.show',$actividad->id) }}" method="GET" id="form-busqueda">
                             <div class="row pt-3 px-3">
 
@@ -268,7 +279,9 @@ $tiposDocumentos =
                                     <th colspan="4">Nombre &nbsp; <i class="fas fa-caret-down"></i></th>
                                     <th colspan="3">Fecha subido &nbsp; <i class="fas fa-caret-down"></i></th>
                                     <th>Descargar &nbsp; <i class="fas fa-caret-down"></i></th>
+                                    @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_ACTIVIDADES())
                                     <th>Eliminar &nbsp; <i class="fas fa-caret-down"></i> </th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody id="lista-evidencias">
@@ -298,6 +311,8 @@ $tiposDocumentos =
                                     @else
                                     <td><a class="btn btn-contorno-rojo" href="{{ $evidencia->id_repositorio }}" target="_blank"><i class="fas fa-globe"></i> &nbsp; Visualizar</a></td>
                                     @endif
+
+                                    @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_ACTIVIDADES())
                                     <form action="{{ route('evidencias.destroy',$evidencia->id) }}" method="post">
                                         @method('DELETE')
                                         @csrf
@@ -306,6 +321,7 @@ $tiposDocumentos =
                                         </td>
                                         <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
                                     </form>
+                                    @endif
 
                                 </tr>
                                 @endforeach
@@ -317,7 +333,9 @@ $tiposDocumentos =
                                     <th colspan="4">Nombre</th>
                                     <th colspan="3">Fecha de subida</th>
                                     <th>Descargar</th>
+                                    @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_ACTIVIDADES())
                                     <th>Eliminar </th>
+                                    @endif
                                 </tr>
                             </tfoot>
                         </table>

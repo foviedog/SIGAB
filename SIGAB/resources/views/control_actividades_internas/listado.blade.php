@@ -26,8 +26,12 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control Actividades Internas</h2>
             <div>
+
+                @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
                 {{-- Botón para añadir actividad interna--}}
                 <a href="/actividad-interna/registrar" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                @endif
+
             </div>
         </div>
         {{-- Contenedor de la tabla --}}
@@ -42,6 +46,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 </div>
             </div>
             <div class="card-body">
+                @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES())
                 {{-- Formulario para la paginación--}}
                 <form action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina">
                     <div class="row d-flex justify-content-between mb-2 ">
@@ -135,6 +140,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                     </div>
                 </form>
+                @endif
+                
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
@@ -150,7 +157,9 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
+                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
                                 <th>Ver detalle</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -186,12 +195,14 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                     <td><span class="bg-success text-white font-weight-bold px-3 py-2 rounded">Autorizada</span></td>
                                     @endif
                                 @endif
+                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
                                         <a href="{{ route('actividad-interna.show',$actividadInterna->actividad_id) }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -208,7 +219,9 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
+                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
                                 <th>Ver detalle</th>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

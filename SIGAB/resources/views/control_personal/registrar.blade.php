@@ -19,9 +19,7 @@ $tipos_nombramientos = GlobalArrays::TIPOS_NOMBRAMIENTO_PERSONAL;
 $tipos_puestos = GlobalArrays::TIPOS_PUESTOS_PERSONAL;
 $regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
 $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
-
 @endphp
-
 
 @php
 $persona_no_insertada = null;
@@ -37,30 +35,20 @@ $personal_no_insertado = Session::get('personal_no_insertado');
         <div class="d-flex justify-content-between">
             <h2>Registrar información de un personal</h2>
             <div>
-                <a href="{{ route('personal.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de personal </a>
+
+                @if(Accesos::ACCESO_LISTAR_PERSONAL())
+                <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de personal </a>
+                @endif
+                
             </div>
         </div>
         <hr>
-        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-        @if(Session::has('mensaje'))
-        <div class="alert alert-success" role="alert">
-            {!! \Session::get('mensaje') !!}
-        </div>
-        @endif
-
-        {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-        @php
-        $error = Session::get('error');
-        @endphp
-
-        @if(Session::has('error'))
-        <div class="alert alert-danger" role="alert">
-            {{ "¡Oops! Algo ocurrió. ".$error }}
-        </div>
-        @endif
+        
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Mensaje de que muestra el objeto insertado
-        (solo se muestra si ha sido exitoso el registro)  --}}
+            (solo se muestra si ha sido exitoso el registro)  --}}
         @if(Session::has('personal_registrado'))
         <div class="alert alert-dark" role="alert">
 
@@ -87,7 +75,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                     {{-- Link para modificiar al personal recien agregado --}}
                     <br>
                     <a class="btn btn-rojo" href="{{ route('personal.show',$personal_registrado->persona_id ) }}">
+                        @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
                         Editar
+                        @else
+                        Detalle
+                        @endif
                     </a>
                     <br>
                 </div>
@@ -112,10 +104,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo personal:</div>
         @endif
 
-
+        @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
         {{-- Formulario para registrar informacion del personal --}}
         <form action="/personal" method="POST" enctype="multipart/form-data" id="personal-form">
             @csrf
+        @endif
             <input type="hidden" name="idiomasJSON" id="idiomasJSON">
             <div class="tab-content ">
                 <div class="tab-pane pt-4 active" id="general">
@@ -398,7 +391,6 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                             </div>
 
 
-
                             {{-- Campo: Lugar de trabajo externo --}}
                             <div class="d-flex justify-content-start mb-3">
                                 <div class="col-4">
@@ -510,7 +502,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
 
                 </div>
 
-                <div class="tab-pane  " id="infoParticipaciones">
+                <div class="tab-pane" id="infoParticipaciones">
                     <div id="participaciones">
                         <div class="row d-flex justify-content-between border-bottom pb-2">
                             <div class="col">
@@ -605,12 +597,14 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                 </div>
 
             </div>
+            @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
             <div class="d-flex justify-content-center  pt-4">
                 {{-- Boton para registrar informacion del personal --}}
                 <button type="submit" id="registrar-btn" class="btn btn-rojo btn-lg">Registrar</button>
             </div>
-
         </form>
+            @endif
+
     </div>
 </div>
 @endsection

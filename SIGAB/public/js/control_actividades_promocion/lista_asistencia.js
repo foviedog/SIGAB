@@ -9,7 +9,7 @@ let editarActivido = false;
 function cargaInicial(event) {
     ocultarElementos();
     eventos();
-    mostrarMensaje();
+    mostrarMensajeSticky();
 }
 
 function ocultarElementos() {

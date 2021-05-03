@@ -50,7 +50,7 @@ class ActividadesPromocionController extends Controller
         ]);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
     }
 
@@ -104,12 +104,12 @@ class ActividadesPromocionController extends Controller
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/actividad-promocion/registrar")
-                ->with('mensaje', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_promocion_insertada', $actividad_promocion);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect("/actividad-promocion/registrar") //se redirecciona a la pagina de registro
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -131,7 +131,7 @@ class ActividadesPromocionController extends Controller
             }
     } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -171,12 +171,12 @@ class ActividadesPromocionController extends Controller
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/detalle-actividad-promocion/{$actividad->id}")
-                ->with('mensaje', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad);
             //->with('actividad_promocion_insertada', $actividad_promocion);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect("/detalle-actividad-promocion/{$actividad->id}") //se redirecciona a la pagina de registro
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
     }
 
@@ -255,10 +255,10 @@ class ActividadesPromocionController extends Controller
             $actividad->save(); //se guarda el objeto en la base de datos
             //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
             return redirect("/detalle-actividad-promocion/{$actividad->id}")
-                ->with('mensaje', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje-exito', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect("/detalle-actividad-promocion/{$request->id_actividad}") //se redirecciona a la pagina de registro
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
         }
     }
 }

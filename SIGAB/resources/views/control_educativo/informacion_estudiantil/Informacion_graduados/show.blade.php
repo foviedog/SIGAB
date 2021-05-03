@@ -13,98 +13,27 @@ Graduaciones de {{ $estudiante->persona->nombre }}
     <div class="card-body">
 
         {{-- Modal para ver el detalle de la gradución --}}
-        <div class="modal fade" id="detalle-graduacion-modal" tabindex="-1" aria-labelledby="detalle-graduacion-modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title font-weight-bold" id="detalle-graduacion-modal">Detalle de la gradución</h5>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-rojo" id="habilitar-edicion">
-                                    Habilitar edición
-                                </button>
-                                <button type="button" class="btn btn-rojo" id="cancelar-edicion">
-                                    Cancelar
-                                </button>
-                            </div>
-                    </div>
-                    <div class="modal-body">
-
-                        {{-- Formulario para actualizar informacion de la graduación --}}
-                        <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
-                            @csrf
-                            @method('PATCH')
-                            <div class="alert alert-danger" role="alert" id="validar-edicion" style="display:none;">
-                                <strong>No deben quedar espacios vacios al editar la graduacion</strong> 
-                            </div>
-
-                            <div class="d-flex justify-content-center flex-column">
-                                {{-- Campo: Grado académico --}}
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="grado_academico">Grado académico <i class="text-danger">*</i></label>
-                                        <span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span>
-                                    </div>
-                                    
-                                    <select class="form-control w-100" id="grado_academico" name="grado_academico" required disabled>
-                                        <option value="" selected>Seleccione</option>
-                                        <option value="Diplomado"> Diplomado</option>
-                                        <option value="Bachillerato"> Bachillerato </option>
-                                        <option value="Licenciatura"> Licenciatura </option>
-                                        <option value="Maestría"> Maestría </option>
-                                        <option value="Doctorado"> Doctorado </option>
-                                    </select>
-                                </div>
-
-                                {{-- Campo: Carrera cursada--}}
-                                <div class=" mb-3">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i></label>
-                                        <span class="text-muted ml-2" id="mostrar_cant_carrera_cursada"></span>
-                                    </div>
-                                    <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeyup="contarCarCarrCursada(this)" required disabled>
-                                </div>
-
-                                {{-- Campo: Año de graduación --}}
-                                <div class=" mb-3">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i></label>
-                                        <span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span>
-                                    </div>
-                                    <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" min="1975" required disabled>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-                    {{-- Botones para cerrar el modal o para guardar la edición --}}
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-gris" data-dismiss="modal" onclick="cancelarEdicion()">Cerrar</button>
-                        <button onclick="actualizar()" class="btn btn-rojo ml-3" id="terminar-edicion">Terminar edición</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('modal.detalle-titulacion')
 
         {{-- Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
             <h2 class="texto-gris-oscuro mb-4">Graduaciones de {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</h2>
             <div>
+                @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
                 {{-- Regresar al detalle del estudiante --}}
                 <a href="/estudiante/detalle/{{ $estudiante->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @endif
+                
+                @if(Accesos::ACCESO_REGISTRAR_TITULACIONES())
                 {{-- //Botón para añadir graduación --}}
                 <a href="/estudiante/graduacion/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nueva graduación &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                @endif
             </div>
         </div>
 
-        {{-- Mensaje de exito
-            (solo se muestra si ha sido exitoso la edicion) --}}
-        @if(Session::has('exito'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('exito') !!}
-        </div>
-        @endif
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
@@ -123,7 +52,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                 <th>Carrera Cursada</th>
                                 <th>Año de graduación</th>
                                 <th>Ver más</th>
+                                @if(Accesos::ACCESO_ELIMINAR_TITULACIONES())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -142,20 +73,24 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                     </button>
                                     <br />
                                 </td>
+
+                                @if(Accesos::ACCESO_ELIMINAR_TITULACIONES())
                                 <form action="{{ route('graduado.delete',$graduacion->id) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <td>
                                         <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando titulacion');" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
-
                                 </form>
+                                @endif
+
                             </tr>
                             @endforeach
                             @else
                             <tr class="cursor-pointer">
                                 <td colspan="4"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
-                            </tr @endif </tbody>
+                            </tr> @endif 
+                        </tbody>
                             {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <tfoot>
                             <tr>
@@ -163,7 +98,9 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                 <th>Carrera Cursada</th>
                                 <th>Año de graduación</th>
                                 <th>Ver más</th>
+                                @if(Accesos::ACCESO_ELIMINAR_TITULACIONES())
                                 <th>Eliminar</th>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

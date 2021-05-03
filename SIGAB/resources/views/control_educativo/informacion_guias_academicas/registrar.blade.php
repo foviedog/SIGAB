@@ -16,23 +16,8 @@ Registrar guía académica
     </div>
     <hr>
 
-    {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-    @if(Session::has('mensaje'))
-    <div class="alert alert-success" role="alert">
-        {!! \Session::get('mensaje') !!}
-    </div>
-    @endif
-
-    {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-    @php
-    $error = Session::get('error');
-    @endphp
-
-    @if(Session::has('error'))
-    <div class="alert alert-danger" role="alert">
-        {{ "¡Oops! Algo ocurrió. ".$error }}
-    </div>
-    @endif
+    {{-- Alerts --}}
+    @include('layouts.messages.alerts')
 
     {{-- Mensaje de que muestra el objeto insertado
         (solo se muestra si ha sido exitoso el registro)  --}}
@@ -61,18 +46,19 @@ Registrar guía académica
                 <b>Situación:</b> {{ $guia->situacion ?? "No se digitó" }} <br>
                 <b>Recomendaciones:</b> {{ $guia->recomendaciones ?? "No se digitó" }} <br>
                 @if($guia->archivo_adjunto !== NULL)
-
                 <b>Archivo adjunto:</b> <a href='{{ URL::asset('/estudiante/guia-academica/download/') }}/{{ $guia->archivo_adjunto }}' target='_blank'>{{ $guia->archivo_adjunto }}</a>
                 @endif
             </div>
         </div>
     </div>
-
     @endif
 
+    @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
     {{-- Formulario para registrar informacion de la guia academica --}}
     <form action="/estudiante/guia-academica" method="POST" enctype="multipart/form-data" id="form-guia">
         @csrf
+    @endif
+    
         <div class="container">
             <div class="d-flex justify-content-center mb-2">
                 <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
@@ -166,6 +152,7 @@ Registrar guía académica
                 <span class="text-muted" id="mostrar_cant_recomendaciones"></span>
             </div>
 
+            @if(Accesos::ACCESO_ADJUNTAR_EVIDENCIAS())
             <div class="form-group mb-5">
                 <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
                 <input type="file" name="archivo" class="border" id="adjuntar-archivo">
@@ -174,16 +161,21 @@ Registrar guía académica
                     <br>El archivo no debe pesar más de <b>30MB</b>.</div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </div>
+            @endif
+
         </div>
 
         {{-- Input oculto que envia el id del estudiante --}}
         <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}">
 
+        @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
         <div class="d-flex justify-content-center pb-3">
-            {{-- Boton para agregar informacion del estudiante --}}
+            {{-- Boton para agregar informacion de la guia --}}
             <button type="submit" class="btn btn-rojo btn-lg">Agregar Guía</button>
         </div>
     </form>
+        @endif
+        
 </div>
 
 @endsection

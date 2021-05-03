@@ -24,6 +24,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             </div>
         </div>
         <hr>
+        
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" href="#general" data-toggle="tab">Involucramiento general</a>

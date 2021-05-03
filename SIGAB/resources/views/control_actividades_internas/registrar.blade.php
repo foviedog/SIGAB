@@ -9,7 +9,6 @@ Registrar actividad interna
     input[type=time]::-webkit-datetime-edit-ampm-field {
         display: none;
     }
-
 </style>
 @endsection
 
@@ -19,33 +18,23 @@ Registrar actividad interna
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h3>Registrar una actividad de tipo interna</h3>
+
+            @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
             <div>
-                <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-interna.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
             </div>
+            @endif
+            
         </div>
         <hr>
+        @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         {{-- Formulario para registrar informacion de la actividad --}}
-        <form action="/actividad-interna" method="POST" enctype="multipart/form-data" id="actividad-interna">
+        <form action="/actividad-interna" method="POST" enctype="multipart/form-data" id="actividad-interna" onsubmit="activarLoader('Enviando actividad');">
             @csrf
+        @endif
 
-
-            {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-            @if(Session::has('mensaje'))
-            <div class="alert alert-success" role="alert">
-                {!! \Session::get('mensaje') !!}
-            </div>
-            @endif
-
-            {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-            @php
-            $error = Session::get('error');
-            @endphp
-
-            @if(Session::has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ "¡Oops! Algo ocurrió. ".$error }}
-            </div>
-            @endif
+            {{-- Alerts --}}
+            @include('layouts.messages.alerts')
 
             {{-- Mensaje de que muestra el objeto insertado
                     (solo se muestra si ha sido exitoso el registro)  --}}
@@ -72,11 +61,16 @@ Registrar actividad interna
                         <b>Evaluación: </b> {{$actividad_insertada->evaluacion ?? "No se digitó"}} <br>
                         <b>Objetivos: </b> {{$actividad_insertada->objetivos ?? "No se digitó" }} <br>
                         <b>Responsable de coordinar: </b> {{$actividad_insertada->responsable_coordinar}} <br>
-
                         {{-- Link directo al detalle de la actividad recien agregada --}}
                         <br>
                         <a clas="btn btn-rojo" href="{{ route('actividad-interna.show',$actividad_insertada->id) }}">
-                            <input type="button" value="Editar" class="btn btn-rojo">
+                            <input type="button" 
+                            @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
+                            value="Editar" 
+                            @else
+                            value="Detalle"
+                            @endif
+                            class="btn btn-rojo">
                         </a>
                         <br>
                     </div>
@@ -505,9 +499,10 @@ Registrar actividad interna
                     </div>
                 </div>
 
+                @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
                 <div class="d-flex justify-content-center">
                     {{-- Boton para agregar informacion de la actividad --}}
-                    <button type="submit" class="btn btn-rojo btn-lg mt-2" id="agregar-actividad" onclick="activarLoader('Enviando actividad');">
+                    <button type="submit" class="btn btn-rojo btn-lg mt-2" id="agregar-actividad">
                         @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                         Enviar actividad autorizada
                         @else
@@ -515,11 +510,13 @@ Registrar actividad interna
                         @endif
                     </button>
                 </div>
+                @endif
             </div>
+        @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         </form>
+        @endif
     </div>
 </div>
-
 
 @endsection
 
@@ -527,13 +524,11 @@ Registrar actividad interna
 <script>
     // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
-
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_internas/registrar.js') }}" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
-
 </script>
 @endsection

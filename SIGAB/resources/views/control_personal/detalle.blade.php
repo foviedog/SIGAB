@@ -26,11 +26,13 @@ if(is_null($idiomas)){
 
 @section('contenido')
 
+@if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 {{-- Formulario general de personal --}}
 <form action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')
+@endif
 
     <div class="card">
         <div class="card-body">
@@ -48,10 +50,12 @@ if(is_null($idiomas)){
 
                         {{-- Regresar al listado de personal --}}
                         <a href="{{ route('personal.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-personal" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}
                         <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
+                        @endif
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -465,6 +469,7 @@ if(is_null($idiomas)){
                                             </div>
                                         </div>
 
+                                        @if(Accesos::ACCESO_LISTAR_CARGAS_ACADEMICAS())
                                         {{-- Campo: Carga académica--}}
                                         <div class="form-group text-center mt-4">
                                             <label for="city"><strong>Carga académica</strong><br /></label>
@@ -472,6 +477,7 @@ if(is_null($idiomas)){
                                                 <a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo" type="button">Ver carga académica</a>
                                             </div>
                                         </div>
+                                        @endif
 
                                     </div>
                                 </div>
@@ -482,14 +488,18 @@ if(is_null($idiomas)){
                 </div>
             </div>
             <div class="d-flex justify-content-center">
+                @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
                 {{-- Guarda oculto el ID del personal en el detalle --}}
                 <input type="hidden" name="persona_id" value="{{ $personal->persona->persona_id }}"><br>
                 {{-- Boton para enviar los cambios --}}
                 <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
+                @endif
             </div>
         </div>
     </div>
+@if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 </form>
+@endif
 @endsection
 
 @section('scripts')

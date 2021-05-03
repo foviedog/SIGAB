@@ -20,10 +20,14 @@ Listado de Personal
                 <div class="mr-2">
                     <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
                 </div>
+
+                @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
                 <div>
                     {{-- //Botón para añadir personal --}}
                     <a href="{{ route('personal.create') }}" class="btn btn-rojo"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </a>
                 </div>
+                @endif
+
             </div>
         </div>
         {{-- // Contenedor de la tabla --}}
@@ -33,6 +37,8 @@ Listado de Personal
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información del Personal</p>
             </div>
             <div class="card-body">
+
+                @if(Accesos::ACCESO_BUSCAR_PERSONAL())
                 {{-- // Form para la paginación y para la búsqueda del personal --}}
                 <form action="{{ route('personal.listar' ) }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
@@ -63,6 +69,8 @@ Listado de Personal
                         </div>
                     </div>
                 </form>
+                @endif
+
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
 
                     <table class="table my-0" id="dataTable">
@@ -74,8 +82,9 @@ Listado de Personal
                                 <th>Cargo</th>
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
-                                <td><strong>Ver detalle<br /></strong></td>
-
+                                @if(Accesos::ACCESO_VISUALIZAR_PERSONAL())
+                                <th>Ver detalle</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -94,18 +103,15 @@ Listado de Personal
                                 <td>{{ $perso->persona->apellido.", ". $perso->persona->nombre }}</td>
                                 <td>{{ $perso->cargo }}</td>
                                 <td>{{ $perso->persona->telefono_celular }}<br /> </td>
-                                <td>
-                                    <strong>
-                                        {{ $perso->persona->correo_institucional }}
-                                    </strong>
-                                </td>
+                                <td><strong>{{ $perso->persona->correo_institucional }}</strong></td>
+                                @if(Accesos::ACCESO_VISUALIZAR_PERSONAL())
                                 <td>
                                     {{-- Botón para ver el detalle del personal --}}
                                     <strong>
                                         <a href="/personal/detalle/{{ $perso->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
-
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -117,8 +123,9 @@ Listado de Personal
                                 <td><strong>Cargo<br /></strong></td>
                                 <td><strong>Teléfono Celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
+                                @if(Accesos::ACCESO_VISUALIZAR_PERSONAL())
                                 <td><strong>Ver detalle<br /></strong></td>
-
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

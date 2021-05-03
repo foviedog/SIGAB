@@ -28,10 +28,14 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                 <div class="mr-2">
                     <a href="{{ route('graduados.listar') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
                 </div>
+
+                @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
                 <div>
-                    {{-- //Botón para añadir estudainte --}}
+                    {{-- //Botón para añadir estudiante --}}
                     <a href=" {{ route('estudiante.create') }}" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
                 </div>
+                @endif
+
             </div>
         </div>
         {{-- // Contenedor de la tabla --}}
@@ -41,8 +45,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de estudiantes </p>
             </div>
             <div class="card-body">
+                
+                @if(Accesos::ACCESO_BUSCAR_GRADUADOS())
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="{{ route('graduados.listar' ) }}" method="GET" role="form" id="item-pagina">
+                <form action="{{ route('graduados.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-3 col-sm-12 d text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
@@ -91,6 +97,8 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                         </div>
                     </div>
                 </form>
+                @endif
+
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
 
                     <table class="table my-0" id="dataTable">
@@ -102,8 +110,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                                 <th>Carrera (Principal) matriculada</th>
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
-                                <td><strong>Ver detalle<br /></strong></td>
+                                <th>Ver detalle</th>
+                                @if(Accesos::ACCESO_LISTAR_TITULACIONES()) 
                                 <th>Graduaciones</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -133,10 +143,12 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                                     </strong><br />
                                 </td>
                                 <td>
-                                    {{-- Botón para ver las guías académicas del estudiante --}}
+                                    @if(Accesos::ACCESO_LISTAR_TITULACIONES()) 
+                                    {{-- Botón para ver las graduaciones del estudiante --}}
                                     <strong>
                                         <a href="{{ route('graduado.show', $graduado->persona->persona_id ) }}" class="btn btn-contorno-rojo"> Graduaciones </a>
                                     </strong><br />
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -150,7 +162,9 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                                 <td><strong>Teléfono celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>
+                                @if(Accesos::ACCESO_LISTAR_TITULACIONES()) 
                                 <td><strong>Graduaciones<br /></strong></td>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

@@ -13,7 +13,9 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar carga académica</h3>
+        @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
         <div><a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        @endif
     </div>
     <hr>
 
@@ -29,28 +31,16 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
         </div>
     </div>
 
+    @if(Accesos::ACCESO_REGISTRAR_CARGAS_ACADEMICAS())
     {{-- Formulario para registrar informacion de la carga academica --}}
     <form action="/personal/carga-academica" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-
-        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro) --}}
-        @if(Session::has('mensaje'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('mensaje') !!}
-        </div>
-        @endif
-
-        {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la insercion) --}}
-        @php
-        $error = Session::get('error');
-        @endphp
-
-        @if(Session::has('error'))
-        <div class="alert alert-danger" role="alert">
-            {{ "¡Oops! Algo ocurrió. ".$error }}
-        </div>
-        @endif
+    @endif
+    
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
+        
         {{-- Mensaje de que muestra el objeto insertado
             (solo se muestra si ha sido exitoso el registro)  --}}
         @if(Session::has('carga_academica_insertada'))
@@ -123,11 +113,14 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
         {{-- Input oculto que envia el id del personal --}}
         <input type="hidden" name="persona_id" value="{{ $personal->persona->persona_id }}">
 
+        @if(Accesos::ACCESO_REGISTRAR_CARGAS_ACADEMICAS())
         <div class="d-flex justify-content-center pb-3">
             {{-- Boton para agregar informacion de la carga academica --}}
             <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
         </div>
     </form>
+        @endif
+        
 </div>
 @endsection
 

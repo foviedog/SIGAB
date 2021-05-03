@@ -18,11 +18,15 @@ Listado Estudiantil
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control Estudiantil</h2>
             <div class="d-flex">
                 <div class="mr-2">
-                    <a href="{{ route('listado-estudiantil' ) }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
+                    <a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
                 </div>
                 <div>
-                    {{-- //Botón para añadir estudainte --}}
-                    <a href="{{ route('estudiante.create' ) }}" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
+
+                    @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
+                    {{-- //Botón para añadir estudiante --}}
+                    <a href="{{ route('estudiante.create') }}" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -33,8 +37,10 @@ Listado Estudiantil
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de estudiantes </p>
             </div>
             <div class="card-body">
+
+                @if(Accesos::ACCESO_BUSCAR_ESTUDIANTES())
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="{{ route('listado-estudiantil' ) }}" method="GET" role="form" id="item-pagina">
+                <form action="{{ route('listado-estudiantil') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
@@ -63,6 +69,8 @@ Listado Estudiantil
                         </div>
                     </div>
                 </form>
+                @endif
+                
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
@@ -73,8 +81,12 @@ Listado Estudiantil
                                 <th>Carrera (Principal) matriculada</th>
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
-                                <td><strong>Ver detalle<br /></strong></td>
+                                @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
+                                <th>Ver detalle</th>
+                                @endif
+                                @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
                                 <th>Guía Académica</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -93,23 +105,26 @@ Listado Estudiantil
                                 <td>{{ $estudiante->persona->apellido.", ". $estudiante->persona->nombre }}</td>
                                 <td>{{ $estudiante->carrera_matriculada_1 }} </td>
                                 <td>{{ $estudiante->persona->telefono_celular }}<br /> </td>
-                                <td>
-                                    <strong>
-                                        {{ $estudiante->persona->correo_personal }}
-                                    </strong>
-                                </td>
+                                <td><strong>{{ $estudiante->persona->correo_personal }}</strong></td>
+                                
+                                @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
                                 <td>
                                     {{-- Botón para ver el detalle del estudiante --}}
                                     <strong>
                                         <a href="/estudiante/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
+                                @endif
+
+                                @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
                                 <td>
                                     {{-- Botón para ver las guías académicas del estudiante --}}
                                     <strong>
                                         <a href="/estudiante/guia-academica/listar?nombreFiltro={{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Guías </a>
                                     </strong><br />
                                 </td>
+                                @endif
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -121,8 +136,12 @@ Listado Estudiantil
                                 <td><strong>Carrera (Principal) matriculada<br /></strong></td>
                                 <td><strong>Teléfono Celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
+                                @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
                                 <td><strong>Ver detalle<br /></strong></td>
+                                @endif
+                                @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
                                 <td><strong>Guia académica<br /></strong></td>
+                                @endif
                             </tr>
                         </tfoot>
                     </table>

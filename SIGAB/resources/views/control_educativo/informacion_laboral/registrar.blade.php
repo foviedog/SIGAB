@@ -12,7 +12,11 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar información laboral</h3>
+
+        @if(Accesos::ACCESO_LISTAR_TRABAJOS())
         <div><a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        @endif
+        
     </div>
     <hr>
 
@@ -27,19 +31,16 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
         </div>
     </div>
-
+    
+    @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
     {{-- Formulario para registrar informacion laboral --}}
     <form action="/estudiante/trabajo/registrar" method="POST" role="form" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
+    @endif
 
-        {{-- Mensaje de exito
-            (solo se muestra si ha sido exitoso el registro) --}}
-        @if(Session::has('mensaje'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('mensaje') !!}
-        </div>
-        @endif
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Mensaje de que muestra el objeto insertado
             (solo se muestra si ha sido exitoso el registro)  --}}
@@ -196,11 +197,14 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}">
 
             {{-- Boton para agregar informacion laboral --}}
+            @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
             <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
-
+            @endif
         </div>
-
+    
+    @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
     </form>
+    @endif
 </div>
 @endsection
 

@@ -13,7 +13,11 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar graduación</h3>
+
+        @if(Accesos::ACCESO_LISTAR_TITULACIONES())
         <div><a href="/estudiante/graduacion/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        @endif
+        
     </div>
     <hr>
 
@@ -31,30 +35,16 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
         </div>
     </div>
 
+    @if(Accesos::ACCESO_REGISTRAR_TITULACIONES())
     {{-- Formulario para registrar informacion de la graduación --}}
     <form action="/estudiante/graduacion" method="POST" enctype="multipart/form-data" id="estudiante">
         @csrf
         @method('PATCH')
+    @endif
 
-        {{-- Mensaje de exito (solo se muestra si ha sido exitoso el registro)
-            --}}
-        @if (Session::has('mensaje'))
-        <div class="alert alert-success" role="alert" id="mensaje-exito">
-            {!! \Session::get('mensaje') !!}
-        </div>
-        @endif
-
-        {{-- Mensaje de error (solo se muestra si ha sido ocurrio algun error en la
-            insercion) --}}
-        @php
-        $error = Session::get('error');
-        @endphp
-
-        @if (Session::has('error'))
-        <div class="alert alert-danger" role="alert">
-            {{ '¡Oops! Algo ocurrió. ' . $error }}
-        </div>
-        @endif
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
+        
         {{-- Mensaje de que muestra el objeto insertado
             (solo se muestra si ha sido exitoso el registro) --}}
         @if (Session::has('graduado_insertada'))
@@ -122,12 +112,14 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
         {{-- Input oculto que envia el id del estudiante --}}
         <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}">
 
+        @if(Accesos::ACCESO_REGISTRAR_TITULACIONES())
         <div class="d-flex justify-content-center pb-3">
-            {{-- Boton para agregar informacion de la graduación
-                --}}
+            {{-- Boton para agregar informacion de la graduación --}}
             <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
         </div>
     </form>
+        @endif
+        
 </div>
 @endsection
 
