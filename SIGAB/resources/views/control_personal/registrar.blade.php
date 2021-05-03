@@ -603,7 +603,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                 <button type="submit" id="registrar-btn" class="btn btn-rojo btn-lg">Registrar</button>
             </div>
         </form>
-        @endif
+            @endif
 
     </div>
 </div>
