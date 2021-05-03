@@ -4,6 +4,8 @@ php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 
+php artisan tinker
+
 $persona = new \App\Persona();
 $persona->persona_id = '1';
 $persona->nombre = 'Dirección';
