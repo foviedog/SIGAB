@@ -55,7 +55,7 @@ Registrar guía académica
 
     @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
     {{-- Formulario para registrar informacion de la guia academica --}}
-    <form action="/estudiante/guia-academica" method="POST" enctype="multipart/form-data" id="form-guia">
+    <form action="{{ route('guia-academica.store') }}"method="POST" enctype="multipart/form-data" id="form-guia">
         @csrf
     @endif
     

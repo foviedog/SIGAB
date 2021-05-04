@@ -22,12 +22,12 @@ Graduaciones de {{ $estudiante->persona->nombre }}
             <div>
                 @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
                 {{-- Regresar al detalle del estudiante --}}
-                <a href="/estudiante/detalle/{{ $estudiante->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                <a href="{{ route('estudiante.show', $estudiante->persona->persona_id ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 @endif
                 
                 @if(Accesos::ACCESO_REGISTRAR_TITULACIONES())
                 {{-- //Botón para añadir graduación --}}
-                <a href="/estudiante/graduacion/registrar/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"> Añadir nueva graduación &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                <a href="{{ route('graduado.create', $estudiante->persona->persona_id ) }}" class="btn btn-rojo"> Añadir nueva graduación &nbsp; <i class="fas fa-plus-circle"></i> </a>
                 @endif
             </div>
         </div>

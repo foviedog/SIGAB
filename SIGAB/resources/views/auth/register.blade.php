@@ -44,7 +44,7 @@
                                 que se pueda agregar. --}}
                             @if(Session::has('persona-seleccionada'))
 
-                            <form method="POST" action="/registro" id="envio_registro">
+                            <form method="POST" action="{{ route('register') }}" id="envio_registro">
                                 @csrf
 
                                 @php
@@ -137,7 +137,7 @@
                             {{-- Alerts --}}
                             @include('layouts.messages.alerts')
 
-                            <form method="POST" action="/registroselper">
+                            <form method="POST" action="{{ route('registroselper') }}">
                                 @csrf
 
                                 {{-- Se muestran todas las personas del sistema --}}

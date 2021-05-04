@@ -139,7 +139,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                                 <td>
                                     {{-- Botón para ver el detalle del estudiante --}}
                                     <strong>
-                                        <a href="/estudiante/detalle/{{ $graduado->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
+                                        <a href="{{ route('estudiante.show', $graduado->persona->persona_id ) }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
                                 <td>
