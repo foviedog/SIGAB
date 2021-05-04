@@ -166,7 +166,7 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body" style="min-height: 240px;">
+                <div class="card-body" style="min-height: 250px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control estudiantil</h4><i class="fas fa-book texto-rojo-medio  fa-2x"></i>
                     </div>
@@ -210,7 +210,7 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded" >
-                <div class="card-body" style="min-height: 240px;">
+                <div class="card-body" style="min-height: 250px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
                     </div>
@@ -254,7 +254,7 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body"  style="min-height: 240px;">
+                <div class="card-body"  style="min-height: 250px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
                     </div>
@@ -347,7 +347,7 @@ SIGAB
                                 </div>
 
                                 <div class="link-inicio-contenedor">
-                                    <a href="{{ route('guia-academica.listar') }}" class="my-3 card-subtitle mb-3 link-inicio">
+                                    <a href="{{ route('perfil.actualizar-contrasenna') }}" class="my-3 card-subtitle mb-3 link-inicio">
                                         <i class="fas fa-caret-right texto-azul-una"></i> Cambiar contraseña</h6>
                                     </a>
                                 </div>

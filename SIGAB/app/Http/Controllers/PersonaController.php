@@ -8,6 +8,8 @@ use App\Actividades_interna;
 use App\ActividadesPromocion;
 use App\Helper\GlobalArrays;
 use App\Helper\GlobalFunctions;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class PersonaController extends Controller
 {
@@ -106,5 +108,50 @@ class PersonaController extends Controller
             'actividadesInternas' => $actividadesInternas,
             'actividadesPromocion' => $actividadesPromocion
         ]);
+    }
+
+    public function cambiarContrasenna(){
+        return view('control_perfil.contrasenna', [
+        ]);
+    }
+
+    public function actualizarContrasenna(Request $request){
+        try{
+            /* Verifica que la contraseña antigua sea igual a la registrada */
+            if(GlobalFunctions::verificarContrasennaVieja($request->old_password, auth()->user()->password)){
+                /* Verifica que la contraseña contenga los requisitos mínimos de seguridad */
+                if(GlobalFunctions::verificarContrasenna($request->new_password)){
+
+                    /* Si la contraseña cumple con los estándares, se procede a actualizarla
+                        en la base de datos encriptada.  */
+                    $persona_id = auth()->user()->persona_id;
+                    DB::table('users')
+                        ->where('persona_id', $persona_id)
+                            ->update(['password' => GlobalFunctions::hashPassword($request->new_password)]);
+
+                    /* Devuelve la página con un mensaje de éxito. */
+                    return Redirect::back()
+                            ->with('mensaje-exito', 'La contraseña se actualizó exitosamente.');
+
+                } else {
+
+                    /* Si la contraseña no cumple con los estándares acordados, se reedirige
+                    con un mensaje de error. */
+                    return Redirect::back()
+                            ->with('mensaje-error', 'La contraseña no cumple con los estándares mínimos de seguridad.');
+                }
+            } else {
+                return Redirect::back()
+                            ->with('mensaje-error', 'La contraseña antigua no coincide con nuestros registros.');
+            }
+            
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+        catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 }
