@@ -37,7 +37,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 
     @if(Accesos::ACCESO_REGISTRAR_TITULACIONES())
     {{-- Formulario para registrar informacion de la graduación --}}
-    <form action="{{ route('graduado.store') }}" method="POST" enctype="multipart/form-data" id="estudiante">
+    <form autocomplete="off" action="{{ route('graduado.store') }}" method="POST" enctype="multipart/form-data" id="estudiante">
         @csrf
         @method('PATCH')
     @endif

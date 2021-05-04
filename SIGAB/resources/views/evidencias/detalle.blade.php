@@ -135,7 +135,7 @@ $tiposDocumentos =
 
             <div class="col-6 mb-3 " id="agregar-evidencia-card">
             @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
-                <form method="POST" action="{{ route('evidencias.store') }}" id="form-evidencia" enctype="multipart/form-data">
+                <form autocomplete="off" method="POST" action="{{ route('evidencias.store') }}" id="form-evidencia" enctype="multipart/form-data">
                     @csrf
                     <div class="card shadow">
                         <div class="card-header ">

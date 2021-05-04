@@ -44,7 +44,7 @@ Trabajos de {{ $estudiante->persona->nombre }}
             </div>
             <div class="card-body">
                 {{-- Form para la paginación de la página y para la búsqueda de trabajos --}}
-                <form action="{{ route('trabajo.listar',$estudiante->persona->persona_id) }}"  method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('trabajo.listar',$estudiante->persona->persona_id) }}"  method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">

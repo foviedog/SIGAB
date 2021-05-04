@@ -21,7 +21,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
     </div>
 </header>
 {{-- Formulario general de estudiante --}}
-<form action="{{ route('perfil.update', $persona->persona_id) }}" method="POST" role="form" enctype="multipart/form-data" id="persona-form">
+<form autocomplete="off" action="{{ route('perfil.update', $persona->persona_id) }}" method="POST" role="form" enctype="multipart/form-data" id="persona-form">
     @csrf
     @method('PATCH')
 

@@ -5,7 +5,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 @endphp
 
 {{-- MODAL para agregar una persona que no se encuentra registrada en el sistema --}}
-<form method="POST" action="{{ route('lista-asistencia.storeInvitado') }}" id="form-actualizar" enctype="multipart/form-data">
+<form method="POST" autocomplete="off" action="{{ route('lista-asistencia.storeInvitado') }}" id="form-actualizar" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="agregar-invitado" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog   modal-xl modal-dialog-centered">

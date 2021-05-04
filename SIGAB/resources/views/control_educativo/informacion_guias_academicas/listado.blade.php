@@ -32,7 +32,7 @@ Listado de Guías Académicas
                 @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) 
                 <div class="mr-2">
                     {{-- Regresar al listado de estudiantes --}}
-                    <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
+                    <a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
                 </div>
                 @endif
 
@@ -63,7 +63,7 @@ Listado de Guías Académicas
 
             <div class="card-body">
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="{{ route('guia-academica.listar') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('guia-academica.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-4 text-nowrap d-flex align-items-end">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">

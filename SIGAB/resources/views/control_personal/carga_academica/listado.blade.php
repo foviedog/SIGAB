@@ -25,12 +25,12 @@ Cargas académicas de {{ $personal->persona->nombre }}
 
                 @if(Accesos::ACCESO_VISUALIZAR_PERSONAL())
                 {{-- Regresar al detalle del personal --}}
-                <a href="/personal/detalle/{{ $personal->persona->persona_id }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                <a href="{{ route('personal.show', $personal->persona->persona_id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 @endif
 
                 @if(Accesos::ACCESO_REGISTRAR_CARGAS_ACADEMICAS())
                 {{-- //Botón para añadir carga académica --}}
-                <a href="/personal/carga-academica/registrar/{{ $personal->persona->persona_id }}" class="btn btn-rojo"> Añadir nueva carga académica &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                <a href="{{ route('cargaacademica.create', $personal->persona->persona_id) }}" class="btn btn-rojo"> Añadir nueva carga académica &nbsp; <i class="fas fa-plus-circle"></i> </a>
                 @endif
                 
             </div>

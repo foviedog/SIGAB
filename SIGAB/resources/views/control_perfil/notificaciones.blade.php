@@ -65,7 +65,7 @@ Notificaciones
                                 <td>{{ $notifiacion->data['mensaje'] }}</td>
                                 <td>{{ $notifiacion->created_at }}</td>
                                 @if($notifiacion->data['idActividad'])
-                                    <td><a href="/detalle-actividad-interna/{{ $notifiacion->data['idActividad'] }}">Detalle</a></td>
+                                    <td><a href="{{ route('actividad-interna.show', $notifiacion->data['idActividad']) }}">Detalle</a></td>
                                 @endif
                                 <td>Marcar como leído</td>
                             <tr>

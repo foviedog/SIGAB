@@ -14,7 +14,7 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar carga académica</h3>
         @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
-        <div><a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        <div><a href="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
         @endif
     </div>
     <hr>
@@ -33,7 +33,7 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 
     @if(Accesos::ACCESO_REGISTRAR_CARGAS_ACADEMICAS())
     {{-- Formulario para registrar informacion de la carga academica --}}
-    <form action="{{ route('cargaacademica.store') }}" method="POST" enctype="multipart/form-data">
+    <form autocomplete="off" action="{{ route('cargaacademica.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
     @endif

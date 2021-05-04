@@ -262,13 +262,13 @@ SIGAB
 
                     @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
                     <div class="link-inicio-contenedor">
-                        <a href="/actividad-interna/registrar" class="card-subtitle mb-3 link-inicio">
+                        <a href="{{ route('actividad-interna.create') }}" class="card-subtitle mb-3 link-inicio">
                             <i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades Internas
                         </a>
                     </div>
 
                     <div class="link-inicio-contenedor">
-                        <a href="/actividad-promocion/registrar" class="card-subtitle mb-3 link-inicio">
+                        <a href="{{ route('actividad-promocion.create') }}" class="card-subtitle mb-3 link-inicio">
                             <i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades de promoción
                         </a>
                     </div>

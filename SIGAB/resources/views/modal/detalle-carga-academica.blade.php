@@ -20,7 +20,7 @@
 
                 @if(Accesos::ACCESO_MODIFICAR_CARGAS_ACADEMICAS())
                 {{-- Formulario para actualizar informacion de la graduación --}}
-                <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
+                <form autocomplete="off" method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                     @csrf
                     @method('PATCH')
                 @endif

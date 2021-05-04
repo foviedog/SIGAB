@@ -25,7 +25,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
             <div>
                 {{-- Botón para añadir actividad de promocion--}}
-                <a href="/actividad-promocion/registrar" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                <a href="{{ route('actividad-promocion.create') }}" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
             </div>
             @endif
         </div>
@@ -43,7 +43,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             <div class="card-body">
                 @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES()) 
                 {{-- Formulario para la paginación--}}
-                <form action="{{ route('actividad-promocion.listado') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('actividad-promocion.listado') }}" method="GET" role="form" id="item-pagina">
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
@@ -109,7 +109,6 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <div class="col-2 p-0">
                             <div class="d-flex justify-content-between w-100">
                                 <label for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="right" title="Buscar por fecha de INICIO de la actividad"></i></label>
-
                             </div>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
@@ -227,4 +226,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 @section('scripts')
 <script src="{{ asset('js/global/inputs.js') }}"></script>
 <script src="{{ asset('js/control_actividades_internas/listado.js') }}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection

@@ -19,7 +19,7 @@
 
                 @if(Accesos::ACCESO_MODIFICAR_TRABAJOS())
                 {{-- Formulario para actualizar informacion laboral --}}
-                <form method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
+                <form autocomplete="off" method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                     @csrf
                     @method('PATCH')
                 @endif

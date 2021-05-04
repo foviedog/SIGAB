@@ -21,7 +21,7 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
 {{-- Formulario general de estudiante --}}
 
 @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
-<form action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
+<form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
@@ -313,7 +313,7 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Información Laboral</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="/estudiante/trabajo/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo" type="button">Ver trabajos</a>
+                                                        <a href="{{ route('trabajo.listar', $estudiante->persona->persona_id) }}" class="btn btn-rojo" type="button">Ver trabajos</a>
                                                     </div>
                                                 </div>
                                             </div>

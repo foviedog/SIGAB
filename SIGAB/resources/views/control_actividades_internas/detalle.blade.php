@@ -30,7 +30,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
                     @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
                     {{-- Botón para autorizar actividad --}}
-                    <form action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
+                    <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
@@ -75,7 +75,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
         @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
         {{-- Formulario general de actualización de datos de actividad --}}
-        <form action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
+        <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
             {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
             @method('PATCH')
             {{-- Seguridad de envío de datos --}}

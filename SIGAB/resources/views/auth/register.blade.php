@@ -137,7 +137,7 @@
                             {{-- Alerts --}}
                             @include('layouts.messages.alerts')
 
-                            <form method="POST" action="{{ route('registroselper') }}">
+                            <form method="POST" autocomplete="off" action="{{ route('registroselper') }}">
                                 @csrf
 
                                 {{-- Se muestran todas las personas del sistema --}}

@@ -101,7 +101,7 @@ for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                     </div>
                     <div class="col-8 d-flex flex-column justify-content-center align-items-center">
                         <div class="w-100 mb-3"><span class="texto-azul-una" style="font-size: 18px">Rango de años</span> </div>
-                        <form action="{{ route('reportes-involucramiento.anual') }}" method="GET" class="w-100" enctype="multipart/form-data" id="rango-anios">
+                        <form autocomplete="off" action="{{ route('reportes-involucramiento.anual') }}" method="GET" class="w-100" enctype="multipart/form-data" id="rango-anios">
                             <div class="w-100 d-flex justify-content-center align-items-center">
                                 <div class="input-group">
                                     <div class="input-group-prepend">

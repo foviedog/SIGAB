@@ -40,7 +40,7 @@ Listado Estudiantil
 
                 @if(Accesos::ACCESO_BUSCAR_ESTUDIANTES())
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="{{ route('listado-estudiantil') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('listado-estudiantil') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
@@ -111,7 +111,7 @@ Listado Estudiantil
                                 <td>
                                     {{-- Botón para ver el detalle del estudiante --}}
                                     <strong>
-                                        <a href="/estudiante/detalle/{{ $estudiante->persona_id }}" class="btn btn-contorno-rojo"> Detalle </a>
+                                        <a href="{{ route('estudiante.show', $estudiante->persona_id) }}" class="btn btn-contorno-rojo"> Detalle </a>
                                     </strong><br />
                                 </td>
                                 @endif

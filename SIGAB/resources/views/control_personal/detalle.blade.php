@@ -28,7 +28,7 @@ if(is_null($idiomas)){
 
 @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 {{-- Formulario general de personal --}}
-<form action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form">
+<form autocomplete="off" action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')
@@ -474,7 +474,7 @@ if(is_null($idiomas)){
                                         <div class="form-group text-center mt-4">
                                             <label for="city"><strong>Carga académica</strong><br /></label>
                                             <div class="w-100 d-flex justify-content-center">
-                                                <a href="/personal/carga-academica/{{ $personal->persona->persona_id }}" class="btn btn-rojo" type="button">Ver carga académica</a>
+                                                <a href="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" class="btn btn-rojo" type="button">Ver carga académica</a>
                                             </div>
                                         </div>
                                         @endif
