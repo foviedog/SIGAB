@@ -41,7 +41,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 
         @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
         {{-- Formulario para registrar informacion del estudiante --}}
-        <form action="/estudiante" method="POST" enctype="multipart/form-data" id="estudiante">
+        <form action="{{ route('estudiante.store') }}" method="POST" enctype="multipart/form-data" id="estudiante">
             @csrf
         @endif
 

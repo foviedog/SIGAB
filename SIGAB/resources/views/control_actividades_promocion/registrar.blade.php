@@ -28,7 +28,7 @@ Registrar actividad de promocion
         <hr>
         @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         {{-- Formulario para registrar informacion de la actividad --}}
-        <form action="/actividad-promocion" method="POST" enctype="multipart/form-data" id="actividad-promocion" onsubmit="activarLoader('Enviando actividad');">
+        <form action="{{ route('actividad-promocion.store') }}" method="POST" enctype="multipart/form-data" id="actividad-promocion" onsubmit="activarLoader('Enviando actividad');">
             @csrf
         @endif
 

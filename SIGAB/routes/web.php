@@ -24,7 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /* Ruta para registrar usuario */
 Route::get('/register', 'RegistroController@index')->name('register');
-Route::post('/registroselper', 'RegistroController@show');
+Route::post('/registroselper', 'RegistroController@show')->name('registroselper');
 Route::post('/registro', 'RegistroController@register');
 
 /* Ruta del auth */
@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
     // ======================================================================================================================================
 
     /* Ruta de detalle del estudiante*/
-    Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show')
+    Route::get('/estudiante/detalle/{id_estudiante}', 'EstudianteController@show')->name('estudiante.show')
     ->middleware(
         'roles:
             Dirección
@@ -210,7 +210,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::post('/estudiante', 'EstudianteController@store')
+    Route::post('/estudiante', 'EstudianteController@store')->name('estudiante.store')
     ->middleware(
         'roles:
             Subdirección
@@ -220,7 +220,7 @@ Route::group(['middleware' => ['auth']], function () {
     ');
 
     /* Rutas para informacion laboral */
-    Route::get('/estudiante/trabajo/{id_estudiante}', 'TrabajoController@index')
+    Route::get('/estudiante/trabajo/{id_estudiante}', 'TrabajoController@index')->name('trabajo.listar')
     ->middleware(
         'roles:
             Dirección
@@ -241,7 +241,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::get('/estudiante/trabajo/registrar/{id_estudiante}', 'TrabajoController@create')
+    Route::get('/estudiante/trabajo/registrar/{id_estudiante}', 'TrabajoController@create')->name('trabajo.create')
     ->middleware(
         'roles:
             Subdirección
@@ -497,7 +497,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::post('/actividad-interna', 'ActividadesInternaController@store')
+    Route::post('/actividad-interna', 'ActividadesInternaController@store')->name('actividad-interna.store')
     ->middleware(
         'roles:
             Dirección
@@ -674,7 +674,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::post('/actividad-promocion', 'ActividadesPromocionController@store')
+    Route::post('/actividad-promocion', 'ActividadesPromocionController@store')->name('actividad-promocion.store')
     ->middleware(
         'roles:
             Dirección

@@ -15,7 +15,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar graduación</h3>
 
         @if(Accesos::ACCESO_LISTAR_TITULACIONES())
-        <div><a href="/estudiante/graduacion/{{ $estudiante->persona->persona_id }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        <div><a href="{{ route('graduado.show', $estudiante->persona->persona_id ) }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
         @endif
         
     </div>
@@ -37,7 +37,7 @@ Registrar información de graduaciones para {{ $estudiante->persona->nombre }}
 
     @if(Accesos::ACCESO_REGISTRAR_TITULACIONES())
     {{-- Formulario para registrar informacion de la graduación --}}
-    <form action="/estudiante/graduacion" method="POST" enctype="multipart/form-data" id="estudiante">
+    <form action="{{ route('graduado.store') }}" method="POST" enctype="multipart/form-data" id="estudiante">
         @csrf
         @method('PATCH')
     @endif

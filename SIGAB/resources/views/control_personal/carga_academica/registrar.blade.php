@@ -33,7 +33,7 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 
     @if(Accesos::ACCESO_REGISTRAR_CARGAS_ACADEMICAS())
     {{-- Formulario para registrar informacion de la carga academica --}}
-    <form action="/personal/carga-academica" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('cargaacademica.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
     @endif
