@@ -42,13 +42,14 @@
                             {{-- Esta sección se despliega si la persona que se desea agregar
                                 no tiene un usuario. Aquí se genera el formulario para
                                 que se pueda agregar. --}}
-                            @if(Session::has('persona'))
+                            @if(Session::has('persona-seleccionada'))
 
                             <form method="POST" action="/registro" id="envio_registro">
                                 @csrf
 
                                 @php
-                                $persona = Session::get('persona');
+                                $persona = Session::get('persona-seleccionada');
+                                $roles = GlobalArrays::ROLES_USUARIO;
                                 @endphp
 
                                 <div class="form-group row">
@@ -72,9 +73,9 @@
 
                                     <div class="col-md-6">
                                         <select id="rol" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol">
-                                            <option>Administrador</option>
-                                            <option>Docente</option>
-                                            <option>Asistente</option>
+                                            @foreach ($roles as $rol)
+                                                <option value="{{ $loop->index + 1 }}">{{ $rol }}</option>
+                                            @endforeach
                                         </select>
 
                                         @error('rol')
@@ -105,6 +106,8 @@
                                     </div>
                                 </div>
 
+                                 <div class="col-md-6 offset-md-4 mb-3"><strong>La contraseña debe contener mínimo 6 carácteres, tener una mayúscula, contener un número y algún carácter especial.</strong></div>
+
                                 <div class="col-md-6 offset-md-4 mb-3 text-danger" id="error_contrasenna"></div>
 
                                 <div class="form-group row mb-0">
@@ -127,23 +130,12 @@
                             @else
 
                             <div class="text-center mb-2">
-                                En este apartado se enlistan todas las personas previamente registradas en el sistema.<br>
-                                Por favor seleccione la persona a la cual se le desea crear un perfil de acceso.
+                                En este apartado se enlistan todas las personas previamente registradas en el sistema y que no cuentan <br> con un usuario asignado.<br>
+                                <br>Por favor seleccione la persona a la cual se le desea crear un perfil de acceso.
                             </div>
 
-                            {{-- Mensajes de error al tratar de registrar el usuario --}}
-                            @if(Session::has('error'))
-                                <div class="alert alert-danger" role="alert">
-                                    {{ \Session::get('error') }}
-                                </div>
-                            @endif
-
-                            {{-- Mensajes de éxito al registrar el usuario --}}
-                            @if(Session::has('exito'))
-                                <div class="alert alert-success" role="alert" id="mensaje-exito">
-                                    {{ \Session::get('exito') }}
-                                </div>
-                            @endif
+                            {{-- Alerts --}}
+                            @include('layouts.messages.alerts')
 
                             <form method="POST" action="/registroselper">
                                 @csrf

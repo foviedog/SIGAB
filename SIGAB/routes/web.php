@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     /* Ruta para acceder a mis actividades */
     Route::get('/perfil/mis-actividades', 'PersonaController@misActividades')->name('perfil.mis-actividades');
     /* Ruta de detalle del perfil*/
-    Route::get('/perfil/{persona_id}', 'PersonaController@show')->name('perfil.show');
+    Route::get('/perfil', 'PersonaController@show')->name('perfil.show');
     /* Ruta de update del perfil*/
     Route::patch('/perfil/{persona_id}', 'PersonaController@update')->name('perfil.update');
 

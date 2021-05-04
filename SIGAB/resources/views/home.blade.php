@@ -109,7 +109,7 @@ SIGAB
                                 <div class="row">
                                     {{-- Carta de personal total --}}
                                     <div class="col-lg-12 col-xl-6 py-3">
-                                        <div class="row card-info  ">
+                                        <div class="row card-info">
                                             <div class="col-3 py-4 px-0 d-flex justify-content-center">
                                                 <i class="fas fa-user fa-2x texto-rojo-medio"></i>
                                             </div>
@@ -145,7 +145,7 @@ SIGAB
                                             </div>
                                             <div class="col-8 p-0 ">
                                                 <div class="border-left">
-                                                    <div class="ml-2 texto-info">Academicos</div>
+                                                    <div class="ml-2 texto-info">Académicos</div>
                                                     <div class="ml-2 numero-info">{{ $academicos }}</div>
                                                 </div>
                                             </div>
@@ -163,36 +163,45 @@ SIGAB
 
     {{-- Cartas de resumen --}}
     <div class="row px-5 mt-5">
+
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body" style="min-height: 300px;">
+                <div class="card-body" style="min-height: 240px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control estudiantil</h4><i class="fas fa-book texto-rojo-medio  fa-2x"></i>
                     </div>
                     <hr>
 
                     @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
-                    <a href="{{ route('estudiante.create') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir estudiantes</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('estudiante.create') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Añadir estudiantes
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
-                    <a href="{{ route('listado-estudiantil') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('listado-estudiantil') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Estudiantes
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_LISTAR_GRADUADOS())
-                    <a href="{{ route('graduados.listar') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Estudiantes Graduados</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('graduados.listar') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Estudiantes Graduados
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
-                    <a href="{{ route('guia-academica.listar') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Guías académicas</h6>
-                    </a>
+                    <div>
+                        <a href="{{ route('guia-academica.listar') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Guías académicas
+                        </a>
+                    </div>
                     @endif
 
                 </div>
@@ -201,34 +210,42 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded" >
-                <div class="card-body" style="min-height: 300px;">
+                <div class="card-body" style="min-height: 240px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
                     </div>
                     <hr>
 
                     @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
-                    <a href="{{ route('personal.create') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir personal</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('personal.create') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Añadir personal
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_LISTAR_PERSONAL())
-                    <a href="{{ route('personal.listar') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Personal de la EBDI</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('personal.listar') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Personal de la EBDI
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
-                    <a href="{{ route('reportes-involucramiento.show') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte general </h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('reportes-involucramiento.show') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte general 
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
-                    <a href="{{ route('reportes-involucramiento.anual') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte anual</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('reportes-involucramiento.anual') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte anual
+                        </a>
+                    </div>
                     @endif
 
                 </div>
@@ -237,38 +254,108 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body"  style="min-height: 300px;">
+                <div class="card-body"  style="min-height: 240px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
                     </div>
                     <hr>
 
                     @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
-                    <a href="/actividad-interna/registrar">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades Internas</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="/actividad-interna/registrar" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades Internas
+                        </a>
+                    </div>
 
-                    <a href="/actividad-promocion/registrar">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades de promoción</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="/actividad-promocion/registrar" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Añadir actividades de promoción
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
-                    <a href="{{ route('actividad-interna.listado') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades Internas</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('actividad-interna.listado') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Actividades Internas
+                        </a>
+                    </div>
 
-                    <a href="{{ route('actividad-promocion.listado') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Actividades de promoción</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('actividad-promocion.listado') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Actividades de promoción
+                        </a>
+                    </div>
                     @endif
 
                     @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
-                    <a href="{{ route('reportes-actividades.show') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reportes </h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('reportes-actividades.show') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reportes 
+                        </a>
+                    </div>
                     @endif
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- Tarjeta de información personal --}}
+    <div class="container-fluid px-5">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card shadow p-3 rounded border-info-card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <i class="fas fa-users texto-rojo-medio fa-2x"></i><h4 class="font-weight-bold ml-3">Datos personales</h4>
+                        </div>
+                        <hr>
+
+                        <div class="row ">
+
+                            {{-- Datos personales --}}
+                            <div class="col text-center">
+                                <img src="{{ asset('img/fotos/'.$persona->imagen_perfil) }}" class="mb-3 img-fluid" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 10%;" />
+                                                            
+                                <div class="card-subtitle my-3">{{ $persona->nombre." ".$persona->apellido }}</div>
+                        
+                                <div class="card-subtitle font-weight-bold mb-3">{{ session()->get('rol') }}</div>
+                            
+                            </div>
+
+                            {{-- Accesos --}}
+                            <div class="col mt-4">
+
+                                <div class="link-inicio-contenedor">
+                                    <a href="{{ route('perfil.show') }}" class="my-3 card-subtitle mb-3 link-inicio link-card">
+                                        <i class="fas fa-caret-right texto-azul-una"></i> Mi perfil</h6>
+                                    </a>
+                                </div>
+
+                                <div class="link-inicio-contenedor">
+                                    <a href="{{ route('perfil.notifications') }}" class="my-3 card-subtitle mb-3 link-inicio">
+                                        <i class="fas fa-caret-right texto-azul-una"></i> Mis notificaciones
+                                    </a>
+                                </div>
+
+                                <div class="link-inicio-contenedor">
+                                    <a href="{{ route('perfil.mis-actividades') }}" class="my-3 card-subtitle mb-3 link-inicio">
+                                        <i class="fas fa-caret-right texto-azul-una"></i> Mis actividades</h6>
+                                    </a>
+                                </div>
+
+                                <div class="link-inicio-contenedor">
+                                    <a href="{{ route('guia-academica.listar') }}" class="my-3 card-subtitle mb-3 link-inicio">
+                                        <i class="fas fa-caret-right texto-azul-una"></i> Cambiar contraseña</h6>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>

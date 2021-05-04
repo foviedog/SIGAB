@@ -241,5 +241,15 @@ class GlobalArrays
         'BGE409 - Evaluación de servicios y formación de usuarios',
         'BG508 - Investigación II'
     ];
+
+    public const ROLES_USUARIO = [
+        'Dirección',
+        'Subdirección',
+        'Académica responsable de Aseguramiento de la Calidad de la Carrera',
+        'Académica responsable de SIGAB',
+        'Asistente administrativa',
+        'Secretaria',
+        'Estudiante asistente académica'
+    ];
     
 }

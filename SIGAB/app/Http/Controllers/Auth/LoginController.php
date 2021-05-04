@@ -58,10 +58,15 @@ class LoginController extends Controller
     {
         try{
             DB::connection()->getPdo();
+
             $accesos = DB::table('accesos')->where('rol_id', $user->rol)->get();
             $persona =  Persona::findOrFail($user->persona_id);
+
+            $rol = DB::table('roles')->where('id', '=', $user->rol)->get()[0]->nombre;
+
             session(['persona' => $persona]);
             session(['accesos_usuario' => $accesos]);
+            session(['rol' => $rol]);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return redirect()->route('login')//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto

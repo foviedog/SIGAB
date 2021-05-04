@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Estudiante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Persona;
 
 class HomeController extends Controller
 {
@@ -26,23 +27,27 @@ class HomeController extends Controller
     public function index()
     {
         try{
-        $array = ['estudiantesTotales'=> $this->estudiantesTotales(),
-        'graduados'=> $this->graduados(),
-        'graduacionesTotales'=> $this->graduacionesTotales(),
-        'guiasAcademicasTotales'=> $this->guiasAcademicasTotales(),
-        'personalTotal'=> $this->personalTotal(),
-        'administrativos'=> $this->administrativos(),
-        'academicos'=> $this->academicos()
-    ];
-        return view('home',$array);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            
+            $array = ['estudiantesTotales'=> $this->estudiantesTotales(),
+            'graduados'=> $this->graduados(),
+            'graduacionesTotales'=> $this->graduacionesTotales(),
+            'guiasAcademicasTotales'=> $this->guiasAcademicasTotales(),
+            'personalTotal'=> $this->personalTotal(),
+            'administrativos'=> $this->administrativos(),
+            'academicos'=> $this->academicos(),
+            'persona' => Persona::findOrFail(auth()->user()->persona_id)
+            ];
+
+            return view('home',$array);
+
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
+        catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
     private function estudiantesTotales(){
         try{

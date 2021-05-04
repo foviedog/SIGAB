@@ -35,7 +35,7 @@ class AccesosMiddleware
     }
 
     public function verificarAccesos($rol){
-        $rolUsuario = DB::table('roles')->where('id', '=', auth()->user()->rol)->get();
-        return $rol == $rolUsuario[0]->nombre;
+        $rolUsuario = session()->get('rol');
+        return $rol == $rolUsuario;
     }
 }

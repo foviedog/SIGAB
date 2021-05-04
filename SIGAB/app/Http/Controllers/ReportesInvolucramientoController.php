@@ -136,7 +136,7 @@ class ReportesInvolucramientoController extends Controller
         array_push($dataSet, $actividadesPorTipos);
         array_push($dataSet, $actividadesPorFechas);
         array_push($dataSet, $actividadesPorAmbito);
-        //!! Esto no está duplicado?
+        //!! Esto no está duplicado? NOOPE, una es de coordinacion y la otra de asistencia, rasta
         $actividadesCoorPorTipos = $this->actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesCoorPorFechas = $this->activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesCoorPorAmbito = $this->activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);

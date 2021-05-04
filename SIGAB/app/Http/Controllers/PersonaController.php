@@ -13,9 +13,12 @@ use App\Helper\GlobalArrays;
 class PersonaController extends Controller
 {
     // Método que muestra una guía específica de un estudiante.
-    public function show($persona_id)
+    public function show()
     {
         try{
+        
+        $persona_id = auth()->user()->persona_id;
+        
         if ($persona_id != session('persona')->persona_id) {
             return  abort(404);
         }
@@ -57,7 +60,7 @@ class PersonaController extends Controller
         $this->update_avatar($request, $persona);
 
         //Se retorna el detalle del estudiante ya modificado
-        return redirect("/perfil/{$persona->persona_id}");
+        return redirect("/perfil");
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
