@@ -116,7 +116,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <h3 class="texto-rojo-medio font-weight-light m-0 texto-rojo">Configuración de la cuenta </h3>
                             </div>
                             <div>
-                                {{-- Botón para regresar al listado de actividades --}}
+                                {{-- Botón para regresar a la página principal --}}
                                 <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
                                 {{-- Botón para acceder a las notificaciones --}}
                                 <a href="{{ route('perfil.notifications') }}" class="btn btn-contorno-rojo"><i class="fas fa-bell"></i> &nbsp; Notificaciones </a>

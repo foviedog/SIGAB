@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use App\Helper\GlobalArrays;
+use App\Helper\GlobalFunctions;
 use App\Persona;
 use App\User;
 
@@ -26,8 +26,8 @@ class RegistroController extends Controller
         try{
         $personas = Persona::whereNotExists(function($query){
             $query->select(DB::raw(1))
-                      ->from('users')
-                      ->whereRaw('personas.persona_id = users.persona_id');
+                    ->from('users')
+                    ->whereRaw('personas.persona_id = users.persona_id');
         })->get();
         return view('auth.register', [
             'personas' => $personas,
@@ -94,14 +94,14 @@ class RegistroController extends Controller
     public function register(Request $request){
         try{
             /* Verifica que la contraseña contenga los requisitos mínimos de seguridad */
-            if($this->verificarContrasenna($request->password)){
+            if(GlobalFunctions::verificarContrasenna($request->password)){
 
                 /* Si la contraseña cumple con los estándares, se procede a registrar
                 el usuario en la base de datos con la contraseña encriptada.  */
                 DB::table('users')
                     ->insert(['persona_id'=>$request->persona_id,
                                 'rol'=> $request->rol,
-                                    'password'=>Hash::make($request->password)]);
+                                    'password'=> GlobalFunctions::hashPassword($request->password)]);
 
                 /* Devuelve la página con un mensaje de éxito. */
                 return Redirect::back()
@@ -124,35 +124,5 @@ class RegistroController extends Controller
         }
     }
 
-    /* Método que verifica si la contraseña cumple con los estándares */
-    private function verificarContrasenna($password) {
-
-        /* La contraseña debe ser mayor a 6 carácteres */
-        if ( strlen($password) < 6 ) {
-            return false;
-        }
-
-        /* La contraseña debe tener algún número */
-        if ( !preg_match("#[0-9]+#", $password) ) {
-            return false;
-        }
-
-        /* La contraseña debe tener alguna minúscula */
-        if ( !preg_match("#[a-z]+#", $password) ) {
-            return false;
-        }
-
-        /* La contraseña debe tener alguna mayúscula */
-        if ( !preg_match("#[A-Z]+#", $password) ) {
-            return false;
-        }
-
-        /* La contraseña debe tener algún carácter especial */
-        if ( !preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $password) ) {
-            return false;
-        }
-
-        return true;
-    }
 
 }
