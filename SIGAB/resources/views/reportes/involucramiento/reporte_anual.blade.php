@@ -243,7 +243,6 @@ for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
 <script>
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     let graficosInvolucramiento = JSON.parse('{!! $graficosInvolucramiento !!}');
-
 </script>
 
 <script src="{{ asset('js/global/variablesGraficos.js') }}"></script>

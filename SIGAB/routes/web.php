@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
     ');
     
     /* Ruta para cambiar imagen del estudiante*/
-    Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar')
+    Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar')->name('estudiante.update.avatar')
     ->middleware(
         'roles:
             Subdirección
@@ -250,7 +250,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::get('/estudiante/trabajo/obtener/{id_trabajo}', 'TrabajoController@edit')
+    Route::get('/estudiante/trabajo/obtener/{id_trabajo}', 'TrabajoController@edit')->name('trabajo.edit')
     ->middleware(
         'roles:
             Dirección
@@ -262,7 +262,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::patch('/estudiante/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update')
+    Route::patch('/estudiante/trabajo/actualizar/{id_trabajo}', 'TrabajoController@update')->name('trabajo.update')
     ->middleware(
         'roles:
             Subdirección
@@ -311,7 +311,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@edit')
+    Route::get('/estudiante/graduacion/obtener/{id_graduacion}', 'GraduadoController@edit')->name('graduado.edit')
     ->middleware(
         'roles:
             Dirección
@@ -323,7 +323,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update')
+    Route::patch('/estudiante/graduacion/actualizar/{id_graduacion}', 'GraduadoController@update')->name('graduado.update')
     ->middleware(
         'roles:
             Subdirección
@@ -390,7 +390,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::get('/personal/obtener/{id_personal}', 'PersonalController@edit')
+    Route::get('/personal/obtener/{id_personal}', 'PersonalController@edit')->name('personal.edit')
     ->middleware(
         'roles:
             Dirección
@@ -413,7 +413,7 @@ Route::group(['middleware' => ['auth']], function () {
     ');
 
     /* Ruta para cambiar imagen del personal*/
-    Route::post('/personal/imagen/cambiar', 'PersonalController@update_avatar')
+    Route::post('/personal/imagen/cambiar', 'PersonalController@update_avatar')->name('personal.update.avatar')
     ->middleware(
         'roles:
             Dirección
@@ -569,7 +569,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::get('/lista-asistencia/participante/{participante_id}', 'ListaAsistenciaController@obtenerParticipante')
+    Route::get('/lista-asistencia/participante/{participante_id}', 'ListaAsistenciaController@obtenerParticipante')->name('lista-asistencia.edit')
     ->middleware(
         'roles:
             Dirección
@@ -746,7 +746,7 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
-    Route::get('/lista-asistencia-promocion/participante/{participante_id}', 'AsistenciaPromocionController@obtenerParticipante')
+    Route::get('/lista-asistencia-promocion/participante/{participante_id}', 'AsistenciaPromocionController@obtenerParticipante')->name('asistencia-promocion.edit')
     ->middleware(
         'roles:
             Dirección
@@ -858,5 +858,9 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de Aseguramiento de la Calidad de la Carrera
             Académica responsable de SIGAB
     ');
+    
+    //Esta ruta genera un script que protege que algunos datos sensibles sean visibles directamente en
+    //el código fuente de la página
+    Route::get('/js-modules/scriptglobal.js', 'HomeController@scriptGeneral')->name('script.global');
     
 });

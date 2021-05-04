@@ -6,6 +6,7 @@ use App\Estudiante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Persona;
+use App\Helper\GlobalFunctions;
 
 class HomeController extends Controller
 {
@@ -113,4 +114,14 @@ class HomeController extends Controller
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }  
     }
+
+    public function scriptGeneral(){
+        $usuario_id = auth()->user()->id;
+        $rutas = GlobalFunctions::rutas();
+        return view('layouts.script',[
+            'usuario_id' => $usuario_id,
+            'rutas' => json_encode($rutas, JSON_UNESCAPED_SLASHES)
+        ]);
+    }
+
 }

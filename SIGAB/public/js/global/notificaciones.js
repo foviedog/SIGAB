@@ -15,7 +15,7 @@ cargarNotificaciones();
 function cargarNotificaciones(){
     $.ajax({
         url:
-            "/perfil/cant-notificaciones",
+            rutas['perfil.cant.notifications'],
         dataType: "json",
         method: "GET",
         success: function(notificaciones) {

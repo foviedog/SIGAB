@@ -58,14 +58,13 @@
 
         {{-- Scripts globales --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{{route('script.global')}}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/plantilla/ebdi.js') }}"></script>
-        <script> let user_id = "{{ Auth::user()->id }}"; </script>
         <script src="{{ asset('js/global/notificaciones.js') }}"></script>
         <script src="{{ asset('js/global/mensajes.js') }}" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/39f4ebbbea.js" crossorigin="anonymous"></script>
         @yield('scripts')
-
     </body>
 
 </html>

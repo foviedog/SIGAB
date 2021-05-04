@@ -17,6 +17,16 @@ class GlobalFunctions
         return false;
     }
 
+    public static function rutas(){
+        $rutas = app('router')->getRoutes();
+
+        foreach ($rutas as $ruta) {
+            $nombres[$ruta->getName()] = $ruta->uri();
+        }
+
+        return $nombres; 
+    }
+
     public static function actualizarFotoPerfil($avatar, $persona){
         $archivo = time() . '.' . $avatar->getClientOriginalExtension();
         Image::make($avatar)->crop(300, 300)->save(public_path('/img/fotos/' . $archivo));
