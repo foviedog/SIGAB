@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
-use Image;
 use App\Persona;
 use App\Estudiante;
 use App\Guias_academica;
 use App\Helper\GlobalArrays;
+use App\Helper\GlobalFunctions;
 
 class EstudianteController extends Controller
 {
@@ -193,24 +192,17 @@ class EstudianteController extends Controller
     public function update_avatar($request, $estudiante)
     {
         try{
-        if ($request->hasFile('avatar')) {
 
-            $avatar = $request->file('avatar');
-            $archivo = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(500, 640)->save(public_path('/img/fotos/' . $archivo));
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                GlobalFunctions::actualizarFotoPerfil($avatar, $estudiante->persona); //Se llama el metodo global que actualiza la imagen
+            }
 
-            if ($estudiante->persona->imagen_perfil != "default.jpg")
-                File::delete(public_path('/img/fotos/' . $estudiante->persona->imagen_perfil)); //Elimina la foto anterior
-
-            $estudiante->persona->imagen_perfil = $archivo;
-            $estudiante->persona->save();
-        }
-
-        return \Redirect::back();
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
+            return \Redirect::back();
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back()//se redirecciona a la pagina anteriror
+                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }    
     }
     
 

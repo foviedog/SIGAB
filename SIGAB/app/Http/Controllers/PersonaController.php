@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use Illuminate\Http\Request;
 use App\Persona;
-use Image;
 use App\Actividades_interna;
 use App\ActividadesPromocion;
 use App\Helper\GlobalArrays;
+use App\Helper\GlobalFunctions;
 
 class PersonaController extends Controller
 {
@@ -74,16 +73,8 @@ class PersonaController extends Controller
     private function update_avatar($request, $persona)
     {
         if ($request->hasFile('avatar')) {
-
             $avatar = $request->file('avatar');
-            $archivo = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(500, 640)->save(public_path('/img/fotos/' . $archivo));
-
-            if ($persona->imagen_perfil != "default.jpg")
-                File::delete(public_path('/img/fotos/' . $persona->imagen_perfil)); //Elimina la foto anterior
-
-            $persona->imagen_perfil = $archivo;
-            $persona->save();
+            GlobalFunctions::actualizarFotoPerfil($avatar, $persona);
         }
 
         return \Redirect::back();

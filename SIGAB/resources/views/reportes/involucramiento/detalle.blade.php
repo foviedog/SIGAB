@@ -198,7 +198,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
                     <div class="container-fluid mt-5 mb-5 pt-2 pb-5" id="seccion-graficos" style="width: 90%">
 
-                        <div class="display-5 w-75 texto-rojo-medio pb-1">
+                        <div class="display-5 texto-rojo-medio pb-1 text-center">
                             <h2>Gráficos para medir el involucramiento de {{ $nombre }}</h2>
                         </div>
 

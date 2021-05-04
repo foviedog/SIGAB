@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
 use App\Persona;
 use App\Personal;
 use App\Idioma;
 use App\Participacion;
 use App\Helper\GlobalArrays;
+use App\Helper\GlobalFunctions;
 
 class PersonalController extends Controller
 {
@@ -184,16 +183,11 @@ try{
     {
         //En caso de que se haya subido alguna foto con el request se procede a guardarlo en el repositorio de imagenes de perfil
         if ($request->hasFile('avatar')) {
-
+            
             $avatar = $request->file('avatar'); // Se obtiene el objeto que viene en el request y se guarda dentro de una variable
-            $archivo = time() . '.' . $avatar->getClientOriginalExtension(); // Se toma la hora y la extensión del archivo que se subió (.jpg,png,etc..)
-            Image::make($avatar)->resize(500, 640)->save(public_path('/img/fotos/' . $archivo)); // Se utiliza la herramienta de Image para que todas las imágenes se guarden en el mismo formato
-
-            if ($personal->persona->imagen_perfil != "default.jpg") // En caso de que *NO* se haya establecido una imagen por defecto
-                File::delete(public_path('/img/fotos/' . $personal->persona->imagen_perfil)); //Elimina la foto anterior para que no queden archivos "basura"
-
-            $personal->persona->imagen_perfil = $archivo; //Se le setea a la persona el nombre de la imagen de perfil con el formato especificado anteriormente (fecha.extension)
-            $personal->persona->save(); //Se guarda el atributo en la BD
+            
+            GlobalFunctions::actualizarFotoPerfil($avatar, $personal->persona); //Se llama el metodo global que actualiza la imagen
+        
         }
     }
 
