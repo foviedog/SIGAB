@@ -82,7 +82,7 @@ Asistencia a {{ $actividad->tema }}
 
             @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
             <div class="col-6" id="nuevoParticipante">
-                <form action="{{ route('asistencia-promocion.store') }}" enctype="multipart/form-data" method="POST">
+                <form autocomplete="off" action="{{ route('asistencia-promocion.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
                     <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">

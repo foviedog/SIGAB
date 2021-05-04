@@ -41,7 +41,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 
         @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
         {{-- Formulario para registrar informacion del estudiante --}}
-        <form action="{{ route('estudiante.store') }}" method="POST" enctype="multipart/form-data" id="estudiante">
+        <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante">
             @csrf
         @endif
 
@@ -77,7 +77,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a clas="btn btn-rojo" href="/estudiante/detalle/{{ $cedula }}">
+                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $cedula) }}">
                             <input type="button"
                             @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) 
                             value="Editar" 

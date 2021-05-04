@@ -31,7 +31,7 @@
                     </div>
 
                     @if(Accesos::ACCESO_MODIFICAR_GUIAS_ACADEMICAS())
-                    <form action="" method="post" id="form-actualizar" enctype="multipart/form-data">
+                    <form autocomplete="off" action="" method="post" id="form-actualizar" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                     @endif

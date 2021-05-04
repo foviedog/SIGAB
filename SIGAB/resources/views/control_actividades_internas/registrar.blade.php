@@ -29,7 +29,7 @@ Registrar actividad interna
         <hr>
         @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         {{-- Formulario para registrar informacion de la actividad --}}
-        <form action="{{ route('actividad-interna.store') }}" method="POST" enctype="multipart/form-data" id="actividad-interna" onsubmit="activarLoader('Enviando actividad');">
+        <form autocomplete="off" action="{{ route('actividad-interna.store') }}" method="POST" enctype="multipart/form-data" id="actividad-interna" onsubmit="activarLoader('Enviando actividad');">
             @csrf
         @endif
 

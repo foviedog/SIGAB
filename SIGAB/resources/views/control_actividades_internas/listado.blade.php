@@ -29,7 +29,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                 @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
                 {{-- Botón para añadir actividad interna--}}
-                <a href="/actividad-interna/registrar" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                <a href="{{ route('actividad-interna.create') }}" class="btn btn-rojo"> Añadir Actividad &nbsp; <i class="fas fa-plus-circle"></i> </a>
                 @endif
 
             </div>
@@ -48,7 +48,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             <div class="card-body">
                 @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES())
                 {{-- Formulario para la paginación--}}
-                <form action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina">
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">

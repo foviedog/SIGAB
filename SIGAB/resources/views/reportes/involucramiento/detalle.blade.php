@@ -126,7 +126,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
                     <hr>
 
-                    <form action="{{ route('reportes-involucramiento.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
+                    <form autocomplete="off" action="{{ route('reportes-involucramiento.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
 
                         <div class="row d-flex justify-content-center my-3">
                             <div class="display-5 w-75 texto-rojo-medio pb-5">

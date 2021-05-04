@@ -34,7 +34,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
     
     @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
     {{-- Formulario para registrar informacion laboral --}}
-    <form action="{{ route('trabajo.store') }}" method="POST" role="form" enctype="multipart/form-data">
+    <form autocomplete="off" action="{{ route('trabajo.store') }}" method="POST" role="form" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
     @endif

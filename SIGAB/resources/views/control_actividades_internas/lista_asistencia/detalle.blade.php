@@ -176,7 +176,7 @@ Asistencia a {{ $actividad->tema }}
                                 <button href="" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
                             </div>
                         </div>
-                        <form action="{{ route('lista-asistencia.show',$actividad->id) }}" method="GET" id="form-busqueda">
+                        <form autocomplete="off" action="{{ route('lista-asistencia.show',$actividad->id) }}" method="GET" id="form-busqueda">
                             <div class="row pt-3 px-3">
                                 <div class="col-md-6 text-nowrap">
                                     <div class="" aria-controls="dataTable">

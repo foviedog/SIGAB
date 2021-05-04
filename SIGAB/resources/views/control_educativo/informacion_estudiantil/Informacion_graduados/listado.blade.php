@@ -48,7 +48,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                 
                 @if(Accesos::ACCESO_BUSCAR_GRADUADOS())
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
-                <form action="{{ route('graduados.listar') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('graduados.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-3 col-sm-12 d text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
