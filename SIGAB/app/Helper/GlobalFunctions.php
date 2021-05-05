@@ -21,7 +21,7 @@ class GlobalFunctions
         $rutas = app('router')->getRoutes();
 
         foreach ($rutas as $ruta) {
-            $nombres[$ruta->getName()] = $ruta->uri();
+            $nombres[$ruta->getName()] = "/".$ruta->uri();
         }
 
         return $nombres; 

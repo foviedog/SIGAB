@@ -7,11 +7,11 @@ toastr.options = {
     "fadeIn": 300,
     "fadeOut": 1000,
     "timeOut": 10000,
-    "extendedTimeOut": 1000
+    "extendedTimeOut": 2500
 }
 
 cargarNotificaciones();
-
+console.log(rutas);
 function cargarNotificaciones(){
     $.ajax({
         url:
@@ -66,7 +66,9 @@ Echo.private('App.User.'+ user_id)
             dataType: "json",
             method: "GET",
             success: function(notificaciones) {
-                if(notificaciones.length == 0){
+                console.log("Mira vos");
+                cargarNotificaciones();
+                /*if(notificaciones.length == 0){
                     $("#numero-notificaciones").html("0");
                     div = $("<div>").addClass("dropdown-item ver-mas-notificaciones")
                             .html("<a href='/perfil/notificaciones'>Ver notificaciones</a>");
@@ -97,7 +99,7 @@ Echo.private('App.User.'+ user_id)
                         div = $("<div>").addClass("dropdown-item ver-mas-notificaciones").html("<a href='/perfil/notificaciones'>Ver todas las notificaciones...</a>");
                         $("#espacio-notificaciones").append(div);
                     }
-                }
+                }*/
             }
         });
         toastr.info(notification.mensaje);

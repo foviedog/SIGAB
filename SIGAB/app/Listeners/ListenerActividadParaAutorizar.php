@@ -31,7 +31,7 @@ class ListenerActividadParaAutorizar
     {
 
         $usuarios = User::where('rol', '=', '1')->get();
-
+        //dd($event->actividad);
         foreach ($usuarios as $usuario) {
             $usuario->notify(new NotificacionActividadParaAutorizar($event->actividad));
         }
