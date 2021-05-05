@@ -45,7 +45,7 @@ function evtBuscarResponsable() {
         } else {
             $("#responsable-encontrado").val("true");
             $.ajax({
-                url: "/personal/obtener/" + $("#cedula-responsable").val(),
+                url: rutas['personal.edit'] + $("#cedula-responsable").val(),
                 type: "GET",
                 success: function(responsable) {
                     llenarTargetaResponsable(responsable);

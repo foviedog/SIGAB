@@ -27,7 +27,7 @@ $("#detalle-graduacion-modal").on("show.bs.modal", function(event) {
 
     //Método en AJAX que trae la información de la graduación desde el servidor
     $.ajax({
-        url: "/estudiante/graduacion/obtener/" + id,
+        url: rutas['graduado.edit'] + id,
         type: "GET",
         success: function(response) {
             if (response) {

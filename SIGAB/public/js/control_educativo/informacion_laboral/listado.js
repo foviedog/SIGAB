@@ -26,7 +26,7 @@ $('#detalle-trabajo-modal').on('show.bs.modal', function (event) {
 
     //Método en AJAX que trae la información del trabajo desde el servidor
     $.ajax({
-        url: "/estudiante/trabajo/obtener/" + id,
+        url: rutas['trabajo.edit'] + id,
         type: "GET",
         success: function(response) {
             if (response) {

@@ -62,7 +62,7 @@ Echo.private('App.User.'+ user_id)
     .notification((notification) => {
         $.ajax({
             url:
-                "/perfil/cant-notificaciones",
+            rutas['perfil.cant.notifications'],
             dataType: "json",
             method: "GET",
             success: function(notificaciones) {

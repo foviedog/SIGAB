@@ -25,7 +25,7 @@ $('#detalle-carga_academica-modal').on('show.bs.modal', function (event) {
 
     //Método en AJAX que trae la información de la carga academica desde el servidor
     $.ajax({
-        url: "/personal/carga-academica/obtener/" + id,
+        url: rutas['cargaacademica.edit'] + id,
         type: "GET",
         success: function(response) {
             if (response) {

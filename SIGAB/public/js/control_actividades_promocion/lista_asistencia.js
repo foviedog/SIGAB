@@ -64,7 +64,7 @@ function mostrar2Info(boton) {
     var id = boton.id.split("mostrar2-")[1];
     var idActividad = $("#"+idBtn).data("idactividad");
     $.ajax({
-        url: "/lista-asistencia-promocion/participante/" + id +"?actividadId="+idActividad,
+        url: rutas['asistencia-promocion.edit'] + id +"?actividadId="+idActividad,
         method: "GET",
         success: function(participante) {
             llenarModalParticipante(participante);

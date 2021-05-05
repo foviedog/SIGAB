@@ -26,7 +26,7 @@ $('#detalle-guia-modal').on('show.bs.modal', function (event) {
     var id = button.data('idguia') // Extract info from data-* attributes
 
     $.ajax({
-        url: "/estudiante/guia-academica/" + id,
+        url: rutas['guia-academica.show'] + id,
         type: "GET",
         success: function(response) {
             if (response) {
@@ -92,7 +92,7 @@ $('#crear-guia-modal').on('click', function (event) {
         });
     } else {
     $.ajax({
-        url: "/estudiante/guia-academica/registrar/" + id,
+        url: rutas['guia-academica.create'] + id,
         type: "GET",
         success: function() {
             window.location.href = "/estudiante/guia-academica/registrar/" + id +"?aceptado=true";

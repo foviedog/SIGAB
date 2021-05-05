@@ -72,7 +72,7 @@ function evtBuscarParticipante() {
         } else {
             $.ajax({
                 url:
-                    "/lista-asistencia/participante/" +
+                rutas['lista-asistencia.edit'] +
                     $("#cedula-participante").val(),
                 dataType: "json",
                 method: "GET",
@@ -104,7 +104,7 @@ function evtAgregarParticipante() {
 
             $.ajax({
                 method: "POST",
-                url: "/lista-asistencia",
+                url: rutas['lista-asistencia.store'],
                 dataType: "json",
                 data: {
                     participante_id: $("#participante-encontrado").val(),
@@ -133,7 +133,7 @@ function evtAgregarParticipante() {
 function mostrarInfo(boton) {
     var id = boton.id.split("mostrar-")[1];
     $.ajax({
-        url: "/lista-asistencia/participante/" + id,
+        url: rutas['lista-asistencia.edit'] + id,
         dataType: "json",
         method: "GET",
         success: function(participante) {
