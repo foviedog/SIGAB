@@ -1,16 +1,21 @@
+
+
 function mostrarBusquedaAvanzada(checkbox) {
     if (checkbox.checked == true) {
         $("#busqAvanzada").show();
-    } else {
+    } else if (checkbox.checked == false) {
         $("#busqAvanzada").hide();
     }
 }
+
 
 function eliminarFechas(input) {
     $("#rango_fechas").val("");
 }
 
+
 if($("#checkAvanzada").is(':checked')){
-mostrarBusquedaAvanzada(this);   
+    $("#busqAvanzada").show(); 
 }
+
 

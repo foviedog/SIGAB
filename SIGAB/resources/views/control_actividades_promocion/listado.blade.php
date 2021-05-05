@@ -57,7 +57,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                             </div>
                             {{-- Checkbox para escoger la busqueda avanzada --}}
                             <div class="custom-control custom-checkbox mr-5">
-                                <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" onchange="mostrarBusquedaAvanzada(this);">
+                                <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" onchange="mostrarBusquedaAvanzada(this);" <?php if(isset($_GET['checkAvanzada'])) echo "checked='checked'"; ?>>
                                 <label class="custom-control-label" for="checkAvanzada">Busqueda avanzada</label>
                             </div>
                         </div>
