@@ -80,6 +80,7 @@ try{
             $graduados = $this->obtenerGraduados($itemsPagina);
         }
 
+        //dd($anio);
 
         //se devuelve la vista con los atributos de paginación de los estudiante
         return view('control_educativo.informacion_estudiantil.informacion_graduados.listado', [

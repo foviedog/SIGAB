@@ -10,8 +10,8 @@ Listado de Graduados
 
 @php
 $anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { 
-    array_push($anios,$anio); 
+for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) { 
+    array_push($anios,$anio2); 
 } 
 @endphp 
 
@@ -70,10 +70,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) {
                                     <i class="far fa-question-circle fa-lg" data-toggle="tooltip" data-placement="bottom" title="Ver estudiantes graduados en un año determinado"></i>
                                     &nbsp;&nbsp;
 
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="anio">
+                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="anio" >
                                         <option value=' '>Sin seleccionar</option>
-                                        @foreach($anios as $anio)
-                                        <option value={{ $anio }}>{{ $anio }}</option>
+                                        @foreach($anios as $anio2)
+                                        <option  value="{{ $anio2 }}" @if ( $anio != null) @if ( $anio2==$anio) selected @endif @endif> {{ $anio2 }} </option>                                        
                                         @endforeach
                                     </select>
 
