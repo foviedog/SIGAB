@@ -3,6 +3,7 @@
 function mostrarBusquedaAvanzada(checkbox) {
     if (checkbox.checked == true) {
         $("#busqAvanzada").show();
+        $("#rango_fechas").val("");
     } else if (checkbox.checked == false) {
         $("#busqAvanzada").hide();
     }
