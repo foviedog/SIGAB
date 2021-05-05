@@ -11,7 +11,7 @@ toastr.options = {
 }
 
 cargarNotificaciones();
-console.log(rutas);
+//console.log(rutas);
 function cargarNotificaciones(){
     $.ajax({
         url:
