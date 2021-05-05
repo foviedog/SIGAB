@@ -58,6 +58,8 @@ function cargarNotificaciones(){
     });
 }
 
+//toastr.info("Iván Esteban Chinchilla Córdoba ha enviando una actividad para autorización.", "Nueva notificación");
+
 Echo.private('App.User.'+ user_id)
     .notification((notification) => {
         $.ajax({
@@ -66,7 +68,6 @@ Echo.private('App.User.'+ user_id)
             dataType: "json",
             method: "GET",
             success: function(notificaciones) {
-                console.log("Mira vos");
                 cargarNotificaciones();
                 /*if(notificaciones.length == 0){
                     $("#numero-notificaciones").html("0");
@@ -102,5 +103,5 @@ Echo.private('App.User.'+ user_id)
                 }*/
             }
         });
-        toastr.info(notification.mensaje);
+        toastr.info(notification.mensaje, "Nueva notificación");
 });
