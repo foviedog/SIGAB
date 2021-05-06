@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helper\GlobalArrays;
+use App\Helper\Accesos;
+use App\Events\EventActividadParaAutorizar;
+use App\Actividades_interna;
 use App\Actividades;
 use App\Personal;
-use App\Actividades_interna;
-use App\Helper\Accesos;
-use App\Helper\GlobalArrays;
-
-use App\Events\EventActividadParaAutorizar;
 
 class ActividadesInternaController extends Controller
 {

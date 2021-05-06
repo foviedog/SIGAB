@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Persona;
-use App\Graduado;
-use App\Estudiante;
-use App\Guias_academica;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use App\Graduado;
+use App\Persona;
+use App\Estudiante;
+use App\Guias_academica;
 
 class GraduadoController extends Controller
 {

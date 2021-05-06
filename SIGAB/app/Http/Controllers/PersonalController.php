@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-use App\Persona;
+use App\Helper\GlobalFunctions;
+use App\Helper\GlobalArrays;
 use App\Personal;
+use App\Persona;
 use App\Idioma;
 use App\Participacion;
-use App\Helper\GlobalArrays;
-use App\Helper\GlobalFunctions;
 
 class PersonalController extends Controller
 {

@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actividades_interna;
-use App\ActividadesPromocion;
-use App\Actividades;
-use App\ListaAsistencia;
-use Carbon\Carbon;
-use App\Personal;
-use App\Persona;
 use App\Helper\GlobalArrays;
+use App\ActividadesPromocion;
+use Carbon\Carbon;
 use DB;
+use App\Personal;
+use App\ListaAsistencia;
+use App\Persona;
+use App\Actividades;
 
 class ReportesInvolucramientoController extends Controller
 {

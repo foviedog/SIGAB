@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Estudiante;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Persona;
 use App\Helper\GlobalFunctions;
+use App\Persona;
+use App\Estudiante;
 
 class HomeController extends Controller
 {

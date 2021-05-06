@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Actividades_interna;
-use App\ActividadesPromocion;
-use App\Actividades;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
+use App\Helper\GlobalArrays;
+use Carbon\Carbon;
 use DateTime;
 use PDF;
-use App\Helper\GlobalArrays;
+use App\Actividades;
+use App\Actividades_interna;
+use App\ActividadesPromocion;
 
 class ReportesActividadesController extends Controller
 {

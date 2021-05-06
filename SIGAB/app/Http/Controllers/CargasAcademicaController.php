@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Personal;
-use App\Cargas_academica;
 use Illuminate\Support\Facades\Redirect;
 use App\Helper\GlobalArrays;
+use App\Cargas_academica;
+use App\Personal;
 
 class CargasAcademicaController extends Controller
 {

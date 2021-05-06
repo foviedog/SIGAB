@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\notificarAgregarTrabajo;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Estudiante;
+use App\Events\notificarAgregarTrabajo;
 use App\Trabajo;
+use App\Estudiante;
 
 class TrabajoController extends Controller
 {
