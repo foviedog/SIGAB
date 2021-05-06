@@ -31,7 +31,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
             <h2>Registrar información del estudiante</h2>
             <div>
 
-                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) 
+                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
                 <div><a href="{{ route('listado-estudiantil') }}" class="btn btn-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Regresar</a></div>
                 @endif
 
@@ -43,7 +43,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
         {{-- Formulario para registrar informacion del estudiante --}}
         <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante">
             @csrf
-        @endif
+            @endif
 
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
@@ -78,13 +78,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
                         <a clas="btn btn-rojo" href="{{ route('estudiante.show', $cedula) }}">
-                            <input type="button"
-                            @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) 
-                            value="Editar" 
-                            @else
-                            value="Detalle"
-                            @endif
-                            class="btn btn-rojo">
+                            <input type="button" @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
                         </a>
                         <br>
 
@@ -154,7 +148,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->apellido ?? '' }}"required>
+                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->apellido ?? '' }}" required>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_apellido"></span>
@@ -230,10 +224,10 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select id="estado_civil" name="estado_civil" class="form-control" required >
+                            <select id="estado_civil" name="estado_civil" class="form-control" required>
                                 <option value="" selected>Sin seleccionar</option>
                                 @foreach($estadosCiviles as $estadoCivil)
-                                <option value='{{ $estadoCivil }}'  @if ( $persona_no_insertada != null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif >  {{ $estadoCivil }}</option>
+                                <option value='{{ $estadoCivil }}' @if ( $persona_no_insertada !=null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif > {{ $estadoCivil }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -245,7 +239,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required> {{ $persona_no_insertada->direccion_residencia ?? '' }}  </textarea>
+                            <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required> {{ $persona_no_insertada->direccion_residencia ?? '' }} </textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -259,11 +253,11 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="genero">Género: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select id="genero" name="genero" class="form-control w-100" required >
+                            <select id="genero" name="genero" class="form-control w-100" required>
                                 <option value="" selected>Sin seleccionar</option>
-                                <option value="M" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
-                                <option value="F" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
-                                <option value="Otro" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
+                                <option value="M" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
+                                <option value="F" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
+                                <option value="Otro" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
                             </select>
                         </div>
                     </div>
@@ -274,7 +268,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="direccion_lectivo">Dirección en tiempo lectivo: </label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCaracteres(this,250)" > {{ $estudiante_no_insertado->direccion_lectivo ?? '' }} </textarea>
+                            <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCaracteres(this,250)"> {{ $estudiante_no_insertado->direccion_lectivo ?? '' }} </textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio o apartamento en el que reside durante los ciclos lectivos"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -306,9 +300,9 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="tipo_colegio_procedencia">Tipo colegio de procedencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" class="form-control" required >
+                            <select id="tipo_colegio_procedencia" name="tipo_colegio_procedencia" class="form-control" required>
                                 @foreach($colegiosProcedencias as $colegioProcedencia)
-                                <option value="{{ $colegioProcedencia }}" @if ( $estudiante_no_insertado != null) @if ( $colegioProcedencia==$estudiante_no_insertado->tipo_colegio_procedencia) selected @endif @endif > {{ $colegioProcedencia }} </option>
+                                <option value="{{ $colegioProcedencia }}" @if ( $estudiante_no_insertado !=null) @if ( $colegioProcedencia==$estudiante_no_insertado->tipo_colegio_procedencia) selected @endif @endif > {{ $colegioProcedencia }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -334,7 +328,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_ebdi">Año de ingreso a la EBDI: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? null }}" required>
+                            <input type='date' class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? null }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -348,7 +342,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_una">Año de ingreso a la UNA: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date'  class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? null  }}"  required>
+                            <input type='date' class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? null  }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -362,7 +356,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_desercion">Año de deserción:</label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="0" max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_desercion ?? '' }}">
+                            <input type='number' min="0" max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_desercion ?? '' }}">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que desertó de la carrera, si no lo ha hecho, se debe dejar el espacio vacío"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -376,9 +370,9 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="tipo_beca">Tipo de beca: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <select id="tipo_beca" name="tipo_beca" class="form-control" required >
+                            <select id="tipo_beca" name="tipo_beca" class="form-control" required>
                                 @foreach($tiposBecas as $tipoBeca)
-                                <option value="{{ $tipoBeca }}" @if ( $estudiante_no_insertado != null) @if ( $tipoBeca==$estudiante_no_insertado->tipo_beca) selected @endif @endif > {{ $tipoBeca }} </option>
+                                <option value="{{ $tipoBeca }}" @if ( $estudiante_no_insertado !=null) @if ( $tipoBeca==$estudiante_no_insertado->tipo_beca) selected @endif @endif > {{ $tipoBeca }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -432,7 +426,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_graduacion_estimado_1">Año de graduación estimado 1: </label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_graduacion_estimado_1 ?? '' }}">
+                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_graduacion_estimado_1 ?? '' }}">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -446,7 +440,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_graduacion_estimado_2">Año de graduación estimado 2:</label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_graduacion_estimado_2 ?? '' }}">
+                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_graduacion_estimado_2 ?? '' }}">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera matriculada 2"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -494,7 +488,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                 <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
             </div>
         </form>
-            @endif
+        @endif
 
     </div>
 </div>

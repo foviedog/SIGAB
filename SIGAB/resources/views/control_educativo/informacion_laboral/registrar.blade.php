@@ -16,7 +16,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
         @if(Accesos::ACCESO_LISTAR_TRABAJOS())
         <div><a href="{{ route('trabajo.listar', $estudiante->persona->persona_id) }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
         @endif
-        
+
     </div>
     <hr>
 
@@ -31,13 +31,13 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
             <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
         </div>
     </div>
-    
+
     @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
     {{-- Formulario para registrar informacion laboral --}}
     <form autocomplete="off" action="{{ route('trabajo.store') }}" method="POST" role="form" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-    @endif
+        @endif
 
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
@@ -77,132 +77,161 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
         @endif
 
-        <div class="container w-75">
+        <div class="row">
 
-            {{-- Campo: Nombre de la organizacion --}}
-            <div class="d-flex justify-content-center flex-column mt-3">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="nombre_organizacion">Nombre de la organización<i class="text-danger">*</i></label>
+            {{-- Campos de la izquierda --}}
+
+            <div class="col">
+                {{-- Campo: Nombre de la organizacion --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="nombre_organizacion">Nombre de la organización: <i class="text-danger">*</i></label>
+                    </div>
+                    <div class="col-6">
+                        <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeyup="contarCaracteres(this,100)" required>
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_nombre_organizacion"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeyup="contarCaracteres(this,100)" required>
                 </div>
-            </div>
 
-            {{-- Campo: Tipo de organizacion --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <label for="tipo_organizacion">Tipo de organización</label> <i class="text-danger">*</i> <span class="text-muted" id="mostrar_cant_tip_org"></span>
-                    <select name="tipo_organizacion" class="form-control w-100">
-                        <option value="Instituciones públicas">Instituciones públicas</option>
-                        <option value="Instituciones privadas">Instituciones privadas</option>
-                        <option value="Instituciones autónomas">Instituciones autónomas</option>
-                        <option value="Instituciones semiautónomas">Instituciones semiautónomas</option>
-                        <option value="Organismos internacionales (ONGs)">Organismos internacionales (ONGs)</option>
-                    </select>
+                {{-- Campo: Tipo de organizacion --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="tipo_organizacion">Tipo de organización</label> <i class="text-danger">*</i>
+                    </div>
+                    <div class="col-6">
+                        <select name="tipo_organizacion" class="form-control">
+                            <option value="Instituciones públicas">Instituciones públicas</option>
+                            <option value="Instituciones privadas">Instituciones privadas</option>
+                            <option value="Instituciones autónomas">Instituciones autónomas</option>
+                            <option value="Instituciones semiautónomas">Instituciones semiautónomas</option>
+                            <option value="Organismos internacionales (ONGs)">Organismos internacionales (ONGs)</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <span class="text-muted" id="mostrar_cant_tip_org"></span>
+                    </div>
                 </div>
-            </div>
 
-            {{-- Campo: Jornada laboral --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="jornada_laboral">Jornada laboral</label>
+                {{-- Campo: Jornada laboral --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="jornada_laboral">Jornada laboral: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCaracteres(this,45)">
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_jornada_laboral"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCaracteres(this,45)">
                 </div>
-            </div>
 
-            {{-- Campo: Cargo actual --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="cargo_actual">Cargo actual:</label>
+                {{-- Campo: Cargo actual --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="cargo_actual">Cargo actual: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCaracteres(this,45)">
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_cargo_actual"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCaracteres(this,45)">
+                </div>
+
+                {{-- Campo: Intereses Capacitacion --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="interes_capacitacion">Capacitaciones de interés</label>
+                        <span class="ml-1" data-toggle="tooltip" data-placement="bottom" title="Digitar los temas de interés de la persona en recibir capacitación y/o actualización."><i class="far fa-question-circle fa-lg"></i> </span>
+                    </div>
+                    <div class="col-6">
+                        <textarea class="form-control w-100" id="interes_capacitacion" name="interes_capacitacion"></textarea>
+                    </div>
                 </div>
             </div>
 
-            {{-- Campo: Jefe inmediato --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="jefe_inmediato">Jefe inmediato</label>
+
+            {{-- Campos de la derecha --}}
+
+            <div class="col">
+                {{-- Campo: Jefe inmediato --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="jefe_inmediato">Jefe inmediato: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeyup="contarCaracteres(this,45)">
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_jefe_inmediato"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeyup="contarCaracteres(this,45)">
                 </div>
-            </div>
-
-            {{-- Campo: Tiempo desempleado --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="tiempo_desempleado">Tiempo desempleado</label>
+                {{-- Campo: Tiempo desempleado --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="tiempo_desempleado">Tiempo desempleado: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCaracteres(this,45)">
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_tiempo_desempleado"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCaracteres(this,45)">
                 </div>
-            </div>
 
-            {{-- Campo: Telefono trabajo --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="telefono_trabajo">Teléfono trabajo</label>
+                {{-- Campo: Telefono trabajo --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="telefono_trabajo">Teléfono trabajo: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeyup="contarCaracteres(this,45)">
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_telefono_trabajo"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeyup="contarCaracteres(this,45)">
                 </div>
-            </div>
 
-            {{-- Campo: Correo trabajo --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between w-100">
-                        <label for="correo_trabajo">Correo trabajo</label>
+                {{-- Campo: Correo trabajo --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="correo_trabajo">Correo trabajo: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type="email" class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeyup="contarCaracteres(this,80)">
+                    </div>
+                    <div class="col-1">
                         <span class="text-muted" id="mostrar_correo_trabajo"></span>
                     </div>
-                    <input type='text' class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeyup="contarCaracteres(this,80)">
                 </div>
-            </div>
 
-            {{-- Campo: Intereses Capacitacion --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <div class="d-flex">
-                        <label for="interes_capacitacion">Capacitaciones de interés </label>
-                        <div class="ml-2" data-toggle="tooltip" data-placement="right" title="Digitar los temas de interés de la persona en recibir capacitación y/o actualización."><i class="far fa-question-circle fa-lg"></i> </div>
+                {{-- Campo: Otros estudios --}}
+                <div class="d-flex justify-content-start mb-4">
+                    <div class="col-5">
+                        <label for="otros_estudios">Otros estudios: </label>
                     </div>
-                    <textarea class="form-control w-100" id="interes_capacitacion" name="interes_capacitacion"></textarea>
-                </div>
-            </div>
-
-            {{-- Campo: Otros estudios --}}
-            <div class="d-flex justify-content-center flex-column ">
-                <div class="mb-3">
-                    <label for="otros_estudios">Otros estudios</label>
-                    <textarea class="form-control w-100" id="otros_estudios" name="otros_estudios"></textarea>
+                    <div class="col-6">
+                        <textarea class="form-control w-100" id="otros_estudios" name="otros_estudios"></textarea>
+                    </div>
                 </div>
             </div>
 
         </div>
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center ">
 
             {{-- Input oculto que envia el id del estudiante --}}
             <input type="hidden" name="persona_id" value="{{ $estudiante->persona->persona_id }}">
 
             {{-- Boton para agregar informacion laboral --}}
             @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
-            <input type="submit" value="Agregar" class="btn btn-rojo btn-lg">
+            <input type="submit" value="Agregar" class="btn btn-rojo btn-lg mb-3">
             @endif
         </div>
-    
-    @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
+
+        @if(Accesos::ACCESO_REGISTRAR_TRABAJOS())
     </form>
     @endif
 </div>

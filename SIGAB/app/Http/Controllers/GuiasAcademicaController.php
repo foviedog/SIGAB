@@ -41,7 +41,7 @@ class GuiasAcademicaController extends Controller
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
+    }
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -130,10 +130,12 @@ class GuiasAcademicaController extends Controller
         $filtro = request('nombreFiltro', NULL); //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
         $fechaIni = request('fechaIni', NULL); //Se recibe del request con el valor final del rango de fechas, si dicho valor no está seteado se pone en NULL
         $fechaFin = request('fechaFin', NULL); //Se recibe del request con el valor final del rango de fechas, si dicho valor no está seteado se pone en NULL
+        $rango_fechas = request('rango_fechas', NULL);
+
 
         //En caso de que el filtro de intervalo de fechas se encuentre dentro del request entonces se realiza un búsqueda en la base de datos con dichos datos.
-        if (!is_null($fechaIni) && !is_null($fechaFin)) {
-            $guias =  $this->filtroFechaNombre($fechaIni, $fechaFin, $filtro, $itemsPagina); //Retorna la lista de guías con respecto a las fechas especificadas
+        if (!is_null($rango_fechas)) {
+            $guias =  $this->filtroFechaNombre($rango_fechas, $filtro, $itemsPagina); //Retorna la lista de guías con respecto a las fechas especificadas
         } else if (!is_null($filtro)) { // En caso de que se busque únicamente el nombre,apellido o cédula de la persona se ejecuta la búsqueda por nombre
             $guias = $this->filtroNombre($filtro, $itemsPagina); //Búsqueda en la BD del por nombre, apellido o cédula
         } else { //Si no se adjunta ningún filtro de búsqueda se devuelve un listado de los estudiantes
@@ -151,13 +153,14 @@ class GuiasAcademicaController extends Controller
             'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página
             'fechaIni' => $fechaIni, // Valor del filtro que se haya hecho para mantenerlo en la página
             'fechaFin' => $fechaFin, // Valor del filtro que se haya hecho para mantenerlo en la página
+            'rango_fechas' => $rango_fechas,
             'tipos' => $tipos,
             'docentes' => $docentes
         ]);
     } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
+    }
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -175,7 +178,7 @@ class GuiasAcademicaController extends Controller
             ->first(); // Obtener únicamente a la guía a la que se ha consultado.
 
         return response()->json($guia, 200); // Retorna el resultado por medio de un atributo JSON en la respuesta al AJAX del documento js/control_educativo/información_guias_academicas/listado.js
-    }    
+    }
      catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -232,7 +235,7 @@ class GuiasAcademicaController extends Controller
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-        }    
+        }
          catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -258,7 +261,7 @@ class GuiasAcademicaController extends Controller
 
         return Redirect::back()
             ->with('mensaje-exito', '¡El archivo se ha borrado exitosamente!');
-        }    
+        }
          catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -279,12 +282,17 @@ class GuiasAcademicaController extends Controller
     //el filtro de nombre se realiza una intersección entre los resultados de la fecha con
     //los resultados que coincidan con el nombre,apellido o cedula especificada, junto
     //con la paginación respectiva de los resultados
-    private function filtroFechaNombre($fechaIni, $fechaFin, $filtro, $itemsPagina)
+    private function filtroFechaNombre($rango_fechas, $filtro, $itemsPagina)
     {
+
+        $fechaIni = substr($rango_fechas, 0, 10);
+        $fechaFin = substr($rango_fechas, -10);
+        $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+        $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
         //Convierte el filtro de string a una fecha
-        $fechaFin = date($fechaFin);
+        //$fechaFin = date($fechaFin);
         //Convierte el filtro de string a una fecha
-        $fechaIni = date($fechaIni);
+        //$fechaIni = date($fechaIni);
 
 
         $guias = Guias_academica::join('personas', 'guias_academicas.persona_id', '=', 'personas.persona_id') //Inner join de guias con personas
@@ -331,8 +339,8 @@ class GuiasAcademicaController extends Controller
     public function destroy( $id_guia)
     {
         try {
-            
-            $guia = Guias_academica::find($id_guia); 
+
+            $guia = Guias_academica::find($id_guia);
             $guia->delete();
             return Redirect::back()
             ->with('mensaje-exito', '¡Se ha eliminado correctamente!');

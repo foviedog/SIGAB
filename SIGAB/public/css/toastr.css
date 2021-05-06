@@ -1,13 +1,10 @@
 .toast-title {
   font-weight: bold;
-  margin-left: 10px;
-  margin-bottom: 5px;
 }
 
 .toast-message {
   -ms-word-wrap: break-word;
   word-wrap: break-word;
-  margin-left: 10px;
 }
 
 .toast-message a,
@@ -116,7 +113,7 @@ button.toast-close-button {
   overflow: hidden;
   margin: 0 0 6px;
   padding: 15px 15px 15px 50px;
-  width: 500px;
+  width: 300px;
   border-radius: 3px 3px 3px 3px;
   background-position: 15px center;
   background-repeat: no-repeat;
@@ -136,7 +133,7 @@ button.toast-close-button {
 }
 
 #toast-container > .toast-info {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAKiSURBVHjanJdtYeMwDIYfIVgPwa4ImjLYEKwM1mNwQ7AUwcZgHYMOwcagOQY9BNch0P2InMSJbKfNryS2ZOnVqw+LqnLFUwHPwMa+D6A7kCZsUEBGQt4/mWNAL6h2uHwCi9GOM3APNN0f78RrDBiZcwB5AN6B3/bzFfRRkQ9BN/GprRUpWyIDJptcqU7gB8q5XZcF8C/oLMAYfVyIgN4Z/DmI74GvvBOlEAShXrgCXoC7qVb3hC/gKfBhPgfGutqlLcKLke4b2KMcgAbRswkszMgNsAVugDPwhLK/HIH+uQM+bce7tMrzyCoLhFfg0Q1J0YBY8wm4BXagdTGnhkpUaoRnlBPCMnVADoEt8Ab8BX7G8lP/E4gEB34B+ywCTpYcgIec8IxnC7wpfAAbL2smCAyq3gnkFljaO6AGgBSjYXoq4GhILD2onBB0O2zBTnMyL8rWdGHQvkBN8zvHgRAbSXsbdwlx1rXFKzZgsHlaB4g7D3Oorx1OnjFZPWUEUGlBGKhNUN6vYxgCPnFyzWg2AoUm5nBgBgLaWd4zUhImTakVMUBt0eVSrhnN50C+eysi13AgLIjM6KoJgxSJcMuEQDUcFSVLnu6XoVFCIBKpbei8yN++WrpB35neYi8I5RNg3Q4VuQDEFJwmgFTAsSWxrlWkEReBXrIBVp3FTokt8SEuzaBILS2ijTmVJGGA/o8h4Z425MuMlhyeBmWFxKEYGlApHM3ZNWhzYRaWLzPK0dStw7w4NCBAn/Qy0KtUkjMpOTxr7RigK69gpTqd13400cuMhO239CG+4maEczGhfDEZTxpuOw6p5JKs8yiManub/bE7wxYbvbyDou5CwoCZIa1szL4Z/f+2Mb5xu0hiYpKrrudKhVAbEpjndfEm5Hj4fwBoOnTQOiaKOwAAAABJRU5ErkJggg==") !important;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=") !important;
 }
 
 #toast-container > .toast-error {
@@ -178,7 +175,7 @@ button.toast-close-button {
 }
 
 .toast-info {
-  background-color: #034991;
+  background-color: #2f96b4;
 }
 
 .toast-warning {

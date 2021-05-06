@@ -17,7 +17,7 @@ Listado de Guías Académicas
         @include('modal.agregar-guia-academica')
         @endif
 
-        @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS()) 
+        @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
         {{-- Modal para ver el detalle de una guía académica--}}
         @include('modal.detalle-guia-academica')
         @endif
@@ -29,7 +29,7 @@ Listado de Guías Académicas
 
             <div class="d-flex">
 
-                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) 
+                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
                 <div class="mr-2">
                     {{-- Regresar al listado de estudiantes --}}
                     <a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
@@ -53,7 +53,7 @@ Listado de Guías Académicas
 
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
-        
+
         {{-- // Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">
@@ -65,44 +65,42 @@ Listado de Guías Académicas
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
                 <form autocomplete="off" action="{{ route('guia-academica.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
-                        <div class="col-md-4 text-nowrap d-flex align-items-end">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                <label class="font-weight-bold">Mostrar &nbsp;
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-8 d-flex justify-content-end">
-                            <div class="mx-2 ">
-                                <label for="fecha-inicio" class="ml-3"> &nbsp;Fecha inicio: </label>
-                                <div class="d-flex">
-                                    <span id="fechaIni" class="fechaIni" data-toggle="tooltip" data-placement="bottom" title="Limpiar Fecha de inicio"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
-                                    <input type="date" class="form-control form-control-sm" name="fechaIni" id="fecha-inicio" @if (!is_null($fechaIni)) value={{ $fechaIni }} @endif>
-                                </div>
-                            </div>
-                            <div class=" mx-3 ">
-                                <label for=" fecha-final" class="ml-3"> &nbsp; Fecha final: </label>
-                                <div class="d-flex">
-                                    <span id="fechaFin" class="fechaFin" data-toggle="tooltip" data-placement="bottom" title="Limpiar Fecha final"><i class="far fa-times-circle fa-lg"></i> &nbsp;</span>
-                                    <input type="date" class="form-control form-control-sm" name="fechaFin" id="fecha-final" @if (!is_null($fechaFin)) value={{ $fechaFin }} @endif>
-                                </div>
-                            </div>
+
+                        <div class="col-md-7 d-flex align-items-end ">
                             <div class="d-flex justify-content-end w-25">
                                 <div class="text-md-right dataTables_filter d-flex align-items-center mt-3">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                     &nbsp;&nbsp;<input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                                 </div>
                             </div>
+                            {{-- Busqueda por rango de fechas --}}
+                            <div class="col-md-6 d-flex text-nowrap align-items-between">
+                                <label class="align-text-center" for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="top" title="Buscar por rango de fechas las guías académicas"></i></label>
+                                <div class="input-group d-flex justify-content-between">
+                                    <div class="input-group-prepend ml-1">
+                                        <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control  datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                </div>
+                            </div>
                             {{-- Botón de submit para realizar la búsqueda del estudiante --}}
-                            <div class="d-flex align-items-center mt-3">
+                            <div class="d-flex align-items-between mt-3">
                                 <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                             </div>
+                        </div>
+                        {{-- Cantidad de items --}}
+                        <div class="col-2 text-nowrap d-flex justify-content-end">
+                            <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                            {{-- Select con la cantidad de items por páginas--}}
+                            <div class="w-50">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                    @foreach($paginaciones as $paginacion)
+                                    <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                 </form>
@@ -141,7 +139,7 @@ Listado de Guías Académicas
                                 <td> {{ $guia->ciclo_lectivo }} </td>
                                 <td> {{ $guia->lugar_atencion }}</td>
 
-                                @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS()) 
+                                @if(Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
                                 <td>
                                     {{-- Botón para ver el detalle de la guía académica del estudiante --}}
                                     <button type="button" class="btn btn-contorno-rojo" data-toggle="modal" data-target="#detalle-guia-modal" data-idguia="{{ $guia->id }}">
@@ -155,9 +153,9 @@ Listado de Guías Académicas
                                     @method('DELETE')
                                     @csrf
                                     <td>
-                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando guia');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando guia');" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
-                                @endif
+                                    @endif
 
                                 </form>
                             </tr>
@@ -201,7 +199,14 @@ Listado de Guías Académicas
     // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
     var documentosURL = "{{ URL::asset('/estudiante/guia-academica/download/') }}";
+
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/listado.js') }}" defer></script>
+
+{{-- Scripts para el DatePicker utilizado en el filtro de fecha --}}
+<script src="{{ asset('js/global/inputs.js') }}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
