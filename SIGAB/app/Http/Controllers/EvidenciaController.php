@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Storage;
+use App\Evidencia;
 use App\Actividades;
 use App\Actividades_interna;
-use App\Evidencia;
-use Storage;
-use Illuminate\Support\Facades\File;
-
 
 class EvidenciaController extends Controller
 {

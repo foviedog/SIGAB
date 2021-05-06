@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Actividades;
-use App\ActividadesPromocion;
-use App\Helper\Accesos;
 use App\Helper\GlobalArrays;
+use App\Helper\Accesos;
+use App\ActividadesPromocion;
+use App\Actividades;
 
 use App\Events\EventActividadParaAutorizar;
 

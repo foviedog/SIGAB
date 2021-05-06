@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-use App\Persona;
-use App\Estudiante;
-use App\Guias_academica;
-use App\Helper\GlobalArrays;
 use App\Helper\GlobalFunctions;
+use App\Helper\GlobalArrays;
+use App\Estudiante;
+use App\Persona;
+use App\Guias_academica;
 
 class EstudianteController extends Controller
 {

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use App\Helper\GlobalArrays;
 use App\Helper\GlobalFunctions;
-use App\Persona;
 use App\User;
+use App\Persona;
 
 /*  Esta clase se creó con el fin de registrar nuevos usuarios
     desde una interfaz interna en el sistema sin la necesidad

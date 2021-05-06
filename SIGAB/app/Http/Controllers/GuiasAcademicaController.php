@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Estudiante;
-use App\Guias_academica;
-use App\Personal;
-use Illuminate\Support\Facades\File; //para acceder a la imagen y luego borrarla
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use App\Helper\GlobalArrays;
+use App\Guias_academica;
+use App\Estudiante;
+use App\Personal;
 
 class GuiasAcademicaController extends Controller
 {

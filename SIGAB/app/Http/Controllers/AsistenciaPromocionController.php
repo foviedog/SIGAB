@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Actividades;
-use App\ActividadesPromocion;
-use App\asistenciaPromocion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\ActividadesPromocion;
+use App\Actividades;
+use App\asistenciaPromocion;
 
 class AsistenciaPromocionController extends Controller
 {
