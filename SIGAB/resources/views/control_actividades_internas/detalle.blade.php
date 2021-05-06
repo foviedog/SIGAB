@@ -28,17 +28,17 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                 {{-- Botones superiores --}}
                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
-                    @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
-                    {{-- Botón para autorizar actividad --}}
-                    <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
-                        <button type="submit" class="btn btn-info ml-4"><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
-                    </form>
-                    @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
-                    <button class="btn btn-success ml-4" disabled><i class="fas fa-check-double"></i> &nbsp; Actividad autorizada </button>
-                    @endif
+                @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+                {{-- Botón para autorizar actividad --}}
+                <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
+                    <button type="submit" class="btn btn-info ml-4"><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
+                </form>
+                @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
+                <button class="btn btn-success ml-4" disabled><i class="fas fa-check-double"></i> &nbsp; Actividad autorizada </button>
+                @endif
                 @endif
             </div>
 
@@ -80,7 +80,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             @method('PATCH')
             {{-- Seguridad de envío de datos --}}
             @csrf
-        @endif
+            @endif
 
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab">
@@ -95,11 +95,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <div>
 
                                     @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
-                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
+                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
                                     @endif
 
                                     @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
-                                    <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                                    <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
                                     @endif
 
                                 </div>
@@ -545,7 +545,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
             </div>
         </form>
-            @endif
+        @endif
 
     </div>
 </div>
@@ -555,6 +555,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
@@ -562,5 +563,6 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 @endsection

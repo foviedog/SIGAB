@@ -3,7 +3,9 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');*/
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto");
-html, body, html * {
+html,
+body,
+html * {
     font-family: "Roboto", sans-serif;
 }
 
@@ -137,7 +139,7 @@ Botones contorno (outline)
 }
 
 .btn-contorno-rojo {
-    transition: all .4s ease;
+    transition: all 0.4s ease;
     background-color: #ffffff !important;
     border-color: #aa1816 !important;
     color: #aa1816 !important;
@@ -155,7 +157,7 @@ Botones contorno (outline)
 }
 
 .btn-contorno-gris {
-    transition: all .4s ease;
+    transition: all 0.4s ease;
     background-color: #ffffff !important;
     border-color: #2d2d2d !important;
     color: #2d2d2d !important;
@@ -167,7 +169,7 @@ Botones contorno (outline)
 }
 
 .btn-contorno-azul-una {
-    transition: all .4s ease;
+    transition: all 0.4s ease;
     border-color: #034991 !important;
     background-color: #ffffff !important;
     color: #034991 !important;
@@ -181,7 +183,12 @@ Botones contorno (outline)
 /* Sombra mostrada cuando un boton está seleccionado */
 
 .btn:focus {
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(221, 93, 93, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+        0 0 8px rgba(221, 93, 93, 0.6);
+}
+.btn-sombreado-azul:focus {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+        0 0 8px rgba(3, 73, 144, 0.6);
 }
 
 /* ***********************
@@ -214,7 +221,7 @@ Fin de la paleta de colores
     box-shadow: 0px 2px 19px -5px rgba(0, 0, 0, 0.2);
 }
 
-.link-inicio-contenedor{
+.link-inicio-contenedor {
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -225,7 +232,8 @@ Fin de la paleta de colores
 
 .form-control:focus {
     border-color: rgba(204, 204, 204, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(204, 204, 204, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+        0 0 8px rgba(204, 204, 204, 0.6);
 }
 
 .logo {
@@ -267,9 +275,9 @@ Fin de la paleta de colores
 }
 
 .info-card {
-    -webkit-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
-    -moz-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
-    box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.2);
     border: 1px solid rgb(129, 129, 129);
     border-radius: 5px;
     color: #585757;
@@ -490,7 +498,7 @@ Fin de la paleta de colores
 
 .footer-img-container .footer-img {
     width: 100%;
-    background-image: url('../../img/facultad.png');
+    background-image: url("../../img/facultad.png");
     background-color: #e6e6e6;
     background-attachment: fixed;
     background-position: top;
@@ -548,12 +556,14 @@ Fin de la paleta de colores
     margin-top: 20px;
 }
 
-.file-dropping, .file-upload-wrap:hover {
+.file-dropping,
+.file-upload-wrap:hover {
     background-color: #af0a0ada;
     border: 2px dashed #ffffff;
 }
 
-.file-dropping, .file-upload-wrap:hover .drag-text h4 {
+.file-dropping,
+.file-upload-wrap:hover .drag-text h4 {
     color: #ffffff;
 }
 
@@ -589,7 +599,7 @@ Fin de la paleta de colores
     padding: 10px;
     border-radius: 4px;
     border-bottom: 3px solid #b02818;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
     outline: none;
     text-transform: uppercase;
     font-weight: 600;
@@ -598,13 +608,13 @@ Fin de la paleta de colores
 .remove-file:hover {
     background: #c13b2a;
     color: #ffffff;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
     cursor: pointer;
 }
 
 .remove-file:active {
     border: 0;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
 }
 
 /* **********************************************
@@ -625,7 +635,7 @@ Fin de la paleta de colores
     background: #82ce34;
     padding: 15px;
     box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
-    background-image: url('/img/fotos/default.jpg');
+    background-image: url("/img/fotos/default.jpg");
     background-size: cover;
 }
 
@@ -633,21 +643,24 @@ Fin de la paleta de colores
         TABS DE NAVEGACIÓN
 ********************************************** */
 
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
     color: #aa1816;
     background-color: #ffffff00;
     border-color: #aa1816 #aa1816 #fff #aa1816;
     font-weight: bold;
 }
 
-.nav-tabs .nav-link, .nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link,
+.nav-tabs .nav-item.show .nav-link {
     border-color: #e6e5e1 #e6e5e1 rgba(255, 255, 255, 0) #e6e5e1;
     margin-left: 1rem;
     transition: border-color ease-out 0.5s, background-color ease-out 0.2s;
     color: #585858;
 }
 
-.nav-tabs .nav-link:hover, .nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-item.show .nav-link {
     background-color: #6d6d6d28;
     color: #aa1816;
     border-color: #aa1816 #aa1816 #fff #aa1816;
@@ -664,9 +677,9 @@ Fin de la paleta de colores
 .card-info {
     background-color: #fff;
     border-radius: 5px;
-    -webkit-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
-    -moz-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
-    box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 4px 16px 0px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -675,7 +688,7 @@ Fin de la paleta de colores
     border-color: #aa1816;
 }
 
-.border-info-card{
+.border-info-card {
     border-left: 5px solid #aa1816 !important;
 }
 
