@@ -209,8 +209,8 @@ SIGAB
         </div>
 
         <div class="col">
-            <div class="card shadow p-3 mb-5 rounded" >
-                <div class="card-body" style="min-height: 250px;">
+            <div class="card shadow p-3 mb-5 rounded">
+                <div class="card-body" style="min-height: 300px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
                     </div>
@@ -233,20 +233,21 @@ SIGAB
                     @endif
 
                     @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
-                    <div class="link-inicio-contenedor">
-                        <a href="{{ route('reportes-involucramiento.show') }}" class="card-subtitle mb-3 link-inicio">
-                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte general 
-                        </a>
-                    </div>
+                    <a href="{{ route('reportes-involucramiento.show') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte general </h6>
+                    </a>
+
+                    <a href="{{ route('reportes-involucramiento.anual') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte anual</h6>
+                    </a>
+
+                    <a href="{{ route('involucramiento-ciclo.show') }}">
+                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte por ciclo</h6>
+                    </a>
+
                     @endif
 
-                    @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
-                    <div class="link-inicio-contenedor">
-                        <a href="{{ route('reportes-involucramiento.anual') }}" class="card-subtitle mb-3 link-inicio">
-                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte anual
-                        </a>
-                    </div>
-                    @endif
+
 
                 </div>
             </div>
@@ -254,7 +255,7 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body"  style="min-height: 250px;">
+                <div class="card-body" style="min-height: 300px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
                     </div>
@@ -291,7 +292,7 @@ SIGAB
                     @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
                     <div class="link-inicio-contenedor">
                         <a href="{{ route('reportes-actividades.show') }}" class="card-subtitle mb-3 link-inicio">
-                            <i class="fas fa-caret-right texto-azul-una"></i> Reportes 
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reportes
                         </a>
                     </div>
                     @endif
@@ -318,11 +319,11 @@ SIGAB
                             {{-- Datos personales --}}
                             <div class="col text-center">
                                 <img src="{{ asset('img/fotos/'.$persona->imagen_perfil) }}" class="mb-3 img-fluid" id="imagen-personal" style="max-width: 160px; max-height: 160px; border-radius: 10%;" />
-                                                            
+
                                 <div class="card-subtitle my-3">{{ $persona->nombre." ".$persona->apellido }}</div>
-                        
+
                                 <div class="card-subtitle font-weight-bold mb-3">{{ session()->get('rol') }}</div>
-                            
+
                             </div>
 
                             {{-- Accesos --}}
@@ -352,9 +353,9 @@ SIGAB
                                     </a>
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

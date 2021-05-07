@@ -24,14 +24,12 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             </div>
         </div>
         <hr>
-        
+
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" href="#general" data-toggle="tab">Involucramiento general</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#reporte-anual-tab">Reporte anual</a>
-            </li>
+
         </ul>
 
         <div class="container-fluid pb-5">

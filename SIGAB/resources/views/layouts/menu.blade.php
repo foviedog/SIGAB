@@ -8,7 +8,7 @@
     </div>
 
     <ul class="list-unstyled components">
-        
+
         <li>
             <a href="#controlEstudiantil" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
                 <i class="fas fa-graduation-cap"></i>
@@ -27,7 +27,7 @@
                     <a href="{{ route('graduados.listar' ) }}">Estudiantes Graduados</a>
                 </li>
                 @endif
-                
+
                 @if (Accesos::ACCESO_VISUALIZAR_GUIAS_ACADEMICAS())
                 <li>
                     <a href="{{ route('guia-academica.listar' ) }}">Guías académicas</a>
@@ -84,6 +84,9 @@
                 </li>
                 <li>
                     <a href="{{ route('reportes-involucramiento.anual' ) }}">Involucramiento anual </a>
+                </li>
+                <li >
+                    <a href="{{ route('involucramiento-ciclo.show') }}" > Reporte por ciclo</a>
                 </li>
             </ul>
         </li>

@@ -19,32 +19,31 @@ class ReportesInvolucramientoController extends Controller
 
     public function show()
     {
-        try{
-        $anio = date('Y');
-        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
-        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
-        $datosCuantitativos = $this->datosCuntitativosPersonal();
-        $datos = null;
-        $personal = null;
-        $nombre = null;
-        $estadoActividad = request('estado_actividad', null);
-        return view('reportes.involucramiento.detalle', [
-            'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
-            'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
-            'datosCuantitativos' => $datosCuantitativos,
-            'datos' => $datos,
-            'personal' => $personal,
-            'estadoActividad' => $estadoActividad,
-            'nombre' => $nombre
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+        try {
+            $anio = date('Y');
+            $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
+            $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
+            $datosCuantitativos = $this->datosCuntitativosPersonal();
+            $datos = null;
+            $personal = null;
+            $nombre = null;
+            $estadoActividad = request('estado_actividad', null);
+            return view('reportes.involucramiento.general', [
+                'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
+                'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
+                'datosCuantitativos' => $datosCuantitativos,
+                'datos' => $datos,
+                'personal' => $personal,
+                'estadoActividad' => $estadoActividad,
+                'nombre' => $nombre
+            ]);
+        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+            return Redirect::back() //se redirecciona a la pagina anteriror
+                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        }
     }
 
     public function datosCuntitativosPersonal()
@@ -150,7 +149,7 @@ class ReportesInvolucramientoController extends Controller
         $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
         $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
 
-        return view('reportes.involucramiento.detalle', [
+        return view('reportes.involucramiento.general', [
             'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
             'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
             'datos' => json_encode($dataSet, JSON_UNESCAPED_SLASHES),
@@ -447,7 +446,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function cantActividadesInternasXTipo($persona_id, $tipo, $anio)
     {
-        $cant = Actividades::join('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+        $cant = Actividades::leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
@@ -472,18 +471,16 @@ class ReportesInvolucramientoController extends Controller
         $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
         $porcentajesParticipacion = [];
         $cantPersonal = count($actividadesXPersonal);
-
-        foreach ($actividadesXPersonal as &$personal) {
-            foreach ($tipos as &$tipo) { //Se reccorre el array de los tipos de actividades internas
+        foreach ($actividadesXPersonal as $personal) {
+            foreach ($tipos as $tipo) { //Se reccorre el array de los tipos de actividades internas
                 if (!isset($porcentajesParticipacion[$tipo])) { //Se inicializa el porcentaje de parcipación según el tipo de actividad en 0
                     $porcentajesParticipacion[$tipo] = 0;
                 }
                 if ($personal[$tipo] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
-                    $porcentajesParticipacion[$tipo] = $porcentajesParticipacion[$tipo] +  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
+                    $porcentajesParticipacion[$tipo] +=  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
                 }
             }
         }
-        // dd($porcentajesParticipacion);
         return $porcentajesParticipacion;
     }
 
