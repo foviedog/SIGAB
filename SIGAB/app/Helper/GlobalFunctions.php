@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helper;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -8,29 +9,49 @@ use Image;
 
 class GlobalFunctions
 {
-    public static function verificarAcceso($tareaConsulta){
+    public static function verificarAcceso($tareaConsulta)
+    {
         $tareas = Session::get('accesos_usuario');
-        foreach ($tareas as $tarea){
-            if($tarea->tarea_id == $tareaConsulta)
+        foreach ($tareas as $tarea) {
+            if ($tarea->tarea_id == $tareaConsulta)
                 return true;
         }
         return false;
     }
+    public static function obtenerAniosActual($tareaConsulta)
+    {
+        $anios = array();
+        for ($anio = 2000; $anio <= date("Y"); $anio++) {
+            array_push($anios, $anio);
+        }
+        return $anios;
+    }
 
-    public static function rutas(){
+    public static function obtenerAniosFuturos($tareaConsulta)
+    {
+        $anios = array();
+        for ($anio = 2000; $anio <= date("Y") + 10; $anio++) {
+            array_push($anios, $anio);
+        }
+        return $anios;
+    }
+
+    public static function rutas()
+    {
         $rutas = app('router')->getRoutes();
 
         foreach ($rutas as $ruta) {
             $uri = $ruta->uri();
             $uri = strtok($uri, '{');
-            
-            $nombres[$ruta->getName()] = "/".$uri;
+
+            $nombres[$ruta->getName()] = "/" . $uri;
         }
 
-        return $nombres; 
+        return $nombres;
     }
 
-    public static function actualizarFotoPerfil($avatar, $persona){
+    public static function actualizarFotoPerfil($avatar, $persona)
+    {
         $archivo = time() . '.' . $avatar->getClientOriginalExtension();
         Image::make($avatar)->crop(300, 300)->save(public_path('/img/fotos/' . $archivo));
 
@@ -42,41 +63,44 @@ class GlobalFunctions
     }
 
     /* Método que verifica si la contraseña cumple con los estándares */
-    public static function verificarContrasenna($password) {
+    public static function verificarContrasenna($password)
+    {
 
         /* La contraseña debe ser mayor a 6 carácteres */
-        if ( strlen($password) < 6 ) {
+        if (strlen($password) < 6) {
             return false;
         }
 
         /* La contraseña debe tener algún número */
-        if ( !preg_match("#[0-9]+#", $password) ) {
+        if (!preg_match("#[0-9]+#", $password)) {
             return false;
         }
 
         /* La contraseña debe tener alguna minúscula */
-        if ( !preg_match("#[a-z]+#", $password) ) {
+        if (!preg_match("#[a-z]+#", $password)) {
             return false;
         }
 
         /* La contraseña debe tener alguna mayúscula */
-        if ( !preg_match("#[A-Z]+#", $password) ) {
+        if (!preg_match("#[A-Z]+#", $password)) {
             return false;
         }
 
         /* La contraseña debe tener algún carácter especial */
-        if ( !preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $password) ) {
+        if (!preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $password)) {
             return false;
         }
 
         return true;
     }
 
-    public static function hashPassword($password){
+    public static function hashPassword($password)
+    {
         return Hash::make($password);
     }
 
-    public static function verificarContrasennaVieja($new_password, $old_passoword){
+    public static function verificarContrasennaVieja($new_password, $old_passoword)
+    {
         return Hash::check($new_password, $old_passoword);
     }
 }

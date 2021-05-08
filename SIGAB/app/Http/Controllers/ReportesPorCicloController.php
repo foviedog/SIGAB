@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\File;
 use DateTime;
 use PDF;
 use App\Helper\GlobalArrays;
+use App\Helper\GlobalFunctions;
 
 class ReportesPorCicloController extends Controller
 {
+    private $anios = GobalFunctions::obtenerAniosActual();
 
     // ========================================================================================================================================
     // Función utilizada para procesar el request de mostrar la vista de reportes de actividades
@@ -39,7 +41,8 @@ class ReportesPorCicloController extends Controller
                 'personal' => $personal,
                 'anioReporte' => $anio,
                 'actividadesPrimerCiclo' => $actividadesCiclo[0],
-                'actividadesSegundoCiclo' =>  $actividadesCiclo[1]
+                'actividadesSegundoCiclo' =>  $actividadesCiclo[1],
+                'anios' => $anios
             ]);
 
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
