@@ -18,7 +18,12 @@ use App\Helper\GlobalFunctions;
 
 class ReportesPorCicloController extends Controller
 {
-    private $anios = GobalFunctions::obtenerAniosActual();
+    private $anios;
+
+    public function __construct()
+    {
+        $this->anios = GlobalFunctions::obtenerAniosActual();
+    }
 
     // ========================================================================================================================================
     // Función utilizada para procesar el request de mostrar la vista de reportes de actividades
@@ -42,9 +47,8 @@ class ReportesPorCicloController extends Controller
                 'anioReporte' => $anio,
                 'actividadesPrimerCiclo' => $actividadesCiclo[0],
                 'actividadesSegundoCiclo' =>  $actividadesCiclo[1],
-                'anios' => $anios
+                'anios' => $this->anios
             ]);
-
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina anteriror
                 ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
@@ -103,6 +107,4 @@ class ReportesPorCicloController extends Controller
 
         return $actividadesCiclo;
     }
-
-
 }

@@ -18,7 +18,7 @@ class GlobalFunctions
         }
         return false;
     }
-    public static function obtenerAniosActual($tareaConsulta)
+    public static function obtenerAniosActual()
     {
         $anios = array();
         for ($anio = 2000; $anio <= date("Y"); $anio++) {
@@ -27,7 +27,7 @@ class GlobalFunctions
         return $anios;
     }
 
-    public static function obtenerAniosFuturos($tareaConsulta)
+    public static function obtenerAniosFuturos()
     {
         $anios = array();
         for ($anio = 2000; $anio <= date("Y") + 10; $anio++) {

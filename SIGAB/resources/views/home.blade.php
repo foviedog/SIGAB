@@ -210,7 +210,7 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body" style="min-height: 300px;">
+                <div class="card-body" style="min-height: 250px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control del personal</h4><i class="far fa-address-book texto-rojo-medio  fa-2x" style="width: 32px;"></i>
                     </div>
@@ -255,7 +255,7 @@ SIGAB
 
         <div class="col">
             <div class="card shadow p-3 mb-5 rounded">
-                <div class="card-body" style="min-height: 300px;">
+                <div class="card-body" style="min-height: 250px;">
                     <div class="d-flex">
                         <h4 class="font-weight-bold mr-3">Control de actividades</h4><i class="fas fa-chalkboard-teacher  texto-rojo-medio fa-2x" style="width: 32px;"></i>
                     </div>
