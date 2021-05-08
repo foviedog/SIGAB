@@ -15,17 +15,13 @@ $generos = GlobalArrays::GENEROS;
 $colegiosProcedencias = GlobalArrays::COLEGIOS_PROCEDENCIA;
 $tiposBecas = GlobalArrays::TIPOS_BECA;
 @endphp
-
-@section('contenido')
-
-{{-- Formulario general de estudiante --}}
-
-@if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
-<form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
+@php
+$anios = array();
+for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp {{-- fin del php--}} @section('contenido') {{-- Formulario general de estudiante --}} @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
-@endif
+    @endif
 
     <div class="card">
         <div class="card-body">
@@ -43,14 +39,14 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                         {{-- Regresar al listado de estudiantes --}}
                         <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         @endif
-                        
+
                         @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-estudiante" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}
                         <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
                         @endif
-                        
+
                     </div>
                 </div>
 
@@ -90,11 +86,23 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                 </div>
                                 {{-- Campo: Ingreso a la UNA --}}
                                 <div class="form-group">
-                                    <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label><input type="date" name="anio_ingreso_una" class="form-control " placeholder="Ingreso a la UNA" value="{{ $estudiante->anio_ingreso_UNA }}" required disabled />
+                                    <label for="anioUNA"><strong>Año de ingreso a la UNA</strong><br /></label>
+                                    <select id="anio_ingreso_una" name="anio_ingreso_una" class="form-control w-100" required disabled>
+                                        @foreach($anios as $anio)
+                                        <option value="{{ $anio }}" @if ($anio==$estudiante->anio_ingreso_UNA ) selected @endif>{{ $anio }}</option>
+                                        @endforeach
+                                    </select>
+
                                 </div>
                                 {{-- Campo: Ingreso a la EBDI --}}
                                 <div class="form-group">
-                                    <label for="anioEBDI"><strong>Año de ingreso a la EBDI<i class="text-danger">* </i> </strong><br /></label><input type="date" name="anio_ingreso_ebdi" class="form-control" placeholder="Ingreso a la EBDI" value="{{ $estudiante->anio_ingreso_ebdi }}" required disabled />
+                                    <label for="anioEBDI"><strong>Año de ingreso a la EBDI<i class="text-danger">* </i> </strong><br /></label>
+                                    <select id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" class="form-control w-100" required disabled>
+                                        @foreach($anios as $anio)
+                                        <option value="{{ $anio }}" @if ($anio==$estudiante->anio_ingreso_ebdi ) selected @endif>{{ $anio }}</option>
+                                        @endforeach
+                                    </select>
+
                                 </div>
                                 {{-- Campo: Primera Carrera --}}
                                 <div class="form-group">
@@ -318,7 +326,7 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                 </div>
                                             </div>
                                             @endif
-                                            
+
                                             @if(Accesos::ACCESO_LISTAR_TITULACIONES())
                                             {{-- Segmento asociado al estudiante cuando ya es graduado --}}
                                             <div class="col">
@@ -375,12 +383,12 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
         </div>
     </div>
 
-@if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
-</form>
-@endif
+    @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
+    </form>
+    @endif
 
-@endsection
+    @endsection
 
-@section('scripts')
-<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
-@endsection
+    @section('scripts')
+    <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
+    @endsection

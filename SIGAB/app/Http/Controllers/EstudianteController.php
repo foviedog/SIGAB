@@ -17,6 +17,12 @@ use App\Guias_academica;
 class EstudianteController extends Controller
 {
 
+    private $anios;
+
+    public function __construct()
+    {
+        $this->anios = GlobalFunctions::obtenerAniosActual();
+    }
     //Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
     {
@@ -31,6 +37,7 @@ class EstudianteController extends Controller
 
             //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
             $filtro = request('filtro', NULL);
+
 
             //En caso de que el filtro esté seteado entonces se realiza un búsqueda en la base de datos con dichos datos.
             if (!is_null($filtro)) {
@@ -49,8 +56,9 @@ class EstudianteController extends Controller
                 'estudiantes' => $estudiantes, // Listado estudiantel.
                 'paginaciones' => $paginaciones, // Listado de items de paginaciones.
                 'itemsPagina' => $itemsPagina, // Item que se desean por página.
-                'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
-            ]);   
+                'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página
+                'anios' => $this->anios
+            ]);
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
@@ -114,7 +122,7 @@ class EstudianteController extends Controller
                 ->with('persona_insertado', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('estudiante_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('cedula', $request->cedula); //Retorna un objeto en el response con la cedula, de otra manera no obtiene el dato de manera adecuada para imprimirlo en la vista
-        
+
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return Redirect::back() //se redirecciona a la pagina de registro estudiante
                 ->with('mensaje-error', "Ha ocurrido un error con el registro del estudiante con la cédula  " . "$request->cedula" . ". Es posible que el estudiante ya se encuentre agregado.") //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto

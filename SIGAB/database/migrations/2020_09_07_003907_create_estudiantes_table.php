@@ -20,8 +20,8 @@ class CreateEstudiantesTable extends Migration
             $table->integer('cant_hijos')->nullable();
             $table->string('tipo_colegio_procedencia', 13)->nullable(); /* verificar la cantidad de caracteres */
             $table->string('condicion_discapacidad', 250)->nullable();
-            $table->date('anio_ingreso_ebdi')->nullable();
-            $table->date('anio_ingreso_UNA')->nullable();
+            $table->integer('anio_ingreso_ebdi')->nullable();
+            $table->integer('anio_ingreso_UNA')->nullable();
             $table->string('carrera_matriculada_1', 45)->nullable();
             $table->string('carrera_matriculada_2', 45)->nullable();
             $table->integer('anio_graduacion_estimado_1')->nullable();

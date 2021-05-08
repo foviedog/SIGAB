@@ -23,9 +23,9 @@ $persona_no_insertada = Session::get('persona_no_insertada');
 $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 @endphp
 
-@section('contenido')
-
-<div class="card">
+@php
+$anios = array();
+for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp @section('contenido') <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h2>Registrar información del estudiante</h2>
@@ -239,7 +239,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required> {{ $persona_no_insertada->direccion_residencia ?? '' }} </textarea>
+                            <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required>{{$persona_no_insertada->direccion_residencia ?? ''}}</textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -328,7 +328,11 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_ebdi">Año de ingreso a la EBDI: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' class="form-control w-100" id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_ingreso_ebdi ?? null }}" required>
+                            <select id="anio_ingreso_ebdi" name="anio_ingreso_ebdi" class="form-control w-100" required>
+                                @foreach($anios as $anio)
+                                <option value="{{ $anio }}" @if ( !is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_ingreso_ebdi ) selected @endif>{{ $anio }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la escuela"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -342,7 +346,11 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="anio_ingreso_una">Año de ingreso a la UNA: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' class="form-control w-100" id="anio_ingreso_una" name="anio_ingreso_una" onkeyup="contarCaracteres(this,10)" value="{{ $estudiante_no_insertado->anio_ingreso_UNA ?? null  }}" required>
+                            <select id="anio_ingreso_una" name="anio_ingreso_una" class="form-control w-100" required>
+                                @foreach($anios as $anio)
+                                <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_ingreso_UNA ) selected @endif>{{ $anio }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que ingresó a la universidad"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -491,9 +499,9 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
         @endif
 
     </div>
-</div>
-@endsection
+    </div>
+    @endsection
 
-@section('scripts')
-<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-@endsection
+    @section('scripts')
+    <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+    @endsection
