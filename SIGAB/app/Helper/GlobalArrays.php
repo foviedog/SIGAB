@@ -10,7 +10,6 @@ class GlobalArrays
         'Conferencia',
         'Taller',
         'Seminario',
-        'Seminario',
         'Conversatorio',
         'Órgano colegiado',
         'Tutorías',
@@ -251,5 +250,5 @@ class GlobalArrays
         'Secretaria',
         'Estudiante asistente académica'
     ];
-    
+
 }

@@ -71,7 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
             Secretaria
             Estudiante asistente académica
     ');
-    
+
     /* Rutas para editar  y actualizar la informacion del estudiante*/
     Route::patch('/estudiante/detalle/{id_estudiante}', 'EstudianteController@update')->name('estudiante.update')
     ->middleware(
@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
             Secretaria
             Estudiante asistente académica
     ');
-    
+
     /* Ruta para cambiar imagen del estudiante*/
     Route::post('/estudiante/imagen/cambiar', 'EstudianteController@update_avatar')->name('estudiante.update.avatar')
     ->middleware(
@@ -107,7 +107,7 @@ Route::group(['middleware' => ['auth']], function () {
             Secretaria
             Estudiante asistente académica
     ');
-    
+
     Route::get('/estudiantes/graduados/listar', 'GraduadoController@index')->name('graduados.listar')
     ->middleware(
         'roles:
@@ -140,7 +140,7 @@ Route::group(['middleware' => ['auth']], function () {
             Secretaria
             Estudiante asistente académica
     ');
-    
+
     Route::get('/estudiante/guia-academica/registrar/{id_estudiante}', 'GuiasAcademicaController@create')->name('guia-academica.create')
     ->middleware(
         'roles:
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de SIGAB
             Estudiante asistente académica
     ');
-    
+
     Route::get('/estudiante/guia-academica/{id_guia}', 'GuiasAcademicaController@show')->name('guia-academica.show')
     ->middleware(
         'roles:
@@ -767,7 +767,7 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de SIGAB
             Estudiante asistente académica
     ');
-    
+
     Route::delete('/lista-asistencia-promocion/{participante_id}', 'AsistenciaPromocionController@destroy')->name('asistencia-promocion.destroy')
     ->middleware(
         'roles:
@@ -849,7 +849,9 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de Aseguramiento de la Calidad de la Carrera
             Académica responsable de SIGAB
     ');
-
+    // ********************************************************
+    //      Reportes de involucramiento ANUAL del personal
+    // ********************************************************
     Route::get('/reportes/involucramiento/anual', 'ReportesInvolucramientoController@reporteAnual')->name('reportes-involucramiento.anual')
     ->middleware(
         'roles:
@@ -863,4 +865,16 @@ Route::group(['middleware' => ['auth']], function () {
     //el código fuente de la página
     Route::get('/js/scriptglobal.js', 'HomeController@scriptGeneral')->name('script.global');
     
+    // ********************************************************
+    //      Reportes de involucramiento POR CICLO del personal
+    // ********************************************************
+
+    Route::get('/reportes/involucramiento/ciclo', 'ReportesPorCicloController@show')->name('involucramiento-ciclo.show')
+    ->middleware(
+        'roles:
+            Dirección
+            Subdirección
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
 });

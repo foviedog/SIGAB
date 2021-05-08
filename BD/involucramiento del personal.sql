@@ -78,3 +78,24 @@ and ai.`tipo_actividad` like '%Simposio%'
   )
   and year(a.`fecha_final_actividad`) = '2021';
 
+
+select * from actividades;
+
+
+select distinct
+   `actividades`.`id` id,  `actividades_internas`.`tipo_actividad`,`actividades`.`tema`, `actividades`.`fecha_inicio_actividad`, `actividades`.`fecha_final_actividad`
+from
+  `actividades`
+  left join `lista_asistencias` on `lista_asistencias`.`actividad_id` = `actividades`.`id`
+  inner join `actividades_internas` on `actividades_internas`.`actividad_id` = `actividades`.`id`
+where
+  (
+    `actividades`.`responsable_coordinar` = 'asdasd'
+     or `lista_asistencias`.`persona_id` = 'asdasd'
+  )
+  and (
+    `actividades`.`estado` = 'Ejecutada'
+    or `actividades`.`estado` = 'En progreso'
+  )
+  and year(`actividades`.`fecha_inicio_actividad`) = '2021'
+  and (month(`actividades`.`fecha_inicio_actividad`) between '01'and '06')
