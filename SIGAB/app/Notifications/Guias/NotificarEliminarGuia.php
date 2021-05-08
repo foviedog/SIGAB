@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Guias;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +11,7 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 
 use App\Persona;
 
-class NotificacionActividadParaAutorizar extends Notification implements ShouldBroadcast
+class NotificarEliminarGuia extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -20,9 +20,11 @@ class NotificacionActividadParaAutorizar extends Notification implements ShouldB
      *
      * @return void
      */
-    public function __construct($actividad)
+    public function __construct($guia, $persona_id)
     {
-        $this->actividad = $actividad;
+        $persona = Persona::find($persona_id);
+        $this->guia = $guia;
+        $this->persona_id = $persona_id;
     }
 
     /**
@@ -44,19 +46,20 @@ class NotificacionActividadParaAutorizar extends Notification implements ShouldB
      */
     public function toArray($notifiable)
     {
-        $persona = Persona::find($this->actividad->creada_por);
-        $mensaje = $persona->nombre." ".$persona->apellido." ha enviado una actividad para autorización.";
+        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado una guía académica.";
         return [
-            'idActividad' => $this->actividad->id,
+            'id' => $this->guia->persona_id,
+            'modelo' => 'guia',
             'mensaje' => $mensaje
         ];
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $persona = Persona::find($this->actividad->creada_por);
-        $mensaje = $persona->nombre." ".$persona->apellido." ha enviado una actividad para autorización.";
+        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado una guía académica.";
         return new BroadcastMessage([
+            'id' => $this->guia->persona_id,
+            'modelo' => 'guia',
             'mensaje' => $mensaje
         ]);
     }

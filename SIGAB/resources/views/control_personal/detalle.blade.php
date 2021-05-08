@@ -49,7 +49,7 @@ if(is_null($idiomas)){
                     <div>
 
                         {{-- Regresar al listado de personal --}}
-                        <a href="{{ route('personal.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-personal" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>

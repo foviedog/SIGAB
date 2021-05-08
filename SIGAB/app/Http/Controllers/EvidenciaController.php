@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Events\EventEvidencias;
+use App\Exceptions\ControllerFailedException;
 use Storage;
 use App\Evidencia;
 use App\Actividades;
@@ -92,11 +94,11 @@ class EvidenciaController extends Controller
             'mensaje' => $mensaje,
             'evidencias' => $evidencias
         ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+    } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+     catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -139,11 +141,16 @@ class EvidenciaController extends Controller
             if ($evidencia->tipo_documento != "video") {
                 File::delete(public_path('storage/evidencias/' . $request->actividad_id . "/" . $evidencia->id_repositorio));
             }
+
+             //Se envía la notificación
+            event(new EventEvidencias($evidencia, 1));
+
             $evidencia->delete();
 
             return redirect()->route('evidencias.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
-        } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect()->route('lista-asistencias.show', $request->actividad_id)->with('mensaje', 'error');
+        
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
     /**
@@ -153,24 +160,23 @@ class EvidenciaController extends Controller
      * @param  \App\evidencias  $evidencias
      * @return \Illuminate\Http\Response
      */
-    public function download(Request $request,  $evidenciaId)
-    {try{
-        $evidencia = Evidencia::where('id', $evidenciaId)->first();
-        $ruta = 'storage/evidencias/' . $request->actividad_id . '/' . $evidencia->id_repositorio;
-        return response()->download(public_path($ruta));
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+    public function download(Request $request, $evidenciaId)
+    {
+        try{
+
+            $evidencia = Evidencia::where('id', $evidenciaId)->first();
+            $ruta = 'storage/evidencias/' . $request->actividad_id . '/' . $evidencia->id_repositorio;
+            return response()->download(public_path($ruta));
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     public function obtenerLista($actividadId, $itemsPagina, $nombreFiltro, $tipoFiltro)
     {
         try {
+        
             $lista = NULL;
             if (!is_null($nombreFiltro || $tipoFiltro)) {
                 $lista = Evidencia::where('actividad_id', $actividadId)
@@ -181,46 +187,49 @@ class EvidenciaController extends Controller
                 $lista = Evidencia::where('actividad_id', $actividadId)
                     ->paginate($itemsPagina);
             }
-        } catch (\Illuminate\Database\QueryException $ex) {
-            report($ex);
-        }
 
-        return $lista;
+            return $lista;
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     private function guardarVideo($request, &$evidencia)
     {
         try{
-        $evidencia->id_repositorio = request()->url_video;
-        $evidencia->tipo_documento = "video";
-        $evidencia->save();
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
+
+            $evidencia->id_repositorio = request()->url_video;
+            $evidencia->tipo_documento = "video";
+            $evidencia->save();
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     private function guardarDocumento($request, &$evidencia)
     {
         try{
-        if ($request->hasFile('evidencia')) {
-            $evidenciaArchivo = $request->file('evidencia');
-            $evidencia->tipo_documento = $this->obtenerTipoDocumento($evidenciaArchivo->getClientOriginalExtension());
-            $id_repositorio = time() . '_' . preg_replace('/\s+/', '', $request->nombre_archivo) . "." . $evidenciaArchivo->getClientOriginalExtension();
-            $file =  $request->file('evidencia');
-            //Se guarda el documento en el repositorio PUBLICO para luego poder acceder a él para su previsualización
-            $file->storeAs('/evidencias/' . $request->actividad_id, $id_repositorio, ['disk' => 'public_storage']);
 
-            // ? En caso de que se desee guardar de manera privada se puede hacer de la forma de abajo
-            // $ruta = $request->file('evidencia')->storeAs('evidencias/' . $request->actividad_id, $id_repositorio, 'public');
-            $evidencia->id_repositorio = $id_repositorio;
+            if ($request->hasFile('evidencia')) {
+                $evidenciaArchivo = $request->file('evidencia');
+                $evidencia->tipo_documento = $this->obtenerTipoDocumento($evidenciaArchivo->getClientOriginalExtension());
+                $id_repositorio = time() . '_' . preg_replace('/\s+/', '', $request->nombre_archivo) . "." . $evidenciaArchivo->getClientOriginalExtension();
+                $file =  $request->file('evidencia');
+                //Se guarda el documento en el repositorio PUBLICO para luego poder acceder a él para su previsualización
+                $file->storeAs('/evidencias/' . $request->actividad_id, $id_repositorio, ['disk' => 'public_storage']);
 
-            $evidencia->save();
-        }
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
+                // ? En caso de que se desee guardar de manera privada se puede hacer de la forma de abajo
+                // $ruta = $request->file('evidencia')->storeAs('evidencias/' . $request->actividad_id, $id_repositorio, 'public');
+                $evidencia->id_repositorio = $id_repositorio;
+
+                $evidencia->save();
+            }
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }  
     }
 
     private function obtenerTipoDocumento($extension)

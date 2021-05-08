@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helper\GlobalArrays;
 use App\Helper\Accesos;
+use App\Events\EventActividades;
+use App\Exceptions\ControllerFailedException;
 use App\ActividadesPromocion;
 use App\Actividades;
 
@@ -17,41 +19,42 @@ class ActividadesPromocionController extends Controller
     public function index()
     {
         try{
-        // Array que devuelve los items que se cargan por página
-        $paginaciones = [5, 10, 25, 50];
-        //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
-        //request se setea por defecto en 25 por página
-        $itemsPagina = request('itemsPagina', 25);
-        $tema_filtro = request('tema_filtro', NULL);
-        $tipo_filtro = request('tipo_filtro', NULL);
-        $estado_filtro = request('estado_filtro', NULL);
-        $rango_fechas = request('rango_fechas', NULL);
-        $checkAvanzada = request('checkAvanzada', NULL);
-        $fechaIni = NULL;
-        $fechaFin = NULL;
-        //si se realiza una búsqueda sin seleccionar la fecha
-        if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
-            $actividadesPromocion = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $estado_filtro);
-        } else if (!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si se realiza una búsqueda y se coloca la fecha
-            $actividadesPromocion = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro);
-        } else {
-            $actividadesPromocion = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
-        }
 
-        //se devuelve la vista con los atributos de paginación de actividades
-        return view('control_actividades_promocion.listado', [
-            'actividadesPromocion' => $actividadesPromocion, // Listado de actividades
-            'paginaciones' => $paginaciones, // Listado de items de paginaciones.
-            'itemsPagina' => $itemsPagina, // Item que se desean por página.
-            'tema_filtro' => $tema_filtro,
-            'tipo_filtro' => $tipo_filtro,
-            'estado_filtro' => $estado_filtro,
-            'rango_fechas' => $rango_fechas
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            // Array que devuelve los items que se cargan por página
+            $paginaciones = [5, 10, 25, 50];
+            //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+            //request se setea por defecto en 25 por página
+            $itemsPagina = request('itemsPagina', 25);
+            $tema_filtro = request('tema_filtro', NULL);
+            $tipo_filtro = request('tipo_filtro', NULL);
+            $estado_filtro = request('estado_filtro', NULL);
+            $rango_fechas = request('rango_fechas', NULL);
+            $checkAvanzada = request('checkAvanzada', NULL);
+            $fechaIni = NULL;
+            $fechaFin = NULL;
+            //si se realiza una búsqueda sin seleccionar la fecha
+            if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
+                $actividadesPromocion = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $estado_filtro);
+            } else if (!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si se realiza una búsqueda y se coloca la fecha
+                $actividadesPromocion = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro);
+            } else {
+                $actividadesPromocion = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
+            }
+
+            //se devuelve la vista con los atributos de paginación de actividades
+            return view('control_actividades_promocion.listado', [
+                'actividadesPromocion' => $actividadesPromocion, // Listado de actividades
+                'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+                'itemsPagina' => $itemsPagina, // Item que se desean por página.
+                'tema_filtro' => $tema_filtro,
+                'tipo_filtro' => $tipo_filtro,
+                'estado_filtro' => $estado_filtro,
+                'rango_fechas' => $rango_fechas
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
 
@@ -64,7 +67,7 @@ class ActividadesPromocionController extends Controller
     //Método que inserta una actividad promocion en la base de datos
     public function store(Request $request)
     {
-        try { //se utiliza un try-catch para control de errores
+        try {
 
             $actividad = new Actividades; //Se crea una nueva instacia de Actividad
             $actividad_promocion = new ActividadesPromocion; //Se crea una nueva instacia de la actividad promocion
@@ -92,14 +95,13 @@ class ActividadesPromocionController extends Controller
             $actividad_promocion->recursos = $request->recursos;
             $actividad_promocion->save(); //se guarda el objeto en la base de datos
 
-            //Generar la notificacion
-            event(new EventActividadParaAutorizar($actividad));
-
             //Mensaje dependiendo del acceso
             if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
                 $mensaje = "¡El registro ha sido exitoso!";
+                event(new EventActividades($actividad, 2, 2));
             } else {
                 $mensaje = "¡La actividad fue enviada para autorización correctamente! Puede verificar la actividad en el listado de Mis actividades que encontrará en el perfil personal";
+                event(new EventActividades($actividad, 2, 1));
             }
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
@@ -107,9 +109,9 @@ class ActividadesPromocionController extends Controller
                 ->with('mensaje-exito', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_promocion_insertada', $actividad_promocion);
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return redirect("/actividad-promocion/registrar") //se redirecciona a la pagina de registro
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 
@@ -118,7 +120,8 @@ class ActividadesPromocionController extends Controller
     public function show($id_actividad)
     {
         try{
-        $actividad = Actividades::findOrfail($id_actividad);
+
+            $actividad = Actividades::findOrfail($id_actividad);
             //Las actividades se acceden si se cumple al menos uno de los siguientes parámetros:
             //1. Se tiene el acceso para autorizar la actividad
             //2. La actividad fue registrada por la persona que está en sesión
@@ -129,9 +132,9 @@ class ActividadesPromocionController extends Controller
             } else {
                 return redirect('/home');
             }
-    } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 
@@ -143,7 +146,7 @@ class ActividadesPromocionController extends Controller
 
     public function update($id_actividad, Request $request)
     {
-        try { //se utiliza un try-catch para control de errores
+        try {
 
             $actividad = Actividades::findOrFail($id_actividad);
             $actividad_promocion = ActividadesPromocion::findOrFail($id_actividad);
@@ -169,14 +172,16 @@ class ActividadesPromocionController extends Controller
 
             $actividad_promocion->save(); //se guarda el objeto en la base de datos
 
+            event(new EventActividades($actividad, 2, 3));
+
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/detalle-actividad-promocion/{$actividad->id}")
                 ->with('mensaje-exito', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad);
             //->with('actividad_promocion_insertada', $actividad_promocion);
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return redirect("/detalle-actividad-promocion/{$actividad->id}") //se redirecciona a la pagina de registro
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 
@@ -230,7 +235,8 @@ class ActividadesPromocionController extends Controller
 
         return $actividadesPromocion;
     }
-//Filtro solo por tema de actividad
+
+    //Filtro solo por tema de actividad
     private function filtroTema($itemsPagina, $tema_filtro)
     {
         $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
@@ -249,16 +255,20 @@ class ActividadesPromocionController extends Controller
 
     public function autorizar(Request $request)
     {
-        try { //se utiliza un try-catch para control de errores
+        try {
+
             $actividad = Actividades::findOrfail($request->id_actividad);
             $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
+
+            event(new EventActividades($actividad, 2, 2));
+
             //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
             return redirect("/detalle-actividad-promocion/{$actividad->id}")
                 ->with('mensaje-exito', '¡La actividad se ha autorizado correctamente!'); //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return redirect("/detalle-actividad-promocion/{$request->id_actividad}") //se redirecciona a la pagina de registro
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar
+        
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 }

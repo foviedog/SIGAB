@@ -40,7 +40,7 @@ Listado de Personal
 
                 @if(Accesos::ACCESO_BUSCAR_PERSONAL())
                 {{-- // Form para la paginación y para la búsqueda del personal --}}
-                <form autocomplete="off" action="{{ route('personal.listar' ) }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('personal.listar') }}" method="GET" role="form" id="item-pagina">
                     <div class="row">
                         <div class="col-md-6 text-nowrap">
                             <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">

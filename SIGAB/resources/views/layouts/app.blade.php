@@ -56,6 +56,9 @@
             </div>
         </div>
 
+        {{-- Audio para notificaciones --}}
+        <audio id="notification-sound" src="{{ asset('sounds/notification.mp3') }}" muted="muted"></audio>
+        
         {{-- Scripts globales --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{{route('script.global')}}"></script>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use App\Events\EventTitulos;
+use App\Exceptions\ControllerFailedException;
 use App\Graduado;
 use App\Persona;
 use App\Estudiante;
@@ -17,22 +19,23 @@ class GraduadoController extends Controller
     //Método que obtiene una cedula por medio del request, devuelve ese estudiante espefico junto con la vista para crear una guia academica
     public function create($id_estudiante)
     {
-try{
-        $estudiante = Estudiante::findOrFail($id_estudiante);
+        try{
 
-        return view('control_educativo.informacion_estudiantil.informacion_graduados.registrar', [
-            'estudiante' => $estudiante,
-        ]); 
-        }   catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            $estudiante = Estudiante::findOrFail($id_estudiante);
+
+            return view('control_educativo.informacion_estudiantil.informacion_graduados.registrar', [
+                'estudiante' => $estudiante,
+            ]); 
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     //Método que inserta una guia academica de un estudiante especifico en la base de datos
     public function store(Request $request)
     {
-        try { //se utiliza un try-catch para control de errores
+        try {
             //Se crea una nueva instacia de graduado.
             $graduado = new Graduado;
 
@@ -45,13 +48,16 @@ try{
             //se guarda el objeto en la base de datos
             $graduado->save();
 
+             //Se envía la notificación
+            event(new EventTitulos($graduado, 1));
+
             //se redirecciona a la pagina de registro de guias academicas con un mensaje de exito y los datos específicos del objeto insertado
             return Redirect::back()
                 ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('graduado_insertada', $graduado); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina de registro guias academicas
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 
@@ -91,11 +97,11 @@ try{
             'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página,
             'anio' => $anio // Valor del filtro de año de graduación
         ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+    } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+     catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -115,7 +121,7 @@ try{
             'estudiante' => $estudiante,       // Estudiante
             'graduaciones' => $graduaciones,   // Graduaciones
         ]);
-         } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+         } catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -130,7 +136,7 @@ try{
 
         //Retorna la graduación en formato JSON y con un código de éxito de 200
         return response()->json($graduacion, 200);
-        }    catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        }    catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -151,14 +157,17 @@ try{
         //Se guarda en la base de datos
         $graduacion->save();
 
+         //Se envía la notificación
+        event(new EventTitulos($graduacion, 2));
+
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('mensaje-exito', '¡Se ha actualizado correctamente!');
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        } catch (\Illuminate\Database\QueryException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }    
-         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+         catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
@@ -212,13 +221,17 @@ try{
         try {
             
             $graduacion = Graduado::find($id_graduacion); 
+
+             //Se envía la notificación
+            event(new EventTitulos($graduacion, 3));
+
             $graduacion->delete();
             return Redirect::back()
             ->with('exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
             ->with('mensaje-error', 'ha ocurrido un error');
-        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        } catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }

@@ -10,9 +10,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Actividades;
+use App\Personal;
 
-class EventActividadParaAutorizar implements ShouldBroadcast
+class EventPersonal
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,11 +22,13 @@ class EventActividadParaAutorizar implements ShouldBroadcast
      * @return void
      */
 
-    public $actividad;
+    public $personal;
+    public $accion;
 
-    public function __construct(Actividades $actividad)
+    public function __construct(Personal $personal, $accion)
     {
-        $this->actividad = $actividad;
+        $this->personal = $personal;
+        $this->accion = $accion;
     }
 
     /**
@@ -34,7 +36,7 @@ class EventActividadParaAutorizar implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn(): Channel
+    public function broadcastOn()
     {
         return new PrivateChannel('events');
     }

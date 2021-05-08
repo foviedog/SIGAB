@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use App\Helper\GlobalArrays;
+use App\Exceptions\ControllerFailedException;
 use Carbon\Carbon;
 use DateTime;
 use PDF;
@@ -23,44 +24,41 @@ class ReportesActividadesController extends Controller
     public function show()
     {
         try{
-        //Se obtienen los datos que sean necesarios para la generación de estadísticas
-        //(A pesar de que no sean necesarios en un inicio es para evitar confictos con la recuperación de datos digitados en la elaboración de un request al servidor)
-        $chart = "bar";
-        $tip_act_int = $this->devolverTipos(0);
-        $tip_act_prom = $this->devolverTipos(1);
-        $datos = null;
-        $datosCuantitativos = $this->datosCuantitativosActividades();
-        $naturalezaAct = request('actividad_naturaleza', null);
-        $estadoActividad = request('estado_actividad', null);
-        $mesInicio = request('mes_inicio', null);
-        $mesFinal = request('mes_final', null);
-        $chart = request('tipo_grafico', null);
-        $tipoAct = request('tipo_actividad_int', null);
-        $propositosDelAnio = $this->propositosActividad(); //Se obtiene el gráfico de cantidad de actividades según propósitos del año actual
-        $estadosDelAnio = $this->estadosActividades(); //Se obtiene el gráfico de cantidad de actividades según estadis del año actual
 
-        return view('reportes.actividades.detalle', [
-            'chart' => $chart,
-            'tip_act_int' => $tip_act_int,
-            'tip_act_prom' => $tip_act_prom,
-            'datos' => $datos,
-            'datosCuantitativos' => $datosCuantitativos,
-            'naturalezaAct' => $naturalezaAct,
-            'tipoAct' => $tipoAct,
-            'mesInicio' => $mesInicio,
-            'mesFinal' => $mesFinal,
-            'estadoActividad' => $estadoActividad,
-            'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
-            'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES) //Se formatea el gráfico a JSON para utilizarlo en la API de JS
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            //Se obtienen los datos que sean necesarios para la generación de estadísticas
+            //(A pesar de que no sean necesarios en un inicio es para evitar confictos con la recuperación de datos digitados en la elaboración de un request al servidor)
+            $chart = "bar";
+            $tip_act_int = $this->devolverTipos(0);
+            $tip_act_prom = $this->devolverTipos(1);
+            $datos = null;
+            $datosCuantitativos = $this->datosCuantitativosActividades();
+            $naturalezaAct = request('actividad_naturaleza', null);
+            $estadoActividad = request('estado_actividad', null);
+            $mesInicio = request('mes_inicio', null);
+            $mesFinal = request('mes_final', null);
+            $chart = request('tipo_grafico', null);
+            $tipoAct = request('tipo_actividad_int', null);
+            $propositosDelAnio = $this->propositosActividad(); //Se obtiene el gráfico de cantidad de actividades según propósitos del año actual
+            $estadosDelAnio = $this->estadosActividades(); //Se obtiene el gráfico de cantidad de actividades según estadis del año actual
+
+            return view('reportes.actividades.detalle', [
+                'chart' => $chart,
+                'tip_act_int' => $tip_act_int,
+                'tip_act_prom' => $tip_act_prom,
+                'datos' => $datos,
+                'datosCuantitativos' => $datosCuantitativos,
+                'naturalezaAct' => $naturalezaAct,
+                'tipoAct' => $tipoAct,
+                'mesInicio' => $mesInicio,
+                'mesFinal' => $mesFinal,
+                'estadoActividad' => $estadoActividad,
+                'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
+                'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES) //Se formatea el gráfico a JSON para utilizarlo en la API de JS
+            ]);
+            
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
 
@@ -70,51 +68,48 @@ class ReportesActividadesController extends Controller
     public function resultado(Request $request)
     {
         try{
-        //Se setean los tipos según la naturaleza de la actividad (Interna o promoción)
-        $tip_act_int = $this->devolverTipos(0);
-        $tip_act_prom = $this->devolverTipos(1);
 
-        //Se obtienen los datos que se hayan digitado en el formulario de generación de estadísticas
-        $chart = $request->tipo_grafico;
-        $naturalezaAct = $request->actividad_naturaleza;
-        $estadoActividad = $request->estado_actividad;
-        $mesInicio = $request->mes_inicio;
-        $mesFinal = $request->mes_final;
-        $chart = $request->tipo_grafico;
-        if ($naturalezaAct == "Actividad interna") {
-            $tipoAct = $request->tipo_actividad_int;
-        } else {
-            $tipoAct = $request->tipo_actividad_prom;
+            //Se setean los tipos según la naturaleza de la actividad (Interna o promoción)
+            $tip_act_int = $this->devolverTipos(0);
+            $tip_act_prom = $this->devolverTipos(1);
+
+            //Se obtienen los datos que se hayan digitado en el formulario de generación de estadísticas
+            $chart = $request->tipo_grafico;
+            $naturalezaAct = $request->actividad_naturaleza;
+            $estadoActividad = $request->estado_actividad;
+            $mesInicio = $request->mes_inicio;
+            $mesFinal = $request->mes_final;
+            $chart = $request->tipo_grafico;
+            if ($naturalezaAct == "Actividad interna") {
+                $tipoAct = $request->tipo_actividad_int;
+            } else {
+                $tipoAct = $request->tipo_actividad_prom;
+            }
+            //Se llama al algoritmo para la obtención de actividades realizadas según las fecahs
+            $datos = $this->obtenerDatos($mesInicio, $mesFinal, $naturalezaAct, $tipoAct, $estadoActividad);
+            $datosCuantitativos = $this->datosCuantitativosActividades(); //Se obtienen los datos cuantitativos que están ubicados encima de la página
+            $propositosDelAnio = $this->propositosActividad(); //Se obtiene el gráfico de cantidad de actividades según propósitos del año actual
+            $estadosDelAnio = $this->estadosActividades(); //Se obtiene el gráfico de cantidad de actividades según estadis del año actual
+
+            //Se devuelve a la misma vista con los mismos datos de la búsqueda que haya realizado
+            return view('reportes.actividades.detalle', [
+                'chart' => $chart,
+                'tip_act_int' => $tip_act_int,
+                'tip_act_prom' => $tip_act_prom,
+                'datos' => json_encode($datos, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
+                'datosCuantitativos' => $datosCuantitativos,
+                'naturalezaAct' => $naturalezaAct,
+                'tipoAct' => $tipoAct,
+                'mesInicio' => $mesInicio,
+                'mesFinal' => $mesFinal,
+                'estadoActividad' => $estadoActividad,
+                'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
+                'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES) //Se formatea el gráfico a JSON para utilizarlo en la API de JS
+            ]);
+            
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
-        //Se llama al algoritmo para la obtención de actividades realizadas según las fecahs
-        $datos = $this->obtenerDatos($mesInicio, $mesFinal, $naturalezaAct, $tipoAct, $estadoActividad);
-        $datosCuantitativos = $this->datosCuantitativosActividades(); //Se obtienen los datos cuantitativos que están ubicados encima de la página
-        $propositosDelAnio = $this->propositosActividad(); //Se obtiene el gráfico de cantidad de actividades según propósitos del año actual
-        $estadosDelAnio = $this->estadosActividades(); //Se obtiene el gráfico de cantidad de actividades según estadis del año actual
-
-        //Se devuelve a la misma vista con los mismos datos de la búsqueda que haya realizado
-        return view('reportes.actividades.detalle', [
-            'chart' => $chart,
-            'tip_act_int' => $tip_act_int,
-            'tip_act_prom' => $tip_act_prom,
-            'datos' => json_encode($datos, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
-            'datosCuantitativos' => $datosCuantitativos,
-            'naturalezaAct' => $naturalezaAct,
-            'tipoAct' => $tipoAct,
-            'mesInicio' => $mesInicio,
-            'mesFinal' => $mesFinal,
-            'estadoActividad' => $estadoActividad,
-            'propositosDelAnio' => json_encode($propositosDelAnio, JSON_UNESCAPED_SLASHES), //Se formatea el gráfico a JSON para utilizarlo en la API de JS
-            'estadosDelAnio' => json_encode($estadosDelAnio, JSON_UNESCAPED_SLASHES) //Se formatea el gráfico a JSON para utilizarlo en la API de JS
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
     }
 
 

@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 /* Ruta para registrar usuario */
 Route::get('/register', 'RegistroController@index')->name('register');
 Route::post('/registroselper', 'RegistroController@show')->name('registroselper');
-Route::post('/registro', 'RegistroController@register');
+Route::post('/registro', 'RegistroController@register')->name('registro');
 
 /* Ruta del auth */
 Auth::routes([
@@ -861,6 +861,6 @@ Route::group(['middleware' => ['auth']], function () {
     
     //Esta ruta genera un script que protege que algunos datos sensibles sean visibles directamente en
     //el código fuente de la página
-    Route::get('/js-modules/scriptglobal.js', 'HomeController@scriptGeneral')->name('script.global');
+    Route::get('/js/scriptglobal.js', 'HomeController@scriptGeneral')->name('script.global');
     
 });

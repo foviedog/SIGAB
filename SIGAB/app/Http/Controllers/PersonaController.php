@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Helper\GlobalFunctions;
 use App\Helper\GlobalArrays;
+use App\Exceptions\ControllerFailedException;
 use App\Persona;
 use App\Actividades_interna;
 use App\ActividadesPromocion;
@@ -19,58 +20,55 @@ class PersonaController extends Controller
     {
         try{
         
-        $persona_id = auth()->user()->persona_id;
-        
-        if ($persona_id != session('persona')->persona_id) {
-            return  abort(404);
+            $persona_id = auth()->user()->persona_id;
+            
+            if ($persona_id != session('persona')->persona_id) {
+                return  abort(404);
+            }
+            // Se realiza una búsqueda en la BD respecto a la persona específica.
+            $persona = Persona::findOrFail($persona_id);
+            // dd($persona->personal);
+            return view('control_perfil.detalle', [
+                'persona' => $persona,
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
-        // Se realiza una búsqueda en la BD respecto a la persona específica.
-        $persona = Persona::findOrFail($persona_id);
-        // dd($persona->personal);
-        return view('control_perfil.detalle', [
-            'persona' => $persona,
-        ]);
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
-    }
+
     // Método que muestra una guía específica de un estudiante.
     public function update($persona_id, Request $request)
     {
         try{
-        // Se accesede al objeto persona almacenado en la sesión.
-        $persona = session('persona');;
 
-        // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
-        $persona->nombre = $request->nombre;
-        $persona->apellido = $request->apellido;
-        $persona->fecha_nacimiento = $request->fecha_nacimiento;
-        $persona->telefono_fijo = $request->telefono_fijo;
-        $persona->telefono_celular = $request->telefono_celular;
-        $persona->correo_personal = $request->correo_personal;
-        $persona->correo_institucional = $request->correo_institucional;
-        $persona->estado_civil = $request->estado_civil;
-        $persona->direccion_residencia = $request->direccion_residencia;
-        $persona->genero = $request->genero;
+            // Se accesede al objeto persona almacenado en la sesión.
+            $persona = session('persona');;
 
-        //Se guardan los datos de la persona
-        $persona->save();
+            // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
+            $persona->nombre = $request->nombre;
+            $persona->apellido = $request->apellido;
+            $persona->fecha_nacimiento = $request->fecha_nacimiento;
+            $persona->telefono_fijo = $request->telefono_fijo;
+            $persona->telefono_celular = $request->telefono_celular;
+            $persona->correo_personal = $request->correo_personal;
+            $persona->correo_institucional = $request->correo_institucional;
+            $persona->estado_civil = $request->estado_civil;
+            $persona->direccion_residencia = $request->direccion_residencia;
+            $persona->genero = $request->genero;
 
-        //Llamado al método que actualiza la foto de perfil
-        $this->update_avatar($request, $persona);
+            //Se guardan los datos de la persona
+            $persona->save();
 
-        //Se retorna el detalle del estudiante ya modificado
-        return redirect("/perfil");
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            //Llamado al método que actualiza la foto de perfil
+            $this->update_avatar($request, $persona);
+
+            //Se retorna el detalle del estudiante ya modificado
+            return redirect("/perfil");
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     private function update_avatar($request, $persona)
@@ -96,6 +94,9 @@ class PersonaController extends Controller
     }
 
     public function obtenerNotificaciones(){
+        /*if(auth()->user()->unreadNotifications()> 5){
+            return auth()->user()->unreadNotifications()->limit(5)->get();
+        }*/
         return auth()->user()->unreadNotifications;
     }
 
@@ -118,6 +119,7 @@ class PersonaController extends Controller
 
     public function actualizarContrasenna(Request $request){
         try{
+
             /* Verifica que la contraseña antigua sea igual a la registrada */
             if(GlobalFunctions::verificarContrasennaVieja($request->old_password, auth()->user()->password)){
                 /* Verifica que la contraseña contenga los requisitos mínimos de seguridad */
@@ -146,13 +148,8 @@ class PersonaController extends Controller
                             ->with('mensaje-error', 'La contraseña antigua no coincide con nuestros registros.');
             }
             
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina anteriror
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-        }    
-        catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina anteriror
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 }

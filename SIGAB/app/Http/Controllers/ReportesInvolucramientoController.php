@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actividades_interna;
 use App\Helper\GlobalArrays;
+use App\Exceptions\ControllerFailedException;
 use App\ActividadesPromocion;
 use Carbon\Carbon;
 use DB;
@@ -20,31 +21,28 @@ class ReportesInvolucramientoController extends Controller
     public function show()
     {
         try{
-        $anio = date('Y');
-        $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
-        $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
-        $datosCuantitativos = $this->datosCuntitativosPersonal();
-        $datos = null;
-        $personal = null;
-        $nombre = null;
-        $estadoActividad = request('estado_actividad', null);
-        return view('reportes.involucramiento.detalle', [
-            'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
-            'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
-            'datosCuantitativos' => $datosCuantitativos,
-            'datos' => $datos,
-            'personal' => $personal,
-            'estadoActividad' => $estadoActividad,
-            'nombre' => $nombre
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+                
+            $anio = date('Y');
+            $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
+            $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
+            $datosCuantitativos = $this->datosCuntitativosPersonal();
+            $datos = null;
+            $personal = null;
+            $nombre = null;
+            $estadoActividad = request('estado_actividad', null);
+            return view('reportes.involucramiento.detalle', [
+                'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
+                'porcentajeActualAmbito' => json_encode($porcentajeActualAmbito, JSON_UNESCAPED_SLASHES),
+                'datosCuantitativos' => $datosCuantitativos,
+                'datos' => $datos,
+                'personal' => $personal,
+                'estadoActividad' => $estadoActividad,
+                'nombre' => $nombre
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     public function datosCuntitativosPersonal()

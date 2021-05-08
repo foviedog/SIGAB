@@ -9,6 +9,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Events\EventUsuarios;
+use App\Exceptions\ControllerFailedException;
 use App\Persona;
 use App\Acceso;
 
@@ -67,15 +69,19 @@ class LoginController extends Controller
             session(['persona' => $persona]);
             session(['accesos_usuario' => $accesos]);
             session(['rol' => $rol]);
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return redirect()->route('login')//se redirecciona a la pagina anteriror
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-        } catch (\Exception $ex) {
-            return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+
+
+             //Se envía la notificación
+            event(new EventUsuarios($user, 1));
+
+        } catch (\Illuminate\Database\QueryException $ex) {  
+            return redirect()->route('login')
+                ->with('mensaje-error', $ex->getMessage());
+        } catch (ModelNotFoundException $ex) {  
+            return Redirect::back()
+                ->with('mensaje-error', $ex->getMessage());
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Helper\GlobalFunctions;
 use App\Helper\GlobalArrays;
+use App\Events\EventPersonal;
+use App\Exceptions\ControllerFailedException;
 use App\Personal;
 use App\Persona;
 use App\Idioma;
@@ -19,42 +21,39 @@ class PersonalController extends Controller
     //Devuevle el listado del personal ordenados por su apellido.
     public function index()
     {
-try{
-        // Array que devuelve los items que se cargan por página
-        $paginaciones = [5, 10, 25, 50];
-        //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
-        //request se setea por defecto en 25 por página
-        $itemsPagina = request('itemsPagina', 25);
-        //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
-        $filtro = request('filtro', NULL);
-        if (!is_null($filtro)) {
-            $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id') //Inner join de personal con personas
-                ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
-                ->orWhere('personal.cargo', 'like', '%' . $filtro . '%') // Filtro para buscar el cargo del personal
-                ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro . "%'") //Filtro para buscar por nombre completo
-                ->orderBy('personas.apellido', 'asc')
-                ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
-        } else { //Si no se setea el filtro se devuelve un listado del personal
-            $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id') //Inner join de personal con personas
-                ->orderBy('personas.apellido', 'asc') // Ordena por medio del apellido de manera ascendente
-                ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
-        }
+        try{
 
-        //se devuelve la vista con los atributos de paginación del personal
-        return view('control_personal.listado', [
-            'personal' => $personal, // Listado de personal.
-            'paginaciones' => $paginaciones, // Listado de items de paginaciones.
-            'itemsPagina' => $itemsPagina, // Item que se desean por página.
-            'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            // Array que devuelve los items que se cargan por página
+            $paginaciones = [5, 10, 25, 50];
+            //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+            //request se setea por defecto en 25 por página
+            $itemsPagina = request('itemsPagina', 25);
+            //Se recibe del request con el valor de nombre,apellido o cédula, si dicho valor no está seteado se pone en NULL
+            $filtro = request('filtro', NULL);
+            if (!is_null($filtro)) {
+                $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id') //Inner join de personal con personas
+                    ->where('personas.persona_id', 'like', '%' . $filtro . '%') // Filtro para buscar por nombre de persona
+                    ->orWhere('personal.cargo', 'like', '%' . $filtro . '%') // Filtro para buscar el cargo del personal
+                    ->orWhereRaw("concat(nombre, ' ', apellido) like '%" . $filtro . "%'") //Filtro para buscar por nombre completo
+                    ->orderBy('personas.apellido', 'asc')
+                    ->paginate($itemsPagina); //Paginación de los resultados según el atributo seteado en el Request
+            } else { //Si no se setea el filtro se devuelve un listado del personal
+                $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id') //Inner join de personal con personas
+                    ->orderBy('personas.apellido', 'asc') // Ordena por medio del apellido de manera ascendente
+                    ->paginate($itemsPagina);; //Paginación de los resultados según el atributo seteado en el Request
+            }
+
+            //se devuelve la vista con los atributos de paginación del personal
+            return view('control_personal.listado', [
+                'personal' => $personal, // Listado de personal.
+                'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+                'itemsPagina' => $itemsPagina, // Item que se desean por página.
+                'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     // ===========================================================================================
@@ -84,7 +83,7 @@ try{
             $persona->persona_id = $request->persona_id;
 
 
-            $this->guardarPersonal($persona, $personal, $request); //Se llama al método genérico para guardar un personal
+            $this->guardarPersonal($persona, $personal, $request, 1); //Se llama al método genérico para guardar un personal
 
             //Antes de guardar las participaciones se crea un registro de participaciones en la base de datos para luego ser actualizadas
             $participacion->persona_id = $request->persona_id;
@@ -99,11 +98,13 @@ try{
                 ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('personal_registrado', $personal); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
 
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        } catch (\Illuminate\Database\QueryException $ex) {  
             return Redirect::back() //se redirecciona a la pagina de registro personal
                 ->with('mensaje-error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe")  //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto           
                 ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
                 ->with('personal_no_insertado', $personal); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente 
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
     }
 
@@ -113,23 +114,23 @@ try{
     public function show($id_personal)
     {
         try{
-        //Busca en la base de datos al personal con la cédula indicada y obtiene también las participaciones asociadas a él.
-        $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
-            ->where('personal.persona_id', '=', $id_personal)
-            ->first();
 
-        //Se optiene un arreglo con los idiomas específicos de la persona.
-        $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();
+            //Busca en la base de datos al personal con la cédula indicada y obtiene también las participaciones asociadas a él.
+            $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
+                ->where('personal.persona_id', '=', $id_personal)
+                ->first();
 
-        return view('control_personal.detalle', [
-            'personal' => $personal,
-            'idiomas' => $idiomas
-        ]);
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            //Se optiene un arreglo con los idiomas específicos de la persona.
+            $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();
+
+            return view('control_personal.detalle', [
+                'personal' => $personal,
+                'idiomas' => $idiomas
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
 
@@ -139,37 +140,34 @@ try{
     public function update($id_personal, Request $request)
     {
         try{
-        //Se crean instancias de persona y personal para crear inicializar los atributos de cada objeto
-        $persona = new Persona();
-        $personal = new Personal();
 
-        // Se busca en la BD la persona que concuerde con el id que viene en el request
-        $persona = Persona::find($id_personal);   //Se obtiene el personal que contiene ese ID
+            //Se crean instancias de persona y personal para crear inicializar los atributos de cada objeto
+            $persona = new Persona();
+            $personal = new Personal();
 
-        // Se busca en la BD el personal que concuerde con el ID y se adjunta el registro de participaciones que tenga
-        $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
-            ->where('personal.persona_id', '=', $id_personal)
-            ->first();
+            // Se busca en la BD la persona que concuerde con el id que viene en el request
+            $persona = Persona::find($id_personal);   //Se obtiene el personal que contiene ese ID
 
-        $this->guardarPersonal($persona, $personal, $request); //Se llama al método genérico para guardar un personal
-        $this->guardarParticipaciones($personal, $request); //Se llama al método genérico para guardar las participaciones
+            // Se busca en la BD el personal que concuerde con el ID y se adjunta el registro de participaciones que tenga
+            $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
+                ->where('personal.persona_id', '=', $id_personal)
+                ->first();
 
-        Idioma::where('persona_id', $id_personal)->delete(); // Antes de guardar los idiommas de la persona, se eliminan todos los registros de idomas referentes a esa persona para que sea posible actualizarlo
-        $this->guardarIdiomas($request); //Se llama al método genérico para guardar idiomas
+            $this->guardarPersonal($persona, $personal, $request, 2); //Se llama al método genérico para guardar un personal
+            $this->guardarParticipaciones($personal, $request); //Se llama al método genérico para guardar las participaciones
 
-        // Llamado al método que actualiza la foto de perfil
-        $this->update_avatar($request, $personal);
+            Idioma::where('persona_id', $id_personal)->delete(); // Antes de guardar los idiommas de la persona, se eliminan todos los registros de idomas referentes a esa persona para que sea posible actualizarlo
+            $this->guardarIdiomas($request); //Se llama al método genérico para guardar idiomas
 
-        //Se retorna el detalle del personal ya modificado
-        return redirect("/personal/detalle/{$personal->persona_id}");
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
+            // Llamado al método que actualiza la foto de perfil
+            $this->update_avatar($request, $personal);
+
+            //Se retorna el detalle del personal ya modificado
+            return redirect("/personal/detalle/{$personal->persona_id}");
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
 
@@ -205,7 +203,7 @@ try{
     // ===========================================================================================
     // Métodos genérico que toma los datos del request y *guarda* o *actualiza* un personal
     //============================================================================================
-    private function guardarPersonal(&$persona, &$personal, $request)
+    private function guardarPersonal(&$persona, &$personal, $request, $accion)
     {
         //se setean los atributos del objeto
         $persona->nombre = $request->nombre;
@@ -237,6 +235,9 @@ try{
 
         $persona->save(); //se guarda el objeto en la base de datos
         $personal->save();
+
+         //Se envía la notificación
+        event(new EventPersonal($personal, $accion));
     }
 
     // ==============================================================================================================
@@ -281,19 +282,17 @@ try{
     public function edit($id_personal)
     {
         try{
-        $personal = Personal::find($id_personal); //se busca la persona con el id del personal requerido
-        if ($personal == null) {
-            return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
-        } else {
-            return response()->json($personal->persona, 200); //si hay un personal registrado con ese id lo retorna
+
+            $personal = Personal::find($id_personal); //se busca la persona con el id del personal requerido
+            if ($personal == null) {
+                return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
+            } else {
+                return response()->json($personal->persona, 200); //si hay un personal registrado con ese id lo retorna
+            }
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
-    }
+    
 }

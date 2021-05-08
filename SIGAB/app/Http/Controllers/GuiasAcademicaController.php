@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use App\Helper\GlobalArrays;
+use App\Events\EventGuiasAcademicas;
+use App\Exceptions\ControllerFailedException;
 use App\Guias_academica;
 use App\Estudiante;
 use App\Personal;
@@ -39,11 +41,11 @@ class GuiasAcademicaController extends Controller
             ]);
         }
         return response()->json($estudiante, 200);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+    } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+     catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -52,7 +54,7 @@ class GuiasAcademicaController extends Controller
     //Método que inserta una guia academica de un estudiante especifico en la base de datos
     public function store(Request $request)
     {
-        try { //se utiliza un try-catch para control de errores
+        try {
 
             //Se crea una nueva instacia de guías académicas.
             $guia = new Guias_academica;
@@ -92,6 +94,9 @@ class GuiasAcademicaController extends Controller
             //se guarda el objeto en la base de datos
             $guia->save();
 
+             //Se envía la notificación
+            event(new EventGuiasAcademicas($guia, 1));
+
             //Revisa si la guia fue solicitada por un docente
             if ($request->solicitud != $request->persona_id) {
 
@@ -108,7 +113,7 @@ class GuiasAcademicaController extends Controller
                     ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                     ->with('gua_academica_insertada', $guia); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
             }
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        } catch (\Illuminate\Database\QueryException $ex) {  
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
@@ -158,11 +163,11 @@ class GuiasAcademicaController extends Controller
             'tipos' => $tipos,
             'docentes' => $docentes
         ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+    } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+     catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -180,7 +185,7 @@ class GuiasAcademicaController extends Controller
 
         return response()->json($guia, 200); // Retorna el resultado por medio de un atributo JSON en la respuesta al AJAX del documento js/control_educativo/información_guias_academicas/listado.js
     }
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+     catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -230,14 +235,17 @@ class GuiasAcademicaController extends Controller
         //Se guarda en la base de datos
         $guia->save();
 
+         //Se envía la notificación
+        event(new EventGuiasAcademicas($guia, 2));
+
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
             ->with('mensaje-exito', '¡Se ha actualizado correctamente!');
-        } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
+        } catch (\Illuminate\Database\QueryException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
-         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+         catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
@@ -260,10 +268,13 @@ class GuiasAcademicaController extends Controller
 
         $guia->save();
 
+         //Se envía la notificación
+        event(new EventGuiasAcademicas($guia, 2));
+
         return Redirect::back()
             ->with('mensaje-exito', '¡El archivo se ha borrado exitosamente!');
         }
-         catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
+         catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
@@ -343,6 +354,10 @@ class GuiasAcademicaController extends Controller
 
             $guia = Guias_academica::find($id_guia);
             $guia->delete();
+
+             //Se envía la notificación
+            event(new EventGuiasAcademicas($guia, 3));
+
             return Redirect::back()
             ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Helper\GlobalArrays;
+use App\Events\EventListaAsistencia;
+use App\Exceptions\ControllerFailedException;
 use Image;
 use App\ListaAsistencia;
 use App\Actividades;
@@ -87,41 +89,38 @@ class ListaAsistenciaController extends Controller
     public function show($actividadId)
     {
         try{
-        $paginaciones = [5, 10, 25, 50];
-        $itemsPagina = request('itemsPagina', 5);
-        $filtro = request('filtro', NULL);
 
-        $mensaje = request('mensaje', NULL);
+            $paginaciones = [5, 10, 25, 50];
+            $itemsPagina = request('itemsPagina', 5);
+            $filtro = request('filtro', NULL);
 
-        $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
-        $actividad = Actividades::find($actividadId);
+            $mensaje = request('mensaje', NULL);
 
-        if (!is_null($mensaje)) {
-            if($mensaje == "success"){
-                return redirect()->route('lista-asistencia.show', $actividadId)
-                    ->with('mensaje-exito', "Participante agregado correctamente");
-            }else{
-                return redirect()->route('lista-asistencia.show', $actividadId)
-                    ->with('mensaje-error', "Ocurrió un error al agregar el participante");
+            $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
+            $actividad = Actividades::findOrFail($actividadId);
+
+            if (!is_null($mensaje)) {
+                if($mensaje == "success"){
+                    return redirect()->route('lista-asistencia.show', $actividadId)
+                        ->with('mensaje-exito', "Participante agregado correctamente");
+                }else{
+                    return redirect()->route('lista-asistencia.show', $actividadId)
+                        ->with('mensaje-error', "Ocurrió un error al agregar el participante");
+                }
             }
+            // dd($listaAsistencia);
+            return view('control_actividades_internas.lista_asistencia.detalle', [
+                'listaAsistencia' => $listaAsistencia,
+                'actividad' => $actividad,
+                'paginaciones' => $paginaciones,
+                'itemsPagina' => $itemsPagina,
+                'filtro' => $filtro,
+                'mensaje' => $mensaje,
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
         }
-        // dd($listaAsistencia);
-        return view('control_actividades_internas.lista_asistencia.detalle', [
-            'listaAsistencia' => $listaAsistencia,
-            'actividad' => $actividad,
-            'paginaciones' => $paginaciones,
-            'itemsPagina' => $itemsPagina,
-            'filtro' => $filtro,
-            'mensaje' => $mensaje,
-        ]);
-    } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }    
-     catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-        return Redirect::back()//se redirecciona a la pagina anteriror
-            ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-    }
     }
 
     /**
@@ -156,11 +155,17 @@ class ListaAsistenciaController extends Controller
     public function destroy(Request $request, $particioanteId)
     {
         try {
+
             $lista = ListaAsistencia::where('persona_id', $particioanteId)
                 ->where('actividad_id', $request->actividad_id);
+
+             //Se envía la notificación
+            event(new EventListaAsistencia($particioanteId, $request->actividad_id, 1, 1));
+
             $lista->delete();
             return redirect()->route('lista-asistencia.show', $request->actividad_id)
             ->with('mensaje-exito', 'Participante eliminado correctamente');
+
         } catch (\Illuminate\Database\QueryException $ex) {
             return redirect()->route('lista-asistencia.show', $request->actividad_id)
             ->with('mensaje-error', 'Ocurrió un error al eliminar el participante');
@@ -214,6 +219,7 @@ class ListaAsistenciaController extends Controller
         $persona->save(); //se guarda el objeto en la base de datos
         $this->update_avatar($request, $persona);
     }
+    
     private function registrarParticipante($participante_id, $actividad_id)
     {
         $lista = new ListaAsistencia();
@@ -221,6 +227,7 @@ class ListaAsistenciaController extends Controller
         $lista->actividad_id = $actividad_id;
         $lista->save();
     }
+
     private function update_avatar($request, &$persona)
     {
         //En caso de que se haya subido alguna foto con el request se procede a guardarlo en el repositorio de imagenes de perfil
