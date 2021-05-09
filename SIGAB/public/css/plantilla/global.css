@@ -799,10 +799,11 @@ Tabla reporte anual
     font-weight: bold;
 }
 
-.tabla-reporte-anual .jornada-personal {
+.table .jornada-personal {
     text-align: center;
     justify-content: center;
     font-size: 12px;
+    font-weight: 600;
     color: rgb(92, 92, 92);
 }
 
@@ -844,6 +845,16 @@ Tabla reporte anual
     background-position: right bottom;
     background-size: 200% 100%;
     transition: background-position 0.5s ease;
+}
+.tabla-reporte-ciclo .info-actividad.no-data {
+    background: linear-gradient(to right, #f4000099  50%, white 50%);
+    background-position: right bottom;
+    background-size: 200% 100%;
+    transition: background-position 0.5s ease;
+    display: flex;
+    align-items: center;
+    font-style: italic;
+    cursor: not-allowed !important;
 }
 
 .tabla-reporte-ciclo .info-actividad:hover {

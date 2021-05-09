@@ -16,7 +16,7 @@ use PDF;
 use App\Helper\GlobalArrays;
 use App\Helper\GlobalFunctions;
 
-class ReportesPorCicloController extends Controller
+class ReporteInvolucramientoPorCicloController extends Controller
 {
     private $anios;
 
@@ -32,17 +32,17 @@ class ReportesPorCicloController extends Controller
     {
         try {
             $anio = request('anio', null);
-            $actividadesXAnio  = null;
-            $graficosInvolucramiento  = null;
             $personal = null;
             $actividadesCiclo = null;
+            $datosCuantitativos = $this->datosCuntitativosPersonal();
+
             if (!is_null($anio)) {
                 $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')->get()->keyBy('persona_id'); //Inner join de personal con personas
                 $actividadesCiclo = $this->actividadesPorCiclo($personal, $anio);
             }
 
-            return view('reportes.involucramiento.reporte_ciclo', [
-                'actividadesXAnio' => $actividadesXAnio,
+            return view('reportes.involucramiento.por_ciclo.involucramiento_ciclo', [
+                'datosCuantitativos' => $datosCuantitativos,
                 'personal' => $personal,
                 'anioReporte' => $anio,
                 'actividadesPrimerCiclo' => $actividadesCiclo[0],
@@ -106,5 +106,28 @@ class ReportesPorCicloController extends Controller
             ->distinct()->get();
 
         return $actividadesCiclo;
+    }
+
+    // ==============================================================
+    // Función utilizada para generar el reporte en una página aparte
+    // ==============================================================
+    public function reporte(Request $request)
+    {
+        $annioActual = date("Y"); //Se obtiene el año actual del servidor
+        date_default_timezone_set("America/Costa_Rica"); //Se obtiene la hora, minutos y segundos del servidor
+        $consultado = 'Consultado el ' . date("d/m/Y") . ' a las ' . date('h:i:sa') . '.'; //Se crea la leyenda de "consultado en"
+        //Se retorna la vista en la que se puede realizar la impresión o descarga del reporte
+        $personal = json_decode($request->personal);
+        $anioReporte =  json_decode($request->anio);
+        $actividadesPrimerCiclo = json_decode($request->actividadesPrimerCiclo,true);
+        $actividadesSegundoCiclo =  json_decode($request->actividadesSegundoCiclo, true);
+        // dd($actividadesPrimerCiclo);
+        return view('reportes.involucramiento.por_ciclo.reporte', [
+            'personal' => $personal,
+            'anioReporte' => $anioReporte,
+            'actividadesPrimerCiclo' => $actividadesPrimerCiclo,
+            'actividadesSegundoCiclo' => $actividadesSegundoCiclo,
+            'consultado' => $consultado
+        ]);
     }
 }

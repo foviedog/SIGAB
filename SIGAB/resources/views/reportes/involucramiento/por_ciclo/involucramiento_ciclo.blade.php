@@ -7,7 +7,8 @@ Involucramiento Anual
 
 
 {{-- --}}
-@section('contenido') <div class="card pb-5">
+@section('contenido')
+<div class="card pb-5">
     <div class="card-body pb-5">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
@@ -110,10 +111,22 @@ Involucramiento Anual
             @if(!is_null($personal) )
 
             <div class="card">
-                <div class="card-header" id="heading2021">
+                <div class="card-header d-flex justify-content-between align-items-center" id="heading2021">
                     <h4 class="mb-0 texto-azul-una py-3">
                         <div>Involucramiento del personal por ciclo en {{ $anioReporte }}</div>
                     </h4>
+                    <div>
+                        <form action="{{ route('involucramiento-ciclo.reporte') }}" method="post" target="_blank">
+                            @csrf
+                            <input type="hidden" name="personal" id="personal" value='@json($personal)''>
+                            <input type="hidden" name="anio" id="anio" value=' {{ $anio }}'>
+                            <input type="hidden" name="actividadesPrimerCiclo" id="actividadesPrimerCiclo" value='@json($actividadesPrimerCiclo)'>
+                            <input type="hidden" name="actividadesSegundoCiclo" id="actividadesSegundoCiclo" value='@json($actividadesSegundoCiclo)'>
+                            <button type="submit" class="btn btn-lg btn-contorno-rojo ml-2" id="reporte-trigger">
+                                <i class="far fa-file-pdf"></i> Generar reporte
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <div id="reporte">
@@ -130,16 +143,20 @@ Involucramiento Anual
                                 @foreach ($personal as $persona)
                                 <tr data-toggle="tooltip" data-placement="top" title="{{ $persona->nombre . " " . $persona->apellido . "(" . $anio .")"}}">
                                     <td>
-                                        <div class="row justify-content-center align-items-center">
+                                        <div class="row flex-column d-flex justify-content-center align-items-center">
                                             <img class="img-personal" src="{{URL::asset('img/fotos/'. $persona->imagen_perfil)}}" alt="">
                                             <div class="nombre-personal ">{{ $persona->nombre . " " . $persona->apellido }}</div>
                                             <div class="jornada-personal">{{ $persona->jornada }} </div>
+                                            <div class="jornada-personal">{{ $persona->cargo}}</div>
+                                            <div class="jornada-personal">{{ $persona->tipo_puesto_1}}</div>
+                                            <div class="jornada-personal">{{ $persona->jornada}}</div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col ciclo">
+                                                    @if(count($actividadesPrimerCiclo[$persona->persona_id]) != 0)
                                                     @foreach ($actividadesPrimerCiclo[$persona->persona_id] as $actividad)
                                                     <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="row info-actividad " target="_blank">
                                                         <span class="font-weight-bold w-100">{{ $actividad->tipo_actividad }}:</span>
@@ -147,6 +164,11 @@ Involucramiento Anual
                                                         <i class="text-muted w-100">{{ $actividad->fecha_inicio_actividad  . " al " . $actividad->fecha_final_actividad  }}</i>
                                                     </a>
                                                     @endforeach
+                                                    @else
+                                                    <div class="row info-actividad no-data " target="_blank">
+                                                        <span class="font-weight-bold w-100">No existen acitividades registradas</span>
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -155,6 +177,7 @@ Involucramiento Anual
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col ciclo">
+                                                    @if(count($actividadesSegundoCiclo[$persona->persona_id]) != 0)
                                                     @foreach ($actividadesSegundoCiclo[$persona->persona_id] as $actividad)
                                                     <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="row info-actividad ciclo2" target="_blank">
                                                         <span class="font-weight-bold w-100">{{ $actividad->tipo_actividad }}:</span>
@@ -162,6 +185,11 @@ Involucramiento Anual
                                                         <i class="text-muted w-100">{{ $actividad->fecha_inicio_actividad  . " al " . $actividad->fecha_final_actividad  }}</i>
                                                     </a>
                                                     @endforeach
+                                                    @else
+                                                    <div class="row  info-actividad no-data " target="_blank">
+                                                        <span class="font-weight-bold  w-100">No existen acitividades registradas</span>
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -173,6 +201,8 @@ Involucramiento Anual
                     </div>
                 </div>
             </div>
+
+
             @endif
 
         </div>
@@ -182,8 +212,14 @@ Involucramiento Anual
 
         @section('scripts')
         <script>
-            var fotosURL = "{{ URL::asset('img/fotos/') }}";
+            var personal = @json($personal);
+            var $anio = @json($anio);
+            var actividadesCiclo = @json($actividadesPrimerCiclo);
+            var actividadesSegundoCiclo = @json($actividadesSegundoCiclo);
+            console.log(personal);
 
         </script>
+
+        <script src="{{ asset('js/reportes/involucramiento/porCiclo.js') }}"></script>
 
         @endsection
