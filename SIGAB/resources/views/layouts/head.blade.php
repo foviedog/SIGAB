@@ -32,7 +32,7 @@
                         <span> {{ Auth::user()->persona_id }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('perfil.show', Auth::user()->persona_id) }}">
+                        <a class="dropdown-item" href="{{ route('perfil.show') }}">
                             <i class="fas fa-user"></i> &nbsp; Mi perfil
                         </a>
                         <div class="dropdown-divider"></div>
