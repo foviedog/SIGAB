@@ -370,13 +370,19 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                     <div class="w-100">
                                         <div class="card shadow-sm rounded pb-2">
                                             <div class="card-header py-3">
-                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                    <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
-                                                    Evaluación &nbsp;&nbsp
-                                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
-                                                        <i class="far fa-question-circle fa-lg"></i>
-                                                    </span>
-                                                </p>
+                                                <div class=" d-flex justify-content-between align-items-center">
+                                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+
+                                                        <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
+                                                        Evaluación &nbsp;&nbsp
+
+                                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
+                                                            <i class="far fa-question-circle fa-lg"></i>
+                                                        </span>
+                                                    </p>
+
+                                                    <span class="text-muted" id="mostrar_evaluacion"></span>
+                                                </div>
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
@@ -463,6 +469,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
 </script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}

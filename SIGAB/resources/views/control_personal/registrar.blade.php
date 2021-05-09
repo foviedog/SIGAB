@@ -39,11 +39,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                 @if(Accesos::ACCESO_LISTAR_PERSONAL())
                 <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de personal </a>
                 @endif
-                
+
             </div>
         </div>
         <hr>
-        
+
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
 
@@ -108,7 +108,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
         {{-- Formulario para registrar informacion del personal --}}
         <form autocomplete="off" action="{{ route('personal.store') }}" method="POST" enctype="multipart/form-data" id="personal-form">
             @csrf
-        @endif
+            @endif
             <input type="hidden" name="idiomasJSON" id="idiomasJSON">
             <div class="tab-content ">
                 <div class="tab-pane pt-4 active" id="general">
@@ -164,7 +164,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='date'  class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento"   value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
+                                    <input type='date' class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
                                 </div>
                             </div>
 
@@ -218,7 +218,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,45)" multiple value="{{ $persona_no_insertada->correo_institucional ?? '' }}" required>
                                 </div>
                                 <div class="col-1">
-                                    <span class="text-muted" id="mostrar_cant_correo_institucional"></span>
+                                    <span class="text-muted" id="mostrar_correo_institucional"></span>
                                 </div>
                             </div>
 
@@ -228,10 +228,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="estado_civil">Estado civil: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="estado_civil" name="estado_civil" class="form-control" required >
+                                    <select id="estado_civil" name="estado_civil" class="form-control" required>
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($estadosCiviles as $estadoCivil)
-                                        <option value='{{ $estadoCivil }}'  @if ( $persona_no_insertada != null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif >  {{ $estadoCivil }}</option>
+                                        <option value='{{ $estadoCivil }}' @if ( $persona_no_insertada !=null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif > {{ $estadoCivil }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -257,11 +257,11 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="genero">Género: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="genero" name="genero" class="form-control w-100" required >
+                                    <select id="genero" name="genero" class="form-control w-100" required>
                                         <option value="" selected>Sin seleccionar</option>
-                                        <option value="M" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
-                                        <option value="F" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
-                                        <option value="Otro" @if ( $persona_no_insertada != null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
+                                        <option value="M" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
+                                        <option value="F" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
+                                        <option value="Otro" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
                                     </select>
                                 </div>
                             </div>
@@ -272,10 +272,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="grado_academico">Grado académico: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="grado_academico" name="grado_academico" class="form-control" required >
+                                    <select id="grado_academico" name="grado_academico" class="form-control" required>
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($grados_academicos as $grado_academico)
-                                        <option value="{{ $grado_academico }}" @if ( $personal_no_insertado != null) @if ( $grado_academico==$personal_no_insertado->grado_academico) selected @endif @endif> {{ $grado_academico }}</option>
+                                        <option value="{{ $grado_academico }}" @if ( $personal_no_insertado !=null) @if ( $grado_academico==$personal_no_insertado->grado_academico) selected @endif @endif> {{ $grado_academico }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -286,10 +286,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="tipo_nombramiento">Tipo de nombramiento: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="tipo_nombramiento" name="tipo_nombramiento" class="form-control" required >
+                                    <select id="tipo_nombramiento" name="tipo_nombramiento" class="form-control" required>
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($tipos_nombramientos as $tipo_nombramiento)
-                                        <option value="{{ $tipo_nombramiento }}" @if ( $personal_no_insertado != null) @if ( $tipo_nombramiento==$personal_no_insertado->tipo_nombramiento) selected @endif @endif> {{ $tipo_nombramiento }}</option>
+                                        <option value="{{ $tipo_nombramiento }}" @if ( $personal_no_insertado !=null) @if ( $tipo_nombramiento==$personal_no_insertado->tipo_nombramiento) selected @endif @endif> {{ $tipo_nombramiento }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -306,10 +306,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="cargo">Tipo de cargo: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="cargo" name="cargo" class="form-control" required >
+                                    <select id="cargo" name="cargo" class="form-control" required>
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($cargos as $cargo)
-                                        <option value="{{ $cargo }}" @if ( $personal_no_insertado != null) @if ( $cargo==$personal_no_insertado->cargo) selected @endif @endif> {{ $cargo }}</option>
+                                        <option value="{{ $cargo }}" @if ( $personal_no_insertado !=null) @if ( $cargo==$personal_no_insertado->cargo) selected @endif @endif> {{ $cargo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -320,9 +320,9 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="tipo_puesto_1">Tipo de puesto 1: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="tipo_puesto_1" name="tipo_puesto_1" class="form-control" required >
+                                    <select id="tipo_puesto_1" name="tipo_puesto_1" class="form-control" required>
                                         @foreach($tipos_puestos as $tipo_puesto)
-                                        <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado != null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_1) selected @endif @endif> {{ $tipo_puesto }}</option>
+                                        <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado !=null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_1) selected @endif @endif> {{ $tipo_puesto }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -334,10 +334,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="tipo_puesto_2">Tipo de puesto 2: </label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="tipo_puesto_2" name="tipo_puesto_2" class="form-control" >
+                                    <select id="tipo_puesto_2" name="tipo_puesto_2" class="form-control">
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($tipos_puestos as $tipo_puesto)
-                                        <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado != null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_2) selected @endif @endif> {{ $tipo_puesto }}</option>
+                                        <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado !=null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_2) selected @endif @endif> {{ $tipo_puesto }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -350,10 +350,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="jornada">Jornada laboral: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="jornada" name="jornada" class="form-control" required >
+                                    <select id="jornada" name="jornada" class="form-control" required>
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach($jornadas as $jornada)
-                                        <option value="{{ $jornada }}" @if ( $personal_no_insertado != null) @if ( $jornada==$personal_no_insertado->jornada) selected @endif @endif> {{ $jornada }}</option>
+                                        <option value="{{ $jornada }}" @if ( $personal_no_insertado !=null) @if ( $jornada==$personal_no_insertado->jornada) selected @endif @endif> {{ $jornada }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -364,10 +364,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="regimen_administrativo">Régimen administrativo:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="regimen_administrativo" name="regimen_administrativo" class="form-control" >
+                                    <select id="regimen_administrativo" name="regimen_administrativo" class="form-control">
                                         <option value="" selected>No aplica para docentes</option>
                                         @foreach($regimenes_administrativos as $regimen_administrativo)
-                                        <option value="{{ $regimen_administrativo }}" @if ( $personal_no_insertado != null) @if ( $regimen_administrativo==$personal_no_insertado->regimen_administrativo) selected @endif @endif> {{ $regimen_administrativo }}</option>
+                                        <option value="{{ $regimen_administrativo }}" @if ( $personal_no_insertado !=null) @if ( $regimen_administrativo==$personal_no_insertado->regimen_administrativo) selected @endif @endif> {{ $regimen_administrativo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -380,10 +380,10 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                                     <label for="regimen_docente">Régimen docente:</label>
                                 </div>
                                 <div class="col-6">
-                                    <select id="regimen_docente" name="regimen_docente" class="form-control" >
+                                    <select id="regimen_docente" name="regimen_docente" class="form-control">
                                         <option value="" selected>No aplica para administrativos</option>
                                         @foreach($regimenes_docentes as $regimen_docente)
-                                        <option value="{{ $regimen_docente }}" @if ( $personal_no_insertado != null) @if ( $regimen_docente==$personal_no_insertado->regimen_docente) selected @endif @endif> {{ $regimen_docente }}</option>
+                                        <option value="{{ $regimen_docente }}" @if ( $personal_no_insertado !=null) @if ( $regimen_docente==$personal_no_insertado->regimen_docente) selected @endif @endif> {{ $regimen_docente }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -603,7 +603,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
                 <button type="submit" id="registrar-btn" class="btn btn-rojo btn-lg">Registrar</button>
             </div>
         </form>
-            @endif
+        @endif
 
     </div>
 </div>

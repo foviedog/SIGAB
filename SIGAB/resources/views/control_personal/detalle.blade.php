@@ -20,7 +20,7 @@ $tipos_puestos = GlobalArrays::TIPOS_PUESTOS_PERSONAL;
 $regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
 $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
 if(is_null($idiomas)){
-    $idiomas = [];
+$idiomas = [];
 }
 @endphp
 
@@ -32,7 +32,7 @@ if(is_null($idiomas)){
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')
-@endif
+    @endif
 
     <div class="card">
         <div class="card-body">
@@ -147,16 +147,20 @@ if(is_null($idiomas)){
                                             {{-- Campo: Nombre personal --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
-                                                    <span class="text-muted" id="mostrar_nombre"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
+                                                        <span class="text-muted" id="mostrar_nombre"></span>
+                                                    </div>
                                                     <input type="text" onkeyup="contarCaracteres(this,50)" id="nombre" name="nombre" class="form-control" placeholder="Nombre personal" value="{{ $personal->persona->nombre }}" required disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Apellidos --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
-                                                    <span class="text-muted" id="mostrar_apellido"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
+                                                        <span class="text-muted" id="mostrar_apellido"></span>
+                                                    </div>
                                                     <input type="text" name="apellido" id="apellido" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Apellidos" value="{{ $personal->persona->apellido }}" required disabled /> </input>
                                                 </div>
                                             </div>
@@ -168,16 +172,20 @@ if(is_null($idiomas)){
                                             {{-- Correo Personal --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_personal"><strong>Correo Personal</strong><br /></label>
-                                                    <span class="text-muted" id="mostrar_correo_personal"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="correo_personal"><strong>Correo Personal</strong></label>
+                                                        <span class="text-muted" id="mostrar_correo_personal"></span>
+                                                    </div>
                                                     <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Personal" value="{{ $personal->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
-                                                    <span class="text-muted" id="mostrar_correo_institucional"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong></label>
+                                                        <span class="text-muted" id="mostrar_correo_institucional"></span>
+                                                    </div>
                                                     <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Institucional" value="{{ $personal->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
@@ -188,18 +196,22 @@ if(is_null($idiomas)){
                                             {{-- Celular --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
-                                                    <span class="text-muted" id="mostrar_telefono_celular"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="telefono_celular"><strong>Teléfono Celular</strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span></label>
+                                                        <span class="text-muted" id="mostrar_telefono_celular"></span>
+                                                    </div>
                                                     <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $personal->persona->telefono_celular}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Telefono Fijo --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
-                                                    <span class="text-muted" id="mostrar_telefono_fijo"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="telefono_fijo"><strong>Teléfono Fijo</strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span></label>
+                                                        <span class="text-muted" id="mostrar_telefono_fijo"></span>
+                                                    </div>
                                                     <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $personal->persona->telefono_fijo }}" disabled />
                                                 </div>
                                             </div>
@@ -250,15 +262,16 @@ if(is_null($idiomas)){
                                             <div class="col-12">
                                                 {{-- Campo: trabajo_externo --}}
                                                 <div class="form-group">
-                                                    <label for="trabajo_externo"><strong>Lugar de Trabajo externo </strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
-                                                    <span class="text-muted" id="mostrar_trabajo_externo"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="trabajo_externo"><strong>Lugar de Trabajo externo </strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span></label>
+                                                        <span class="text-muted" id="mostrar_trabajo_externo"></span>
+                                                    </div>
                                                     <input type="text" name="trabajo_externo" id="trabajo_externo" class=" form-control" onkeyup="contarCaracteres(this,60)" placeholder="Solamente para docente interino" value="{{ $personal->lugar_trabajo_externo}}" disabled /> </input>
                                                 </div>
                                             </div>
                                             <div class="col-6 d-flex justify-content-center align-items-center mt-2">
                                                 <div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -267,9 +280,11 @@ if(is_null($idiomas)){
                                             <div class="col-12">
                                                 {{-- Campo: Direccion Residencia --}}
                                                 <div class="form-group">
-                                                    <label for="DireccionResidencia"><strong>Dirección Residencia <i class="text-danger">* </i></strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del personal "><i class="far fa-question-circle fa-lg"></i></span>
-                                                    <span class="text-muted" id="mostrar_direccion_residencia"></span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="DireccionResidencia"><strong>Dirección Residencia <i class="text-danger">* </i></strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del personal "><i class="far fa-question-circle fa-lg"></i></span></label>
+                                                        <span class="text-muted" id="mostrar_direccion_residencia"></span>
+                                                    </div>
                                                     <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" required disabled />{{$personal->persona->direccion_residencia}}</textarea>
                                                 </div>
                                             </div>
@@ -497,7 +512,7 @@ if(is_null($idiomas)){
             </div>
         </div>
     </div>
-@if(Accesos::ACCESO_MODIFICAR_PERSONAL())
+    @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 </form>
 @endif
 @endsection

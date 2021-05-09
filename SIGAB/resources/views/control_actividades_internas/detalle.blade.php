@@ -218,11 +218,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                                     <span data-toggle="tooltip" data-placement="right" title="Se ingresa el número de horas totales de la duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-center">
-                                                <div class="col d-flex justify-content-center">
-                                                    <div class="w-50  d-flex ">
-                                                        <input type="number" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
-                                                        <span class=" d-flex align-items-center ml-2 font-weight-bold"> h</span>
+                                            <div class="d-flex align-items-between justify-center w-100">
+                                                <div class="col d-flex align-items-between justify-content-center">
+                                                    <div class="group-item align-items-between d-flex" style="width: 65% !important;">
+                                                        <input type="number" class="form-control " min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
+                                                        <span class=" d-flex align-items-center ml-1 font-weight-bold"> h</span>
                                                     </div>
 
                                                 </div>
@@ -489,17 +489,22 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                     <div class="w-100">
                                         <div class="card shadow-sm rounded pb-2">
                                             <div class="card-header py-3">
-                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                    <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
-                                                    Evaluación &nbsp;&nbsp
-                                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
-                                                        <i class="far fa-question-circle fa-lg"></i>
-                                                    </span>
-                                                </p>
+                                                <div class=" d-flex justify-content-between align-items-center">
+                                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                        <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
+                                                        Evaluación &nbsp;&nbsp
+                                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
+                                                            <i class="far fa-question-circle fa-lg"></i>
+                                                        </span>
+
+
+                                                    </p>
+                                                    <span class="text-muted" id="mostrar_evaluacion"></span>
+                                                </div>
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->evaluacion }} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" disabled>{{ $actividad->evaluacion }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -557,6 +562,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 
 </script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+
 <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_promocion/detalle_editar.js') }}" defer></script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}

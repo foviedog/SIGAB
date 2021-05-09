@@ -64,29 +64,29 @@ Listado de Guías Académicas
             <div class="card-body">
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
                 <form autocomplete="off" action="{{ route('guia-academica.listar') }}" method="GET" role="form" id="item-pagina">
-                    <div class="row">
-
-                        <div class="col-md-7 d-flex align-items-end ">
-                            <div class="d-flex justify-content-end w-25">
-                                <div class="text-md-right dataTables_filter d-flex align-items-center mt-3">
-                                    {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
-                                    &nbsp;&nbsp;<input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
-                                </div>
-                            </div>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-md-9 col-lg-7 d-flex ">
                             {{-- Busqueda por rango de fechas --}}
-                            <div class="col-md-6 d-flex text-nowrap align-items-between">
-                                <label class="align-text-center" for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="top" title="Buscar por rango de fechas las guías académicas"></i></label>
-                                <div class="input-group d-flex justify-content-between">
-                                    <div class="input-group-prepend ml-1">
-                                        <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control  datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                            <div class="input-group d-flex justify-content-between mr-2">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text texto-azul-una font-weight-bold">
+                                        &nbsp;Fechas &nbsp;
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control  datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                <div class="input-group-append">
+                                    <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
                             </div>
-                            {{-- Botón de submit para realizar la búsqueda del estudiante --}}
-                            <div class="d-flex align-items-between mt-3">
-                                <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            <div class="input-group ">
+                                <div class="input-group-prepend ">
+                                    {{-- Input para realizar la búsqueda del estudiante --}}
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
+                                </div>
+                                <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                            </div>
+                            <div class="d-flex justify-content-center" style="width: 30%">
+                                <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                             </div>
                         </div>
                         {{-- Cantidad de items --}}
@@ -100,7 +100,6 @@ Listado de Guías Académicas
                                     @endforeach
                                 </select>
                             </div>
-
                         </div>
                     </div>
                 </form>

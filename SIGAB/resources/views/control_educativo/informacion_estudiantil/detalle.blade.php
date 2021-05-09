@@ -82,7 +82,11 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <div class="card-body pb-5">
                                 {{-- Campo: Nota admision --}}
                                 <div class="form-group">
-                                    <label for="nota"><strong>Nota de admisión</strong><br /></label><input type="number" id="nota_admision" name="nota_admision" min="0" max="999.99" step="0.01" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" disabled />
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label for="nota"><strong>Nota de admisión</strong><br /></label>
+                                        <span class="text-muted" id="mostrar_nota_admision"></span>
+                                    </div>
+                                    <input type="number" id="nota_admision" name="nota_admision" min="0" max="999.99" step="0.01" onkeyup="contarCaracteres(this,6)" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la UNA --}}
                                 <div class="form-group">
@@ -106,14 +110,22 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                 </div>
                                 {{-- Campo: Primera Carrera --}}
                                 <div class="form-group">
-                                    <label for="carrera1"><strong>Primera Carrera<i class="text-danger">* </i> </strong><br /></label>
-                                    <input type="text" name="carrera_matriculada_1" class="form-control" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label for="carrera1"><strong>Primera Carrera<i class="text-danger">* </i> </strong><br /></label>
+                                        <span class="text-muted" id="mostrar_carrera_matriculada_1"></span>
+                                    </div>
+                                    <input type="text" id="carrera_matriculada_1" name="carrera_matriculada_1" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
                                 </div>
                                 {{-- Campo: Segunda Carrera --}}
                                 <div class="form-group">
-                                    <label for="carrera2"><strong>Segunda Carrera</strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Sólo en caso de que existe segunda carrera"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                    <input type="text" name="carrera_matriculada_2" class="form-control" placeholder="Nombre de carrera" value="{{ $estudiante->carrera_matriculada_2  }}" disabled /> </input>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label for="carrera2"><strong>Segunda Carrera </strong>
+                                            <span data-toggle="tooltip" data-placement="right" title="Sólo en caso de que existe segunda carrera"><i class="far fa-question-circle fa-lg"></i></span>
+                                        </label>
+                                        <span class="text-muted" id="mostrar_carrera_matriculada_2"></span>
+                                    </div>
+
+                                    <input type="text" id="carrera_matriculada_2" name="carrera_matriculada_2" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Nombre de carrera" value="{{ $estudiante->carrera_matriculada_2  }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Colegio Procedencia --}}
                                 <div class="form-group">
@@ -124,25 +136,30 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                         @endforeach
                                     </select>
                                 </div>
-                                {{-- Campo: Estimado Graduacion --}}
 
+                                {{-- Campo: Estimado Graduacion --}}
                                 {{-- Primera Carrera --}}
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado Graduación 1</strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                    <input type="number" name="anio_graduacion_estimado_1" min="1975" max="9999" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_1}}" disabled />
+                                    <label for="anio_graduacion_estimado_1"><strong>Año Estimado de Graduación 1</strong></label>
+                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span class="text-muted" id="mostrar_anio_graduacion_estimado_1"></span><br />
+                                    <input type="number" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" min="1975" max="9999" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_1}}" disabled />
                                 </div>
                                 {{-- Segunda Carrera --}}
                                 <div class="form-group">
-                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado Graduación 2</strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 2 (en caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                    <input type="number" name="anio_graduacion_estimado_2" min="1975" max="9999" class="form-control" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_2}}" disabled />
+                                    <label for="anio_graduacion_estimado_2"><strong>Año Estimado de Graduación 2</strong></label>
+                                    <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 2 (en caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span class="text-muted" id="mostrar_anio_graduacion_estimado_2"></span><br />
+                                    <input type="number" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" min="1975" max="9999" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_2}}" disabled />
                                 </div>
-                                {{-- Campo: Desercion --}}
+                                {{-- Campo: Año de Deserción --}}
                                 <div class="form-group">
-                                    <label for="anio_desercion"><strong>Año Deserción</strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa año de deserción si existe"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                    <input type="number" name="anio_desercion" min="1975" max="9999" class="form-control" placeholder="Año de Deserción" value="{{ $estudiante->anio_desercion }}" disabled />
+
+                                    <label for="anio_desercion"><strong>Año de Deserción</strong></label>
+                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa año de deserción si existe"><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span class="text-muted" id="mostrar_anio_desercion"></span><br />
+
+                                    <input type="number" id="anio_desercion" name="anio_desercion" min="1975" max="9999" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Año de Deserción" value="{{ $estudiante->anio_desercion }}" disabled />
                                 </div>
                             </div>
                         </div>
@@ -160,14 +177,22 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                             {{-- Campo: Nombre estudiante --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label><input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" value="{{ $estudiante->persona->nombre }}" required disabled />
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
+                                                        <span class="text-muted" id="mostrar_nombre"></span>
+                                                    </div>
+                                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" onkeyup="contarCaracteres(this,50)" value="{{ $estudiante->persona->nombre }}" required disabled />
                                                 </div>
+
                                             </div>
                                             {{-- Campo: Apellidos --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
-                                                    <input type="text" name="apellido" class="form-control" placeholder="Apellidos" value="{{ $estudiante->persona->apellido }}" required disabled /> </input>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
+                                                        <span class="text-muted" id="mostrar_apellido"></span>
+                                                    </div>
+                                                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellidos" onkeyup="contarCaracteres(this,50)" value="{{ $estudiante->persona->apellido }}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -177,13 +202,21 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                             {{-- Correo Personal --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_personal"><strong>Correo Personal</strong><br /></label><input type="email" name="correo_personal" class="form-control" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="correo_personal"><strong>Correo Personal</strong><br /></label>
+                                                        <span class="text-muted" id="mostrar_correo_personal"></span>
+                                                    </div>
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_personal" name="correo_personal" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label><input type="email" name="correo_institucional" class="form-control" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
+                                                        <span class="text-muted" id="mostrar_correo_institucional"></span>
+                                                    </div>
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -193,13 +226,21 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                             {{-- Celular --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label><input type="text" name="telefono_celular" class="form-control" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular}}" disabled />
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
+                                                        <span class="text-muted" id="mostrar_telefono_celular"></span>
+                                                    </div>
+                                                    <input type="text" id="telefono_celular" name="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Telefono Fijo --}}
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label><input type="text" name="telefono_fijo" class="form-control" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo }}" disabled />
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
+                                                        <span class="text-muted" id="mostrar_telefono_fijo"></span>
+                                                    </div>
+                                                    <input type="text" id="telefono_fijo" name="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -213,17 +254,23 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                     <div class="card-body pb-5">
                                         {{-- Campo: Direccion Residencia --}}
                                         <div class="form-group">
-                                            <label for="DireccionResidencia"><strong>Dirección Residencia<i class="text-danger">* </i> </strong></label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del estudiante "><i class="far fa-question-circle fa-lg"></i></span><br />
-                                            <textarea type="text" name="direccion_residencia" class="form-control" placeholder="Direccion de residencia" required disabled />{{$estudiante->persona->direccion_residencia}}</textarea>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <label for="DireccionResidencia"><strong>Dirección Residencia<i class="text-danger">* </i> </strong>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del estudiante "><i class="far fa-question-circle fa-lg"></i></span></label>
+                                                <span class="text-muted" id="mostrar_direccion_residencia"></span>
+                                            </div>
+                                            <textarea type="text" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" class="form-control" placeholder="Direccion de residencia" required disabled />{{$estudiante->persona->direccion_residencia}}</textarea>
                                         </div>
                                         {{-- Campo: Direccion tiempo lectivo --}}
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo</strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia del estudiante durante el tiempo lectivo"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                                    <textarea type="text" name="direccion_lectivo" class="form-control" placeholder="Direccion de tiempo lectivo" disabled />{{$estudiante->direccion_lectivo}}</textarea>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="DireccionLectivo"><strong>Dirección Tiempo Lectivo</strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia del estudiante durante el tiempo lectivo"><i class="far fa-question-circle fa-lg"></i></span></label>
+                                                        <span class="text-muted" id="mostrar_direccion_lectivo"></span>
+                                                    </div>
+                                                    <textarea type="text" id="direccion_lectivo" name="direccion_lectivo" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de tiempo lectivo" disabled />{{$estudiante->direccion_lectivo}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,7 +278,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                         <div class="form-row">
                                             <div class="col-3 mr-2">
                                                 <div class="form-group">
-                                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento<i class="text-danger">* </i> </strong><br /></label><input type='date' name="fecha_nacimiento" class="form-control" placeholder="Fecha Nacimiento" value={{$estudiante->persona->fecha_nacimiento}} required disabled />
+                                                    <label for="fecha_nacimiento"><strong>Fecha de Nacimiento<i class="text-danger">* </i> </strong><br /></label><input type='date' id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Fecha Nacimiento" value={{$estudiante->persona->fecha_nacimiento}} required disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Genero --}}
@@ -259,9 +306,11 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                             {{-- Cantidad de hijos (en numero) --}}
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="cantidad_hijos"><strong>Hijos<i class="text-danger">* </i> </strong></label>
-                                                    <span data-toggle="tooltip" data-placement="top" title="Ingresar el número de hijos y 0 en caso de no tener"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                                    <input type="number" name="cantidad_hijos" min="0" max="99" class="form-control" placeholder="Hijos" value="{{ $estudiante->cant_hijos }}" required disabled />
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="cantidad_hijos"><strong>Hijos<i class="text-danger">* </i> </strong>
+                                                            <span data-toggle="tooltip" data-placement="top" title="Ingresar el número de hijos y 0 en caso de no tener"><i class="far fa-question-circle fa-lg"></i></span></label>
+                                                    </div>
+                                                    <input type="number" id="cantidad_hijos" name="cantidad_hijos" min="0" max="99" class="form-control" placeholder="Hijos" value="{{ $estudiante->cant_hijos }}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -269,9 +318,13 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="apoyo_educativo"><strong>Apoyo Educativo</strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                                    <textarea type="text" name="apoyo_educativo" class="form-control" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="apoyo_educativo"><strong>Apoyo Educativo</strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+                                                        </label>
+                                                        <span class="text-muted" id="mostrar_apoyo_educativo"></span>
+                                                    </div>
+                                                    <textarea type="text" id="apoyo_educativo" name="apoyo_educativo" class="form-control" onkeyup="contarCaracteres(this,500)" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -306,9 +359,12 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="condicion_discapacidad"><strong>Condición Discapacidad</strong></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Ingresar si el estudiante posee alguna discapacidad o no"><i class="far fa-question-circle fa-lg"></i></span><br />
-                                                    <textarea type="text" name="condicion_discapacidad" class="form-control" placeholder="Discapacidad del estudiante" disabled />{{$estudiante->condicion_discapacidad}}</textarea>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label for="condicion_discapacidad"><strong>Condición Discapacidad</strong>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Ingresar si el estudiante posee alguna discapacidad o no"><i class="far fa-question-circle fa-lg"></i></span></label>
+                                                        <span class="text-muted" id="mostrar_condicion_discapacidad"></span>
+                                                    </div>
+                                                    <textarea type="text" id="condicion_discapacidad" name="condicion_discapacidad" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Discapacidad del estudiante" disabled />{{$estudiante->condicion_discapacidad}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -390,5 +446,6 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
     @endsection
 
     @section('scripts')
+    <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
     <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
     @endsection
