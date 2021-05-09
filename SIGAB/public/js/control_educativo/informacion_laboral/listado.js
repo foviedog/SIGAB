@@ -79,6 +79,11 @@ function actualizar() {
     $('#form-actualizar').trigger("submit");
 }
 
+function rutaTrabajo(id){   
+    $("#form-eliminar").attr('action', rutas['trabajo.delete'] + id);
+}
+
+
 /*Contador de caracteres de Nombre de la Organizacion */
 function contarCarNomOrg(val) {
     var len = val.value.length;

@@ -95,13 +95,13 @@ class GraduadoController extends Controller
             'paginaciones' => $paginaciones, // Listado de items de paginaciones.
             'itemsPagina' => $itemsPagina, // Item que se desean por página.
             'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página,
-            'anio' => $anio // Valor del filtro de año de graduación
+            'anio' => $anio, // Valor del filtro de año de graduación
         ]);
     } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
-     catch (ModelNotFoundException $ex) {  
+    catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -120,8 +120,9 @@ class GraduadoController extends Controller
         return view('control_educativo.informacion_estudiantil.informacion_graduados.show', [
             'estudiante' => $estudiante,       // Estudiante
             'graduaciones' => $graduaciones,   // Graduaciones
+            'confirmarEliminar' => 'simple'
         ]);
-         } catch (ModelNotFoundException $ex) {  
+        } catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }

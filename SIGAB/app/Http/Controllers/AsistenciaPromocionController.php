@@ -38,6 +38,7 @@ class AsistenciaPromocionController extends Controller
                         'itemsPagina' => $itemsPagina,
                         'filtro' => $filtro,
                         'mensajeExito' => $mensajeExito,
+                        'confirmarEliminar' => 'simple'
                     ]);
                 }else{
                     $mensajeError = "Ocurrió un error al agregar el participante";
@@ -48,6 +49,7 @@ class AsistenciaPromocionController extends Controller
                         'itemsPagina' => $itemsPagina,
                         'filtro' => $filtro,
                         'mensajeError' => $mensajeError,
+                        'confirmarEliminar' => 'simple'
                     ]);
                 }
             }
@@ -58,6 +60,7 @@ class AsistenciaPromocionController extends Controller
                 'paginaciones' => $paginaciones,
                 'itemsPagina' => $itemsPagina,
                 'filtro' => $filtro,
+                'confirmarEliminar' => 'simple'
             ]);
     
         } catch (\Exception $exception) {

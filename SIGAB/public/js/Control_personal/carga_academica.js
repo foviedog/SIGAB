@@ -41,6 +41,11 @@ $('#detalle-carga_academica-modal').on('show.bs.modal', function (event) {
 
 });
 
+function rutaCargaAcademica(id){   
+    $("#form-eliminar").attr('action', rutas['cargaacademica.delete'] + id);
+}
+
+
 /* Funcionalidades para habilitar y deshaibilitar los campos de texto del modal */
 $('#cancelar-edicion').hide();
 $('#terminar-edicion').hide();

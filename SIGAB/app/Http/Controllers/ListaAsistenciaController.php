@@ -116,6 +116,7 @@ class ListaAsistenciaController extends Controller
                 'itemsPagina' => $itemsPagina,
                 'filtro' => $filtro,
                 'mensaje' => $mensaje,
+                'confirmarEliminar' => 'simple'
             ]);
 
         } catch (\Exception $exception) {

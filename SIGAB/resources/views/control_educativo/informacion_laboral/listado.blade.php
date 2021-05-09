@@ -15,6 +15,10 @@ Trabajos de {{ $estudiante->persona->nombre }}
         {{-- Modal para ver el detalle del trabajo --}}
         @include('modal.detalle-trabajo')
 
+        @if(Accesos::ACCESO_ELIMINAR_TRABAJOS())
+            @include('layouts.messages.confirmar_eliminar')
+        @endif
+
         {{-- Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
@@ -92,13 +96,9 @@ Trabajos de {{ $estudiante->persona->nombre }}
                                 </td>
                                 
                                 @if(Accesos::ACCESO_ELIMINAR_TRABAJOS())
-                                <form action="{{ route('trabajo.delete',$trabajo->id) }}" method="post">
-                                    @method('DELETE')
-                                    @csrf
-                                    <td>
-                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando trabajo');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
-                                    </td>
-                                </form>
+                                <td>
+                                    <button class="btn btn-contorno-rojo" onclick="rutaTrabajo({{ $trabajo->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                </td>
                                 @endif
                                 
                             </tr>

@@ -137,6 +137,10 @@ $("#crear-guia-modal").on("click", function(event) {
     }
 });
 
+function rutaGuiaAcademica(id){   
+    $("#form-eliminar").attr('action', rutas['guia-academica.delete'] + id);
+}
+
 $("#terminar-edicion").on("click", function() {
     if (validarEdicion()) {
         let id_graduacion = $("#id-guia-modal").val();

@@ -38,6 +38,10 @@ Asistencia a {{ $actividad->tema }}
                 <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
                 @endif
 
+                @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                    @include('layouts.messages.confirmar_eliminar')
+                @endif
+
             </div>
         </div>
         <hr>
@@ -245,14 +249,9 @@ Asistencia a {{ $actividad->tema }}
                                     </td>
 
                                     @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <form action="{{ route('lista-asistencia.destroy',$participante->persona_id) }}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <td>
-                                            <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
-                                        </td>
-                                        <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
-                                    </form>
+                                    <td>
+                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipanteInternas({{ $participante->persona_id }}, {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                    </td>
                                     @endif
 
                                 </tr>

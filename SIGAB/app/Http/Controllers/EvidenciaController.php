@@ -92,7 +92,8 @@ class EvidenciaController extends Controller
             'nombre_filtro' => $nombreFiltro,
             'tipo_filtro' => $tipoFiltro,
             'mensaje' => $mensaje,
-            'evidencias' => $evidencias
+            'evidencias' => $evidencias,
+            'confirmarEliminar' => 'simple'
         ]);
     } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
@@ -137,6 +138,7 @@ class EvidenciaController extends Controller
     {
         try {
 
+            
             $evidencia = Evidencia::where('id', $evidenciaId)->first();
             if ($evidencia->tipo_documento != "video") {
                 File::delete(public_path('storage/evidencias/' . $request->actividad_id . "/" . $evidencia->id_repositorio));

@@ -33,6 +33,13 @@ Cargas académicas de {{ $personal->persona->nombre }}
                 <a href="{{ route('cargaacademica.create', $personal->persona->persona_id) }}" class="btn btn-rojo"> Añadir nueva carga académica &nbsp; <i class="fas fa-plus-circle"></i> </a>
                 @endif
                 
+
+                @if(Accesos::ACCESO_ELIMINAR_CARGAS_ACADEMICAS())
+                    @include('layouts.messages.confirmar_eliminar')
+                @endif
+
+
+
             </div>
         </div>
 
@@ -86,13 +93,9 @@ Cargas académicas de {{ $personal->persona->nombre }}
                                 @endif
 
                                 @if(Accesos::ACCESO_ELIMINAR_CARGAS_ACADEMICAS())
-                                <form action="{{ route('cargaacademica.delete',$carga_academica->id) }}" method="post">
-                                    @method('DELETE')
-                                    @csrf
-                                    <td>
-                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando carga academica');"  type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
-                                    </td>
-                                </form>
+                                <td>
+                                    <button class="btn btn-contorno-rojo" onclick="rutaCargaAcademica({{ $carga_academica->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                </td>
                                 @endif
 
                             </tr>

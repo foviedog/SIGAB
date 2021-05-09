@@ -49,6 +49,7 @@ class TrabajoController extends Controller
                 'trabajos' => $trabajos,           // Trabajos
                 'paginaciones' => $paginaciones,  // Listado de items de paginaciones
                 'itemsPagina' => $itemsPagina,   // Items que se desean por página
+                'confirmarEliminar' => 'simple'
             ]);
 
         } catch (\Exception $exception) {

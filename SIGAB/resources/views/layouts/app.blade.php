@@ -34,6 +34,7 @@
         
         {{-- Loader --}}
         @include('layouts.messages.loader')
+        
 
         <div class="wrapper bg-gris-claro">
 

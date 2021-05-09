@@ -30,6 +30,11 @@ Asistencia a {{ $actividad->tema }}
                 <a href="{{ route('actividad-promocion.show', $actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
             </div>
             @endif
+
+            @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                @include('layouts.messages.confirmar_eliminar')
+            @endif
+
         </div>
         <hr>
 
@@ -327,14 +332,9 @@ Asistencia a {{ $actividad->tema }}
                                     </td>
 
                                     @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <form action="{{ route('asistencia-promocion.destroy', $participante->cedula) }}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <td>
-                                            <button class="btn btn-contorno-rojo" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
-                                        </td>
-                                        <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
-                                    </form>
+                                    <td>
+                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipantePromocion({{ $participante->cedula }}, {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                    </td>
                                     @endif
 
                                 </tr>

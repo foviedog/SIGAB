@@ -22,6 +22,11 @@ Listado de Guías Académicas
         @include('modal.detalle-guia-academica')
         @endif
 
+        @if(Accesos::ACCESO_ELIMINAR_GUIAS_ACADEMICAS())
+            @include('layouts.messages.confirmar_eliminar')
+        @endif
+
+
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- //Título de la página --}}
@@ -148,12 +153,18 @@ Listado de Guías Académicas
                                 @endif
 
                                 @if(Accesos::ACCESO_ELIMINAR_GUIAS_ACADEMICAS())
+<<<<<<< Updated upstream
                                 <form action="{{ route('guia-academica.delete',$guia->id) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <td>
                                         <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando guía');" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
+=======
+                                <td>
+                                    <button class="btn btn-contorno-rojo" onclick="rutaGuiaAcademica({{ $guia->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                </td>
+>>>>>>> Stashed changes
                                     @endif
 
                                 </form>

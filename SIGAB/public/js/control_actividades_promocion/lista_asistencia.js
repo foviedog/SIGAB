@@ -99,3 +99,9 @@ function evtAgregarParticipante2() {
         $("#submitStore").trigger("click");
     });
 }
+
+
+function rutaParticipantePromocion(id, actividad_id){ 
+    $("#button-submit-eliminar").before('<input type="hidden" name="actividad_id" value="'+actividad_id+'">');
+    $("#form-eliminar").attr('action', rutas['asistencia-promocion.destroy'] + id);
+}

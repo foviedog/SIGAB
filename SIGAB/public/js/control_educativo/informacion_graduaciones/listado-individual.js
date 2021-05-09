@@ -39,6 +39,11 @@ $("#detalle-graduacion-modal").on("show.bs.modal", function(event) {
     });
 });
 
+function rutaTitulacion(id){   
+    $("#form-eliminar").attr('action', rutas['graduado.delete'] + id);
+}
+
+
 /* Funcionalidades para habilitar y deshaibilitar los campos de texto del modal */
 $("#cancelar-edicion").hide();
 $("#terminar-edicion").hide();

@@ -58,6 +58,11 @@ $tiposDocumentos =
                 <button href="" class="btn btn-rojo" id="btn-agregar-evid"> Añadir evidencia &nbsp; <i class="fas fa-plus-circle"></i> </button>
                 @endif
 
+                @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_ACTIVIDADES())
+                    @include('layouts.messages.confirmar_eliminar')
+                @endif
+
+
             </div>
         </div>
 
@@ -313,14 +318,9 @@ $tiposDocumentos =
                                     @endif
 
                                     @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_ACTIVIDADES())
-                                    <form action="{{ route('evidencias.destroy',$evidencia->id) }}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <td>
-                                            <button class="btn btn-contorno-rojo" type="submit" onclick="activarLoader('Eliminando evidencia')"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
-                                        </td>
-                                        <input type="hidden" name="actividad_id" value="{{ $actividad->id }}">
-                                    </form>
+                                    <td>
+                                        <a class="btn btn-contorno-rojo" onclick="rutaEvidencias({{ $evidencia->id }}, {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                    </td>
                                     @endif
 
                                 </tr>

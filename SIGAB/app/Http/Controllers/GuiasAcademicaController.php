@@ -161,7 +161,8 @@ class GuiasAcademicaController extends Controller
             'fechaFin' => $fechaFin, // Valor del filtro que se haya hecho para mantenerlo en la página
             'rango_fechas' => $rango_fechas,
             'tipos' => $tipos,
-            'docentes' => $docentes
+            'docentes' => $docentes,
+            'confirmarEliminar' => 'simple'
         ]);
     } catch (\Illuminate\Database\QueryException $ex) {
         return Redirect::back()//se redirecciona a la pagina anteriror

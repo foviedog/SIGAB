@@ -41,3 +41,14 @@ function mostrarMensajePersonalizado(mensajeId, textoMensaje) {
             $("#" + mensajeId).slideUp(1000);
         });
 }
+
+function confirmarEliminacion(mensaje) {
+    //$("#btn-cancelar-agregar").trigger("click");
+    $(".eliminar-text").html(mensaje);
+    $("#eliminar-full").show();
+    //$("#form-evidencia").trigger("submit");
+}
+
+function ocultarEliminacion() {
+    $("#eliminar-full").hide();
+}

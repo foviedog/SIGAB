@@ -15,6 +15,10 @@ Graduaciones de {{ $estudiante->persona->nombre }}
         {{-- Modal para ver el detalle de la gradución --}}
         @include('modal.detalle-titulacion')
 
+        @if(Accesos::ACCESO_ELIMINAR_TITULACIONES())
+            @include('layouts.messages.confirmar_eliminar')
+        @endif
+
         {{-- Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
             {{-- Título de la página --}}
@@ -72,16 +76,13 @@ Graduaciones de {{ $estudiante->persona->nombre }}
                                         Ver más
                                     </button>
                                     <br />
+
                                 </td>
 
                                 @if(Accesos::ACCESO_ELIMINAR_TITULACIONES())
-                                <form action="{{ route('graduado.delete',$graduacion->id) }}" method="post">
-                                    @method('DELETE')
-                                    @csrf
-                                    <td>
-                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando titulacion');" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
-                                    </td>
-                                </form>
+                                <td>
+                                    <button class="btn btn-contorno-rojo" onclick="rutaTitulacion({{ $graduacion->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                </td>                                
                                 @endif
 
                             </tr>

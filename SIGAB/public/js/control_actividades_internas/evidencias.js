@@ -157,3 +157,8 @@ function iframeYoutube(url) {
         height: "500px"
     }).appendTo("#preview");
 }
+
+function rutaEvidencias(id, actividad_id){ 
+    $("#button-submit-eliminar").before('<input type="hidden" name="actividad_id" value="'+actividad_id+'">');
+    $("#form-eliminar").attr('action', rutas['evidencias.destroy'] + id);
+}

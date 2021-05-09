@@ -29,7 +29,8 @@ class CargasAcademicaController extends Controller
             return view('control_personal.carga_academica.listado', [
                 'personal' => $personal, // Personal
                 'cargas_academicas' => $cargas_academicas, // Cargas académicas
-                'cursos' => $cursos //Cursos
+                'cursos' => $cursos, //Cursos
+                'confirmarEliminar' => 'simple'
             ]);
 
         } catch (\Exception $exception) {
