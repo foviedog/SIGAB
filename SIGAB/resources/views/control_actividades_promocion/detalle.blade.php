@@ -209,7 +209,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                             </div>
                                             <div class="d-flex justify-center">
                                                 <div class="col d-flex justify-content-center">
-                                                    <div class="w-50  d-flex ">
+                                                    <div class="group-item align-items-between d-flex" style="width: 65% !important;">
                                                         <input type="number" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
                                                         <span class=" d-flex align-items-center ml-2 font-weight-bold"> h</span>
                                                     </div>
