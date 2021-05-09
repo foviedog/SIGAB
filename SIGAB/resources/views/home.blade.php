@@ -237,7 +237,7 @@ SIGAB
                         <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte general </h6>
                     </a>
 
-                    <a href="{{ route('reportes-involucramiento.anual') }}">
+                    <a href="{{ route('reportes-involucramiento.show') }}">
                         <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte anual</h6>
                     </a>
 

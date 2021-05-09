@@ -51,10 +51,9 @@ Route::group(['middleware' => ['auth']], function () {
     // ********************************************************
     //      Reportes de involucramiento del personal
     // ********************************************************
-
     Route::get('/reportes/involucramiento', 'ReportesInvolucramientoController@show')->name('reportes-involucramiento.show')
-    ->middleware(
-        'roles:
+        ->middleware(
+            'roles:
             Dirección
             Subdirección
             Académica responsable de Aseguramiento de la Calidad de la Carrera
@@ -62,8 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
     ');
 
     Route::get('/reportes/involucramiento/resultado', 'ReportesInvolucramientoController@resultado')->name('reportes-involucramiento.resultado')
-    ->middleware(
-        'roles:
+        ->middleware(
+            'roles:
             Dirección
             Subdirección
             Académica responsable de Aseguramiento de la Calidad de la Carrera
@@ -71,33 +70,50 @@ Route::group(['middleware' => ['auth']], function () {
     ');
 
     Route::get('/reportes/involucramiento/personal/{personal_id}', 'ReportesInvolucramientoController@obtenerPersonal')->name('reportes-involucramiento.personal')
-    ->middleware(
-        'roles:
+        ->middleware(
+            'roles:
             Dirección
             Subdirección
             Académica responsable de Aseguramiento de la Calidad de la Carrera
             Académica responsable de SIGAB
     ');
 
-    // ********************************************************
+    // ****************************************************************************************************************
     //      Reportes de involucramiento ANUAL del personal
-    // ********************************************************
-    Route::get('/reportes/involucramiento/anual', 'ReportesInvolucramientoController@reporteAnual')->name('reportes-involucramiento.anual')
-    ->middleware(
-        'roles:
+    // ****************************************************************************************************************
+    Route::get('/reportes/involucramiento/anual', 'ReporteInvolucramientoAnualController@show')->name('involucramiento-anual.show')
+        ->middleware(
+            'roles:
             Dirección
             Subdirección
             Académica responsable de Aseguramiento de la Calidad de la Carrera
             Académica responsable de SIGAB
     ');
-    
-    // ********************************************************
-    //      Reportes de involucramiento POR CICLO del personal
-    // ********************************************************
+    Route::post('/reportes/involucramiento/anual', 'ReporteInvolucramientoAnualController@reporte')->name('involucramiento-anual.reporte')
+        ->middleware(
+            'roles:
+            Dirección
+            Subdirección
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
 
-    Route::get('/reportes/involucramiento/ciclo', 'ReportesPorCicloController@show')->name('involucramiento-ciclo.show')
-    ->middleware(
-        'roles:
+    // ****************************************************************************************************************
+    //      Reportes de involucramiento POR CICLO del personal
+    // ****************************************************************************************************************
+
+    Route::get('/reportes/involucramiento/ciclo', 'ReporteInvolucramientoPorCicloController@show')->name('involucramiento-ciclo.show')
+        ->middleware(
+            'roles:
+            Dirección
+            Subdirección
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+
+    Route::post('/reportes/involucramiento/ciclo/reporte', 'ReporteInvolucramientoPorCicloController@reporte')->name('involucramiento-ciclo.reporte')
+        ->middleware(
+            'roles:
             Dirección
             Subdirección
             Académica responsable de Aseguramiento de la Calidad de la Carrera
