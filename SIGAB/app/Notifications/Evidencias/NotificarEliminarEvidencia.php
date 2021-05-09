@@ -22,9 +22,16 @@ class NotificarEliminarEvidencia extends Notification implements ShouldBroadcast
      */
     public function __construct($evidencia, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->evidencia = $evidencia;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado una evidencia: ".$evidencia->nombre_archivo.".";
+        $url = route('evidencias.show', $evidencia->actividad_id);
+        $this->dataSet = [
+            'id' => $evidencia->actividad_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'evidencia',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     /**
@@ -46,23 +53,11 @@ class NotificarEliminarEvidencia extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado una evidencia: ".$this->evidencia->nombre_archivo.".";
-        return [
-            'id' => $this->evidencia->actividad_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'evidencia',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado una evidencia: ".$this->evidencia->nombre_archivo.".";
-        return new BroadcastMessage([
-            'id' => $this->evidencia->actividad_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'evidencia',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

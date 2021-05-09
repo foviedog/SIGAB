@@ -20,12 +20,20 @@ class NotificarEliminarListaAsistenciaInterna extends Notification implements Sh
      *
      * @return void
      */
-    public function __construct($persona, $actividad, $tipoActividad, $persona_id)
+    public function __construct($personaEli, $actividad, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->personaEliminada = Persona::find($persona);
-        $this->actividad = $actividad;
-        $this->tipoActividad = $tipoActividad;
+        $persona = Persona::find($persona_id);
+        $personaEliminada = Persona::find($personaEli);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado a un participante: ".$personaEliminada->nombre." ".$personaEliminada->apellido.".";
+        $url = route('lista-asistencia.show', $actividad);
+        $this->dataSet = [
+            'id' => $actividad,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'lista_asistencia',
+            'actividad' => 'interna',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     public function via($notifiable)
@@ -41,25 +49,11 @@ class NotificarEliminarListaAsistenciaInterna extends Notification implements Sh
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado a un participante: ".$this->personaEliminada->nombre." ".$this->personaEliminada->apellido.".";
-        return [
-            'id' => $this->actividad,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'lista_asistencia',
-            'actividad' => 'interna',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado a un participante: ".$this->personaEliminada->nombre." ".$this->persona->personaEliminada.".";
-        return new BroadcastMessage([
-            'id' => $this->actividad,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'lista_asistencia',
-            'actividad' => 'interna',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

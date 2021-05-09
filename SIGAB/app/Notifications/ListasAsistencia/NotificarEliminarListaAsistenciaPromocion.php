@@ -21,13 +21,21 @@ class NotificarEliminarListaAsistenciaPromocion extends Notification implements 
      *
      * @return void
      */
-    public function __construct($persona, $actividad, $tipoActividad, $persona_id)
+    public function __construct($personaEli, $actividad, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->personaEliminada = asistenciaPromocion::where('cedula', $persona)
+        $persona = Persona::find($persona_id);
+        $personaEliminada = asistenciaPromocion::where('cedula', $personaEli)
             ->where("actividad_id", $actividad)->first();
-        $this->actividad = $actividad;
-        $this->tipoActividad = $tipoActividad;
+        $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado a un participante: ".$personaEliminada->nombre." ".$persona->personaEliminada.".";
+        $url = route('asistencia-promocion.show', $actividad);
+        $this->dataSet = [
+            'id' => $actividad,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'lista_asistencia',
+            'actividad' => 'interna',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     public function via($notifiable)
@@ -43,25 +51,11 @@ class NotificarEliminarListaAsistenciaPromocion extends Notification implements 
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado a un participante: ".$this->personaEliminada->nombre." ".$this->personaEliminada->apellidos.".";
-        return [
-            'id' => $this->actividad,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'lista_asistencia',
-            'actividad' => 'promocion',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado a un participante: ".$this->personaEliminada->nombre." ".$this->personaEliminada->apellidos.".";
-        return new BroadcastMessage([
-            'id' => $this->actividad,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'lista_asistencia',
-            'actividad' => 'promocion',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

@@ -24,11 +24,17 @@ class NotificarCambiarRol extends Notification implements ShouldBroadcast
      */
     public function __construct($usuario, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->personaRol = Persona::find($usuario->persona_id);
-        $this->usuario = $usuario;
-        $this->rol = GlobalArrays::ROLES_USUARIO[$usuario->rol - 1];
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $personaRol = Persona::find($usuario->persona_id);
+        $usuario = $usuario;
+        $rol = GlobalArrays::ROLES_USUARIO[$usuario->rol - 1];
+        $mensaje = $persona->nombre." ".$persona->apellido." ha cambiado el rol a ".$personaRol->nombre." ".$personaRol->apellido.": ".$rol.".";
+        $this->dataSet = [
+            'id' => $usuario->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'usuario',
+            'mensaje' => $mensaje
+        ];
     }
 
     /**
@@ -50,23 +56,11 @@ class NotificarCambiarRol extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha cambiado el rol a ".$this->personaRol->nombre." ".$this->personaRol->apellido.": ".$this->rol.".";
-        return [
-            'id' => $this->usuario->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'usuario',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha cambiado el rol a ".$this->personaRol->nombre." ".$this->personaRol->apellido.": ".$this->rol.".";
-        return new BroadcastMessage([
-            'id' => $this->usuario->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'usuario',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

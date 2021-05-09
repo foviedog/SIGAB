@@ -22,9 +22,16 @@ class NotificarEliminarTrabajo extends Notification
      */
     public function __construct($trabajo, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->trabajo = $trabajo;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado información laboral para un estudiante.";
+        $url = route('trabajo.listar', $trabajo->persona_id);
+        $this->dataSet = [
+            'id' => $trabajo->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'trabajo',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     /**
@@ -46,23 +53,11 @@ class NotificarEliminarTrabajo extends Notification
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado información laboral para un estudiante.";
-        return [
-            'id' => $this->trabajo->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'trabajo',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado información laboral para un estudiante.";
-        return new BroadcastMessage([
-            'id' => $this->trabajo->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'trabajo',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

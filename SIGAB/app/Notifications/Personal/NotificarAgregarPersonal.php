@@ -22,9 +22,16 @@ class NotificarAgregarPersonal extends Notification implements ShouldBroadcast
      */
     public function __construct($personal, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->personal = $personal;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha agregado un miembro del personal.";
+        $url = route('personal.show', $personal->persona_id);
+        $this->dataSet = [
+            'id' => $personal->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'personal',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     /**
@@ -46,23 +53,11 @@ class NotificarAgregarPersonal extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado un miembro del personal.";
-        return [
-            'id' => $this->personal->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'personal',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado un miembro del personal.";
-        return new BroadcastMessage([
-            'id' => $this->personal->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'personal',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

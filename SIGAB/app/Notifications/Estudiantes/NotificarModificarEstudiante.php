@@ -22,9 +22,16 @@ class NotificarModificarEstudiante extends Notification implements ShouldBroadca
      */
     public function __construct($estudiante, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->estudiante = $estudiante;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha modificado la información de un estudiante.";
+        $url = route('estudiante.show', $estudiante->persona_id);
+        $this->dataSet = [
+            'id' => $estudiante->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'estudiante',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     /**
@@ -46,23 +53,11 @@ class NotificarModificarEstudiante extends Notification implements ShouldBroadca
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha modificado la información de un estudiante.";
-        return [
-            'id' => $this->estudiante->persona_id,
-            'modelo' => 'estudiante',
-            'persona_id' => $this->persona->persona_id,
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha modificado la información de un estudiante.";
-        return new BroadcastMessage([
-            'id' => $this->estudiante->persona_id,
-            'modelo' => 'estudiante',
-            'persona_id' => $this->persona->persona_id,
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

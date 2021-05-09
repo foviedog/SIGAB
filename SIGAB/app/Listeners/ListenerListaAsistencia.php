@@ -37,11 +37,11 @@ class ListenerListaAsistencia
                                 ->orWhere('rol', '=', '7')->get();
                 if($event->tipoActividad == 1){
                     foreach ($usuarios as $usuario) {
-                        $usuario->notify(new NotificarEliminarListaAsistenciaInterna($event->persona, $event->actividad, $event->tipoActividad, auth()->user()->persona_id));
+                        $usuario->notify(new NotificarEliminarListaAsistenciaInterna($event->persona, $event->actividad, auth()->user()->persona_id));
                     }
                 } else {
                     foreach ($usuarios as $usuario) {
-                        $usuario->notify(new NotificarEliminarListaAsistenciaPromocion($event->persona, $event->actividad, $event->tipoActividad, auth()->user()->persona_id));
+                        $usuario->notify(new NotificarEliminarListaAsistenciaPromocion($event->persona, $event->actividad, auth()->user()->persona_id));
                     }
                 }
                 

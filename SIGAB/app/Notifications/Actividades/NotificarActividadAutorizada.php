@@ -22,9 +22,36 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
      */
     public function __construct($actividad, $tipoActividad)
     {
-        $this->persona = Persona::find(auth()->user()->persona_id);
-        $this->actividad = $actividad;
-        $this->tipoActividad = $tipoActividad;
+        $persona = Persona::find(auth()->user()->persona_id);
+
+        switch($tipoActividad){
+            case 1: {
+                $mensaje = $persona->nombre." ".$persona->apellido." ha autorizado una actividad: ".$actividad->tema.".";
+                $url = route('actividad-interna.show', $actividad->id);
+                $this->dataSet = [
+                    'id' => $actividad->id,
+                    'persona_id' => $persona->persona_id,
+                    'modelo' => 'actividad',
+                    'actividad' => 'interna',
+                    'mensaje' => $mensaje,
+                    'url' => $url
+                ];
+            }
+            break;
+            case 2: {
+                $mensaje = $persona->nombre." ".$persona->apellido." ha autorizado una actividad: ".$actividad->tema.".";
+                $url = route('actividad-promocion.show', $actividad->id);
+                $this->dataSet = [
+                    'id' => $actividad->id,
+                    'persona_id' => $persona->persona_id,
+                    'modelo' => 'actividad',
+                    'actividad' => 'promocion',
+                    'mensaje' => $mensaje,
+                    'url' => $url
+                ];
+            }
+            break;
+        }
     }
 
     public function via($notifiable)
@@ -40,55 +67,11 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha autorizado una actividad: ".$this->actividad->tema.".";
-        switch($this->tipoActividad){
-            case 1: {
-                return [
-                    'id' => $this->actividad->id,
-                    'persona_id' => $this->persona->persona_id,
-                    'modelo' => 'actividad',
-                    'actividad' => 'interna',
-                    'mensaje' => $mensaje
-                ];
-            }
-            break;
-            case 2: {
-                return [
-                    'id' => $this->actividad->id,
-                    'persona_id' => $this->persona->persona_id,
-                    'modelo' => 'actividad',
-                    'actividad' => 'promocion',
-                    'mensaje' => $mensaje
-                ];
-            }
-            break;
-        }
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha autorizado una actividad: ".$this->actividad->tema.".";
-        switch($this->tipoActividad){
-            case 1: {
-                return new BroadcastMessage([
-                    'id' => $this->actividad->id,
-                    'persona_id' => $this->persona->persona_id,
-                    'modelo' => 'actividad',
-                    'actividad' => 'interna',
-                    'mensaje' => $mensaje
-                ]);
-            }
-            break;
-            case 2: {
-                return new BroadcastMessage([
-                    'id' => $this->actividad->id,
-                    'persona_id' => $this->persona->persona_id,
-                    'modelo' => 'actividad',
-                    'actividad' => 'promocion',
-                    'mensaje' => $mensaje
-                ]);
-            }
-            break;
-        }
+        return new BroadcastMessage($this->dataSet);
     }
 }

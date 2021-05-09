@@ -22,9 +22,16 @@ class NotificarAgregarTitulo extends Notification implements ShouldBroadcast
      */
     public function __construct($graduado, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->graduado = $graduado;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha agregado una graduación a un estudiante.";
+        $url = route('graduado.show', $graduado->persona_id);
+        $this->dataSet = [
+            'id' => $graduado->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'graduado',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     /**
@@ -46,23 +53,11 @@ class NotificarAgregarTitulo extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado una graduación a un estudiante.";
-        return [
-            'id' => $this->graduado->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'graduado',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado una graduación a un estudiante.";
-        return new BroadcastMessage([
-            'id' => $this->graduado->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'graduado',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
+use App\Helper\GlobalArrays;
 use App\Persona;
 use App\User;
 
@@ -23,11 +24,17 @@ class NotificarUsuarioAgregado extends Notification implements ShouldBroadcast
      */
     public function __construct($usuario, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->personaAgregada = Persona::find($usuario->persona_id);
-        $this->usuario = $usuario;
-        $this->persona_id = $persona_id;
-        }
+        $persona = Persona::find($persona_id);
+        $personaAgregada = Persona::find($usuario->persona_id);
+        $rol = GlobalArrays::ROLES_USUARIO[$usuario->rol - 1];
+        $mensaje = $persona->nombre." ".$persona->apellido." ha agregado un nuevo usuario al sistema: ".$personaAgregada->nombre." ".$personaAgregada->apellido." con el rol de ".$rol.".";
+        $this->dataSet = [
+            'id' => $usuario->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'usuario',
+            'mensaje' => $mensaje
+        ];
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -48,23 +55,11 @@ class NotificarUsuarioAgregado extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado un nuevo usuario al sistema: ".$this->personaAgregada->nombre." ".$this->personaAgregada->apellido.".";
-        return [
-            'id' => $this->usuario->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'usuario',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado un nuevo usuario al sistema: ".$this->personaAgregada->nombre." ".$this->personaAgregada->apellido.".";
-        return new BroadcastMessage([
-            'id' => $this->usuario->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'usuario',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

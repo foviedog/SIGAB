@@ -64,32 +64,10 @@ Notificaciones
                             <tr>
                                 <td>{{ $notifiacion->data['mensaje'] }}</td>
                                 <td>{{ $notifiacion->created_at }}</td>
-                                @if($notifiacion->data['modelo'] == 'actividad')
-                                    @if($notifiacion->data['actividad'] == 'interna')
-                                        <td><a class="btn btn-contorno-rojo" href="{{ route('actividad-interna.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                    @else
-                                        <td><a class="btn btn-contorno-rojo" href="{{ route('actividad-promocion.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                    @endif
-                                @elseif ($notifiacion->data['modelo'] == 'lista_asistencia')
-                                    @if($notifiacion->data['actividad'] == 'interna')
-                                        <td><a class="btn btn-contorno-rojo" href="{{ route('lista-asistencia.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                    @else
-                                        <td><a class="btn btn-contorno-rojo" href="{{ route('asistencia-promocion.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                    @endif
-                                @elseif ($notifiacion->data['modelo'] == 'evidencia')
-                                    <td><a class="btn btn-contorno-rojo" href="{{ route('evidencias.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                @elseif ($notifiacion->data['modelo'] == 'estudiante')
-                                    <td><a class="btn btn-contorno-rojo" href="{{ route('estudiante.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                @elseif ($notifiacion->data['modelo'] == 'trabajo')
-                                    <td><a class="btn btn-contorno-rojo" href="{{ route('trabajo.listar', $notifiacion->data['id']) }}">Detalle</a></td>
-                                @elseif ($notifiacion->data['modelo'] == 'guia')
-                                    <td><a class="btn btn-contorno-rojo" href="{{route('guia-academica.listar', ['nombreFiltro' => $notifiacion->data['id']]) }}">Detalle</a></td>
-                                @elseif ($notifiacion->data['modelo'] == 'graduado')
-                                    <td><a class="btn btn-contorno-rojo" href="{{route('graduado.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                @elseif ($notifiacion->data['modelo'] == 'personal')
-                                    <td><a class="btn btn-contorno-rojo" href="{{route('personal.show', $notifiacion->data['id']) }}">Detalle</a></td>
-                                @elseif ($notifiacion->data['modelo'] == 'usuario')
+                                @if($notifiacion->data['modelo'] == 'usuario')
                                     <td><button class="btn btn-contorno-rojo disabled">Detalle</button></td>
+                                @else
+                                    <td><a class="btn btn-contorno-rojo" href="{{ $notifiacion->data['url'] }}">Detalle</a></td>
                                 @endif
                                 <td>Marcar como leído</td>
                             <tr>

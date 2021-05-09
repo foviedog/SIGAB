@@ -22,9 +22,16 @@ class NotificarModificarGuia extends Notification implements ShouldBroadcast
      */
     public function __construct($guia, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->guia = $guia;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha modificado una guía académica.";
+        $url = route('guia-academica.listar', ['nombreFiltro' => $guia->persona_id]);
+        $this->dataSet = [
+            'id' => $guia->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'guia',
+            'mensaje' => $mensaje,
+            'url' => $url
+        ];
     }
 
     /**
@@ -46,23 +53,11 @@ class NotificarModificarGuia extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha modificado una guía académica.";
-        return [
-            'id' => $this->guia->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'guia',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha modificado una guía académica.";
-        return new BroadcastMessage([
-            'id' => $this->guia->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'guia',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }

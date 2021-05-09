@@ -23,9 +23,15 @@ class NotificarInicioSesion extends Notification implements ShouldBroadcast
      */
     public function __construct($usuario, $persona_id)
     {
-        $this->persona = Persona::find($persona_id);
-        $this->usuario = $usuario;
-        $this->persona_id = $persona_id;
+        $persona = Persona::find($persona_id);
+        $usuario = $usuario;
+        $mensaje = $persona->nombre." ".$persona->apellido." ha iniciado sesión.";
+        $this->dataSet = [
+            'id' => $usuario->persona_id,
+            'persona_id' => $persona->persona_id,
+            'modelo' => 'usuario',
+            'mensaje' => $mensaje
+        ];
     }
 
     /**
@@ -47,23 +53,11 @@ class NotificarInicioSesion extends Notification implements ShouldBroadcast
      */
     public function toArray($notifiable)
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha iniciado sesión.";
-        return [
-            'id' => $this->usuario->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'usuario',
-            'mensaje' => $mensaje
-        ];
+        return $this->dataSet;
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
-        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha iniciado sesión.";
-        return new BroadcastMessage([
-            'id' => $this->usuario->persona_id,
-            'persona_id' => $this->persona->persona_id,
-            'modelo' => 'usuario',
-            'mensaje' => $mensaje
-        ]);
+        return new BroadcastMessage($this->dataSet);
     }
 }
