@@ -46,7 +46,17 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapRutasControlEstudiantil();
+
+        $this->mapRutasControlPersonal();
+
+        $this->mapRutasControlActividadesInternas();
+
+        $this->mapRutasControlActividadesPromocion();
+
+        $this->mapRutasControlEstadisticas();
+
+        $this->mapRutasControlPerfil();
     }
 
     /**
@@ -77,4 +87,41 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
     }
+
+    protected function mapRutasControlEstudiantil(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_estudiantil.php'));
+    }
+
+    protected function mapRutasControlPersonal(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_personal.php'));
+    }
+
+    protected function mapRutasControlActividadesInternas(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_actividades_internas.php'));
+    }
+
+    protected function mapRutasControlActividadesPromocion(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_actividades_promocion.php'));
+    }
+
+    protected function mapRutasControlEstadisticas(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_estadisticas.php'));
+    }
+
+    protected function mapRutasControlPerfil(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_perfil.php'));
+    }
+
 }

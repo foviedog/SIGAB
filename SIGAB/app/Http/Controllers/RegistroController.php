@@ -109,7 +109,7 @@ class RegistroController extends Controller
                 //Se recupera el usuario agregado
                 $usuario = User::where('persona_id', '=', $request->persona_id)->first();
 
-                 //Se envía la notificación
+                //Se envía la notificación
                 event(new EventUsuarios($usuario, 2));
 
                 /* Devuelve la página con un mensaje de éxito. */
@@ -123,6 +123,54 @@ class RegistroController extends Controller
                 return Redirect::back()
                         ->with('mensaje-error', 'La contraseña no cumple con los estándares mínimos de seguridad.');
             }
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+    }
+
+    public function cambiarRol(){
+        try{
+
+            $personas = Persona::join('users', 'users.persona_id', '=', 'personas.persona_id')->get();
+            return view('auth.rol', [
+                'personas' => $personas,
+            ]);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+    }
+
+    public function mostrarPersonaRol(Request $request){
+        try{
+
+            $persona_id = explode(' ', $request->persona)[0];
+            $persona = Persona::find($persona_id);
+            $usuario = User::where("persona_id", $persona_id)->first();
+            $rolActual = GlobalArrays::ROLES_USUARIO[$usuario->rol - 1];
+            return Redirect::back()
+                ->with('persona-seleccionada', $persona)
+                ->with('rolActual', $rolActual);
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+    }
+
+    public function actualizarRol(Request $request){
+        try{
+
+            $usuario = User::where("persona_id", $request->persona_id)->first();
+            $usuario->rol = $request->rol;
+            $usuario->save();
+
+            //Se envía la notificación
+            event(new EventUsuarios($usuario, 3));
+
+            /* Devuelve la página con un mensaje de éxito. */
+            return Redirect::back()
+                    ->with('mensaje-exito', 'Se actualizó el rol correctamente.');
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();

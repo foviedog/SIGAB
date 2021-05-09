@@ -50,6 +50,7 @@ class NotificarInicioSesion extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha iniciado sesión.";
         return [
             'id' => $this->usuario->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ];
@@ -60,6 +61,7 @@ class NotificarInicioSesion extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha iniciado sesión.";
         return new BroadcastMessage([
             'id' => $this->usuario->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ]);

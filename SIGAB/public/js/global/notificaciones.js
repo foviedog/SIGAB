@@ -4,16 +4,9 @@ cargarNotificaciones();
 
 Echo.private('App.User.'+ user_id)
     .notification((notification) => {
-        $.ajax({
-            url:
-            rutas['perfil.cant.notifications'],
-            dataType: "json",
-            method: "GET",
-            success: function(notificaciones) {
-                cargarNotificaciones();
-                notificationMessage(notification);
-            }
-        });
+        cargarNotificaciones();
+        if(notification.persona_id != persona_id)
+            notificationMessage(notification);
 });
 
 function cargarNotificaciones(){
@@ -22,47 +15,36 @@ function cargarNotificaciones(){
             rutas['perfil.cant.notifications'],
         dataType: "json",
         method: "GET",
-        success: function(notificaciones) {
-            if(notificaciones.length == 0){
+        success: function(resultado) {
+            if(resultado.cantidad == 0){
                 $("#numero-notificaciones").html("0");
                 div = $("<div>").addClass("dropdown-item ver-mas-notificaciones")
-                        .html("<a href='/perfil/notificaciones'>Ver notificaciones</a>");
+                        .html("<a href='"+rutas['perfil.notifications']+"'>Ver notificaciones</a>");
                 $("#espacio-notificaciones").append(div);
             } else {
                 $("#espacio-notificaciones").html("");
-                $("#numero-notificaciones").html(notificaciones.length);
-                if(notificaciones.length > 5){
-                    for(let i = 0; i < 5; i++){
-                        if(notificaciones[i].data.mensaje.length > 60)
-                            mensaje = notificaciones[i].data.mensaje.substring(0, 60) + "...";
-                        else
-                            mensaje = notificaciones[i].data.mensaje;
+                $("#numero-notificaciones").html(resultado.cantidad);
+                for(let i = 0; i < resultado.notificaciones.length ; i++){
+                    mensajeOriginal = resultado.notificaciones[i].data.mensaje;
+                    mensaje = resultado.notificaciones[i].data.mensaje.substring(0, 60);
+                    if(mensajeOriginal.length > 60){
                         div = $("<div>")
-                            .addClass("dropdown-item")
-                            .html(""+mensaje);
-                        $("#espacio-notificaciones").append(div);
-                    }
-                    cant = notificaciones.length - 5;
-                    div = $("<div>").addClass("dropdown-item ver-mas-notificaciones")
-                                    .html("<a href='/perfil/notificaciones'>Ver "+cant+" notificaciones más...</a>");
-                    $("#espacio-notificaciones").append(div);
-                } else {
-                    for(let i = 0; i < notificaciones.length ; i++){
-                        mensaje = notificaciones[i].data.mensaje.substring(0, 60);
+                        .addClass("dropdown-item")
+                        .html(""+mensaje+"...");
+                    } else {
                         div = $("<div>")
-                            .addClass("dropdown-item")
-                            .html(""+mensaje+"...");
-                        $("#espacio-notificaciones").append(div);
+                        .addClass("dropdown-item")
+                        .html(""+mensaje);
                     }
-                    div = $("<div>").addClass("dropdown-item ver-mas-notificaciones").html("<a href='/perfil/notificaciones'>Ver todas las notificaciones...</a>");
                     $("#espacio-notificaciones").append(div);
                 }
+                div = $("<div>").addClass("dropdown-item ver-mas-notificaciones")
+                        .html("<a href='"+rutas['perfil.notifications']+"'>Ver todas las notificaciones...</a>");
+                $("#espacio-notificaciones").append(div);
             }
         }
     });
 }
-
-//toastr.info("Iván Esteban Chinchilla Córdoba ha enviando una actividad para autorización.", "Nueva notificación");
 
 toastr.options = {
     "debug": false,
@@ -80,8 +62,9 @@ function notificationMessage(notification){
     notificationSound(function(){
         document.getElementById('notification-sound').play();
         document.getElementById('notification-sound').muted = false;
-    })
+    });
 }
+
 function notificationSound(_callback){
     _callback();
 }

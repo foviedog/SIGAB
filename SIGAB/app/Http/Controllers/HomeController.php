@@ -124,9 +124,11 @@ class HomeController extends Controller
     public function scriptGeneral(){
         try{
             $usuario_id = auth()->user()->id;
+            $persona_id = auth()->user()->persona_id;
             $rutas = GlobalFunctions::rutas();
             return view('layouts.script',[
                 'usuario_id' => $usuario_id,
+                'persona_id' => $persona_id,
                 'rutas' => json_encode($rutas, JSON_UNESCAPED_SLASHES)
             ]);
         } catch (\Exception $exception) {

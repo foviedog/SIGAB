@@ -49,6 +49,7 @@ class NotificarAgregarTitulo extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado una graduación a un estudiante.";
         return [
             'id' => $this->graduado->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'graduado',
             'mensaje' => $mensaje
         ];
@@ -59,6 +60,7 @@ class NotificarAgregarTitulo extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado una graduación a un estudiante.";
         return new BroadcastMessage([
             'id' => $this->graduado->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'graduado',
             'mensaje' => $mensaje
         ]);

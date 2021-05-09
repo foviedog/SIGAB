@@ -51,6 +51,7 @@ class NotificarUsuarioAgregado extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado un nuevo usuario al sistema: ".$this->personaAgregada->nombre." ".$this->personaAgregada->apellido.".";
         return [
             'id' => $this->usuario->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ];
@@ -61,6 +62,7 @@ class NotificarUsuarioAgregado extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado un nuevo usuario al sistema: ".$this->personaAgregada->nombre." ".$this->personaAgregada->apellido.".";
         return new BroadcastMessage([
             'id' => $this->usuario->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ]);
