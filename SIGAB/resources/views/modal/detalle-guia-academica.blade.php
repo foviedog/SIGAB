@@ -34,7 +34,7 @@
                     <form autocomplete="off" action="" method="post" id="form-actualizar" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                    @endif
+                        @endif
 
                         <div class="form-group">
                             <label for="motivo" class="col-form-label mt-3">Tipo &nbsp;<i class="text-danger">*</i></label>
@@ -117,7 +117,7 @@
                             <span class="text-muted" id="mostrar_cant_recomendaciones"></span>
                         </div>
 
-                        
+
                         <div class="form-group mb-3">
                             <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
                             <input type="file" name="archivo" class="border" id="adjuntar-archivo" disabled> &nbsp;
@@ -133,21 +133,21 @@
                         @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_GUIAS_ACADEMICAS())
                         <div id="eliminar-archivo"></div>
                         @endif
-                        
+
                         <div class="alert alert-danger text-center" role="alert" id="rellenar-campos-modificar">
                             Hay campos vacíos que son obligatorios.
                         </div>
 
                         @if(Accesos::ACCESO_MODIFICAR_GUIAS_ACADEMICAS())
-                        </form>
-                        @endif
+                    </form>
+                    @endif
 
                 </div>
 
             </div>
             <input type="hidden" name="id-guia-modal" id="id-guia-modal">
 
-            
+
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-gris" data-dismiss="modal" id="cerrar-modal-edicion">Cerrar</button>
                 @if(Accesos::ACCESO_MODIFICAR_GUIAS_ACADEMICAS())

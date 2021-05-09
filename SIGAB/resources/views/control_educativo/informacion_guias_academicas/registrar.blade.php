@@ -21,12 +21,12 @@ Registrar guía académica
 
     {{-- Mensaje de que muestra el objeto insertado
         (solo se muestra si ha sido exitoso el registro)  --}}
-    @if(Session::has('gua_academica_insertada'))
+    @if(Session::has('guia_academica_insertada'))
     <div class="alert alert-dark" role="alert">
 
         {{-- Esto viene  del controller y trae el objeto recien creado en caso de haber hecho un registro exitoso --}}
         @php
-        $guia = Session::get('gua_academica_insertada');
+        $guia = Session::get('guia_academica_insertada');
         @endphp
 
         Se registró la guía académica con lo siguientes datos: <br> <br>
@@ -55,10 +55,10 @@ Registrar guía académica
 
     @if(Accesos::ACCESO_REGISTRAR_GUIAS_ACADEMICAS())
     {{-- Formulario para registrar informacion de la guia academica --}}
-    <form autocomplete="off" action="{{ route('guia-academica.store') }}"method="POST" enctype="multipart/form-data" id="form-guia">
+    <form autocomplete="off" action="{{ route('guia-academica.store') }}" method="POST" enctype="multipart/form-data" id="form-guia" onsubmit="activarLoader('Agregando guía');">
         @csrf
-    @endif
-    
+        @endif
+
         <div class="container">
             <div class="d-flex justify-content-center mb-2">
                 <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
@@ -174,8 +174,8 @@ Registrar guía académica
             <button type="submit" class="btn btn-rojo btn-lg">Agregar Guía</button>
         </div>
     </form>
-        @endif
-        
+    @endif
+
 </div>
 
 @endsection

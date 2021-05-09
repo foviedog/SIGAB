@@ -152,7 +152,7 @@ Listado de Guías Académicas
                                     @method('DELETE')
                                     @csrf
                                     <td>
-                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando guia');" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                                        <button class="btn btn-contorno-rojo" onclick="activarLoader('Eliminando guía');" type="submit"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                                     </td>
                                     @endif
 

@@ -70,7 +70,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
         @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
         {{-- Formulario general de actualización de datos de actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-promocion.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
+        <form autocomplete="off" action="{{ route('actividad-promocion.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form" onsubmit="activarLoader('Agregando cambios');">
             {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
             @method('PATCH')
             {{-- Seguridad de envío de datos --}}

@@ -28,7 +28,7 @@ $idiomas = [];
 
 @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 {{-- Formulario general de personal --}}
-<form autocomplete="off" action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form">
+<form autocomplete="off" action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form" onsubmit="activarLoader('Enviando cambios');">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')

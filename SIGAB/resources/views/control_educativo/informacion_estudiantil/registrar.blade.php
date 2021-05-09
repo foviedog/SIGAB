@@ -41,7 +41,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
 
         @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
         {{-- Formulario para registrar informacion del estudiante --}}
-        <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante">
+        <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante" onsubmit="activarLoader('Agregando Estudiante');">
             @csrf
             @endif
 

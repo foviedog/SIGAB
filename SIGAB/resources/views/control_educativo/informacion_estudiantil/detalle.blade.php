@@ -17,7 +17,7 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
 @endphp
 @php
 $anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp {{-- fin del php--}} @section('contenido') {{-- Formulario general de estudiante --}} @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data">
+for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp {{-- fin del php--}} @section('contenido') {{-- Formulario general de estudiante --}} @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" onsubmit="activarLoader('Agregando Cambios');">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')

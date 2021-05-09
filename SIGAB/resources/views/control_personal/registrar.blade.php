@@ -106,7 +106,7 @@ $personal_no_insertado = Session::get('personal_no_insertado');
 
         @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
         {{-- Formulario para registrar informacion del personal --}}
-        <form autocomplete="off" action="{{ route('personal.store') }}" method="POST" enctype="multipart/form-data" id="personal-form">
+        <form autocomplete="off" action="{{ route('personal.store') }}" method="POST" enctype="multipart/form-data" id="personal-form" onsubmit="activarLoader('Agregando Personal');">
             @csrf
             @endif
             <input type="hidden" name="idiomasJSON" id="idiomasJSON">

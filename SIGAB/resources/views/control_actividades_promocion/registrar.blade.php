@@ -28,9 +28,9 @@ Registrar actividad de promocion
         <hr>
         @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         {{-- Formulario para registrar informacion de la actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-promocion.store') }}" method="POST" enctype="multipart/form-data" id="actividad-promocion" onsubmit="activarLoader('Enviando actividad');">
+        <form autocomplete="off" action="{{ route('actividad-promocion.store') }}" method="POST" enctype="multipart/form-data" id="actividad-promocion" onsubmit="activarLoader('Agregando actividad');">
             @csrf
-        @endif
+            @endif
 
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
@@ -63,13 +63,7 @@ Registrar actividad de promocion
                         {{-- Link directo al detalle de la actividad recien agregada --}}
                         <br>
                         <a clas="btn btn-rojo" href="{{ route('actividad-promocion.show',$actividad_insertada->id) }}">
-                            <input type="button" 
-                            @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
-                            value="Editar" 
-                            @else
-                            value="Detalle"
-                            @endif
-                            class="btn btn-rojo">
+                            <input type="button" @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
                         </a>
                         <br>
                     </div>
@@ -413,7 +407,7 @@ Registrar actividad de promocion
                 </div>
                 @endif
             </div>
-        @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
+            @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         </form>
         @endif
     </div>
@@ -425,6 +419,7 @@ Registrar actividad de promocion
 <script>
     // Variables globales
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 {{-- Link al script de registro de actividades promocion --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
@@ -432,5 +427,6 @@ Registrar actividad de promocion
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 @endsection
