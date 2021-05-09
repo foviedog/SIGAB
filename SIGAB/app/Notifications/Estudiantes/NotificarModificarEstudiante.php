@@ -50,6 +50,7 @@ class NotificarModificarEstudiante extends Notification implements ShouldBroadca
         return [
             'id' => $this->estudiante->persona_id,
             'modelo' => 'estudiante',
+            'persona_id' => $this->persona->persona_id,
             'mensaje' => $mensaje
         ];
     }
@@ -60,6 +61,7 @@ class NotificarModificarEstudiante extends Notification implements ShouldBroadca
         return new BroadcastMessage([
             'id' => $this->estudiante->persona_id,
             'modelo' => 'estudiante',
+            'persona_id' => $this->persona->persona_id,
             'mensaje' => $mensaje
         ]);
     }

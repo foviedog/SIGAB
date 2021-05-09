@@ -33,21 +33,26 @@ class ListenerPersonal
     {
         switch($event->accion){
             case 1:{
-                $usuarios = User::where('rol', '=', '1')->get();
+                $usuarios = User::where('rol', '=', '3')
+                                ->orWhere('rol', '=', '4')
+                                ->orWhere('rol', '=', '7')->get();
                 foreach ($usuarios as $usuario) {
                     $usuario->notify(new NotificarAgregarPersonal($event->personal, auth()->user()->persona_id));
                 }
             }
             break;
             case 2: {
-                $usuarios = User::where('rol', '=', '1')->get();
+                $usuarios = User::where('rol', '=', '4')
+                                ->orWhere('rol', '=', '7')->get();
                 foreach ($usuarios as $usuario) {
                     $usuario->notify(new NotificarModificarPersonal($event->personal, auth()->user()->persona_id));
                 }
             }
             break;
             case 3: {
-                $usuarios = User::where('rol', '=', '1')->get();
+                $usuarios = User::where('rol', '=', '3')
+                                ->orWhere('rol', '=', '4')
+                                ->orWhere('rol', '=', '7')->get();
                 foreach ($usuarios as $usuario) {
                     $usuario->notify(new NotificarEliminarPersonal($event->personal, auth()->user()->persona_id));
                 }

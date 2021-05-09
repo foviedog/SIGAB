@@ -45,6 +45,7 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
             case 1: {
                 return [
                     'id' => $this->actividad->id,
+                    'persona_id' => $this->persona->persona_id,
                     'modelo' => 'actividad',
                     'actividad' => 'interna',
                     'mensaje' => $mensaje
@@ -54,6 +55,7 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
             case 2: {
                 return [
                     'id' => $this->actividad->id,
+                    'persona_id' => $this->persona->persona_id,
                     'modelo' => 'actividad',
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje
@@ -70,6 +72,7 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
             case 1: {
                 return new BroadcastMessage([
                     'id' => $this->actividad->id,
+                    'persona_id' => $this->persona->persona_id,
                     'modelo' => 'actividad',
                     'actividad' => 'interna',
                     'mensaje' => $mensaje
@@ -79,6 +82,7 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
             case 2: {
                 return new BroadcastMessage([
                     'id' => $this->actividad->id,
+                    'persona_id' => $this->persona->persona_id,
                     'modelo' => 'actividad',
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje

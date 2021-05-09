@@ -32,7 +32,9 @@ class ListenerListaAsistencia
     {
         switch($event->accion){
             case 1:{
-                $usuarios = User::where('rol', '=', '1')->get();
+                $usuarios = User::where('rol', '=', '3')
+                                ->orWhere('rol', '=', '4')
+                                ->orWhere('rol', '=', '7')->get();
                 if($event->tipoActividad == 1){
                     foreach ($usuarios as $usuario) {
                         $usuario->notify(new NotificarEliminarListaAsistenciaInterna($event->persona, $event->actividad, $event->tipoActividad, auth()->user()->persona_id));

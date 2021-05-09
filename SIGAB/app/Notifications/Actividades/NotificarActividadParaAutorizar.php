@@ -46,6 +46,7 @@ class NotificarActividadParaAutorizar extends Notification implements ShouldBroa
                 return [
                     'id' => $this->actividad->id,
                     'modelo' => 'actividad',
+                    'persona_id' => $this->persona->persona_id,
                     'actividad' => 'interna',
                     'mensaje' => $mensaje
                 ];
@@ -55,6 +56,7 @@ class NotificarActividadParaAutorizar extends Notification implements ShouldBroa
                 return [
                     'id' => $this->actividad->id,
                     'modelo' => 'actividad',
+                    'persona_id' => $this->persona->persona_id,
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje
                 ];
@@ -71,6 +73,7 @@ class NotificarActividadParaAutorizar extends Notification implements ShouldBroa
                 return new BroadcastMessage([
                     'id' => $this->actividad->id,
                     'modelo' => 'actividad',
+                    'persona_id' => $this->persona->persona_id,
                     'actividad' => 'interna',
                     'mensaje' => $mensaje
                 ]);
@@ -80,6 +83,7 @@ class NotificarActividadParaAutorizar extends Notification implements ShouldBroa
                 return new BroadcastMessage([
                     'id' => $this->actividad->id,
                     'modelo' => 'actividad',
+                    'persona_id' => $this->persona->persona_id,
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje
                 ]);

@@ -337,7 +337,8 @@ $tiposBecas = GlobalArrays::TIPOS_BECA;
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Guías académicas</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="/estudiante/guia-academica/listar?nombreFiltro={{ $estudiante->persona_id }}" class="btn btn-rojo"> Ver guías </a>
+                                                        
+                                                        <a href="{{ route('guia-academica.listar', ['nombreFiltro' => $estudiante->persona_id]) }}" class="btn btn-rojo"> Ver guías </a>
                                                     </div>
                                                 </div>
                                             </div>

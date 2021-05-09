@@ -44,6 +44,7 @@ class NotificarEliminarListaAsistenciaInterna extends Notification implements Sh
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado a un participante: ".$this->personaEliminada->nombre." ".$this->personaEliminada->apellido.".";
         return [
             'id' => $this->actividad,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'lista_asistencia',
             'actividad' => 'interna',
             'mensaje' => $mensaje
@@ -55,6 +56,7 @@ class NotificarEliminarListaAsistenciaInterna extends Notification implements Sh
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado a un participante: ".$this->personaEliminada->nombre." ".$this->persona->personaEliminada.".";
         return new BroadcastMessage([
             'id' => $this->actividad,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'lista_asistencia',
             'actividad' => 'interna',
             'mensaje' => $mensaje

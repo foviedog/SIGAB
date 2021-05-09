@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Título de la página  --}}
-    <title>Registrar un nuevo usuario</title>
+    <title>Cambiar rol a usuario</title>
 
     {{-- Css  --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -29,7 +29,7 @@
 
                     <div class="card-header bg-rojo-oscuro">
                         <div class="text-lext font-weight-bold text-white bg-rojo-oscuro">
-                            Registrar un nuevo usuario
+                            Cambiar rol a usuario
                         </div>
                     </div>
 
@@ -39,16 +39,18 @@
                                 <img class="mb-4" src="/img/logoSIGAB.png">
                             </div>
 
-                            {{-- Esta sección se despliega si la persona que se desea agregar
+                            {{-- Esta sección se despliega si la persona que se desea cambiar rol
                                 no tiene un usuario. Aquí se genera el formulario para
-                                que se pueda agregar. --}}
+                                que se pueda cambiar rol. --}}
                             @if(Session::has('persona-seleccionada'))
 
-                            <form method="POST" action="{{ route('registro') }}" id="envio_registro">
+                            <form method="POST" action="{{ route('cambiar-rol.update') }}" id="envio_registro">
                                 @csrf
+                                @method('PATCH')
 
                                 @php
                                 $persona = Session::get('persona-seleccionada');
+                                $rolActual = Session::get('rolActual');
                                 $roles = GlobalArrays::ROLES_USUARIO;
                                 @endphp
 
@@ -69,7 +71,15 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="rol" class="col-md-4 col-form-label text-md-right">{{ __('Rol:') }}</label>
+                                    <label class="col-md-4 col-form-label text-md-right">{{ __('Rol actual:') }}</label>
+
+                                    <div class="col-md-6">
+                                        {{ $rolActual }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="rol" class="col-md-4 col-form-label text-md-right">{{ __('Nuevo rol:') }}</label>
 
                                     <div class="col-md-6">
                                         <select id="rol" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="rol">
@@ -86,35 +96,11 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña:') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña:') }}</label>
-                                    <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 offset-md-4 mb-3"><strong>La contraseña debe contener mínimo 6 carácteres, tener una mayúscula, contener un número y algún carácter especial.</strong></div>
-
-                                <div class="col-md-6 offset-md-4 mb-3 text-danger" id="error_contrasenna"></div>
-
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <a onclick="confirmar()" class="btn btn-rojo">
-                                            {{ __('Registrar nuevo usuario') }}
-                                        </a>
+                                        <button type="submit" class="btn btn-rojo">
+                                            {{ __('Cambiar rol') }}
+                                        </button>
                                         <a onclick="location.reload();" class="btn btn-rojo">
                                             {{ __('Cancelar') }}
                                         </a>
@@ -123,24 +109,22 @@
                             </form>
 
                             {{-- De lo contrario se muestra una tabla
-                                con todas las personas que existen en el sistema
-                                y que se pueden agregar como usuario. En esta
-                                sección se despliega un formulario para poder elegir
-                                la persona que se desea agregar como usuario. --}}
+                                con todas las personas que tienen un usuario actualmente.
+                                En esta sección se despliega un formulario para poder elegir
+                                la persona que se desea cambiar rol. --}}
                             @else
 
                             <div class="text-center mb-2">
-                                En este apartado se enlistan todas las personas previamente registradas en el sistema y que no cuentan <br> con un usuario asignado.<br>
-                                <br>Por favor seleccione la persona a la cual se le desea crear un perfil de acceso.
+                                Seleccione la persona a la que desea cambiar el rol
                             </div>
 
                             {{-- Alerts --}}
                             @include('layouts.messages.alerts')
 
-                            <form method="POST" autocomplete="off" action="{{ route('registroselper') }}">
+                            <form method="POST" autocomplete="off" action="{{ route('cambiar-rol.show') }}">
                                 @csrf
 
-                                {{-- Se muestran todas las personas del sistema --}}
+                                {{-- Se muestran todas las personas con un usuario en el sistema --}}
                                 <select class="form-control mb-3" id="personas" name="persona" size="15">
                                     @foreach($personas as $persona)
                                         {{-- Se le da el siguiente formato: 'XXX - YYY YYY' donde X
@@ -171,7 +155,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script src="{{ asset('js/login/Tooltip.js') }}" defer></script>
-    <script src="{{ asset('js/register/register.js') }}" defer></script>
     <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
 
 </body>

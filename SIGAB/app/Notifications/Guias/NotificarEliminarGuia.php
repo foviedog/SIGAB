@@ -22,7 +22,7 @@ class NotificarEliminarGuia extends Notification implements ShouldBroadcast
      */
     public function __construct($guia, $persona_id)
     {
-        $persona = Persona::find($persona_id);
+        $this->persona = Persona::find($persona_id);
         $this->guia = $guia;
         $this->persona_id = $persona_id;
     }

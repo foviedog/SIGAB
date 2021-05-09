@@ -49,6 +49,7 @@ class NotificarModificarGuia extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha modificado una guía académica.";
         return [
             'id' => $this->guia->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'guia',
             'mensaje' => $mensaje
         ];
@@ -59,6 +60,7 @@ class NotificarModificarGuia extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha modificado una guía académica.";
         return new BroadcastMessage([
             'id' => $this->guia->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'guia',
             'mensaje' => $mensaje
         ]);

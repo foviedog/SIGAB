@@ -49,6 +49,7 @@ class NotificarAgregarTrabajo extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado información laboral para un estudiante.";
         return [
             'id' => $this->trabajo->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'trabajo',
             'mensaje' => $mensaje
         ];
@@ -59,6 +60,7 @@ class NotificarAgregarTrabajo extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha agregado información laboral para un estudiante.";
         return new BroadcastMessage([
             'id' => $this->trabajo->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'trabajo',
             'mensaje' => $mensaje
         ]);

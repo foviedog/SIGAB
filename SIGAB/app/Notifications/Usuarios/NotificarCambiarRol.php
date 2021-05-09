@@ -6,8 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class NotificarCambiarRol extends Notification
+use App\Helper\GlobalArrays;
+use App\Persona;
+use App\User;
+
+class NotificarCambiarRol extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -16,9 +22,13 @@ class NotificarCambiarRol extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($usuario, $persona_id)
     {
-        //
+        $this->persona = Persona::find($persona_id);
+        $this->personaRol = Persona::find($usuario->persona_id);
+        $this->usuario = $usuario;
+        $this->rol = GlobalArrays::ROLES_USUARIO[$usuario->rol - 1];
+        $this->persona_id = $persona_id;
     }
 
     /**
@@ -29,21 +39,7 @@ class NotificarCambiarRol extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -54,8 +50,23 @@ class NotificarCambiarRol extends Notification
      */
     public function toArray($notifiable)
     {
+        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha cambiado el rol a ".$this->personaRol->nombre." ".$this->personaRol->apellido.": ".$this->rol.".";
         return [
-            //
+            'id' => $this->usuario->persona_id,
+            'persona_id' => $this->persona->persona_id,
+            'modelo' => 'usuario',
+            'mensaje' => $mensaje
         ];
+    }
+
+    public function toBroadcast($notifiable): BroadcastMessage
+    {
+        $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha cambiado el rol a ".$this->personaRol->nombre." ".$this->personaRol->apellido.": ".$this->rol.".";
+        return new BroadcastMessage([
+            'id' => $this->usuario->persona_id,
+            'persona_id' => $this->persona->persona_id,
+            'modelo' => 'usuario',
+            'mensaje' => $mensaje
+        ]);
     }
 }

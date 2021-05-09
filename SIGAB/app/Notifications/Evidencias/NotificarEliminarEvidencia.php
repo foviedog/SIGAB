@@ -49,6 +49,7 @@ class NotificarEliminarEvidencia extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado una evidencia: ".$this->evidencia->nombre_archivo.".";
         return [
             'id' => $this->evidencia->actividad_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'evidencia',
             'mensaje' => $mensaje
         ];
@@ -59,6 +60,7 @@ class NotificarEliminarEvidencia extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado una evidencia: ".$this->evidencia->nombre_archivo.".";
         return new BroadcastMessage([
             'id' => $this->evidencia->actividad_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'evidencia',
             'mensaje' => $mensaje
         ]);

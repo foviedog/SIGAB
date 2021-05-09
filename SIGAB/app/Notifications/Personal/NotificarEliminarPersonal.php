@@ -49,6 +49,7 @@ class NotificarEliminarPersonal extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado un miembro del personal.";
         return [
             'id' => $this->personal->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'personal',
             'mensaje' => $mensaje
         ];
@@ -59,6 +60,7 @@ class NotificarEliminarPersonal extends Notification implements ShouldBroadcast
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado un miembro del personal.";
         return new BroadcastMessage([
             'id' => $this->personal->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'personal',
             'mensaje' => $mensaje
         ]);

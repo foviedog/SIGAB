@@ -94,10 +94,12 @@ class PersonaController extends Controller
     }
 
     public function obtenerNotificaciones(){
-        /*if(auth()->user()->unreadNotifications()> 5){
-            return auth()->user()->unreadNotifications()->limit(5)->get();
-        }*/
-        return auth()->user()->unreadNotifications;
+        $notificaciones = auth()->user()->unreadNotifications()->limit(5)->get();
+        $cantidad = auth()->user()->unreadNotifications()->groupBy('notifiable_type')->count();
+        $resultado = new \stdClass();
+        $resultado->notificaciones = $notificaciones;
+        $resultado->cantidad = $cantidad;
+        return response()->json($resultado);
     }
 
     public function misActividades(){

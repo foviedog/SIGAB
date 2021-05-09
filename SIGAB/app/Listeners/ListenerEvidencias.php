@@ -31,7 +31,9 @@ class ListenerEvidencias
     {
         switch($event->accion){
             case 1:{
-                $usuarios = User::where('rol', '=', '1')->get();
+                $usuarios = User::where('rol', '=', '3')
+                                ->orWhere('rol', '=', '4')
+                                ->orWhere('rol', '=', '7')->get();
                 foreach ($usuarios as $usuario) {
                     $usuario->notify(new NotificarEliminarEvidencia($event->evidencia, auth()->user()->persona_id));
                 }

@@ -49,6 +49,7 @@ class NotificarEliminarEstudiante extends Notification implements ShouldBroadcas
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado un estudiante.";
         return [
             'id' => $this->estudiante->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'estudiante',
             'mensaje' => $mensaje
         ];
@@ -59,6 +60,7 @@ class NotificarEliminarEstudiante extends Notification implements ShouldBroadcas
         $mensaje = $this->persona->nombre." ".$this->persona->apellido." ha eliminado un estudiante.";
         return new BroadcastMessage([
             'id' => $this->estudiante->persona_id,
+            'persona_id' => $this->persona->persona_id,
             'modelo' => 'estudiante',
             'mensaje' => $mensaje
         ]);
