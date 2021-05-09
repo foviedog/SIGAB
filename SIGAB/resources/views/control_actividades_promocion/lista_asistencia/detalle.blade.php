@@ -15,6 +15,9 @@ Asistencia a {{ $actividad->tema }}
 @section('contenido')
 
 @include('control_actividades_promocion.lista_asistencia.info')
+@if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+    @include('layouts.messages.confirmar_eliminar')
+@endif
 
 <div class="card">
     <div class="card-body">
@@ -29,10 +32,6 @@ Asistencia a {{ $actividad->tema }}
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-promocion.show', $actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
             </div>
-            @endif
-
-            @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                @include('layouts.messages.confirmar_eliminar')
             @endif
 
         </div>
@@ -333,7 +332,7 @@ Asistencia a {{ $actividad->tema }}
 
                                     @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
                                     <td>
-                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipantePromocion({{ $participante->cedula }}, {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipantePromocion('{{ $participante->cedula }}', {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
                                     </td>
                                     @endif
 

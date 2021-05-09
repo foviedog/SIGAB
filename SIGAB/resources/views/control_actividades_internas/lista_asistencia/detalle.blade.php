@@ -250,7 +250,7 @@ Asistencia a {{ $actividad->tema }}
 
                                     @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
                                     <td>
-                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipanteInternas({{ $participante->persona_id }}, {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipanteInternas('{{ $participante->persona_id }}', {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
                                     </td>
                                     @endif
 
