@@ -10,19 +10,7 @@ Involucramiento Anual
 
 @php
 $anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } 
-@endphp {{-- @if ($anio==$estado) selected @endif --}} 
-
-@section('contenido')
-
-<div class="card pb-5">
-
-@php
-$anios = array();
-for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
-@endphp {{-- @if ($anio==$estado) selected @endif --}} 
- 
- <div class="card pb-5">
+for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp {{-- @if ($anio==$estado) selected @endif --}} @section('contenido') <div class="card pb-5">
 
     <div class="card-body pb-5">
         <div class="d-flex justify-content-between">
@@ -101,7 +89,7 @@ for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                     </div>
                     <div class="col-8 d-flex flex-column justify-content-center align-items-center">
                         <div class="w-100 mb-3"><span class="texto-azul-una" style="font-size: 18px">Rango de años</span> </div>
-                        <form autocomplete="off" action="{{ route('reportes-involucramiento.anual') }}" method="GET" class="w-100" enctype="multipart/form-data" id="rango-anios">
+                        <form action="{{ route('involucramiento-anual.show') }}" method="GET" class="w-100" enctype="multipart/form-data" id="rango-anios">
                             <div class="w-100 d-flex justify-content-center align-items-center">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -135,6 +123,19 @@ for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                 </div>
             </div>
             @if(!is_null($actividadesXAnio))
+            <div class="w-100 d-flex justify-content-end mb-3">
+                <form action="{{ route('involucramiento-anual.reporte') }}" method="post" target="_blank">
+                    @csrf
+                    <input type="hidden" name="actividadesXAnio" id="actividadesXAnio" value='@json($actividadesXAnio)''>
+                    <input type="hidden" name="graficosInvolucramiento" id="graficosInvolucramiento" value='{{ $graficosInvolucramiento }}'>
+                    <input type="hidden" name="personal" id="personal" value='@json($personal)'>
+                    <input type="hidden" name="anioInicio" id="anioInicio" value='@json($anioInicio)'>
+                    <input type="hidden" name="anioFinal" id="anioFinal" value='@json($anioFinal)'>
+                    <button type="submit" class="btn btn-contorno-rojo text-end">
+                        <i class="far fa-file-pdf" style="font-size: 20px;"></i> Crear Reporte
+                    </button>
+                </form>
+            </div>
 
             <div class="accordion resultado-reporte-anio" id="accordionExample">
                 @foreach ($actividadesXAnio as $anio => $actividades )
@@ -174,7 +175,9 @@ for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                                         <td class="personal-col border-left separador-fila" rowspan="8">
                                             <img class="img-personal" src="{{URL::asset('img/fotos/'.$personal[$persona_id]->imagen_perfil)  }}" alt="">
                                             <div class="nombre-personal">{{ $personal[$persona_id]->nombre . " " . $personal[$persona_id]->apellido }}</div>
-                                            <div class="jornada-personal">{{ $personal[$persona_id]->jornada }}</div>
+                                            <div class="jornada-personal">{{ $personal[$persona_id]->cargo}}</div>
+                                            <div class="jornada-personal">{{ $personal[$persona_id]->tipo_puesto_1}}</div>
+                                            <div class="jornada-personal">{{ $personal[$persona_id]->jornada}}</div>
                                         </td>
                                         <td scope="col" class="thead-reporte ">Curso</td>
                                         <td class="cant-participaciones">{{ $nombre_actividad["Curso"] }}</td>
@@ -236,15 +239,16 @@ for ($anio = 2010; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
         </div>
     </div>
 
-@endsection
+    @endsection
 
 
-@section('scripts')
-<script>
-    var fotosURL = "{{ URL::asset('img/fotos/') }}";
-    let graficosInvolucramiento = JSON.parse('{!! $graficosInvolucramiento !!}');
-</script>
+    @section('scripts')
+    <script>
+        var fotosURL = "{{ URL::asset('img/fotos/') }}";
+        let graficosInvolucramiento = JSON.parse('{!! $graficosInvolucramiento !!}');
 
-<script src="{{ asset('js/global/variablesGraficos.js') }}"></script>
-<script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
-@endsection
+    </script>
+
+    <script src="{{ asset('js/global/variablesGraficos.js') }}"></script>
+    <script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
+    @endsection

@@ -83,7 +83,7 @@
                     <a href="{{ route('reportes-involucramiento.show' ) }}">Involucramiento general </a>
                 </li>
                 <li>
-                    <a href="{{ route('reportes-involucramiento.anual' ) }}">Involucramiento anual </a>
+                    <a href="{{ route('involucramiento-anual.show' ) }}">Involucramiento anual </a>
                 </li>
                 <li >
                     <a href="{{ route('involucramiento-ciclo.show') }}" > Reporte por ciclo</a>

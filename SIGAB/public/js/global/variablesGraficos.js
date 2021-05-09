@@ -67,11 +67,8 @@ function generarGrafico(idRender, tipoGrafico, dataSet, contarCeros) {
         }
 
     }
-    console.log(nombreDeDatos);
-    console.log(datos);
 
     var options = getOptions(tipoGrafico, datos, nombreDeDatos, total);
-    console.log(options);
     var chart = new ApexCharts(document.querySelector('#' + idRender), options)
     chart.render();
 }
@@ -81,7 +78,7 @@ function getOptions(tipoGrafico, datos, nombreDeDatos, totalDatos) {
 
     var options = {
         series: [{
-            name: 'Servings',
+            name: 'Datos',
             data: datos,
         }],
         chart: {
@@ -89,11 +86,18 @@ function getOptions(tipoGrafico, datos, nombreDeDatos, totalDatos) {
             defaultLocale: "es",
             locales: locales,
             height: 350,
+            width: '100%',
+            labels: [],
+            toolbar: {
+                show: true
+            }
         },
         plotOptions: {
             bar: {
                 borderRadius: 10,
-                columnWidth: '50%',
+                dataLabels: {
+                    position: 'top',
+                }
             },
             pie: {
                 donut: {
@@ -113,6 +117,28 @@ function getOptions(tipoGrafico, datos, nombreDeDatos, totalDatos) {
         grid: grid,
         xaxis: {
             categories: nombreDeDatos,
+            position: 'bottom',
+            axisBorder: {
+                show: false
+            },
+            labels: {
+                minHeight: 150,
+            },
+            axisTicks: {
+                show: false
+            },
+            crosshairs: {
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        colorFrom: '#D8E3F0',
+                        colorTo: '#BED1E6',
+                        stops: [0, 100],
+                        opacityFrom: 0.4,
+                        opacityTo: 0.5,
+                    }
+                }
+            },
         },
         yaxis: {
             labels: {
@@ -120,7 +146,24 @@ function getOptions(tipoGrafico, datos, nombreDeDatos, totalDatos) {
                     return val + "%";
                 }
             },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false,
+            },
             max: 100
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+                return val + "%";
+            },
+            offsetY: -20,
+            style: {
+                fontSize: '12px',
+                colors: ["#304758"]
+            }
         },
     };
     if (tipoGrafico === "pie" || tipoGrafico === "donut") {
