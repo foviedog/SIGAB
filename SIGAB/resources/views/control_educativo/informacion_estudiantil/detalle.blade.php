@@ -206,7 +206,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                                         <label for="correo_personal"><strong>Correo Personal</strong><br /></label>
                                                         <span class="text-muted" id="mostrar_correo_personal"></span>
                                                     </div>
-                                                    <input type="email" minlength="3" maxlength="45" id="correo_personal" name="correo_personal" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_personal" name="correo_personal" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
@@ -216,7 +216,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                                         <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
                                                         <span class="text-muted" id="mostrar_correo_institucional"></span>
                                                     </div>
-                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -401,7 +401,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Guías académicas</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        
+
                                                         <a href="{{ route('guia-academica.listar', ['nombreFiltro' => $estudiante->persona_id]) }}" class="btn btn-rojo"> Ver guías </a>
                                                     </div>
                                                 </div>

@@ -20,8 +20,8 @@ class CreatePersonasTable extends Migration
             $table->date('fecha_nacimiento')->nullable();
             $table->string('telefono_fijo', 30)->nullable();
             $table->string('telefono_celular', 30)->nullable();
-            $table->string('correo_personal', 45)->nullable();
-            $table->string('correo_institucional', 45)->nullable();
+            $table->string('correo_personal', 50)->nullable();
+            $table->string('correo_institucional', 200)->nullable();
             $table->string('estado_civil', 45)->nullable();
             $table->string('direccion_residencia', 250)->nullable();
             $table->string('genero', 4)->nullable();

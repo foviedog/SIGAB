@@ -198,7 +198,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="correo_personal">Correo personal:</label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,45)" value="{{ $persona_no_insertada->correo_personal ?? '' }}" multiple>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->correo_personal ?? '' }}" multiple>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_personal"></span>
@@ -211,7 +211,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,45)" multiple value="{{ $persona_no_insertada->correo_institucional ?? '' }}" required>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,100)" multiple value="{{ $persona_no_insertada->correo_institucional ?? '' }}" required>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_institucional"></span>

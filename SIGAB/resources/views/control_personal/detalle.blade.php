@@ -176,7 +176,7 @@ $idiomas = [];
                                                         <label for="correo_personal"><strong>Correo Personal</strong></label>
                                                         <span class="text-muted" id="mostrar_correo_personal"></span>
                                                     </div>
-                                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Personal" value="{{ $personal->persona->correo_personal}}" disabled />
+                                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Correo Personal" value="{{ $personal->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
@@ -186,7 +186,7 @@ $idiomas = [];
                                                         <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong></label>
                                                         <span class="text-muted" id="mostrar_correo_institucional"></span>
                                                     </div>
-                                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Institucional" value="{{ $personal->persona->correo_institucional}}" required disabled />
+                                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $personal->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
