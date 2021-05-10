@@ -13,12 +13,21 @@ Registrar actividad interna
 </style>
 @endsection
 
+{{-- Arreglos de opciones de los select utilizados --}}
+@php
+$tiposActividad = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
+$propositos = GlobalArrays::PROPOSITOS_ACTIVIDAD_INTERNA;
+$poblacion = GlobalArrays::POBLACION_DIRIGIDA;
+$estados = GlobalArrays::ESTADOS_ACTIVIDAD;
+$ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
+@endphp
+
 @section('contenido')
 
 <div class="card">
     <div class="card-body">
-        <div class="d-flex justify-content-between">
-            <h3>Registrar una actividad de tipo interna</h3>
+        <div class="d-flex justify-content-between texto-rojo-medio">
+            <h3><i class="fas fa-plus-circle "></i> Registrar una actividad de tipo interna</h3>
 
             @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
             <div>
@@ -90,119 +99,234 @@ Registrar actividad interna
             @endif
 
             <div class="container-fluid w-100">
-                <div class="py-3 my-4 border-bottom">
-                    <div class="row">
-                        {{-- Campos de la izquierda --}}
-                        <div class="col">
-                            {{-- Campo: Tema --}}
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <label for="tema">Tema <i class="text-danger">*</i></label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                        </div>
-                                        <span class="text-muted " id="mostrar_tema"></span>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type='text' class="form-control w-100" id="tema" name="tema" onkeyup="contarCaracteres(this,100)" required>
+                {{-- Campos iniciales --}}
+                <div class="row py-3 mt-4 border-bottom">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
+                            </div>
 
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                {{-- Campo: Tema --}}
+                                <div class="w-90">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Tema: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <input type='text' class="form-control " id="tema" name="tema" onkeyup="contarCaracteres(this,100)" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class="d-flex justify-content-end align-items-center w-5">
+                                            <span id="mostrar_tema"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Campo: LUGAR --}}
+                                <div class="w-90">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Lugar: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <input type='text' class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class="d-flex justify-content-end align-items-center w-5">
+                                            <span id="mostrar_lugar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Campo: RANGO DE FECHAS --}}
+                                <div class="w-90">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-dark">Fechas: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                        <div class="input-group-append">
+                                            <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class=" w-5">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Campo: TIPO DE ACTIVIDAD--}}
+                                <div class="w-90">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-dark">Tipo de actividad: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <select class="form-control" id="tipo_actividad" name="tipo_actividad" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach($tiposActividad as $tipoActividad)
+                                            <option value="{{ $tipoActividad }}"> {{ $tipoActividad }} </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Tipo de actividad de actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class=" w-5">
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- PROPÓSITO --}}
+                                <div class="w-90">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Propósito: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <select class="form-control  w-25" id="proposito" name="proposito" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach($propositos as $proposito)
+                                            <option value="{{ $proposito }}"> {{ $proposito }} </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Propósito con el que se realiza la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class="w-5 ">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            {{-- Campo: Lugar --}}
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-
-                                        <div>
-                                            <label for="lugar">Lugar </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                        </div>
-                                        {{-- espacio donde se muestran los caracteres restantes  --}}
-                                        <span class="text-muted" id="mostrar_lugar"></span>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Campo: Facilitador de actividad --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <label for="facilitador_actividad">Facilitador de actividad<i class="text-danger">*</i>
-                                            </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Ingrese el nombre completo del facilitador de la actividad" class="mx-2"><i class="far fa-question-circle fa-lg"></i></span>
-                                            {{-- espacio donde se muestran los caracteres restantes  --}}
-                                        </div>
-                                        <span class="text-muted" id="mostrar_facilitador_actividad"></span>
-
-                                    </div>
-
-                                    <div class="d-flex">
-                                        <input type='text' class="form-control w-100" id="facilitador_actividad" name="facilitador_actividad" onkeyup="contarCaracteres(this,45)" required>
-
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col">
-                            {{-- Campo: Fecha de actividad--}}
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <label for="fecha_actividad">Fecha de inicio<i class="text-danger">*</i>
-                                            </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha de inicio de actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                    <div class="col">
+                        <div class="card pb-5">
+                            <div class="card-header">
+                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Características de la actividad </p>
+                            </div>
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center pb-4">
+                                {{-- CERTIFICACIÓN --}}
+                                <div class="w-90">
+                                    <div class="input-group mb-3">
+                                        {{-- Certificación --}}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Certificación:</span>
+                                        </div>
+                                        <input class="form-control" type='text' name="certificacion_actividad" id="certificacion_actividad" onkeyup="contarCaracteres(this,100)">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="En este espacio se ingresa si la actividad ofrece certificación o no, si se conoce el título de la certificación puede ingresarlo" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class="w-5 d-flex justify-content-center align-items-center">
+                                            <span class="text-muted" id="mostrar_certificacion_actividad"></span>
                                         </div>
                                     </div>
-                                    <div class="d-flex">
-                                        <input type='date' class="form-control w-100" id="fecha_inicio_actividad" name="fecha_inicio_actividad" required>
+                                </div>
+
+
+                                {{-- DURACIÓN --}}
+                                <div class="w-90 d-flex justify-content-between">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Duración Total: </span>
+                                        </div>
+                                        <div class="w-50 mx-2">
+                                            <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" />
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text font-weight-bold font-italic"> h</span>
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Se ingresa el número de horas totales de la duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                        </div>
+                                        <div class="w-5">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-90">
+                                    {{-- ESTADO --}}
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Estado: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <select class="form-control" id="estado" name="estado" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach($estados as $estado)
+                                            <option value="{{ $estado }}"> {{ $estado }} </option>
+                                            @endforeach
+                                        </select>
+                                        {{-- ÁMBITO --}}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Ámbito: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <select class="form-control " id="ambito" name="ambito" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach($ambitos as $ambito)
+                                            <option value="{{ $ambito }}"> {{ $ambito }} </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="w-5">
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- ÁMBITO Y DIRIGIDO A--}}
+                                <div class="w-90 ">
+                                    <div class="input-group mb-3">
+                                        {{-- POBLACIÓN DIRIGIDA --}}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark">Dirigido a: <i class="text-danger">*</i></span>
+                                        </div>
+                                        <select class="form-control " id="publico_dirigido" name="publico_dirigido" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach($poblacion as $dirigido)
+                                            <option value="{{ $dirigido }}"> {{ $dirigido }} </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="w-5">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Campo: Fecha de actividad--}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <label for="fecha_actividad">Fecha final<i class="text-danger">*</i>
-                                            </label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha a finalizar la actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                    </div>
+                </div>
+                {{-- Facilitador y coordinador --}}
+                <div class="row my-4 px-3">
+                    <div class="card w-100">
+                        <div class="card-header">
+                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Personal responsable </p>
+                        </div>
+                        <div class="card-body row">
+                            {{-- FACILITADOR DE ACTIVIDAD --}}
+                            <div class="col border-right">
+                                {{-- INPUT PARA REALIZAR LA BÚSQUEDA DEL FACILITADOR DE LA ACTIVIDAD --}}
+                                <div class="row d-flex justify-content-center my-4">
+                                    <div class="input-group w-90">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-dark font-weight-bold"> Facilitador: <i class="text-danger">*</i> </span>
+                                            <div class="input-group-text texto-azul-una">
+                                                Externo: &nbsp;
+                                                <input type="checkbox" id="externo-check" name="externo_check">
+                                            </div>
                                         </div>
 
+                                        <input type='text' id="cedula-facilitador" name="facilitador" class="form-control " required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del facilitador de coordinar la actividad y presione buscar"> <i class="far fa-question-circle fa-lg "></i></span>
+                                            <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una">Buscar</button>
+                                        </div>
                                     </div>
-                                    <div class="d-flex">
-                                        <input type='date' class="form-control w-100" id="fecha_final_actividad" name="fecha_final_actividad" required>
-
-                                    </div>
+                                    <input class="form-control" type='hidden' id="facilitador-encontrado" name="facilitador_encontrado" value="false">
                                 </div>
-                            </div>
-                        </div>
 
-                        {{-- Campo: Duracion --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <label for="duracion">Duración Total</label>
-                                            <span data-toggle="tooltip" data-placement="right" title="Se ingresa el número de horas totales de la duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
+                                <div class="row d-flex justify-content-center">
+                                    <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-facilitador"></div>
+                                </div>
+                                {{-- TARJETA CON LA INFORMACIÓN DEL FACILITADOR --}}
+                                <div class="row justify-content-center pb-3" id="facilitador-info">
+                                    <div class="w-75 p-3 d-flex border-top justify-content-center">
+                                        <div class="col-3">
+                                            <div class="d-flex justify-content-center mb-2">
+                                                <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
+                                                    <img class="rounded mb-3" id="imagen-facilitador" style="max-width: 100%;  " />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-center">
@@ -211,288 +335,194 @@ Registrar actividad interna
                                                 <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" />
                                                 <span class="d-flex align-items-center ml-2 font-weight-bold"> h</span>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            {{-- RESPONSABLE DE ACTIVIDAD --}}
+                            <div class="col">
+                                {{-- INPUT PARA REALIZAR LA BÚSQUEDA DEL RESPONSABLE --}}
+                                <div class="row d-flex justify-content-center my-4">
+                                    <div class="input-group w-90">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text textd-dark font-weight-bold"> Responsable de coordinar: <i class="text-danger">*</i> </span>
+                                        </div>
+
+                                        <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar"> <i class="far fa-question-circle fa-lg "></i></span>
+                                            <button type="button" id="buscarCoordinador" class="btn btn-contorno-azul-una">Buscar</button>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable_encontrado" value="false">
+                                </div>
+
+                                {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
+                                <div class="row d-flex justify-content-center">
+                                    <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-responsable"></div>
+                                </div>
+                                {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
+                                <div class="row justify-content-center pb-3" id="responsable-info">
+                                    <div class="w-75 p-3 d-flex border-top justify-content-center">
+                                        <div class="col-3">
+                                            <div class="d-flex justify-content-center mb-2">
+                                                <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
+                                                    <img class="rounded mb-3" id="imagen-responsable" style="max-width: 100%;  " />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-9  d-flex justify-content-start align-items-center ">
+                                            <div class="d-flex w-100 justify-content-start align-items-center ">
+                                                <div class="text-start mb-3">
+                                                    <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> </span> <br>
+                                                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable"> </span> <br>
+                                                    <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> </span> <br>
+                                                    <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"></span> <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="row">
+                        {{-- Campo: Objetivos --}}
+                        <div class="col">
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="w-100">
+                                    <div class="card shadow-sm rounded pb-2">
+                                        <div class="card-header py-3">
+                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                <i class="far fa-file-alt fa-2x"></i> &nbsp;&nbsp
+                                                Objetivos de la actividad &nbsp;&nbsp
+                                                <span data-toggle="tooltip" data-placement="right" title="Se describen los objetivos de la actividad">
+                                                    <i class="far fa-question-circle fa-lg"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <textarea type='text' class="form-control w-100" id="objetivos" name="objetivos" rows="4"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-                    </div>
-                    {{-- Campo: Proposito  --}}
-                    <div class="row">
+                        {{-- Campo: Agenda --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-75">
-                                        <label for="proposito">Propósito<i class="text-danger">*</i></label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <select class="form-control w-100" id="proposito" name="proposito" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Inducción">Inducción</option>
-                                            <option value="Capacitación">Capacitación</option>
-                                            <option value="Actualización">Actualización</option>
-                                            <option value="Involucramiento del personal">Involucramiento del personal</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Campo: Tipo de Actividad  --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-75">
-                                        <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <select class="form-control w-100" id="tipo_actividad" name="tipo_actividad" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Curso">Curso</option>
-                                            <option value="Conferencia">Conferencia</option>
-                                            <option value="Taller">Taller</option>
-                                            <option value="Seminario">Seminario</option>
-                                            <option value="Conversatorio">Conversatorio</option>
-                                            <option value="Órgano colegiado">Órgano colegiado</option>
-                                            <option value="Tutorías">Tutorías</option>
-                                            <option value="Lectorías">Lectorías</option>
-                                            <option value="Simposio">Simposio</option>
-                                            <option value="Charla">Charla</option>
-                                            <option value="Actividad cocurricular">Actividad co curricular</option>
-                                            <option value="Tribunales de prueba de grado">Tribunales de prueba de grado</option>
-                                            <option value="Tribunales de defensas públicas">Tribunales de defensas públicas</option>
-                                            <option value="Comisiones de trabajo">Comisiones de trabajo</option>
-                                            <option value="Externa">Externa</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Campo: Poblacion a la que va dirigida la actividad   --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-75">
-                                        <label for="publico_dirigido">Dirigido a <i class="text-danger">*</i></label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <select class="form-control w-100" id="publico_dirigido" name="publico_dirigido" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Estudiantes de primer ingreso">Estudiantes de primer ingreso</option>
-                                            <option value="Estudiantes regulares">Estudiantes regulares</option>
-                                            <option value="Estudiantes graduados">Estudiantes graduados</option>
-                                            <option value="Personal Docente">Personal Docente</option>
-                                            <option value="Personal Administrativo">Personal Administrativo</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    {{-- Campo: Estado de actividad  --}}
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-75">
-                                        <label for="estado">Estado <i class="text-danger">*</i></label>
-                                    </div>
-                                    <div class="d-flex">
-                                        <select class="form-control w-100" id="estado" name="estado" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Para ejecución">Para ejecución</option>
-                                            <option value="En progreso">En progreso</option>
-                                            <option value="Ejecutada">Ejecutada</option>
-                                            <option value="Cancelada">Cancelada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Campo: Certificación  --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <label for="certificacion">Certificación</label>
-                                            <span data-toggle="tooltip" data-placement="right" title="En este espacio se ingresa si la actividad ofrece certificación o no, si se conoce el título de la certificación puede ingresarlo"><i class="far fa-question-circle fa-lg"></i></span>
+                                <div class="w-100">
+                                    <div class="card shadow-sm rounded pb-2">
+                                        <div class="card-header py-3">
+                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                <i class="far fa-calendar fa-2x"></i> &nbsp;&nbsp
+                                                Agenda &nbsp;&nbsp
+                                                <span data-toggle="tooltip" data-placement="right" title="Se describen los puntos a tratar en la actividad">
+                                                    <i class="far fa-question-circle fa-lg"></i>
+                                                </span>
+                                            </p>
                                         </div>
-                                        <span class="text-muted" id="mostrar_certificacion_actividad"></span>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input class="form-control w-100" type='text' name="certificacion_actividad" id="certificacion_actividad" onkeyup="contarCaracteres(this,100)">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <textarea type='text' class="form-control w-100" id="agenda" name="agenda" rows="4"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- Campo: Ambito  --}}
+                    </div>
+                    <div class="row">
+                        {{-- Campo: Descripción --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
-                                <div class="w-75">
-                                    <div class="d-flex justify-content-between w-75">
-                                        <label for="ambito">Ámbito<i class="text-danger">*</i></label>
+                                <div class="w-100">
+
+                                    <div class="card shadow-sm rounded pb-2">
+                                        <div class="card-header py-3">
+                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
+                                                Descripcion &nbsp;&nbsp
+                                                <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad">
+                                                    <i class="far fa-question-circle fa-lg"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <textarea class="form-control w-100" id="descripcion" name="descripcion" rows="4"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex">
-                                        <select class="form-control w-100" id="ambito" name="ambito" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Nacional">Nacional</option>
-                                            <option value="Internacional">Internacional</option>
-                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Campo: Evaluacion --}}
+                        <div class="col">
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="w-100">
+                                    <div class="card shadow-sm rounded pb-2">
+                                        <div class="card-header py-3">
+                                            <div class=" d-flex justify-content-between align-items-center">
+                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                    <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
+                                                    Evaluación &nbsp;&nbsp
+                                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
+                                                        <i class="far fa-question-circle fa-lg"></i>
+                                                    </span>
+
+
+                                                </p>
+                                                <span class="text-muted" id="mostrar_evaluacion"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div class="row">
-                    {{-- Campo: Objetivos --}}
-                    <div class="col">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="w-100">
-                                <div class="d-flex justify-content-between w-75">
-                                    <div>
-                                        <label for="objetivos">Objetivos</label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Se describen los objetivos de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
+                    <div class="row">
+                        {{-- Campo: Recursos --}}
+                        <div class="col">
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="w-50">
+                                    <div class="card shadow-sm rounded pb-2">
+                                        <div class="card-header py-3">
+                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                <i class="fas fa-pencil-ruler fa-2x"></i> &nbsp;&nbsp
+                                                Recursos &nbsp;&nbsp
+                                                <span data-toggle="tooltip" data-placement="right" title="Recursos necesarios para desarrollar la actividad ">
+                                                    <i class="far fa-question-circle fa-lg"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="objetivos" name="objetivos" rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Agenda --}}
-                    <div class="col">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="w-100">
-                                <div class="d-flex justify-content-between w-75">
-                                    <div>
-                                        <label for="agenda">Agenda </label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Se describen los puntos a tratar en la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <textarea class="form-control w-100" id="agenda" name="agenda" rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    {{-- Campo: Descripción --}}
-                    <div class="col">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="w-100">
-                                <div class="d-flex justify-content-between w-75">
-                                    <div>
-                                        <label for="descripcion">Descripción </label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="descripcion" name="descripcion" rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Campo: Evaluacion --}}
-                    <div class="col">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="w-100">
-                                <div class="d-flex justify-content-between w-100">
-                                    <div>
-                                        <label for="evaluacion">Evaluación</label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad"> <i class="far fa-question-circle fa-lg"></i></span>
-                                    </div>
-                                    <div>
-                                        <span class="text-muted" id="mostrar_evaluacion"></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)"></textarea>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    {{-- Campo: Recursos --}}
-                    <div class="col">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="w-50">
-                                <div class="d-flex justify-content-between w-75">
-                                    <div>
-                                        <label for="recursos">Recursos </label>
-                                        <span data-toggle="tooltip" data-placement="right" title="Recursos necesarios para desarrollar la actividad "> <i class="far fa-question-circle fa-lg"></i></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,200)"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
-                </div>
 
-                <div class="row d-flex justify-content-center my-4">
-                    {{-- Campo: Responsable de coordinar --}}
-                    <div class="col-3 d-flex justify-content-end">
-                        <label for="responsable_coordinar">
-                            Responsable de coordinar<i class="text-danger">*</i>
-                        </label>
-                    </div>
 
-                    <div class="col-6 ">
-                        <div class="input-group w-50">
-                            <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " required>
-                            <div class="input-group-append">
-                                <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
-                                <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar" class="ml-2"> <i class="far fa-question-circle fa-lg mr-2"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable-encontrado" value="false">
-                </div>
-
-                <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger w-50 text-center" role="alert" id="mensaje-alerta"></div>
-                </div>
-
-                <div class="row justify-content-center pb-3" id="targeta-responsable">
-                    <div class="p-3 w-50 d-flex border-top border-secondary  justify-content-center">
-                        <div class="col-3">
-                            <div class="d-flex justify-content-center mb-2">
-                                <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                    <img class="rounded mb-3" id="imagen-responsable" style="max-width: 100%;  " />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-5  d-flex justify-content-start align-items-center ">
-                            <div class="d-flex justify-content-start align-items-center ">
-                                <div class="text-start mb-3">
-                                    <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> </span> <br>
-                                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable"> </span> <br>
-                                    <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> </span> <br>
-                                    <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"></span> <br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
                 <div class="d-flex justify-content-center">

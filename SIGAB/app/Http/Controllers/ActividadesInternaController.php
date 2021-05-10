@@ -54,7 +54,6 @@ class ActividadesInternaController extends Controller
                 'proposito_filtro' => $proposito_filtro,
                 'rango_fechas' => $rango_fechas
             ]);
-
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -63,20 +62,18 @@ class ActividadesInternaController extends Controller
     //Retorna la vista de registrar actividades internas
     public function show($id_actividad)
     {
-        try{
-
+        try {
             $actividad = Actividades::findOrfail($id_actividad);
             //Las actividades se acceden si se cumple al menos uno de los siguientes parámetros:
             //1. Se tiene el acceso para autorizar la actividad
             //2. La actividad fue registrada por la persona que está en sesión
             //3. La actividad ya se encuentra autorizada
-            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD() || $actividad->creada_por == auth()->user()->persona_id || $actividad->autorizada == 1){
+            if (Accesos::ACCESO_AUTORIZAR_ACTIVIDAD() || $actividad->creada_por == auth()->user()->persona_id || $actividad->autorizada == 1) {
                 $personal = Personal::findOrFail($actividad->responsable_coordinar);
                 return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
             } else {
                 return redirect('/home')->with('mensaje-advertencia', 'La actividad no se ha autorizado aún.');
             }
-
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -92,23 +89,27 @@ class ActividadesInternaController extends Controller
     public function store(Request $request)
     {
         try {
-
             $actividad = new Actividades; //Se crea una nueva instacia de Actividad
             $actividad_interna = new Actividades_interna; //Se crea una nueva instacia de la actividad interna
 
+            //Obtene el rango de fechas del request y lo divide en fecha de inicio y fecha final
+            $fechaIni = substr($request->rango_fechas, 0, 10);
+            $fechaFin = substr($request->rango_fechas, -10);
+            $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+            $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
             //se setean los atributos del objeto
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
             $actividad->estado = $request->estado;
-            $actividad->fecha_inicio_actividad = $request->fecha_inicio_actividad;
-            $actividad->fecha_final_actividad = $request->fecha_final_actividad;
+            $actividad->fecha_inicio_actividad = $fechaIni;
+            $actividad->fecha_final_actividad = $fechaFin;
             $actividad->descripcion = $request->descripcion;
             $actividad->evaluacion = $request->evaluacion;
             $actividad->objetivos = $request->objetivos;
-            $actividad->responsable_coordinar = $request->responsable_coordinar;
+            $actividad->responsable_coordinar = $request->responsable_encontrado;
             $actividad->duracion = $request->duracion;
             $actividad->creada_por = auth()->user()->persona_id;
-            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) //Si se tiene el acceso para autorizar, al registrar una actividad se autoriza automaticamente
+            if (Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) //Si se tiene el acceso para autorizar, al registrar una actividad se autoriza automaticamente
                 $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
 
@@ -116,16 +117,22 @@ class ActividadesInternaController extends Controller
             $actividad_interna->actividad_id = $actividad->id;
             $actividad_interna->tipo_actividad = $request->tipo_actividad;
             $actividad_interna->proposito = $request->proposito;
-            $actividad_interna->facilitador_actividad = $request->facilitador_actividad;
             $actividad_interna->agenda = $request->agenda;
             $actividad_interna->ambito = $request->ambito;
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
+            $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+
+            if ($request->externo_check == "on") {
+                $actividad_interna->facilitador_externo = $request->facilitador;
+                $actividad_interna->personal_facilitador = NULL;
+            }
+
             $actividad_interna->save(); //se guarda el objeto en la base de datos
 
             //Mensaje y notificación dependiendo del acceso
-            if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+            if (Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {
                 $mensaje = "¡El registro ha sido exitoso!";
                 event(new EventActividades($actividad, 1, 2));
             } else {
@@ -138,7 +145,6 @@ class ActividadesInternaController extends Controller
                 ->with('mensaje-exito', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_interna_insertada', $actividad_interna);
-
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -186,7 +192,6 @@ class ActividadesInternaController extends Controller
                 ->with('mensaje-exito', '¡La actividad se ha actualizado correctamente!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('actividad_insertada', $actividad)
                 ->with('actividad_interna_insertada', $actividad_interna);
-
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -201,9 +206,9 @@ class ActividadesInternaController extends Controller
 
         $actividades_internas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
-            ->where(function($query){
+            ->where(function ($query) {
                 //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
-                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                if (!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {
                     $query->where('actividades.autorizada', '=', '1');
                 }
             })
@@ -222,9 +227,9 @@ class ActividadesInternaController extends Controller
     {
         $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
-            ->where(function($query){
+            ->where(function ($query) {
                 //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
-                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                if (!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {
                     $query->where('actividades.autorizada', '=', '1');
                 }
             })
@@ -236,14 +241,14 @@ class ActividadesInternaController extends Controller
             ->paginate($itemsPagina); //Paginación de los resultados
         return $actividadesInternas;
     }
-    
+
     private function filtroTema($itemsPagina, $tema_filtro)
     {
         $actividadesInternas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id') //revisar
-            ->where(function($query){
+            ->where(function ($query) {
                 //Si el usuario no cuenta con el permiso de autorizar, solo podra ver las actividades autorizadas
-                if(!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
+                if (!Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {
                     $query->where('actividades.autorizada', '=', '1');
                 }
             })
@@ -273,5 +278,4 @@ class ActividadesInternaController extends Controller
             throw new ControllerFailedException();
         }
     }
-
 }

@@ -1,4 +1,6 @@
 require("./bootstrap");
+ window.moment = require('moment');
+window.daterangepicker = require('daterangepicker');
 
 import $ from "jquery";
 window.$ = window.jQuery = $;
@@ -18,3 +20,4 @@ window.jsPDF = jsPDF;
 
 import toastr from 'toastr';
 window.toastr = toastr;
+

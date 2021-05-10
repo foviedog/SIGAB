@@ -236,13 +236,13 @@ $tiposDocumentos =
                                 </form>
                             </div>
                         </div>
-                        
+
                         <form action="{{ route('evidencias.show',$actividad->id) }}" method="GET" id="form-busqueda">
                             <div class="row pt-3 px-3">
 
                                 <div class="col-md-10 d-flex justify-content-start">
                                     <div class="d-flex justify-content-end w-50">
-                                        <div class="text-md-right dataTables_filter input-group mb-3 ">
+                                        <div class="input-group text-md-right dataTables_filter  mb-3 ">
                                             {{-- Input para realizar la búsqueda del archivo --}}
                                             <div class="input-group mb-2">
                                                 <input type="text" class="form-control w-50" id="nombre_filtro" name="nombre_filtro" placeholder="Nombre de la evidencia." value="{{ $nombre_filtro ?? "" }}">

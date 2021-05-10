@@ -18,12 +18,14 @@ class CreateActividadesInternasTable extends Migration
             $table->foreign('actividad_id')->references('id')->on('actividades')->onDelete('cascade');
             $table->string('tipo_actividad', 45)->nullable();
             $table->string('proposito', 45)->nullable();
-            $table->string('facilitador_actividad', 45)->nullable();
             $table->longText('agenda')->nullable();
             $table->string('ambito', 45)->nullable();
             $table->string('certificacion_actividad', 100)->nullable();
             $table->string('publico_dirigido', 45)->nullable();
             $table->string('recursos', 200)->nullable();
+            $table->string('facilitador_externo', 90)->nullable();
+            $table->string('personal_facilitador', 90)->nullable();
+            $table->foreign('personal_facilitador')->references('persona_id')->on('personas');
             $table->timestamps();
         });
     }
