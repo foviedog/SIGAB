@@ -318,13 +318,9 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="{{ asset('js/global/inputs.js') }}"></script>
 
 <script>
     $("input[type='number']").inputSpinner();
-
 </script>
 
 @endsection
