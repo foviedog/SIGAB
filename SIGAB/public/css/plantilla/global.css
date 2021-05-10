@@ -364,7 +364,17 @@ Fin de la paleta de colores
         opacity: 0;
     }
 }
-
+.badge-info-success {
+    color: #4f4f4f;
+    border-bottom: 3px solid #2cef76;
+    width: 12rem;
+    padding: 7px 4px 4px 6px;
+    box-shadow: 0px 1px 3px 1px #a6a6a6;
+    font-weight: 600;
+}
+.badge-info-success>i {
+    color: #2cef76;
+}
 /* **********************************************
         Elementos de espera de ejecucución
 ********************************************** */

@@ -10,7 +10,9 @@ function cargaInicial(event) {
 function ocultarElementos() {
     $("#alerta-facilitador").hide();
     $("#alerta-responsable").hide();
+    $("#cancelar-edi").hide();
 }
+
 // ===============================================================================================
 //Función encargada de hacer llamar los metodos de eventos
 // ===============================================================================================
@@ -19,23 +21,48 @@ function eventos() {
     evtBuscarFacilitador();
     evtBuscarResponsable();
     evtFacilitadorExterno();
+    validarInfo()
+    evtEditar();
+    evtCancelarEdicion();
 }
+
+// ===============================================================================================
+// Función para habilitar edición
+// ===============================================================================================
+function evtEditar() {
+    $("#editar-actividad").on("click", function () {
+        editarActivido = true;
+        $("input").removeAttr("disabled");
+        $("select").removeAttr("disabled");
+        $("textarea").removeAttr("disabled");
+        $("button").removeAttr("disabled");
+        $("#editar-actividad").hide();
+        $("#cancelar-edi").show();
+        $("#guardar-cambios").show();
+        $("#cambiar-foto").show();
+        $("#campo-buscar").addClass('d-flex');
+        $("#campo-buscar").show();
+        $("#info-responsable").addClass('border-top');
+        $("#card-footer").show();
+        $("#avatar").show();
+    });
+}
+
+function evtCancelarEdicion() {
+    $("#cancelar-edi").on("click", function () {
+        location.reload(); // Recarga la página inicial para eliminar todos los cambios hechos y volver a bloquer todos los cambios
+    });
+}
+
 // ===============================================================================================
 //Función encargada de validar que se haya ingresado un personal
 // ===============================================================================================
 function evtSubmit() {
-    $("#actividad-interna").on("submit", function (e) {
+    $("#actividad-form").on("submit", function (e) {
         if ($("#responsable-encontrado").val() === "false") {
             e.preventDefault();
             $("#cedula-responsable").val("");
-            $("#mensaje-alerta").html(
-                "Por favor busque un personal que exista"
-            );
-            $("#mensaje-alerta")
-                .fadeTo(2000, 1000)
-                .slideUp(1000, function () {
-                    $("#mensaje-alerta").slideUp(1000);
-                });
+            desplegarAlerta("mensaje-alerta", "Por favor designe un responsable a la actividad")
         }
     });
 }
@@ -44,8 +71,8 @@ function evtBuscarFacilitador() {
     $("#buscarFacilitador").on("click", function () {
         if ($("#cedula-facilitador").val() === "") {
             $("#facilitador-encontrado").val("false");
-            esconderTarjetaInfo("alerta-facilitador");
-            desplegarAlerta("alerta-facilitador", "facilitador-info", "La cédula digitada no existe");
+            esconderTarjetaInfo("facilitador-info");
+            desplegarAlerta("alerta-facilitador", "La cédula digitada no existe");
         } else {
             $.ajax({
                 url:
@@ -65,8 +92,8 @@ function evtBuscarFacilitador() {
                 statusCode: {
                     404: function () {
                         $("#facilitador-encontrado").val("false");
-                        esconderTarjetaInfo("alerta-facilitador");
-                        desplegarAlerta("facilitador-info", "No se encontró el personal");
+                        esconderTarjetaInfo("facilitador-info");
+                        desplegarAlerta("alerta-facilitador", "No se encontró el personal");
                     }
                 }
             });
@@ -138,12 +165,36 @@ function esconderTarjetaInfo(idTarjeta) {
 
 function evtFacilitadorExterno() {
     $("#externo-check").on("change", function (event) {
-        if(this.checked) {
+        if (this.checked) {
             $("#cedula-facilitador").val("");
             esconderTarjetaInfo("facilitador-info");
             $("#buscarFacilitador").hide();
-        }else{
+        } else {
             $("#buscarFacilitador").show();
         }
     })
+}
+
+function validarInfo() {
+    $("#info-esp-tab").on("click", function (e) {
+        e.preventDefault();
+        let $actividadForm = $("#actividad-form"); // Variable que contiene el form de información general del personal
+        if ($actividadForm.length > 0) {
+            if (!$actividadForm[0].checkValidity() || $("#responsable-encontrado").val() === "false") { // Valida el form antes de que se proceda a la siguiente página para evitar que se envíen datos incorrectos
+                $("#guardar-cambios").trigger("click"); // Fuerza el envío de datos en el form para que realice la validación automática de los campos
+                $("#info-gen-tab").addClass('active');
+                $("#info-esp-tab").removeClass('active');
+            } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
+                $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
+                $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
+                $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
+                $("#info-esp").tab("show"); // Muestra la vista de participaciones.
+            }
+        } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
+            $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
+            $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
+            $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
+            $("#info-esp").tab("show"); // Muestra la vista de participaciones.
+        }
+    });
 }

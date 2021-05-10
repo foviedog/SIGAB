@@ -148,7 +148,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         </div>
                                         <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
                                         <div class="input-group-append">
-                                            <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
+                                            <button class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></button>
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                         <div class=" w-5">
@@ -324,16 +324,18 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <div class="col-3">
                                             <div class="d-flex justify-content-center mb-2">
                                                 <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                    <img class="rounded mb-3" id="imagen-facilitador" style="max-width: 100%;  " />
+                                                    <img class="rounded mb-3" id="imagen-facilitador"  style="max-width: 100%;  " />
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex justify-center">
-                                        <div class="col d-flex justify-content-center">
-                                            <div class="group-item align-items-between d-flex" style="width: 65% !important;">
-                                                <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" />
-                                                <span class="d-flex align-items-center ml-2 font-weight-bold"> h</span>
+                                        <div class="col-9  d-flex justify-content-start align-items-center ">
+                                            <div class="d-flex w-100 justify-content-start align-items-center ">
+                                                <div class="text-start mb-3">
+                                                    <strong>Persona id:</strong> &nbsp;&nbsp; <span id="cedula-facilitador-card"> </span> <br>
+                                                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-facilitador"> </span> <br>
+                                                    <strong>Correo institucional: </strong> &nbsp;&nbsp; <span id="correo-facilitador"> </span> <br>
+                                                    <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-facilitador"></span> <br>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

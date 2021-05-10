@@ -97,6 +97,7 @@ class ActividadesInternaController extends Controller
             $fechaFin = substr($request->rango_fechas, -10);
             $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
             $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
+
             //se setean los atributos del objeto
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
@@ -158,16 +159,23 @@ class ActividadesInternaController extends Controller
             $actividad = Actividades::findOrFail($id_actividad);
             $actividad_interna = Actividades_interna::findOrFail($id_actividad);
 
+            //Obtene el rango de fechas del request y lo divide en fecha de inicio y fecha final
+            $fechaIni = substr($request->rango_fechas, 0, 10);
+            $fechaFin = substr($request->rango_fechas, -10);
+
+            $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+            $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
+
             //se setean los atributos del objeto
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
             $actividad->estado = $request->estado;
-            $actividad->fecha_inicio_actividad = $request->fecha_inicio_actividad;
-            $actividad->fecha_final_actividad = $request->fecha_final_actividad;
+            $actividad->fecha_inicio_actividad = $fechaIni;
+            $actividad->fecha_final_actividad = $fechaFin;
             $actividad->descripcion = $request->descripcion;
             $actividad->evaluacion = $request->evaluacion;
             $actividad->objetivos = $request->objetivos;
-            $actividad->responsable_coordinar = $request->responsable_coordinar;
+            $actividad->responsable_coordinar = $request->responsable_encontrado;
             $actividad->duracion = $request->duracion;
             $actividad->save(); //se guarda el objeto en la base de datos
 
@@ -175,12 +183,17 @@ class ActividadesInternaController extends Controller
             $actividad_interna->actividad_id = $actividad->id;
             $actividad_interna->tipo_actividad = $request->tipo_actividad;
             $actividad_interna->proposito = $request->proposito;
-            $actividad_interna->facilitador_actividad = $request->facilitador_actividad;
             $actividad_interna->agenda = $request->agenda;
             $actividad_interna->ambito = $request->ambito;
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
+            $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+
+            if ($request->externo_check == "on") {
+                $actividad_interna->facilitador_externo = $request->facilitador;
+                $actividad_interna->personal_facilitador = NULL;
+            }
 
             $actividad_interna->save(); //se guarda el objeto en la base de datos
 
