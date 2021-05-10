@@ -157,7 +157,7 @@ class TrabajoController extends Controller
         }
     }
 
-    public function destroy( $id_trabajo)
+    public function destroy($id_trabajo)
     {
         try {
             

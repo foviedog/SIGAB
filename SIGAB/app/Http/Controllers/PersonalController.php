@@ -14,6 +14,9 @@ use App\Personal;
 use App\Persona;
 use App\Idioma;
 use App\Participacion;
+use App\ListaAsistencia;
+use App\Actividades;
+use App\Actividades_interna;
 
 class PersonalController extends Controller
 {
@@ -123,9 +126,13 @@ class PersonalController extends Controller
             //Se optiene un arreglo con los idiomas específicos de la persona.
             $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();
 
+            $elementosBorrar = $this->delete($id_personal);
+
             return view('control_personal.detalle', [
                 'personal' => $personal,
-                'idiomas' => $idiomas
+                'idiomas' => $idiomas,
+                'confirmarEliminar' => 'personal',
+                'elementosBorrar' => $elementosBorrar
             ]);
 
         } catch (\Exception $exception) {
@@ -294,4 +301,57 @@ class PersonalController extends Controller
         }
     }
 
+    public function destroy($personaId){
+        
+    }
+
+    private function delete($personaId){
+        $listasAsistencia = $this->obtenerConcurrenciasListas($personaId);
+        $coordinacion = $this->obtenerConcurrenciaCoordinacion($personaId);
+
+        $dataListas = [];
+        $dataCoord = [];
+
+        foreach ($listasAsistencia as &$lista) {
+            $dato = new \stdClass();
+            $dato->url = route('lista-asistencia.show', $lista->id);
+            $dato->tema = $lista->tema;
+            array_push($dataListas, $dato);
+        }
+
+        foreach ($coordinacion as &$coord) {
+            $dato = new \stdClass();
+            $dato->url = route('actividad-interna.show', $coord->id);
+            $dato->tema = $coord->tema;
+            array_push($dataCoord, $dato);
+        }
+
+        $resultado = [];
+
+        array_push($resultado, $dataListas);
+        array_push($resultado, $dataCoord);
+
+        return $resultado;
+    }
+
+    private function obtenerConcurrenciasListas($personaId){
+        $concurrencias = ListaAsistencia::select('tema', 'actividades.id')
+        ->join('actividades', 'actividades.id', '=', 'lista_asistencias.actividad_id')
+        ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+        ->where('persona_id', '=', $personaId)->get();
+        return $concurrencias;
+    }
+
+    private function obtenerConcurrenciaCoordinacion($personaId){
+        $concurrencias = Actividades::select('tema', 'actividades.id')
+                        ->where('responsable_coordinar', '=', $personaId)->get();
+        return $concurrencias;
+    }
+
+    private function obtenerConcurrenciaFacilitador($personaId){
+        $concurrencias = Actividades_interna::select('tema', 'actividades.id')
+                        ->where('personal_facilitador', '=', $personaId)->get();
+        return $concurrencias;
+    }
+    
 }

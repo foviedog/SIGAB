@@ -73,4 +73,25 @@
     }
 
 
+// =======================================================================
+// Evento al momento de realizar un submit del form de eliminar personal
+// =======================================================================
+
+    $(function () {
+        $('.check-list').on('click', function () {
+            if($('#checkIdiomas:checked').length > 0 && $('#checkParticipaciones:checked').length > 0 && $('#checkCargas:checked').length > 0){
+                $("#button-submit-eliminar").prop("disabled", false);
+            } else {
+                $("#button-submit-eliminar").prop("disabled", true);
+            }
+        });
+    });
+    
+// =======================================================================
+// Evento al momento de realizar un submit del form de eliminar personal
+// =======================================================================
+
+
+
+
 

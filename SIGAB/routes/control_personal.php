@@ -144,4 +144,21 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
+    Route::delete('/personal/carga-academica/eliminar/{id_carga_academica}', 'CargasAcademicaController@destroy')->name('cargaacademica.delete')
+    ->middleware(
+        'roles:
+            Dirección
+            Académica responsable de SIGAB
+            Estudiante asistente académica
+    ');
+
+
+    Route::get('/personal/eliminar/{id_personal}', 'PersonalController@delete')->name('personal.delete')
+    ->middleware(
+        'roles:
+            Dirección
+            Académica responsable de SIGAB
+            Estudiante asistente académica
+    ');
+
 });

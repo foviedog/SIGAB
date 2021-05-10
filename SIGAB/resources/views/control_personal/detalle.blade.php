@@ -35,6 +35,11 @@ $idiomas = [];
     @endif
 
     <div class="card">
+
+        @if(Accesos::ACCESO_ELIMINAR_PERSONAL())
+            @include('layouts.messages.confirmar_eliminar')
+        @endif
+
         <div class="card-body">
             {{-- Input para el array de idiomas en JSON --}}
             <input type="hidden" name="idiomasJSON" id="idiomasJSON">
