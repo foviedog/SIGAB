@@ -134,14 +134,13 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                     <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
                                 <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
-
                             </div>
                         </div>
 
                     </div>
                 </form>
                 @endif
-                
+
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
@@ -245,12 +244,6 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/global/inputs.js') }}"></script>
 <script src="{{ asset('js/control_actividades_internas/listado.js') }}"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> --}}
-{{-- <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script> --}}
-{{-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" /> --}}
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 @endsection

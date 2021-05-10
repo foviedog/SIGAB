@@ -1,84 +1,72 @@
-
 document.addEventListener("DOMContentLoaded", cargaInicial); //Se agrega el evento carga inicial al momento de cargar el documento
 
-let editarActivido = false;
 // ===============================================================================================
 //Función encargada de hacer el llamado  de todos los métodos utilizados en el registro.
 // ===============================================================================================
 function cargaInicial(event) {
     ocultarElementos();
     eventos();
-    AparecerMensajeExito();
 }
-
 function ocultarElementos() {
-    $("#mensaje-alerta").hide();
-    $("#campo-buscar").removeClass('d-flex');
-    $("#campo-buscar").hide();
-    $("#cancelar-edi").hide();
-    $("#info-responsable").removeClass('border-top');
-    $("#card-footer").hide();
-    $("#avatar").hide();
+    $("#alerta-facilitador").hide();
+    $("#alerta-responsable").hide();
 }
-
-
 // ===============================================================================================
 //Función encargada de hacer llamar los metodos de eventos
 // ===============================================================================================
 function eventos() {
-    infoGeneralEvt();
     evtSubmit();
+    evtBuscarFacilitador();
     evtBuscarResponsable();
-    editar();
-    validarInfo();
-    EvtCancelarEdicion();
+    evtFacilitadorExterno();
 }
-
-function EvtCancelarEdicion() {
-    $("#cancelar-edi").on("click", function () {
-        location.reload(); // Recarga la página inicial para eliminar todos los cambios hechos y volver a bloquer todos los cambios
-    });
-}
-
 // ===============================================================================================
 //Función encargada de validar que se haya ingresado un personal
 // ===============================================================================================
 function evtSubmit() {
-    $("#guardar-cambios").on("click", function (e) {
-        if (editarActivido === true && $("#responsable-encontrado").val() === "false") {
+    $("#actividad-interna").on("submit", function (e) {
+        if ($("#responsable-encontrado").val() === "false") {
             e.preventDefault();
             $("#cedula-responsable").val("");
             $("#mensaje-alerta").html(
-                "Debe de designar un responsable"
+                "Por favor busque un personal que exista"
             );
             $("#mensaje-alerta")
                 .fadeTo(2000, 1000)
-                .slideUp(1000, function() {
+                .slideUp(1000, function () {
                     $("#mensaje-alerta").slideUp(1000);
                 });
         }
     });
 }
 
-function evtBuscarResponsable() {
-    $("#buscar").on("click", function() {
-        if ($("#cedula-responsable").val() === "") {
-            $("#responsable-encontrado").val('false');
-            ocultarInfoResponsable();
-            desplegarAlerta("La cédula digitada no está registrada");
+function evtBuscarFacilitador() {
+    $("#buscarFacilitador").on("click", function () {
+        if ($("#cedula-facilitador").val() === "") {
+            $("#facilitador-encontrado").val("false");
+            esconderTarjetaInfo("alerta-facilitador");
+            desplegarAlerta("alerta-facilitador", "facilitador-info", "La cédula digitada no existe");
         } else {
-            $("#responsable-encontrado").val("true");
             $.ajax({
-                url: rutas['personal.edit'] + $("#cedula-responsable").val(),
+                url:
+                    rutas['personal.edit'] + $("#cedula-facilitador").val(),
                 type: "GET",
-                success: function (responsable) {
-                    llenarTarjetaResponsable(responsable);
+                success: function (personal) {
+                    $("#facilitador-encontrado").val(personal.persona_id);
+                    var infoTarjeta = {
+                        imageID: "imagen-facilitador",
+                        nombreID: "nombre-facilitador",
+                        cedulaID: "cedula-facilitador-card",
+                        correoID: "correo-facilitador",
+                        telefonoID: "num-telefono-facilitador",
+                    };
+                    llenarTarjetaInfo("facilitador-info", personal, infoTarjeta);
                 },
                 statusCode: {
                     404: function () {
-                    ocultarInfoResponsable();
-                    $("#responsable-encontrado").val('false');
-                        desplegarAlerta("No se encontró el personal");
+                        $("#facilitador-encontrado").val("false");
+                        esconderTarjetaInfo("alerta-facilitador");
+                        desplegarAlerta("facilitador-info", "No se encontró el personal");
                     }
                 }
             });
@@ -86,111 +74,76 @@ function evtBuscarResponsable() {
     });
 }
 
-function llenarTarjetaResponsable(responsable) {
-    mostrarResponsable();
-    $("#responsable-encontrado").val('true');
-    let src = fotosURL + "/" + responsable.imagen_perfil;
-    $("#imagen-responsable").attr("src", src);
-    $("#nombre-responsable").html(
-        responsable.nombre + " " + responsable.apellido
+function evtBuscarResponsable() {
+    $("#buscarCoordinador").on("click", function () {
+        if ($("#cedula-responsable").val() === "") {
+            $("#responsable-encontrado").val("false");
+            esconderTarjetaInfo("alerta-responsable");
+            desplegarAlerta("responsable-info", "La cédula digitada no existe");
+        } else {
+            $.ajax({
+                url:
+                    rutas['personal.edit'] + $("#cedula-responsable").val(),
+                type: "GET",
+                success: function (personal) {
+                    $("#responsable-encontrado").val(personal.persona_id);
+                    var infoTarjeta = {
+                        imageID: "imagen-responsable",
+                        nombreID: "nombre-responsable",
+                        cedulaID: "cedula-responsable-card",
+                        correoID: "correo-responsable",
+                        telefonoID: "num-telefono-responsable",
+                    };
+                    llenarTarjetaInfo("responsable-info", personal, infoTarjeta);
+                },
+                statusCode: {
+                    404: function () {
+                        $("#responsable-encontrado").val("false");
+                        esconderTarjetaInfo("alerta-responsable");
+                        desplegarAlerta("responsable-info", "No se encontró el personal");
+                    }
+                }
+            });
+        }
+    });
+}
+
+function llenarTarjetaInfo(idTarjeta, personal, infoTarjeta) {
+    $("#" + idTarjeta).addClass("d-flex");
+    let src = fotosURL + "/" + personal.imagen_perfil;
+    $("#" + infoTarjeta.imageID).attr("src", src);
+    $("#" + infoTarjeta.nombreID).html(
+        personal.nombre + " " + personal.apellido
     );
-    $("#cedula-responsable-card").html(responsable.persona_id);
-    $("#correo-responsable").html(responsable.correo_institucional);
-    // En caso de que no se encuentre registrado el correo se muestra un mensaje
-    if (!responsable.correo_institucional) {
-        $("#correo-responsable").html('<i class="font-weight-light"> No registrado</i>' );
-    }
+    $("#" + infoTarjeta.cedulaID).html(personal.persona_id);
+    $("#" + infoTarjeta.correoID).html(personal.correo_institucional);
+    $("#" + infoTarjeta.telefonoID).html(personal.telefono_celular);
 
-    $("#num-telefono-responsable").html(responsable.telefono_celular);
-    // En caso de que no se encuentre registrado el teléfono se muestra un mensaje
-    if (!responsable.telefono_celular) {
-        $("#num-telefono-responsable").html('<i class="font-weight-light"> No registrado</i>' );
-        }
-
-    $("#targeta-responsable").show("d-flex");
+    $("#" + idTarjeta).show("d-flex");
 }
 
-$("#targeta-responsable").show("d-flex");
-
-function desplegarAlerta(contenido) {
-    $("#targeta-responsable").removeClass("d-flex");
-    $("#targeta-responsable").hide();
-    $("#mensaje-alerta").html(contenido);
-    $("#mensaje-alerta")
-        .fadeTo(2000, 500)
-        .slideUp(500, function() {
-            $("#mensaje-alerta").slideUp(500);
+function desplegarAlerta(idAlerta, contenido) {
+    $("#" + idAlerta).html(contenido);
+    $("#" + idAlerta)
+        .fadeTo(3000, 1000)
+        .slideUp(500, function () {
+            $("#" + idAlerta).slideUp(5000);
         });
 }
 
-function editar() {
-    $("#editar-actividad").on("click", function () {
-        editarActivido = true;
-        $("input").removeAttr("disabled");
-        $("select").removeAttr("disabled");
-        $("textarea").removeAttr("disabled");
-        $("#editar-actividad").hide();
-        $("#cancelar-edi").show();
-        $("#guardar-cambios").show();
-        $("#cambiar-foto").show();
-        $("#campo-buscar").addClass('d-flex');
-        $("#campo-buscar").show();
-        $("#info-responsable").addClass('border-top');
-        $("#card-footer").show();
-        $("#avatar").show();
-    });
+function esconderTarjetaInfo(idTarjeta) {
+    $("#" + idTarjeta).removeClass("d-flex");
+    $("#" + idTarjeta).hide();
 }
 
-function ocultarInfoResponsable() {
-    $("#info-responsable").removeClass('border-top');
-    $("#info-responsable").removeClass('d-flex');
-    $("#info-responsable").hide();
-}
-function mostrarResponsable() {
-    $("#info-responsable").addClass('border-top');
-    $("#info-responsable").addClass('d-flex');
-    $("#info-responsable").show();
-}
-
-function infoGeneralEvt() {
-    $("#info-gen-tab").on("click", function (e) {
-        $("#info-gen-tab").addClass("active");// Desacitva la vista de información general
-        $("#info-esp-tab").removeClass("active");// Desacitva la vista de información general
-        $("#info-esp").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
-        $("#info-gen").tab("show"); // Muestra la vista de informacion general.
-    });
-}
-function validarInfo() {
-
-    $("#info-esp-tab").on("click", function (e) {
-        e.preventDefault();
-        let $actividadForm = $("#actividad-form"); // Variable que contiene el form de información general del personal
-
-        if($actividadForm.length > 0){
-            if (!$actividadForm[0].checkValidity() ||  $("#responsable-encontrado").val() === "false") { // Valida el form antes de que se proceda a la siguiente página para evitar que se envíen datos incorrectos
-                $("#guardar-cambios").trigger("click"); // Fuerza el envío de datos en el form para que realice la validación automática de los campos
-                $("#info-gen-tab").addClass('active');
-                $("#info-esp-tab").removeClass('active');
-
-            } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
-                $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
-                $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
-                $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
-                $("#info-esp").tab("show"); // Muestra la vista de participaciones.
-            }
-        } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
-            $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
-            $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
-            $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
-            $("#info-esp").tab("show"); // Muestra la vista de participaciones.
+function evtFacilitadorExterno() {
+    $("#externo-check").on("change", function (event) {
+        if(this.checked) {
+            $("#cedula-facilitador").val("");
+            esconderTarjetaInfo("facilitador-info");
+            $("#buscarFacilitador").hide();
+        }else{
+            $("#buscarFacilitador").show();
         }
-
-    });
-}
-function AparecerMensajeExito() {
-    $("#mensaje_exito")
-        .fadeTo(3000, 500)
-        .slideUp(500, function() {
-            $("#mensaje_exito").slideUp(800);
-        });
+    })
 }

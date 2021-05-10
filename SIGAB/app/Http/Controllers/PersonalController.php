@@ -98,11 +98,11 @@ class PersonalController extends Controller
                 ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('personal_registrado', $personal); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
 
-        } catch (\Illuminate\Database\QueryException $ex) {  
+        } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back() //se redirecciona a la pagina de registro personal
-                ->with('mensaje-error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe")  //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto           
+                ->with('mensaje-error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe")  //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
-                ->with('personal_no_insertado', $personal); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente 
+                ->with('personal_no_insertado', $personal); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -182,11 +182,11 @@ class PersonalController extends Controller
     {
         //En caso de que se haya subido alguna foto con el request se procede a guardarlo en el repositorio de imagenes de perfil
         if ($request->hasFile('avatar')) {
-            
+
             $avatar = $request->file('avatar'); // Se obtiene el objeto que viene en el request y se guarda dentro de una variable
-            
+
             GlobalFunctions::actualizarFotoPerfil($avatar, $personal->persona); //Se llama el metodo global que actualiza la imagen
-        
+
         }
     }
 
@@ -216,7 +216,7 @@ class PersonalController extends Controller
         $persona->estado_civil = $request->estado_civil;
         $persona->direccion_residencia = $request->direccion_residencia;
         $persona->genero = $request->genero;
-        
+
         //se setean los atributos del objeto tipo personal
         $personal->grado_academico = $request->grado_academico;
         $personal->cargo = $request->cargo;
@@ -282,7 +282,6 @@ class PersonalController extends Controller
     public function edit($id_personal)
     {
         try{
-
             $personal = Personal::find($id_personal); //se busca la persona con el id del personal requerido
             if ($personal == null) {
                 return response("No existe", 404); //si no lo encuentra devuelve mensaje de error
@@ -294,5 +293,5 @@ class PersonalController extends Controller
             throw new ControllerFailedException();
         }
     }
-    
+
 }

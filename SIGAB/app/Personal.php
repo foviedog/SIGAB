@@ -25,8 +25,12 @@ class Personal extends Model
         return $this->hasMany('App\Idioma', 'persona_id');
     }
 
-    public function actividades()
+    public function responsableCoordinar()
     {
         return $this->hasMany('App\Actividades', 'responsable_coordinar');
+    }
+    public function facilitadorActividades()
+    {
+        return $this->hasMany('App\Actividades', 'personal_facilitador');
     }
 }

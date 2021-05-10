@@ -14,4 +14,8 @@ class Actividades_interna extends Model
     {
         return $this->belongsTo('App\Actividades', 'id');
     }
+    public function personalFacilitador()
+    {
+        return $this->belongsTo('App\Personal', 'personal_facilitador'); /* Revisar */
+    }
 }
