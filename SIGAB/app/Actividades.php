@@ -17,10 +17,7 @@ class Actividades extends Model
     {
         return $this->belongsTo('App\Personal', 'responsable_coordinar'); /* Revisar */
     }
-    public function personalFacilitador()
-    {
-        return $this->belongsTo('App\Personal', 'personal_facilitador'); /* Revisar */
-    }
+
 
     public function actividadInterna()
     {

@@ -37,7 +37,7 @@ $idiomas = [];
     <div class="card">
 
         @if(Accesos::ACCESO_ELIMINAR_PERSONAL())
-            @include('layouts.messages.confirmar_eliminar')
+            {{-- @include('layouts.messages.confirmar_eliminar') --}}
         @endif
 
         <div class="card-body">

@@ -162,7 +162,6 @@ function infoGeneralEvt() {
     });
 }
 function validarInfo() {
-
     $("#info-esp-tab").on("click", function (e) {
         e.preventDefault();
         let $actividadForm = $("#actividad-form"); // Variable que contiene el form de información general del personal
@@ -184,7 +183,6 @@ function validarInfo() {
             $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
             $("#info-esp").tab("show"); // Muestra la vista de participaciones.
         }
-
     });
 }
 function AparecerMensajeExito() {
