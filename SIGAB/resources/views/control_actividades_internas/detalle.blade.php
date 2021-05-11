@@ -55,18 +55,35 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
         @include('layouts.messages.alerts')
 
         {{-- Barra de navegación entre información general y bloques de texto  --}}
-        <ul class="nav nav-tabs" id="opciones_tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="info-gen-tab" href="#info-gen" data-toggle="tab" role="tab" aria-controls="info-gen" aria-selected="true">Información general</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
-            </li>
+        <ul class="nav nav-tabs d-flex justify-content-between" id="opciones_tab" role="tablist">
+            <div class="d-flex">
+                <li class="nav-item">
+                    <a class="nav-link active" id="info-gen-tab" href="#info-gen" data-toggle="tab" role="tab" aria-controls="info-gen" aria-selected="true">Información general</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
+                </li>
+            </div>
+            <div>
+                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+                @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+                {{-- Botón para autorizar actividad --}}
+                <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
+                    <button type="submit" class="btn btn-info "><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
+                </form>
+                @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
+                <span class="badge-info-success mb-2" style="" disabled><i class="fas fa-check-circle"></i> &nbsp; Actividad autorizada </span>
+                @endif
+                @endif
+            </div>
         </ul>
 
         @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
         {{-- Formulario general de actualización de datos de actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form" onsubmit="activarLoader('Agregando cambios');">
+        <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
             {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
             @method('PATCH')
             {{-- Seguridad de envío de datos --}}
@@ -79,22 +96,8 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                     <div class="row d-flex justify-content-center">
                         <div class="alert alert-danger w-50 text-center" role="alert" id="mensaje-alerta" style="display: none;"></div>
                     </div>
-                    <div class="row d-flex justify-content-between mt-4 px-3">
-                        <div>
-                            @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
-                            @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
-                            {{-- Botón para autorizar actividad --}}
-                            <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PATCH')
-                                <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
-                                <button type="submit" class="btn btn-info "><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
-                            </form>
-                            @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
-                            <span class="badge-info-success " style="" disabled><i class="fas fa-check-circle"></i> &nbsp; Actividad autorizada </span>
-                            @endif
-                            @endif
-                        </div>
+                    <div class="row d-flex justify-content-end mt-4 px-3">
+
                         <div>
                             @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
                             <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light mr-3"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
@@ -302,7 +305,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                     <div class="row d-flex justify-content-center my-4">
                                         <div class="input-group w-90">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text text-dark font-weight-bold"> Facilitador: <i class="text-danger">*</i> </span>
+                                                <span class="input-group-text text-dark font-weight-bold"> Facilitador: </span>
                                                 <div class="input-group-text texto-azul-una">
                                                     Externo: &nbsp;
                                                     <input type="checkbox" id="externo-check" name="externo_check" @if(!is_null($actividad->actividadInterna->facilitador_externo))
@@ -322,14 +325,14 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="input-group-append">
                                                 <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del facilitador de la actividad y presione buscar. En caso de ser externo solamente digite el nombre de la persona"> <i class="far fa-question-circle fa-lg "></i></span>
 
-                                                <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una" @if (is_null($actividad->actividadInterna->personal_facilitador ))
+                                                <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una" @if (is_null($actividad->actividadInterna->personal_facilitador))
                                                     style="display:none;"
                                                     @endif
                                                     disabled>Buscar</button>
                                             </div>
                                         </div>
                                         <input class="form-control" type='hidden' id="facilitador-encontrado" name="facilitador_encontrado" @if (!is_null($actividad->actividadInterna->personal_facilitador ))
-                                        {{ $actividad->actividadInterna->personalFacilitador->persona_id }}
+                                        value="{{ $actividad->actividadInterna->personalFacilitador->persona_id }}"
                                         @else value="false" @endif
                                         >
                                     </div>

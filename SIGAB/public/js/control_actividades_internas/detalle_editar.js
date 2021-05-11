@@ -64,6 +64,7 @@ function evtSubmit() {
             $("#cedula-responsable").val("");
             desplegarAlerta("mensaje-alerta", "Por favor designe un responsable a la actividad")
         }
+        else {activarLoader('Agregando cambios');}
     });
 }
 
@@ -105,8 +106,8 @@ function evtBuscarResponsable() {
     $("#buscarCoordinador").on("click", function () {
         if ($("#cedula-responsable").val() === "") {
             $("#responsable-encontrado").val("false");
-            esconderTarjetaInfo("alerta-responsable");
-            desplegarAlerta("responsable-info", "La cédula digitada no existe");
+            esconderTarjetaInfo("responsable-info");
+            desplegarAlerta("alerta-responsable", "La cédula digitada no existe");
         } else {
             $.ajax({
                 url:
@@ -126,8 +127,8 @@ function evtBuscarResponsable() {
                 statusCode: {
                     404: function () {
                         $("#responsable-encontrado").val("false");
-                        esconderTarjetaInfo("alerta-responsable");
-                        desplegarAlerta("responsable-info", "No se encontró el personal");
+                        esconderTarjetaInfo("responsable-info");
+                        desplegarAlerta("alerta-responsable", "No se encontró el personal");
                     }
                 }
             });

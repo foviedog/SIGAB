@@ -165,7 +165,6 @@ class ActividadesInternaController extends Controller
 
             $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
             $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
-
             //se setean los atributos del objeto
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
@@ -189,6 +188,7 @@ class ActividadesInternaController extends Controller
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
             $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+            $actividad_interna->facilitador_externo = NULL;
 
             if ($request->externo_check == "on") {
                 $actividad_interna->facilitador_externo = $request->facilitador;

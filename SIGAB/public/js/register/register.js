@@ -1,7 +1,5 @@
 function confirmar() {
 
-    //console.log(verificarContrasenna($("#password").val()));
-
     if ($("#password").val() != "" && $("#password-confirm").val() != "") {
         if ($("#password").val() === $("#password-confirm").val()) {
             if (verificarContrasenna($("#password").val())){
