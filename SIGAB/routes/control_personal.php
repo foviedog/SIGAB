@@ -153,7 +153,7 @@ Route::group(['middleware' => ['auth']], function () {
     ');
 
 
-    Route::get('/personal/eliminar/{id_personal}', 'PersonalController@delete')->name('personal.delete')
+    Route::delete('/personal/eliminar/{id_personal}', 'PersonalController@destroy')->name('personal.destroy')
     ->middleware(
         'roles:
             Dirección

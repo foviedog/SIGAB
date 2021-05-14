@@ -33,4 +33,13 @@ class Personal extends Model
     {
         return $this->hasMany('App\Actividades', 'personal_facilitador');
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($personal) {
+                $personal->idiomas()->delete();
+                $personal->participacion()->delete();
+        });
+    }
 }

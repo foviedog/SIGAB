@@ -168,6 +168,14 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
+    Route::delete('/estudiante/eliminar/{id_personal}', 'EstudianteController@destroy')->name('estudiante.destroy')
+    ->middleware(
+        'roles:
+            Dirección
+            Académica responsable de SIGAB
+            Estudiante asistente académica
+    ');
+
     /* Rutas para informacion laboral */
     Route::get('/estudiante/trabajo/{id_estudiante}', 'TrabajoController@index')->name('trabajo.listar')
     ->middleware(

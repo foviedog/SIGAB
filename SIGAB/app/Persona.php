@@ -25,4 +25,12 @@ class Persona extends Model
     {
         return $this->belongsToMany('App\ListaAsistencia', 'actividad_id');
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($persona) {
+                $persona->usuario()->delete();
+        });
+    }
 }

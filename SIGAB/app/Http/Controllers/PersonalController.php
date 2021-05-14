@@ -17,6 +17,9 @@ use App\Participacion;
 use App\ListaAsistencia;
 use App\Actividades;
 use App\Actividades_interna;
+use App\ActividadesPromocion;
+use App\Estudiante;
+use App\User;
 
 class PersonalController extends Controller
 {
@@ -302,15 +305,47 @@ class PersonalController extends Controller
     }
 
     public function destroy($personaId){
-        
+        try{
+
+            $esEstudiante = Estudiante::where('persona_id', $personaId)->count() > 0;
+
+            if($esEstudiante){
+                $idiomas = Idioma::where('persona_id', $personaId);
+                $idiomas->delete();
+                $participaciones = Participacion::where('persona_id', $personaId);
+                $participaciones->delete();
+                $personal = Personal::where('persona_id', $personaId);
+                $personal->delete();
+            } else {
+                $usuario = User::where('persona_id', $personaId);
+                $usuario->delete();
+                $idiomas = Idioma::where('persona_id', $personaId);
+                $idiomas->delete();
+                $participaciones = Participacion::where('persona_id', $personaId);
+                $participaciones->delete();
+                $personal = Personal::where('persona_id', $personaId);
+                $personal->delete();
+                $persona = Persona::where('persona_id', $personaId);
+                $persona->delete();
+            }
+
+            return redirect(route('personal.listar'))
+                ->with('mensaje-exito', "El personal se ha eliminado correctamente.");
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+
     }
 
     private function delete($personaId){
         $listasAsistencia = $this->obtenerConcurrenciasListas($personaId);
         $coordinacion = $this->obtenerConcurrenciaCoordinacion($personaId);
+        $facilitador = $this->obtenerConcurrenciaFacilitador($personaId);
 
         $dataListas = [];
         $dataCoord = [];
+        $dataFacili = [];
 
         foreach ($listasAsistencia as &$lista) {
             $dato = new \stdClass();
@@ -321,15 +356,27 @@ class PersonalController extends Controller
 
         foreach ($coordinacion as &$coord) {
             $dato = new \stdClass();
-            $dato->url = route('actividad-interna.show', $coord->id);
+            $esInterna = Actividades_interna::where('actividades_internas.actividad_id', $coord->id)->count() > 0;
+            if($esInterna)
+                $dato->url = route('actividad-interna.show', $coord->id);
+            else
+                $dato->url = route('actividad-promocion.show', $coord->id);
             $dato->tema = $coord->tema;
             array_push($dataCoord, $dato);
+        }
+
+        foreach ($facilitador as &$facili) {
+            $dato = new \stdClass();
+            $dato->url = route('actividad-interna.show', $coord->id);
+            $dato->tema = $coord->tema;
+            array_push($dataFacili, $dato);
         }
 
         $resultado = [];
 
         array_push($resultado, $dataListas);
         array_push($resultado, $dataCoord);
+        array_push($resultado, $dataFacili);
 
         return $resultado;
     }
@@ -349,8 +396,9 @@ class PersonalController extends Controller
     }
 
     private function obtenerConcurrenciaFacilitador($personaId){
-        $concurrencias = Actividades_interna::select('tema', 'actividades.id')
-                        ->where('personal_facilitador', '=', $personaId)->get();
+        $concurrencias = Actividades::select('tema', 'actividades.id')
+                        ->join('actividades_internas', 'actividades.id', '=', 'actividades_internas.actividad_id')
+                        ->where('actividades_internas.personal_facilitador', '=', $personaId)->get();
         return $concurrencias;
     }
     

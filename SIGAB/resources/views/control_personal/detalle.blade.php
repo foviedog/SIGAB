@@ -22,10 +22,13 @@ $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
 if(is_null($idiomas)){
 $idiomas = [];
 }
-
 @endphp
 
 @section('contenido')
+
+@if(Accesos::ACCESO_ELIMINAR_PERSONAL())
+    @include('layouts.messages.confirmar_eliminar')
+@endif
 
 @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 {{-- Formulario general de personal --}}
@@ -36,10 +39,6 @@ $idiomas = [];
     @endif
 
     <div class="card">
-
-        @if(Accesos::ACCESO_ELIMINAR_PERSONAL())
-            {{-- @include('layouts.messages.confirmar_eliminar') --}}
-        @endif
 
         <div class="card-body">
             {{-- Input para el array de idiomas en JSON --}}
@@ -56,6 +55,10 @@ $idiomas = [];
 
                         {{-- Regresar al listado de personal --}}
                         <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                        @if(Accesos::ACCESO_ELIMINAR_PERSONAL())
+                        {{-- Boton para eliminar el personal --}}
+                        <a class="btn btn-rojo" data-toggle="modal" data-target="#modal-confirmacion"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                        @endif
                         @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-personal" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>

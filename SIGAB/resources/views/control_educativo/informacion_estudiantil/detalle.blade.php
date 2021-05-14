@@ -14,10 +14,19 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 $generos = GlobalArrays::GENEROS;
 $colegiosProcedencias = GlobalArrays::COLEGIOS_PROCEDENCIA;
 $tiposBecas = GlobalArrays::TIPOS_BECA;
-@endphp
-@php
 $anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp {{-- fin del php--}} @section('contenido') {{-- Formulario general de estudiante --}} @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" onsubmit="activarLoader('Agregando Cambios');">
+for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } 
+@endphp
+
+@section('contenido') 
+
+    @if(Accesos::ACCESO_ELIMINAR_ESTUDIANTE())
+        @include('layouts.messages.confirmar_eliminar')
+    @endif
+
+    {{-- Formulario general de estudiante --}} 
+    @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) 
+    <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" onsubmit="activarLoader('Agregando Cambios');">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
@@ -39,7 +48,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                         {{-- Regresar al listado de estudiantes --}}
                         <a href="/listado-estudiantil" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                         @endif
-
+                        @if(Accesos::ACCESO_ELIMINAR_ESTUDIANTE())
+                        {{-- Boton para eliminar el personal --}}
+                        <a class="btn btn-rojo" data-toggle="modal" data-target="#modal-confirmacion"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                        @endif
                         @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-estudiante" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>

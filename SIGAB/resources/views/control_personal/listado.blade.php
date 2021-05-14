@@ -30,6 +30,10 @@ Listado de Personal
 
             </div>
         </div>
+
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
+
         {{-- // Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">

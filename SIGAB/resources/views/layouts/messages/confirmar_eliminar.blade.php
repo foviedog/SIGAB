@@ -30,17 +30,12 @@
 
     @elseif($confirmarEliminar == 'personal')
 
-        @if(empty($elementosBorrar[0]) && empty($elementosBorrar[1]))
-        
-        
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-confirmacion">
-            Launch demo modal
-        </button>
+        @if(empty($elementosBorrar[0]) && empty($elementosBorrar[1]) && empty($elementosBorrar[2]))
 
-        <form  id="form-eliminar" method="post">
+        <form action={{ route('personal.destroy', \Route::current()->parameter('id_personal')) }} id="form-eliminar" method="post">
         @method('DELETE')
         @csrf
-
+        
             <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="modal-eliminarTitle" aria-hidden="true" >
                 <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
@@ -84,10 +79,6 @@
 
         @else
 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-confirmacion">
-            Launch demo modal
-        </button>
-
         <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="modal-eliminarTitle" aria-hidden="true" >
             <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
@@ -103,12 +94,17 @@
 
                         @if(!empty($elementosBorrar[0])) Es participante en las siguientes listas de asistencia: <br> @endif
                         @foreach ($elementosBorrar[0] as $lista)
-                            <a href="{{ $lista->url }}">{{ $lista->tema }}</a> <br>
+                            <a href="{{ $lista->url }}" target="_blank">{{ $lista->tema }}</a> <br>
                         @endforeach
 
                         @if(!empty($elementosBorrar[1])) Es coordinador de las siguientes actividades: <br> @endif
                         @foreach ($elementosBorrar[1] as $coordinacion)
-                            <a href="{{ $coordinacion->url }}">{{ $coordinacion->tema }}</a> <br>
+                            <a href="{{ $coordinacion->url }}" target="_blank">{{ $coordinacion->tema }}</a> <br>
+                        @endforeach
+
+                        @if(!empty($elementosBorrar[2])) Es facilitador de las siguientes actividades: <br> @endif
+                        @foreach ($elementosBorrar[2] as $facilitador)
+                            <a href="{{ $facilitador->url }}" target="_blank">{{ $facilitador->tema }}</a> <br>
                         @endforeach
 
                     </div>
@@ -122,7 +118,57 @@
 
         @endif
 
-    @endif
+        @elseif($confirmarEliminar == 'estudiante')
 
+        <form action={{ route('estudiante.destroy', \Route::current()->parameter('id_estudiante')) }} id="form-eliminar" method="post">
+            @method('DELETE')
+            @csrf
+            
+                <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="modal-eliminarTitle" aria-hidden="true" >
+                    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+    
+                                <div class="form-check">
+    
+                                    <input class="form-check-input check-list" type="checkbox" id="checkTrabajos">
+                                    <label class="form-check-label" for="checkTrabajos">
+                                        Estoy de acuerdo en que se eliminará la información laboral del estudiante
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input check-list" type="checkbox" id="checkTitulaciones">
+                                    <label class="form-check-label" for="checkTitulaciones">
+                                        Estoy de acuerdo en que se eliminarán las titulaciones del estudiante
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input check-list" type="checkbox" id="checkGuias">
+                                    <label class="form-check-label" for="checkGuias">
+                                        Estoy de acuerdo en que se eliminarán las guías académicas del estudiante
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input check-list" type="checkbox" id="checkListas">
+                                    <label class="form-check-label" for="checkListas">
+                                        Estoy de acuerdo en que se eliminará al estudiante de las listas de asistencia donde aparezca
+                                    </label>
+                                </div>
+    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                                <button class="btn btn-rojo" id="button-submit-eliminar" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </form>
+
+        @endif
 
 @endif

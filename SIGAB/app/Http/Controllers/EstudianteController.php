@@ -13,6 +13,11 @@ use App\Exceptions\ControllerFailedException;
 use App\Estudiante;
 use App\Persona;
 use App\Guias_academica;
+use App\Trabajo;
+use App\Graduado;
+use App\Personal;
+use App\ListaAsistencia;
+use App\User;
 
 class EstudianteController extends Controller
 {
@@ -141,6 +146,7 @@ class EstudianteController extends Controller
             $estudiante = Estudiante::findOrFail($id_estudiante);
             return view('control_educativo.informacion_estudiantil.detalle', [
                 'estudiante' => $estudiante,
+                'confirmarEliminar' =>'estudiante'
             ]);
 
         } catch (\Exception $exception) {
@@ -221,6 +227,48 @@ class EstudianteController extends Controller
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
+    }
+
+    public function destroy($personaId){
+        try{
+
+            $esPersonal = Personal::where('persona_id', $personaId)->count() > 0;
+
+            if($esPersonal){
+                $guias = Guias_academica::where('persona_id', $personaId);
+                $guias->delete();
+                $trabajos = Trabajo::where('persona_id', $personaId);
+                $trabajos->delete();
+                $graduaciones = Graduado::where('persona_id', $personaId);
+                $graduaciones->delete();
+                $asistencia = ListaAsistencia::where('persona_id', $personaId);
+                $asistencia->delete();
+                $estudiante = Estudiante::where('persona_id', $personaId);
+                $estudiante->delete();
+            } else {
+                $usuario = User::where('persona_id', $personaId);
+                $usuario->delete();
+                $guias = Guias_academica::where('persona_id', $personaId);
+                $guias->delete();
+                $trabajos = Trabajo::where('persona_id', $personaId);
+                $trabajos->delete();
+                $graduaciones = Graduado::where('persona_id', $personaId);
+                $graduaciones->delete();
+                $asistencia = ListaAsistencia::where('persona_id', $personaId);
+                $asistencia->delete();
+                $estudiante = Estudiante::where('persona_id', $personaId);
+                $estudiante->delete();
+                $persona = Persona::where('persona_id', $personaId);
+                $persona->delete();
+            }
+
+            return redirect(route('listado-estudiantil'))
+                ->with('mensaje-exito', "El estudiante se ha eliminado correctamente.");
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+
     }
 
 }
