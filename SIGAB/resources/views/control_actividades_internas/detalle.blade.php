@@ -16,8 +16,7 @@ $poblacion = GlobalArrays::POBLACION_DIRIGIDA;
 $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
-//Seteo de las fechas para que se pueda utilizar en el rango de fechas del api: daterangePicker()
-
+// Formato de fechas para que se pueda utilizar en el rango de fechas del api: daterangePicker()
 $fechaIni = date("d/m/Y", strtotime(str_replace('/', '-', $actividad->fecha_inicio_actividad)));
 $fechaFin = date("d/m/Y", strtotime(str_replace('/', '-', $actividad->fecha_final_actividad)));
 
@@ -50,7 +49,11 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
             </div>
         </div>
         <hr>
-
+        {{-- Mensajes FIXED --}}
+        <div class="mensaje-container" id="mensaje-error" style="display:none;">
+            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
+            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; "> </div>
+        </div>
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
 
@@ -75,7 +78,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                     <button type="submit" class="btn btn-info "><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
                 </form>
                 @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
-                <span class="badge-info-success mb-2" style="" disabled><i class="fas fa-check-circle"></i> &nbsp; Actividad autorizada </span>
+                <span class="badge-info-success" style="" disabled><i class="fas fa-check-circle"></i> &nbsp; Actividad autorizada </span>
                 @endif
                 @endif
             </div>
@@ -83,7 +86,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
 
         @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
         {{-- Formulario general de actualización de datos de actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="actividad-form">
+        <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="form-guardar">
             {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
             @method('PATCH')
             {{-- Seguridad de envío de datos --}}
@@ -156,9 +159,9 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="input-group-append">
                                                 <span class="input-group-text text-dark">Fechas: <i class="text-danger">*</i></span>
                                             </div>
-                                            <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rangoFechas ?? null }}" disabled>
+                                            <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rangoFechas ?? null }}" disabled required>
                                             <div class="input-group-append">
-                                                <button class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);" disabled><i class="fas fa-calendar-times fa-lg"></i></button>
+                                                <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);" disabled><i class="fas fa-calendar-times fa-lg"></i></button>
                                                 <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
                                             <div class=" w-5">

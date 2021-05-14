@@ -50,7 +50,7 @@ Asistencia a {{ $actividad->tema }}
             <input type="hidden" id="mensaje" name="mensaje" value="" />
         </form>
 
-        {{-- Mensajes sticky --}}
+        {{-- Mensajes FIXED --}}
         @include('layouts.messages.sticky')
 
         <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">

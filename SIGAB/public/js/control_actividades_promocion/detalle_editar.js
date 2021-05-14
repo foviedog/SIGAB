@@ -12,7 +12,6 @@ function cargaInicial(event) {
 }
 
 function ocultarElementos() {
-    $("#mensaje-alerta").hide();
     $("#campo-buscar").removeClass('d-flex');
     $("#campo-buscar").hide();
     $("#cancelar-edi").hide();
@@ -48,85 +47,16 @@ function evtSubmit() {
         if (editarActivido === true && $("#responsable-encontrado").val() === "false") {
             e.preventDefault();
             $("#cedula-responsable").val("");
-            $("#mensaje-alerta").html(
-                "Debe de designar un responsable"
-            );
-            $("#mensaje-alerta")
-                .fadeTo(2000, 1000)
-                .slideUp(1000, function() {
-                    $("#mensaje-alerta").slideUp(1000);
-                });
+            mostrarMensajeValidar("mensaje-alerta","Asigne un personal a la actividad")
         }
     });
-}
-
-function evtBuscarResponsable() {
-    $("#buscar").on("click", function() {
-        if ($("#cedula-responsable").val() === "") {
-            $("#responsable-encontrado").val('false');
-            ocultarInfoResponsable();
-            desplegarAlerta("La cédula digitada no está registrada");
-        } else {
-            $("#responsable-encontrado").val("true");
-            $.ajax({
-                url: rutas['personal.edit'] + $("#cedula-responsable").val(),
-                type: "GET",
-                success: function (responsable) {
-                    llenarTarjetaResponsable(responsable);
-                },
-                statusCode: {
-                    404: function () {
-                    ocultarInfoResponsable();
-                    $("#responsable-encontrado").val('false');
-                        desplegarAlerta("No se encontró el personal");
-                    }
-                }
-            });
-        }
-    });
-}
-
-function llenarTarjetaResponsable(responsable) {
-    mostrarResponsable();
-    $("#responsable-encontrado").val('true');
-    let src = fotosURL + "/" + responsable.imagen_perfil;
-    $("#imagen-responsable").attr("src", src);
-    $("#nombre-responsable").html(
-        responsable.nombre + " " + responsable.apellido
-    );
-    $("#cedula-responsable-card").html(responsable.persona_id);
-    $("#correo-responsable").html(responsable.correo_institucional);
-    // En caso de que no se encuentre registrado el correo se muestra un mensaje
-    if (!responsable.correo_institucional) {
-        $("#correo-responsable").html('<i class="font-weight-light"> No registrado</i>' );
-    }
-
-    $("#num-telefono-responsable").html(responsable.telefono_celular);
-    // En caso de que no se encuentre registrado el teléfono se muestra un mensaje
-    if (!responsable.telefono_celular) {
-        $("#num-telefono-responsable").html('<i class="font-weight-light"> No registrado</i>' );
-        }
-
-    $("#targeta-responsable").show("d-flex");
-}
-
-$("#targeta-responsable").show("d-flex");
-
-function desplegarAlerta(contenido) {
-    $("#targeta-responsable").removeClass("d-flex");
-    $("#targeta-responsable").hide();
-    $("#mensaje-alerta").html(contenido);
-    $("#mensaje-alerta")
-        .fadeTo(2000, 500)
-        .slideUp(500, function() {
-            $("#mensaje-alerta").slideUp(500);
-        });
 }
 
 function editar() {
     $("#editar-actividad").on("click", function () {
         editarActivido = true;
         $("input").removeAttr("disabled");
+        $("button").removeAttr("disabled");
         $("select").removeAttr("disabled");
         $("textarea").removeAttr("disabled");
         $("#editar-actividad").hide();
@@ -139,17 +69,6 @@ function editar() {
         $("#card-footer").show();
         $("#avatar").show();
     });
-}
-
-function ocultarInfoResponsable() {
-    $("#info-responsable").removeClass('border-top');
-    $("#info-responsable").removeClass('d-flex');
-    $("#info-responsable").hide();
-}
-function mostrarResponsable() {
-    $("#info-responsable").addClass('border-top');
-    $("#info-responsable").addClass('d-flex');
-    $("#info-responsable").show();
 }
 
 function infoGeneralEvt() {
@@ -185,10 +104,117 @@ function validarInfo() {
         }
     });
 }
+
 function AparecerMensajeExito() {
     $("#mensaje_exito")
         .fadeTo(3000, 500)
         .slideUp(500, function() {
             $("#mensaje_exito").slideUp(800);
         });
+}
+
+
+function evtBuscarResponsable() {
+    $("#buscarCoordinador").on("click", function () {
+        if ($("#cedula-responsable").val() === "") {
+            $("#responsable-encontrado").val("false");
+            esconderTarjetaInfo("responsable-info");
+            desplegarAlerta("alerta-responsable", "La cédula digitada no existe");
+        } else {
+            $.ajax({
+                url:
+                    rutas['personal.edit'] + $("#cedula-responsable").val(),
+                type: "GET",
+                success: function (personal) {
+                    $("#responsable-encontrado").val(personal.persona_id);
+                    var infoTarjeta = {
+                        imageID: "imagen-responsable",
+                        nombreID: "nombre-responsable",
+                        cedulaID: "cedula-responsable-card",
+                        correoID: "correo-responsable",
+                        telefonoID: "num-telefono-responsable",
+                    };
+                    llenarTarjetaInfo("responsable-info", personal, infoTarjeta);
+                },
+                statusCode: {
+                    404: function () {
+                        $("#responsable-encontrado").val("false");
+                        esconderTarjetaInfo("responsable-info");
+                        desplegarAlerta("alerta-responsable", "No se encontró el personal");
+                    }
+                }
+            });
+        }
+    });
+}
+
+function llenarTarjetaInfo(idTarjeta, personal, infoTarjeta) {
+    $("#" + idTarjeta).addClass("d-flex");
+    let src = fotosURL + "/" + personal.imagen_perfil;
+    $("#" + infoTarjeta.imageID).attr("src", src);
+    $("#" + infoTarjeta.nombreID).html(
+        personal.nombre + " " + personal.apellido
+    );
+    $("#" + infoTarjeta.cedulaID).html(personal.persona_id);
+    $("#" + infoTarjeta.correoID).html(personal.correo_institucional);
+    $("#" + infoTarjeta.telefonoID).html(personal.telefono_celular);
+
+    $("#" + idTarjeta).show("d-flex");
+}
+
+function desplegarAlerta(idAlerta, contenido) {
+    $("#" + idAlerta).html(contenido);
+    $("#" + idAlerta)
+        .fadeTo(3000, 1000)
+        .slideUp(500, function () {
+            $("#" + idAlerta).slideUp(5000);
+        });
+}
+
+function esconderTarjetaInfo(idTarjeta) {
+    $("#" + idTarjeta).removeClass("d-flex");
+    $("#" + idTarjeta).hide();
+}
+
+
+function validarInfo() {
+    $("#info-esp-tab").on("click", function (e) {
+        e.preventDefault();
+        let $actividadForm = $("#actividad-form"); // Variable que contiene el form de información general del personal
+        if ($actividadForm.length > 0) {
+            if (!$actividadForm[0].checkValidity() || $("#responsable-encontrado").val() === "false") { // Valida el form antes de que se proceda a la siguiente página para evitar que se envíen datos incorrectos
+                $("#guardar-cambios").trigger("click"); // Fuerza el envío de datos en el form para que realice la validación automática de los campos
+                $("#info-gen-tab").addClass('active');
+                $("#info-esp-tab").removeClass('active');
+            } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
+                $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
+                $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
+                $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
+                $("#info-esp").tab("show"); // Muestra la vista de participaciones.
+            }
+        } else { // En caso de que se hayan completado los campos de manera correcta procede a mostrar la información de participaciones
+            $("#info-esp-tab").addClass("active");// Desacitva la vista de información general
+            $("#info-gen-tab").removeClass("active");// Desacitva la vista de información general
+            $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
+            $("#info-esp").tab("show"); // Muestra la vista de participaciones.
+        }
+    });
+}
+
+function mostrarMensajeValidar(idAlerta, mensaje) {
+    $("#"+idAlerta).addClass("d-flex");
+    $("#"+idAlerta).show();
+    $("#"+idAlerta).css("animation-name", "mostrar-mensaje");
+    $("#texto-mensaje").html(mensaje)
+    setTimeout(function() { 
+        $("#"+idAlerta).css("animation-name", "esconder-mensaje");
+    }, 4000);
+    setTimeout(function() {
+        $("#"+idAlerta).removeClass("d-flex");
+        $("#"+idAlerta).hide();
+        window.history.replaceState(
+            {},
+            "/" + window.location.href.split("?")[0]
+        );
+    }, 4790);
 }

@@ -4,6 +4,24 @@ $("#alert")
         $("#alert").slideUp(500);
 });
 
+function mostrarMensajeFixed(idAlerta, mensaje) {
+    $("#"+idAlerta).addClass("d-flex");
+    $("#"+idAlerta).show();
+    $("#"+idAlerta).css("animation-name", "mostrar-mensaje");
+    $("#texto-mensaje").html(mensaje)
+    setTimeout(function() { 
+        $("#"+idAlerta).css("animation-name", "esconder-mensaje");
+    }, 4000);
+    setTimeout(function() {
+        $("#"+idAlerta).removeClass("d-flex");
+        $("#"+idAlerta).hide();
+        window.history.replaceState(
+            {},
+            "/" + window.location.href.split("?")[0]
+        );
+    }, 4790);
+}
+
 function mostrarMensajeSticky() {
     $("#mensaje-sticky").addClass("d-flex");
     $("#mensaje-sticky").show();

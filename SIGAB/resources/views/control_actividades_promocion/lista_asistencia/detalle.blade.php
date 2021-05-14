@@ -54,7 +54,7 @@ Asistencia a {{ $actividad->tema }}
                         <div class="container-fluid">
                             <div class="row d-flex justify-content-center align-items-center">
                                 <div class="col d-flex justify-content-center align-items-center" id="img-actividad">
-                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" style="max-width: 40%">
+                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" style="max-width: 26%; padding-bottom: 1.2rem;">
                                 </div>
                                 <div class="col-12 border-top d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div class="w-100">

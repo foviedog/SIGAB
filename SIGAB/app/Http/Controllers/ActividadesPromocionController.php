@@ -71,19 +71,25 @@ class ActividadesPromocionController extends Controller
 
             $actividad = new Actividades; //Se crea una nueva instacia de Actividad
             $actividad_promocion = new ActividadesPromocion; //Se crea una nueva instacia de la actividad promocion
+            //Obtene el rango de fechas del request y lo divide en fecha de inicio y fecha final
+            $fechaIni = substr($request->rango_fechas, 0, 10);
+            $fechaFin = substr($request->rango_fechas, -10);
+            $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+            $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
 
             //se setean los atributos del objeto
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
             $actividad->estado = $request->estado;
-            $actividad->fecha_inicio_actividad = $request->fecha_inicio_actividad;
-            $actividad->fecha_final_actividad = $request->fecha_final_actividad;
             $actividad->descripcion = $request->descripcion;
             $actividad->evaluacion = $request->evaluacion;
             $actividad->objetivos = $request->objetivos;
-            $actividad->responsable_coordinar = $request->responsable_coordinar;
+            $actividad->fecha_inicio_actividad = $fechaIni; 
+            $actividad->fecha_final_actividad = $fechaFin; 
+            $actividad->responsable_coordinar = $request->responsable_encontrado;
             $actividad->creada_por = auth()->user()->persona_id;
             $actividad->duracion = $request->duracion;
+
             if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) //Si se tiene el acceso para autorizar, al registrar una actividad se autoriza automaticamente
                 $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
@@ -120,7 +126,6 @@ class ActividadesPromocionController extends Controller
     public function show($id_actividad)
     {
         try{
-
             $actividad = Actividades::findOrfail($id_actividad);
             //Las actividades se acceden si se cumple al menos uno de los siguientes parámetros:
             //1. Se tiene el acceso para autorizar la actividad
@@ -150,17 +155,22 @@ class ActividadesPromocionController extends Controller
 
             $actividad = Actividades::findOrFail($id_actividad);
             $actividad_promocion = ActividadesPromocion::findOrFail($id_actividad);
+            //Obtene el rango de fechas del request y lo divide en fecha de inicio y fecha final
+            $fechaIni = substr($request->rango_fechas, 0, 10);
+            $fechaFin = substr($request->rango_fechas, -10);
+            $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
+            $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
 
             //se setean los atributos del objeto
             $actividad->tema = $request->tema;
             $actividad->lugar = $request->lugar;
             $actividad->estado = $request->estado;
-            $actividad->fecha_inicio_actividad = $request->fecha_inicio_actividad;
-            $actividad->fecha_final_actividad = $request->fecha_final_actividad;
+            $actividad->fecha_inicio_actividad = $fechaIni; 
+            $actividad->fecha_final_actividad = $fechaFin; 
             $actividad->descripcion = $request->descripcion;
             $actividad->evaluacion = $request->evaluacion;
             $actividad->objetivos = $request->objetivos;
-            $actividad->responsable_coordinar = $request->responsable_coordinar;
+            $actividad->responsable_coordinar = $request->responsable_encontrado;
             $actividad->duracion = $request->duracion;
             $actividad->save(); //se guarda el objeto en la base de datos
 
@@ -256,7 +266,6 @@ class ActividadesPromocionController extends Controller
     public function autorizar(Request $request)
     {
         try {
-
             $actividad = Actividades::findOrfail($request->id_actividad);
             $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos

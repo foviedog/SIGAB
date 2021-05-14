@@ -364,6 +364,7 @@ Fin de la paleta de colores
         opacity: 0;
     }
 }
+
 .badge-info-success {
     color: #4f4f4f;
     border-bottom: 3px solid #2cef76;
@@ -372,9 +373,11 @@ Fin de la paleta de colores
     box-shadow: 0px 1px 3px 1px #a6a6a6;
     font-weight: 600;
 }
+
 .badge-info-success>i {
     color: #2cef76;
 }
+
 /* **********************************************
         Elementos de espera de ejecucución
 ********************************************** */
@@ -909,11 +912,25 @@ input[type=checkbox] {
 ===============================
  */
 
+@media (max-width: 1500px) {
+    .header-perfil {
+        flex-direction: column;
+    }
+    .container-fluid.container-pefil {
+        padding-left: 1rem !important;
+    }
+    .info-gen-perfil{
+        flex: 0 0 33.3333333333%;
+        max-width: 33.3333333333%;
+    }
+}
+
 @media (min-width: 1366px) {
     .col-md-9 {
         flex: 0 0 75%;
         max-width: 75%;
     }
+
 }
 
 @media (min-width: 1900px) {
@@ -925,4 +942,5 @@ input[type=checkbox] {
         flex: 0 0 58.3333333333%;
         max-width: 58.3333333333%;
     }
+
 }

@@ -25,9 +25,9 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
     @csrf
     @method('PATCH')
 
-    <div class="container-fluid " style="margin-top: -4.4rem; padding-left: 10rem !important; ">
+    <div class="container-fluid container-pefil" style="margin-top: -4.4rem; padding-left: 10rem ; ">
         <div class="row">
-            <div class="col-3 ">
+            <div class="col-3 info-gen-perfil">
                 <div class="card shadow pb-5">
                     <div class="card-body">
                         <div class="d-flex justify-content-center mb-2 mt-4">
@@ -111,11 +111,11 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
             <div class="col-8">
                 <div class="card shadow pb-2">
                     <div class="card-header py-3">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between header-perfil">
                             <div>
-                                <h3 class="texto-rojo-medio font-weight-light m-0 texto-rojo">Configuración de la cuenta </h3>
+                                <h3 class="texto-rojo-medio font-weight-light m-0 texto-rojo pb-3">Configuración de la cuenta </h3>
                             </div>
-                            <div>
+                            <div >
                                 {{-- Botón para regresar a la página principal --}}
                                 <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
                                 {{-- Botón para acceder a las notificaciones --}}

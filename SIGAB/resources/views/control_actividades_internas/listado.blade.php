@@ -55,8 +55,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad" value="{{ $tema_filtro ?? ''  }}">
                                 <div class="input-group-append">
                                     <div class="input-group-text"><i class="fas fa-bullhorn texto-azul-una"></i></div>
-                                    <button type="submit" class="btn btn-rojo  ml-3 mr-2 d-flex">Buscar <i class="fas fa-search ml-2 mt-1"></i> </button>
                                 </div>
+                                <button type="submit" class="btn btn-rojo  ml-3 mr-2 d-flex">Buscar <i class="fas fa-search ml-2 mt-1"></i> </button>
                             </div>
 
                             <div class="custom-control custom-checkbox mr-5">

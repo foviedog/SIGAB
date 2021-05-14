@@ -26,28 +26,26 @@ function eventos() {
 //Función encargada de validar que se haya ingresado un personal
 // ===============================================================================================
 function evtSubmit() {
-    $("#actividad-interna").on("submit", function (e) {
-        if ($("#responsable-encontrado").val() === "false") {
-            e.preventDefault();
-            $("#cedula-responsable").val("");
-            $("#mensaje-alerta").html(
-                "Por favor busque un personal que exista"
-            );
-            $("#mensaje-alerta")
-                .fadeTo(2000, 1000)
-                .slideUp(1000, function () {
-                    $("#mensaje-alerta").slideUp(1000);
-                });
-        }
+    $("#form-guardar").on("submit", function(e){
+        validarResponsable(e);
     });
 }
 
+function validarResponsable(e){
+    if ($("#responsable-encontrado").val() === "false") {
+        e.preventDefault();
+        $("#cedula-responsable").val("");
+        mostrarMensajeFixed("mensaje-error","Debe designar un responsable")
+    } else {
+        activarLoader('Agregando actividad');
+    }
+}
 function evtBuscarFacilitador() {
     $("#buscarFacilitador").on("click", function () {
         if ($("#cedula-facilitador").val() === "") {
             $("#facilitador-encontrado").val("false");
             esconderTarjetaInfo("facilitador-info");
-            desplegarAlerta("alerta-facilitador", "No se encontró ningún personal asociado a la cédula "+$("#cedula-responsable").val());
+            desplegarAlerta("alerta-facilitador", "No se encontró ningún personal asociado a la cédula " + $("#cedula-responsable").val());
         } else {
             $.ajax({
                 url:
@@ -68,7 +66,7 @@ function evtBuscarFacilitador() {
                     404: function () {
                         $("#facilitador-encontrado").val("false");
                         esconderTarjetaInfo("facilitador-info");
-                        desplegarAlerta("alerta-facilitador", "No se encontró ningún personal asociado a la cédula "+$("#cedula-responsable").val());
+                        desplegarAlerta("alerta-facilitador", "No se encontró ningún personal asociado a la cédula " + $("#cedula-responsable").val());
                     }
                 }
             });
@@ -102,7 +100,7 @@ function evtBuscarResponsable() {
                     404: function () {
                         $("#responsable-encontrado").val("false");
                         esconderTarjetaInfo("responsable-info");
-                        desplegarAlerta("alerta-responsable", "No se encontró ningún personal asociado a la cédula "+$("#cedula-responsable").val());
+                        desplegarAlerta("alerta-responsable", "No se encontró ningún personal asociado a la cédula " + $("#cedula-responsable").val());
                     }
                 }
             });
@@ -140,11 +138,11 @@ function esconderTarjetaInfo(idTarjeta) {
 
 function evtFacilitadorExterno() {
     $("#externo-check").on("change", function (event) {
-        if(this.checked) {
+        if (this.checked) {
             $("#cedula-facilitador").val("");
             esconderTarjetaInfo("facilitador-info");
             $("#buscarFacilitador").hide();
-        }else{
+        } else {
             $("#buscarFacilitador").show();
         }
     })

@@ -12,12 +12,23 @@
 @php
 $tiposActividad = GlobalArrays::TIPOS_ACTIVIDAD_PROMOCION;
 $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
+// Formato de fechas para que se pueda utilizar en el rango de fechas del api: daterangePicker()
+$fechaIni = date("d/m/Y", strtotime(str_replace('/', '-', $actividad->fecha_inicio_actividad)));
+$fechaFin = date("d/m/Y", strtotime(str_replace('/', '-', $actividad->fecha_final_actividad)));
+
+$rangoFechas = $fechaIni . " - " . $fechaFin
 @endphp
 
 @section('contenido')
 
 <div class="card">
     <div class="card-body">
+
+        {{-- Mensajes FIXED --}}
+        <div class="mensaje-container" id="mensaje-alerta" style="display:none;">
+            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
+            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; ">  </div>
+        </div>
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
@@ -26,7 +37,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
                 @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
                 {{-- Botón para autorizar actividad --}}
-                <form action="{{ route('actividad-promocion.autorizar') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('actividad-promocion.autorizar') }}" method="POST" enctype="multipart/form-data" id="form-guardar">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
@@ -55,6 +66,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
         </div>
         <hr>
 
+
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
 
@@ -78,221 +90,186 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             @endif
 
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab">
-                    <div class="card shadow-sm my-3 rounded pb-2">
-                        <div class="card-header py-3">
-                            <div class="d-flex justify-content-between">
-                                <div>
+                <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab" role="tabpanel">
+
+                    <div class="row d-flex justify-content-end mt-4 px-3">
+                        <div>
+                            @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
+                            <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light mr-3"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
+                            @endif
+                            @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
+                            <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Campos iniciales --}}
+                    <div class="row py-3 mt-2 border-bottom">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
                                     <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Datos generales </p>
                                 </div>
-                                <div>
 
-                                    @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
-                                    <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
-                                    @endif
-
-                                    @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
-                                    <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
-                                    @endif
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                {{-- Campos de la izquierda --}}
-                                <div class="col">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
                                     {{-- Campo: Tema --}}
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-100">
-                                                <div>
-                                                    <label for="tema">Tema <i class="text-danger">*</i></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                                </div>
-                                                <span class="text-muted " id="mostrar_tema"></span>
+                                    <div class="w-90">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-dark">Tema: <i class="text-danger">*</i></span>
                                             </div>
-                                            <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="tema" name="tema" onkeyup="contarCaracteres(this,100)" value="{{ $actividad->tema }}" required disabled>
+                                            <input type='text' class="form-control " id="tema" name="tema" onkeyup="contarCaracteres(this,100)" value="{{ $actividad->tema }}" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    {{-- Campo: Lugar --}}
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-100">
-
-                                                <div>
-                                                    <label for="lugar">Lugar </label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                                </div>
-                                                {{-- espacio donde se muestran los caracteres restantes  --}}
-                                                <span class="text-muted" id="mostrar_lugar"></span>
-                                            </div>
-                                            <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)" value='{{ $actividad->lugar }}' placeholder="No especificado" disabled>
-
+                                            <div class="d-flex justify-content-end align-items-center w-5">
+                                                <span id="mostrar_tema"></span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                {{-- Campo: Tipo de Actividad  --}}
-                                <div class="col">
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-75">
-                                                <label for="tipo_actividad">Tipo de actividad<i class="text-danger">*</i></label>
+                                    {{-- Campo: LUGAR --}}
+                                    <div class="w-90">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-dark">Lugar: <i class="text-danger">*</i></span>
                                             </div>
-                                            <div class="d-flex">
-                                                <select id="propositos" name="tipo_actividad" class="form-control" required disabled>
-                                                    @foreach($tiposActividad as $tipoActividad)
-                                                    <option value="{{ $tipoActividad }}" @if($tipoActividad==$actividad->actividadPromocion->tipo_actividad) selected @endif> {{ $tipoActividad }} </option>
-                                                    @endforeach
-                                                </select>
+                                            <input type='text' class="form-control" id="lugar" name="lugar" value="{{ $actividad->lugar }}" onkeyup=" contarCaracteres(this,60)" disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            </div>
+                                            <div class="d-flex justify-content-end align-items-center w-5">
+                                                <span id="mostrar_lugar"></span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
+
+                                    {{-- Campo: TIPO DE ACTIVIDAD--}}
+                                    <div class="w-90">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-dark">Tipo de actividad: <i class="text-danger">*</i></span>
+                                            </div>
+                                            <select class="form-control" id="tipo_actividad" name="tipo_actividad" required disabled>
+                                                @foreach($tiposActividad as $tipoActividad)
+                                                <option value="{{ $tipoActividad }}" @if($tipoActividad==$actividad->actividadPromocion->tipo_actividad) selected @endif> {{ $tipoActividad }} </option>
+                                                @endforeach
+                                            </select>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Tipo de actividad de actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            </div>
+                                            <div class=" w-5">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- Campo: Fecha de actividad--}}
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-100">
-                                                <div>
-                                                    <label for="fecha_actividad">Fecha de inicio<i class="text-danger">*</i>
-                                                    </label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha de inicio de actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                                </div>
+                        </div>
+                        <div class="col">
+                            <div class="card pb-5">
+                                <div class="card-header">
+                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Características de la actividad </p>
+                                </div>
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center pb-4">
+
+                                    {{-- DURACIÓN --}}
+                                    <div class="w-90 d-flex justify-content-between">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-dark">Duración Total: </span>
                                             </div>
-                                            <div class="d-flex">
-                                                <input type='date' class="form-control w-100" id="fecha_inicio_actividad" name="fecha_inicio_actividad" value='{{ $actividad->fecha_inicio_actividad ?? "No especificado " }}' required disabled>
+                                            <div class="w-50 mx-2">
+                                                <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text font-weight-bold font-italic"> h</span>
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Se ingresa el número de horas totales de la duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            </div>
+                                            <div class="w-5">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                {{-- Campo: Fecha de actividad--}}
-                                <div class="col">
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-100">
-                                                <div>
-                                                    <label for="fecha_actividad">Fecha final<i class="text-danger">*</i>
-                                                    </label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Se selecciona la fecha a finalizar la actividad, también se puede escribir siguiendo el formato determinado" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                                </div>
-
+                                    {{-- Campo: RANGO DE FECHAS --}}
+                                    <div class="w-90">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-dark">Fechas: <i class="text-danger">*</i></span>
                                             </div>
-                                            <div class="d-flex">
-                                                <input type='date' class="form-control w-100" id="fecha_final_actividad" name="fecha_final_actividad" value='{{ $actividad->fecha_final_actividad ?? "No especificado " }}' required disabled>
-
+                                            <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rangoFechas ?? null }}" disabled required>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);" disabled><i class="fas fa-calendar-times fa-lg"></i></button>
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            </div>
+                                            <div class=" w-5">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                {{-- Campo: Duracion --}}
-                                <div class="col">
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-100">
-                                                <div>
-                                                    <label for="duracion">Duración Total</label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Se ingresa el número de horas totales de la duración de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
-                                                </div>
+                                    <div class="w-90">
+                                        {{-- ESTADO --}}
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-dark">Estado: <i class="text-danger">*</i></span>
                                             </div>
-                                            <div class="d-flex justify-center">
-                                                <div class="col d-flex justify-content-center">
-                                                    <div class="group-item align-items-between d-flex" style="width: 65% !important;">
-                                                        <input type="number" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
-                                                        <span class=" d-flex align-items-center ml-2 font-weight-bold"> h</span>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                            <select class="form-control" id="estado" name="estado" required disabled>
+                                                @foreach($estados as $estado)
+                                                <option value="{{ $estado }}" @if($estado==$actividad->estado) selected @endif> {{ $estado }} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
-
-                            <div class="row d-felx justify-content-center">
-
-                                <div class="col-4">
-                                    <div class="d-flex justify-content-center mb-3">
-                                        <div class="w-75">
-                                            <div class="d-flex justify-content-between w-75">
-                                                <label for="estado">Estado <i class="text-danger">*</i></label>
-                                            </div>
-                                            <div class="d-flex">
-                                                <select id="propositos" name="estado" class="form-control" required disabled>
-                                                    @foreach($estados as $estado)
-                                                    <option value="{{ $estado }}" @if($estado==$actividad->estado) selected @endif> {{ $estado }} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </div>
                     </div>
 
-                    <div class="border-top">
 
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-6">
-                                <div class="card shadow-sm rounded pb-2 mt-2">
-                                    <div class="card-header py-3">
-                                        <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                            Responsable de coordinar la actividad
-                                        </p>
+                    {{-- Facilitador y coordinador --}}
+                    <div class="row my-4 px-3">
+                        <div class="card w-100">
+                            <div class="card-header">
+                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">Personal responsable </p>
+                            </div>
+                            <div class="card-body row d-flex justify-content-center">
+                                {{-- RESPONSABLE DE ACTIVIDAD --}}
+                                <div class="col-5">
+                                    {{-- INPUT PARA REALIZAR LA BÚSQUEDA DEL RESPONSABLE --}}
+                                    <div class="row d-flex justify-content-center my-4">
+                                        <div class="input-group w-90">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text textd-dark font-weight-bold"> Responsable de coordinar: <i class="text-danger">*</i> </span>
+                                            </div>
+                                            <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " value="{{ $actividad->responsableCoordinar->persona_id }}" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar"> <i class="far fa-question-circle fa-lg "></i></span>
+                                                <button type="button" id="buscarCoordinador" class="btn btn-contorno-azul-una" disabled>Buscar</button>
+                                            </div>
+                                        </div>
+                                        <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable_encontrado" value="{{ $actividad->responsableCoordinar->persona_id }}">
                                     </div>
-                                    <div class="card-body ">
-                                        <div class="row d-flex justify-content-center mb-2" id="campo-buscar">
-                                            {{-- Campo: Responsable de coordinar --}}
-                                            <div class="col-6 ">
-                                                <div class="input-group w-80">
-                                                    <input type='text' id="cedula-responsable" name="responsable_coordinar" class="form-control " value='{{ $actividad->responsableCoordinar->persona_id }}' required>
-                                                    <div class="input-group-append">
-                                                        <button type="button" id="buscar" class="btn btn-contorno-rojo">Buscar</button>
-                                                        <span data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del responsable de coordinar la actividad y presione buscar" class="ml-2 mt-2"> <i class="far fa-question-circle fa-lg "></i></span>
+
+                                    {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-responsable" style="display: none;"></div>
+                                    </div>
+                                    {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
+                                    <div class="row justify-content-center pb-3" id="responsable-info">
+                                        <div class="w-75 p-3 d-flex border-top justify-content-center">
+                                            <div class="col-3 p-0">
+                                                <div class="d-flex justify-content-center mb-2">
+                                                    <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
+                                                        <img class="rounded mb-3" id="imagen-responsable" src="{{ URL::asset('img/fotos/') }}/{{ $actividad->responsableCoordinar->persona->imagen_perfil }}" style="max-width: 100%; max-height:  100%; " />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input class="form-control" type='hidden' id="responsable-encontrado" name="responsable-encontrado" value="true">
-                                        </div>
-
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta"></div>
-                                        </div>
-
-                                        <div class="row justify-content-center pb-3" id="tarjeta-responsable">
-                                            <div class="p-3 w-100 d-flex border-top justify-content-center" id="info-responsable">
-                                                <div class="col-3">
-                                                    <div class="d-flex justify-content-center mb-2">
-                                                        <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                            <img class="rounded mb-3" id="imagen-responsable" src="{{ URL::asset('img/fotos/') }}/{{ $actividad->responsableCoordinar->persona->imagen_perfil }}" style="max-width: 100%; max-height:  100%; " />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-5  d-flex justify-content-start align-items-center ">
-                                                    <div class="d-flex justify-content-start align-items-center ">
-                                                        <div class="text-start mb-3">
-                                                            <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> {{ $actividad->responsableCoordinar->persona_id }}</span> <br>
-                                                            <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable"> {{ $actividad->responsableCoordinar->persona->nombre }} </span> <br>
-                                                            <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> {!! $actividad->responsableCoordinar->persona->correo_institucional ?? '<i class="font-weight-light"> No registrado</i>' !!}</span> <br>
-                                                            <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"> {!! $actividad->responsableCoordinar->persona->telefono_celular ?? '<i class="font-weight-light"> No registrado</i>' !!} </span> <br>
-                                                        </div>
+                                            <div class="col-9  d-flex justify-content-start align-items-center ">
+                                                <div class="d-flex justify-content-start align-items-center w-100">
+                                                    <div class="text-start mb-3">
+                                                        <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> {{ $actividad->responsableCoordinar->persona_id }}</span> <br>
+                                                        <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable">{{ $actividad->responsableCoordinar->persona->nombre." " . $actividad->responsableCoordinar->persona->apellido}} </span> <br>
+                                                        <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-responsable"> {!! $actividad->responsableCoordinar->persona->correo_institucional ?? '<i class="font-weight-light"> No registrado</i>' !!}</span> <br>
+                                                        <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-responsable"> {!! $actividad->responsableCoordinar->persona->telefono_celular ?? '<i class="font-weight-light"> No registrado</i>' !!} </span> <br>
                                                     </div>
                                                 </div>
                                             </div>
@@ -301,9 +278,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div class="tab-pane fade" id="info-esp" role="tabpanel" aria-labelledby="info-esp-tab">

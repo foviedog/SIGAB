@@ -39,10 +39,14 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
         <hr>
         @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         {{-- Formulario para registrar informacion de la actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-interna.store') }}" method="POST" enctype="multipart/form-data" id="actividad-interna" onsubmit="activarLoader('Agregando actividad');">
+        <form autocomplete="off" action="{{ route('actividad-interna.store') }}" method="POST" enctype="multipart/form-data" id="form-guardar" onsubmit="">
             @csrf
             @endif
-
+            {{-- Mensajes para la validación de errores  --}}
+            <div class="mensaje-container" id="mensaje-error" style="display:none;">
+                <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
+                <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; "> </div>
+            </div>
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
 
@@ -146,7 +150,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <div class="input-group-append">
                                             <span class="input-group-text text-dark">Fechas: <i class="text-danger">*</i></span>
                                         </div>
-                                        <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                        <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}" required>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></button>
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
@@ -324,7 +328,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <div class="col-3">
                                             <div class="d-flex justify-content-center mb-2">
                                                 <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                    <img class="rounded mb-3" id="imagen-facilitador"  style="max-width: 100%;  " />
+                                                    <img class="rounded mb-3" id="imagen-facilitador" style="max-width: 100%;  " />
                                                 </div>
                                             </div>
                                         </div>

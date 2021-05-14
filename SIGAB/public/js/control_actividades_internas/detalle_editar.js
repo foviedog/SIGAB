@@ -57,16 +57,23 @@ function evtCancelarEdicion() {
 // ===============================================================================================
 //Función encargada de validar que se haya ingresado un personal
 // ===============================================================================================
+
 function evtSubmit() {
-    $("#actividad-form").on("submit", function (e) {
-        if ($("#responsable-encontrado").val() === "false") {
-            e.preventDefault();
-            $("#cedula-responsable").val("");
-            desplegarAlerta("mensaje-alerta", "Por favor designe un responsable a la actividad")
-        }
-        else {activarLoader('Agregando cambios');}
+    $("#form-guardar").on("submit", function(e){
+        validarResponsable(e);
     });
 }
+
+function validarResponsable(e){
+    if ($("#responsable-encontrado").val() === "false") {
+        e.preventDefault();
+        $("#cedula-responsable").val("");
+        mostrarMensajeFixed("mensaje-error","Debe designar un responsable")
+    } else {
+        activarLoader('Agregando actividad');
+    }
+}
+
 
 function evtBuscarFacilitador() {
     $("#buscarFacilitador").on("click", function () {
@@ -199,3 +206,4 @@ function validarInfo() {
         }
     });
 }
+

@@ -10,9 +10,6 @@ function mostrarBusquedaAvanzada(checkbox) {
 }
 
 
-function eliminarFechas(input) {
-    $("#rango_fechas").val("");
-}
 
 
 if($("#checkAvanzada").is(':checked')){
