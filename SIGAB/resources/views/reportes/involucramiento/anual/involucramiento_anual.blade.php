@@ -201,7 +201,6 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                         <td scope="col" class="thead-reporte ">Lectorías</td>
                                         <td class="cant-participaciones">{{ $nombre_actividad["Lectorías"] }}</td>
                                     </tr>
-                                    {{-- --}}
                                     <tr>
                                         <td scope="col" class="thead-reporte ">Simposio</td>
                                         <td class="cant-participaciones">{{ $nombre_actividad["Simposio"] }}</td>
@@ -249,6 +248,6 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
 
     </script>
 
-    <script src="{{ asset('js/global/variablesGraficos.js') }}"></script>
-    <script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
+    <script src="{{ asset('js/global/variablesGraficos.js') }}" defer=""></script>
+    <script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}" defer=""></script>
     @endsection

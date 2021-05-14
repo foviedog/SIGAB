@@ -22,6 +22,7 @@ $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
 if(is_null($idiomas)){
 $idiomas = [];
 }
+
 @endphp
 
 @section('contenido')

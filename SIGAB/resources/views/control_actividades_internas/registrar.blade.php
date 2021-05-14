@@ -148,7 +148,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         </div>
                                         <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
                                         <div class="input-group-append">
-                                            <button class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></button>
+                                            <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></button>
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                         <div class=" w-5">
@@ -298,7 +298,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <div class="row d-flex justify-content-center my-4">
                                     <div class="input-group w-90">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text text-dark font-weight-bold"> Facilitador: <i class="text-danger">*</i> </span>
+                                            <span class="input-group-text text-dark font-weight-bold"> Facilitador: </span>
                                             <div class="input-group-text texto-azul-una">
                                                 Externo: &nbsp;
                                                 <input type="checkbox" id="externo-check" name="externo_check">
@@ -307,7 +307,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                                         <input type='text' id="cedula-facilitador" name="facilitador" class="form-control " required>
                                         <div class="input-group-append">
-                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del facilitador de coordinar la actividad y presione buscar"> <i class="far fa-question-circle fa-lg "></i></span>
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="En caso de ser un personal ingrese sin espacio y sin guiones el número de cédula del facilitador y luego presione buscar. En caso de ser externo coloque únicamente el nombre completo de la persona."> <i class="far fa-question-circle fa-lg "></i></span>
                                             <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una">Buscar</button>
                                         </div>
                                     </div>
@@ -316,10 +316,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                                 {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
                                 <div class="row d-flex justify-content-center">
-                                    <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-facilitador"></div>
+                                    <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-facilitador" style="display: none;"></div>
                                 </div>
                                 {{-- TARJETA CON LA INFORMACIÓN DEL FACILITADOR --}}
-                                <div class="row justify-content-center pb-3" id="facilitador-info">
+                                <div class="row justify-content-center pb-3" id="facilitador-info" style="display: none;">
                                     <div class="w-75 p-3 d-flex border-top justify-content-center">
                                         <div class="col-3">
                                             <div class="d-flex justify-content-center mb-2">
@@ -362,10 +362,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                                 {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
                                 <div class="row d-flex justify-content-center">
-                                    <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-responsable"></div>
+                                    <div class="alert alert-danger w-50 text-center" role="alert" id="alerta-responsable" style="display: none;"></div>
                                 </div>
                                 {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
-                                <div class="row justify-content-center pb-3" id="responsable-info">
+                                <div class="row justify-content-center pb-3" id="responsable-info" style="display: none;">
                                     <div class="w-75 p-3 d-flex border-top justify-content-center">
                                         <div class="col-3">
                                             <div class="d-flex justify-content-center mb-2">

@@ -37,6 +37,7 @@ class ReporteInvolucramientoAnualController extends Controller
             $anioFinal = request('anio_final', null);
             $actividadesXAnio  = null;
             $graficosInvolucramiento  = null;
+            $datosCuantitativos = $this->datosCuantitativosPersonal();
 
             if (!is_null($anioInicio) && !is_null($anioFinal)) {
                 $dataSet = $this->involucramientoAnual($anioInicio, $anioFinal);
@@ -47,6 +48,7 @@ class ReporteInvolucramientoAnualController extends Controller
             $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')->get()->keyBy('persona_id'); //Inner join de personal con personas
             return view('reportes.involucramiento.anual.involucramiento_anual', [
                 'graficosInvolucramiento' => json_encode($graficosInvolucramiento, JSON_UNESCAPED_SLASHES),
+                'datosCuantitativos' => $datosCuantitativos,
                 'actividadesXAnio' => $actividadesXAnio,
                 'personal' => $personal,
                 'anioInicio' => $anioInicio,
@@ -61,7 +63,7 @@ class ReporteInvolucramientoAnualController extends Controller
         }
     }
 
-    public function datosCuntitativosPersonal()
+    public function datosCuantitativosPersonal()
     {
         $interinos = Personal::where("tipo_nombramiento", "Interino")->count();
         $propietarios = Personal::where("tipo_nombramiento", "Propietario")->count();
@@ -112,6 +114,7 @@ class ReporteInvolucramientoAnualController extends Controller
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                    ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
                     ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
             })
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')

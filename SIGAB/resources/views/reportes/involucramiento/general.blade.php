@@ -326,8 +326,6 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
 </script>
 @endif
-
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
-<script src="{{ asset('js/reportes/involucramiento/involucramientoAnual.js') }}"></script>
 @endsection

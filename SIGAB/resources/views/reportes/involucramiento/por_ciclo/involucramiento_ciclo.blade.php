@@ -149,7 +149,6 @@ Involucramiento Anual
                                             <div class="jornada-personal">{{ $persona->jornada }} </div>
                                             <div class="jornada-personal">{{ $persona->cargo}}</div>
                                             <div class="jornada-personal">{{ $persona->tipo_puesto_1}}</div>
-                                            <div class="jornada-personal">{{ $persona->jornada}}</div>
                                         </div>
                                     </td>
                                     <td>

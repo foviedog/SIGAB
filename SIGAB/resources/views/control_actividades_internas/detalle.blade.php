@@ -323,7 +323,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             @endif
                                             disabled/>
                                             <div class="input-group-append">
-                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="Ingrese sin espacio y sin guiones el número de cédula del facilitador de la actividad y presione buscar. En caso de ser externo solamente digite el nombre de la persona"> <i class="far fa-question-circle fa-lg "></i></span>
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="En caso de ser un personal ingrese sin espacio y sin guiones el número de cédula del facilitador y luego presione buscar. En caso de ser externo coloque únicamente el nombre completo de la persona."> <i class="far fa-question-circle fa-lg "></i></span>
 
                                                 <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una" @if (is_null($actividad->actividadInterna->personal_facilitador))
                                                     style="display:none;"

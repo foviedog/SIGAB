@@ -96,6 +96,7 @@ class ReporteInvolucramientoPorCicloController extends Controller
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                    ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
                     ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
             })
             ->where(function ($query) {

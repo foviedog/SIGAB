@@ -19,3 +19,7 @@ $(function() {
         $(this).val('');
     });
 });
+
+function eliminarFechas(input) {
+    $("#rango_fechas").val("");
+}

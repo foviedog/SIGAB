@@ -413,6 +413,7 @@ class ReportesInvolucramientoController extends Controller
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                    ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
                     ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
             })
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
@@ -420,15 +421,12 @@ class ReportesInvolucramientoController extends Controller
                 $query->where('actividades.estado', '=', 'Ejecutada')
                     ->orWhere('actividades.estado', '=', 'En progreso');
             })
-            // ->where(function ($query) use ($anio) {
-            //     $query->whereYear('actividades.fecha_final_actividad', $anio)
-            //         ->orwhereYear('actividades.fecha_inicio_actividad', $anio);
-            // })
             ->whereYear('actividades.fecha_inicio_actividad', $anio)
             ->distinct()
             ->count('actividades.id');
         return $cant;
     }
+
     public function porcentajeParticipacion($actividadesXPersonal)
     {
         $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
@@ -440,7 +438,7 @@ class ReportesInvolucramientoController extends Controller
                     $porcentajesParticipacion[$tipo] = 0;
                 }
                 if ($personal[$tipo] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
-                    $porcentajesParticipacion[$tipo] +=  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
+                    $porcentajesParticipacion[$tipo] +=  round(((1 / $cantPersonal) * 100), 1); //Se actualiza el array de porcentajes
                 }
             }
         }
@@ -474,6 +472,7 @@ class ReportesInvolucramientoController extends Controller
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                    ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
                     ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
             })
             ->Where('actividades_internas.ambito', 'like', '%' .   $ambito . '%')

@@ -46,8 +46,8 @@ function evtBuscarFacilitador() {
     $("#buscarFacilitador").on("click", function () {
         if ($("#cedula-facilitador").val() === "") {
             $("#facilitador-encontrado").val("false");
-            esconderTarjetaInfo("alerta-facilitador");
-            desplegarAlerta("alerta-facilitador", "facilitador-info", "La cédula digitada no existe");
+            esconderTarjetaInfo("facilitador-info");
+            desplegarAlerta("alerta-facilitador", "No se encontró ningún personal asociado a la cédula "+$("#cedula-responsable").val());
         } else {
             $.ajax({
                 url:
@@ -67,8 +67,8 @@ function evtBuscarFacilitador() {
                 statusCode: {
                     404: function () {
                         $("#facilitador-encontrado").val("false");
-                        esconderTarjetaInfo("alerta-facilitador");
-                        desplegarAlerta("facilitador-info", "No se encontró el personal");
+                        esconderTarjetaInfo("facilitador-info");
+                        desplegarAlerta("alerta-facilitador", "No se encontró ningún personal asociado a la cédula "+$("#cedula-responsable").val());
                     }
                 }
             });
@@ -80,8 +80,8 @@ function evtBuscarResponsable() {
     $("#buscarCoordinador").on("click", function () {
         if ($("#cedula-responsable").val() === "") {
             $("#responsable-encontrado").val("false");
-            esconderTarjetaInfo("alerta-responsable");
-            desplegarAlerta("responsable-info", "La cédula digitada no existe");
+            esconderTarjetaInfo("responsable-info");
+            desplegarAlerta("alerta-responsable", "La cédula digitada no existe");
         } else {
             $.ajax({
                 url:
@@ -101,8 +101,8 @@ function evtBuscarResponsable() {
                 statusCode: {
                     404: function () {
                         $("#responsable-encontrado").val("false");
-                        esconderTarjetaInfo("alerta-responsable");
-                        desplegarAlerta("responsable-info", "No se encontró el personal");
+                        esconderTarjetaInfo("responsable-info");
+                        desplegarAlerta("alerta-responsable", "No se encontró ningún personal asociado a la cédula "+$("#cedula-responsable").val());
                     }
                 }
             });
