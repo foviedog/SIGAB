@@ -456,9 +456,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
     </form>
     @endif
 
-    @endsection
+@endsection
 
-    @section('scripts')
-    <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-    <script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
-    @endsection
+@section('scripts')
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ asset('js/control_educativo/informacion_estudiante/editar.js') }}" defer></script>
+<script src="{{ asset('js/global/validacionesImagenPerfil.js') }}" crossorigin="anonymous"></script>
+@endsection

@@ -530,4 +530,5 @@ $idiomas = [];
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_personal/registrar.js') }}" defer></script>
 <script src="{{ asset('js/control_personal/editar.js') }}" defer></script>
+<script src="{{ asset('js/global/validacionesImagenPerfil.js') }}" crossorigin="anonymous"></script>
 @endsection

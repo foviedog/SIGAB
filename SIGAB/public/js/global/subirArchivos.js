@@ -3,21 +3,27 @@
 function readURL(input) {
     if (input.files && input.files[0]) {//Si se ha seleccionado algún archivo
 
-    var reader = new FileReader();//Crea un nuevo objeto que sirve para leer el contenido de archivos
-
-    reader.onload = function(e) { //Closer de JS para designar una función cuando el evento "load" suceda
-        $('.file-upload-wrap').hide();
-        $('.file-upload-image').attr('src', e.target.result);//Toma el contenido del archivo subido y coloca la ruta de dicho archivo en la ruta de la file
-        colocarImagen(input.files[0].name);//En caso de que el arhivo subido no sea una imagen, se coloca una imagen representativa
-
-        $('.file-upload-content').show();//Muestra la imagen
-        $('.file-title').html(input.files[0].name);//Toma el nombre del archivo y lo coloca en el botón de eliminar
-        if (obtenerURL(input.files[0].name) == null) {
-            alert("El formato del archivo no es aceptado");
+        if (input.files[0].size > 30000000) {
+            toastr.error("Los archivos no deben pesar más de 30MB");
             removeUpload();
+        } else {
+            var reader = new FileReader();//Crea un nuevo objeto que sirve para leer el contenido de archivos
+
+            reader.onload = function(e) { //Closer de JS para designar una función cuando el evento "load" suceda
+                $('.file-upload-wrap').hide();
+                $('.file-upload-image').attr('src', e.target.result);//Toma el contenido del archivo subido y coloca la ruta de dicho archivo en la ruta de la file
+                colocarImagen(input.files[0].name);//En caso de que el arhivo subido no sea una imagen, se coloca una imagen representativa
+
+                $('.file-upload-content').show();//Muestra la imagen
+                $('.file-title').html(input.files[0].name);//Toma el nombre del archivo y lo coloca en el botón de eliminar
+                if (obtenerURL(input.files[0].name) == null) {
+                    toastr.error("El formato del archivo no es aceptado");
+                    removeUpload();
+                }
+            };
+            reader.readAsDataURL(input.files[0]);//Inicializa el modo de buffer como URL (De esta manera el ".result" devolverá la ruta del archivo)
         }
-    };
-    reader.readAsDataURL(input.files[0]);//Inicializa el modo de buffer como URL (De esta manera el ".result" devolverá la ruta del archivo)
+    
     } else {
         removeUpload();//Se remueve la previsualización del archivo y se vuelve a colocar el campo para subir elementos
     }

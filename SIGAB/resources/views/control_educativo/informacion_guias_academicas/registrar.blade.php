@@ -157,7 +157,7 @@ Registrar guía académica
                 <label class="col-form-label" for="adjuntar-archivo">Adjuntar archivo</label> <br>
                 <input type="file" name="archivo" class="border" id="adjuntar-archivo">
                 <br><span style="cursor: pointer" onclick="quitarArchivo()">Quitar archivo</span>
-                <div class="text-danger">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, rar, zip, 7zip</b>.
+                <div class="text-danger">Los formatos permitidos son: <b>docx, odt, doc, txt, rar, zip, 7z, rar5, xls, xlsm, xlsx, ods, csv, pps, ppt, ppsx, pptm, potx, pptx, jpg, png, svg, jpeg</b>.
                     <br>El archivo no debe pesar más de <b>30MB</b>.</div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </div>
@@ -189,4 +189,5 @@ Registrar guía académica
 </script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/informacion_guias_academicas/registrar.js') }}" defer></script>
+<script src="{{ asset('js/global/validacionArchivos.js') }}" crossorigin="anonymous"></script>
 @endsection

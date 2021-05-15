@@ -123,7 +123,7 @@
                             <input type="file" name="archivo" class="border" id="adjuntar-archivo" disabled> &nbsp;
                             <span data-toggle="tooltip" id="tooltip" data-placement="bottom" title="Si el archivo adjunto ya existe, se reemplazará al elegir otro"><i class="far fa-question-circle fa-lg"></i></span>
                             <br><span style="cursor: pointer" onclick="quitarArchivo()" id="quitar-archivo">Quitar archivo</span>
-                            <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>csv, txt, xlx, xls, pdf, docx, zip, rar, 7zip</b>.
+                            <div class="text-danger" id="mensaje-informacion-archivo">Los formatos permitidos son: <b>docx, odt, doc, txt, rar, zip, 7z, rar5, xls, xlsm, xlsx, ods, csv, pps, ppt, ppsx, pptm, potx, pptx, jpg, png, svg, jpeg</b>.
                                 <br>El archivo no debe pesar más de <b>30MB</b>.</div>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         </div>

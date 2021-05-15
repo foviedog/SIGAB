@@ -72,9 +72,8 @@ class GuiasAcademicaController extends Controller
             //Verifica el archivo adjunto y lo sube
             if ($request->archivo !== NULL) {
 
-
                 $validacion = Validator::make($request->all(), [
-                    'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,pptx|max:30000'
+                    'archivo' => 'mimes:docx,odt,doc,txt,rar,zip,7z,rar5,xls,xlsm,xlsx,ods,csv,pps,ppt,ppsx,pptm,potx,pptx,jpg,png,svg,jpeg|max:30000'
                 ]);
 
                 if ($validacion->fails()) {

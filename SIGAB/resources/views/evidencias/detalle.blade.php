@@ -181,7 +181,7 @@ $tiposDocumentos =
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="file-upload" id="file-upload">
                                 <span class="text-danger">
-                                    Los formatos permitidos son: <b>csv, xlx, xls, pdf, docx, rar, zip, 7zip, pptx, ppsx, pptm, jpg , jpeg, png ,svg</b>.
+                                    Los formatos permitidos son: <b>csv, xlx, xls, pdf, docx, rar, zip, 7zip, pptx, ppsx, pptm, jpg , jpeg, png, svg</b>.
                                     <br>El archivo no debe pesar más de <b>30MB</b>.
                                 </span>
                                 <button class="file-upload-btn btn btn-contorno-rojo w-100" type="button" onclick="$('.file-upload-input').trigger( 'click' )">AGREGAR EVIDENCIA</button>

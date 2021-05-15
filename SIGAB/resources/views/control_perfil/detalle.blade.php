@@ -255,4 +255,5 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 </script>
 <script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
 <script src="{{ asset('js/control_educativo/detalle_editar.js') }}" defer></script>
+<script src="{{ asset('js/global/validacionesImagenPerfil.js') }}" crossorigin="anonymous"></script>
 @endsection
