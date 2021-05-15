@@ -28,6 +28,11 @@ class NotificarModificarGuia extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $guia->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha modificado una guía académica.",
+            'color' => 'azul',
+            'icono' => '<i class="fas fa-clipboard-list"></i>',
             'modelo' => 'guia',
             'mensaje' => $mensaje,
             'url' => $url

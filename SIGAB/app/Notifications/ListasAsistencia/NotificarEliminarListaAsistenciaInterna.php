@@ -29,6 +29,11 @@ class NotificarEliminarListaAsistenciaInterna extends Notification implements Sh
         $this->dataSet = [
             'id' => $actividad,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha eliminado a un participante: ".$personaEliminada->nombre." ".$personaEliminada->apellido.".",
+            'color' => 'roja',
+            'icono' => '<i class="fas fa-user-slash"></i>',
             'modelo' => 'lista_asistencia',
             'actividad' => 'interna',
             'mensaje' => $mensaje,

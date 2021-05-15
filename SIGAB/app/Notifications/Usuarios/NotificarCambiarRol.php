@@ -32,6 +32,11 @@ class NotificarCambiarRol extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $usuario->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => " ha cambiado el rol a ".$personaRol->nombre." ".$personaRol->apellido.": ".$rol.".",
+            'color' => 'amarilla',
+            'icono' => '<i class="fas fa-exchange-alt"></i>',
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ];

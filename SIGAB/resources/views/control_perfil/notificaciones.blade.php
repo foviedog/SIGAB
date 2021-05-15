@@ -6,10 +6,11 @@ Notificaciones
 
 @section('css')
 <style>
-    .header-collapse{
+    .header-collapse {
         text-align: center;
         cursor: pointer;
     }
+
 </style>
 @endsection
 
@@ -21,8 +22,8 @@ Notificaciones
 </header>
 
 <div class="container-fluid " style="margin-top: -4.4rem;">
-    <div class="row">
-        <div class="col">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-7 col-md-9">
             <div class="card shadow pb-2">
 
                 <div class="card-header py-3">
@@ -36,95 +37,86 @@ Notificaciones
                         </div>
                     </div>
                 </div>
-                
-                <div class="card-body">
-                    
-                    <div class="py-3" style="text-align: center;">
-                        <h4>Notificaciones nuevas</h4>
-                    </div>
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                            <th scope="col">Información</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Ver</th>
-                            <th scope="col">Marcar como leído</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- En caso de que no existan registros --}}
-                            @if(count($notificacionesNoLeidas) == 0)
-                            <tr class="cursor-pointer">
-                                <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg">
-                                    </i> &nbsp; No existen registros</td>
-                            </tr>
-                            @endif
-                            @foreach($notificacionesNoLeidas as $notifiacion)
-                            <tr>
-                                <td>{{ $notifiacion->data['mensaje'] }}</td>
-                                <td>{{ $notifiacion->created_at }}</td>
-                                @if($notifiacion->data['modelo'] == 'usuario')
-                                    <td><button class="btn btn-contorno-rojo disabled">Detalle</button></td>
-                                @else
-                                    <td><a class="btn btn-contorno-rojo" href="{{ $notifiacion->data['url'] }}">Detalle</a></td>
+                <div class="card-body notificaciones">
+                    <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+                        <li class="nav-item mr-2">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Sin leer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Anteriores</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div class="container">
+                                @if(count($notificacionesNoLeidas) == 0)
+                                <div class="cursor-pointer">
+                                    <i class="text-danger fas fa-exclamation-circle fa-lg">
+                                    </i> &nbsp; No existen registros
+                                </div>
                                 @endif
-                                <td>Marcar como leído</td>
-                            <tr>
-                            @endforeach
-                            
-                        </tbody>
-                    </table>
-
-                    <div class="header-collapse" id="accordion" data-toggle="collapse" data-target="#collapseNotificaciones" aria-expanded="false" aria-controls="collapseNotificaciones">
-                        <div class="card">
-                            <div class="card-header" id="collapse-notificaciones">
-                                <h4 class="mb-0">
-                                    Ver notificaciones leídas
-                                </h4>
+                                @foreach ($notificacionesNoLeidas as $notificacion)
+                                <div class="row mt-2 mx-5 border-bottom pb-3 notificacion-container">
+                                    <div class="col-2 p-0 imagen-notificacion">
+                                        <div class="container-image">
+                                            <img class="imagen-perfil" src="{{ URL::asset('img/fotos/'.$notificacion->data["imagen_perfil"]) }}" alt="">
+                                        </div>
+                                        <div class="container-tipo {{ $notificacion->data["color"] }}">
+                                            {!! $notificacion->data["icono"] !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-8 notificacion-info">
+                                        <div class="w-100 text-muted">
+                                            <b class="text-dark">{{ $notificacion->data["nombre"] }}</b> {{ $notificacion->data["informacion"] }}
+                                        </div>
+                                        <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y", strtotime($notificacion->created_at))  }}</span>
+                                    </div>
+                                    <div class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
+                                        <div class="btn btn-contorno-rojo">Detalle</div>
+                                    </div>
+                                </div>
+                                @endforeach
+                                <div class="row justify-content-center">
+                                    {{ $notificacionesNoLeidas->withQueryString()->links() }}
+                                </div>
                             </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            @if(count($notificacionesLeidas) == 0)
+                            <div class="row mt-2 mx-5 border-bottom pb-3 d-flex justify-content-center align-items-center">
+                                <i class="text-danger fas fa-exclamation-circle fa-lg">
+                                </i> &nbsp; No existen registros
+                            </div>
+                            @endif
+                            @foreach ($notificacionesLeidas as $notificacion)
+                            <div class="row mt-2 mx-5 border-bottom pb-3 notificacion">
+                                <div class="col-2 p-0 imagen-notificacion">
+                                    <div class="container-image">
+                                        <img class="imagen-perfil" src="{{ URL::asset('img/fotos/'.$notificacion->data["imagen_perfil"]) }}" alt="">
+                                    </div>
+                                    <div class="container-tipo {{ $notificacion->data["color"] }}">
+                                        {!! $notificacion->data["icono"] !!}
+                                    </div>
+                                </div>
+                                <div class="col-8 notificacion-info">
+                                    <div class="w-100 text-muted">
+                                        <b class="text-dark">{{ $notificacion->data["nombre"] }}</b> {{ $notificacion->data["informacion"] }}
+                                    </div>
+                                    <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y", strtotime($notificacion->created_at))  }}</span>
+                                </div>
+                                <div class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
+                                    <div class="btn btn-contorno-rojo">Detalle</div>
+                                </div>
+                            </div>
+                            @endforeach
+
                         </div>
                     </div>
-
-                    <div id="collapseNotificaciones" class="collapse" aria-labelledby="collapse-notificaciones" data-parent="#accordion">
-                        <div class="card-body">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">Información</th>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Ver</th>
-                                    <th scope="col">Eliminar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- En caso de que no existan registros --}}
-                                    @if(count($notificacionesLeidas) == 0)
-                                    <tr class="cursor-pointer">
-                                        <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg">
-                                            </i> &nbsp; No existen registros</td>
-                                    </tr>
-                                    @endif
-                                    @foreach($notificacionesLeidas as $notifiacion)
-                                    <tr>
-                                        <td>{{ $notifiacion->data['mensaje'] }}</td>
-                                        <td>{{ $notifiacion->created_at }}</td>
-                                        @if($notifiacion->data['id'])
-                                            <td>{{ $notifiacion->data['id'] }}</td>
-                                        @endif
-                                        <td>Eliminar</td>
-                                    <tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-
-
-
                 </div>
-
+               
             </div>
         </div>
     </div>

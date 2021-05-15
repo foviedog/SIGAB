@@ -116,6 +116,7 @@ class ActividadesInternaController extends Controller
             $actividad->responsable_coordinar = $request->responsable_encontrado;
             $actividad->duracion = $request->duracion;
             $actividad->creada_por = auth()->user()->persona_id;
+
             if (Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) //Si se tiene el acceso para autorizar, al registrar una actividad se autoriza automaticamente
                 $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
@@ -129,13 +130,16 @@ class ActividadesInternaController extends Controller
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
-            $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+
+            if($request->facilitador_encontrado != "false"){
+                $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+            }
 
             if ($request->externo_check == "on") {
                 $actividad_interna->facilitador_externo = $request->facilitador;
                 $actividad_interna->personal_facilitador = NULL;
             }
-
+            
             $actividad_interna->save(); //se guarda el objeto en la base de datos
 
             //Mensaje y notificación dependiendo del acceso
@@ -193,7 +197,9 @@ class ActividadesInternaController extends Controller
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
-            $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+            if($facilitador_encontrado != "false"){
+                $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
+            }
             $actividad_interna->facilitador_externo = NULL;
 
             if ($request->externo_check == "on") {

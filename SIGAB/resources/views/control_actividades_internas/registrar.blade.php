@@ -309,7 +309,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                             </div>
                                         </div>
 
-                                        <input type='text' id="cedula-facilitador" name="facilitador" class="form-control " required>
+                                        <input type='text' id="cedula-facilitador" name="facilitador" class="form-control " >
                                         <div class="input-group-append">
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="En caso de ser un personal ingrese sin espacio y sin guiones el número de cédula del facilitador y luego presione buscar. En caso de ser externo coloque únicamente el nombre completo de la persona."> <i class="far fa-question-circle fa-lg "></i></span>
                                             <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una">Buscar</button>

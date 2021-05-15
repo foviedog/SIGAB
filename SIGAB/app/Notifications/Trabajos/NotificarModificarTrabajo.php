@@ -28,6 +28,11 @@ class NotificarModificarTrabajo extends Notification
         $this->dataSet = [
             'id' => $trabajo->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha modificado información laboral para un estudiante.",
+            'color' => 'azul',
+            'icono' => '<i class="fas fa-pencil-alt"></i>',
             'modelo' => 'trabajo',
             'mensaje' => $mensaje,
             'url' => $url

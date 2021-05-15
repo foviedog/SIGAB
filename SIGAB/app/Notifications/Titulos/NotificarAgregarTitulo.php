@@ -28,6 +28,11 @@ class NotificarAgregarTitulo extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $graduado->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha agregado una graduación a un estudiante.",
+            'color' => 'verde',
+            'icono' => '<i class="fas fa-user-graduate"></i>',
             'modelo' => 'graduado',
             'mensaje' => $mensaje,
             'url' => $url

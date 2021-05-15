@@ -31,6 +31,11 @@ class NotificarUsuarioAgregado extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $usuario->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha agregado un nuevo usuario al sistema: ".$personaAgregada->nombre." ".$personaAgregada->apellido." con el rol de ".$rol.".",
+            'color' => 'verde',
+            'icono' => '<i class="fas fa-user-plus"></i>',
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ];

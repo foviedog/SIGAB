@@ -31,6 +31,11 @@ class NotificarModificarActividad extends Notification implements ShouldBroadcas
                 $this->dataSet = [
                     'id' => $actividad->id,
                     'persona_id' => $persona->persona_id,
+                    'nombre' => $persona->nombre." ".$persona->apellido,
+                    'imagen_perfil' => $persona->imagen_perfil,
+                    'informacion' => "ha modificado la información de una actividad: ".$actividad->tema.".",
+                    'color' => 'azul',
+                    'icono' => '<i class="fas fa-edit"></i>',
                     'modelo' => 'actividad',
                     'actividad' => 'interna',
                     'mensaje' => $mensaje,
@@ -44,6 +49,11 @@ class NotificarModificarActividad extends Notification implements ShouldBroadcas
                 $this->dataSet = [
                     'id' => $actividad->id,
                     'persona_id' => $persona->persona_id,
+                    'nombre' => $persona->nombre." ".$persona->apellido,
+                    'imagen_perfil' => $persona->imagen_perfil,
+                    'informacion' => "ha modificado la información de una actividad: ".$actividad->tema.".",
+                    'color' => 'azul',
+                    'icono' => '<i class="fas fa-edit"></i>',
                     'modelo' => 'actividad',
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje,

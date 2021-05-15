@@ -28,6 +28,11 @@ class NotificarEliminarPersonal extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $personal->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha eliminado un miembro del personal.",
+            'color' => 'roja',
+            'icono' => '<i class="fas fa-user-times"></i>',
             'modelo' => 'personal',
             'mensaje' => $mensaje,
             'url' => $url

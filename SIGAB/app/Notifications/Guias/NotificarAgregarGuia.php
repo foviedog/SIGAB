@@ -28,6 +28,11 @@ class NotificarAgregarGuia extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $guia->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha agregado una guía académica.",
+            'color' => 'verde',
+            'icono' => '<i class="fas fa-notes-medical"></i>',
             'modelo' => 'guia',
             'mensaje' => $mensaje,
             'url' => $url

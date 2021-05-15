@@ -31,6 +31,11 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
                 $this->dataSet = [
                     'id' => $actividad->id,
                     'persona_id' => $persona->persona_id,
+                    'nombre' => $persona->nombre." ".$persona->apellido,
+                    'imagen_perfil' => $persona->imagen_perfil,
+                    'informacion' => "ha autorizado una actividad: ".$actividad->tema.".",
+                    'color' => 'verde',
+                    'icono' => '<i class="fas fa-lock-open"></i>',
                     'modelo' => 'actividad',
                     'actividad' => 'interna',
                     'mensaje' => $mensaje,
@@ -44,6 +49,11 @@ class NotificarActividadAutorizada extends Notification implements ShouldBroadca
                 $this->dataSet = [
                     'id' => $actividad->id,
                     'persona_id' => $persona->persona_id,
+                    'nombre' => $persona->nombre." ".$persona->apellido,
+                    'imagen_perfil' => $persona->imagen_perfil,
+                    'informacion' => "ha autorizado una actividad: ".$actividad->tema.".",
+                    'color' => 'verde',
+                    'icono' => '<i class="fas fa-lock-open"></i>',
                     'modelo' => 'actividad',
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje,

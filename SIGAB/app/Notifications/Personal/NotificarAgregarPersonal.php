@@ -28,6 +28,11 @@ class NotificarAgregarPersonal extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $personal->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha agregado un miembro del personal.",
+            'color' => 'verde',
+            'icono' => '<i class="fas fa-user-plus"></i>',
             'modelo' => 'personal',
             'mensaje' => $mensaje,
             'url' => $url

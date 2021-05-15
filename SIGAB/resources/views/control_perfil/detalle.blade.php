@@ -235,7 +235,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                     <div class="card-footer" id="card-footer">
                         <div class="d-flex justify-content-center">
                             {{-- Boton para enviar los cambios --}}
-                            <button type="submit" id="guardar-cambios" class="btn btn-rojo">Guardar cambios</button>
+                            <button type="submit" id="guardar-cambios" class="btn btn-rojo" style="display: none;">Guardar cambios</button>
                         </div>
                     </div>
                 </div>

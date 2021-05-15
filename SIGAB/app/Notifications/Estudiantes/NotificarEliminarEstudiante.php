@@ -28,6 +28,11 @@ class NotificarEliminarEstudiante extends Notification implements ShouldBroadcas
         $this->dataSet = [
             'id' => $estudiante->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha eliminado un estudiante.",
+            'color' => 'roja',
+            'icono' => '<i class="fas fa-user-times"></i>',
             'modelo' => 'estudiante',
             'mensaje' => $mensaje,
             'url' => $url

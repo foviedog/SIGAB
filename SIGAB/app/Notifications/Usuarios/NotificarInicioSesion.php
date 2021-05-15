@@ -29,6 +29,11 @@ class NotificarInicioSesion extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $usuario->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha iniciado sesión.",
+            'color' => 'amarilla',
+            'icono' => '<i class="fas fa-sign-in-alt"></i>',
             'modelo' => 'usuario',
             'mensaje' => $mensaje
         ];

@@ -29,6 +29,11 @@ class NotificarAgregarEstudiante extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $estudiante->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha agregado un estudiante.",
+            'color' => 'verde',
+            'icono' => '<i class="fas fa-user-plus"></i>',
             'modelo' => 'estudiante',
             'mensaje' => $mensaje,
             'url' => $url

@@ -393,6 +393,7 @@ Fin de la paleta de colores
     background: #0000005c;
     background-image: linear-gradient(315deg, #0000005c 0%, #00000041 74%);
     z-index: 1000;
+    cursor: wait;
 }
 
 .loader-full-page .loader-text {
@@ -880,6 +881,90 @@ Tabla reporte anual
 
 /*
 ===============================
+        NOTIFICAIONES
+===============================
+ */
+
+.notificacion-container {
+    margin-bottom: 1rem;
+    padding: 10px;
+    min-height: 7rem;
+    background: linear-gradient(to bottom, #eaeaea52 50%, white 50%);
+    background-size: 100% 0%;
+    background-position: top;
+    transition: background-size 0.3s ease;
+}
+
+.notificacion-container:hover {
+    background-size: 100% 200%;
+    cursor: context-menu;
+}
+
+.notificaciones .imagen-notificacion {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.imagen-notificacion .container-image {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notificaciones .imagen-notificacion .imagen-perfil {
+    width: 100%;
+}
+
+.notificaciones .container-tipo {
+    position: relative;
+    top: 27px;
+    right: 23px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.notificaciones .container-tipo.azul {
+    background-image: linear-gradient( 147deg, #4498de 0%, #1d75bf 74%);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgb(156 161 247 / 50%), inset -0.2em -0.2em 0.2em 0 rgb(74 62 191 / 50%);
+}
+
+.notificaciones .container-tipo.verde {
+    background-image: linear-gradient(147deg, #57b509 0%, #29a501 74%);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 #53d6285e, inset -0.2em -0.2em 0.2em 0 #238c018f;
+}
+
+.notificaciones .container-tipo.roja {
+    background-image: linear-gradient( 147deg, #de4444 0%, #bf1d1d 74%);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgb(247 156 156 / 50%), inset -0.2em -0.2em 0.2em 0 rgb(191 62 62 / 50%);
+}
+
+.notificaciones .container-tipo.amarilla {
+    background-image: linear-gradient( 147deg, #d1b600 0%, #e0e300 74%);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 #fffd005e, inset -0.2em -0.2em 0.2em 0 #9fa0008f;
+}
+
+.notificaciones .notificacion-info {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+}
+
+/*
+===============================
         WIDTH
 ===============================
  */
@@ -919,9 +1004,16 @@ input[type=checkbox] {
     .container-fluid.container-pefil {
         padding-left: 1rem !important;
     }
-    .info-gen-perfil{
+    .info-gen-perfil {
         flex: 0 0 33.3333333333%;
         max-width: 33.3333333333%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-7 {
+        flex: 0 0 75%;
+        max-width: 75%;
     }
 }
 
@@ -930,10 +1022,9 @@ input[type=checkbox] {
         flex: 0 0 75%;
         max-width: 75%;
     }
-
 }
 
-@media (min-width: 1900px) {
+@media (min-width: 1750px) {
     .col-lg-8 {
         flex: 0 0 66.6666666667%;
         max-width: 66.6666666667%;
@@ -942,5 +1033,4 @@ input[type=checkbox] {
         flex: 0 0 58.3333333333%;
         max-width: 58.3333333333%;
     }
-
 }

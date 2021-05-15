@@ -28,6 +28,11 @@ class NotificarEliminarGuia extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $guia->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha eliminado una guía académica.",
+            'color' => 'roja',
+            'icono' => '<i class="far fa-clipboard"></i>',
             'modelo' => 'guia',
             'mensaje' => $mensaje,
             'url' => $url

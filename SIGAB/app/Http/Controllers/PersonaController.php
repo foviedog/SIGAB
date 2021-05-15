@@ -84,9 +84,9 @@ class PersonaController extends Controller
     //Metodo que reedireciona a la vista de notificaciones
     public function notifications()
     {
-        $notificacionesNoLeidas = auth()->user()->unreadNotifications;
+        $notificacionesNoLeidas = auth()->user()->unreadNotifications()->paginate(2);
         $notificacionesLeidas = auth()->user()->readNotifications;
-
+        // dd($notificacionesNoLeidas);
         return view('control_perfil.notificaciones', [
             'notificacionesNoLeidas'=> $notificacionesNoLeidas,
             'notificacionesLeidas'=> $notificacionesLeidas

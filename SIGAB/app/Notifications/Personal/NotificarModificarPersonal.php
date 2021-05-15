@@ -28,6 +28,11 @@ class NotificarModificarPersonal extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $personal->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha modificado la información de un miembro del personal.",
+            'color' => 'azul',
+            'icono' => '<i class="fas fa-user-edit"></i>',
             'modelo' => 'personal',
             'mensaje' => $mensaje,
             'url' => $url

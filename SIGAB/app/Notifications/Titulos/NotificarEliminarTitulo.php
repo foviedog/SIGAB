@@ -28,6 +28,11 @@ class NotificarEliminarTitulo extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $graduado->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha eliminado una graduación a un estudiante.",
+            'color' => 'roja',
+            'icono' => '<i class="fas fa-trash-alt"></i>',
             'modelo' => 'graduado',
             'mensaje' => $mensaje,
             'url' => $url

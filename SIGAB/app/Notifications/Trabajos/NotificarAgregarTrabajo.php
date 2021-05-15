@@ -28,6 +28,11 @@ class NotificarAgregarTrabajo extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $trabajo->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha agregado información laboral para un estudiante.",
+            'color' => 'verde',
+            'icono' => '<i class="fas fa-briefcase"></i>',
             'modelo' => 'trabajo',
             'mensaje' => $mensaje,
             'url' => $url

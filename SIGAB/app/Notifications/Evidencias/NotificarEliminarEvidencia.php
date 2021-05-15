@@ -28,6 +28,11 @@ class NotificarEliminarEvidencia extends Notification implements ShouldBroadcast
         $this->dataSet = [
             'id' => $evidencia->actividad_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha eliminado una evidencia: ".$evidencia->nombre_archivo.".",
+            'color' => 'roja',
+            'icono' => '<i class="fas fa-folder-minus"></i>',
             'modelo' => 'evidencia',
             'mensaje' => $mensaje,
             'url' => $url

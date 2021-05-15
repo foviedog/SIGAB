@@ -31,6 +31,11 @@ class NotificarActividadParaAutorizar extends Notification implements ShouldBroa
                 $this->dataSet = [
                     'id' => $actividad->id,
                     'persona_id' => $persona->persona_id,
+                    'nombre' => $persona->nombre." ".$persona->apellido,
+                    'imagen_perfil' => $persona->imagen_perfil,
+                    'informacion' => "ha enviado una actividad para autorización: ".$actividad->tema.".",
+                    'color' => 'amarilla',
+                    'icono' => '<i class="fas fa-chalkboard-teacher"></i>',
                     'modelo' => 'actividad',
                     'actividad' => 'interna',
                     'mensaje' => $mensaje,
@@ -39,11 +44,16 @@ class NotificarActividadParaAutorizar extends Notification implements ShouldBroa
             }
             break;
             case 2: {
-                $mensaje = $persona->nombre." ".$persona->apellido." ha enviado una actividad para autorización: ".$actividad->tema.".";
+                $mensaje = $persona->nombre." ".$persona->apellido."ha enviado una actividad para autorización: ".$actividad->tema.".";
                 $url = route('actividad-promocion.show', $actividad->id);
                 $this->dataSet = [
                     'id' => $actividad->id,
                     'persona_id' => $persona->persona_id,
+                    'nombre' => $persona->nombre." ".$persona->apellido,
+                    'imagen_perfil' => $persona->imagen_perfil,
+                    'informacion' => "ha enviado una actividad para autorización: ".$actividad->tema.".",
+                    'color' => 'amarilla',
+                    'icono' => '<i class="fas fa-bullhorn"></i>',
                     'modelo' => 'actividad',
                     'actividad' => 'promocion',
                     'mensaje' => $mensaje,

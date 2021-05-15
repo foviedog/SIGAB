@@ -28,6 +28,11 @@ class NotificarModificarEstudiante extends Notification implements ShouldBroadca
         $this->dataSet = [
             'id' => $estudiante->persona_id,
             'persona_id' => $persona->persona_id,
+            'nombre' => $persona->nombre." ".$persona->apellido,
+            'imagen_perfil' => $persona->imagen_perfil,
+            'informacion' => "ha modificado la información de un estudiante.",
+            'color' => 'azul',
+            'icono' => '<i class="fas fa-user-edit"></i>',
             'modelo' => 'estudiante',
             'mensaje' => $mensaje,
             'url' => $url
