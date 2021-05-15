@@ -11,6 +11,11 @@ use App\Exceptions\ControllerFailedException;
 use App\Actividades_interna;
 use App\Actividades;
 use App\Personal;
+use App\ListaAsistencia;
+use Illuminate\Support\Facades\File;
+use App\Events\EventEvidencias;
+use Storage;
+use App\Evidencia;
 
 class ActividadesInternaController extends Controller
 {
@@ -70,7 +75,8 @@ class ActividadesInternaController extends Controller
             //3. La actividad ya se encuentra autorizada
             if (Accesos::ACCESO_AUTORIZAR_ACTIVIDAD() || $actividad->creada_por == auth()->user()->persona_id || $actividad->autorizada == 1) {
                 $personal = Personal::findOrFail($actividad->responsable_coordinar);
-                return view('control_actividades_internas.detalle', ['actividad' => $actividad]);
+                return view('control_actividades_internas.detalle', ['actividad' => $actividad,
+                'confirmarEliminar' =>'Actividades_internas']);
             } else {
                 return redirect('/home')->with('mensaje-advertencia', 'La actividad no se ha autorizado aún.');
             }
@@ -292,13 +298,48 @@ class ActividadesInternaController extends Controller
         }
     }
 
+
+    private function obtenerConcurrenciasListas($actividadId){
+        $concurrencias = ListaAsistencia::select('lista_asistencias.id')
+        ->join('actividades', 'actividades.id', '=', 'lista_asistencias.actividad_id')
+        ->where('actividad_id', '=', $actividadId)->get();
+        return $concurrencias;
+    }
+
+    private function obtenerConcurrenciasEvidencias($actividadId){
+        $concurrencias = Evidencia::select('evidencias.id')
+        ->join('actividades', 'actividades.id', '=', 'evidencias.actividad_id')
+        ->where('actividad_id', '=', $actividadId)->get();
+        return $concurrencias;
+    }
+
+
     public function destroy($actividadId){
         try{
 
-            dd("llego hasta aqui");
+            $listasAsistencia = $this->obtenerConcurrenciasListas($actividadId);
+            $listaEvidencias = $this->obtenerConcurrenciasEvidencias($actividadId);
+            $actividad = Actividades::findOrFail($actividadId);
+            $actividad_interna = Actividades_interna::findOrFail($actividadId);
+
+            foreach($listasAsistencia as $lista){
+                $lista->delete();
+            }
+            foreach($listaEvidencias as $evidencia){
+                if ($evidencia->tipo_documento != "video") {
+                    File::delete(public_path('storage/evidencias/' . $actividadId . "/" . $evidencia->id_repositorio));
+                }
+                $evidencia->delete();
+            }
+
+            $actividad_interna->delete();
+            $actividad->delete();
+
+            return redirect(route('actividad-interna.listado'))
+                ->with('mensaje-exito', "La actividad se ha eliminado correctamente.");
 
         } catch (\Exception $exception) {
-            throw new ControllerFailedException();
+        throw new ControllerFailedException();
         }
 
     }

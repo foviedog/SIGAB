@@ -21,6 +21,11 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
 
 @section('contenido')
 
+@if(Accesos::ACCESO_ELIMINAR_ACTIVIDADES())
+@include('layouts.messages.confirmar_eliminar')
+@endif
+
+
 <div class="card">
     <div class="card-body">
 
@@ -55,7 +60,10 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-promocion.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
                 @endif
-
+                @if(Accesos::ACCESO_ELIMINAR_ACTIVIDADES())
+                {{-- Boton para eliminar el personal --}}
+                <a class="btn btn-rojo" data-toggle="modal" data-target="#modal-confirmacion"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                @endif
                 @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
                 {{-- Boton que habilita opcion de editar --}}
                 <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>

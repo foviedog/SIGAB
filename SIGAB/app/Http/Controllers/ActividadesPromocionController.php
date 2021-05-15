@@ -10,6 +10,11 @@ use App\Events\EventActividades;
 use App\Exceptions\ControllerFailedException;
 use App\ActividadesPromocion;
 use App\Actividades;
+use App\asistenciaPromocion;
+use Illuminate\Support\Facades\File;
+use App\Events\EventEvidencias;
+use Storage;
+use App\Evidencia;
 
 use App\Events\EventActividadParaAutorizar;
 
@@ -133,7 +138,8 @@ class ActividadesPromocionController extends Controller
             //3. La actividad ya se encuentra autorizada
             //dd($actividad->creada_por." ".auth()->user()->persona_id);
             if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD() || $actividad->creada_por == auth()->user()->persona_id || $actividad->autorizada == 1){
-                return view('control_actividades_promocion.detalle', ['actividad' => $actividad]);
+                return view('control_actividades_promocion.detalle', ['actividad' => $actividad,
+                'confirmarEliminar' =>'Actividades_promocion']);
             } else {
                 return redirect('/home');
             }
@@ -196,10 +202,6 @@ class ActividadesPromocionController extends Controller
     }
 
 
-    public function destroy(Request $request, $particioanteId)
-    {
-        //
-    }
     
     //Filtro para hacer busquedas avanzadas, rangos de fecha de inicio, tema, tipo de actividad y estado
     private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $rango_fechas, $tema_filtro)
@@ -281,10 +283,49 @@ class ActividadesPromocionController extends Controller
         }
     }
 
+
+    private function obtenerConcurrenciasListas($actividadId){
+        $concurrencias = asistenciaPromocion::select('asistencia_promocion.id')
+        ->join('actividades', 'actividades.id', '=', 'asistencia_promocion.actividad_id')
+        ->where('actividad_id', '=', $actividadId)->get();
+        return $concurrencias;
+    }
+
+    private function obtenerConcurrenciasEvidencias($actividadId){
+        $concurrencias = Evidencia::select('evidencias.id')
+        ->join('actividades', 'actividades.id', '=', 'evidencias.actividad_id')
+        ->where('actividad_id', '=', $actividadId)->get();
+        return $concurrencias;
+    }
+
+
+
     public function destroy($actividadId){
         try{
 
-            dd("llego hasta aqui");
+            $listasAsistencia = $this->obtenerConcurrenciasListas($actividadId);
+            $listaEvidencias = $this->obtenerConcurrenciasEvidencias($actividadId);
+            $actividad = Actividades::findOrFail($actividadId);
+            $actividad_promocion = ActividadesPromocion::findOrFail($actividadId);
+
+
+
+            foreach($listasAsistencia as $lista){
+                $lista->delete();
+            }
+            foreach($listaEvidencias as $evidencia){
+                if ($evidencia->tipo_documento != "video") {
+                    File::delete(public_path('storage/evidencias/' . $actividadId . "/" . $evidencia->id_repositorio));
+                }
+                $evidencia->delete();
+            }
+
+            $actividad_promocion->delete();
+            $actividad->delete();
+
+            return redirect(route('actividad-promocion.listado'))
+                ->with('mensaje-exito', "La actividad se ha eliminado correctamente.");
+
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();

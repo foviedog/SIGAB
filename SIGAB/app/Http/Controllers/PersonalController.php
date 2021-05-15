@@ -335,7 +335,6 @@ class PersonalController extends Controller
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
-
     }
 
     private function delete($personaId){

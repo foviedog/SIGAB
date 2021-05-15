@@ -34,6 +34,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
             </div>
         </div>
+
+                {{-- Alerts --}}
+                @include('layouts.messages.alerts')
+
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">

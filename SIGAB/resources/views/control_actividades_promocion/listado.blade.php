@@ -29,6 +29,10 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             </div>
             @endif
         </div>
+
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
+
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
