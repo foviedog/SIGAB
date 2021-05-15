@@ -207,3 +207,17 @@ function validarInfo() {
     });
 }
 
+// =======================================================================
+// Evento que habilita el botón si se está de acuerdo con las condiciones
+// =======================================================================
+
+$(function () {
+    $('.check-list').on('click', function () {
+        if($('#checkListasAsistencia:checked').length > 0 
+            && $('#checkEvidencias:checked').length > 0 ){
+            $("#button-submit-eliminar").prop("disabled", false);
+        } else {
+            $("#button-submit-eliminar").prop("disabled", true);
+        }
+    });
+});

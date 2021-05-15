@@ -77,6 +77,15 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
+    Route::delete('/actividad-promocion/{id_actividad}', 'ActividadesPromocionController@destroy')->name('actividad-promocion.destroy')
+    ->middleware(
+        'roles:
+        Dirección
+        Subdirección
+        Académica responsable de Aseguramiento de la Calidad de la Carrera
+        Académica responsable de SIGAB
+    ');
+    
     // ********************************************
     //      Control de listas de asistencia PC
     // ********************************************
@@ -124,5 +133,7 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de SIGAB
             Estudiante asistente académica
     ');
+
+
 
 });

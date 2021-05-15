@@ -280,4 +280,16 @@ class ActividadesPromocionController extends Controller
             throw new ControllerFailedException();
         }
     }
+
+    public function destroy($actividadId){
+        try{
+
+            dd("llego hasta aqui");
+
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+
+    }
+
 }

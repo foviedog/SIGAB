@@ -218,3 +218,15 @@ function mostrarMensajeValidar(idAlerta, mensaje) {
         );
     }, 4790);
 }
+
+
+$(function () {
+    $('.check-list').on('click', function () {
+        if($('#checkListasAsistencia:checked').length > 0 
+            && $('#checkEvidencias:checked').length > 0 ){
+            $("#button-submit-eliminar").prop("disabled", false);
+        } else {
+            $("#button-submit-eliminar").prop("disabled", true);
+        }
+    });
+});

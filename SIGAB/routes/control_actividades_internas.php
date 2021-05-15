@@ -77,6 +77,15 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
+    Route::delete('/actividad-interna/{id_actividad}', 'ActividadesInternaController@destroy')->name('actividad-interna.destroy')
+    ->middleware(
+        'roles:
+        Dirección
+        Subdirección
+        Académica responsable de Aseguramiento de la Calidad de la Carrera
+        Académica responsable de SIGAB
+    ');
+
     // ********************************************
     //      Control de listas de asistencia
     // ********************************************

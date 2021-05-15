@@ -171,4 +171,95 @@
 
         @endif
 
+
+        @elseif($confirmarEliminar == 'Actividades_internas')
+
+        <form action={{ route('actividad-interna.destroy', \Route::current()->parameter('id_actividad')) }} id="form-eliminar" method="post">
+            @method('DELETE')
+            @csrf
+            
+                <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="modal-eliminarTitle" aria-hidden="true" >
+                    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+    
+                                <div class="form-check">
+    
+                                    <input class="form-check-input check-list" type="checkbox" id="checkListasAsistencia">
+                                    <label class="form-check-label" for="checkListasAsistencia">
+                                        Estoy de acuerdo en que se eliminarán las listas de asistencia de la actividad
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input check-list" type="checkbox" id="checkEvidencias">
+                                    <label class="form-check-label" for="checkEvidencias">
+                                        Estoy de acuerdo en que se eliminarán las evidencias de la actividad
+                                    </label>
+                                    <br>
+                                </div>
+    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                                <button class="btn btn-rojo" id="button-submit-eliminar" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </form>
+
+        @endif
+
+        @elseif($confirmarEliminar == 'Actividades_promocion')
+
+        <form action={{ route('actividad-promocion.destroy', \Route::current()->parameter('id_actividad')) }} id="form-eliminar" method="post">
+            @method('DELETE')
+            @csrf
+            
+                <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="modal-eliminarTitle" aria-hidden="true" >
+                    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+    
+                                <div class="form-check">
+    
+                                    <input class="form-check-input check-list" type="checkbox" id="checkListasAsistencia">
+                                    <label class="form-check-label" for="checkListasAsistencia">
+                                        Estoy de acuerdo en que se eliminarán las listas de asistencia de la actividad
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input check-list" type="checkbox" id="checkEvidencias">
+                                    <label class="form-check-label" for="checkEvidencias">
+                                        Estoy de acuerdo en que se eliminarán las evidencias de la actividad
+                                    </label>
+                                    <br>
+                                </div>
+    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                                <button class="btn btn-rojo" id="button-submit-eliminar" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </form>
+
+        @endif
+
+
+
 @endif

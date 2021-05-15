@@ -80,7 +80,16 @@ class LoginController extends Controller
         } catch (ModelNotFoundException $ex) {  
             return Redirect::back()
                 ->with('mensaje-error', $ex->getMessage());
-        } catch (\Exception $exception) {
+                
+        } catch (\Exception $ex) {
+            return Redirect::back()
+            ->with('mensaje-error', $ex->getMessage());
+        }
+        catch (PDOException $e) {
+            return Redirect::back()
+            ->with('mensaje-error', $ex->getMessage());
+        }
+        catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
     }
