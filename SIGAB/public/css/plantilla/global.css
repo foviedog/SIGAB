@@ -893,6 +893,7 @@ Tabla reporte anual
     background-size: 100% 0%;
     background-position: top;
     transition: background-size 0.3s ease;
+    background-repeat: no-repeat;
 }
 
 .notificacion-container:hover {
