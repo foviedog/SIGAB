@@ -27,14 +27,16 @@ function cargarNotificaciones(){
                 for(let i = 0; i < resultado.notificaciones.length ; i++){
                     mensajeOriginal = resultado.notificaciones[i].data.mensaje;
                     mensaje = resultado.notificaciones[i].data.mensaje.substring(0, 60);
+                    url = resultado.notificaciones[i].data.url;
+                    if(url === undefined) url = "#";
                     if(mensajeOriginal.length > 60){
                         div = $("<div>")
                         .addClass("dropdown-item")
-                        .html(""+mensaje+"...");
+                        .html("<a href='"+url+"'>"+mensaje+"...</a>");
                     } else {
                         div = $("<div>")
                         .addClass("dropdown-item")
-                        .html(""+mensaje);
+                        .html("<a href='"+url+"'>"+mensaje+"</a>");
                     }
                     $("#espacio-notificaciones").append(div);
                 }
