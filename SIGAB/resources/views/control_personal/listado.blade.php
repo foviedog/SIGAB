@@ -10,6 +10,47 @@ Listado de Personal
 
 @section('contenido')
 
+<!-- Button trigger modal -->
+<!-- Modal -->
+@if(Accesos::ACCESO_REGISTRAR_PERSONAL())
+<form action="{{ route('personal.create') }}" method="GET">
+    @csrf
+    <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <span class="modal-header" data-toggle="tooltip" data-placement="left" title="Este paso se realiza con el fin de verficar que el personal que desee agregar no se haya registrado con anterioridad como estudiante o como participante en alguna actividad">
+                    <h5 class="modal-title texto-rojo-medio" id="agregarModalLabel">Verificación del personal </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </span>
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="w-90">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text text-dark">Cédula: <i class="text-danger">*</i></span>
+                            </div>
+                            <input type='text' class="form-control " id="cedula" name="cedula" onkeyup="contarCaracteres(this,50)" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Insertar la identificación del personal sin guiones y sin espacios." class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center w-5">
+                                <span id="mostrar_cedula"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-rojo" >Siguiente <i class="fas fa-arrow-circle-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@endif
+
+
 <div class="card">
     <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
@@ -24,16 +65,13 @@ Listado de Personal
                 @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
                 <div>
                     {{-- //Botón para añadir personal --}}
-                    <a href="{{ route('personal.create') }}" class="btn btn-rojo"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                    <button class="btn btn-rojo" data-toggle="modal" data-target="#agregarModal"> Añadir Personal &nbsp; <i class="fas fa-plus-circle"></i> </button>
                 </div>
                 @endif
-
             </div>
         </div>
-
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
-
         {{-- // Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">
@@ -41,7 +79,6 @@ Listado de Personal
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información del Personal</p>
             </div>
             <div class="card-body">
-
                 @if(Accesos::ACCESO_BUSCAR_PERSONAL())
                 {{-- // Form para la paginación y para la búsqueda del personal --}}
                 <form autocomplete="off" action="{{ route('personal.listar') }}" method="GET" role="form" id="item-pagina">
@@ -75,9 +112,7 @@ Listado de Personal
                     </div>
                 </form>
                 @endif
-
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
-
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
                         <thead>
@@ -93,7 +128,6 @@ Listado de Personal
                             </tr>
                         </thead>
                         <tbody>
-
                             {{-- En caso de que no existan registros --}}
                             @if(count($personal) == 0)
                             <tr class="cursor-pointer">

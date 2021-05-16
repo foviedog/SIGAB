@@ -65,9 +65,22 @@ class PersonalController extends Controller
     // ===========================================================================================
     // Método para redireccionar al usuario a la vista de registro de personal
     //============================================================================================
-    public function create()
+    public function create(Request $request)
     {
-        return view('control_personal.registrar');
+        try{
+            if($request->cedula != null){
+                $persona = Persona::find($request->cedula);
+                // dd($persona);
+                return view('control_personal.registrar',[
+                    'persona_existe' => $persona, // Listado de personal.
+                ]);
+            }else{
+                throw new ControllerFailedException();
+            }
+        }catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
+
     }
 
 
@@ -87,9 +100,11 @@ class PersonalController extends Controller
             //SI NO SE PONE LA CÉDULA EL MÉTODO GENERAL LO TOMA COMO ACTUALIZACIÓN.
             $personal->persona_id = $request->persona_id;
             $persona->persona_id = $request->persona_id;
+            if($request->persona_existe == "true"){
+                $persona = Persona::find($request->persona_id);   //Se obtiene el personal que contiene ese ID
+            }
 
-
-            $this->guardarPersonal($persona, $personal, $request, 1); //Se llama al método genérico para guardar un personal
+            $this->guardarPersonal($persona, $personal, $request, 1); 
 
             //Antes de guardar las participaciones se crea un registro de participaciones en la base de datos para luego ser actualizadas
             $participacion->persona_id = $request->persona_id;
@@ -98,17 +113,19 @@ class PersonalController extends Controller
 
             $this->guardarParticipaciones($personal, $request); //Se actualizan las participaciones con los datos que vengan en el request.
             $this->guardarIdiomas($request); //Se guarda la lista de idiomas
-
+            $persona_existe = null;
             return Redirect::back()
                 ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
-                ->with('personal_registrado', $personal); //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                ->with('personal_registrado', $personal) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                ->with('persona_existe', null); 
 
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back() //se redirecciona a la pagina de registro personal
                 ->with('mensaje-error', "El registro ingresado con la cédula  " . "$request->cedula" . " ya existe")  //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
-                ->with('personal_no_insertado', $personal); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
+                ->with('personal_no_insertado', $personal) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
+                ->with('persona_existe', $persona); 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }

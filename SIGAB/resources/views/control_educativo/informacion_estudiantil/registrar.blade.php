@@ -44,6 +44,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
         <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante" onsubmit="activarLoader('Agregando Estudiante');">
             @csrf
             @endif
+            <input type="hidden" name="persona_existe" @if(!is_null($persona_existe))) value="true" @else value="false" @endif>
 
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
@@ -61,7 +62,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                 Se registró el estudiante con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
-                        <b>Cédula:</b> {{ $cedula }} <br>
+                        <b>Cédula:</b> {{ $persona_insertado->persona_id }} <br>
                         <b>Nombre/s:</b> {{ $persona_insertado->nombre }} <br>
                         <b>Apellido/s:</b> {{ $persona_insertado->apellido }} <br>
                         <b>Fecha de nacimiento:</b> {{ $persona_insertado->fecha_nacimiento ?? "No se digitó" }} <br>
@@ -77,7 +78,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $cedula) }}">
+                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $persona_insertado->persona_id) }}">
                             <input type="button" @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
                         </a>
                         <br>
@@ -115,17 +116,17 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
 
                 {{-- Campos de la izquierda --}}
                 <div class="col">
-
                     {{-- Campo: Cedula --}}
                     <div class="d-flex justify-content-start mb-4">
                         <div class="col-4">
-                            <label for="cedula">Cédula: <i class="text-danger">*</i></label>
+                            <label for="persona_id">Identificación: <i class="text-danger">*</i></label>
                         </div>
-                        <div class="col-6">
-                            <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,15)" value="{{ $persona_no_insertada->persona_id ?? '' }}" required>
+                        <div class="col-6 ">
+                            <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" value="{{ (!is_null($persona_existe)) ? $persona_existe->persona_id : ($persona_no_insertada->persona_id ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
                         </div>
-                        <div class="col-1">
-                            <span class="text-muted" id="mostrar_cedula"></span>
+                        <div class="col-2 d-flex h-25">
+                            <span data-toggle="tooltip" data-placement="top" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
+                            <span class="text-muted" id="mostrar_persona_id"></span>
                         </div>
                     </div>
 
@@ -135,7 +136,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->nombre ?? '' }}" required>
+                            <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->nombre : ($persona_no_insertada->nombre ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_nombre"></span>
@@ -148,7 +149,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->apellido ?? '' }}" required>
+                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->apellido : ($persona_no_insertada->apellido ?? '') }}" required @if(!is_null($persona_existe)) readonly @endif>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_apellido"></span>
@@ -161,9 +162,8 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="fecha_nacimiento">Fecha de nacimiento: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='date' class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $persona_no_insertada->fecha_nacimiento ?? null  }}" required>
+                            <input type='date' class="form-control w-100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ (!is_null($persona_existe)) ? $persona_existe->fecha_nacimiento : ($persona_no_insertada->fecha_nacimiento ?? null)  }}" required>
                         </div>
-
                     </div>
 
                     {{-- Campo: Telefono fijo --}}
@@ -172,9 +172,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="telefono_fijo">Teléfono fijo:</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)" value="{{ $persona_no_insertada->telefono_fijo ?? '' }}">
+                            <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)" value="{{ (!is_null($persona_existe)) ? $persona_existe->telefono_fijo : ($persona_no_insertada->telefono_fijo ?? '') }}">
                         </div>
-                        <div class="col-1">
+                        <div class="col-2 d-flex h-25">
+                            <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                             <span class="text-muted" id="mostrar_telefono_fijo"></span>
                         </div>
                     </div>
@@ -185,9 +186,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="telefono_celular">Teléfono celular:</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)" value="{{ $persona_no_insertada->telefono_celular ?? '' }}">
+                            <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)" value="{{(!is_null($persona_existe)) ? $persona_existe->telefono_celular : ($persona_no_insertada->telefono_celular ?? '') }}">
                         </div>
-                        <div class="col-1">
+                        <div class="col-2 d-flex h-25">
+                            <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                             <span class="text-muted" id="mostrar_telefono_celular"></span>
                         </div>
                     </div>
@@ -198,7 +200,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="correo_personal">Correo personal:</label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,50)" value="{{ $persona_no_insertada->correo_personal ?? '' }}" multiple>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_personal : ($persona_no_insertada->correo_personal ?? '') }}" multiple>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_personal"></span>
@@ -211,7 +213,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,100)" multiple value="{{ $persona_no_insertada->correo_institucional ?? '' }}" required>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}" required>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_institucional"></span>
@@ -227,7 +229,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <select id="estado_civil" name="estado_civil" class="form-control" required>
                                 <option value="" selected>Sin seleccionar</option>
                                 @foreach($estadosCiviles as $estadoCivil)
-                                <option value='{{ $estadoCivil }}' @if ( $persona_no_insertada !=null) @if ( $estadoCivil==$persona_no_insertada->estado_civil) selected @endif @endif > {{ $estadoCivil }}</option>
+                                <option value='{{ $estadoCivil }}' @if ((!is_null($persona_existe) && $persona_existe->estado_civil == $estadoCivil) || (!is_null($persona_no_insertada) && $estadoCivil==$persona_no_insertada->estado_civil)) selected @endif > {{ $estadoCivil }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -239,14 +241,13 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required>{{$persona_no_insertada->direccion_residencia ?? ''}}</textarea>
+                            <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required>{{ (!is_null($persona_existe)) ? $persona_existe->direccion_residencia : ($persona_no_insertada->direccion_residencia ?? '')}}</textarea>
                         </div>
-                        <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
+                        <span data-toggle="tooltip" data-placement="top" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_direccion_residencia"></span>
                         </div>
                     </div>
-
                     {{-- Campo: Genero --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
@@ -255,13 +256,12 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                         <div class="col-6">
                             <select id="genero" name="genero" class="form-control w-100" required>
                                 <option value="" selected>Sin seleccionar</option>
-                                <option value="M" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "M") selected @endif @endif>Masculino</option>
-                                <option value="F" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "F") selected @endif @endif>Femenino</option>
-                                <option value="Otro" @if ( $persona_no_insertada !=null) @if ( $persona_no_insertada->genero == "Otro") selected @endif @endif )>Otro</option>
+                                @foreach ($generos as $genero )
+                                <option value="{{ $genero }}" @if ( (!is_null($persona_existe) && $persona_existe->genero == $genero) || !is_null($persona_no_insertada) && $persona_no_insertada->genero == $genero ) selected @endif>{{ $genero }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-
                     {{-- Campo: Direccion lectivo --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">

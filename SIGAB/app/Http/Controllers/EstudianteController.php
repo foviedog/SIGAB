@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Helper\GlobalFunctions;
 use App\Helper\GlobalArrays;
@@ -72,9 +73,27 @@ class EstudianteController extends Controller
     }
 
     //Retorna la vista para crear un estudiante
-    public function create()
+    public function create(Request $request)
     {
-        return view('control_educativo.informacion_estudiantil.registrar');
+        try{
+            if($request->cedula != null){
+                $persona = Persona::find($request->cedula);
+                $estudiante = Estudiante::find($request->cedula);
+
+                if(!is_null($estudiante)){
+                    return redirect()->back()
+                    ->with('estudianteExisteError', "El estudiante ya se encuentra registrado");
+                }
+
+                return view('control_educativo.informacion_estudiantil.registrar',[
+                    'persona_existe' => $persona, // Listado de personal.
+                ]);
+            }else{
+                throw new ControllerFailedException();
+            }
+        }catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
     //Método que inserta un estudiante especifico en la base de datos
@@ -82,24 +101,28 @@ class EstudianteController extends Controller
     {
         try {
 
-            $persona = new Persona; //Se crea una nueva instacia de Persona
             $estudiante = new Estudiante; //Se crea una nueva instacia de estudiante
+            if($request->persona_existe == "true"){
+                $persona = Persona::find($request->persona_id);  //En caso de que la persona ya exista en la bd se busca al objeto para evitar conflictos de llave primaria duplicada
+            }else{
+                $persona = new Persona; //Se crea una nueva instacia de Persona
+                //se setean los atributos del objeto
+                $persona->persona_id = $request->persona_id;
+                $persona->nombre = $request->nombre;
+                $persona->apellido = $request->apellido;
+                $persona->fecha_nacimiento = $request->fecha_nacimiento;
+                $persona->telefono_fijo = $request->telefono_fijo;
+                $persona->telefono_celular = $request->telefono_celular;
+                $persona->correo_personal = $request->correo_personal;
+                $persona->correo_institucional = $request->correo_institucional;
+                $persona->estado_civil = $request->estado_civil;
+                $persona->direccion_residencia = $request->direccion_residencia;
+                $persona->genero = $request->genero;
+            }
+
 
             //se setean los atributos del objeto
-            $persona->persona_id = $request->cedula;
-            $persona->nombre = $request->nombre;
-            $persona->apellido = $request->apellido;
-            $persona->fecha_nacimiento = $request->fecha_nacimiento;
-            $persona->telefono_fijo = $request->telefono_fijo;
-            $persona->telefono_celular = $request->telefono_celular;
-            $persona->correo_personal = $request->correo_personal;
-            $persona->correo_institucional = $request->correo_institucional;
-            $persona->estado_civil = $request->estado_civil;
-            $persona->direccion_residencia = $request->direccion_residencia;
-            $persona->genero = $request->genero;
-
-            //se setean los atributos del objeto
-            $estudiante->persona_id = $request->cedula;
+            $estudiante->persona_id = $request->persona_id;
             $estudiante->direccion_lectivo = $request->direccion_lectivo;
             $estudiante->cant_hijos = $request->cantidad_hijos;
             $estudiante->tipo_colegio_procedencia = $request->tipo_colegio_procedencia;
@@ -115,8 +138,8 @@ class EstudianteController extends Controller
             $estudiante->nota_admision = $request->nota_admision;
             $estudiante->apoyo_educativo = $request->apoyo_educativo;
             $estudiante->residencias_UNA = $request->residencias;
-
             $persona->save(); //se guarda el objeto en la base de datos
+
             $estudiante->save(); //se guarda el objeto en la base de datos
 
              //Se envía la notificación

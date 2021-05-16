@@ -9,7 +9,48 @@ Listado Estudiantil
 @endsection
 
 @section('contenido')
+@php
+(Session::has('estudianteExisteError')) ? $estudianteExisteError = Session::get('estudianteExisteError') : $estudianteExisteError = null;
 
+@endphp
+
+@if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
+<form action="{{ route('estudiante.create') }}" method="GET">
+    @csrf
+    <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <span class="modal-header" data-toggle="tooltip" data-placement="left" title="Este paso se realiza con el fin de verficar que el estudiante que desee agregar no se haya registrado con anterioridad como personal o como participante en alguna actividad">
+                    <h5 class="modal-title texto-rojo-medio" id="agregarModalLabel">Verificación del estudiante </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </span>
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="w-90">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text text-dark">Cédula: <i class="text-danger">*</i></span>
+                            </div>
+                            <input type='text' class="form-control " id="cedula" name="cedula" onkeyup="contarCaracteres(this,50)" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Insertar la identificación del estudiante sin guiones y sin espacios." class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center w-5">
+                                <span id="mostrar_cedula"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-rojo">Siguiente <i class="fas fa-arrow-circle-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@endif
 <div class="card">
     <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
@@ -24,7 +65,7 @@ Listado Estudiantil
 
                     @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
                     {{-- //Botón para añadir estudiante --}}
-                    <a href="{{ route('estudiante.create') }}" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
+                    <button class="btn btn-rojo" data-toggle="modal" data-target="#agregarModal"> Añadir estudiante &nbsp; <i class="fas fa-plus-circle"></i> </button>
                     @endif
 
                 </div>
@@ -166,6 +207,13 @@ Listado Estudiantil
 
 @endsection
 
+
 @section('scripts')
-{{-- Ningún script por el momento --}}
+<script defer="">
+    @if(!is_null($estudianteExisteError))
+    alert("{{ $estudianteExisteError }}")
+    toastr.error("{{ $estudianteExisteError }}");
+    @endif
+</script>
+
 @endsection
