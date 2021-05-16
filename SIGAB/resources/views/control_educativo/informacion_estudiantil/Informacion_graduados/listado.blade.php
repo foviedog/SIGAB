@@ -10,15 +10,8 @@ Listado de Graduados
 
 @php
 $anios = array();
-for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) { 
-    array_push($anios,$anio2); 
-} 
-@endphp 
+for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) { array_push($anios,$anio2); } @endphp @section('contenido') <div class="card">
 
-@section('contenido') 
-
-<div class="card">
-    
     <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}
         <div class="d-flex justify-content-between">
@@ -45,54 +38,52 @@ for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) {
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de estudiantes </p>
             </div>
             <div class="card-body">
-                
+
                 @if(Accesos::ACCESO_BUSCAR_GRADUADOS())
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
                 <form autocomplete="off" action="{{ route('graduados.listar') }}" method="GET" role="form" id="item-pagina">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-12 d text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                <label class="font-weight-bold">Mostrar &nbsp;
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-9  col-sm-12 d-flex justify-content-end">
-                            <div class=" mx-3 w-25">
-                                <label for="anio" class="ml-3"> &nbsp; Año de graduación: </label>
-                                <div class="d-flex align-items-center">
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <i class="far fa-question-circle fa-lg" data-toggle="tooltip" data-placement="bottom" title="Ver estudiantes graduados en un año determinado"></i>
-                                    &nbsp;&nbsp;
+                    <div class="row d-flex justify-content-between">
 
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="anio" >
-                                        <option value=' '>Sin seleccionar</option>
-                                        @foreach($anios as $anio2)
-                                        <option  value="{{ $anio2 }}" @if ( $anio != null) @if ( $anio2==$anio) selected @endif @endif> {{ $anio2 }} </option>                                        
-                                        @endforeach
-                                    </select>
+                        <div class="col-md-10 d-flex ">
 
+                            <div class="input-group d-flex justify-content-between mr-2">
+                                <div class="input-group-prepend ">
+                                    {{-- Input para realizar la búsqueda del estudiante --}}
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Ver estudiantes graduados en un año determinado"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                 </div>
+                                <select class="form-control form-control-md " name="anio">
+                                    <option value=' '>Sin seleccionar</option>
+                                    @foreach($anios as $anio2)
+                                    <option value="{{ $anio2 }}" @if ( $anio !=null) @if ( $anio2==$anio) selected @endif @endif> {{ $anio2 }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del estudiante por año--}}
-                            <div class="d-flex align-items-end ">
-                                <button class="btn btn-rojo mr-4" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            <div class="d-flex justify-content-center" style="width: 30%">
+                                <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                             </div>
-                            <div class="d-flex justify-content-end w-25">
-                                <div class="text-md-right dataTables_filter d-flex align-items-end">
+
+                            <div class="input-group ">
+                                <div class="input-group-prepend ">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg mb-2"></i></span>
-                                    &nbsp;&nbsp;<input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                 </div>
+                                <input type="search" class="form-control form-control-md " placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="nombreFiltro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                             </div>
-                            {{-- Botón de submit para realizar la búsqueda del estudiante --}}
-                            <div class="d-flex align-items-end ">
-                                <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            <div class="d-flex justify-content-center" style="width: 30%">
+                                <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            </div>
+
+                        </div>
+                        <div class="col-2 text-nowrap d-flex justify-content-end">
+                            <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                            {{-- Select con la cantidad de items por páginas--}}
+                            <div class="w-50">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                    @foreach($paginaciones as $paginacion)
+                                    <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -111,7 +102,7 @@ for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) {
                                 <th>Teléfono celular</th>
                                 <th>Correo</th>
                                 <th>Ver detalle</th>
-                                @if(Accesos::ACCESO_LISTAR_TITULACIONES()) 
+                                @if(Accesos::ACCESO_LISTAR_TITULACIONES())
                                 <th>Graduaciones</th>
                                 @endif
                             </tr>
@@ -143,7 +134,7 @@ for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) {
                                     </strong><br />
                                 </td>
                                 <td>
-                                    @if(Accesos::ACCESO_LISTAR_TITULACIONES()) 
+                                    @if(Accesos::ACCESO_LISTAR_TITULACIONES())
                                     {{-- Botón para ver las graduaciones del estudiante --}}
                                     <strong>
                                         <a href="{{ route('graduado.show', $graduado->persona->persona_id ) }}" class="btn btn-contorno-rojo"> Graduaciones </a>
@@ -162,7 +153,7 @@ for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) {
                                 <td><strong>Teléfono celular</strong><br /></td>
                                 <td><strong>Correo<br /></strong></td>
                                 <td><strong>Ver detalle<br /></strong></td>
-                                @if(Accesos::ACCESO_LISTAR_TITULACIONES()) 
+                                @if(Accesos::ACCESO_LISTAR_TITULACIONES())
                                 <td><strong>Graduaciones<br /></strong></td>
                                 @endif
                             </tr>
@@ -182,10 +173,10 @@ for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) {
             </div>
         </div>
 
-</div>
-</div>
-@endsection
+    </div>
+    </div>
+    @endsection
 
-@section('scripts')
-{{-- Ningún script por el momento --}}
-@endsection
+    @section('scripts')
+    {{-- Ningún script por el momento --}}
+    @endsection

@@ -45,30 +45,31 @@ Listado de Personal
                 @if(Accesos::ACCESO_BUSCAR_PERSONAL())
                 {{-- // Form para la paginación y para la búsqueda del personal --}}
                 <form autocomplete="off" action="{{ route('personal.listar') }}" method="GET" role="form" id="item-pagina">
-                    <div class="row">
-                        <div class="col-md-6 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                <label class="font-weight-bold">Mostrar &nbsp;
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-end">
-                            <div class="d-flex justify-content-end w-50">
-                                <div class="text-md-right dataTables_filter input-group mb-3 ">
+                    <div class="row d-flex justify-content-between">
+
+                        <div class="col-6 d-flex ">
+                            <div class="input-group ">
+                                <div class="input-group-prepend ">
                                     {{-- Input para realizar la búsqueda del personal --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o cargo"><i class="far fa-question-circle fa-lg"></i></span>
-                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable" name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido, cédula o cargo"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                 </div>
+                                <input type="search" class="form-control form-control-md" placeholder="Buscar personal" aria-controls="dataTable" placeholder="Buscar personal" name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
                             </div>
                             {{-- Botón de submit para realizar la búsqueda del personal --}}
-                            <div>
-                                <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            <div class="d-flex justify-content-center" style="width: 30%">
+                                <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        {{-- Cantidad de items --}}
+                        <div class="col-2 text-nowrap d-flex justify-content-end">
+                            <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                            {{-- Select con la cantidad de items por páginas--}}
+                            <div class="w-50">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                    @foreach($paginaciones as $paginacion)
+                                    <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

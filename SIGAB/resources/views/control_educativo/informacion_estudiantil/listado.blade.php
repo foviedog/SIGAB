@@ -30,10 +30,10 @@ Listado Estudiantil
                 </div>
             </div>
         </div>
-        
+
         {{-- Alerts --}}
         @include('layouts.messages.alerts')
-        
+
         {{-- // Contenedor de la tabla --}}
         <div class="card shadow">
             <div class="card-header py-3">
@@ -45,36 +45,34 @@ Listado Estudiantil
                 @if(Accesos::ACCESO_BUSCAR_ESTUDIANTES())
                 {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
                 <form autocomplete="off" action="{{ route('listado-estudiantil') }}" method="GET" role="form" id="item-pagina">
-                    <div class="row">
-                        <div class="col-md-6 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                <label class="font-weight-bold">Mostrar &nbsp;
-                                    {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                        @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-6 d-flex ">
+                            <div class="input-group ">
+                                <div class="input-group-prepend ">
+                                    {{-- Input para realizar la búsqueda del estudiante --}}
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
+                                </div>
+                                <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
+                            </div>
+                            <div class="d-flex justify-content-center" style="width: 30%">
+                                <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end">
-                            <div class="d-flex justify-content-end w-50">
-                                <div class="text-md-right dataTables_filter input-group mb-3 ">
-                                    {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
-                                    &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
-                                </div>
-                            </div>
-                            {{-- Botón de submit para realizar la búsqueda del estudiante --}}
-                            <div>
-                                <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                        <div class="col-2 text-nowrap d-flex justify-content-end">
+                            <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                            {{-- Select con la cantidad de items por páginas--}}
+                            <div class="w-50">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                    @foreach($paginaciones as $paginacion)
+                                    <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
                 </form>
                 @endif
-                
+
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table my-0" id="dataTable">
                         {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
@@ -110,7 +108,7 @@ Listado Estudiantil
                                 <td>{{ $estudiante->carrera_matriculada_1 }} </td>
                                 <td>{{ $estudiante->persona->telefono_celular }}<br /> </td>
                                 <td><strong>{{ $estudiante->persona->correo_personal }}</strong></td>
-                                
+
                                 @if(Accesos::ACCESO_VISUALIZAR_ESTUDIANTES())
                                 <td>
                                     {{-- Botón para ver el detalle del estudiante --}}
