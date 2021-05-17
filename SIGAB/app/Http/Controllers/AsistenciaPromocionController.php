@@ -11,6 +11,7 @@ use App\Exceptions\ControllerFailedException;
 use App\ActividadesPromocion;
 use App\Actividades;
 use App\asistenciaPromocion;
+use App\Eliminado;
 
 class AsistenciaPromocionController extends Controller
 {
@@ -119,6 +120,13 @@ class AsistenciaPromocionController extends Controller
 
              //Se envía la notificación
             event(new EventListaAsistencia($particioanteId, $request->actividad_id, 2, 1));
+
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Participante en actividad de promoción';
+            $eliminado->titulo = "Participante: ".$particioanteId.' de la actividad: '.$request->actividad_id;
+            $eliminado->save();
 
             $lista->delete();
             return redirect()->route('asistencia-promocion.show', $request->actividad_id)

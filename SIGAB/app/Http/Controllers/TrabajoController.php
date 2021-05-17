@@ -8,6 +8,7 @@ use App\Events\EventTrabajos;
 use App\Exceptions\ControllerFailedException;
 use App\Trabajo;
 use App\Estudiante;
+use App\Eliminado;
 
 class TrabajoController extends Controller
 {
@@ -166,7 +167,15 @@ class TrabajoController extends Controller
              //Se envía la notificación
             event(new EventTrabajos($trabajo, 3));
 
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Trabajo';
+            $eliminado->titulo = $trabajo->nombre_organizacion;
+            $eliminado->save();
+
             $trabajo->delete();
+
             return Redirect::back()
             ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
 

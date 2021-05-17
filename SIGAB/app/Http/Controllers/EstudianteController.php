@@ -18,6 +18,7 @@ use App\Graduado;
 use App\Personal;
 use App\ListaAsistencia;
 use App\User;
+use App\Eliminado;
 
 class EstudianteController extends Controller
 {
@@ -235,6 +236,13 @@ class EstudianteController extends Controller
             $esPersonal = Personal::where('persona_id', $personaId)->count() > 0;
 
             if($esPersonal){
+                //Se guarda el registro en la tabla de eliminados
+                $eliminado = new Eliminado;
+                $eliminado->eliminado_por = auth()->user()->persona_id;
+                $eliminado->elemento_eliminado = 'Estudiante';
+                $eliminado->titulo = 'Se eliminó el estudiante '.$personaId.', sus guías académicas, sus trabajos, sus titulaciones y se eliminó de las listas de asistencia donde participaba';
+                $eliminado->save();
+
                 $guias = Guias_academica::where('persona_id', $personaId);
                 $guias->delete();
                 $trabajos = Trabajo::where('persona_id', $personaId);
@@ -246,6 +254,13 @@ class EstudianteController extends Controller
                 $estudiante = Estudiante::where('persona_id', $personaId);
                 $estudiante->delete();
             } else {
+                //Se guarda el registro en la tabla de eliminados
+                $eliminado = new Eliminado;
+                $eliminado->eliminado_por = auth()->user()->persona_id;
+                $eliminado->elemento_eliminado = 'Estudiante';
+                $eliminado->titulo = 'Se eliminó el estudiante '.$personaId.', sus guías académicas, sus trabajos, sus titulaciones, se eliminó de las listas de asistencia donde participaba, su usuario (si tuviese) y la persona asociada';
+                $eliminado->save();
+                
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();
                 $guias = Guias_academica::where('persona_id', $personaId);

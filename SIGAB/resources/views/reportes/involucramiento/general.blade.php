@@ -194,7 +194,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         </div>
                     </form>
 
-                    <div class="container-fluid mt-5 mb-5 pt-2 pb-5" id="seccion-graficos" style="width: 90%">
+                    <div class="container-fluid mt-5 mb-5 pt-2" id="seccion-graficos" style="width: 90%">
 
                         <div class="display-5 texto-rojo-medio pb-1 text-center">
                             <h2>Gráficos para medir el involucramiento de {{ $nombre }}</h2>
@@ -274,6 +274,33 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 </div>
                                 <div class="grafico-container w-100 mt-1">
                                     <div id="grafico_coord_ambito">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mt-5 mb-5">
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Facilitador en actividades internas por tipos</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de facilitador" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_facili_tipo">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex">
+                                    <h4>Facilitador en actividades internas por fechas</h4>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Total de participación en actividades internas según responsabilidad de facilitador en un rango de fechas" style="font-size: 18px;"></i>
+                                </div>
+                                <div class="grafico-container w-100 mt-1">
+                                    <div id="grafico_facili_fecha">
 
                                     </div>
                                 </div>

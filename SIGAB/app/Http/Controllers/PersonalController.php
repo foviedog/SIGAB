@@ -122,9 +122,10 @@ class PersonalController extends Controller
         try{
 
             //Busca en la base de datos al personal con la cédula indicada y obtiene también las participaciones asociadas a él.
-            $personal = Personal::join('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
+            /*$personal = Personal::leftJoin('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
                 ->where('personal.persona_id', '=', $id_personal)
-                ->first();
+                ->first();*/
+            $personal = Personal::findOrFail($id_personal);
 
             //Se optiene un arreglo con los idiomas específicos de la persona.
             $idiomas = Idioma::where('persona_id', '=', $id_personal)->get();

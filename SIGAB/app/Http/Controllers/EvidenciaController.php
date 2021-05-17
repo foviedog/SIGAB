@@ -11,6 +11,7 @@ use Storage;
 use App\Evidencia;
 use App\Actividades;
 use App\Actividades_interna;
+use App\Eliminado;
 
 class EvidenciaController extends Controller
 {
@@ -146,6 +147,13 @@ class EvidenciaController extends Controller
 
              //Se envía la notificación
             event(new EventEvidencias($evidencia, 1));
+
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Evidencia';
+            $eliminado->titulo = "Evidencia: ".$evidencia->nombre_archivo.' de la actividad: '.$evidencia->actividad_id;
+            $eliminado->save();
 
             $evidencia->delete();
 

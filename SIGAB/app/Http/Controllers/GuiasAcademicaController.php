@@ -14,6 +14,7 @@ use App\Exceptions\ControllerFailedException;
 use App\Guias_academica;
 use App\Estudiante;
 use App\Personal;
+use App\Eliminado;
 
 class GuiasAcademicaController extends Controller
 {
@@ -45,7 +46,7 @@ class GuiasAcademicaController extends Controller
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
-     catch (ModelNotFoundException $ex) {
+    catch (ModelNotFoundException $ex) {
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -70,10 +71,10 @@ class GuiasAcademicaController extends Controller
             $guia->recomendaciones = $request->recomendaciones;
 
             //Verifica el archivo adjunto y lo sube
-            if ($request->archivo !== NULL) {
+            if ($request->archivo != NULL) {
 
                 $validacion = Validator::make($request->all(), [
-                    'archivo' => 'mimes:docx,odt,doc,txt,rar,zip,7z,rar5,xls,xlsm,xlsx,ods,csv,pps,ppt,ppsx,pptm,potx,pptx,jpg,png,svg,jpeg|max:30000'
+                    'archivo' => 'mimes:pdf,docx,odt,doc,txt,rar,zip,7z,rar5,xls,xlsm,xlsx,ods,csv,pps,ppt,ppsx,pptm,potx,pptx,jpg,png,svg,jpeg|max:30000'
                 ]);
 
                 if ($validacion->fails()) {
@@ -208,10 +209,10 @@ class GuiasAcademicaController extends Controller
 
 
         //Verifica el archivo adjunto y lo sube
-        if ($request->archivo !== NULL) {
+        if ($request->archivo != NULL) {
 
             $validacion = Validator::make($request->all(), [
-                'archivo' => 'mimes:csv,txt,xlx,xls,pdf,docx,rar,zip,7zip|max:30000'
+                'archivo' => 'mimes:pdf,docx,odt,doc,txt,rar,zip,7z,rar5,xls,xlsm,xlsx,ods,csv,pps,ppt,ppsx,pptm,potx,pptx,jpg,png,svg,jpeg|max:30000'
             ]);
 
             if ($validacion->fails()) {
@@ -220,7 +221,7 @@ class GuiasAcademicaController extends Controller
             }
 
             if ($guia->archivo_adjunto != NULL) {
-                File::delete(public_path('/storage/guias_archivos/' . $guia->archivo_adjunto));
+                File::delete(storage_path('app/public/guias_archivos/' . $guia->archivo_adjunto));
             }
 
             $archivo = new File;
@@ -259,8 +260,17 @@ class GuiasAcademicaController extends Controller
         $guia = Guias_academica::find($id_guia);
 
         if ($guia->archivo_adjunto != NULL) {
-            File::delete(public_path('/storage/guias_archivos/' . $guia->archivo_adjunto));
+
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Archivo adjunto de Guía Académica';
+            $eliminado->titulo = $guia->archivo_adjunto;
+            $eliminado->save();
+            
+            File::delete(storage_path('app/public/guias_archivos/' . $guia->archivo_adjunto));
             $guia->archivo_adjunto = NULL;
+
         } else {
             return Redirect::back() //se redirecciona a la pagina de registro guias academicas
                 ->with('mensaje-error', "El archivo no exite");
@@ -274,9 +284,9 @@ class GuiasAcademicaController extends Controller
         return Redirect::back()
             ->with('mensaje-exito', '¡El archivo se ha borrado exitosamente!');
         }
-         catch (ModelNotFoundException $ex) {
-            return Redirect::back()//se redirecciona a la pagina anteriror
-                ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+            catch (ModelNotFoundException $ex) {
+                return Redirect::back() 
+                    ->with('mensaje-error', $ex->getMessage()); 
         }
     }
     //Método que descarga un archivo
@@ -348,21 +358,40 @@ class GuiasAcademicaController extends Controller
     }
 
 
-    public function destroy( $id_guia)
+    public function destroy($id_guia)
     {
         try {
 
             $guia = Guias_academica::find($id_guia);
-            $guia->delete();
+
+            if($guia->archivo_adjunto != NULL){
+                //Se guarda el registro en la tabla de eliminados
+                $eliminado = new Eliminado;
+                $eliminado->eliminado_por = auth()->user()->persona_id;
+                $eliminado->elemento_eliminado = 'Archivo adjunto de Guía Académica';
+                $eliminado->titulo = $guia->archivo_adjunto;
+                $eliminado->save();
+                
+                File::delete(storage_path('app/public/guias_archivos/' . $guia->archivo_adjunto));
+            }
 
              //Se envía la notificación
             event(new EventGuiasAcademicas($guia, 3));
 
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Guía Académica';
+            $eliminado->titulo = $guia->tipo;
+            $eliminado->save();
+
+            $guia->delete();
+
             return Redirect::back()
-            ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
+                ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
-            ->with('mensaje-error', 'ha ocurrido un error');
+                ->with('mensaje-error', 'ha ocurrido un error');
         }
     }
 

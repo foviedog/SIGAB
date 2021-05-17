@@ -60,10 +60,6 @@ class ReportesInvolucramientoController extends Controller
         $tiposCargo = ["Administrativo", "Académico"];
     }
 
-    public function jornadaLaboral()
-    {
-    }
-
     public function cantActividadesXPersonal($anio)
     {
         $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
@@ -98,13 +94,17 @@ class ReportesInvolucramientoController extends Controller
         array_push($dataSet, $actividadesPorFechas);
         array_push($dataSet, $actividadesPorAmbito);
 
-        //!! Esto no está duplicado? NOOPE, una es de coordinacion y la otra de asistencia, rasta
         $actividadesCoorPorTipos = $this->actividadesCoorPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesCoorPorFechas = $this->activadesCoorPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
         $actividadesCoorPorAmbito = $this->activadesCoorPorAmbito($personal, $mesInicio, $mesFinal, $estadoActividad);
         array_push($dataSet, $actividadesCoorPorTipos);
         array_push($dataSet, $actividadesCoorPorFechas);
         array_push($dataSet, $actividadesCoorPorAmbito);
+
+        $actividadesFaciliPorTipos = $this->actividadesFaciliPorTipos($personal, $mesInicio, $mesFinal, $estadoActividad);
+        $actividadesFaciliPorFechas = $this->actividadesFaciliPorFechas($personal, $mesInicio, $mesFinal, $estadoActividad);
+        array_push($dataSet, $actividadesFaciliPorTipos);
+        array_push($dataSet, $actividadesFaciliPorFechas);
 
         $datosCuantitativos = $this->datosCuntitativosPersonal();
 
@@ -130,7 +130,7 @@ class ReportesInvolucramientoController extends Controller
         $dataSet = array();
         $fecha_ini = $mesInicio . "-01";
         $fecha_fin = $mesFinal . "-01";
-        $tipos = $this->devolverTiposActividades(0);
+        $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
 
         foreach ($tipos as &$tipo) {
             $count = ListaAsistencia::join('actividades', 'actividades.id', '=', 'lista_asistencias.actividad_id')
@@ -153,7 +153,7 @@ class ReportesInvolucramientoController extends Controller
 
         $fecha_ini = $mesInicio . "-01";
         $fecha_fin = $mesFinal . "-01";
-        $tipos = $this->devolverTiposActividades(0);
+        $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
 
         foreach ($tipos as &$tipo) {
             $count = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
@@ -367,25 +367,6 @@ class ReportesInvolucramientoController extends Controller
         return array_combine($ambitos, $dataSet);
     }
 
-    public function devolverTiposActividades($act)
-    {
-        switch ($act) {
-            case 0:
-                return [
-                    "Curso", "Conferencia", "Taller", "Seminario", "Conversatorio",
-                    "Órgano colegiado", "Tutorías", "Lectorías", "Simposio", "Charla", "Actividad cocurricular",
-                    "Tribunales de prueba de grado", "Tribunales de defensas públicas",
-                    "Comisiones de trabajo", "Externa", "Otro"
-                ];
-            case 1:
-                return [
-                    "Ferias", "Participación en congresos nacionales e internacionales", "Puertas abiertas",
-                    "Promoción por redes sociales", "Visitas a comunidades", "Visitas a colegios",
-                    "Envío de paquetes promocionales por correo electrónico", "Charlas", "Otro"
-                ];
-        }
-    }
-
     public function obtenerPersonal($idPersonal)
     {
         $datos = array();
@@ -509,5 +490,103 @@ class ReportesInvolucramientoController extends Controller
         }
         //dd($porcentajesParticipacion);
         return $porcentajesParticipacion;
+    }
+
+    public function actividadesFaciliPorTipos($personal, $mesInicio, $mesFinal, $estado)
+    {
+        $dataSet = array();
+
+        $fecha_ini = $mesInicio . "-01";
+        $fecha_fin = $mesFinal . "-01";
+        $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
+
+        foreach ($tipos as &$tipo) {
+            $count = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+                ->where('actividades_internas.personal_facilitador', '=', $personal->persona_id)
+                ->where('actividades.estado', 'like', '%' .   $estado . '%')
+                ->where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
+                ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+                ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+                ->count();
+            array_push($dataSet, $count);
+        }
+
+        return array_combine($tipos, $dataSet);
+    }
+
+    public function actividadesFaciliPorFechas($personal, $mesInicio, $mesFinal, $estado)
+    {
+        $dataSet = [];
+
+        $anio_ini = (int)substr($mesInicio, 0, 4);
+        $anio_fin = (int)substr($mesFinal, 0, 4);
+        $mes_ini = (int)substr($mesInicio, 5, strlen($mesFinal));
+        $mes_fin = (int)substr($mesFinal, 5, strlen($mesFinal));
+
+        $DA = $anio_fin - $anio_ini;
+        $DM = $mes_fin - $mes_ini;
+        $cont = 1;
+
+        if ($DA == 0) {
+            for ($i = $mes_ini; $i <= $mes_fin; $i++) {
+                $actvidadesPorMes = $this->cantActFaciliPorMes($i, $personal, $anio_ini, $estado, $dataSet);
+                $dataSet[$anio_ini . "-" . $i] =  $actvidadesPorMes;
+            }
+        } else if ($DA >= 1) {
+            $anios_completos = $DA - 1;
+            $anio = $anio_ini;
+            //? Primer extremo
+            for ($i = $mes_ini; $i <= 12; $i++) {
+                $actvidadesPorMes = $this->cantActFaciliPorMes($i, $personal, $anio, $estado, $dataSet);
+                $dataSet[$anio . "-" . $i] =  $actvidadesPorMes;
+            }
+
+            $anio++; //?Se amuenta el año
+            //?Años intermedios que se deben contar COMPLETOS (Todos los 12 meses del año)
+            for ($i = 1; $i <= $anios_completos; $i++) {
+                for ($j = 1; $j <= 12; $j++) {
+                    $actvidadesPorMes = $this->cantActFaciliPorMes($j, $personal, $anio, $estado, $dataSet);
+                    $dataSet[$anio . "-" . $j] =  $actvidadesPorMes;
+                }
+                $anio++;
+            }
+
+            //? Segundo extremo
+            for ($i = 1; $i <= $mes_fin; $i++) {
+                $actvidadesPorMes = $this->cantActFaciliPorMes($i, $personal, $anio, $estado, $dataSet);
+                $dataSet[$anio . "-" . $i] =  $actvidadesPorMes;
+            }
+        }
+
+        return $dataSet;
+    }
+
+    public function cantActFaciliPorMes($mes, $personal, $anio, $estado, &$dataSet)
+    {
+
+        $mesIni = (int)$mes;
+        $mesFin = $mesIni + 1;
+        $mesStr = (string)$mes;
+        $mesStrFin = (string)($mesFin);
+
+        if ($mes < 9) {
+            $mesStr = "0" . $mesStr;
+            $mesStrFin = "0" . $mesFin;
+        }
+        $fecha_ini = $anio . "-" . $mesStr . "-01";
+        $fecha_fin = $anio  . "-" . $mesStrFin . "-01";
+
+        if ($mes == 12) {
+            $fecha_fin =  $anio . "-12" . "-31";
+        }
+
+        $cantAct = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where('actividades_internas.personal_facilitador', '=', $personal->persona_id)
+            ->where('actividades.estado', 'like', '%' .   $estado . '%')
+            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
+            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->count();
+
+        return $cantAct;
     }
 }

@@ -31,6 +31,16 @@ let ambitoCoordinacionX = [];
 let ambitoCoordinacionY = [];
 let totalAmbitoCoordinacion = 0;
 
+let tiposFacilitador = dataSet[6];
+let tiposFacilitadorX = [];
+let tiposFacilitadorY = [];
+let totalTiposFacilitador = 0;
+
+let fechasFacilitador = dataSet[7];
+let fechasFacilitadorX = [];
+let fechasFacilitadorY = [];
+let totalFechasFacilitador = 0;
+
 
 function cargaInicial(event) {
     cargarInformacionArrays();
@@ -61,11 +71,9 @@ function cargarInformacionArrays() {
     }
     //Ámbito Asistencia
     for (const atributo in ambitoAsistencia) {
-        if (ambitoAsistencia[atributo] != 0) {
-            ambitoAsistenciaX.push(atributo);
-            ambitoAsistenciaY.push(ambitoAsistencia[atributo]);
-            totalAmbitoAsistencia += ambitoAsistencia[atributo];
-        }
+        ambitoAsistenciaX.push(atributo);
+        ambitoAsistenciaY.push(ambitoAsistencia[atributo]);
+        totalAmbitoAsistencia += ambitoAsistencia[atributo];
     }
 
     //Tipos Coordinacion
@@ -89,16 +97,31 @@ function cargarInformacionArrays() {
 
     //Ambito Coordinacion
     for (const atributo in ambitoCoordinacion) {
-        if (ambitoCoordinacion[atributo] != 0) {
-            ambitoCoordinacionX.push(atributo);
-            ambitoCoordinacionY.push(ambitoCoordinacion[atributo]);
-            totalAmbitoCoordinacion++;
+        ambitoCoordinacionX.push(atributo);
+        ambitoCoordinacionY.push(ambitoCoordinacion[atributo]);
+        totalAmbitoCoordinacion++;
+    }
+
+    //Tipos Facilitador
+    for (const atributo in tiposFacilitador) {
+        if (tiposFacilitador[atributo] != 0) {
+            tiposFacilitadorX.push(atributo);
+            tiposFacilitadorY.push(tiposFacilitador[atributo]);
+            totalTiposFacilitador += tiposFacilitador[atributo];
+        }
+    }
+
+    //Fechas Facilitador
+    for (const atributo in fechasFacilitador) {
+        if (fechasFacilitador[atributo] != 0) {
+            let aux = new Date(atributo);
+            fechasFacilitadorX.push(meses[aux.getMonth()] + " del " + aux.getFullYear());
+            fechasFacilitadorY.push(fechasFacilitador[atributo]);
+            totalFechasFacilitador++;
         }
     }
 
 }
-
-
 
 //-----------------------------------------
 // GRAFICO ASISTENCIA POR TIPOS
@@ -278,7 +301,7 @@ var optionsAsisAmbito = {
         data: ambitoAsistenciaY,
     }],
     xaxis: {
-        categories: ambitoAsistenciaX
+        categories: ["Nacional", "Internacional"]
     }
 }
 
@@ -313,9 +336,83 @@ var optionsAsisAmbito = {
         data: ambitoCoordinacionY,
     }],
     xaxis: {
-        categories: ambitoCoordinacionX
+        categories: ["Nacional", "Internacional"]
     }
 }
 
 var chart = new ApexCharts(document.querySelector("#grafico_coord_ambito"), optionsAsisAmbito);
 chart.render();
+
+
+
+//-----------------------------------------
+// GRAFICO FACILITADOR POR TIPOS
+//-----------------------------------------
+
+var optionsFaciliTip = {
+    chart: {
+        width: '100%',
+        type: 'donut',
+        labels: [],
+        locales: locales,
+        defaultLocale: "es",
+        toolbar: {
+            show: true
+        }
+    },
+    grid: grid,
+    series: tiposFacilitadorY,
+    labels: tiposFacilitadorX
+}
+
+let plotOptionsFaciliTip = {
+    pie: {
+        donut: {
+            labels: {
+                show: true,
+                total: {
+                    show: true,
+                    fontSize: '35px',
+                    label: 'Total',
+                    color: '#373d3f',
+                    formatter: function () { return totalTiposFacilitador }
+                }
+            }
+        }
+    }
+};
+
+optionsFaciliTip["plotOptions"] = plotOptionsFaciliTip;
+
+var chart = new ApexCharts(document.querySelector('#grafico_facili_tipo'), optionsFaciliTip)
+chart.render()
+
+//-----------------------------------------
+// GRAFICO FACILITADOR POR FECHA
+//-----------------------------------------
+
+var optionsFaciliFecha = {
+    chart: {
+        width: '100%',
+        type: 'bar',
+        labels: [],
+        locales: locales,
+        defaultLocale: "es",
+    },
+    plotOptions: {
+        bar: {
+            distributed: true
+        }
+    },
+    grid: grid,
+    series: [{
+        name: nameSeries,
+        data: fechasFacilitadorY
+    }],
+    xaxis: {
+        categories: fechasFacilitadorX
+    }
+}
+
+var chart = new ApexCharts(document.querySelector('#grafico_facili_fecha'), optionsFaciliFecha)
+chart.render()

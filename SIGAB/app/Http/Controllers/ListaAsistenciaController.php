@@ -13,6 +13,7 @@ use App\ListaAsistencia;
 use App\Actividades;
 use App\Actividades_interna;
 use App\Persona;
+use App\Eliminado;
 
 class ListaAsistenciaController extends Controller
 {
@@ -162,6 +163,13 @@ class ListaAsistenciaController extends Controller
 
              //Se envía la notificación
             event(new EventListaAsistencia($particioanteId, $request->actividad_id, 1, 1));
+
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Participante en actividad interna';
+            $eliminado->titulo = "Participante: ".$particioanteId.' de la actividad: '.$request->actividad_id;
+            $eliminado->save();
 
             $lista->delete();
             return redirect()->route('lista-asistencia.show', $request->actividad_id)

@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use App\Helper\GlobalArrays;
 use App\Helper\Accesos;
 use App\Events\EventActividades;
+use App\Events\EventEvidencias;
 use App\Exceptions\ControllerFailedException;
 use App\Actividades_interna;
 use App\Actividades;
 use App\Personal;
 use App\ListaAsistencia;
 use Illuminate\Support\Facades\File;
-use App\Events\EventEvidencias;
 use Storage;
 use App\Evidencia;
 
@@ -345,7 +345,7 @@ class ActividadesInternaController extends Controller
                 ->with('mensaje-exito', "La actividad se ha eliminado correctamente.");
 
         } catch (\Exception $exception) {
-        throw new ControllerFailedException();
+            throw new ControllerFailedException();
         }
 
     }

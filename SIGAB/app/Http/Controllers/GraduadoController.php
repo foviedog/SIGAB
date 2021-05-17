@@ -12,6 +12,7 @@ use App\Graduado;
 use App\Persona;
 use App\Estudiante;
 use App\Guias_academica;
+use App\Eliminado;
 
 class GraduadoController extends Controller
 {
@@ -217,7 +218,7 @@ class GraduadoController extends Controller
         return $graduados; //Retorna el resultado de todas las guías
     }
 
-    public function destroy( $id_graduacion)
+    public function destroy($id_graduacion)
     {
         try {
             
@@ -226,7 +227,15 @@ class GraduadoController extends Controller
              //Se envía la notificación
             event(new EventTitulos($graduacion, 3));
 
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Titulación';
+            $eliminado->titulo = $graduacion->grado_academico.' '.$graduacion->carrera_cursada.' '.$graduacion->anio_graduacion;
+            $eliminado->save();
+
             $graduacion->delete();
+            
             return Redirect::back()
             ->with('exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
