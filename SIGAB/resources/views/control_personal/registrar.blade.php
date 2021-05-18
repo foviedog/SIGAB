@@ -21,12 +21,6 @@ $regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
 $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
 @endphp
 
-@php
-$persona_no_insertada = null;
-$personal_no_insertado = null ;
-$persona_no_insertada = Session::get('persona_no_insertada');
-$personal_no_insertado = Session::get('personal_no_insertado');
-@endphp
 
 @section('contenido')
 
@@ -51,28 +45,23 @@ $personal_no_insertado = Session::get('personal_no_insertado');
 
         {{-- Mensaje de que muestra el objeto insertado
             (solo se muestra si ha sido exitoso el registro)  --}}
-        @if(Session::has('personal_registrado'))
+        @if(isset($personal_registrado))
         <div class="alert alert-dark" role="alert">
-
-            @php
-            $persona_insertado = Session::get('persona_registrada');
-            $personal_registrado = Session::get('personal_registrado');
-            @endphp
 
             <span class="my-3 font-weight-bolder">Se registró el personal exitosamente con lo siguientes datos:</span>
             <div class="row ">
                 <div class="col-6 ">
-                    <b>Cédula:</b> {{ $persona_insertado->persona_id }} <br>
-                    <b>Nombre/s:</b> {{ $persona_insertado->nombre }} <br>
-                    <b>Apellido/s:</b> {{ $persona_insertado->apellido }} <br>
-                    <b>Fecha de nacimiento:</b> {{ $persona_insertado->fecha_nacimiento ?? "No se digitó" }} <br>
-                    <b>Teléfono fijo:</b> {{ $persona_insertado->telefono_fijo ?? "No se digitó" }} <br>
-                    <b>Teléfono celular:</b> {{ $persona_insertado->telefono_celular ?? "No se digitó" }} <br>
-                    <b>Correo personal:</b> {{ $persona_insertado->correo_personal ?? "No se digitó" }} <br>
-                    <b>Correo institucional:</b> {{ $persona_insertado->correo_institucional ?? "No se digitó" }} <br>
-                    <b>Estado Civil:</b> {{ $persona_insertado->estado_civil ?? "No se digitó" }} <br>
-                    <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
-                    <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
+                    <b>Cédula:</b> {{ $persona_registrada->persona_id }} <br>
+                    <b>Nombre/s:</b> {{ $persona_registrada->nombre }} <br>
+                    <b>Apellido/s:</b> {{ $persona_registrada->apellido }} <br>
+                    <b>Fecha de nacimiento:</b> {{ $persona_registrada->fecha_nacimiento ?? "No se digitó" }} <br>
+                    <b>Teléfono fijo:</b> {{ $persona_registrada->telefono_fijo ?? "No se digitó" }} <br>
+                    <b>Teléfono celular:</b> {{ $persona_registrada->telefono_celular ?? "No se digitó" }} <br>
+                    <b>Correo personal:</b> {{ $persona_registrada->correo_personal ?? "No se digitó" }} <br>
+                    <b>Correo institucional:</b> {{ $persona_registrada->correo_institucional ?? "No se digitó" }} <br>
+                    <b>Estado Civil:</b> {{ $persona_registrada->estado_civil ?? "No se digitó" }} <br>
+                    <b>Dirección de residencia:</b> {{ $persona_registrada->direccion_residencia ?? "No se digitó" }} <br>
+                    <b>Género:</b> {{ $persona_registrada->genero ?? "No se digitó" }} <br>
                     <b>Grado academico:</b> {{ $personal_registrado->grado_academico ?? "No se digitó" }} <br>
                     {{-- Link para modificiar al personal recien agregado --}}
                     <br>

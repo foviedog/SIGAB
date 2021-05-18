@@ -27,7 +27,6 @@ class PersonaController extends Controller
             }
             // Se realiza una búsqueda en la BD respecto a la persona específica.
             $persona = Persona::findOrFail($persona_id);
-            // dd($persona->personal);
             return view('control_perfil.detalle', [
                 'persona' => $persona,
             ]);
@@ -84,9 +83,8 @@ class PersonaController extends Controller
     //Metodo que reedireciona a la vista de notificaciones
     public function notifications()
     {
-        $notificacionesNoLeidas = auth()->user()->unreadNotifications()->paginate(2);
+        $notificacionesNoLeidas = auth()->user()->unreadNotifications()->paginate(8);
         $notificacionesLeidas = auth()->user()->readNotifications;
-        dd($notificacionesNoLeidas);
         return view('control_perfil.notificaciones', [
             'notificacionesNoLeidas'=> $notificacionesNoLeidas,
             'notificacionesLeidas'=> $notificacionesLeidas

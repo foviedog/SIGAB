@@ -50,29 +50,22 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
             @include('layouts.messages.alerts')
 
             {{-- Mensaje de que muestra el objeto insertado (solo se muestra si ha sido exitoso el registro)  --}}
-            @if(Session::has('estudiante_insertado'))
+            @if(isset($estudiante_insertado))
             <div class="alert alert-dark" role="alert">
-
-                @php
-                $persona_insertado = Session::get('persona_insertado');
-                $estudiante_insertado = Session::get('estudiante_insertado');
-                $cedula = Session::get('cedula');
-                @endphp
-
                 Se registró el estudiante con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
-                        <b>Cédula:</b> {{ $persona_insertado->persona_id }} <br>
-                        <b>Nombre/s:</b> {{ $persona_insertado->nombre }} <br>
-                        <b>Apellido/s:</b> {{ $persona_insertado->apellido }} <br>
-                        <b>Fecha de nacimiento:</b> {{ $persona_insertado->fecha_nacimiento ?? "No se digitó" }} <br>
-                        <b>Teléfono fijo:</b> {{ $persona_insertado->telefono_fijo ?? "No se digitó" }} <br>
-                        <b>Teléfono celular:</b> {{ $persona_insertado->telefono_celular ?? "No se digitó" }} <br>
-                        <b>Correo personal:</b> {{ $persona_insertado->correo_personal ?? "No se digitó" }} <br>
-                        <b>Correo institucional:</b> {{ $persona_insertado->correo_institucional ?? "No se digitó" }} <br>
-                        <b>Estado Civil:</b> {{ $persona_insertado->estado_civil ?? "No se digitó" }} <br>
-                        <b>Dirección de residencia:</b> {{ $persona_insertado->direccion_residencia ?? "No se digitó" }} <br>
-                        <b>Género:</b> {{ $persona_insertado->genero ?? "No se digitó" }} <br>
+                        <b>Cédula:</b> {{ $persona_insertada->persona_id }} <br>
+                        <b>Nombre/s:</b> {{ $persona_insertada->nombre }} <br>
+                        <b>Apellido/s:</b> {{ $persona_insertada->apellido }} <br>
+                        <b>Fecha de nacimiento:</b> {{ $persona_insertada->fecha_nacimiento ?? "No se digitó" }} <br>
+                        <b>Teléfono fijo:</b> {{ $persona_insertada->telefono_fijo ?? "No se digitó" }} <br>
+                        <b>Teléfono celular:</b> {{ $persona_insertada->telefono_celular ?? "No se digitó" }} <br>
+                        <b>Correo personal:</b> {{ $persona_insertada->correo_personal ?? "No se digitó" }} <br>
+                        <b>Correo institucional:</b> {{ $persona_insertada->correo_institucional ?? "No se digitó" }} <br>
+                        <b>Estado Civil:</b> {{ $persona_insertada->estado_civil ?? "No se digitó" }} <br>
+                        <b>Dirección de residencia:</b> {{ $persona_insertada->direccion_residencia ?? "No se digitó" }} <br>
+                        <b>Género:</b> {{ $persona_insertada->genero ?? "No se digitó" }} <br>
                         <b>Dirección lectivo:</b> {{ $estudiante_insertado->direccion_lectivo ?? "No se digitó" }} <br>
                         <b>Cantidad de hijos:</b> {{ $estudiante_insertado->cant_hijos ?? "No se digitó" }} <br>
 

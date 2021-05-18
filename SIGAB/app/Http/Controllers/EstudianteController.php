@@ -79,14 +79,12 @@ class EstudianteController extends Controller
             if($request->cedula != null){
                 $persona = Persona::find($request->cedula);
                 $estudiante = Estudiante::find($request->cedula);
-
                 if(!is_null($estudiante)){
                     return redirect()->back()
                     ->with('estudianteExisteError', "El estudiante ya se encuentra registrado");
                 }
-
                 return view('control_educativo.informacion_estudiantil.registrar',[
-                    'persona_existe' => $persona, // Listado de personal.
+                    'persona_existe' => $persona, 
                 ]);
             }else{
                 throw new ControllerFailedException();
@@ -139,25 +137,23 @@ class EstudianteController extends Controller
             $estudiante->apoyo_educativo = $request->apoyo_educativo;
             $estudiante->residencias_UNA = $request->residencias;
             $persona->save(); //se guarda el objeto en la base de datos
-
             $estudiante->save(); //se guarda el objeto en la base de datos
 
              //Se envía la notificación
             event(new EventEstudiantes($estudiante, 1));
-
             //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado
-            return Redirect::back()
+            return view('control_educativo.informacion_estudiantil.registrar')
                 ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
-                ->with('persona_insertado', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
+                ->with('persona_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('estudiante_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
-                ->with('cedula', $request->cedula); //Retorna un objeto en el response con la cedula, de otra manera no obtiene el dato de manera adecuada para imprimirlo en la vista
-
+                ->with('persona_existe', null); 
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina de registro estudiante
+            return view('control_educativo.informacion_estudiantil.registrar')
                 ->with('mensaje-error', "Ha ocurrido un error con el registro del estudiante con la cédula  " . "$request->cedula" . ". Es posible que el estudiante ya se encuentre agregado.") //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
-                ->with('estudiante_no_insertado', $estudiante); //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
-        } catch (\Exception $exception) {
+                ->with('estudiante_no_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
+                ->with('persona_existe', null); 
+            } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
     }
