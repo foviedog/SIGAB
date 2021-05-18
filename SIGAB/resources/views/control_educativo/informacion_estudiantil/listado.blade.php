@@ -211,9 +211,11 @@ Listado Estudiantil
 @section('scripts')
 <script defer="">
     @if(!is_null($estudianteExisteError))
-    alert("{{ $estudianteExisteError }}")
-    toastr.error("{{ $estudianteExisteError }}");
+    setTimeout(function() {
+        toastr.error("{{ $estudianteExisteError }}");
+    }, 100);
     @endif
+
 </script>
 
 @endsection

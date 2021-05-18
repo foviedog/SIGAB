@@ -9,6 +9,9 @@ Listado de Personal
 @endsection
 
 @section('contenido')
+@php
+(Session::has('personalExisteError')) ? $personalExisteError = Session::get('personalExisteError') : $personalExisteError = null;
+@endphp
 
 <!-- Button trigger modal -->
 <!-- Modal -->
@@ -188,5 +191,12 @@ Listado de Personal
 @endsection
 
 @section('scripts')
-{{-- Ningún script por el momento --}}
+<script defer="">
+    @if(!is_null($personalExisteError))
+    setTimeout(function() {
+        toastr.error("{{ $personalExisteError }}");
+    }, 100);
+    @endif
+
+</script>
 @endsection

@@ -70,7 +70,13 @@ class PersonalController extends Controller
         try{
             if($request->cedula != null){
                 $persona = Persona::find($request->cedula);
-                // dd($persona);
+                $personal = Personal::find($request->cedula);
+
+                if(!is_null($personal)){
+                    return redirect()->back()
+                    ->with('personalExisteError', "El personal ya se encuentra registrado");
+                }
+
                 return view('control_personal.registrar',[
                     'persona_existe' => $persona, // Listado de personal.
                 ]);
@@ -101,7 +107,7 @@ class PersonalController extends Controller
             $personal->persona_id = $request->persona_id;
             $persona->persona_id = $request->persona_id;
             if($request->persona_existe == "true"){
-                $persona = Persona::find($request->persona_id);   //Se obtiene el personal que contiene ese ID
+                $persona = Persona::find($request->persona_id);  //En caso de que la persona ya exista en la bd se busca al objeto para evitar conflictos de llave primaria duplicada
             }
 
             $this->guardarPersonal($persona, $personal, $request, 1); 
