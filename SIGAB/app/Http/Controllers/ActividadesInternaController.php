@@ -197,7 +197,7 @@ class ActividadesInternaController extends Controller
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
-            if($facilitador_encontrado != "false"){
+            if($request->facilitador_encontrado != "false"){
                 $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
             }
             $actividad_interna->facilitador_externo = NULL;

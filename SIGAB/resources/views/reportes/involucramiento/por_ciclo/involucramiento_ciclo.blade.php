@@ -141,7 +141,7 @@ Involucramiento Anual
                             </thead>
                             <tbody>
                                 @foreach ($personal as $persona)
-                                <tr data-toggle="tooltip" data-placement="top" title="{{ $persona->nombre . " " . $persona->apellido . "(" . $anio .")"}}">
+                                <tr data-toggle="tooltip" data-placement="top" title="{{ $persona->nombre . " " . $persona->apellido . "(" . $anioReporte .")"}}">
                                     <td>
                                         <div class="row flex-column d-flex justify-content-center align-items-center">
                                             <img class="img-personal" src="{{URL::asset('img/fotos/'. $persona->imagen_perfil)}}" alt="">
