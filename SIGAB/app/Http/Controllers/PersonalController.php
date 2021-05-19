@@ -187,7 +187,7 @@ class PersonalController extends Controller
             $personal = Personal::find($id_personal);
 
             $this->guardarPersonal($persona, $personal, $request, 2); //Se llama al método genérico para guardar un personal
-          
+        
             // $this->guardarParticipaciones($personal, $request); //Se llama al método genérico para guardar las participaciones
 
             Idioma::where('persona_id', $id_personal)->delete(); // Antes de guardar los idiommas de la persona, se eliminan todos los registros de idomas referentes a esa persona para que sea posible actualizarlo
@@ -352,7 +352,7 @@ class PersonalController extends Controller
                 $persona->delete();
             }
 
-            return redirect(route('personal.listar'))
+            return redirect()->route('personal.listar')
                 ->with('mensaje-exito', "El personal se ha eliminado correctamente.");
 
         } catch (\Exception $exception) {
