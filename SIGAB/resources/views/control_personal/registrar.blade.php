@@ -19,6 +19,12 @@ $tipos_nombramientos = GlobalArrays::TIPOS_NOMBRAMIENTO_PERSONAL;
 $tipos_puestos = GlobalArrays::TIPOS_PUESTOS_PERSONAL;
 $regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
 $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
+
+if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
+    $persona_no_insertada = null;
+    $personal_no_insertado = null;
+}
+
 @endphp
 
 
