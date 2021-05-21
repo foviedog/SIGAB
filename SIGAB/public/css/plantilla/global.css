@@ -244,6 +244,7 @@ Fin de la paleta de colores
 .logo {
     max-width: 150px;
     max-height: 150px;
+
 }
 
 .far {
@@ -251,6 +252,7 @@ Fin de la paleta de colores
 }
 
 .obligatorio {
+    border-radius: 4px;
     color: rojo;
 }
 
