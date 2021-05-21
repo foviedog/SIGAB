@@ -36,7 +36,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                             </div>
                         </div>
                         <div id="cambiar-foto" class="mb-3">
-                            <input type="file" name="avatar" class="border" id="avatar">
+                            <input type="file" name="avatar" class="border" id="avatar" style="display: none;">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         </div>
                         {{-- Nombre completo de usario --}}
@@ -116,6 +116,8 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <h3 class="texto-rojo-medio font-weight-light m-0 texto-rojo pb-3">Configuración de la cuenta </h3>
                             </div>
                             <div >
+                                {{-- Botón para ver las actividades que ha registrado --}}
+                                <a href="{{ route('perfil.mis-actividades') }}" class="btn btn-contorno-rojo"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Mis actividades</a>
                                 {{-- Botón para regresar a la página principal --}}
                                 <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
                                 {{-- Botón para acceder a las notificaciones --}}

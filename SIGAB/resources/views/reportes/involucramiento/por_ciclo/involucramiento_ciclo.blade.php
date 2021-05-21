@@ -109,7 +109,6 @@ Involucramiento Anual
             </div>
 
             @if(!is_null($personal) )
-
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center" id="heading2021">
                     <h4 class="mb-0 texto-azul-una py-3">
@@ -200,25 +199,23 @@ Involucramiento Anual
                     </div>
                 </div>
             </div>
-
-
             @endif
-
         </div>
+    </div>
 
-        @endsection
+    @endsection
 
 
-        @section('scripts')
-        <script>
-            var personal = @json($personal);
-            var $anio = @json($anio);
-            var actividadesCiclo = @json($actividadesPrimerCiclo);
-            var actividadesSegundoCiclo = @json($actividadesSegundoCiclo);
-            console.log(personal);
+    @section('scripts')
+    <script>
+        var personal = @json($personal);
+        var $anio = @json($anio);
+        var actividadesCiclo = @json($actividadesPrimerCiclo);
+        var actividadesSegundoCiclo = @json($actividadesSegundoCiclo);
+        console.log(personal);
 
-        </script>
+    </script>
 
-        <script src="{{ asset('js/reportes/involucramiento/porCiclo.js') }}"></script>
+    <script src="{{ asset('js/reportes/involucramiento/porCiclo.js') }}"></script>
 
-        @endsection
+    @endsection

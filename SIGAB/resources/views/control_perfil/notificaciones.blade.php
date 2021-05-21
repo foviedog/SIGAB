@@ -51,6 +51,7 @@ Notificaciones
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                             <div class="container">
+
                                 @if(count($notificacionesNoLeidas) == 0)
                                 <div class="cursor-pointer">
                                     <i class="text-danger fas fa-exclamation-circle fa-lg">
@@ -73,9 +74,11 @@ Notificaciones
                                         </div>
                                         <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y", strtotime($notificacion->created_at))  }}</span>
                                     </div>
-                                    <div class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
+                                    @if($notificacion->data["modelo"] != "usuario")
+                                    <a href="{{ $notificacion->data['url'] }}" target="_blank" class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
                                         <div class="btn btn-contorno-rojo">Detalle</div>
-                                    </div>
+                                    </a>
+                                    @endif
                                 </div>
                                 @endforeach
                                 <div class="row justify-content-center">
@@ -116,7 +119,7 @@ Notificaciones
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
