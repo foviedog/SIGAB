@@ -23,44 +23,19 @@ class AsistenciaPromocionController extends Controller
             $paginaciones = [5, 10, 25, 50];
             $itemsPagina = request('itemsPagina', 5);
             $filtro = request('filtro', NULL);
-
-            $mensaje = Session::get('mensaje');
+            $mensaje = request('mensaje',NULL);
+            $error = request('error',NULL);
 
             $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
             $actividad = Actividades::find($actividadId);
-            
-            if (!is_null($mensaje)) {
-                if($mensaje == "success"){
-                    $mensajeExito = "Participante agregado correctamente";
-                    return view('control_actividades_promocion.lista_asistencia.detalle', [
-                        'listaAsistencia' => $listaAsistencia,
-                        'actividad' => $actividad,
-                        'paginaciones' => $paginaciones,
-                        'itemsPagina' => $itemsPagina,
-                        'filtro' => $filtro,
-                        'mensajeExito' => $mensajeExito,
-                        'confirmarEliminar' => 'simple'
-                    ]);
-                }else{
-                    $mensajeError = "Ocurrió un error al agregar el participante";
-                    return view('control_actividades_promocion.lista_asistencia.detalle', [
-                        'listaAsistencia' => $listaAsistencia,
-                        'actividad' => $actividad,
-                        'paginaciones' => $paginaciones,
-                        'itemsPagina' => $itemsPagina,
-                        'filtro' => $filtro,
-                        'mensajeError' => $mensajeError,
-                        'confirmarEliminar' => 'simple'
-                    ]);
-                }
-            }
-            
             return view('control_actividades_promocion.lista_asistencia.detalle', [
                 'listaAsistencia' => $listaAsistencia,
                 'actividad' => $actividad,
                 'paginaciones' => $paginaciones,
                 'itemsPagina' => $itemsPagina,
                 'filtro' => $filtro,
+                'mensaje' => $mensaje,
+                'error' => $error,
                 'confirmarEliminar' => 'simple'
             ]);
     
@@ -100,11 +75,7 @@ class AsistenciaPromocionController extends Controller
             $lista->numero_telefono = request()->telefono;
             $lista->procedencia = request()->procedencia;
             $lista->save();
-
-            $mensaje = "success";
-            return redirect()->route('asistencia-promocion.show', request()->acitividad_id)
-                ->with('mensaje', $mensaje);
-           // return response()->json($mensaje, 200);
+            return redirect()->route('asistencia-promocion.show', [request()->acitividad_id,"mensaje"=> "Participante agregado correctamente"]);
         
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
@@ -114,7 +85,6 @@ class AsistenciaPromocionController extends Controller
     public function destroy(Request $request, $particioanteId)
     {
         try {
-
             $lista = asistenciaPromocion::where('cedula', $particioanteId)
                 ->where('actividad_id', $request->actividad_id);
 
@@ -129,8 +99,7 @@ class AsistenciaPromocionController extends Controller
             $eliminado->save();
 
             $lista->delete();
-            return redirect()->route('asistencia-promocion.show', $request->actividad_id)
-                ->with('mensaje-exito', 'Participante eliminado correctamente');
+            return redirect()->route('asistencia-promocion.show', [$request->actividad_id, "mensaje"=>"Participante eliminado correctamente"]);
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();

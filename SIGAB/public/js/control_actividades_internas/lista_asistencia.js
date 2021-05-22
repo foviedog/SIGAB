@@ -32,7 +32,6 @@ function eventos() {
     evtAgregarParticipanteShow();
     evtCancelarAgregarPart();
     evtBuscarParticipante();
-    mostrarMensajeSticky();
     evtListarTodo();
 }
 
@@ -47,7 +46,6 @@ function evtCancelarAgregarPart() {
         $("participante-encontrado").val("false");
         $("#cedula-participante").val("");
         ocultarParticipanteInfo();
-        reducirTamanioInfo();
     });
 }
 
@@ -115,13 +113,13 @@ function evtAgregarParticipante() {
                     $("#cancelar-agregar-part").trigger("click");
                 },
                 success: function(datos) {
-                    $("#mensaje").val("success");
+                    $("#mensaje").val("Participante agregado correctamente");
                     $("#form-reload").trigger("submit");
                 },
                 statusCode: {
                     404: function() {
                         $("#loader").hide();
-                        $("#mensaje").val("error");
+                        $("#error").val("El participante ya ha sido agregado anteriormente");
                         $("#form-reload").trigger("submit");
                     }
                 }
@@ -197,7 +195,6 @@ function llenarModalParticipante(participante) {
 
 function llenarTarjetaParticipante(participante) {
     mostrarParticipanteInfo();
-    aumentarTamanioInfo();
     $("#agregar-submit").show();
     $("#participante-encontrado").val(participante.persona_id);
     let src = fotosURL + "/" + participante.imagen_perfil;
@@ -236,23 +233,8 @@ function desplegarAlerta(contenido) {
         });
 }
 
-function aumentarTamanioInfo() {
-    $("#logo-EBDI").css("max-width", "141%");
-    $("#img-actividad").css("padding-top", "8%");
-    $("#img-actividad").css("padding-bottom", "4%");
-    $("#info-actividad").css("padding-top", "11%");
-    $("#info-actividad").css("padding-bottom", "5%");
-
-    $("#info-actividad").css("margin-left", "3%");
-}
-function reducirTamanioInfo() {
-    $("#logo-EBDI").css("max-width", "100%");
-    $("#img-actividad").removeAttr("style");
-    $("#info-actividad").removeAttr("style");
-}
 
 function errorNoEncontrado() {
-    reducirTamanioInfo();
     ocultarParticipanteInfo();
     $("#participante-encontrado").val("false");
     desplegarAlerta("La cédula digitada no existe");

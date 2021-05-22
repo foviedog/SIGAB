@@ -65,7 +65,7 @@ class ListaAsistenciaController extends Controller
 
             if (!is_null($persona)) {
                 return redirect()->route('lista-asistencia.show', $request->actividad_id)
-                ->with('mensaje-error', "Ocurrió un error al agregar el participante");
+                ->with('error', "Ocurrió un error al agregar el participante");
             } else {
                 $persona = new Persona();
                 $this->guardarPersona($persona, $request);
@@ -73,10 +73,10 @@ class ListaAsistenciaController extends Controller
             }
 
             return redirect()->route('lista-asistencia.show', $request->actividad_id)
-            ->with('mensaje-exito', "Participante agregado correctamente");
+            ->with('mensaje', "Participante agregado correctamente");
         } catch (\Illuminate\Database\QueryException $ex) {
             return redirect()->route('lista-asistencia.show', $request->actividad_id)
-            ->with('mensaje-error', "Ocurrió un error al agregar el participante");
+            ->with('error', "Ocurrió un error al agregar el participante");
         }
     }
 
@@ -94,21 +94,11 @@ class ListaAsistenciaController extends Controller
             $paginaciones = [5, 10, 25, 50];
             $itemsPagina = request('itemsPagina', 5);
             $filtro = request('filtro', NULL);
-
             $mensaje = request('mensaje', NULL);
-
+            $error = request('error', NULL);
             $listaAsistencia = $this->obtenerLista($actividadId, $itemsPagina, $filtro);
             $actividad = Actividades::findOrFail($actividadId);
 
-            if (!is_null($mensaje)) {
-                if($mensaje == "success"){
-                    return redirect()->route('lista-asistencia.show', $actividadId)
-                        ->with('mensaje-exito', "Participante agregado correctamente");
-                }else{
-                    return redirect()->route('lista-asistencia.show', $actividadId)
-                        ->with('mensaje-error', "Ocurrió un error al agregar el participante");
-                }
-            }
             // dd($listaAsistencia);
             return view('control_actividades_internas.lista_asistencia.detalle', [
                 'listaAsistencia' => $listaAsistencia,
@@ -117,6 +107,7 @@ class ListaAsistenciaController extends Controller
                 'itemsPagina' => $itemsPagina,
                 'filtro' => $filtro,
                 'mensaje' => $mensaje,
+                'error' => $error,
                 'confirmarEliminar' => 'simple'
             ]);
 
@@ -172,12 +163,11 @@ class ListaAsistenciaController extends Controller
             $eliminado->save();
 
             $lista->delete();
-            return redirect()->route('lista-asistencia.show', $request->actividad_id)
-            ->with('mensaje-exito', 'Participante eliminado correctamente');
-
+            return redirect()->route('lista-asistencia.show', [$request->actividad_id,"mensaje"=>"Participante eliminado correctamente"]);
+            
         } catch (\Illuminate\Database\QueryException $ex) {
             return redirect()->route('lista-asistencia.show', $request->actividad_id)
-            ->with('mensaje-error', 'Ocurrió un error al eliminar el participante');
+            ->with('error', 'Ocurrió un error al eliminar el participante');
         }
     }
     //Método que busca la cédula del participante que se desea agregar en
