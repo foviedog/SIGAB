@@ -72,7 +72,7 @@ Notificaciones
                                         <div class="w-100 text-muted">
                                             <b class="text-dark">{{ $notificacion->data["nombre"] }}</b> {{ $notificacion->data["informacion"] }}
                                         </div>
-                                        <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y", strtotime($notificacion->created_at))  }}</span>
+                                        <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y - H:i:s", strtotime($notificacion->created_at))  }}</span>
                                     </div>
                                     @if($notificacion->data["modelo"] != "usuario")
                                     <a href="{{ $notificacion->data['url'] }}" target="_blank" class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
@@ -111,7 +111,7 @@ Notificaciones
                                     <div class="w-100 text-muted">
                                         <b class="text-dark">{{ $notificacion->data["nombre"] }}</b> {{ $notificacion->data["informacion"] }}
                                     </div>
-                                    <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y", strtotime($notificacion->created_at))  }}</span>
+                                    <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y - H:i:s", strtotime($notificacion->created_at))  }}</span>
                                 </div>
                                 <div class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
                                     <div class="btn btn-contorno-rojo">Detalle</div>

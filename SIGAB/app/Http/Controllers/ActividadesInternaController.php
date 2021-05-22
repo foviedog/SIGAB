@@ -322,7 +322,7 @@ class ActividadesInternaController extends Controller
 
 
     public function destroy($actividadId){
-        try{
+        //try{
 
             $listasAsistencia = $this->obtenerConcurrenciasListas($actividadId);
             $listaEvidencias = $this->obtenerConcurrenciasEvidencias($actividadId);
@@ -333,9 +333,11 @@ class ActividadesInternaController extends Controller
             $eliminado = new Eliminado;
             $eliminado->eliminado_por = auth()->user()->persona_id;
             $eliminado->elemento_eliminado = 'Actividad interna';
-            $eliminado->titulo = 'Se eleminó la actividad interna '.$actividadId.', sus listas de asistencia y sus evidencias.';
+            $eliminado->titulo = 'Se eliminó la actividad interna '.$actividadId.', sus listas de asistencia y sus evidencias.';
             $eliminado->save();
 
+            //Generar la notificacion
+            event(new EventActividades($actividad, 1, 4));
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();
@@ -353,9 +355,9 @@ class ActividadesInternaController extends Controller
             return redirect(route('actividad-interna.listado'))
                 ->with('mensaje-exito', "La actividad se ha eliminado correctamente.");
 
-        } catch (\Exception $exception) {
-            throw new ControllerFailedException();
-        }
+        //} catch (\Exception $exception) {
+        //    throw new ControllerFailedException();
+        //}
 
     }
     

@@ -222,7 +222,7 @@ class EstudianteController extends Controller
             //Llamado al método que actualiza la foto de perfil
             $this->update_avatar($request, $estudiante);
 
-             //Se envía la notificación
+            //Se envía la notificación
             event(new EventEstudiantes($estudiante, 2));
 
             //Se retorna el detalle del estudiante ya modificado
@@ -262,6 +262,11 @@ class EstudianteController extends Controller
                 $eliminado->titulo = 'Se eliminó el estudiante '.$personaId.', sus guías académicas, sus trabajos, sus titulaciones y se eliminó de las listas de asistencia donde participaba';
                 $eliminado->save();
 
+                $estudiante = Estudiante::where('persona_id', $personaId);
+
+                //Se envía la notificación
+                event(new EventEstudiantes($estudiante->first(), 3));
+
                 $guias = Guias_academica::where('persona_id', $personaId);
                 $guias->delete();
                 $trabajos = Trabajo::where('persona_id', $personaId);
@@ -270,7 +275,7 @@ class EstudianteController extends Controller
                 $graduaciones->delete();
                 $asistencia = ListaAsistencia::where('persona_id', $personaId);
                 $asistencia->delete();
-                $estudiante = Estudiante::where('persona_id', $personaId);
+
                 $estudiante->delete();
             } else {
                 //Se guarda el registro en la tabla de eliminados
@@ -279,7 +284,12 @@ class EstudianteController extends Controller
                 $eliminado->elemento_eliminado = 'Estudiante';
                 $eliminado->titulo = 'Se eliminó el estudiante '.$personaId.', sus guías académicas, sus trabajos, sus titulaciones, se eliminó de las listas de asistencia donde participaba, su usuario (si tuviese) y la persona asociada';
                 $eliminado->save();
-                
+
+                $estudiante = Estudiante::where('persona_id', $personaId);
+
+                //Se envía la notificación
+                event(new EventEstudiantes($estudiante->first(), 3));
+
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();
                 $guias = Guias_academica::where('persona_id', $personaId);
@@ -290,11 +300,13 @@ class EstudianteController extends Controller
                 $graduaciones->delete();
                 $asistencia = ListaAsistencia::where('persona_id', $personaId);
                 $asistencia->delete();
-                $estudiante = Estudiante::where('persona_id', $personaId);
+
                 $estudiante->delete();
                 $persona = Persona::where('persona_id', $personaId);
                 $persona->delete();
             }
+
+            
 
             return redirect(route('listado-estudiantil'))
                 ->with('mensaje-exito', "El estudiante se ha eliminado correctamente.");

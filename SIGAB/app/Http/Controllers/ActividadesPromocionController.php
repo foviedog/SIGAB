@@ -298,8 +298,6 @@ class ActividadesPromocionController extends Controller
         return $concurrencias;
     }
 
-
-
     public function destroy($actividadId){
         try{
 
@@ -314,6 +312,9 @@ class ActividadesPromocionController extends Controller
             $eliminado->elemento_eliminado = 'Actividad de promoción de la carrera';
             $eliminado->titulo = 'Se eleminó la actividad de promoción la carrera '.$actividadId.', sus listas de asistencia y sus evidencias.';
             $eliminado->save();
+
+            //Generar la notificacion
+            event(new EventActividades($actividad, 2, 4));
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();

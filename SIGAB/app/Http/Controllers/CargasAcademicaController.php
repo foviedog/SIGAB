@@ -135,7 +135,6 @@ class CargasAcademicaController extends Controller
             $eliminado->elemento_eliminado = 'Carga académica';
             $eliminado->titulo = 'Se eliminó la carga académica ' .$carga_academica->nombre_curso.' '.$carga_academica->nrc.' del personal '.$carga_academica->persona_id.'.';
             $eliminado->save();
-
             
             $carga_academica->delete();
             return Redirect::back()

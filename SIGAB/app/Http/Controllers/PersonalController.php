@@ -165,7 +165,7 @@ class PersonalController extends Controller
     //============================================================================================
     public function update($id_personal, Request $request)
     {
-        // try{
+        try{
             //Se crean instancias de persona y personal para crear inicializar los atributos de cada objeto
             $persona = new Persona();
             $personal = new Personal();
@@ -191,9 +191,9 @@ class PersonalController extends Controller
 
             return redirect("/personal/detalle/{$personal->persona_id}");
 
-        // } catch (\Exception $exception) {
-            // throw new ControllerFailedException();
-        // }
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
 
@@ -261,7 +261,7 @@ class PersonalController extends Controller
         $persona->save(); //se guarda el objeto en la base de datos
         $personal->save();
 
-         //Se envía la notificación
+        //Se envía la notificación
         event(new EventPersonal($personal, $accion));
     }
 
@@ -333,11 +333,16 @@ class PersonalController extends Controller
                 $eliminado->titulo = 'Se eliminó el personal '.$personaId.', sus cargas académicas y se eliminó de las listas de asistencia donde participaba';
                 $eliminado->save();
 
+                $personal = Personal::where('persona_id', $personaId);
+
+                //Se envía la notificación
+                event(new EventPersonal($personal->first(), 3));
+
                 $idiomas = Idioma::where('persona_id', $personaId);
                 $idiomas->delete();
                 $participaciones = Participacion::where('persona_id', $personaId);
                 $participaciones->delete();
-                $personal = Personal::where('persona_id', $personaId);
+                
                 $personal->delete();
             } else {
 
@@ -348,13 +353,17 @@ class PersonalController extends Controller
                 $eliminado->titulo = 'Se eliminó el personal '.$personaId.', sus cargas académicas y se eliminó de las listas de asistencia donde participaba';
                 $eliminado->save();
 
+                $personal = Personal::where('persona_id', $personaId);
+
+                //Se envía la notificación
+                event(new EventPersonal($personal->first(), 3));
+
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();
                 $idiomas = Idioma::where('persona_id', $personaId);
                 $idiomas->delete();
                 $participaciones = Participacion::where('persona_id', $personaId);
                 $participaciones->delete();
-                $personal = Personal::where('persona_id', $personaId);
                 $personal->delete();
                 $persona = Persona::where('persona_id', $personaId);
                 $persona->delete();
