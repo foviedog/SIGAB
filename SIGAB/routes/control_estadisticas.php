@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de SIGAB
     ');
 
-    Route::get('/reportes/activdades/resultado', 'ReportesActividadesController@resultado')->name('reportes-actividades.resultado')
+    Route::get('/reportes/actividades/resultado', 'ReportesActividadesController@resultado')->name('reportes-actividades.resultado')
     ->middleware(
         'roles:
             Dirección
