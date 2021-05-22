@@ -14,19 +14,10 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 $generos = GlobalArrays::GENEROS;
 $colegiosProcedencias = GlobalArrays::COLEGIOS_PROCEDENCIA;
 $tiposBecas = GlobalArrays::TIPOS_BECA;
-$anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } 
+$anios = GlobalFunctions::obtenerAniosActual();
+$aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
 @endphp
-
-@section('contenido') 
-
-    @if(Accesos::ACCESO_ELIMINAR_ESTUDIANTE())
-        @include('layouts.messages.confirmar_eliminar')
-    @endif
-
-    {{-- Formulario general de estudiante --}} 
-    @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) 
-    <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" onsubmit="activarLoader('Agregando Cambios');">
+@section('contenido') @if(Accesos::ACCESO_ELIMINAR_ESTUDIANTE()) @include('layouts.messages.confirmar_eliminar') @endif {{-- Formulario general de estudiante --}} @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) <form autocomplete="off" action="{{ route('estudiante.update',$estudiante->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" onsubmit="activarLoader('Agregando Cambios');">
     @csrf
     {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
     @method('PATCH')
@@ -155,14 +146,22 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                                     <label for="anio_graduacion_estimado_1"><strong>Año Estimado de Graduación 1</strong></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_anio_graduacion_estimado_1"></span><br />
-                                    <input type="number" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" min="1975" max="9999" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_1}}" disabled />
+                                    <select id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" class="form-control w-100" required disabled>
+                                        @foreach($aniosFuturos as $anio)
+                                        <option value="{{ $anio }}" @if ($anio==$estudiante->anio_graduacion_estimado_1 ) selected @endif>{{ $anio }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 {{-- Segunda Carrera --}}
                                 <div class="form-group">
                                     <label for="anio_graduacion_estimado_2"><strong>Año Estimado de Graduación 2</strong></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 2 (en caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_anio_graduacion_estimado_2"></span><br />
-                                    <input type="number" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" min="1975" max="9999" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Estimado Graduación" value="{{$estudiante->anio_graduacion_estimado_2}}" disabled />
+                                    <select id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" class="form-control w-100" required disabled>
+                                        @foreach($aniosFuturos as $anio)
+                                        <option value="{{ $anio }}" @if ($anio==$estudiante->anio_graduacion_estimado_2 ) selected @endif>{{ $anio }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 {{-- Campo: Año de Deserción --}}
                                 <div class="form-group">
@@ -170,8 +169,11 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                                     <label for="anio_desercion"><strong>Año de Deserción</strong></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Se ingresa año de deserción si existe"><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_anio_desercion"></span><br />
-
-                                    <input type="number" id="anio_desercion" name="anio_desercion" min="1975" max="9999" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Año de Deserción" value="{{ $estudiante->anio_desercion }}" disabled />
+                                    <select id="anio_desercion" name="anio_desercion" class="form-control w-100" required disabled>
+                                        @foreach($anios as $anio)
+                                        <option value="{{ $anio }}" @if ($anio==$estudiante->anio_desercion ) selected @endif>{{ $anio }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -298,9 +300,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                                                 <div class="form-group">
                                                     <label for="genero"><strong>Género<i class="text-danger">* </i> </strong></label>
                                                     <select id="genero" name="genero" class="form-control w-100" required disabled>
-                                                        <option value="M" @if( $estudiante->persona->genero == "M" ) option selected @endif>Masculino</option>
-                                                        <option value="F" @if( $estudiante->persona->genero == "F" ) option selected @endif>Femenino</option>
-                                                        <option value="Otro" @if( $estudiante->persona->genero == "Otro" ) option selected @endif>Otro</option>
+                                                        <option value="" selected>Sin seleccionar</option>
+                                                        @foreach ($generos as $genero )
+                                                        <option value="{{ $genero }}" @if ( $genero==$estudiante->persona->genero) selected @endif>{{ $genero }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -453,8 +456,8 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
     </div>
 
     @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES())
-    </form>
-    @endif
+</form>
+@endif
 
 @endsection
 

@@ -23,13 +23,6 @@ use App\Eliminado;
 
 class EstudianteController extends Controller
 {
-
-    private $anios;
-
-    public function __construct()
-    {
-        $this->anios = GlobalFunctions::obtenerAniosActual();
-    }
     //Devuevle el listado de los estudiantes ordenados por su apellido.
     public function index()
     {
@@ -63,8 +56,8 @@ class EstudianteController extends Controller
                 'estudiantes' => $estudiantes, // Listado estudiantel.
                 'paginaciones' => $paginaciones, // Listado de items de paginaciones.
                 'itemsPagina' => $itemsPagina, // Item que se desean por página.
-                'filtro' => $filtro, // Valor del filtro que se haya hecho para mantenerlo en la página
-                'anios' => $this->anios
+                'filtro' => $filtro // Valor del filtro que se haya hecho para mantenerlo en la página
+
             ]);
 
         } catch (\Exception $exception) {
@@ -84,7 +77,7 @@ class EstudianteController extends Controller
                     ->with('estudianteExisteError', "El estudiante ya se encuentra registrado");
                 }
                 return view('control_educativo.informacion_estudiantil.registrar',[
-                    'persona_existe' => $persona, 
+                    'persona_existe' => $persona,
                 ]);
             }else{
                 throw new ControllerFailedException();
@@ -146,13 +139,13 @@ class EstudianteController extends Controller
                 ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('persona_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('estudiante_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
-                ->with('persona_existe', null); 
+                ->with('persona_existe', null);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return view('control_educativo.informacion_estudiantil.registrar')
                 ->with('mensaje-error', "Ha ocurrido un error con el registro del estudiante con la cédula  " . "$request->cedula" . ". Es posible que el estudiante ya se encuentre agregado.") //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
                 ->with('estudiante_no_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
-                ->with('persona_existe', null); 
+                ->with('persona_existe', null);
             } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -279,7 +272,7 @@ class EstudianteController extends Controller
                 $eliminado->elemento_eliminado = 'Estudiante';
                 $eliminado->titulo = 'Se eliminó el estudiante '.$personaId.', sus guías académicas, sus trabajos, sus titulaciones, se eliminó de las listas de asistencia donde participaba, su usuario (si tuviese) y la persona asociada';
                 $eliminado->save();
-                
+
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();
                 $guias = Guias_academica::where('persona_id', $personaId);

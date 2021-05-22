@@ -11,12 +11,16 @@ $(function() {
         autoUpdateInput: false
     });
 
-    $('.datetimepicker').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    $(".datetimepicker").on("apply.daterangepicker", function(ev, picker) {
+        $(this).val(
+            picker.startDate.format("DD/MM/YYYY") +
+                " - " +
+                picker.endDate.format("DD/MM/YYYY")
+        );
     });
 
-    $('.datetimepicker').on('cancel.daterangepicker', function(ev, picker) {
-        $(this).val('');
+    $(".datetimepicker").on("cancel.daterangepicker", function(ev, picker) {
+        $(this).val("");
     });
 });
 

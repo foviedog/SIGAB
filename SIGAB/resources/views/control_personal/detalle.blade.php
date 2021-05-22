@@ -27,7 +27,7 @@ $idiomas = [];
 @section('contenido')
 
 @if(Accesos::ACCESO_ELIMINAR_PERSONAL())
-    @include('layouts.messages.confirmar_eliminar')
+@include('layouts.messages.confirmar_eliminar')
 @endif
 
 @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
@@ -247,9 +247,9 @@ $idiomas = [];
                                                     <label for="genero"><strong>Género <i class="text-danger">* </i></strong></label>
                                                     <select id="genero" name="genero" class="form-control w-100" required disabled>
                                                         <option value="" selected>Sin seleccionar</option>
-                                                        <option value="M" @if( $personal->persona->genero == "M" ) selected @endif>Masculino</option>
-                                                        <option value="F" @if( $personal->persona->genero == "F" ) selected @endif>Femenino</option>
-                                                        <option value="Otro" @if( $personal->persona->genero == "Otro" ) selected @endif>Otro</option>
+                                                        @foreach ($generos as $genero )
+                                                        <option value="{{ $genero }}" @if ( $genero==$personal->persona->genero ) selected @endif>{{ $genero }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

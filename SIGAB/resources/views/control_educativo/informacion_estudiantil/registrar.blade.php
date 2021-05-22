@@ -14,6 +14,8 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 $generos = GlobalArrays::GENEROS;
 $colegiosProcedencias = GlobalArrays::COLEGIOS_PROCEDENCIA;
 $tiposBecas = GlobalArrays::TIPOS_BECA;
+$anios = GlobalFunctions::obtenerAniosActual();
+$aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
 @endphp
 
 @php
@@ -23,9 +25,7 @@ $persona_no_insertada = Session::get('persona_no_insertada');
 $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 @endphp
 
-@php
-$anios = array();
-for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @endphp @section('contenido') <div class="card">
+@section('contenido') <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h2>Registrar información del estudiante</h2>
@@ -71,7 +71,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $persona_insertado->persona_id) }}">
+                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $estudiante_insertado->persona->persona_id) }}">
                             <input type="button" @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
                         </a>
                         <br>
@@ -357,7 +357,11 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="anio_desercion">Año de deserción:</label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="0" max="9999" class="form-control w-100" id="anio_desercion" name="anio_desercion" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_desercion ?? '' }}">
+                            <select id="anio_desercion" name="anio_desercion" class="form-control w-100" required>
+                                @foreach($anios as $anio)
+                                <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_desercion ) selected @endif>{{ $anio }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que desertó de la carrera, si no lo ha hecho, se debe dejar el espacio vacío"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -427,7 +431,11 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="anio_graduacion_estimado_1">Año de graduación estimado 1: </label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_graduacion_estimado_1 ?? '' }}">
+                            <select id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" class="form-control w-100" required>
+                                @foreach($aniosFuturos as $anio)
+                                <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_graduacion_estimado_1 ) selected @endif>{{ $anio }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -441,7 +449,11 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                             <label for="anio_graduacion_estimado_2">Año de graduación estimado 2:</label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="1975" max="9999" class="form-control w-100" id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" onkeyup="contarCaracteres(this,4)" value="{{ $estudiante_no_insertado->anio_graduacion_estimado_2 ?? '' }}">
+                            <select id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" class="form-control w-100" required>
+                                @foreach($aniosFuturos as $anio)
+                                <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_graduacion_estimado_2 ) selected @endif>{{ $anio }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Año en el que se estima que concluya la carrera matriculada 2"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -492,9 +504,10 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
         @endif
 
     </div>
-    </div>
-    @endsection
+</div>
+@endsection
 
-    @section('scripts')
-    <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
-    @endsection
+@section('scripts')
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ asset('js/global/inputs.js') }}" defer></script>
+@endsection
