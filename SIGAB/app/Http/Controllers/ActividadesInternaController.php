@@ -16,6 +16,7 @@ use App\ListaAsistencia;
 use Illuminate\Support\Facades\File;
 use Storage;
 use App\Evidencia;
+use App\Eliminado;
 
 class ActividadesInternaController extends Controller
 {
@@ -327,6 +328,14 @@ class ActividadesInternaController extends Controller
             $listaEvidencias = $this->obtenerConcurrenciasEvidencias($actividadId);
             $actividad = Actividades::findOrFail($actividadId);
             $actividad_interna = Actividades_interna::findOrFail($actividadId);
+
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Actividad interna';
+            $eliminado->titulo = 'Se eleminó la actividad interna '.$actividadId.', sus listas de asistencia y sus evidencias.';
+            $eliminado->save();
+
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();
