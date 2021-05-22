@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 use App\Events\EventEvidencias;
 use Storage;
 use App\Evidencia;
-
+use App\Eliminado;
 use App\Events\EventActividadParaAutorizar;
 
 class ActividadesPromocionController extends Controller
@@ -308,7 +308,12 @@ class ActividadesPromocionController extends Controller
             $actividad = Actividades::findOrFail($actividadId);
             $actividad_promocion = ActividadesPromocion::findOrFail($actividadId);
 
-
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Actividad de promoción de la carrera';
+            $eliminado->titulo = 'Se eleminó la actividad de promoción la carrera '.$actividadId.', sus listas de asistencia y sus evidencias.';
+            $eliminado->save();
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();

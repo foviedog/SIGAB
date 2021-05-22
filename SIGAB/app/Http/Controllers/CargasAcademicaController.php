@@ -9,6 +9,7 @@ use App\Helper\GlobalArrays;
 use App\Exceptions\ControllerFailedException;
 use App\Cargas_academica;
 use App\Personal;
+use App\Eliminado;
 
 class CargasAcademicaController extends Controller
 {
@@ -126,6 +127,13 @@ class CargasAcademicaController extends Controller
     {
         try {
             
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Carga académica';
+            $eliminado->titulo = 'Se eliminó la carga académica' .$id_carga_academica.'.';
+            $eliminado->save();
+
             $carga_academica = Cargas_academica::find($id_carga_academica); 
             $carga_academica->delete();
             return Redirect::back()

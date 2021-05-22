@@ -20,6 +20,7 @@ use App\Actividades_interna;
 use App\ActividadesPromocion;
 use App\Estudiante;
 use App\User;
+use App\Eliminado;
 
 class PersonalController extends Controller
 {
@@ -324,6 +325,14 @@ class PersonalController extends Controller
             $esEstudiante = Estudiante::where('persona_id', $personaId)->count() > 0;
 
             if($esEstudiante){
+
+                //Se guarda el registro en la tabla de eliminados
+                $eliminado = new Eliminado;
+                $eliminado->eliminado_por = auth()->user()->persona_id;
+                $eliminado->elemento_eliminado = 'Personal';
+                $eliminado->titulo = 'Se eliminó el personal '.$personaId.', sus cargas académicas y se eliminó de las listas de asistencia donde participaba';
+                $eliminado->save();
+
                 $idiomas = Idioma::where('persona_id', $personaId);
                 $idiomas->delete();
                 $participaciones = Participacion::where('persona_id', $personaId);
@@ -331,6 +340,14 @@ class PersonalController extends Controller
                 $personal = Personal::where('persona_id', $personaId);
                 $personal->delete();
             } else {
+
+                //Se guarda el registro en la tabla de eliminados
+                $eliminado = new Eliminado;
+                $eliminado->eliminado_por = auth()->user()->persona_id;
+                $eliminado->elemento_eliminado = 'Personal';
+                $eliminado->titulo = 'Se eliminó el personal '.$personaId.', sus cargas académicas y se eliminó de las listas de asistencia donde participaba';
+                $eliminado->save();
+
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();
                 $idiomas = Idioma::where('persona_id', $personaId);
