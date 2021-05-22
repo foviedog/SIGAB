@@ -91,6 +91,15 @@ class PersonaController extends Controller
         ]);
     }
 
+    public function marcarLeido($idNotificacion){
+
+        $notificacion = auth()->user()->unreadNotifications
+        ->where('id', '=',$idNotificacion)->first();
+        $notificacion->markAsRead();
+
+        return \Redirect::back();
+    }
+
     public function obtenerNotificaciones(){
         $notificaciones = auth()->user()->unreadNotifications()->limit(5)->get();
         $cantidad = auth()->user()->unreadNotifications()->groupBy('notifiable_type')->count();

@@ -80,7 +80,7 @@ Notificaciones
                                     </a>
                                     @endif
                                     <div class="col-1">
-                                        <a class="btn btn-contorno-azul-una btn-sm"><i class="fas fa-check-circle"></i></a>
+                                        <a href="{{ route('perfil.notifications.read', $notificacion->id) }}" class="btn btn-contorno-azul-una btn-sm"><i class="fas fa-check-circle"></i></a>
                                     </div>
                                 </div>
                                 @endforeach
