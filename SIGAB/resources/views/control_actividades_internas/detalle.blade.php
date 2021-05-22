@@ -251,7 +251,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                 <span class="input-group-text text-dark">Duración Total: </span>
                                             </div>
                                             <div class="w-50 mx-2">
-                                                <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
+                                                <input type="number" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
                                             </div>
                                             <div class="input-group-append">
                                                 <span class="input-group-text font-weight-bold font-italic"> h</span>

@@ -71,7 +71,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $persona_insertado->persona_id) }}">
+                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $estudiante_insertado->persona_id) }}">
                             <input type="button" @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
                         </a>
                         <br>
