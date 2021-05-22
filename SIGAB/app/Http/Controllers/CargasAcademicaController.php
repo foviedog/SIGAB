@@ -123,18 +123,20 @@ class CargasAcademicaController extends Controller
         }
     }
 
-    public function destroy( $id_carga_academica)
+    public function destroy($id_carga_academica)
     {
         try {
+
+            $carga_academica = Cargas_academica::find($id_carga_academica); 
             
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;
             $eliminado->eliminado_por = auth()->user()->persona_id;
             $eliminado->elemento_eliminado = 'Carga académica';
-            $eliminado->titulo = 'Se eliminó la carga académica' .$id_carga_academica.'.';
+            $eliminado->titulo = 'Se eliminó la carga académica ' .$carga_academica->nombre_curso.' '.$carga_academica->nrc.' del personal '.$carga_academica->persona_id.'.';
             $eliminado->save();
 
-            $carga_academica = Cargas_academica::find($id_carga_academica); 
+            
             $carga_academica->delete();
             return Redirect::back()
             ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
