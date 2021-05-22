@@ -96,8 +96,6 @@ class PersonalController extends Controller
     public function store(Request $request)
     {
         try { //se utiliza un try-catch para evitar el redireccionamiento a página default de error de Laravel
-
-
             $persona = new Persona(); //Se crea una nueva instacia de Persona
             $personal = new Personal(); //Se crea una nueva instacia de estudiante
             $participacion = new Participacion(); //Se crea una nueva instacia de estudiante
@@ -109,13 +107,10 @@ class PersonalController extends Controller
             if($request->persona_existe == "true"){
                 $persona = Persona::find($request->persona_id);  //En caso de que la persona ya exista en la bd se busca al objeto para evitar conflictos de llave primaria duplicada
             }
-
             $this->guardarPersonal($persona, $personal, $request, 1); 
-
             //Antes de guardar las participaciones se crea un registro de participaciones en la base de datos para luego ser actualizadas
             $participacion->persona_id = $request->persona_id;
             $participacion->save();
-
 
             $this->guardarParticipaciones($personal, $request); //Se actualizan las participaciones con los datos que vengan en el request.
             $this->guardarIdiomas($request); //Se guarda la lista de idiomas
@@ -143,11 +138,7 @@ class PersonalController extends Controller
     public function show($id_personal)
     {
         try{
-
             //Busca en la base de datos al personal con la cédula indicada y obtiene también las participaciones asociadas a él.
-            /*$personal = Personal::leftJoin('participaciones', 'personal.persona_id', '=', 'participaciones.persona_id')
-                ->where('personal.persona_id', '=', $id_personal)
-                ->first();*/
             $personal = Personal::findOrFail($id_personal);
 
             //Se optiene un arreglo con los idiomas específicos de la persona.

@@ -39,9 +39,9 @@ Notificaciones
                 </div>
 
                 <div class="card-body notificaciones">
-                    <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+                    <ul class="nav nav-tabs mb-5" id="pills-tab" role="tablist">
                         <li class="nav-item mr-2">
-                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Sin leer</a>
+                            <a class="nav-link active" id="sin-leer-tab" data-toggle="pill" href="#sin-leer" role="tab" aria-controls="sin-leer" aria-selected="true">Sin leer</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Anteriores</a>
@@ -49,7 +49,7 @@ Notificaciones
                     </ul>
 
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="tab-pane fade show active" id="sin-leer" role="tabpanel" aria-labelledby="sin-leer-tab">
                             <div class="container">
 
                                 @if(count($notificacionesNoLeidas) == 0)
@@ -59,7 +59,7 @@ Notificaciones
                                 </div>
                                 @endif
                                 @foreach ($notificacionesNoLeidas as $notificacion)
-                                <div class="row mt-2 mx-5 border-bottom pb-3 notificacion-container">
+                                <div class="row mt-2 mx-5 border-bottom pb-3 notificacion-container d-flex justify-content-between">
                                     <div class="col-2 p-0 imagen-notificacion">
                                         <div class="container-image">
                                             <img class="imagen-perfil" src="{{ URL::asset('img/fotos/'.$notificacion->data["imagen_perfil"]) }}" alt="">
@@ -79,6 +79,9 @@ Notificaciones
                                         <div class="btn btn-contorno-rojo">Detalle</div>
                                     </a>
                                     @endif
+                                    <div class="col-1">
+                                        <a class="btn btn-contorno-azul-una btn-sm"><i class="fas fa-check-circle"></i></a>
+                                    </div>
                                 </div>
                                 @endforeach
                                 <div class="row justify-content-center">
