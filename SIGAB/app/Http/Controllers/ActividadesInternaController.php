@@ -322,7 +322,7 @@ class ActividadesInternaController extends Controller
 
 
     public function destroy($actividadId){
-        //try{
+        try{
 
             $listasAsistencia = $this->obtenerConcurrenciasListas($actividadId);
             $listaEvidencias = $this->obtenerConcurrenciasEvidencias($actividadId);
@@ -355,9 +355,9 @@ class ActividadesInternaController extends Controller
             return redirect(route('actividad-interna.listado'))
                 ->with('mensaje-exito', "La actividad se ha eliminado correctamente.");
 
-        //} catch (\Exception $exception) {
-        //    throw new ControllerFailedException();
-        //}
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
 
     }
     
