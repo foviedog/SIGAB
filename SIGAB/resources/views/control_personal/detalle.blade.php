@@ -247,8 +247,8 @@ $idiomas = [];
                                                     <label for="genero"><strong>Género <i class="text-danger">* </i></strong></label>
                                                     <select id="genero" name="genero" class="form-control w-100" required disabled>
                                                         <option value="" selected>Sin seleccionar</option>
-                                                        <option value="M" @if( $personal->persona->genero == "M" ) selected @endif>Masculino</option>
-                                                        <option value="F" @if( $personal->persona->genero == "F" ) selected @endif>Femenino</option>
+                                                        <option value="M" @if( $personal->persona->genero == "Masc" ) selected @endif>Masculino</option>
+                                                        <option value="F" @if( $personal->persona->genero == "Feme" ) selected @endif>Femenino</option>
                                                         <option value="Otro" @if( $personal->persona->genero == "Otro" ) selected @endif>Otro</option>
                                                     </select>
                                                 </div>

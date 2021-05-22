@@ -298,8 +298,8 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); }
                                                 <div class="form-group">
                                                     <label for="genero"><strong>Género<i class="text-danger">* </i> </strong></label>
                                                     <select id="genero" name="genero" class="form-control w-100" required disabled>
-                                                        <option value="M" @if( $estudiante->persona->genero == "M" ) option selected @endif>Masculino</option>
-                                                        <option value="F" @if( $estudiante->persona->genero == "F" ) option selected @endif>Femenino</option>
+                                                        <option value="M" @if( $estudiante->persona->genero == "Masc" ) option selected @endif>Masculino</option>
+                                                        <option value="F" @if( $estudiante->persona->genero == "Feme" ) option selected @endif>Femenino</option>
                                                         <option value="Otro" @if( $estudiante->persona->genero == "Otro" ) option selected @endif>Otro</option>
                                                     </select>
                                                 </div>
