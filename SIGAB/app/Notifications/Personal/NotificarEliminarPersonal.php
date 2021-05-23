@@ -23,14 +23,15 @@ class NotificarEliminarPersonal extends Notification implements ShouldBroadcast
     public function __construct($personal, $persona_id)
     {
         $persona = Persona::find($persona_id);
+        $personaEliminda = Persona::find($personal->persona_id);
         $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado un miembro del personal.";
-        $url = route('personal.show', $personal->persona_id);
+        $url = route('personal.listar');
         $this->dataSet = [
             'id' => $personal->persona_id,
             'persona_id' => $persona->persona_id,
             'nombre' => $persona->nombre." ".$persona->apellido,
             'imagen_perfil' => $persona->imagen_perfil,
-            'informacion' => "ha eliminado un miembro del personal.",
+            'informacion' => "ha eliminado un miembro del personal: ".$personaEliminda->nombre." ".$personaEliminda->apellido.".",
             'color' => 'roja',
             'icono' => '<i class="fas fa-user-times"></i>',
             'modelo' => 'personal',

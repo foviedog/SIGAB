@@ -23,14 +23,15 @@ class NotificarEliminarEstudiante extends Notification implements ShouldBroadcas
     public function __construct($estudiante, $persona_id)
     {
         $persona = Persona::find($persona_id);
-        $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado un estudiante.";
-        $url = route('estudiante.show', $estudiante->persona_id);
+        $personaEliminda = Persona::find($estudiante->persona_id);
+        $mensaje = $persona->nombre." ".$persona->apellido." ha eliminado un estudiante: ".$estudiante->nombre." ".$estudiante->apellido.".";
+        $url = route('listado-estudiantil');
         $this->dataSet = [
             'id' => $estudiante->persona_id,
             'persona_id' => $persona->persona_id,
             'nombre' => $persona->nombre." ".$persona->apellido,
             'imagen_perfil' => $persona->imagen_perfil,
-            'informacion' => "ha eliminado un estudiante.",
+            'informacion' => "ha eliminado un estudiante: ".$personaEliminda->nombre." ".$personaEliminda->apellido.".",
             'color' => 'roja',
             'icono' => '<i class="fas fa-user-times"></i>',
             'modelo' => 'estudiante',

@@ -83,7 +83,7 @@ function mostrar2Info(boton) {
 
 function evtListarTodo() {
     $("#btn-listar-todo").on("click", function(e) {
-        $("#mensaje").val("");
+        $("#mensaje").val("Listo actualizado");
         $("#form-reload").trigger("submit");
     });
 }

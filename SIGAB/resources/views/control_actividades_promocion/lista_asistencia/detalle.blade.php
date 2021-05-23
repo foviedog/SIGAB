@@ -16,7 +16,7 @@ Asistencia a {{ $actividad->tema }}
 
 @include('control_actividades_promocion.lista_asistencia.info')
 @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-    @include('layouts.messages.confirmar_eliminar')
+@include('layouts.messages.confirmar_eliminar')
 @endif
 
 <div class="card">
@@ -39,10 +39,8 @@ Asistencia a {{ $actividad->tema }}
 
         <form action="{{ route('asistencia-promocion.show', $actividad->id) }}" method="GET" id="form-reload" style="display: none">
             <input type="hidden" id="mensaje" name="mensaje" value="" />
+            <input type="hidden" id="error" name="error" value="" />
         </form>
-
-        {{-- Mensajes sticky --}}
-        @include('layouts.messages.sticky')
 
         <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
 
@@ -229,7 +227,7 @@ Asistencia a {{ $actividad->tema }}
                     </div>
                 </form>
             </div>
-            
+
             <div class="col-6 " id="loader" style="display:none;">
                 <div class="d-flex justify-content-center mt-2 mb-4">
                     <h4 class="texto-rojo-oscuro">Agregando participante a la lista </h4>
@@ -396,6 +394,7 @@ Asistencia a {{ $actividad->tema }}
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
@@ -409,5 +408,28 @@ Asistencia a {{ $actividad->tema }}
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function eliminarParametros() {
+        var url = window.location.href;
+        var indexHref = url.indexOf("?");
+        url = url.substr(0, indexHref)
+        window.history.pushState({}, '', url);
+    }
+
+    @if(!is_null($mensaje))
+    setTimeout(function() {
+        toastr.success("{{ $mensaje }}");
+        eliminarParametros()
+    }, 100);
+    @endif
+
+    @if(!is_null($error))
+    setTimeout(function() {
+        toastr.error("{{ $error }}");
+        eliminarParametros()
+    }, 100);
+    @endif
+
 </script>
+
 @endsection

@@ -54,9 +54,9 @@ class EvidenciaController extends Controller
             else
                 $this->guardarDocumento($request, $evidencia);
 
-            $mensaje = "success";
+            $mensaje = "Evidencia agregada correctamente";
 
-            return redirect()->route('evidencias.show', request()->actividad_id)->with('mensaje', $mensaje);;
+            return redirect()->route('evidencias.show', [request()->actividad_id,"mensaje"=>$mensaje]);
         } catch (\Illuminate\Database\QueryException $ex) {
             return abort(500, 'No se ha podido registrar la evidencia');
         }
@@ -82,10 +82,6 @@ class EvidenciaController extends Controller
         $evidencias = $this->obtenerLista($actividadId, $itemsPagina, $nombreFiltro, $tipoFiltro);
         $actividad = Actividades::find($actividadId);
 
-        if (!is_null($mensaje)) {
-            return redirect()->route('evidencias.show', $actividadId)->with('mensaje', $mensaje);
-        }
-
         return view('evidencias.detalle', [
             'actividad' => $actividad,
             'paginaciones' => $paginaciones,
@@ -94,13 +90,13 @@ class EvidenciaController extends Controller
             'tipo_filtro' => $tipoFiltro,
             'mensaje' => $mensaje,
             'evidencias' => $evidencias,
-            'confirmarEliminar' => 'simple'
+            'confirmarEliminar' => 'simple',
         ]);
     } catch (\Illuminate\Database\QueryException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }    
-     catch (ModelNotFoundException $ex) {  
+    catch (ModelNotFoundException $ex) {  
         return Redirect::back()//se redirecciona a la pagina anteriror
             ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
     }
@@ -147,7 +143,6 @@ class EvidenciaController extends Controller
 
              //Se envía la notificación
             event(new EventEvidencias($evidencia, 1));
-
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;
             $eliminado->eliminado_por = auth()->user()->persona_id;
@@ -156,8 +151,8 @@ class EvidenciaController extends Controller
             $eliminado->save();
 
             $evidencia->delete();
-
-            return redirect()->route('evidencias.show', $request->actividad_id)->with('eliminado', 'Participante eliminado correctamente');
+            $mensaje = "Evidencia eliminada correctamente";
+            return redirect()->route('evidencias.show', [request()->actividad_id,"mensaje"=>$mensaje]);
         
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
@@ -173,7 +168,6 @@ class EvidenciaController extends Controller
     public function download(Request $request, $evidenciaId)
     {
         try{
-
             $evidencia = Evidencia::where('id', $evidenciaId)->first();
             $ruta = 'storage/evidencias/' . $request->actividad_id . '/' . $evidencia->id_repositorio;
             return response()->download(public_path($ruta));

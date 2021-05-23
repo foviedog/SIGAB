@@ -333,9 +333,11 @@ class ActividadesInternaController extends Controller
             $eliminado = new Eliminado;
             $eliminado->eliminado_por = auth()->user()->persona_id;
             $eliminado->elemento_eliminado = 'Actividad interna';
-            $eliminado->titulo = 'Se eleminó la actividad interna '.$actividadId.', sus listas de asistencia y sus evidencias.';
+            $eliminado->titulo = 'Se eliminó la actividad interna '.$actividadId.', sus listas de asistencia y sus evidencias.';
             $eliminado->save();
 
+            //Generar la notificacion
+            event(new EventActividades($actividad, 1, 4));
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();

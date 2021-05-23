@@ -50,7 +50,6 @@ $tiposDocumentos =
                     {{-- Botón para regresar al listado de actividades --}}
                     <a href="{{ route('actividad-promocion.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                     @endif
-
                 @endif
 
                 @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
@@ -70,33 +69,6 @@ $tiposDocumentos =
         <form action="{{ route('evidencias.show',$actividad->id) }}" method="GET" id="form-reload" style="display: none">
             <input type="hidden" id="mensaje" name="mensaje" value="" />
         </form>
-        @php
-        $mensaje = Session::get('mensaje');
-        @endphp
-        @if($mensaje == 'success')
-
-        {{-- Mensaje de exito  --}}
-        <div class="mensaje-container" id="mensaje-info" style="display:none;  ">
-            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style="background-image: url('/img/recursos/iconos/success.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; ">Evidencia agregada correctamente</div>
-        </div>
-        @elseif($mensaje == 'error')
-        {{-- Mensaje de error --}}
-        <div class="mensaje-container" id="mensaje-info" style="display:none; ">
-            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; ">Ocurrió un error al agregar la evidencia</div>
-        </div>
-        @endif
-
-        @if(Session::has('eliminado'))
-        {{-- Mensaje de exito al eliminar una evidencia de la lista --}}
-        <div class="mensaje-container" id="mensaje-info" style="display:none;  ">
-            <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style="background-image: url('/img/recursos/iconos/success.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #046704e8; "> {{ Session::get('eliminado') }} </div>
-        </div>
-        @endif
-
-
 
         <div class="row border-bottom mb-3 pb-2">
 
@@ -105,17 +77,17 @@ $tiposDocumentos =
                     <div class="card-body  ">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-4" id="img-actividad">
-                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 100%">
+                                <div class="col-4 d-flex justify-content-center" id="img-actividad">
+                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 70%">
                                 </div>
-                                <div class="col-7 border-left d-flex align-items-center transicion-padding" id="info-actividad">
-                                    <div class="overflow-auto">
-                                        <span class="my-1" style='width: 134%; '> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
+                                <div class="col-8 border-left d-flex align-items-center transicion-padding" id="info-actividad">
+                                    <div class="w-100 overflow-auto">
+                                        <span class="my-1" style='max-width: 134%; width: max-content; '> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
                                         @if(!is_null($actividad->actividadInterna))
-                                        <span class="my-1" style='width: 134%; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
+                                        <span class="my-1" style='max-width: 134%; width: max-content; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
                                         <span class="my-1"> <strong> Tipo de actividad:</strong> {{$actividad->actividadInterna->tipo_actividad }}</span><br>
                                         @endif
-                                        <span class="my-1" style='width: 120%; '> <strong>Fecha de la actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
+                                        <span class="my-1" style='max-width: 134%; width: max-content;'> <strong>Fecha de la actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
                                         <span class="my-1"> <strong>Estado:</strong></span>
                                         @if ( $actividad->estado == 'Para ejecución' )
                                         <span class=" bg-info text-dark font-weight-bold px-2 rounded">{{ $actividad->estado  }}</span>
@@ -125,11 +97,8 @@ $tiposDocumentos =
                                         <span class=" bg-warning text-dark px-2 rounded">{{ $actividad->estado  }}</span>
                                         @elseif($actividad->estado == 'Ejecutada')
                                         <span class=" bg-success text-white px-2 rounded">{{ $actividad->estado  }}</span>
-
                                         @endif
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -138,11 +107,11 @@ $tiposDocumentos =
                 </div>
             </div>
 
-            <div class="col-6 mb-3 " id="agregar-evidencia-card">
+            <div class="col-6 mb-3 " id="agregar-evidencia-card" style="display: none;">
             @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
                 <form autocomplete="off" method="POST" action="{{ route('evidencias.store') }}" id="form-evidencia" enctype="multipart/form-data">
                     @csrf
-                    <div class="card shadow">
+                    <div class="card shadow" >
                         <div class="card-header ">
                             <div class="s d-flex justify-content-between">
                                 <div>
@@ -184,7 +153,6 @@ $tiposDocumentos =
                                     Los formatos permitidos son: <b>csv, xlx, xls, pdf, docx, rar, zip, 7zip, pptx, ppsx, pptm, jpg , jpeg, png, svg</b>.
                                     <br>El archivo no debe pesar más de <b>30MB</b>.
                                 </span>
-                                <button class="file-upload-btn btn btn-contorno-rojo w-100" type="button" onclick="$('.file-upload-input').trigger( 'click' )">AGREGAR EVIDENCIA</button>
                                 <div class="file-upload-wrap">
                                     <input class="file-upload-input" id="evidencia-file" name="evidencia" type='file' onchange="readURL(this);" />
                                     <div class="drag-text">
@@ -362,9 +330,6 @@ $tiposDocumentos =
         </div>
     </div>
 
-
-    {{-- <embed src="{{ URL::asset('storage/evidencias/1/1615573854_ejemplopdf.pdf')  }}" width="800px" height="800px" /> --}}
-    {{-- <iframe src="http://docs.google.com/gview?url={{ URL::asset('storage/evidencias/1/1615574430_liderazgo.docx')  }}&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe> --}}
 </div>
 
 {{-- </form> --}}
@@ -388,5 +353,12 @@ $tiposDocumentos =
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    //Mensajes de ayuda para el usuario enviados desde el BackEnd
+    @if(!is_null($mensaje))
+    setTimeout(function() {
+        toastr.success("{{ $mensaje }}");
+    }, 100);
+    @endif
 </script>
+
 @endsection

@@ -16,7 +16,6 @@ Asistencia a {{ $actividad->tema }}
 
 @include('control_actividades_internas.lista_asistencia.invitado')
 @include('control_actividades_internas.lista_asistencia.info')
-
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
@@ -30,7 +29,7 @@ Asistencia a {{ $actividad->tema }}
                 {{-- Botón para regresar al listado de actividades --}}
                 <a href="{{ route('actividad-interna.show',$actividad->id ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 @endif
-                
+
                 @if(Accesos::ACCESO_REGISTRAR_PARTICIPANTES())
                 {{-- Boton que habilita opcion de agregar participante --}}
                 <button href="" class="btn btn-rojo" id="btn-agregar-part"> Añadir participante &nbsp; <i class="fas fa-plus-circle"></i> </button>
@@ -39,15 +38,16 @@ Asistencia a {{ $actividad->tema }}
                 @endif
 
                 @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                    @include('layouts.messages.confirmar_eliminar')
+                @include('layouts.messages.confirmar_eliminar')
                 @endif
 
             </div>
         </div>
         <hr>
-        
+
         <form action="{{ route('lista-asistencia.show',$actividad->id) }}" method="GET" id="form-reload" style="display: none">
             <input type="hidden" id="mensaje" name="mensaje" value="" />
+            <input type="hidden" id="error" name="error" value="" />
         </form>
 
         {{-- Mensajes FIXED --}}
@@ -63,16 +63,16 @@ Asistencia a {{ $actividad->tema }}
                         <div class="container-fluid">
                             <div class="row">
 
-                                <div class="col-4" id="img-actividad">
-                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 100%">
+                                <div class="col-3 d-flex justify-content-center align-content-center" id="img-actividad">
+                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="width: 110px;">
                                 </div>
-                                
-                                <div class="col-7 border-left d-flex align-items-center transicion-padding" id="info-actividad">
-                                    
+
+                                <div class="col-9 border-left d-flex align-items-center transicion-padding" id="info-actividad">
+
                                     <div class="overflow-auto">
-                                        <span class="my-1" style='width: 134%; '> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
-                                        <span class="my-1" style='width: 134%; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
-                                        <span class="my-1" style='width: 120%; '> <strong>Fecha de la actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
+                                        <span class="my-1" style='max-width: 134%; width: max-content;'> <strong>Nombre de actividad:</strong> {{ $actividad->tema }}</span> <br>
+                                        <span class="my-1" style='max-width: 134%; width: max-content; '> <strong>Público dirigido:</strong> {{ $actividad->actividadInterna->publico_dirigido  }}</span><br>
+                                        <span class="my-1" style='max-width: 134%; width: max-content; '> <strong>Fecha de la actividad:</strong> {{ $actividad->fecha_inicio_actividad }} <i class="far fa-arrow-alt-circle-right"></i> {{ $actividad->fecha_final_actividad }}</span><br>
                                         <span class="my-1"> <strong> Tipo de actividad:</strong> {{ $actividad->actividadInterna->tipo_actividad }}</span><br>
                                         <span class="my-1"> <strong>Estado:</strong></span>
                                         @if ( $actividad->estado == 'Para ejecución' )
@@ -99,7 +99,7 @@ Asistencia a {{ $actividad->tema }}
             <div class="col-6 " id="agregar-participante-card" style="display:none;">
                 <div class="card shadow">
                     <div class="card-header ">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante </h6>
                             </div>
@@ -108,7 +108,7 @@ Asistencia a {{ $actividad->tema }}
                             </div>
                         </div>
                     </div>
-                    <div class="card-body ">
+                    <div class="card-body pb-0">
 
                         <div class="d-flex justify-content-center ml-4" id="input-buscar-agregar">
                             <div class="input-group w-50">
@@ -124,22 +124,20 @@ Asistencia a {{ $actividad->tema }}
                             <div class="alert alert-danger w-75 text-center" role="alert" id="mensaje-alerta" style="display:none;"></div>
                         </div>
                         <div class="row transicion-opacity" id="tarjeta-participante">
-                            <div class="p-3 w-100 d-flex border-top  mt-3 ">
-                                <div class="col-3">
-                                    <div class="d-flex justify-content-center mb-2">
+                            <div class="w-100 d-flex border-top  mt-3 ">
+                                <div class="col-3 p-4">
+                                    <div class="d-flex justify-content-center">
                                         <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
                                             <img class=" rounded mb-3" id="imagen-participante" style="max-width: 100%;  " />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-5  d-flex justify-content-start align-items-center transicion-opacity" id="info-parti" style="opacity:0;">
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="text-start mb-3">
-                                            <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-participante-card"> </span> <br>
-                                            <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-participante"> </span> <br>
-                                            <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-participante"> </span> <br>
-                                            <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-participante"></span> <br>
-                                        </div>
+                                <div class="col-9  d-flex justify-content-start align-items-center transicion-opacity" id="info-parti" style="opacity:0;">
+                                    <div class="w-100 text-start mb-3">
+                                        <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-participante-card"> </span> <br>
+                                        <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-participante"> </span> <br>
+                                        <strong>Correo institucional: </strong> &nbsp;&nbsp;<span id="correo-participante"> </span> <br>
+                                        <strong>Número de teléfono: </strong> &nbsp;&nbsp;<span id="num-telefono-participante"></span> <br>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +152,7 @@ Asistencia a {{ $actividad->tema }}
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-6 " id="loader" style="display:none;">
                 <div class="d-flex justify-content-center mt-2 mb-4">
                     <h4 class="texto-rojo-oscuro">Agregando participante a la lista </h4>
@@ -293,10 +291,6 @@ Asistencia a {{ $actividad->tema }}
             </div>
         </div>
     </div>
-
-
-
-</div>
 </div>
 
 {{-- </form> --}}
@@ -307,6 +301,7 @@ Asistencia a {{ $actividad->tema }}
 <script>
     // Variable global utilizada para obtener el url de las imágenes con js.
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
+
 </script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
@@ -314,11 +309,33 @@ Asistencia a {{ $actividad->tema }}
 <script src="{{ asset('js/global/subirArchivos.js') }}"></script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
 <script src="{{ asset('js/global/mensajes.js') }}"></script>
-<script type="text/javascript">
+<script type="text/javascript" defer="">
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function eliminarParametros(){
+        var url = window.location.href;
+        var indexHref = url.indexOf("?");
+        url = url.substr(0, indexHref)
+        window.history.pushState({}, '', url);
+    }
+
+    @if(!is_null($mensaje))
+    setTimeout(function() {
+        toastr.success("{{ $mensaje }}");
+        eliminarParametros()
+    }, 100);
+    @endif
+
+    @if(!is_null($error))
+    setTimeout(function() {
+        toastr.error("{{ $error }}");
+        eliminarParametros()
+    }, 100);
+    @endif
+
 </script>
 @endsection

@@ -71,7 +71,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
 
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
-                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $estudiante_insertado->persona->persona_id) }}">
+                        <a clas="btn btn-rojo" href="{{ route('estudiante.show', $estudiante_insertado->persona_id) }}">
                             <input type="button" @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
                         </a>
                         <br>
