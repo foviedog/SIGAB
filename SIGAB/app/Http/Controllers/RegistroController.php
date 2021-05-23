@@ -110,7 +110,7 @@ class RegistroController extends Controller
                 $usuario = User::where('persona_id', '=', $request->persona_id)->first();
 
                 //Se envía la notificación
-                event(new EventUsuarios($usuario, 2));
+                //event(new EventUsuarios($usuario, 2));
 
                 /* Devuelve la página con un mensaje de éxito. */
                 return Redirect::back()
@@ -166,7 +166,7 @@ class RegistroController extends Controller
             $usuario->save();
 
             //Se envía la notificación
-            event(new EventUsuarios($usuario, 3));
+            //event(new EventUsuarios($usuario, 3));
 
             /* Devuelve la página con un mensaje de éxito. */
             return Redirect::back()

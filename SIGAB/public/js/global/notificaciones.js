@@ -1,4 +1,4 @@
-$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
+/*$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
 
 cargarNotificaciones();
 
@@ -69,4 +69,4 @@ function notificationMessage(notification){
 
 function notificationSound(_callback){
     _callback();
-}
+}*/

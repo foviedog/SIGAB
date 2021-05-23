@@ -133,7 +133,7 @@ class EstudianteController extends Controller
             $estudiante->save(); //se guarda el objeto en la base de datos
 
              //Se envía la notificación
-            event(new EventEstudiantes($estudiante, 1));
+            //event(new EventEstudiantes($estudiante, 1));
             //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado
             return view('control_educativo.informacion_estudiantil.registrar')
                 ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
@@ -216,7 +216,7 @@ class EstudianteController extends Controller
             $this->update_avatar($request, $estudiante);
 
             //Se envía la notificación
-            event(new EventEstudiantes($estudiante, 2));
+            //event(new EventEstudiantes($estudiante, 2));
 
             //Se retorna el detalle del estudiante ya modificado
             return redirect("/estudiante/detalle/{$estudiante->persona_id}");
@@ -258,7 +258,7 @@ class EstudianteController extends Controller
                 $estudiante = Estudiante::where('persona_id', $personaId);
 
                 //Se envía la notificación
-                event(new EventEstudiantes($estudiante->first(), 3));
+                //event(new EventEstudiantes($estudiante->first(), 3));
 
                 $guias = Guias_academica::where('persona_id', $personaId);
                 $guias->delete();
@@ -281,7 +281,7 @@ class EstudianteController extends Controller
                 $estudiante = Estudiante::where('persona_id', $personaId);
 
                 //Se envía la notificación
-                event(new EventEstudiantes($estudiante->first(), 3));
+                //event(new EventEstudiantes($estudiante->first(), 3));
 
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();

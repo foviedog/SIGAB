@@ -95,7 +95,7 @@ class GuiasAcademicaController extends Controller
             $guia->save();
 
              //Se envía la notificación
-            event(new EventGuiasAcademicas($guia, 1));
+            //event(new EventGuiasAcademicas($guia, 1));
 
             //Revisa si la guia fue solicitada por un docente
             if ($request->solicitud != $request->persona_id) {
@@ -237,7 +237,7 @@ class GuiasAcademicaController extends Controller
         $guia->save();
 
          //Se envía la notificación
-        event(new EventGuiasAcademicas($guia, 2));
+        //event(new EventGuiasAcademicas($guia, 2));
 
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
@@ -279,7 +279,7 @@ class GuiasAcademicaController extends Controller
         $guia->save();
 
          //Se envía la notificación
-        event(new EventGuiasAcademicas($guia, 2));
+        //event(new EventGuiasAcademicas($guia, 2));
 
         return Redirect::back()
             ->with('mensaje-exito', '¡El archivo se ha borrado exitosamente!');
@@ -376,7 +376,7 @@ class GuiasAcademicaController extends Controller
             }
 
              //Se envía la notificación
-            event(new EventGuiasAcademicas($guia, 3));
+            //event(new EventGuiasAcademicas($guia, 3));
 
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;

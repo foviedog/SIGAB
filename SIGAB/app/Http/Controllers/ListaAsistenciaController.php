@@ -153,7 +153,7 @@ class ListaAsistenciaController extends Controller
                 ->where('actividad_id', $request->actividad_id);
 
              //Se envía la notificación
-            event(new EventListaAsistencia($particioanteId, $request->actividad_id, 1, 1));
+            //event(new EventListaAsistencia($particioanteId, $request->actividad_id, 1, 1));
 
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;

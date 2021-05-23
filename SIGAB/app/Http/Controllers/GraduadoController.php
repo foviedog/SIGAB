@@ -50,7 +50,7 @@ class GraduadoController extends Controller
             $graduado->save();
 
              //Se envía la notificación
-            event(new EventTitulos($graduado, 1));
+            //event(new EventTitulos($graduado, 1));
 
             //se redirecciona a la pagina de registro de guias academicas con un mensaje de exito y los datos específicos del objeto insertado
             return Redirect::back()
@@ -160,7 +160,7 @@ class GraduadoController extends Controller
         $graduacion->save();
 
          //Se envía la notificación
-        event(new EventTitulos($graduacion, 2));
+        //event(new EventTitulos($graduacion, 2));
 
         //Se reedirige a la página anterior con un mensaje de éxito
         return Redirect::back()
@@ -225,7 +225,7 @@ class GraduadoController extends Controller
             $graduacion = Graduado::find($id_graduacion); 
 
              //Se envía la notificación
-            event(new EventTitulos($graduacion, 3));
+            //event(new EventTitulos($graduacion, 3));
 
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;

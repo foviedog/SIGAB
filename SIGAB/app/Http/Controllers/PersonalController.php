@@ -262,7 +262,7 @@ class PersonalController extends Controller
         $personal->save();
 
         //Se envía la notificación
-        event(new EventPersonal($personal, $accion));
+        //event(new EventPersonal($personal, $accion));
     }
 
     // ==============================================================================================================
@@ -336,7 +336,7 @@ class PersonalController extends Controller
                 $personal = Personal::where('persona_id', $personaId);
 
                 //Se envía la notificación
-                event(new EventPersonal($personal->first(), 3));
+                //event(new EventPersonal($personal->first(), 3));
 
                 $idiomas = Idioma::where('persona_id', $personaId);
                 $idiomas->delete();
@@ -356,7 +356,7 @@ class PersonalController extends Controller
                 $personal = Personal::where('persona_id', $personaId);
 
                 //Se envía la notificación
-                event(new EventPersonal($personal->first(), 3));
+                //event(new EventPersonal($personal->first(), 3));
 
                 $usuario = User::where('persona_id', $personaId);
                 $usuario->delete();

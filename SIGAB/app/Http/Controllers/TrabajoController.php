@@ -101,7 +101,7 @@ class TrabajoController extends Controller
             $trabajo->save();
 
              //Se envía la notificación
-            event(new EventTrabajos($trabajo, 1));
+            //event(new EventTrabajos($trabajo, 1));
 
             //Se reedirige a la página anterior con la información digitada un mensaje de éxito
             return Redirect::back()
@@ -147,7 +147,7 @@ class TrabajoController extends Controller
             $trabajo->save();
 
              //Se envía la notificación
-            event(new EventTrabajos($trabajo, 2));
+            //event(new EventTrabajos($trabajo, 2));
 
             //Se reedirige a la página anterior con un mensaje de éxito
             return Redirect::back()
@@ -165,7 +165,7 @@ class TrabajoController extends Controller
             $trabajo = Trabajo::find($id_trabajo);
             
              //Se envía la notificación
-            event(new EventTrabajos($trabajo, 3));
+            //event(new EventTrabajos($trabajo, 3));
 
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;

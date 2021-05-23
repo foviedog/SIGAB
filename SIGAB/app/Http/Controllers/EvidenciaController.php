@@ -142,7 +142,7 @@ class EvidenciaController extends Controller
             }
 
              //Se envía la notificación
-            event(new EventEvidencias($evidencia, 1));
+            //event(new EventEvidencias($evidencia, 1));
             //Se guarda el registro en la tabla de eliminados
             $eliminado = new Eliminado;
             $eliminado->eliminado_por = auth()->user()->persona_id;

@@ -72,7 +72,7 @@ class LoginController extends Controller
 
 
              //Se envía la notificación
-            event(new EventUsuarios($user, 1));
+            //event(new EventUsuarios($user, 1));
 
         } catch (\Illuminate\Database\QueryException $ex) {  
             return redirect()->route('login')

@@ -109,10 +109,10 @@ class ActividadesPromocionController extends Controller
             //Mensaje dependiendo del acceso
             if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()){
                 $mensaje = "¡El registro ha sido exitoso!";
-                event(new EventActividades($actividad, 2, 2));
+                //event(new EventActividades($actividad, 2, 2));
             } else {
                 $mensaje = "¡La actividad fue enviada para autorización correctamente! Puede verificar la actividad en el listado de Mis actividades que encontrará en el perfil personal";
-                event(new EventActividades($actividad, 2, 1));
+                //event(new EventActividades($actividad, 2, 1));
             }
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
@@ -188,7 +188,7 @@ class ActividadesPromocionController extends Controller
 
             $actividad_promocion->save(); //se guarda el objeto en la base de datos
 
-            event(new EventActividades($actividad, 2, 3));
+            //event(new EventActividades($actividad, 2, 3));
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/detalle-actividad-promocion/{$actividad->id}")
@@ -272,7 +272,7 @@ class ActividadesPromocionController extends Controller
             $actividad->autorizada = 1;
             $actividad->save(); //se guarda el objeto en la base de datos
 
-            event(new EventActividades($actividad, 2, 2));
+            //event(new EventActividades($actividad, 2, 2));
 
             //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
             return redirect("/detalle-actividad-promocion/{$actividad->id}")
@@ -314,7 +314,7 @@ class ActividadesPromocionController extends Controller
             $eliminado->save();
 
             //Generar la notificacion
-            event(new EventActividades($actividad, 2, 4));
+            //event(new EventActividades($actividad, 2, 4));
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();

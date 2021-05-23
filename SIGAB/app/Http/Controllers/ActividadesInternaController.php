@@ -146,10 +146,10 @@ class ActividadesInternaController extends Controller
             //Mensaje y notificación dependiendo del acceso
             if (Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {
                 $mensaje = "¡El registro ha sido exitoso!";
-                event(new EventActividades($actividad, 1, 2));
+                //event(new EventActividades($actividad, 1, 2));
             } else {
                 $mensaje = "¡La actividad fue enviada para autorización correctamente! Puede verificar la actividad en el listado de Mis actividades que encontrará en el perfil personal";
-                event(new EventActividades($actividad, 1, 1));
+                //event(new EventActividades($actividad, 1, 1));
             }
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
@@ -211,7 +211,7 @@ class ActividadesInternaController extends Controller
             $actividad_interna->save(); //se guarda el objeto en la base de datos
 
             //Generar la notificacion
-            event(new EventActividades($actividad, 1, 3));
+            //event(new EventActividades($actividad, 1, 3));
 
             //se redirecciona a la pagina de registro de actividad con un mensaje de exito
             return redirect("/detalle-actividad-interna/{$actividad->id}")
@@ -294,7 +294,7 @@ class ActividadesInternaController extends Controller
             $actividad->save(); //se guarda el objeto en la base de datos
 
             //Generar la notificacion
-            event(new EventActividades($actividad, 1, 2));
+            //event(new EventActividades($actividad, 1, 2));
 
             //se redirecciona a la pagina del detalle de la actividad con un mensaje de exito
             return redirect("/detalle-actividad-interna/{$actividad->id}")
@@ -337,7 +337,7 @@ class ActividadesInternaController extends Controller
             $eliminado->save();
 
             //Generar la notificacion
-            event(new EventActividades($actividad, 1, 4));
+            //event(new EventActividades($actividad, 1, 4));
 
             foreach($listasAsistencia as $lista){
                 $lista->delete();
