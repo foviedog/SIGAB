@@ -195,13 +195,13 @@ Asistencia a {{ $actividad->tema }}
                                 <div class="col-md-6 d-flex justify-content-end">
                                     <div class="d-flex justify-content-end w-50">
                                         <div class="text-md-right dataTables_filter input-group mb-3 ">
-                                            {{-- Input para realizar la búsqueda del estudiante --}}
+                                            {{-- Input para realizar la búsqueda del participante --}}
                                             <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
 
-                                            &nbsp;&nbsp; <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
+                                            &nbsp;&nbsp; <input type="search" class="form-control form-control-md" aria-controls="dataTable" placeholder="Búsqueda del participante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
                                         </div>
                                     </div>
-                                    {{-- Botón de submit para realizar la búsqueda del estudiante --}}
+                                    {{-- Botón de submit para realizar la búsqueda del participante --}}
                                     <div>
                                         <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                                     </div>

@@ -262,7 +262,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             let aux = new Date(atributo);
             x.push(meses[aux.getMonth()] + " del " + aux.getFullYear());
             y.push(dataSet[atributo]);
-            total++;
+            total+= dataSet[atributo];
         }
     }
 

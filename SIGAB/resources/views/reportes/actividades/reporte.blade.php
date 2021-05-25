@@ -8,6 +8,8 @@
 <head>
     <meta charset="utf-8">
     <title>Reporte</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plantilla/global.css') }}" rel="stylesheet">
 </head>
 
 <style>
@@ -48,13 +50,13 @@
 
     .logo1 {
         display: block;
-        width: 110px;
+        width: 160px;
         height: auto;
     }
 
     .logo2 {
         display: block;
-        width: 150px;
+        width: 110px;
         height: auto;
     }
 
@@ -111,6 +113,7 @@
         margin: auto;
         padding: 2rem;
         box-shadow: 0px 0px 7px 0px #cfcfcf;
+        background-color: white;
     }
 
     .titulo {
@@ -126,9 +129,9 @@
 <body>
     <div class="sheet-format" id="sheet-format">
         <header>
-            <div class="header-wrapper">
-                <img class="logo1" src="{{ $logoUNA }}">
-                <img class="logo2" src="{{ $logoEBDI }}" style="">
+            <div class="d-flex justify-content-between align-items-center my-3">
+                <img class="logo1" src="{{ URL::asset('img/logoUNA-Blanco.png') }}">
+                <img class="logo2" src="{{ URL::asset('img/logoEBDI.png') }}" style="">
             </div>
         </header>
         <div class="container-body">
