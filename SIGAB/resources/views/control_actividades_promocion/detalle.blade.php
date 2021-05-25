@@ -32,26 +32,14 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
         {{-- Mensajes FIXED --}}
         <div class="mensaje-container" id="mensaje-alerta" style="display:none;">
             <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
-            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; ">  </div>
+            <div class="col-9 texto-mensaje d-flex align-items-center text-center" id="texto-mensaje" style="color: #b30808e8; "> </div>
         </div>
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
                 <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
 
-                @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
-                @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
-                {{-- Botón para autorizar actividad --}}
-                <form action="{{ route('actividad-promocion.autorizar') }}" method="POST" enctype="multipart/form-data" id="form-guardar">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
-                    <button type="submit" class="btn btn-info ml-4"><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
-                </form>
-                @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
-                <button class="btn btn-success ml-4" disabled><i class="fas fa-check-double"></i> &nbsp; Actividad autorizada </button>
-                @endif
-                @endif
+
 
             </div>
             {{-- Botones superiores --}}
@@ -87,6 +75,16 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                 <a class="nav-link" id="info-esp-tab" href="#">Información específica</a>
             </li>
         </ul>
+        @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+        @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+        {{-- Botón para autorizar actividad --}}
+        <form action="{{ route('actividad-promocion.autorizar') }}" id="submit-autorizar" method="POST" enctype="multipart/form-data" id="form-guardar">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad">
+        </form>
+        @endif
+        @endif
 
         @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
         {{-- Formulario general de actualización de datos de actividad --}}
@@ -100,7 +98,17 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab" role="tabpanel">
 
-                    <div class="row d-flex justify-content-end mt-4 px-3">
+                    <div class="row d-flex justify-content-between mt-4 px-3">
+                        <div class="">
+                            @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+                            @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+                            {{-- Botón para autorizar actividad --}}
+                                <button type="button" class="btn btn-info ml-4" onclick='$("#submit-autorizar").trigger("submit")''><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
+                            @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
+                            <button class="btn btn-success ml-4" disabled><i class="fas fa-check-double"></i> &nbsp; Actividad autorizada </button>
+                            @endif
+                            @endif
+                        </div>
                         <div>
                             @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
                             <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light mr-3"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
@@ -232,7 +240,6 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                         </div>
                     </div>
 
-
                     {{-- Facilitador y coordinador --}}
                     <div class="row my-4 px-3">
                         <div class="card w-100">
@@ -331,7 +338,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                     <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
                                                     Descripcion &nbsp;&nbsp
-                                                    <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad">
+                                                    <span data-toggle="tooltip" data-placement="right" title="Información que incluye una síntesis de los resultados de cada actividad con datos de: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
                                                         <i class="far fa-question-circle fa-lg"></i>
                                                     </span>
                                                 </p>
@@ -359,7 +366,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                         <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
                                                         Evaluación &nbsp;&nbsp
 
-                                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
+                                                        <span data-toggle="tooltip" data-placement="right" title="Información sobre los resultados de la evaluación de los participantes a cada actividad. La evaluación se realiza al final de cada actividad mediante un formulario digital u otro instrumento que se define como parte de la planificación de las actividades.">
                                                             <i class="far fa-question-circle fa-lg"></i>
                                                         </span>
                                                     </p>

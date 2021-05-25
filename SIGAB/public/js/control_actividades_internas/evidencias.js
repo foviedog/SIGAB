@@ -112,6 +112,7 @@ function obtenerVideoId(videoUrl) {
     var pos = videoUrl.search("v=");
     var videoID = videoUrl.slice(pos + 2, videoUrl.length);
     pos = videoID.search("&");
+    if(pos == -1) pos = videoUrl.length;
     videoID = videoID.slice(0, pos);
     return videoID;
 }

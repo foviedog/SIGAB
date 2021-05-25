@@ -399,7 +399,7 @@ Fin de la paleta de colores
     position: fixed;
     background: #0000005c;
     background-image: linear-gradient(315deg, #0000005c 0%, #00000041 74%);
-    z-index: 1000;
+    z-index: 9999;
     cursor: wait;
 }
 
@@ -988,12 +988,18 @@ Tabla reporte anual
 ===============================
  */
 
+
 .w-5 {
     width: 5% !important;
 }
 
 .w-90 {
     width: 90% !important;
+}
+
+.w-lg-60{
+    max-width: 60%;
+    width: 60%;
 }
 
 input[type="checkbox"] {
@@ -1017,6 +1023,10 @@ input[type="checkbox"] {
  */
 
 @media (max-width: 1500px) {
+    .w-md-100{
+        max-width: 100%;
+        width: 100%;
+    }
     .header-perfil {
         flex-direction: column;
     }
@@ -1027,6 +1037,7 @@ input[type="checkbox"] {
         flex: 0 0 33.3333333333%;
         max-width: 33.3333333333%;
     }
+
 }
 
 @media (min-width: 992px) {
