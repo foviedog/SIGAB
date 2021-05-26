@@ -20,7 +20,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-rojo" id="button-submit-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                        <button type="submit" class="btn btn-rojo" id="button-submit-eliminar" onclick="activarLoader('Generando datos');"  ><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                            <button class="btn btn-rojo" id="button-submit-eliminar" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                            <button class="btn btn-rojo" id="button-submit-eliminar" disabled onclick="activarLoader('Generando datos');"  ><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                        <a class="btn btn-rojo disabled" id="button-submit-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                        <a class="btn btn-rojo disabled" id="button-submit-eliminar" onclick="activarLoader('Generando datos');"  ><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
                     </div>
                 </div>
             </div>
@@ -202,7 +202,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                            <button class="btn btn-rojo" id="button-submit-eliminar" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                            <button class="btn btn-rojo" id="button-submit-eliminar" disabled onclick="activarLoader('Generando datos');"  ><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                         </div>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>
-                            <button class="btn btn-rojo" id="button-submit-eliminar" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                            <button class="btn btn-rojo" id="button-submit-eliminar" disabled onclick="activarLoader('Generando datos');"  ><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
                         </div>
                     </div>
                 </div>

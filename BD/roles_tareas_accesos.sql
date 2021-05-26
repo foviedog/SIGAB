@@ -281,7 +281,6 @@ insert into accesos(rol_id, tarea_id) values (7, 45);
 insert into accesos(rol_id, tarea_id) values (7, 46);
 insert into accesos(rol_id, tarea_id) values (7, 47);
 insert into accesos(rol_id, tarea_id) values (7, 48);
-
 -- PROCEDIMIENTO PARA INGRESAR TODOS LOS ACCESOS A UN ROL
 
 DROP PROCEDURE IF EXISTS sigab.INSERTAR_TODAS_LAS_TAREAS;

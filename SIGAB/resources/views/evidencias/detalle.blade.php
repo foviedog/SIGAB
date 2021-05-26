@@ -39,17 +39,17 @@ $tiposDocumentos =
             <div>
                 @if(!is_null($actividad->actividadInterna))
 
-                    @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
-                    {{-- Botón para regresar al listado de actividades --}}
-                    <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
-                    @endif
+                @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
+                {{-- Botón para regresar al listado de actividades --}}
+                <a href="{{ route('actividad-interna.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @endif
 
                 @else
 
-                    @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
-                    {{-- Botón para regresar al listado de actividades --}}
-                    <a href="{{ route('actividad-promocion.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
-                    @endif
+                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
+                {{-- Botón para regresar al listado de actividades --}}
+                <a href="{{ route('actividad-promocion.show',$actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
+                @endif
                 @endif
 
                 @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
@@ -58,7 +58,7 @@ $tiposDocumentos =
                 @endif
 
                 @if(Accesos::ACCESO_ELIMINAR_EVIDENCIAS_ACTIVIDADES())
-                    @include('layouts.messages.confirmar_eliminar')
+                @include('layouts.messages.confirmar_eliminar')
                 @endif
 
 
@@ -77,8 +77,10 @@ $tiposDocumentos =
                     <div class="card-body  ">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-4 d-flex justify-content-center" id="img-actividad">
-                                    <img src="{{ asset('img/logoEBDI.png') }}" class="transicion-max-width" id="logo-EBDI" alt="logo_ebdi" class="" style="max-width: 70%">
+                                <div class="col-4 d-flex justify-content-center align-items-center" id="img-actividad">
+                                    <div class="w-lg-60 w-md-100">
+                                        <img src="{{ asset('img/logoEBDI.png') }}" class="w-100" id="logo-EBDI" alt="logo_ebdi">
+                                    </div>
                                 </div>
                                 <div class="col-8 border-left d-flex align-items-center transicion-padding" id="info-actividad">
                                     <div class="w-100 overflow-auto">
@@ -108,10 +110,10 @@ $tiposDocumentos =
             </div>
 
             <div class="col-6 mb-3 " id="agregar-evidencia-card" style="display: none;">
-            @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
+                @if(Accesos::ACCESO_REGISTRAR_EVIDENCIA())
                 <form autocomplete="off" method="POST" action="{{ route('evidencias.store') }}" id="form-evidencia" enctype="multipart/form-data">
                     @csrf
-                    <div class="card shadow" >
+                    <div class="card shadow">
                         <div class="card-header ">
                             <div class="s d-flex justify-content-between">
                                 <div>
@@ -213,7 +215,7 @@ $tiposDocumentos =
                                         <div class="input-group text-md-right dataTables_filter  mb-3 ">
                                             {{-- Input para realizar la búsqueda del archivo --}}
                                             <div class="input-group mb-2">
-                                                <input type="text" class="form-control w-50" id="nombre_filtro" name="nombre_filtro" placeholder="Nombre de la evidencia." value="{{ $nombre_filtro ?? "" }}">
+                                                <input type="search" class="form-control w-50" id="nombre_filtro" name="nombre_filtro" placeholder="Nombre de la evidencia." value="{{ $nombre_filtro ?? "" }}">
                                                 <select name="tipo_filtro" id="tipo_filtro" class="custom-select w-25">
                                                     <option value=""> Todos los tipos </option>
                                                     @foreach($tiposDocumentos as $tipo => $icono)
@@ -228,7 +230,7 @@ $tiposDocumentos =
                                     </div>
                                     {{-- Botón de submit para realizar la búsqueda del archivo --}}
                                     <div>
-                                        <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                                        <button class="btn btn-rojo ml-3" type="submit" onclick="activarLoader('Realizando búsqueda');">Buscar &nbsp;<i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-md-2 ">
@@ -342,23 +344,36 @@ $tiposDocumentos =
     var fotosURL = " {{ URL::asset('img/fotos/') }}";
     var iconosURL = "{{ URL::asset('img/recursos/iconos/') }}";
     var storageURL = "{{ URL::asset('storage/evidencias/'. $actividad->id . '/') }}";
+
 </script>
+
 <script src="{{ asset('js/control_actividades_internas/evidencias.js') }}"></script>
 <script src="{{ asset('js/global/subirArchivos.js') }}"></script>
 <script src="{{ asset('js/global/mensajes.js') }}"></script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
-<script type="text/javascript">
+<script type="text/javascript" defer="">
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function eliminarParametros() {
+        var url = window.location.href;
+        var indexHref = url.indexOf("?");
+        url = url.substr(0, indexHref)
+        window.history.pushState({}, '', url);
+    }
     //Mensajes de ayuda para el usuario enviados desde el BackEnd
-    @if(!is_null($mensaje))
-    setTimeout(function() {
-        toastr.success("{{ $mensaje }}");
-    }, 100);
-    @endif
+    $(document).ready(function() {
+        @if(!is_null($mensaje))
+        setTimeout(function() {
+            toastr.success("{{ $mensaje }}");
+            eliminarParametros()
+        }, 200);
+        @endif
+    });
+
 </script>
 
 @endsection

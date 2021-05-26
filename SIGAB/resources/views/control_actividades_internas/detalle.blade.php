@@ -363,11 +363,11 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                         style="display: show;"
                                         @endif
                                         >
-                                        <div class="w-75 p-3 d-flex border-top justify-content-center">
-                                            <div class="col-3">
-                                                <div class="d-flex justify-content-center mb-2">
-                                                    <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                        <img class="rounded mb-3" id="imagen-facilitador" @if(!is_null($actividad->actividadInterna->personalFacilitador))src="{{ URL::asset('img/fotos/') }}/{{ $actividad->actividadInterna->personalFacilitador->persona->imagen_perfil ?? "" }}" @endif style="max-width: 100%; " />
+                                        <div class="w-75 p-3 d-flex border-top justify-content-center align-items-center">
+                                            <div class="col-3 p-0">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="w-md-100 overflow-hidden rounded " >
+                                                        <img class="rounded " id="imagen-facilitador" @if(!is_null($actividad->actividadInterna->personalFacilitador))src="{{ URL::asset('img/fotos/') }}/{{ $actividad->actividadInterna->personalFacilitador->persona->imagen_perfil ?? "" }}" @endif style="max-width: 100%; " />
                                                     </div>
                                                 </div>
                                             </div>
@@ -414,16 +414,16 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                     </div>
                                     {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
                                     <div class="row justify-content-center pb-3" id="responsable-info">
-                                        <div class="w-75 p-3 d-flex border-top justify-content-center">
-                                            <div class="col-3">
+                                        <div class="w-75 p-3 d-flex border-top justify-content-center align-items-center" >
+                                            <div class="col-3 p-0">
                                                 <div class="d-flex justify-content-center mb-2">
-                                                    <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                        <img class="rounded mb-3" id="imagen-responsable" src="{{ URL::asset('img/fotos/') }}/{{ $actividad->responsableCoordinar->persona->imagen_perfil }}" style="max-width: 100%; max-height:  100%; " />
+                                                    <div class="w-md-100 overflow-hidden rounded " >
+                                                        <img class="rounded" id="imagen-responsable" src="{{ URL::asset('img/fotos/') }}/{{ $actividad->responsableCoordinar->persona->imagen_perfil }}" style="max-width: 100%; max-height:  100%; " />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-9  d-flex justify-content-start align-items-center ">
-                                                <div class="d-flex justify-content-start align-items-center w-100">
+                                                <div class="d-flex w-100 justify-content-start align-items-center ">
                                                     <div class="text-start mb-3">
                                                         <strong>Persona id:</strong> &nbsp;&nbsp;<span id="cedula-responsable-card"> {{ $actividad->responsableCoordinar->persona_id }}</span> <br>
                                                         <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre-responsable">{{ $actividad->responsableCoordinar->persona->nombre." " . $actividad->responsableCoordinar->persona->apellido}} </span> <br>
@@ -505,7 +505,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                     <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
                                                     Descripcion &nbsp;&nbsp
-                                                    <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad">
+                                                    <span data-toggle="tooltip" data-placement="right" title="Información que incluye una síntesis de los resultados de cada actividad con datos de: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
                                                         <i class="far fa-question-circle fa-lg"></i>
                                                     </span>
                                                 </p>
@@ -531,7 +531,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                     <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                         <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
                                                         Evaluación &nbsp;&nbsp
-                                                        <span data-toggle="tooltip" data-placement="right" title="Se ingresa una evaluación o comentario sobre la actividad">
+                                                        <span data-toggle="tooltip" data-placement="right" title="Información sobre los resultados de la evaluación de los participantes a cada actividad. La evaluación se realiza al final de cada actividad mediante un formulario digital u otro instrumento que se define como parte de la planificación de las actividades.">
                                                             <i class="far fa-question-circle fa-lg"></i>
                                                         </span>
 
