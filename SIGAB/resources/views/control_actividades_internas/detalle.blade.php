@@ -42,7 +42,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
             <div>
                 @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
                 {{-- Botón para regresar al listado de actividades --}}
-                <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-interna.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                 @endif
                 @if(Accesos::ACCESO_ELIMINAR_ACTIVIDADES())
                 {{-- Boton para eliminar el personal --}}
@@ -57,7 +57,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
 
 
 
-                
+
             </div>
         </div>
         <hr>
@@ -154,7 +154,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                     <div class="w-90">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text text-dark">Lugar: <i class="text-danger">*</i></span>
+                                                <span class="input-group-text text-dark">Lugar: </span>
                                             </div>
                                             <input type='text' class="form-control" id="lugar" name="lugar" value="{{ $actividad->lugar }}" onkeyup=" contarCaracteres(this,60)" disabled>
                                             <div class="input-group-append">
@@ -174,7 +174,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rangoFechas ?? null }}" disabled required>
                                             <div class="input-group-append">
                                                 <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);" disabled><i class="fas fa-calendar-times fa-lg"></i></button>
-                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad. Presione 'Apply' para insertar las fechas seleccionadas. De ser un único día, presion dos veces el día seleccionado y posteriormente 'Apply'. Para eliminar le fecha seleccionada presione 'Clear'" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
                                             <div class=" w-5">
                                             </div>
@@ -233,7 +233,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-dark">Certificación:</span>
                                             </div>
-                                            <input class="form-control" type='text' name="certificacion_actividad" id="certificacion_actividad" value="{{ $actividad->certificacion_actividad }}" onkeyup="contarCaracteres(this,100)" disabled>
+                                            <input class="form-control" type='text' name="certificacion_actividad" id="certificacion_actividad" value="{{$actividad->actividadInterna->certificacion_actividad}}" onkeyup="contarCaracteres(this,100)" disabled>
                                             <div class="input-group-append">
                                                 <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="En este espacio se ingresa si la actividad ofrece certificación o no, si se conoce el título de la certificación puede ingresarlo" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
@@ -366,7 +366,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                         <div class="w-75 p-3 d-flex border-top justify-content-center align-items-center">
                                             <div class="col-3 p-0">
                                                 <div class="d-flex justify-content-center">
-                                                    <div class="w-md-100 overflow-hidden rounded " >
+                                                    <div class="w-md-100 overflow-hidden rounded ">
                                                         <img class="rounded " id="imagen-facilitador" @if(!is_null($actividad->actividadInterna->personalFacilitador))src="{{ URL::asset('img/fotos/') }}/{{ $actividad->actividadInterna->personalFacilitador->persona->imagen_perfil ?? "" }}" @endif style="max-width: 100%; " />
                                                     </div>
                                                 </div>
@@ -414,10 +414,10 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                     </div>
                                     {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
                                     <div class="row justify-content-center pb-3" id="responsable-info">
-                                        <div class="w-75 p-3 d-flex border-top justify-content-center align-items-center" >
+                                        <div class="w-75 p-3 d-flex border-top justify-content-center align-items-center">
                                             <div class="col-3 p-0">
                                                 <div class="d-flex justify-content-center mb-2">
-                                                    <div class="w-md-100 overflow-hidden rounded " >
+                                                    <div class="w-md-100 overflow-hidden rounded ">
                                                         <img class="rounded" id="imagen-responsable" src="{{ URL::asset('img/fotos/') }}/{{ $actividad->responsableCoordinar->persona->imagen_perfil }}" style="max-width: 100%; max-height:  100%; " />
                                                     </div>
                                                 </div>
@@ -504,7 +504,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="card-header py-3">
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                     <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
-                                                    Descripcion &nbsp;&nbsp
+                                                    Descripción &nbsp;&nbsp
                                                     <span data-toggle="tooltip" data-placement="right" title="Información que incluye una síntesis de los resultados de cada actividad con datos de: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
                                                         <i class="far fa-question-circle fa-lg"></i>
                                                     </span>
