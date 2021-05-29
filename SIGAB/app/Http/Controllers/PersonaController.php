@@ -100,6 +100,31 @@ class PersonaController extends Controller
         return \Redirect::back();
     }
 
+    public function marcarTodasLeido(){
+        $notificacion = auth()->user()->unreadNotifications->markAsRead();
+        return \Redirect::back();
+    }
+
+    public function eliminarNotificacion($idNotificacion){
+
+        $notificacion = auth()->user()->readNotifications
+        ->where('id', '=',$idNotificacion)->first();
+        $notificacion->delete();
+
+        return \Redirect::back();
+    }
+
+    public function eliminarTodasNotificaciones(){
+
+        $notificaciones = auth()->user()->readNotifications;
+
+        foreach($notificaciones as $notificacion){
+            $notificacion->delete();
+        }
+
+        return \Redirect::back();
+    }
+
     public function obtenerNotificaciones(){
         $notificaciones = auth()->user()->unreadNotifications()->limit(5)->get();
         $cantidad = auth()->user()->unreadNotifications()->groupBy('notifiable_type')->count();

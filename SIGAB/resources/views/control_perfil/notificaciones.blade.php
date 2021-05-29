@@ -51,6 +51,10 @@ Notificaciones
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="sin-leer" role="tabpanel" aria-labelledby="sin-leer-tab">
                             <div class="container">
+                                <div class="d-flex justify-content-between mb-5 mr-5">
+                                    <div></div>
+                                    <a href="{{ route('perfil.notifications.allread') }}" class="btn btn-contorno-azul-una btn-sm mr-2"><i class="fas fa-check-circle"></i> Marcar todas como leído</a>
+                                </div>
 
                                 @if(count($notificacionesNoLeidas) == 0)
                                 <div class="cursor-pointer">
@@ -91,6 +95,11 @@ Notificaciones
 
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="d-flex justify-content-between mb-5 mr-5">
+                                <div></div>
+                                <a href="{{ route('perfil.notifications.deleteall') }}" class="btn btn-contorno-rojo btn-sm mr-2"><i class="fas fa-times-circle"></i> Eliminar todas las notificaciones</a>
+                            </div>
+
                             @if(count($notificacionesLeidas) == 0)
                             <div class="row mt-2 mx-5 border-bottom pb-3 d-flex justify-content-center align-items-center">
                                 <i class="text-danger fas fa-exclamation-circle fa-lg">
@@ -115,6 +124,9 @@ Notificaciones
                                 </div>
                                 <div class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
                                     <div class="btn btn-contorno-rojo">Detalle</div>
+                                </div>
+                                <div class="col-1">
+                                    <a href="{{ route('perfil.notifications.delete', $notificacion->id) }}" class="btn btn-contorno-rojo btn-sm"><i class="fas fa-times-circle"></i></a>
                                 </div>
                             </div>
                             @endforeach
