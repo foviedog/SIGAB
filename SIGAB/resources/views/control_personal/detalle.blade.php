@@ -280,7 +280,7 @@ $idiomas = [];
                                     <div class="card-header py-3">
                                         <p class="texto-rojo-medio m-0 font-weight-bold ">Información Personal</p>
                                     </div>
-                                    <div class="card-body" style="height: 936px;">
+                                    <div class="card-body" style="min-height: 936px;">
 
                                         {{-- Campo: Fecha Nacimiento --}}
                                         <div class="form-row">
