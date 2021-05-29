@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Events\EventTitulos;
 use App\Exceptions\ControllerFailedException;
+use App\Helper\GlobalFunctions;
 use App\Graduado;
 use App\Persona;
 use App\Estudiante;

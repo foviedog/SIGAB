@@ -6,7 +6,9 @@ $("#mensaje-exito").fadeTo(2000, 500).slideUp(500, function () {
 /* Botón cancelar y cerrar campos */
 function cancelarEdicion() {
     $("input").attr('disabled', "disabled");
-    $("select").attr('disabled', "disabled");
+    $("#ciclo_lectivo").attr('disabled', "disabled");
+    $("#anio").attr('disabled', "disabled");
+    $("#nombre_curso").attr('disabled', "disabled");
     $('#terminar-edicion').hide();
     $('#cancelar-edicion').hide();
     $('#habilitar-edicion').show();
@@ -52,7 +54,9 @@ $('#terminar-edicion').hide();
 
 $('#habilitar-edicion').on('click', function () {
     $("input").removeAttr('disabled');
-    $("select").removeAttr('disabled');
+    $("#ciclo_lectivo").removeAttr('disabled');
+    $("#anio").removeAttr('disabled');
+    $("#nombre_curso").removeAttr('disabled');
     $('#terminar-edicion').show();
     $('#cancelar-edicion').show();
     $('#habilitar-edicion').hide();
@@ -60,7 +64,9 @@ $('#habilitar-edicion').on('click', function () {
 
 $('#cancelar-edicion').on('click', function () {
     $("input").attr('disabled',"disabled");
-    $("select").attr('disabled', "disabled");
+    $("#ciclo_lectivo").attr('disabled', "disabled");
+    $("#anio").attr('disabled', "disabled");
+    $("#nombre_curso").attr('disabled', "disabled");
     $('#terminar-edicion').hide();
     $('#cancelar-edicion').hide();
     $('#habilitar-edicion').show();

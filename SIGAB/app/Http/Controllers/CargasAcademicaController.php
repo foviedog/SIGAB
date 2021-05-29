@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use App\Helper\GlobalArrays;
+use App\Helper\GlobalFunctions;
 use App\Exceptions\ControllerFailedException;
 use App\Cargas_academica;
 use App\Personal;
@@ -15,29 +17,68 @@ class CargasAcademicaController extends Controller
 {
     public function index($id_personal)
     {
-        try{
-
+       // try{
+            // Array que devuelve los items que se cargan por página
+            $paginaciones = [5, 10, 25, 50];
             // Personal al que se le quiere añadir una carga académica
-            $personal = Personal::findOrFail($id_personal);
 
-            // Cargas académicas por Personal
-            $cargas_academicas = Cargas_academica::where('persona_id', $id_personal)->get();
+                    //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+            //request se setea por defecto en 2 por página
+            $itemsPagina = request('itemsPagina', 25);
+
+            //Se recibe del request el valor de anio, y se le asigna a la variable ciclo par realizar el filtro. Si dicho valor no está seteado se pone en NULL
+            $anio = request('anioFiltro', NULL);
+
+            $personal = Personal::findOrFail($id_personal);
 
             //Lista de cursos
             $cursos = GlobalArrays::CURSOS;
+
+        //En caso de que el filtro de ciclo lectivo se encuentre dentro del request entonces se realiza un búsqueda en la base de datos con dichos datos.
+        if (!is_null($anio) && $anio != ' ') {
+            $cargas_academicas = $this->filtroAnio($anio, $id_personal, $itemsPagina); //Retorna la lista de Cargas académicas  con respecto a las fechas especificadas
+        }  else { //Si no se adjunta ningún filtro de búsqueda se devuelve un listado de Cargas académicas por Personal
+            $cargas_academicas = $this->obtenerCargas($itemsPagina, $id_personal);  //Retorna la lista de Cargas académicas segun ese personal      
+        }
 
             //Se devuelve la vista
             return view('control_personal.carga_academica.listado', [
                 'personal' => $personal, // Personal
                 'cargas_academicas' => $cargas_academicas, // Cargas académicas
+                'paginaciones' => $paginaciones, // Listado de items de paginaciones.
+                'itemsPagina' => $itemsPagina, // Item que se desean por página.
+                'anio' => $anio, // Valor del filtro de año de graduación
                 'cursos' => $cursos, //Cursos
                 'confirmarEliminar' => 'simple'
             ]);
 
-        } catch (\Exception $exception) {
-            throw new ControllerFailedException();
-        }
+       // } catch (\Exception $exception) {
+        //    throw new ControllerFailedException();
+       // }
     }
+
+
+
+
+
+    //Función que realiza la búsqueda de guías académicas en la base de datos con respecto al nombre, apellido o cédula que se haya especificado
+    private function filtroAnio($anio, $id_personal, $itemsPagina)
+    {
+        $cargas_academicas = Cargas_academica::where('persona_id', $id_personal) //Inner join de guias con personas
+            ->where('cargas_academicas.anio', '=', $anio)
+            ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
+
+        return $cargas_academicas; //Retorna el resultado de todas las guías que cumplan con los filtros especificados
+    }
+
+    //Función que retorna todas las guías presentes en la BD ordenadas con respecto a la última agregada en la BD.
+    private function obtenerCargas($itemsPagina, $id_personal)
+    {
+        $cargas_academicas = Cargas_academica::where('persona_id', $id_personal)
+        ->paginate($itemsPagina); //Paginación de los resultados según el atributo de cantidad de itemps por página seteado en el Request
+        return $cargas_academicas; //Retorna el resultado de todas las guías
+    }
+
 
     //Método que obtiene una cedula por medio del request, devuelve ese Personal espefico junto con la vista para crear una guia academica
     public function create($id_personal)

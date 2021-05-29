@@ -8,6 +8,10 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
+@php
+$anios = GlobalFunctions::obtenerAniosFuturos();
+@endphp 
+
 @section('contenido')
 
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
@@ -87,7 +91,11 @@ Registrar información de cargas académicas para {{ $personal->persona->nombre 
                         <label for="anio">Año <i class="text-danger">*</i></label>
                         <span class="text-muted ml-2" id="mostrar_anio"></span>
                     </div>
-                    <input type='number' class="form-control" id="anio" name="anio" onkeyup="contarCaracteres(this,4)" min="1975" required>
+                    <select class="form-control form-control-md " name="anio">
+                        @foreach($anios as $anio2)
+                        <option value="{{ $anio2 }}"> {{ $anio2 }} </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 {{-- Campo: Nombre del curso--}}

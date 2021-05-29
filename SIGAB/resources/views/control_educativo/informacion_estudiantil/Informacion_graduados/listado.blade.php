@@ -9,8 +9,10 @@ Listado de Graduados
 @endsection
 
 @php
-$anios = array();
-for ($anio2 = 2000; $anio2 <= date("Y"); $anio2++) { array_push($anios,$anio2); } @endphp @section('contenido') <div class="card">
+$anios = GlobalFunctions::obtenerAniosFuturos();
+@endphp 
+
+@section('contenido') <div class="card">
 
     <div class="card-body">
         {{-- // Items de la parte alta de la página (Título y botón de añadir) --}}

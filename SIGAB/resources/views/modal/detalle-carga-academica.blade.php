@@ -44,7 +44,11 @@
                                 <label for="anio">Año <i class="text-danger">*</i></label>
                                 <span class="text-muted ml-2" id="mostrar_anio"></span>
                             </div>
-                            <input type='number' class="form-control" id="anio" name="anio" onkeyup="contarCaracteres(this,4)" min="1975" disabled required>
+                            <select class="form-control form-control-md " id="anio" name="anio" disabled >
+                                @foreach($anios as $anio2)
+                                <option value="{{ $anio2 }}"> {{ $anio2 }} </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         {{-- Campo: Nombre del curso--}}
