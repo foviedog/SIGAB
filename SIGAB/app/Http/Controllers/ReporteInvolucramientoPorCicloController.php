@@ -128,7 +128,7 @@ class ReporteInvolucramientoPorCicloController extends Controller
             'anioReporte' => $anioReporte,
             'actividadesPrimerCiclo' => $actividadesPrimerCiclo,
             'actividadesSegundoCiclo' => $actividadesSegundoCiclo,
-            'consultado' => $consultado
+            'consultado' => $consultado 
         ]);
     }
 }

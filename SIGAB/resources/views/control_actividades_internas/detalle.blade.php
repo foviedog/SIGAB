@@ -35,7 +35,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
-            <div class=" d-flex justify-content-start align-items-center">
+            <div class=" d-flex justify-content-start align-items-center w-60">
                 <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
             </div>
 

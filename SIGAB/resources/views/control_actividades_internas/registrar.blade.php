@@ -231,7 +231,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text text-dark">Duración Total: </span>
                                         </div>
-                                        <div class="w-50 mx-2">
+                                        <div class="w-40  mx-2">
                                             <input type="number" value="0" min="0" step="1" name="duracion" id="duracion" />
                                         </div>
                                         <div class="input-group-append">
@@ -248,10 +248,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text text-dark">Estado: <i class="text-danger">*</i></span>
                                         </div>
-                                        <select class="form-control" id="estado" name="estado" required>
+                                        <select class="form-control decorated " id="estado" name="estado" required>
                                             <option value="">Seleccione</option>
                                             @foreach($estados as $estado)
-                                            <option value="{{ $estado }}"> {{ $estado }} </option>
+                                            <option  value="{{ $estado }}"> {{ $estado }} </option>
                                             @endforeach
                                         </select>
                                         {{-- ÁMBITO --}}
@@ -325,10 +325,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 {{-- TARJETA CON LA INFORMACIÓN DEL FACILITADOR --}}
                                 <div class="row justify-content-center pb-3" id="facilitador-info" style="display: none;">
                                     <div class="w-75 p-3 d-flex border-top justify-content-center">
-                                        <div class="col-3">
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                    <img class="rounded mb-3" id="imagen-facilitador" style="max-width: 100%;  " />
+                                        <div class="col-3 p-0">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="w-md-100 overflow-hidden rounded " >
+                                                    <img class="rounded " id="imagen-facilitador" style="max-width: 100%; " />
                                                 </div>
                                             </div>
                                         </div>
@@ -371,10 +371,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
                                 <div class="row justify-content-center pb-3" id="responsable-info" style="display: none;">
                                     <div class="w-75 p-3 d-flex border-top justify-content-center">
-                                        <div class="col-3">
+                                        <div class="col-3 p-0">
                                             <div class="d-flex justify-content-center mb-2">
-                                                <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
-                                                    <img class="rounded mb-3" id="imagen-responsable" style="max-width: 100%;  " />
+                                                <div class="w-md-100 overflow-hidden rounded " >
+                                                    <img class="rounded" id="imagen-responsable"  style="max-width: 100%; max-height:  100%; " />
                                                 </div>
                                             </div>
                                         </div>

@@ -21,7 +21,9 @@ class ReportesInvolucramientoController extends Controller
     public function show()
     {
         try{
-
+            //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+            ini_set('precision', 10);
+            ini_set('serialize_precision', 10);
             $anio = date('Y');
             $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
             $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
@@ -79,6 +81,9 @@ class ReportesInvolucramientoController extends Controller
 
     public function resultado(Request $request)
     {
+        //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+        ini_set('precision', 10);
+        ini_set('serialize_precision', 10);
         $personal = Personal::find($request->personal_encontrado);
         $persona = Persona::find($request->personal_encontrado);
         $nombre = $persona->nombre . " " . $persona->apellido;
@@ -111,6 +116,7 @@ class ReportesInvolucramientoController extends Controller
         $anio = date('Y');
         $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
         $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
+
 
         return view('reportes.involucramiento.general', [
             'porcentajeActualParticipacion' => json_encode($porcentajeActualParticipacion, JSON_UNESCAPED_SLASHES),
@@ -423,10 +429,11 @@ class ReportesInvolucramientoController extends Controller
                     $porcentajesParticipacion[$tipo] = 0;
                 }
                 if ($personal[$tipo] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
-                    $porcentajesParticipacion[$tipo] +=  round(((1 / $cantPersonal) * 100), 1); //Se actualiza el array de porcentajes
+                    $porcentajesParticipacion[$tipo] +=  round(((1 / $cantPersonal) * 100), 2); //Se actualiza el array de porcentajes
                 }
             }
         }
+
         return $porcentajesParticipacion;
     }
 
@@ -445,7 +452,6 @@ class ReportesInvolucramientoController extends Controller
             }
             $dataSet[$persona->persona_id] = $personaAmbito;
         }
-        // dd($dataSet);
         $this->porcentajeParticipacionAmbito($dataSet);
 
         return $dataSet;
@@ -484,11 +490,10 @@ class ReportesInvolucramientoController extends Controller
                     $porcentajesParticipacion[$ambito] = 0;
                 }
                 if ($personal[$ambito] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
-                    $porcentajesParticipacion[$ambito] = $porcentajesParticipacion[$ambito] +  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
+                    $porcentajesParticipacion[$ambito] = $porcentajesParticipacion[$ambito] +  round(((1 / $cantPersonal) * 100), 2); //Se actualiza el array de porcentajes
                 }
             }
         }
-        //dd($porcentajesParticipacion);
         return $porcentajesParticipacion;
     }
 

@@ -3,9 +3,7 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');*/
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto");
-html,
-body,
-html * {
+html, body, html * {
     font-family: "Roboto", sans-serif;
 }
 
@@ -13,10 +11,16 @@ th {
     font-size: 17px;
 }
 
+::selection {
+    color: #fff;
+    background: #aa1816;
+}
+
+
 /* ====================================================
 Paleta de colores para todo SIGAB
 ==================================================== */
-
+/* #aa1816 #990000 #e3302d #585757 #e6e6e6 #034991 #2d2d2d */
 /* ------------------------
 Colores de fondo
 ------------------------ */
@@ -187,13 +191,11 @@ Botones contorno (outline)
 /* Sombra mostrada cuando un boton está seleccionado */
 
 .btn:focus {
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-        0 0 8px rgba(221, 93, 93, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(221, 93, 93, 0.6);
 }
 
 .btn-sombreado-azul:focus {
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-        0 0 8px rgba(3, 73, 144, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(3, 73, 144, 0.6);
 }
 
 /* ***********************
@@ -237,14 +239,12 @@ Fin de la paleta de colores
 
 .form-control:focus {
     border-color: rgba(204, 204, 204, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-        0 0 8px rgba(204, 204, 204, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(204, 204, 204, 0.6);
 }
 
 .logo {
     max-width: 150px;
     max-height: 150px;
-
 }
 
 .far {
@@ -381,7 +381,7 @@ Fin de la paleta de colores
     font-weight: 600;
 }
 
-.badge-info-success > i {
+.badge-info-success>i {
     color: #2cef76;
 }
 
@@ -577,14 +577,12 @@ Fin de la paleta de colores
     margin-top: 20px;
 }
 
-.file-dropping,
-.file-upload-wrap:hover {
+.file-dropping, .file-upload-wrap:hover {
     background-color: #af0a0ada;
     border: 2px dashed #ffffff;
 }
 
-.file-dropping,
-.file-upload-wrap:hover .drag-text h4 {
+.file-dropping, .file-upload-wrap:hover .drag-text h4 {
     color: #ffffff;
 }
 
@@ -664,24 +662,21 @@ Fin de la paleta de colores
         TABS DE NAVEGACIÓN
 ********************************************** */
 
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
     color: #aa1816;
     background-color: #ffffff00;
     border-color: #aa1816 #aa1816 #fff #aa1816;
     font-weight: bold;
 }
 
-.nav-tabs .nav-link,
-.nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link, .nav-tabs .nav-item.show .nav-link {
     border-color: #e6e5e1 #e6e5e1 rgba(255, 255, 255, 0) #e6e5e1;
     margin-left: 1rem;
     transition: border-color ease-out 0.5s, background-color ease-out 0.2s;
     color: #585858;
 }
 
-.nav-tabs .nav-link:hover,
-.nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link:hover, .nav-tabs .nav-item.show .nav-link {
     background-color: #6d6d6d28;
     color: #aa1816;
     border-color: #aa1816 #aa1816 #fff #aa1816;
@@ -797,8 +792,7 @@ Tabla reporte anual
     padding-top: 4rem;
 }
 
-.tabla-reporte-anual .img-personal,
-.tabla-reporte-ciclo .img-personal {
+.tabla-reporte-anual .img-personal, .tabla-reporte-ciclo .img-personal {
     width: 60%;
     border-radius: 5px;
     margin-bottom: 2rem;
@@ -810,8 +804,7 @@ Tabla reporte anual
     border-right: 1px solid #d5d5d5;
 }
 
-.tabla-reporte-anual .nombre-personal,
-.tabla-reporte-ciclo .nombre-personal {
+.tabla-reporte-anual .nombre-personal, .tabla-reporte-ciclo .nombre-personal {
     text-align: center;
     justify-content: center;
     font-size: 18px;
@@ -952,26 +945,22 @@ Tabla reporte anual
 
 .notificaciones .container-tipo.azul {
     background-image: linear-gradient(147deg, #4498de 0%, #1d75bf 74%);
-    box-shadow: inset 0.2em 0.2em 0.2em 0 rgb(156 161 247 / 50%),
-        inset -0.2em -0.2em 0.2em 0 rgb(74 62 191 / 50%);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgb(156 161 247 / 50%), inset -0.2em -0.2em 0.2em 0 rgb(74 62 191 / 50%);
 }
 
 .notificaciones .container-tipo.verde {
     background-image: linear-gradient(147deg, #57b509 0%, #29a501 74%);
-    box-shadow: inset 0.2em 0.2em 0.2em 0 #53d6285e,
-        inset -0.2em -0.2em 0.2em 0 #238c018f;
+    box-shadow: inset 0.2em 0.2em 0.2em 0 #53d6285e, inset -0.2em -0.2em 0.2em 0 #238c018f;
 }
 
 .notificaciones .container-tipo.roja {
     background-image: linear-gradient(147deg, #de4444 0%, #bf1d1d 74%);
-    box-shadow: inset 0.2em 0.2em 0.2em 0 rgb(247 156 156 / 50%),
-        inset -0.2em -0.2em 0.2em 0 rgb(191 62 62 / 50%);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgb(247 156 156 / 50%), inset -0.2em -0.2em 0.2em 0 rgb(191 62 62 / 50%);
 }
 
 .notificaciones .container-tipo.amarilla {
     background-image: linear-gradient(147deg, #d1b600 0%, #e0e300 74%);
-    box-shadow: inset 0.2em 0.2em 0.2em 0 #fffd005e,
-        inset -0.2em -0.2em 0.2em 0 #9fa0008f;
+    box-shadow: inset 0.2em 0.2em 0.2em 0 #fffd005e, inset -0.2em -0.2em 0.2em 0 #9fa0008f;
 }
 
 .notificaciones .notificacion-info {
@@ -988,20 +977,35 @@ Tabla reporte anual
 ===============================
  */
 
-
 .w-5 {
     width: 5% !important;
+}
+.w-60 {
+    width: 60% !important;
+}
+
+.w-40 {
+    width: 40% !important;
 }
 
 .w-90 {
     width: 90% !important;
 }
 
-.w-lg-60{
+.w-lg-60 {
     max-width: 60%;
     width: 60%;
 }
 
+.w-lg-40 {
+    max-width: 40%;
+    width: 40%;
+}
+/*
+======================================
+        Cambios globales a inputs
+======================================
+*/
 input[type="checkbox"] {
     /* Double-sized Checkboxes */
     -ms-transform: scale(1.35);
@@ -1023,9 +1027,13 @@ input[type="checkbox"] {
  */
 
 @media (max-width: 1500px) {
-    .w-md-100{
+    .w-md-100 {
         max-width: 100%;
         width: 100%;
+    }
+    .w-md-40 {
+        max-width: 40%;
+        width: 40%;
     }
     .header-perfil {
         flex-direction: column;
@@ -1037,7 +1045,6 @@ input[type="checkbox"] {
         flex: 0 0 33.3333333333%;
         max-width: 33.3333333333%;
     }
-
 }
 
 @media (min-width: 992px) {

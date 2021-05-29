@@ -314,7 +314,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
     </div>
 </div>
 @endsection
-
+{{ print_r($porcentajeActualParticipacion) }}
 @section('scripts')
 <script>
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
@@ -323,7 +323,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
     @else
     let flagInfoPersonal = false;
     @endif
-
+    
     let porcentajeParticipacionActual = JSON.parse('{!! $porcentajeActualParticipacion !!}');
     let porcentajeAmbitoActual = JSON.parse('{!! $porcentajeActualAmbito !!}');
 
