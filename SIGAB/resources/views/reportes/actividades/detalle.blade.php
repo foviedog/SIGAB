@@ -173,7 +173,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         </div>
                     </div>
 
-                    <form action="{{ route('reportes-actividades.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte">
+                    <form action="{{ route('reportes-actividades.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte" onsubmit="activarLoader('Generando datos');">
                         <div class="row d-flex justify-content-center mb-3">
                             <div class="w-75">
                                 <div class="row d-flex justify-content-center mb-3">

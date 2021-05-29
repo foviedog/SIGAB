@@ -56,7 +56,7 @@ function cargarInformacionArrays() {
         if (tiposAsistencia[atributo] != 0) {
             tiposAsistenciaX.push(atributo);
             tiposAsistenciaY.push(tiposAsistencia[atributo]);
-            totalTiposAsistencia++;
+            totalTiposAsistencia += tiposAsistencia[atributo];
         }
     }
 
