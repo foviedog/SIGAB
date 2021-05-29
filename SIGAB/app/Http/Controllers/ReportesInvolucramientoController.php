@@ -459,7 +459,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function cantActividadesInternasXAmbito($persona_id, $ambito, $anio)
     {
-        $cant = Actividades::join('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+        $cant = Actividades::leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
@@ -490,7 +490,7 @@ class ReportesInvolucramientoController extends Controller
                     $porcentajesParticipacion[$ambito] = 0;
                 }
                 if ($personal[$ambito] > 0) { //En caso de que el personal haya tenido como mínimo 1 participación se suma dicho porcentaje
-                    $porcentajesParticipacion[$ambito] = $porcentajesParticipacion[$ambito] +  (1 / $cantPersonal) * 100; //Se actualiza el array de porcentajes
+                    $porcentajesParticipacion[$ambito] = round($porcentajesParticipacion[$ambito] + (1 / $cantPersonal) * 100, 2); //Se actualiza el array de porcentajes
                 }
             }
         }
