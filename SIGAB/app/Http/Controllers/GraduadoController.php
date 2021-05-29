@@ -47,6 +47,8 @@ class GraduadoController extends Controller
             $graduado->carrera_cursada = $request->carrera_cursada;
             $graduado->anio_graduacion = $request->anio_graduacion;
 
+
+
             //se guarda el objeto en la base de datos
             $graduado->save();
 
@@ -170,7 +172,7 @@ class GraduadoController extends Controller
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }    
-         catch (ModelNotFoundException $ex) {  
+        catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }

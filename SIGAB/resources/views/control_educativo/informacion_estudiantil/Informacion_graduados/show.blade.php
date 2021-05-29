@@ -8,6 +8,10 @@ Graduaciones de {{ $estudiante->persona->nombre }}
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
+@php
+$anios = GlobalFunctions::obtenerAniosFuturos();
+@endphp 
+
 @section('contenido')
 <div class="card">
     <div class="card-body">

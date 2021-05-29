@@ -17,7 +17,7 @@ class CargasAcademicaController extends Controller
 {
     public function index($id_personal)
     {
-       // try{
+        try{
             // Array que devuelve los items que se cargan por página
             $paginaciones = [5, 10, 25, 50];
             // Personal al que se le quiere añadir una carga académica
@@ -52,9 +52,9 @@ class CargasAcademicaController extends Controller
                 'confirmarEliminar' => 'simple'
             ]);
 
-       // } catch (\Exception $exception) {
-        //    throw new ControllerFailedException();
-       // }
+        } catch (\Exception $exception) {
+            throw new ControllerFailedException();
+        }
     }
 
 
