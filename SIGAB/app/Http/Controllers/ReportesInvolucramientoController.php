@@ -21,7 +21,9 @@ class ReportesInvolucramientoController extends Controller
     public function show()
     {
         try{
-
+            //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+            ini_set('precision', 10);
+            ini_set('serialize_precision', 10);
             $anio = date('Y');
             $porcentajeActualParticipacion = $this->porcentajeParticipacion($this->cantActividadesXPersonal($anio));
             $porcentajeActualAmbito = $this->porcentajeParticipacionAmbito($this->cantActividadesXPersonalAmbito($anio));
@@ -47,6 +49,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function datosCuntitativosPersonal()
     {
+        
         $interinos = Personal::where("tipo_nombramiento", "Interino")->count();
         $propietarios = Personal::where("tipo_nombramiento", "Propietario")->count();
         $fijo = Personal::where("tipo_nombramiento", "Plazo fijo")->count();
@@ -79,6 +82,9 @@ class ReportesInvolucramientoController extends Controller
 
     public function resultado(Request $request)
     {
+        //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+        ini_set('precision', 10);
+        ini_set('serialize_precision', 10);
         $personal = Personal::find($request->personal_encontrado);
         $persona = Persona::find($request->personal_encontrado);
         $nombre = $persona->nombre . " " . $persona->apellido;

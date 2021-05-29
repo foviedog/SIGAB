@@ -30,6 +30,9 @@ class ReporteInvolucramientoPorCicloController extends Controller
     // ========================================================================================================================================
     public function show()
     {
+        //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+        ini_set('precision', 10);
+        ini_set('serialize_precision', 10);
         try {
             $anio = request('anio', null);
             $personal = null;

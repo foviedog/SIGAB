@@ -24,7 +24,9 @@ class ReportesActividadesController extends Controller
     public function show()
     {
         try{
-
+            //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+            ini_set('precision', 10);
+            ini_set('serialize_precision', 10);
             //Se obtienen los datos que sean necesarios para la generación de estadísticas
             //(A pesar de que no sean necesarios en un inicio es para evitar confictos con la recuperación de datos digitados en la elaboración de un request al servidor)
             $chart = "bar";
@@ -68,7 +70,12 @@ class ReportesActividadesController extends Controller
     public function resultado(Request $request)
     {
         try{
-
+            //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+            ini_set('precision', 10);
+            ini_set('serialize_precision', 10);
+            //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
+            ini_set('precision', 10);
+            ini_set('serialize_precision', 10);
             //Se setean los tipos según la naturaleza de la actividad (Interna o promoción)
             $tip_act_int = $this->devolverTipos(0);
             $tip_act_prom = $this->devolverTipos(1);
