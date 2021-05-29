@@ -15,7 +15,7 @@ Listado Estudiantil
 @endphp
 
 @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
-<form action="{{ route('estudiante.create') }}" method="GET">
+<form action="{{ route('estudiante.create') }}" method="GET" autocomplete="off">
     @csrf
     <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

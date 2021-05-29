@@ -112,7 +112,7 @@ class PersonalController extends Controller
             $this->guardarIdiomas($request); //Se llama al método genérico para guardar idiomas
             $persona_existe = null;
             return view('control_personal.registrar')
-                    ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                    ->with('mensaje_exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                     ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                     ->with('personal_registrado', $personal) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                     ->with('persona_existe', null); 
@@ -178,7 +178,8 @@ class PersonalController extends Controller
             $this->update_avatar($request, $personal);
             //Se retorna el detalle del personal ya modificado
 
-            return redirect("/personal/detalle/{$personal->persona_id}");
+            return redirect("/personal/detalle/{$personal->persona_id}")
+            ->with('mensaje-exito', 'Modificado correctamente.');
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();

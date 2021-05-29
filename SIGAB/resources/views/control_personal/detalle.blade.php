@@ -44,6 +44,9 @@ $idiomas = [];
             {{-- Input para el array de idiomas en JSON --}}
             <input type="hidden" name="idiomasJSON" id="idiomasJSON">
 
+            {{-- Alerts --}}
+            @include('layouts.messages.alerts')
+
             {{-- Contenido total del detalle --}}
             <div class="container-fluid">
                 <div class=" d-flex justify-content-between">

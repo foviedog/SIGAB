@@ -25,6 +25,10 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
 
     <div class="card">
         <div class="card-body">
+
+            {{-- Alerts --}}
+            @include('layouts.messages.alerts')
+
             {{-- Contenido total del detalle --}}
             <div class="container-fluid">
                 <div class=" d-flex justify-content-between">
@@ -52,9 +56,6 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
 
                     </div>
                 </div>
-
-                {{-- Alerts --}}
-                @include('layouts.messages.alerts')
 
                 <div class="row mb-3">
                     <div class="col-lg-4 col-sm-12">
