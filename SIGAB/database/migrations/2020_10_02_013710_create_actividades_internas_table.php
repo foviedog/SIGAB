@@ -27,6 +27,14 @@ class CreateActividadesInternasTable extends Migration
             $table->string('personal_facilitador', 90)->nullable();
             $table->foreign('personal_facilitador')->references('persona_id')->on('personas');
             $table->timestamps();
+            
+            //Creacion de índices
+            $table->index('personal_facilitador');
+            $table->index('tipo_actividad');
+            $table->index('proposito');
+            $table->index('ambito');
+
+
         });
     }
 

@@ -30,6 +30,9 @@ class CreatePersonalTable extends Migration
             $table->string('regimen_docente', 60)->nullable();
             $table->string('area_especializacion_1', 100)->nullable();
             $table->string('area_especializacion_2', 100)->nullable();
+            $table->longText('publicaciones')->nullable();
+            $table->longText('reconocimientos')->nullable();
+
             $table->timestamps();
         });
     }

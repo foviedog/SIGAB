@@ -19,6 +19,8 @@ class GlobalArrays
         'Actividad cocurricular',
         'Tribunales de prueba de grado',
         'Tribunales de defensas públicas',
+        'Evaluacion interna ppaa',
+        'Evaluacion externa ppaa',
         'Comisiones de trabajo',
         'Externa',
         'Otro'

@@ -21,8 +21,8 @@ $regimenes_administrativos = GlobalArrays::REGIMENES_ADMINISTRATIVOS_PERSONAL;
 $regimenes_docentes = GlobalArrays::REGIMENES_DOCENTES_PERSONAL;
 
 if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
-    $persona_no_insertada = null;
-    $personal_no_insertado = null;
+$persona_no_insertada = null;
+$personal_no_insertado = null;
 }
 
 @endphp
@@ -53,7 +53,6 @@ if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
             (solo se muestra si ha sido exitoso el registro)  --}}
         @if(isset($personal_registrado))
         <div class="alert alert-dark" role="alert">
-
             <span class="my-3 font-weight-bolder">Se registró el personal exitosamente con lo siguientes datos:</span>
             <div class="row ">
                 <div class="col-6 ">
@@ -93,9 +92,7 @@ if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
                     <b>Área de especialización 1:</b> {{ $personal_registrado->area_especializacion_1 ?? "No se digitó" }} <br>
                     <b>Área de especialización 2:</b> {{ $personal_registrado->area_especializacion_2 ?? "No se digitó" }} <br>
                 </div>
-
             </div>
-
         </div>
 
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo personal:</div>
@@ -255,7 +252,7 @@ if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
                                     <select id="genero" name="genero" class="form-control w-100" required>
                                         <option value="" selected>Sin seleccionar</option>
                                         @foreach ($generos as $genero )
-                                        <option value="{{ $genero }}" @if ( (!is_null($persona_existe) && $persona_existe->genero == $genero) || !is_null($persona_no_insertada) &&  $persona_no_insertada->genero == $genero ) selected  @endif>{{ $genero }}</option>
+                                        <option value="{{ $genero }}" @if ( (!is_null($persona_existe) && $persona_existe->genero == $genero) || !is_null($persona_no_insertada) && $persona_no_insertada->genero == $genero ) selected @endif>{{ $genero }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -287,6 +284,22 @@ if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
                                         <option value="{{ $tipo_nombramiento }}" @if ( $personal_no_insertado !=null) @if ( $tipo_nombramiento==$personal_no_insertado->tipo_nombramiento) selected @endif @endif> {{ $tipo_nombramiento }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-10 mt-5">
+                                <div class="bg-light py-2 w-100 d-flex align-items-center rounded">
+                                    <span class="ml-3 font-weight-bold ">Lista de idiomas: </span>
+                                </div>
+                                <div class="alert alert-danger text-center font-weight-bold w-100" role="alert" id="alert-idiomas" style="display: none;">
+                                    Complete todos los campos.
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="lista-idiomas">
+                                        <tr>
+                                            <td><input type="text" name="name[]" placeholder="Nombre del idioma" class="form-control idioma" /></td>
+                                            <td><button type="button" name="agregar-btn" id="agregar-btn" class="btn btn-contorno-rojo"> <i class="fas fa-plus-circle"></i> Agregar otro idioma</button></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -465,129 +478,41 @@ if(!isset($persona_no_insertada) || !isset($personal_no_insertado)){
                                     <span data-toggle="tooltip" data-placement="top" title="Experiencia académica en la UNA y en otras instituciones."><i class="far fa-question-circle fa-lg"></i></span>
                                 </div>
                             </div>
+                            {{-- Campo: publicaciones --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="publicaciones">Publicaciones<br /></label>
+                                </div>
+                                <div class="col-6">
+                                    <textarea type="text" id="publicaciones" name="publicaciones" class="form-control" rows="4"></textarea>
+                                </div>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Enlistar todas las publicaciones de libros, revistas, ...."><i class="far fa-question-circle fa-lg"></i></span>
+                                </div>
+                            </div>
+                            {{-- Campo: reconocimientos --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="reconocimientos">Reconocimientos<br /></label>
+                                </div>
+                                <div class="col-6">
+                                    <textarea type="text" id="reconocimientos" name="reconocimientos" class="form-control" rows="4"></textarea>
+                                </div>
+                                <div class="col-2 d-flex h-25">
+                                    <span data-toggle="tooltip" data-placement="top" title="Enlistar los reconocimientos concedidos al personal."><i class="far fa-question-circle fa-lg"></i></span>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
 
                     <div class="row pb-4">
 
-                        <div class="col mt-2">
-                            <div class="bg-light py-3 w-100">
-                                <p class="ml-3 font-weight-bold ">Lista de idiomas: </p>
-                            </div>
-                            <div class="alert alert-danger text-center font-weight-bold w-100" role="alert" id="alert-idiomas">
-                                Complete todos los campos.
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="lista-idiomas">
-                                    <tr>
-                                        <td><input type="text" name="name[]" placeholder="Nombre del idioma" class="form-control idioma" /></td>
-                                        <td><button type="button" name="agregar-btn" id="agregar-btn" class="btn btn-contorno-rojo"> <i class="fas fa-plus-circle"></i> Agregar otro idioma</button></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+
                         <div class="col pt-5 d-flex justify-content-center  align-items-center">
-                            <div class="mb-3">
-                                <a class="btn btn-contorno-rojo " id="participaciones-ref" data-toggle="tooltip" data-placement="top" title="Esta sección es opcional y se puede editar luego de que se haya registrado el personal">
-                                    Participaciones adicionales &nbsp;<i class="fas fa-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="tab-pane" id="infoParticipaciones">
-                    <div id="participaciones">
-                        <div class="row d-flex justify-content-between border-bottom pb-2">
-                            <div class="col">
-                                <h4 class="font-weight-bold">Participaciones adicionales</h4>
-                            </div>
 
                         </div>
-                        <div class="row pt-4 ">
-                            <div class="col">
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="capacitacion_didactica" class="d-flex justify-content-between">Capacitación didactica:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span>
-                                        </label>
-                                        <textarea class="form-control w-100" id="capacitacion_didactica" name="capacitacion_didactica" rows="3" form="personal-form"></textarea>
-                                    </div>
-
-                                </div>
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="publicaciones" class="d-flex justify-content-between">Publicaciones:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span> </label>
-                                        <textarea class="form-control w-100" id="publicaciones" name="publicaciones" rows="3" form="personal-form"></textarea>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="cursos_impartidos" class="d-flex justify-content-between">Cursos impartidos:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span>
-                                        </label>
-                                        <textarea class="form-control w-100" id="cursos_impartidos" name="cursos_impartidos" rows="3" form="personal-form"></textarea>
-                                    </div>
-
-                                </div>
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="evaluacion_interna_ppaa" class="d-flex justify-content-between">Evaluación interna PPAA: <span data-toggle="tooltip" data-placement="top" title="separar cada uno con punto y coma (;))">
-                                                {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span>
-                                        </label>
-                                        <textarea class="form-control w-100" id="evaluacion_interna_ppaa" name="evaluacion_interna_ppaa" rows="3" form="personal-form"></textarea>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col">
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="miembro_comisiones" class="d-flex justify-content-between">Miembro comisiones:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
-                                        <textarea class="form-control w-100" id="miembro_comisiones" name="miembro_comisiones" rows="3" form="personal-form"></textarea>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="miembro_prueba_grado" class="d-flex justify-content-between">Miembro prueba de grado:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
-                                        <textarea class="form-control w-100" id="miembro_prueba_grado" name="miembro_prueba_grado" rows="3" form="personal-form"></textarea>
-                                    </div>
-
-
-                                </div>
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="evaluador_defensa_publica" class="d-flex justify-content-between">Evaluador defensa pública:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
-                                        <textarea class="form-control w-100" id="evaluador_defensa_publica" name="evaluador_defensa_publica" rows="3" form="personal-form"></textarea>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start mb-3">
-                                    <div class="col">
-                                        <label for="evaluacion_externa_ppaa" class="d-flex justify-content-between">Evaluación externa PPAA:
-                                            {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
-                                        <textarea class="form-control w-100" id="evaluacion_externa_ppaa" name="evaluacion_externa_ppaa" rows="3" form="personal-form"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="d-flex justify-content-center">
-                            <div class="col-6">
-                                <label for="reconocimientos" class="d-flex justify-content-between">Reconocimientos: <span data-toggle="tooltip" data-placement="top" title="separar cada uno con punto y coma (;))">
-                                        {{-- <i class="far fa-question-circle fa-lg"></i> --}}</span></label>
-                                <textarea class="form-control w-100" id="reconocimientos" name="reconocimientos" rows="3" form="personal-form"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col d-flex justify-content-center mt-5">
-                        <a class="btn btn-contorno-rojo" href="#general" id="info-general" data-toggle="tab"><i class="fas fa-chevron-left"></i> &nbsp; Información general </a>
                     </div>
                 </div>
 
