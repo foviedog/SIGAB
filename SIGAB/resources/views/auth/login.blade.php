@@ -78,8 +78,13 @@
                                         </div>
                                         <div class="form-group">
                                             {{--<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>--}}
-
-                                            <input id="password" autocomplete="off" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Contraseña" required autocomplete="current-password" autofocus>
+                                            
+                                            <div class="input-group" id="password_campo">
+                                                <input id="password" autocomplete="off" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Contraseña" required autocomplete="current-password" autofocus>
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><a href="#"><i class="fa fa-eye-slash password-eye" aria-hidden="true"></i></a></div>
+                                                </div>
+                                            </div>
 
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -115,6 +120,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script src="{{ asset('js/login/login.js') }}" defer></script>
     <script src="{{ asset('js/login/Tooltip.js') }}" defer></script>
+    <script src="{{ asset('js/global/inputs.js') }}" defer></script>
 
 
 </body>

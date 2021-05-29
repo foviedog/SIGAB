@@ -90,7 +90,13 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña:') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                        <div class="input-group" id="password_campo">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><a href="#"><i class="fa fa-eye-slash password-eye" aria-hidden="true"></i></a></div>
+                                            </div>
+                                        </div>
 
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -102,7 +108,12 @@
                                 <div class="form-group row">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña:') }}</label>
                                     <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        <div class="input-group" id="password_campo">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><a href="#"><i class="fa fa-eye-slash password-eye" aria-hidden="true"></i></a></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -173,6 +184,7 @@
     <script src="{{ asset('js/login/Tooltip.js') }}" defer></script>
     <script src="{{ asset('js/register/register.js') }}" defer></script>
     <script src="{{ asset('js/global/mensajes.js') }}" defer></script>
+    <script src="{{ asset('js/global/inputs.js') }}" defer></script>
 
 </body>
 </html>

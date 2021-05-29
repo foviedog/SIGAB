@@ -5,7 +5,12 @@ Mi perfil
 @endsection
 
 @section('css')
-{{-- Ninguna hoja de estilo por el momento --}}
+<style>
+#dropdown-perfil{
+    padding: 0px !important;
+    box-shadow: none !important;
+}
+</style>
 @endsection
 
 {{-- Arreglos de opciones de los select utilizados --}}
@@ -115,13 +120,29 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                             <div>
                                 <h3 class="texto-rojo-medio font-weight-light m-0 texto-rojo pb-3">Configuración de la cuenta </h3>
                             </div>
-                            <div >
-                                {{-- Botón para ver las actividades que ha registrado --}}
-                                <a href="{{ route('perfil.mis-actividades') }}" class="btn btn-contorno-rojo"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Mis actividades</a>
+                            <div>
+
+                                <nav class="navbar navbar-expand-lg" style="float: left" id="dropdown-perfil">
+                                    <div class="collapse navbar-collapse">
+                                        <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item dropdown">
+                                            <a class="dropdown-toggle btn btn-contorno-rojo mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Mis accesos personales
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                {{-- Botón para acceder a las notificaciones --}}
+                                                <a href="{{ route('perfil.notifications') }}" class="dropdown-item"><i class="fas fa-bell"></i> &nbsp; Notificaciones </a>
+                                                {{-- Botón para ver las actividades que ha registrado --}}
+                                                <a href="{{ route('perfil.mis-actividades') }}" class="dropdown-item"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Mis actividades</a>
+                                                {{-- Botón para cambiar contrasenna --}}
+                                                <a href="{{ route('perfil.actualizar-contrasenna') }}" class="dropdown-item"><i class="fas fa-key"></i> &nbsp; Cambiar contraseña</a>
+                                            </div>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </nav>
                                 {{-- Botón para regresar a la página principal --}}
                                 <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
-                                {{-- Botón para acceder a las notificaciones --}}
-                                <a href="{{ route('perfil.notifications') }}" class="btn btn-contorno-rojo"><i class="fas fa-bell"></i> &nbsp; Notificaciones </a>
                                 {{-- Boton que habilita opcion de editar --}}
                                 <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                                 {{-- Boton de cancelar edicion --}}
