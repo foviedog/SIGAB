@@ -406,8 +406,8 @@ class PersonalController extends Controller
 
         foreach ($facilitador as &$facili) {
             $dato = new \stdClass();
-            $dato->url = route('actividad-interna.show', $coord->id);
-            $dato->tema = $coord->tema;
+            $dato->url = route('actividad-interna.show', $facili->id);
+            $dato->tema = $facili->tema;
             array_push($dataFacili, $dato);
         }
 
