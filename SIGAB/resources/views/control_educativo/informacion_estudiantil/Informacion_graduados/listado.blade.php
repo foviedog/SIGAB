@@ -24,13 +24,6 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
                     <a href="{{ route('graduados.listar') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
                 </div>
 
-                @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
-                <div>
-                    {{-- //Botón para añadir estudiante --}}
-                    <a href=" {{ route('estudiante.create') }}" class="btn btn-rojo"> Añadir Estudiante &nbsp; <i class="fas fa-plus-circle"></i> </a>
-                </div>
-                @endif
-
             </div>
         </div>
         {{-- // Contenedor de la tabla --}}
