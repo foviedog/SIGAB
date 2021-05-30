@@ -310,7 +310,7 @@ class ActividadesPromocionController extends Controller
             $eliminado = new Eliminado;
             $eliminado->eliminado_por = auth()->user()->persona_id;
             $eliminado->elemento_eliminado = 'Actividad de promoción de la carrera';
-            $eliminado->titulo = 'Se eleminó la actividad de promoción la carrera '.$actividadId.', sus listas de asistencia y sus evidencias.';
+            $eliminado->titulo = 'Se eliminó la actividad de promoción la carrera '.$actividadId.', sus listas de asistencia y sus evidencias.';
             $eliminado->save();
 
             //Generar la notificacion
