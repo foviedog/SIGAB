@@ -165,134 +165,140 @@ Asistencia a {{ $actividad->tema }}
             @endif
 
         </div>
-
-        <div id="table_data">
-            <div class="row mt-2 d-flex justify-content-center">
-                <div class="col-11">
-                    <div class="card shadow">
-                        <div class="d-flex justify-content-between card-header py-3">
-                            <div>
-                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Participaciones </h6>
-                            </div>
-                            <div>
-                                <button href="" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
-                            </div>
+        <div class="row">
+            <div class="col-11 pl-3">
+                <div id="table_data" class="card shadow mt-2">
+                    <div class="d-flex justify-content-between card-header py-3">
+                        <div>
+                            <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Participaciones </h6>
                         </div>
-                        <form autocomplete="off" action="{{ route('lista-asistencia.show',$actividad->id) }}" method="GET" id="form-busqueda">
-                            <div class="row pt-3 px-3">
-                                <div class="col-md-6 text-nowrap">
-                                    <div class="" aria-controls="dataTable">
-                                        <label class="font-weight-bold">Mostrar &nbsp;
-                                            {{-- Select con la cantidad de items por páginas--}}
-                                            <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
-                                                @foreach($paginaciones as $paginacion)
-                                                <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
-                                                @endforeach
-                                            </select>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 d-flex justify-content-end">
-                                    <div class="d-flex justify-content-end w-50">
-                                        <div class="text-md-right dataTables_filter input-group mb-3 ">
-                                            {{-- Input para realizar la búsqueda del participante --}}
-                                            <span data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg"></i></span>
-
-                                            &nbsp;&nbsp; <input type="search" class="form-control form-control-md" aria-controls="dataTable" placeholder="Búsqueda del participante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
-                                        </div>
-                                    </div>
-                                    {{-- Botón de submit para realizar la búsqueda del participante --}}
-                                    <div>
-                                        <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
-                                    </div>
-                                </div>
-                        </form>
-
-                        <table class="table my-0" id="dataTable">
-                            {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
-                            <thead>
-                                <tr>
-                                    <th>N° de Cédula</th>
-                                    <th>Nombre</th>
-                                    <th>Teléfono celular</th>
-                                    <th>Correo institucional</th>
-                                    <th>Informacion</th>
-                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <th>Eliminar</th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody id="lista-participantes">
-
-                                {{-- En caso de que no existan registros --}}
-                                @if(count($listaAsistencia) == 0)
-                                <tr class="cursor-pointer">
-                                    <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
-                                </tr>
-                                @endif
-                                {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
-                                @foreach($listaAsistencia as $participante)
-                                <tr id="" class="cursor-pointer">
-                                    <td>{{ $participante->persona_id }}</td>
-                                    {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
-                                    <td>{{ $participante->apellido.", ".  $participante->nombre }}</td>
-                                    <td>{!! $participante->telefono_celular ?? '<i class="font-weight-light"> No registrado</i>' !!}<br /> </td>
-                                    <td>
-                                        <strong>
-                                            {!! $participante->correo_institucional ?? '<i class="font-weight-light"> No registrado</i>'!!}
-                                        </strong>
-                                    </td>
-                                    <td>
-                                        <button id="mostrar-{{ $participante->persona_id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrarInfo(this)"><i class="fas fa-eye"></i> &nbsp;Detalle</button>
-                                    </td>
-
-                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <td>
-                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipanteInternas('{{ $participante->persona_id }}', {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
-                                    </td>
-                                    @endif
-
-                                </tr>
-                                @endforeach
-                            </tbody>
-                            {{-- Nombre de las columnas en la parte de abajo de la tabla --}}
-                            <tfoot>
-                                <tr>
-                                    <th>N° de Cédula</th>
-                                    <th>Nombre</th>
-                                    <th>Teléfono celular</th>
-                                    <th>Correo institucional</th>
-                                    <th>Informacion</th>
-                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <th>Eliminar </th>
-                                    @endif
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <div>
+                            <button href="" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
+                        </div>
                     </div>
 
+
+                    <div class="card body">
+                        <form autocomplete="off" action="{{ route('lista-asistencia.show',$actividad->id) }}" method="GET" id="form-busqueda">
+                            <div class="row d-flex justify-content-between m-1 mt-3">
+
+                                <div class="col-6 d-flex ">
+                                    <div class="input-group ">
+                                        <div class="input-group-prepend ">
+                                            {{-- Input para realizar la búsqueda del participante --}}
+                                            <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
+                                        </div>
+                                        <input type="search" class="form-control form-control-md" aria-controls="dataTable" placeholder="Búsqueda del participante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
+                                    </div>
+                                    {{-- Botón de submit para realizar la búsqueda del participante --}}
+                                    <div class="d-flex justify-content-center" style="width: 30%">
+                                        <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-2 text-nowrap d-flex justify-content-end">
+                                    <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                                    {{-- Select con la cantidad de items por páginas--}}
+                                    <div class="w-50">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                            @foreach($paginaciones as $paginacion)
+                                            <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive table p-3 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+                            <table class="table my-0" id="dataTable">
+                                {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
+                                <thead>
+                                    <tr>
+                                        <th>N° de Cédula</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono celular</th>
+                                        <th>Correo institucional</th>
+                                        <th>Informacion</th>
+                                        @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                        <th>Eliminar</th>
+                                        @endif
+                                    </tr>
+                                </thead>
+                                <tbody id="lista-participantes">
+
+                                    {{-- En caso de que no existan registros --}}
+                                    @if(count($listaAsistencia) == 0)
+                                    <tr class="cursor-pointer">
+                                        <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i> &nbsp; No existen registros</td>
+                                    </tr>
+                                    @endif
+                                    {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
+                                    @foreach($listaAsistencia as $participante)
+                                    <tr id="" class="cursor-pointer">
+                                        <td>{{ $participante->persona_id }}</td>
+                                        {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
+                                        <td>{{ $participante->apellido.", ".  $participante->nombre }}</td>
+                                        <td>{!! $participante->telefono_celular ?? '<i class="font-weight-light"> No registrado</i>' !!}<br /> </td>
+                                        <td>
+                                            <strong>
+                                                {!! $participante->correo_institucional ?? '<i class="font-weight-light"> No registrado</i>'!!}
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <button id="mostrar-{{ $participante->persona_id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrarInfo(this)"><i class="fas fa-eye"></i> &nbsp;Detalle</button>
+                                        </td>
+
+                                        @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                        <td>
+                                            <a class="btn btn-contorno-rojo" onclick="rutaParticipanteInternas('{{ $participante->persona_id }}', {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                        </td>
+                                        @endif
+
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                {{-- Nombre de las columnas en la parte de abajo de la tabla --}}
+                                <tfoot>
+                                    <tr>
+                                        <th>N° de Cédula</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono celular</th>
+                                        <th>Correo institucional</th>
+                                        <th>Informacion</th>
+                                        @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                        <th>Eliminar </th>
+                                        @endif
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                        <div class="row px-3 py-2">
+                            <div class="col-md-3 align-self-center">
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $listaAsistencia->perPage() }} items por página de {{ $listaAsistencia->total() }}</p>
+                            </div>
+                            {{-- Items de paginación --}}
+                            <div class="col-md-5 ml-5 d-flex justify-content-center">
+                                {{ $listaAsistencia->withQueryString()->links() }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-            <div class="col-1">
-                <div class="info-card" style="padding: 2px 0; max-width: 100%; ">
-                    <span style="font-size: 36px; font-weight: bolder;" id="total">{{ $listaAsistencia->total() }}</span><br>
+            <div class="col-1 mt-2">
+                <div class="info-card" style="padding: 2px 0;width: 100%;">
+                    <span style="font-size: 34px; font-weight: bolder;" class=" d-flex justify-content-center" id="total">{{ $listaAsistencia->total() }}</span><br>
                     <span style="font-size: 20px; font-weight: light;  ">Total</span>
                 </div>
             </div>
         </div>
-        <div class="row px-3 py-2">
-            <div class="col-md-3 align-self-center">
-                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $listaAsistencia->perPage() }} items por página de {{ $listaAsistencia->total() }}</p>
-            </div>
-            {{-- Items de paginación --}}
-            <div class="col-md-5 ml-5 d-flex justify-content-center">
-                {{ $listaAsistencia->withQueryString()->links() }}
-            </div>
-        </div>
-    </div>
-</div>
 
+
+    </div>
+
+</div>
 {{-- </form> --}}
 
 @endsection
@@ -316,7 +322,7 @@ Asistencia a {{ $actividad->tema }}
         }
     });
 
-    function eliminarParametros(){
+    function eliminarParametros() {
         var url = window.location.href;
         var indexHref = url.indexOf("?");
         url = url.substr(0, indexHref)
