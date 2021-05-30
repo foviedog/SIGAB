@@ -89,18 +89,17 @@ Asistencia a {{ $actividad->tema }}
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
                     <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">
 
-                    <div class="card-header ">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
-                                </h6>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="card shadow">
-                        <div class="card-body">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col">
                                     {{-- Campo: cedula --}}

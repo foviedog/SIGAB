@@ -44,9 +44,6 @@ $idiomas = [];
             {{-- Input para el array de idiomas en JSON --}}
             <input type="hidden" name="idiomasJSON" id="idiomasJSON">
 
-            {{-- Alerts --}}
-            @include('layouts.messages.alerts')
-
             {{-- Contenido total del detalle --}}
             <div class="container-fluid">
                 <div class=" d-flex justify-content-between">
@@ -70,6 +67,10 @@ $idiomas = [];
                         @endif
                     </div>
                 </div>
+
+                {{-- Alerts --}}
+                @include('layouts.messages.alerts')
+
                 <div class="row mb-3">
                     <div class="col-lg-4 col-sm-12">
                         {{-- Tarjeta de foto perfil --}}
@@ -413,8 +414,6 @@ $idiomas = [];
                                                     @endfor
                                             </table>
                                         </div>
-
-
 
                                         @if(Accesos::ACCESO_LISTAR_CARGAS_ACADEMICAS())
                                         {{-- Campo: Carga académica--}}

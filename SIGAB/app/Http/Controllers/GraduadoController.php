@@ -240,10 +240,10 @@ class GraduadoController extends Controller
             $graduacion->delete();
             
             return Redirect::back()
-            ->with('exito', '¡Se ha eliminado correctamente!');
+            ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
-            ->with('mensaje-error', 'ha ocurrido un error');
+            ->with('mensaje-error', 'Ha ocurrido un error a la hora de eliminar.');
         } catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto

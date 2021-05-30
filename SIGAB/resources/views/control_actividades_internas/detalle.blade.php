@@ -119,7 +119,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                             @endif
 
                             @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
-                            <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                            <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Asistencia </a>
                             @endif
                         </div>
 

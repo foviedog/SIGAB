@@ -70,7 +70,7 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
                             <div class="input-group d-flex justify-content-between mr-2">
                                 <div class="input-group-prepend ">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Ver cargas academicas en un año determinado"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Ver cargas académicas por un año en específico"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                 </div>
                                 <select class="form-control form-control-md"  name="anioFiltro">
                                     <option value=' '>Sin seleccionar</option>

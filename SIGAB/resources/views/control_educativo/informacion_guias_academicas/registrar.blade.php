@@ -16,6 +16,17 @@ Registrar guía académica
     </div>
     <hr>
 
+    <div class="d-flex justify-content-center mb-2">
+        <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
+    </div>
+    <div class=" d-flex justify-content-center align-items-center border-bottom">
+        <div class=" text-center mb-3">
+            <strong>Cédula:</strong> &nbsp;&nbsp;<span id="cedula"> {{ $estudiante->persona->persona_id }}</span> <br>
+            <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</span> <br>
+            <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
+        </div>
+    </div>
+
     {{-- Alerts --}}
     @include('layouts.messages.alerts')
 
@@ -60,16 +71,6 @@ Registrar guía académica
         @endif
 
         <div class="container">
-            <div class="d-flex justify-content-center mb-2">
-                <img class="rounded mb-3" width="160" height="160" id="imagen-modal" src="{{ asset('img/fotos/'.$estudiante->persona->imagen_perfil) }}" />
-            </div>
-            <div class=" d-flex justify-content-center align-items-center border-bottom">
-                <div class=" text-center mb-3">
-                    <strong>Cédula:</strong> &nbsp;&nbsp;<span id="cedula"> {{ $estudiante->persona->persona_id }}</span> <br>
-                    <strong>Nombre: </strong>&nbsp;&nbsp; <span id="nombre"> {{ $estudiante->persona->nombre." ".$estudiante->persona->apellido }}</span> <br>
-                    <strong>Correo personal: </strong> &nbsp;&nbsp;<span id="correo"> {{ $estudiante->persona->correo_personal }} </span> <br>
-                </div>
-            </div>
 
             <div class="form-group">
                 <label for="motivo" class="col-form-label mt-3">Tipo &nbsp;<i class="text-danger">*</i></label>

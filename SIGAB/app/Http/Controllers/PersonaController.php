@@ -45,8 +45,6 @@ class PersonaController extends Controller
             $persona = session('persona');;
 
             // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
-            $persona->nombre = $request->nombre;
-            $persona->apellido = $request->apellido;
             $persona->fecha_nacimiento = $request->fecha_nacimiento;
             $persona->telefono_fijo = $request->telefono_fijo;
             $persona->telefono_celular = $request->telefono_celular;

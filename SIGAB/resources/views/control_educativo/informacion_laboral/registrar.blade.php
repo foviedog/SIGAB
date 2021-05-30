@@ -77,7 +77,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
         @endif
 
-        <div class="row">
+        <div class="row mt-4">
 
             {{-- Campos de la izquierda --}}
 

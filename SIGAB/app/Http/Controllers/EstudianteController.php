@@ -222,7 +222,7 @@ class EstudianteController extends Controller
 
             //Se retorna el detalle del estudiante ya modificado
             return redirect("/estudiante/detalle/{$estudiante->persona_id}")
-            ->with('mensaje-exito', 'Modificado correctamente.');
+            ->with('mensaje-exito', '¡El estudiante se ha actualizado correctamente!');
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();

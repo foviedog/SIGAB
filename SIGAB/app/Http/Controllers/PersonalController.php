@@ -179,7 +179,7 @@ class PersonalController extends Controller
             //Se retorna el detalle del personal ya modificado
 
             return redirect("/personal/detalle/{$personal->persona_id}")
-            ->with('mensaje-exito', 'Modificado correctamente.');
+            ->with('mensaje-exito', '¡El personal se ha actualizado correctamente!');
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
