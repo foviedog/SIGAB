@@ -19,7 +19,7 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar graduación</h3>
 
         @if(Accesos::ACCESO_LISTAR_TITULACIONES())
-        <div><a href="{{ route('graduado.show', $estudiante->persona->persona_id ) }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        <div><a href="{{ route('graduado.show', $estudiante->persona->persona_id ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
         @endif
         
     </div>

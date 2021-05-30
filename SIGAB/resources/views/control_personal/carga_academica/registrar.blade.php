@@ -18,7 +18,7 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar carga académica</h3>
         @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
-        <div><a href="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        <div><a href="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
         @endif
     </div>
     <hr>

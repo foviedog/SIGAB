@@ -12,7 +12,7 @@ Registrar guía académica
 <div class="container bg-white py-4 px-3 mb-5 sombra w-75">
     <div class="d-flex justify-content-between">
         <h3 class="text-center texto-gris-oscuro font-weight-bold"> Registrar Guía Académica </h3>
-        <div><a href="{{ route('guia-academica.listar' ) }}" class="btn btn-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Regresar</a></div>
+        <div><a href="{{ route('guia-academica.listar' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Regresar</a></div>
     </div>
     <hr>
 

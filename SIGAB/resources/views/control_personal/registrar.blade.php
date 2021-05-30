@@ -329,6 +329,7 @@ $personal_no_insertado = null;
                                 </div>
                                 <div class="col-6">
                                     <select id="tipo_puesto_1" name="tipo_puesto_1" class="form-control" required>
+                                        <option value="" selected>Sin seleccionar</option>
                                         @foreach($tipos_puestos as $tipo_puesto)
                                         <option value="{{ $tipo_puesto }}" @if ( $personal_no_insertado !=null) @if ( $tipo_puesto==$personal_no_insertado->tipo_puesto_1) selected @endif @endif> {{ $tipo_puesto }}</option>
                                         @endforeach

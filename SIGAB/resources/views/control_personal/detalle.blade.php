@@ -421,7 +421,7 @@ $idiomas = [];
                                         <div class="form-group text-center mt-4">
                                             <label for="city"><strong>Carga académica</strong><br /></label>
                                             <div class="w-100 d-flex justify-content-center">
-                                                <a href="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" class="btn btn-rojo" type="button">Ver carga académica</a>
+                                                <a href="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" class="btn btn-contorno-rojo" type="button">Ver carga académica</a>
                                             </div>
                                         </div>
                                         @endif

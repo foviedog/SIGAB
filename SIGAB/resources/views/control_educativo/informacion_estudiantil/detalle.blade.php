@@ -61,7 +61,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                     <div class="col-lg-4 col-sm-12">
                         {{-- Tarjeta de foto perfil --}}
                         <div class="card mb-3">
-                            <div class="card-body text-center shaldow-sm rounded pb-5">
+                            <div class="card-body text-center shaldow-sm rounded " style="height: 353px;">
                                 {{-- Foto del estudiante --}}
                                 <div class="d-flex justify-content-center mb-3 mt-4">
                                     <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
@@ -70,10 +70,10 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                 </div>
                                 {{-- Cedula del estudiante --}}
                                 <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del estudiante"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $estudiante->persona_id }} </strong></small></div>
-                                <div id="cambiar-foto">
+                                <div id="cambiar-foto"  style="display: none;">
                                     <hr>
                                     <input type="file" name="avatar" class="border">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" >
                                     <input type="hidden" name="id_estudiante" value="{{ $estudiante->persona->persona_id }}"><br>
                                 </div>
                             </div>
@@ -393,7 +393,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Información Laboral</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="{{ route('trabajo.listar', $estudiante->persona->persona_id) }}" class="btn btn-rojo" type="button">Ver trabajos</a>
+                                                        <a href="{{ route('trabajo.listar', $estudiante->persona->persona_id) }}" class="btn btn-contorno-rojo" type="button">Ver trabajos</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -405,7 +405,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Titulaciones</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href="{{ route('graduado.show',$estudiante->persona->persona_id ) }}" class="btn btn-rojo" type="button">Ver graduaciones</a>
+                                                        <a href="{{ route('graduado.show',$estudiante->persona->persona_id ) }}" class="btn btn-contorno-rojo" type="button">Ver graduaciones</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -418,7 +418,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                     <label for="city"><strong>Guías académicas</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
 
-                                                        <a href="{{ route('guia-academica.listar', ['nombreFiltro' => $estudiante->persona_id]) }}" class="btn btn-rojo"> Ver guías </a>
+                                                        <a href="{{ route('guia-academica.listar', ['nombreFiltro' => $estudiante->persona_id]) }}" class="btn btn-contorno-rojo"> Ver guías </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -429,7 +429,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                 <div class="form-group text-center mt-4">
                                                     <label for="city"><strong>Crear guía académica</strong><br /></label>
                                                     <div class="w-100 d-flex justify-content-center">
-                                                        <a href=" {{ route('guia-academica.create', $estudiante->persona_id) }}?aceptado=true" class="btn btn-rojo"> Crear guía </a>
+                                                        <a href=" {{ route('guia-academica.create', $estudiante->persona_id) }}?aceptado=true" class="btn btn-contorno-rojo"> Crear guía </a>
                                                     </div>
                                                 </div>
                                             </div>
