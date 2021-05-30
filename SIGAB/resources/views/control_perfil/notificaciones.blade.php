@@ -34,6 +34,8 @@ Notificaciones
                         <div>
                             {{-- Botón para regresar a la vista principal --}}
                             <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
+                            {{-- Botón para regresar mi perfil --}}
+                            <a href="{{ route('perfil.show') }}" class="btn btn-contorno-rojo"><i class="fas fa-user"></i> &nbsp; Mi Perfil </a>
                         </div>
                     </div>
                 </div>
