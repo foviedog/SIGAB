@@ -1,4 +1,3 @@
-    (116350852,' Joselyn ','Navarro Cruz',NULL,NULL,'8950-33-75','navarrojoselyn9614@gmail.com ',NULL,NULL,'Concepción Abajo de Alajuelita, San José ',NULL,'default.jpg',NULL,NULL),
 INSERT INTO `personas` (`persona_id`, `nombre`, `apellido`, `fecha_nacimiento`, `telefono_fijo`, `telefono_celular`, `correo_personal`, `correo_institucional`, `estado_civil`, `direccion_residencia`, `genero`, `imagen_perfil`, `created_at`, `updated_at`) VALUES
 ('109830609', ' Hellen Patricia  ', 'Araya Méndez', NULL, '22384322', '89382474', 'hellenaraya@hotmail.com ', NULL, NULL, 'San Francisco, Heredia, Heredia', NULL, 'default.jpg', NULL, NULL),
 ('113710061', ' Jorge ', 'Quesada Cubillo', NULL, '87779180', '87779180', 'juniorzer@gmail.com', NULL, NULL, 'Heredia', NULL, 'default.jpg', NULL, NULL),
