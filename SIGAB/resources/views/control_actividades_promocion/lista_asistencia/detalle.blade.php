@@ -107,7 +107,7 @@ Asistencia a {{ $actividad->tema }}
                                         <div class="w-100">
                                             <div class="d-flex justify-content-between w-100">
                                                 <div>
-                                                    <label for="cedula">Cedula <i class="text-danger">*</i></label>
+                                                    <label for="cedula">Cédula <i class="text-danger">*</i></label>
                                                 </div>
                                                 <span class="text-muted " id="mostrar_cedula"></span>
                                             </div>
@@ -179,7 +179,7 @@ Asistencia a {{ $actividad->tema }}
                                             <div class="d-flex justify-content-between w-100">
 
                                                 <div>
-                                                    <label for="telefono">Telefono </label>
+                                                    <label for="telefono">Teléfono </label>
                                                 </div>
                                                 {{-- espacio donde se muestran los caracteres restantes --}}
                                                 <span class="text-muted" id="mostrar_telefono"></span>
