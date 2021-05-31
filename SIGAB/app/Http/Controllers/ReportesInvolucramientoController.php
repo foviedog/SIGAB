@@ -438,7 +438,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function cantActividadesXPersonalAmbito($anio)
     {
-        $ambitos = ["Nacional", "Internacional"];
+        $ambitos =  GlobalArrays::AMBITOS_ACTIVIDAD;
         $personal = \DB::table('personal')
             ->select('persona_id')->get();
         $dataSet = [];
@@ -479,7 +479,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function porcentajeParticipacionAmbito($actividadesXPersonal)
     {
-        $ambitos = ["Nacional", "Internacional"];
+        $ambitos =  GlobalArrays::AMBITOS_ACTIVIDAD;
         $porcentajesParticipacion = [];
         $cantPersonal = count($actividadesXPersonal);
 
