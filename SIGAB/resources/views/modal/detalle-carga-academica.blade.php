@@ -23,7 +23,7 @@
                 <form autocomplete="off" method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                     @csrf
                     @method('PATCH')
-                @endif
+                    @endif
 
                     <div class="d-flex justify-content-center flex-column">
                         {{-- Campo: Ciclo lectivo --}}
@@ -44,7 +44,7 @@
                                 <label for="anio">Año <i class="text-danger">*</i></label>
                                 <span class="text-muted ml-2" id="mostrar_anio"></span>
                             </div>
-                            <select class="form-control form-control-md " id="anio" name="anio" disabled >
+                            <select class="form-control form-control-md " id="anio" name="anio" disabled>
                                 @foreach($anios as $anio2)
                                 <option value="{{ $anio2 }}"> {{ $anio2 }} </option>
                                 @endforeach
@@ -58,6 +58,7 @@
                             <option>{{ $curso }}</option>
                             @endforeach
                         </select>
+                        <div id="nombre-mostrar"></div>
 
                         {{-- Campo: NRC--}}
                         <div class=" mb-3">
