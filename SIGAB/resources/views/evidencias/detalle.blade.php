@@ -33,7 +33,7 @@ $tiposDocumentos =
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
-                <h3>Lista de evidencias </h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
+                <h3>Lista de evidencias </h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">código de actividad: {{ $actividad->id }}</span>
             </div>
             {{-- Botones superiores --}}
             <div>
@@ -309,6 +309,16 @@ $tiposDocumentos =
                                 </tr>
                             </tfoot>
                         </table>
+
+                        <div class="py-2">
+                            <div class="col align-self-center">
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $evidencias->perPage() ?? ' ' }} items por página de {{ $evidencias->total() ?? ''  }}</p>
+                            </div>
+                            {{-- Items de paginación --}}
+                            <div class="col-md-5 ml-5 d-flex justify-content-center">
+                                {{ $evidencias->withQueryString()->links() ?? '' }}
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -321,15 +331,7 @@ $tiposDocumentos =
                 </div>
             </div>
         </div>
-        <div class="row px-3 py-2">
-            <div class="col-md-3 align-self-center">
-                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{ $evidencias->perPage() ?? ' ' }} items por página de {{ $evidencias->total() ?? ''  }}</p>
-            </div>
-            {{-- Items de paginación --}}
-            <div class="col-md-5 ml-5 d-flex justify-content-center">
-                {{ $evidencias->withQueryString()->links() ?? '' }}
-            </div>
-        </div>
+
     </div>
 
 </div>
