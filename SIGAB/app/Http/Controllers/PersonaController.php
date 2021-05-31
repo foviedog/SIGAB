@@ -45,8 +45,6 @@ class PersonaController extends Controller
             $persona = session('persona');;
 
             // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
-            $persona->nombre = $request->nombre;
-            $persona->apellido = $request->apellido;
             $persona->fecha_nacimiento = $request->fecha_nacimiento;
             $persona->telefono_fijo = $request->telefono_fijo;
             $persona->telefono_celular = $request->telefono_celular;
@@ -96,6 +94,31 @@ class PersonaController extends Controller
         $notificacion = auth()->user()->unreadNotifications
         ->where('id', '=',$idNotificacion)->first();
         $notificacion->markAsRead();
+
+        return \Redirect::back();
+    }
+
+    public function marcarTodasLeido(){
+        $notificacion = auth()->user()->unreadNotifications->markAsRead();
+        return \Redirect::back();
+    }
+
+    public function eliminarNotificacion($idNotificacion){
+
+        $notificacion = auth()->user()->readNotifications
+        ->where('id', '=',$idNotificacion)->first();
+        $notificacion->delete();
+
+        return \Redirect::back();
+    }
+
+    public function eliminarTodasNotificaciones(){
+
+        $notificaciones = auth()->user()->readNotifications;
+
+        foreach($notificaciones as $notificacion){
+            $notificacion->delete();
+        }
 
         return \Redirect::back();
     }

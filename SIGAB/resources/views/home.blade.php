@@ -172,14 +172,6 @@ SIGAB
                     </div>
                     <hr>
 
-                    @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
-                    <div class="link-inicio-contenedor">
-                        <a href="{{ route('estudiante.create') }}" class="card-subtitle mb-3 link-inicio">
-                            <i class="fas fa-caret-right texto-azul-una"></i> Añadir estudiantes
-                        </a>
-                    </div>
-                    @endif
-
                     @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
                     <div class="link-inicio-contenedor">
                         <a href="{{ route('listado-estudiantil') }}" class="card-subtitle mb-3 link-inicio">
@@ -216,14 +208,6 @@ SIGAB
                     </div>
                     <hr>
 
-                    @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
-                    <div class="link-inicio-contenedor">
-                        <a href="{{ route('personal.create') }}" class="card-subtitle mb-3 link-inicio">
-                            <i class="fas fa-caret-right texto-azul-una"></i> Añadir personal
-                        </a>
-                    </div>
-                    @endif
-
                     @if(Accesos::ACCESO_LISTAR_PERSONAL())
                     <div class="link-inicio-contenedor">
                         <a href="{{ route('personal.listar') }}" class="card-subtitle mb-3 link-inicio">
@@ -233,22 +217,25 @@ SIGAB
                     @endif
 
                     @if(Accesos::ACCESO_GENERAR_INFORMES_ESTADISTICOS())
-                    <a href="{{ route('reportes-involucramiento.show') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte general </h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('reportes-involucramiento.show') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte general
+                        </a>
+                    </div>
 
-                    <a href="{{ route('reportes-involucramiento.show') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte anual</h6>
-                    </a>
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('reportes-involucramiento.show') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte anual
+                        </a>
+                    </div>
 
-                    <a href="{{ route('involucramiento-ciclo.show') }}">
-                        <h6 class="card-subtitle mb-3 link-inicio"><i class="fas fa-caret-right texto-azul-una"></i> Reporte por ciclo</h6>
-                    </a>
-
+                    <div class="link-inicio-contenedor">
+                        <a href="{{ route('involucramiento-ciclo.show') }}" class="card-subtitle mb-3 link-inicio">
+                            <i class="fas fa-caret-right texto-azul-una"></i> Reporte por ciclo
+                        </a>
+                    </div>
                     @endif
-
-
-
+                    
                 </div>
             </div>
         </div>

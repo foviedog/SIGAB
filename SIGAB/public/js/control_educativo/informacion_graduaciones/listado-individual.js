@@ -8,6 +8,7 @@ $("#mensaje-exito")
 /* Botón cancelar y cerrar campos */
 function cancelarEdicion() {
     $("input").attr("disabled", "disabled");
+    $("select").attr("disabled", "disabled");
     $("textarea").attr("disabled", "disabled");
     $("#terminar-edicion").hide();
     $("#cancelar-edicion").hide();
@@ -59,6 +60,7 @@ $("#habilitar-edicion").on("click", function() {
 
 $("#cancelar-edicion").on("click", function() {
     $("input").attr("disabled", "disabled");
+    $("select").attr("disabled", "disabled");
     $("textarea").attr("disabled", "disabled");
     $("#terminar-edicion").hide();
     $("#cancelar-edicion").hide();

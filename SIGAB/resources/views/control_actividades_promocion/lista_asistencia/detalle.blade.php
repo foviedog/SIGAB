@@ -24,7 +24,7 @@ Asistencia a {{ $actividad->tema }}
         <div class="d-flex justify-content-between">
             {{-- Título --}}
             <div class=" d-flex justify-content-start align-items-center">
-                <h3>Lista de asistencia</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
+                <h3>Lista de asistencia</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">código de actividad: {{ $actividad->id }}</span>
             </div>
             {{-- Botones superiores --}}
             @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
@@ -89,18 +89,17 @@ Asistencia a {{ $actividad->tema }}
                     <input class="form-control" type='hidden' id="actividad-id" name="acitividad_id" value="{{ $actividad->id }}">
                     <input class="form-control" type='hidden' id="participante-encontrado2" name="participante-encontrado2" value="false">
 
-                    <div class="card-header ">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
-                                </h6>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="card shadow">
-                        <div class="card-body">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Añadir participante
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col">
                                     {{-- Campo: cedula --}}
@@ -244,6 +243,7 @@ Asistencia a {{ $actividad->tema }}
 
         <div id="table_data">
             <div class="row mt-2 d-flex justify-content-center">
+
                 <div class="col-11">
                     <div class="card shadow">
                         <div class="d-flex justify-content-between card-header py-3">
@@ -255,135 +255,135 @@ Asistencia a {{ $actividad->tema }}
                             </div>
                         </div>
                         <form action="{{ route('asistencia-promocion.show', $actividad->id) }}" method="GET" id="form-busqueda">
-                            <div class="row pt-3 px-3">
+                            <div class="row d-flex justify-content-between m-1 mt-3">
 
-                                <div class="col-md-10 d-flex justify-content-start">
-                                    <div class="d-flex justify-content-end w-25">
-                                        <div class="text-md-right dataTables_filter input-group mb-3 ">
-                                            {{-- Input para realizar la búsqueda del archivo --}}
-                                            <div class="input-group mb-2">
-                                                <input type="text" class="form-control w-50" id="filtro" name="filtro" placeholder="Búsqueda del participante." value="{{ $filtro ?? '' }}">
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Buscar por nombre, apellido o cédula">
-                                                        <i class="far fa-question-circle fa-lg"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="col-6 d-flex ">
+                                    <div class="input-group ">
+                                        <div class="input-group-prepend ">
+                                            {{-- Input para realizar la búsqueda del participante --}}
+                                            <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                         </div>
+                                        <input type="search" class="form-control form-control-md" aria-controls="dataTable" placeholder="Búsqueda del participante." name="filtro" @if (!is_null($filtro)) value="{{ $filtro }}" @endif />
                                     </div>
-                                    {{-- Botón de submit para realizar la búsqueda del archivo --}}
-                                    <div>
-                                        <button class="btn btn-rojo ml-3" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                                    {{-- Botón de submit para realizar la búsqueda del participante --}}
+                                    <div class="d-flex justify-content-center" style="width: 30%">
+                                        <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
-                                <div class="col-md-2 ">
-                                    <div class=" d-flex justify-content-end" aria-controls="dataTable">
-                                        <label class="font-weight-bold mr-2">Mostrar &nbsp; </label>
-                                        {{-- Select con la cantidad de items por páginas --}}
-                                        <select class="form-control form-control-sm custom-select custom-select-sm w-50" name="itemsPagina">
-                                            @foreach ($paginaciones as $paginacion)
-                                            <option value={{ $paginacion }} @if ($itemsPagina==$paginacion) selected @endif>{{ $paginacion }}</option>
+                                <div class="col-2 text-nowrap d-flex justify-content-end">
+                                    <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                                    {{-- Select con la cantidad de items por páginas--}}
+                                    <div class="w-50">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                            @foreach($paginaciones as $paginacion)
+                                            <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                            </div>
                         </form>
 
-                        <table class="table my-0" id="dataTable">
-                            {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
-                            <thead>
-                                <tr>
-                                    <th>N° de Cédula</th>
-                                    <th>Nombre</th>
-                                    <th>Teléfono celular</th>
-                                    <th>Correo</th>
-                                    <th>Información</th>
-                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <th>Eliminar</th>
+                        <div class="table-responsive table p-3 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0 " id="dataTable">
+                                {{-- Nombre de las columnas en la parte de arriba de la tabla --}}
+                                <thead>
+                                    <tr>
+                                        <th>N° de Cédula</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono celular</th>
+                                        <th>Correo</th>
+                                        <th>Información</th>
+                                        @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                        <th>Eliminar</th>
+                                        @endif
+                                    </tr>
+                                </thead>
+                                <tbody id="lista-participantes">
+                                    {{-- En caso de que no existan registros --}}
+                                    @if (count($listaAsistencia) == 0)
+                                    <tr class="cursor-pointer">
+                                        <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i>
+                                            &nbsp; No existen registros</td>
+                                    </tr>
                                     @endif
-                                </tr>
-                            </thead>
-                            <tbody id="lista-participantes">
-                                {{-- En caso de que no existan registros --}}
-                                @if (count($listaAsistencia) == 0)
-                                <tr class="cursor-pointer">
-                                    <td colspan="7"> <i class="text-danger fas fa-exclamation-circle fa-lg"></i>
-                                        &nbsp; No existen registros</td>
-                                </tr>
-                                @endif
-                                {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
-                                @foreach ($listaAsistencia as $participante)
-                                <tr id="" class="cursor-pointer">
-                                    <td>{{ $participante->cedula }}</td>
-                                    {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
-                                    <td>{{ $participante->apellidos . ', ' . $participante->nombre }}</td>
-                                    <td>{!! $participante->numero_telefono ?? '<i class="font-weight-light"> No registrado</i>' !!}<br /> </td>
-                                    <td>
-                                        <strong>
-                                            {!! $participante->correo ?? '<i class="font-weight-light"> No registrado</i>' !!}
-                                        </strong>
-                                    </td>
-                                    <td>
-                                        <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
-                                            &nbsp;Detalle</button>
-                                    </td>
+                                    {{-- Inserción iterativa de los estudiantes dentro de la tabla --}}
+                                    @foreach ($listaAsistencia as $participante)
+                                    <tr id="" class="cursor-pointer">
+                                        <td>{{ $participante->cedula }}</td>
+                                        {{-- Aquí se debería de agregar la foto del estudiante, si así se desea. --}}
+                                        <td>{{ $participante->apellidos . ', ' . $participante->nombre }}</td>
+                                        <td>{!! $participante->numero_telefono ?? '<i class="font-weight-light"> No registrado</i>' !!}<br /> </td>
+                                        <td>
+                                            <strong>
+                                                {!! $participante->correo ?? '<i class="font-weight-light"> No registrado</i>' !!}
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <button id="mostrar2-{{ $participante->cedula }}" data-idactividad="{{ $actividad->id }}" class="btn btn-contorno-rojo" type="button" onclick="mostrar2Info(this)"><i class="fas fa-eye"></i>
+                                                &nbsp;Detalle</button>
+                                        </td>
 
-                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <td>
-                                        <a class="btn btn-contorno-rojo" onclick="rutaParticipantePromocion('{{ $participante->cedula }}', {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
-                                    </td>
-                                    @endif
+                                        @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                        <td>
+                                            <a class="btn btn-contorno-rojo" onclick="rutaParticipantePromocion('{{ $participante->cedula }}', {{ $actividad->id }})" data-toggle="modal" data-target="#modal-eliminar"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a>
+                                        </td>
+                                        @endif
 
-                                </tr>
-                                @endforeach
+                                    </tr>
+                                    @endforeach
 
-                            </tbody>
-                            {{-- Nombre de las columnas en la parte de abajo de la tabla --}}
-                            <tfoot>
-                                <tr>
-                                    <th>N° de Cédula</th>
-                                    <th>Nombre</th>
-                                    <th>Teléfono celular</th>
-                                    <th>Correo</th>
-                                    <th>Información</th>
-                                    @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
-                                    <th>Eliminar </th>
-                                    @endif
-                                </tr>
-                            </tfoot>
-                        </table>
+                                </tbody>
+
+                                {{-- Nombre de las columnas en la parte de abajo de la tabla --}}
+                                <tfoot>
+                                    <tr>
+                                        <th>N° de Cédula</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono celular</th>
+                                        <th>Correo</th>
+                                        <th>Información</th>
+                                        @if(Accesos::ACCESO_ELIMINAR_PARTICIPANTE())
+                                        <th>Eliminar </th>
+                                        @endif
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                        <div class="row px-3 py-2">
+                            <div class="col-md-3 align-self-center">
+
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando
+                                    {{ $listaAsistencia->perPage() }} items por página de {{ $listaAsistencia->total() }}</p>
+
+
+                            </div>
+                            {{-- Items de paginación --}}
+                            <div class="col-md-5 ml-5 d-flex justify-content-center">
+
+                                {{ $listaAsistencia->withQueryString()->links() }}
+
+                            </div>
+                        </div>
+
                     </div>
-
+                </div>
+                <div class="col-1">
+                    <div class="info-card" style="padding: 2px 0; max-width: 100%; ">
+                        <span style="font-size: 36px; font-weight: bolder;" id="total">{{ $listaAsistencia->total() }}</span><br>
+                        <span style="font-size: 20px; font-weight: light;  ">Total</span>
+                    </div>
                 </div>
 
+
             </div>
-            <div class="col-1">
-                <div class="info-card" style="padding: 2px 0; max-width: 100%; ">
-                    <span style="font-size: 36px; font-weight: bolder;" id="total">{{ $listaAsistencia->total() }}</span><br>
-                    <span style="font-size: 20px; font-weight: light;  ">Total</span>
-                </div>
-            </div>
+
         </div>
-        <div class="row px-3 py-2">
-            <div class="col-md-3 align-self-center">
-
-                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando
-                    {{ $listaAsistencia->perPage() }} items por página de {{ $listaAsistencia->total() }}</p>
 
 
-            </div>
-            {{-- Items de paginación --}}
-            <div class="col-md-5 ml-5 d-flex justify-content-center">
 
-                {{ $listaAsistencia->withQueryString()->links() }}
-
-            </div>
-        </div>
     </div>
-
-
-
-</div>
 </div>
 
 {{-- </form> --}}

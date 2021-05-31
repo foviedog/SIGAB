@@ -131,18 +131,19 @@ class EstudianteController extends Controller
             $estudiante->residencias_UNA = $request->residencias;
             $persona->save(); //se guarda el objeto en la base de datos
             $estudiante->save(); //se guarda el objeto en la base de datos
-
+            
+            $mensaje = "¡El registro ha sido exitoso!";
              //Se envía la notificación
             //event(new EventEstudiantes($estudiante, 1));
             //se redirecciona a la pagina de registro estudiante con un mensaje de exito y los datos específicos del objeto insertado
             return view('control_educativo.informacion_estudiantil.registrar')
-                ->with('mensaje-exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
+                ->with('mensaje_exito', $mensaje) //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                 ->with('persona_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('estudiante_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                 ->with('persona_existe', null);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
             return view('control_educativo.informacion_estudiantil.registrar')
-                ->with('mensaje-error', "Ha ocurrido un error con el registro del estudiante con la cédula  " . "$request->cedula" . ". Es posible que el estudiante ya se encuentre agregado.") //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
+                ->with('mensaje_error', "Ha ocurrido un error con el registro del estudiante con la cédula  " . "$request->cedula" . ". Es posible que el estudiante ya se encuentre agregado.") //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                 ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
                 ->with('estudiante_no_insertado', $estudiante) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
                 ->with('persona_existe', null);
@@ -219,7 +220,8 @@ class EstudianteController extends Controller
             //event(new EventEstudiantes($estudiante, 2));
 
             //Se retorna el detalle del estudiante ya modificado
-            return redirect("/estudiante/detalle/{$estudiante->persona_id}");
+            return redirect("/estudiante/detalle/{$estudiante->persona_id}")
+            ->with('mensaje-exito', '¡El estudiante se ha actualizado correctamente!');
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();

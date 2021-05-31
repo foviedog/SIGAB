@@ -23,9 +23,20 @@
                 <form autocomplete="off" method="POST" role="form" enctype="multipart/form-data" id="form-actualizar">
                     @csrf
                     @method('PATCH')
-                @endif
+                    @endif
 
                     <div class="d-flex justify-content-center flex-column">
+
+                        {{-- Campo: Nombre del curso--}}
+                        <label for="nombre_curso">Nombre del curso <i class="text-danger">*</i></label>
+                        <select class="form-control mb-3" id="nombre_curso" name="nombre_curso" size="10" disabled required>
+                            @foreach($cursos as $curso)
+                            <option>{{ $curso }}</option>
+                            @endforeach
+                        </select>
+                        <div id="nombre-mostrar" class="mb-2"></div>
+
+
                         {{-- Campo: Ciclo lectivo --}}
                         <div class="mb-3">
                             <div class="d-flex justify-content-between w-100">
@@ -44,16 +55,13 @@
                                 <label for="anio">Año <i class="text-danger">*</i></label>
                                 <span class="text-muted ml-2" id="mostrar_anio"></span>
                             </div>
-                            <input type='number' class="form-control" id="anio" name="anio" onkeyup="contarCaracteres(this,4)" min="1975" disabled required>
+                            <select class="form-control form-control-md " id="anio" name="anio" disabled>
+                                @foreach($anios as $anio2)
+                                <option value="{{ $anio2 }}"> {{ $anio2 }} </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        {{-- Campo: Nombre del curso--}}
-                        <label for="nombre_curso">Nombre del curso <i class="text-danger">*</i></label>
-                        <select class="form-control mb-3" id="nombre_curso" name="nombre_curso" size="10" disabled required>
-                            @foreach($cursos as $curso)
-                            <option>{{ $curso }}</option>
-                            @endforeach
-                        </select>
 
                         {{-- Campo: NRC--}}
                         <div class=" mb-3">

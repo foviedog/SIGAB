@@ -8,6 +8,10 @@ Cargas académicas de {{ $personal->persona->nombre }}
 {{-- Ninguna hoja de estilo por el momento --}}
 @endsection
 
+@php
+$anios = GlobalFunctions::obtenerAniosFuturos();
+@endphp 
+
 @section('contenido')
 <div class="card">
     <div class="card-body">
@@ -52,7 +56,51 @@ Cargas académicas de {{ $personal->persona->nombre }}
                 {{-- Título de la tabla --}}
                 <p class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Cargas académicas</p>
             </div>
+
+
             <div class="card-body">
+
+                @if(Accesos::ACCESO_VISUALIZAR_CARGAS_ACADEMICAS())
+                {{-- // Form para la paginación de la página y para la búsqueda de estudiantes --}}
+                <form autocomplete="off" action="{{ route('cargaacademica.show', $personal->persona->persona_id) }}" method="GET" role="form" id="item-pagina">
+                    <div class="row d-flex justify-content-between">
+
+                        <div class="col-md-5 d-flex ">
+
+                            <div class="input-group d-flex justify-content-between mr-2">
+                                <div class="input-group-prepend ">
+                                    {{-- Input para realizar la búsqueda del estudiante --}}
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Ver cargas académicas por un año en específico"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
+                                </div>
+                                <select class="form-control form-control-md"  name="anioFiltro">
+                                    <option value=' '>Sin seleccionar</option>
+                                    @foreach($anios as $anio2)
+                                    <option value="{{ $anio2 }}" @if ( $anio !=null) @if ( $anio2==$anio) selected @endif @endif> {{ $anio2 }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{-- Botón de submit para realizar la búsqueda del estudiante por año--}}
+                            <div class="d-flex justify-content-center" style="width: 30%">
+                                <button class="btn btn-rojo" type="submit">Buscar &nbsp;<i class="fas fa-search"></i></button>
+                            </div>
+
+                        </div>
+                        <div class="col-2 text-nowrap d-flex justify-content-end">
+                            <label class="font-weight-bold " for="itemsPagina">Mostrar &nbsp;</label>
+                            {{-- Select con la cantidad de items por páginas--}}
+                            <div class="w-50">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
+                                    @foreach($paginaciones as $paginacion)
+                                    <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                @endif
+
+
                 <div class="table-responsive table mt-2 table-hover" id="dataTable" role="grid" aria-describedby="dataTable_info">
 
                     <table class="table my-0" id="dataTable">
@@ -121,11 +169,18 @@ Cargas académicas de {{ $personal->persona->nombre }}
                             </tr>
                         </tfoot>
                     </table>
-                    <div>
-                        <span class="ml-2"> Total de registros: <span class="font-weight-bold">{{ count($cargas_academicas) }}</span></span>
-                    </div>
                 </div>
 
+                <div class="row">
+                    {{-- Información general de los items por página y el total de resultados --}}
+                    <div class="col-md-5 align-self-center">
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$cargas_academicas->perPage() }} de {{ $cargas_academicas->total() }}</p>
+                    </div>
+                    {{-- Items de paginación --}}
+                    <div class="col-md-5 ml-5">
+                        {{ $cargas_academicas->withQueryString()->links() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

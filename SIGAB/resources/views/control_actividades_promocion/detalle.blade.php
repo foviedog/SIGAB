@@ -111,7 +111,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                             <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light mr-3"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
                             @endif
                             @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
-                            <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Lista de asistencia </a>
+                            <a href="{{ route('asistencia-promocion.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Asistencia </a>
                             @endif
                         </div>
                     </div>
@@ -416,7 +416,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="card-header py-3">
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                     <i class="far fa-building fa-2x"></i> &nbsp;&nbsp
-                                                    Instiuciones patrocinadoras &nbsp;&nbsp
+                                                    Instituciones patrocinadoras &nbsp;&nbsp
                                                     <span data-toggle="tooltip" data-placement="right" title="Se ingresa el nombre de las instituciones o entidades patrocinadoras de la actividad si existen">
                                                         <i class="far fa-question-circle fa-lg"></i>
                                                     </span>

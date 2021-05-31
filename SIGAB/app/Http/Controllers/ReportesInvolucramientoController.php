@@ -49,6 +49,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function datosCuntitativosPersonal()
     {
+        
         $interinos = Personal::where("tipo_nombramiento", "Interino")->count();
         $propietarios = Personal::where("tipo_nombramiento", "Propietario")->count();
         $fijo = Personal::where("tipo_nombramiento", "Plazo fijo")->count();
@@ -439,7 +440,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function cantActividadesXPersonalAmbito($anio)
     {
-        $ambitos = ["Nacional", "Internacional"];
+        $ambitos =  GlobalArrays::AMBITOS_ACTIVIDAD;
         $personal = \DB::table('personal')
             ->select('persona_id')->get();
         $dataSet = [];
@@ -459,7 +460,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function cantActividadesInternasXAmbito($persona_id, $ambito, $anio)
     {
-        $cant = Actividades::join('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+        $cant = Actividades::leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
                 $query->where("actividades.responsable_coordinar", "=", $persona_id)
@@ -479,7 +480,7 @@ class ReportesInvolucramientoController extends Controller
 
     public function porcentajeParticipacionAmbito($actividadesXPersonal)
     {
-        $ambitos = ["Nacional", "Internacional"];
+        $ambitos =  GlobalArrays::AMBITOS_ACTIVIDAD;
         $porcentajesParticipacion = [];
         $cantPersonal = count($actividadesXPersonal);
 

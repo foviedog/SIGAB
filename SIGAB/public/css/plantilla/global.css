@@ -307,6 +307,15 @@ Fin de la paleta de colores
     transition-timing-function: ease-in;
 }
 
+.password-eye{
+    color:#000000;
+    font-size: 17px;
+}
+
+.password-eye:hover{
+    color:#034991;
+}
+
 /* ********************************
         Mensajes
 ******************************** */
@@ -971,11 +980,14 @@ Tabla reporte anual
     padding: 0;
 }
 
+
+
 /*
 ===============================
         WIDTH
 ===============================
  */
+
 
 .w-5 {
     width: 5% !important;
@@ -1045,6 +1057,7 @@ input[type="checkbox"] {
         flex: 0 0 33.3333333333%;
         max-width: 33.3333333333%;
     }
+
 }
 
 @media (min-width: 992px) {

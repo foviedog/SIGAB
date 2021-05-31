@@ -34,7 +34,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
         <hr>
         @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
         {{-- Formulario para registrar informacion de la actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-promocion.store') }}" method="POST" enctype="multipart/form-data" id="form-guardar" >
+        <form autocomplete="off" action="{{ route('actividad-promocion.store') }}" method="POST" enctype="multipart/form-data" id="form-guardar">
             @csrf
             @endif
             {{-- Mensajes para la validación de errores  --}}
@@ -190,7 +190,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                         <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}" required>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></button>
-                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad. Presione 'Apply' para insertar las fechas seleccionadas. De ser un único día, presion dos veces el día seleccionado y posteriormente 'Apply'. Para eliminar le fecha seleccionada presione 'Clear' " class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                         <div class=" w-5">
                                         </div>
@@ -310,8 +310,8 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                         <div class="card-header py-3">
                                             <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                 <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
-                                                Descripcion &nbsp;&nbsp
-                                                <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad">
+                                                Descripción &nbsp;&nbsp
+                                                <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad. Se incluyen datos como: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
                                                     <i class="far fa-question-circle fa-lg"></i>
                                                 </span>
                                             </p>

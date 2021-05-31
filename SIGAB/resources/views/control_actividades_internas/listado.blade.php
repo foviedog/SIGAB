@@ -73,9 +73,9 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <label class="font-weight-bold" for="itemsPagina">Mostrar &nbsp;</label>
                                 <div class="w-25">
                                     {{-- Select con la cantidad de items por páginas--}}
-                                    <select class="form-control  custom-select custom-select-sm" id="itemsPagina" name="itemsPagina" onchange="document.getElementById(' item-pagina').submit()">
+                                    <select class="form-control form-control-sm custom-select custom-select-sm" name="itemsPagina" onchange="document.getElementById('item-pagina').submit()">
                                         @foreach($paginaciones as $paginacion)
-                                        <option value={{ $paginacion }} @if($itemsPagina==$paginacion) @endif>{{ $paginacion }}</option>
+                                        <option value={{ $paginacion }} @if ($itemsPagina==$paginacion )selected @endif>{{ $paginacion }}</option>
                                         @endforeach
                                     </select>
                                 </div>

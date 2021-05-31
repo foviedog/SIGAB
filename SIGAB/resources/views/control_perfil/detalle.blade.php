@@ -5,7 +5,12 @@ Mi perfil
 @endsection
 
 @section('css')
-{{-- Ninguna hoja de estilo por el momento --}}
+<style>
+#dropdown-perfil{
+    padding: 0px !important;
+    box-shadow: none !important;
+}
+</style>
 @endsection
 
 {{-- Arreglos de opciones de los select utilizados --}}
@@ -28,9 +33,9 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
     <div class="container-fluid container-pefil" style="margin-top: -4.4rem; padding-left: 10rem ; ">
         <div class="row">
             <div class="col-3 info-gen-perfil">
-                <div class="card shadow pb-5">
+                <div class="card shadow pb-4">
                     <div class="card-body">
-                        <div class="d-flex justify-content-center mb-2 mt-4">
+                        <div class="d-flex justify-content-center mb-3 mt-4">
                             <div class="overflow-hidden rounded-circle d-flex justify-content-center" style="max-width: 202px; max-height: 202px;">
                                 <img class="" src="{{ asset('img/fotos/'.$persona->imagen_perfil) }}" style="max-width: 100%; object-fit: cover;" />
                             </div>
@@ -40,30 +45,30 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         </div>
                         {{-- Nombre completo de usario --}}
-                        <div class="d-flex justify-content-center border-top" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal">
-                            <small class="texto-negro font-weight-bold" style="font-size: 24px;">
+                        <div class="d-flex justify-content-center text-center border-top pt-2">
+                            <small class="texto-negro font-weight-bold" style="font-size: 20px;">
                                 {{ $persona->nombre ." ". $persona->apellido}}
                             </small>
                         </div>
                         {{-- Cedula de usuario --}}
-                        <div class="d-flex justify-content-center mb-3 text-muted" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal">
+                        <div class="d-flex justify-content-center my-3 text-muted" data-toggle="tooltip" data-placement="bottom" title="Cédula del usuario">
                             <i class="fa fa-id-card mr-1 mt-2 texto-rojo"></i>
                             <small style="font-size: 18px;">
                                 {{ $persona->persona_id }}
                             </small>
                         </div>
-                        <div class="my-5">
+                        <div class="mt-5 mb-2">
                             <div class="d-flex justify-content-center py-2 border-top border-bottom">
                                 <div class="container-fluid">
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-4  d-flex justify-content-end">
-                                            <div class="overflow-hidden rounded-circle " style="max-width: 65%;">
-                                                <img class="" src="{{ asset('img/recursos/iconos/administrativo2.png') }}" style="max-width: 100%; " />
+                                            <div class="overflow-hidden" style="max-width: 65%;">
+                                                <img src="{{ asset('img/recursos/iconos/administrativo2.png') }}" style="max-width: 100%;" class="rounded-circle" />
                                             </div>
                                         </div>
 
                                         <div class="col-8 px-0 d-flex align-items-center">
-                                            <div class="" style="font-size: 16px;">
+                                            <div style="font-size: 16px;">
                                                 @if ($persona->personal)
                                                 {{ $persona->personal->cargo }}
                                                 @elseif($persona->estudiante)
@@ -76,15 +81,15 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 </div>
 
                             </div>
-                            <div class="d-flex justify-content-center py-2 border-top border-bottom">
+                            <div class="d-flex justify-content-center py-2 border-bottom">
                                 <div class="container-fluid">
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-4  d-flex justify-content-end">
-                                            <div class="overflow-hidden rounded-circle " style="max-width: 65%;">
+                                            <div class="overflow-hidden" style="max-width: 65%;">
                                                 @if ($persona->personal)
-                                                <img src="{{ asset('img/recursos/iconos/time2.png') }}" style="max-width: 100%; " />
+                                                <img src="{{ asset('img/recursos/iconos/time2.png') }}" style="max-width: 100%;"  class="rounded-circle"/>
                                                 @else
-                                                <img src="{{ asset('img/recursos/iconos/dinero.png') }}" style="max-width: 100%; " />
+                                                <img src="{{ asset('img/recursos/iconos/dinero.png') }}" style="max-width: 100%;" class="rounded-circle" />
                                                 @endif
                                             </div>
                                         </div>
@@ -109,19 +114,35 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                 </div>
             </div>
             <div class="col-8">
-                <div class="card shadow pb-2">
+                <div class="card shadow">
                     <div class="card-header py-3">
                         <div class="d-flex justify-content-between header-perfil">
                             <div>
                                 <h3 class="texto-rojo-medio font-weight-light m-0 texto-rojo pb-3">Configuración de la cuenta </h3>
                             </div>
-                            <div >
-                                {{-- Botón para ver las actividades que ha registrado --}}
-                                <a href="{{ route('perfil.mis-actividades') }}" class="btn btn-contorno-rojo"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Mis actividades</a>
+                            <div>
+
+                                <nav class="navbar navbar-expand-lg" style="float: left" id="dropdown-perfil">
+                                    <div class="collapse navbar-collapse">
+                                        <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item dropdown">
+                                            <a class="dropdown-toggle btn btn-contorno-rojo mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Mis accesos personales
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                {{-- Botón para acceder a las notificaciones --}}
+                                                <a href="{{ route('perfil.notifications') }}" class="dropdown-item"><i class="fas fa-bell"></i> &nbsp; Notificaciones </a>
+                                                {{-- Botón para ver las actividades que ha registrado --}}
+                                                <a href="{{ route('perfil.mis-actividades') }}" class="dropdown-item"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Mis actividades</a>
+                                                {{-- Botón para cambiar contrasenna --}}
+                                                <a href="{{ route('perfil.actualizar-contrasenna') }}" class="dropdown-item"><i class="fas fa-key"></i> &nbsp; Cambiar contraseña</a>
+                                            </div>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </nav>
                                 {{-- Botón para regresar a la página principal --}}
                                 <a href="{{ route('home') }}" class="btn btn-contorno-rojo"><i class="fas fa-home"></i> &nbsp; Página Principal </a>
-                                {{-- Botón para acceder a las notificaciones --}}
-                                <a href="{{ route('perfil.notifications') }}" class="btn btn-contorno-rojo"><i class="fas fa-bell"></i> &nbsp; Notificaciones </a>
                                 {{-- Boton que habilita opcion de editar --}}
                                 <button type="button" id="editar-actividad" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                                 {{-- Boton de cancelar edicion --}}
@@ -131,24 +152,6 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
 
                     </div>
                     <div class="card-body">
-                        <div class="form-row px-5">
-                            {{-- Campo: Nombre Completo de usuario --}}
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
-                                    <span class="text-muted" id="mostrar_nombre"></span>
-                                    <input type="text" onkeyup="contarCaracteres(this,50)" id="nombre" name="nombre" class="form-control" placeholder="Nombre " value="{{ $persona->nombre }}" required disabled />
-                                </div>
-                            </div>
-                            {{-- Campo: Apellidos --}}
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
-                                    <span class="text-muted" id="mostrar_apellido"></span>
-                                    <input type="text" name="apellido" id="apellido" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Apellidos" value="{{ $persona->apellido }}" required disabled /> </input>
-                                </div>
-                            </div>
-                        </div>
                         {{-- Correos  --}}
                         <div class="form-row px-5 mt-3">
                             {{-- Campo: Correo personal --}}
@@ -226,7 +229,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 {{-- Campo: Direccion Residencia --}}
                                 <div class="form-group">
                                     <label for="DireccionResidencia"><strong>Dirección Residencia <i class="text-danger">* </i></strong></label>
-                                    <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del personal "><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del usuario "><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_direccion_residencia"> </span>
                                     <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" required disabled />{{$persona->direccion_residencia}}</textarea>
                                 </div>
@@ -234,7 +237,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                         </div>
                     </div>
 
-                    <div class="card-footer" id="card-footer">
+                    <div class="card-footer pb-3" id="card-footer">
                         <div class="d-flex justify-content-center">
                             {{-- Boton para enviar los cambios --}}
                             <button type="submit" id="guardar-cambios" class="btn btn-rojo" style="display: none;">Guardar cambios</button>

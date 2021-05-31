@@ -20,6 +20,9 @@ class CreateActividadesPromocionTable extends Migration
             $table->string('recursos', 500)->nullable();
             $table->string('instituciones_patrocinadoras', 500)->nullable();
             $table->timestamps();
+            
+            //Creacion de índices
+            $table->index('tipo_actividad');
         });
     }
 

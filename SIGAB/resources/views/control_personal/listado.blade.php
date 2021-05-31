@@ -16,7 +16,7 @@ Listado de Personal
 <!-- Button trigger modal -->
 <!-- Modal -->
 @if(Accesos::ACCESO_REGISTRAR_PERSONAL())
-<form action="{{ route('personal.create') }}" method="GET">
+<form action="{{ route('personal.create') }}" method="GET" autocomplete="off">
     @csrf
     <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -44,7 +44,7 @@ Listado de Personal
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-rojo" >Siguiente <i class="fas fa-arrow-circle-right"></i></button>
                 </div>
             </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Events\EventTitulos;
 use App\Exceptions\ControllerFailedException;
+use App\Helper\GlobalFunctions;
 use App\Graduado;
 use App\Persona;
 use App\Estudiante;
@@ -45,6 +46,8 @@ class GraduadoController extends Controller
             $graduado->grado_academico = $request->grado_academico;
             $graduado->carrera_cursada = $request->carrera_cursada;
             $graduado->anio_graduacion = $request->anio_graduacion;
+
+
 
             //se guarda el objeto en la base de datos
             $graduado->save();
@@ -169,7 +172,7 @@ class GraduadoController extends Controller
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }    
-         catch (ModelNotFoundException $ex) {  
+        catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
         }
@@ -237,10 +240,10 @@ class GraduadoController extends Controller
             $graduacion->delete();
             
             return Redirect::back()
-            ->with('exito', '¡Se ha eliminado correctamente!');
+            ->with('mensaje-exito', '¡Se ha eliminado correctamente!');
         } catch (\Illuminate\Database\QueryException $ex) {
             return Redirect::back()
-            ->with('mensaje-error', 'ha ocurrido un error');
+            ->with('mensaje-error', 'Ha ocurrido un error a la hora de eliminar.');
         } catch (ModelNotFoundException $ex) {  
             return Redirect::back()//se redirecciona a la pagina anteriror
                 ->with('mensaje-error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto

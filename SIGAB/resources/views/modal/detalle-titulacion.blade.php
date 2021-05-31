@@ -58,7 +58,11 @@
                                 <label for="anio_graduacion">Año de graduación <i class="text-danger">*</i></label>
                                 <span class="text-muted ml-2" id="mostrar_cant_anio_graduacion"></span>
                             </div>
-                            <input type='number' class="form-control" id="anio_graduacion" name="anio_graduacion" onkeyup="contarCarAnioGraduacion(this)" min="1975" required disabled>
+                            <select class="form-control form-control-md " name="anio_graduacion" id="anio_graduacion" disabled>
+                                @foreach($anios as $anio2)
+                                <option value="{{ $anio2 }}"> {{ $anio2 }} </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 @if(Accesos::ACCESO_MODIFICAR_TITULACIONES())

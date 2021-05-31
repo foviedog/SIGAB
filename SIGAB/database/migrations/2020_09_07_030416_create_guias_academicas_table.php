@@ -26,6 +26,8 @@ class CreateGuiasAcademicasTable extends Migration
             $table->longText('recomendaciones')->nullable();
             $table->string('archivo_adjunto')->nullable();
             $table->timestamps();
+            //Creacion de índices
+            $table->index('fecha');
         });
     }
 

@@ -30,6 +30,12 @@ class CreateActividadesTable extends Migration
             $table->string('creada_por', 15);
             $table->foreign('creada_por')->references('persona_id')->on('personas');
             $table->timestamps();
+            
+            //Creacion de índices
+            $table->index('fecha_inicio_actividad');
+            $table->index('fecha_final_actividad');
+            $table->index('estado');
+            $table->index('autorizada');
         });
     }
 

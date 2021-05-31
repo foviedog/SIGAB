@@ -14,7 +14,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
         <h3 class="text-center texto-gris-oscuro font-weight-bold">Registrar información laboral</h3>
 
         @if(Accesos::ACCESO_LISTAR_TRABAJOS())
-        <div><a href="{{ route('trabajo.listar', $estudiante->persona->persona_id) }}" class="btn btn-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
+        <div><a href="{{ route('trabajo.listar', $estudiante->persona->persona_id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left"></i> &nbsp; Regresar</a></div>
         @endif
 
     </div>
@@ -77,7 +77,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
         <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo trabajo:</div>
         @endif
 
-        <div class="row">
+        <div class="row mt-4">
 
             {{-- Campos de la izquierda --}}
 

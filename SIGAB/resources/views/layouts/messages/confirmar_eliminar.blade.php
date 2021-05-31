@@ -16,7 +16,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        ¿Está seguro que desea eliminar este elemento?
+                        ¿Está seguro/a que desea eliminar este elemento?
                     </div>
                     <div class="modal-footer">
                         <button type="button"  class="btn btn-gris" data-dismiss="modal">Cerrar</button>

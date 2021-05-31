@@ -86,13 +86,12 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                     <div class="col-6 text-justify">
                         <b>Tipo de actividad: </b> {{$actividad_interna_insertada->tipo_actividad}} <br>
                         <b>Propósito: </b> {{$actividad_interna_insertada->proposito}} <br>
-                        <b>Facilitador: </b> {{$actividad_interna_insertada->facilitador_actividad ?? "No se digitó" }} <br>
+                        <b>Facilitador: </b> {{$actividad_interna_insertada->facilitador_actividad ?? "No se digitó o se marcó como externo" }} <br>
                         <b>Agenda: </b> {{$actividad_interna_insertada->agenda ?? "No se digitó"}} <br>
                         <b>Ámbito: </b> {{$actividad_interna_insertada->ambito}} <br>
                         <b>Certificación: </b> {{$actividad_interna_insertada->certificacion_actividad ?? "No se digitó"}} <br>
                         <b>Duración: </b> {{$actividad_insertada->duracion." h" ?? "No se digitó"}} <br>
                         <b>Público dirigido: </b> {{$actividad_interna_insertada->publico_dirigido}} <br>
-                        <b>Instituciones Patrocinadoras: </b> {{$actividad_interna_insertada->instituciones_patrocinadoras ?? "No se digitó"}} <br>
                         <b>Recursos: </b> {{$actividad_interna_insertada->recursos ?? "No se digitó"}} <br>
                     </div>
                 </div>
@@ -132,7 +131,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <div class="w-90">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text text-dark">Lugar: <i class="text-danger">*</i></span>
+                                            <span class="input-group-text text-dark">Lugar: </span>
                                         </div>
                                         <input type='text' class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)">
                                         <div class="input-group-append">
@@ -153,7 +152,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}" required>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></button>
-                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                            <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Fecha de inicio y fecha final en el que se ejecuta la actividad. Presione 'Apply' para insertar las fechas seleccionadas. De ser un único día, presion dos veces el día seleccionado y posteriormente 'Apply'. Para eliminar le fecha seleccionada presione 'Clear' " class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
                                         <div class=" w-5">
                                         </div>
@@ -309,7 +308,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                             </div>
                                         </div>
 
-                                        <input type='text' id="cedula-facilitador" name="facilitador" class="form-control " >
+                                        <input type='text' id="cedula-facilitador" name="facilitador" class="form-control ">
                                         <div class="input-group-append">
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="right" title="En caso de ser un personal ingrese sin espacio y sin guiones el número de cédula del facilitador y luego presione buscar. En caso de ser externo coloque únicamente el nombre completo de la persona."> <i class="far fa-question-circle fa-lg "></i></span>
                                             <button type="button" id="buscarFacilitador" class="btn btn-contorno-azul-una">Buscar</button>
@@ -455,8 +454,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         <div class="card-header py-3">
                                             <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                 <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
-                                                Descripcion &nbsp;&nbsp
-                                                <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad">
+                                                Descripción &nbsp;&nbsp
+                                                <span data-toggle="tooltip" data-placement="right" title="Descripción y detalles de la actividad. Se incluyen datos como: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
                                                     <i class="far fa-question-circle fa-lg"></i>
                                                 </span>
                                             </p>
