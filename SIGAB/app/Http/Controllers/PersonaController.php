@@ -57,25 +57,12 @@ class PersonaController extends Controller
             //Se guardan los datos de la persona
             $persona->save();
 
-            //Llamado al método que actualiza la foto de perfil
-            $this->update_avatar($request, $persona);
-
             //Se retorna el detalle del estudiante ya modificado
             return redirect("/perfil");
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
-    }
-
-    private function update_avatar($request, $persona)
-    {
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            GlobalFunctions::actualizarFotoPerfil($avatar, $persona);
-        }
-
-        return \Redirect::back();
     }
 
     //Metodo que reedireciona a la vista de notificaciones

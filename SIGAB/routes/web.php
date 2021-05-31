@@ -32,14 +32,44 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     /* Ruta para registrar usuario */
-    Route::get('/register', 'RegistroController@index')->name('register');
-    Route::post('/registroselper', 'RegistroController@show')->name('registroselper');
-    Route::post('/registro', 'RegistroController@register')->name('registro');
+    Route::get('/register', 'RegistroController@index')->name('register')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+    Route::post('/registroselper', 'RegistroController@show')->name('registroselper')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+    Route::post('/registro', 'RegistroController@register')->name('registro')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
 
     /* Ruta para actualizar el rol */
-    Route::get('/cambiar-rol', 'RegistroController@cambiarRol')->name('cambiar-rol');
-    Route::post('/cambiar-rol', 'RegistroController@mostrarPersonaRol')->name('cambiar-rol.show');
-    Route::patch('/cambiar-rol', 'RegistroController@actualizarRol')->name('cambiar-rol.update');
+    Route::get('/cambiar-rol', 'RegistroController@cambiarRol')->name('cambiar-rol')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+    Route::post('/cambiar-rol', 'RegistroController@mostrarPersonaRol')->name('cambiar-rol.show')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+    Route::patch('/cambiar-rol', 'RegistroController@actualizarRol')->name('cambiar-rol.update')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
 
     //Esta ruta genera un script que protege que algunos datos sensibles sean visibles directamente en
     //el código fuente de la página

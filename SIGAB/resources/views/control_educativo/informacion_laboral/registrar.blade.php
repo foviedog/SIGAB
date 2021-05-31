@@ -133,7 +133,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <label for="cargo_actual">Cargo actual: </label>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCaracteres(this,45)">
+                        <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCaracteres(this,200)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_cargo_actual"></span>

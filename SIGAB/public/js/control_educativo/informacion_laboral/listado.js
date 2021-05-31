@@ -117,10 +117,10 @@ function contarCarTiempDesempl(val) {
 /*Contador de caracteres de Cargo actual */
 function contarCarCargAct(val) {
     var len = val.value.length;
-    if (len >= 45) {
-        val.value = val.value.substring(0, 45);
+    if (len >= 200) {
+        val.value = val.value.substring(0, 200);
     } else {
-        $("#mostrar_cant_carg_act").text(45 - len);
+        $("#mostrar_cant_carg_act").text(200 - len);
     }
 }
 

@@ -20,7 +20,7 @@ class CreateTrabajosTable extends Migration
             $table->string('nombre_organizacion', 100);
             $table->string('tipo_organizacion', 45);
             $table->string('tiempo_desempleado', 45)->nullable();
-            $table->string('cargo_actual', 45)->nullable();
+            $table->string('cargo_actual', 200)->nullable();
             $table->string('jefe_inmediato', 45)->nullable();
             $table->string('telefono_trabajo', 45)->nullable();
             $table->string('jornada_laboral', 45)->nullable();

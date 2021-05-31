@@ -40,10 +40,6 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <img class="" src="{{ asset('img/fotos/'.$persona->imagen_perfil) }}" style="max-width: 100%; object-fit: cover;" />
                             </div>
                         </div>
-                        <div id="cambiar-foto" class="mb-3">
-                            <input type="file" name="avatar" class="border" id="avatar" style="display: none;">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        </div>
                         {{-- Nombre completo de usario --}}
                         <div class="d-flex justify-content-center text-center border-top pt-2">
                             <small class="texto-negro font-weight-bold" style="font-size: 20px;">
@@ -259,6 +255,5 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
     var fotosURL = "{{ URL::asset('img/fotos/') }}";
 </script>
 <script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
-<script src="{{ asset('js/control_educativo/detalle_editar.js') }}" defer></script>
 <script src="{{ asset('js/global/validacionesImagenPerfil.js') }}" crossorigin="anonymous"></script>
 @endsection
