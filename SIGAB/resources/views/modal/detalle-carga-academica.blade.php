@@ -26,6 +26,17 @@
                     @endif
 
                     <div class="d-flex justify-content-center flex-column">
+
+                        {{-- Campo: Nombre del curso--}}
+                        <label for="nombre_curso">Nombre del curso <i class="text-danger">*</i></label>
+                        <select class="form-control mb-3" id="nombre_curso" name="nombre_curso" size="10" disabled required>
+                            @foreach($cursos as $curso)
+                            <option>{{ $curso }}</option>
+                            @endforeach
+                        </select>
+                        <div id="nombre-mostrar" class="mb-2"></div>
+
+
                         {{-- Campo: Ciclo lectivo --}}
                         <div class="mb-3">
                             <div class="d-flex justify-content-between w-100">
@@ -51,14 +62,6 @@
                             </select>
                         </div>
 
-                        {{-- Campo: Nombre del curso--}}
-                        <label for="nombre_curso">Nombre del curso <i class="text-danger">*</i></label>
-                        <select class="form-control mb-3" id="nombre_curso" name="nombre_curso" size="10" disabled required>
-                            @foreach($cursos as $curso)
-                            <option>{{ $curso }}</option>
-                            @endforeach
-                        </select>
-                        <div id="nombre-mostrar"></div>
 
                         {{-- Campo: NRC--}}
                         <div class=" mb-3">
