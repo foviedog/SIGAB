@@ -81,7 +81,7 @@ $idiomas = [];
                                     <div class="overflow-hidden rounded-circle " style="max-width: 160px; max-height: 160px; ">
                                         <img class="" src="{{ asset('img/fotos/'.$personal->persona->imagen_perfil) }}" style="max-width: 100%;  " />
                                     </div>
-                                    
+
                                 </div>
                                 {{-- Cedula del personal --}}
                                 <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
@@ -124,6 +124,20 @@ $idiomas = [];
                                         @endforeach
                                     </select>
                                 </div>
+                                {{-- Campo: nombramiento--}}
+                                <div class="form-group">
+                                    <div class="d-flex ">
+                                        <label for="tipo_nombramiento"><strong>Nombramiento</strong></label>
+                                        <span data-toggle="tooltip" data-placement="top" title="Tipo de puesto SECUNDARIO que desempeña en la EBDI" class="ml-3"><i class="far fa-question-circle fa-lg "></i></span>
+                                    </div>
+                                    <select id="tipo_nombramiento" name="tipo_nombramiento" class="form-control" disabled>
+                                        <option value="" selected>Sin seleccionar</option>
+                                        @foreach($tipos_nombramientos as $tipo_nombramiento)
+                                        <option value="{{ $tipo_nombramiento }}" @if ( $tipo_nombramiento==$personal->tipo_nombramiento) selected @endif> {{ $tipo_nombramiento }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 {{-- Campo: cargo --}}
                                 <div class="form-group">
                                     <label for="cargo"><strong>Tipo de cargo <i class="text-danger">* </i></strong></label>
@@ -387,7 +401,7 @@ $idiomas = [];
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         {{-- Espacio para agregar n idiomas a un personal --}}
                                         <div class="form-row border-top">
                                             <div class="card-header py-3 w-100">

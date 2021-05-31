@@ -36,20 +36,24 @@ class ReporteInvolucramientoPorCicloController extends Controller
         try {
             $anio = request('anio', null);
             $personal = null;
-            $actividadesCiclo = null;
+            $actividadesCiclo = [];
             $datosCuantitativos = $this->datosCuntitativosPersonal();
-
+            $actividadesPrimerCiclo = null;
+            $actividadesSegundoCiclo = null;
+            
             if (!is_null($anio)) {
                 $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')->get()->keyBy('persona_id'); //Inner join de personal con personas
                 $actividadesCiclo = $this->actividadesPorCiclo($personal, $anio);
+                $actividadesPrimerCiclo = $actividadesCiclo[0];
+                $actividadesSegundoCiclo = $actividadesCiclo[1];
             }
 
             return view('reportes.involucramiento.por_ciclo.involucramiento_ciclo', [
                 'datosCuantitativos' => $datosCuantitativos,
                 'personal' => $personal,
                 'anioReporte' => $anio,
-                'actividadesPrimerCiclo' => $actividadesCiclo[0],
-                'actividadesSegundoCiclo' =>  $actividadesCiclo[1],
+                'actividadesPrimerCiclo' =>  $actividadesPrimerCiclo,
+                'actividadesSegundoCiclo' =>   $actividadesSegundoCiclo,
                 'anios' => $this->anios
             ]);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
