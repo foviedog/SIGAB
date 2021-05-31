@@ -21,7 +21,7 @@ Asistencia a {{ $actividad->tema }}
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
-                <h3>Lista de asistencia</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
+                <h3>Lista de asistencia</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">código de actividad: {{ $actividad->id }}</span>
             </div>
             {{-- Botones superiores --}}
             <div>
@@ -288,8 +288,8 @@ Asistencia a {{ $actividad->tema }}
 
             </div>
             <div class="col-1 mt-2">
-                <div class="info-card" style="padding: 2px 0;width: 100%;">
-                    <span style="font-size: 34px; font-weight: bolder;" class=" d-flex justify-content-center" id="total">{{ $listaAsistencia->total() }}</span><br>
+                <div class="info-card" style="padding: 2px 0; max-width: 100%; ">
+                    <span style="font-size: 34px; font-weight: bolder;" id="total">{{ $listaAsistencia->total() }}</span><br>
                     <span style="font-size: 20px; font-weight: light;  ">Total</span>
                 </div>
             </div>

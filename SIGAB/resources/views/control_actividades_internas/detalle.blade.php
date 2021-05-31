@@ -36,7 +36,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
-                <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
+                <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left texto-rojo-oscuro pl-2 p-0 font-weight-bold ">código de actividad: {{ $actividad->id }}</span>
             </div>
 
             <div>

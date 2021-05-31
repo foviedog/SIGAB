@@ -37,7 +37,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
         <div class="d-flex justify-content-between">
             {{-- Título  --}}
             <div class=" d-flex justify-content-start align-items-center">
-                <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">codigo de actividad: {{ $actividad->id }}</span>
+                <h3>{{ $actividad->tema }}</h3>&nbsp;&nbsp;&nbsp; <span class="border-left border-info texto-rojo-oscuro pl-2 p-0 font-weight-bold ">código de actividad: {{ $actividad->id }}</span>
 
 
 
@@ -103,7 +103,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                             @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
                             @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
                             {{-- Botón para autorizar actividad --}}
-                                <button type="button" class="btn btn-info ml-4" onclick='$("#submit-autorizar").trigger("submit")''><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
+                            <button type="button" class="btn btn-info ml-4" onclick='$("#submit-autorizar").trigger("submit")'><i class="fas fa-check-double"></i> &nbsp; Autorizar actividad </button>
                             @else {{-- Si la actividad ya fue autorizada, solo se muestra un botón desactivado que lo recalca --}}
                             <button class="btn btn-success ml-4" disabled><i class="fas fa-check-double"></i> &nbsp; Actividad autorizada </button>
                             @endif
@@ -337,7 +337,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="card-header py-3">
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                     <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
-                                                    Descripcion &nbsp;&nbsp
+                                                    Descripción &nbsp;&nbsp
                                                     <span data-toggle="tooltip" data-placement="right" title="Información que incluye una síntesis de los resultados de cada actividad con datos de: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
                                                         <i class="far fa-question-circle fa-lg"></i>
                                                     </span>
@@ -419,7 +419,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="card-header py-3">
                                                 <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
                                                     <i class="far fa-building fa-2x"></i> &nbsp;&nbsp
-                                                    Instiuciones patrocinadoras &nbsp;&nbsp
+                                                    Instituciones patrocinadoras &nbsp;&nbsp
                                                     <span data-toggle="tooltip" data-placement="right" title="Se ingresa el nombre de las instituciones o entidades patrocinadoras de la actividad si existen">
                                                         <i class="far fa-question-circle fa-lg"></i>
                                                     </span>
