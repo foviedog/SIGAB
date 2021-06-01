@@ -336,7 +336,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                 <div class="form-group">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <label for="apoyo_educativo"><strong>Apoyo Educativo</strong>
-                                                            <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
+                                                            <span data-toggle="tooltip" data-placement="right" title="Detalle del tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
                                                         </label>
                                                         <span class="text-muted" id="mostrar_apoyo_educativo"></span>
                                                     </div>

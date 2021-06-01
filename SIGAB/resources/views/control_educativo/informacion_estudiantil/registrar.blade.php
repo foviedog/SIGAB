@@ -32,7 +32,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
             <div>
 
                 @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
-                <div><a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de estudiantes</a></div>
+                <div><a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a></div>
                 @endif
 
             </div>

@@ -46,7 +46,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
             <div>
                 @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
                 {{-- Botón para regresar al listado de actividades --}}
-                <a href="{{ route('actividad-promocion.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-promocion.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                 @endif
                 @if(Accesos::ACCESO_ELIMINAR_ACTIVIDADES())
                 {{-- Boton para eliminar el personal --}}

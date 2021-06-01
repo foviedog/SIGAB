@@ -33,7 +33,7 @@ Listado de Guías Académicas
                 @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
                 <div class="mr-2">
                     {{-- Regresar al listado de estudiantes --}}
-                    <a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Ir al listado de estudiantes</a>
+                    <a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
                 </div>
                 @endif
 

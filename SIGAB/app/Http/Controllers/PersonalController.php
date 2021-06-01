@@ -10,6 +10,8 @@ use App\Helper\GlobalFunctions;
 use App\Helper\GlobalArrays;
 use App\Events\EventPersonal;
 use App\Exceptions\ControllerFailedException;
+use App\Exports\PersonalExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Personal;
 use App\Persona;
 use App\Idioma;
@@ -415,6 +417,11 @@ class PersonalController extends Controller
                         ->join('actividades_internas', 'actividades.id', '=', 'actividades_internas.actividad_id')
                         ->where('actividades_internas.personal_facilitador', '=', $personaId)->get();
         return $concurrencias;
+    }
+
+    public function exportar() 
+    {
+        return Excel::download(new PersonalExport, 'personal.xlsx');
     }
     
 }

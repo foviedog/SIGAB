@@ -59,7 +59,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                     <b>Jornada laboral:</b> {{ $trabajo_insertado->jornada_laboral }} <br>
                     <b>Jefe inmediato:</b> {{ $trabajo_insertado->jefe_inmediato ?? "No se digitó" }} <br>
                     <b>Tiempo desempleado:</b> {{ $trabajo_insertado->tiempo_desempleado ?? "No se digitó" }} <br>
-                    <b>Intereses de capacitación:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
+                    <b>Capacitaciones de interés:</b> {{ $trabajo_insertado->interes_capacitacion ?? "No se digitó" }} <br>
                 </div>
                 <div class="col-6 text-justify">
                     <b>Tipo de organización:</b> {{ $trabajo_insertado->tipo_organizacion }} <br>
@@ -118,6 +118,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 <div class="d-flex justify-content-start mb-4">
                     <div class="col-5">
                         <label for="jornada_laboral">Jornada laboral: </label>
+                        <span class="ml-1" data-toggle="tooltip" data-placement="bottom" title="Ingrese la jornada, seguido de la cantidad de horas entre paréntesis. Ej. Tiempo completo (40 horas)."><i class="far fa-question-circle fa-lg"></i> </span>
                     </div>
                     <div class="col-6">
                         <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCaracteres(this,45)">
@@ -143,8 +144,8 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 {{-- Campo: Intereses Capacitacion --}}
                 <div class="d-flex justify-content-start mb-4">
                     <div class="col-5">
-                        <label for="interes_capacitacion">Capacitaciones de interés</label>
-                        <span class="ml-1" data-toggle="tooltip" data-placement="bottom" title="Digitar los temas de interés de la persona en recibir capacitación y/o actualización."><i class="far fa-question-circle fa-lg"></i> </span>
+                        <label for="interes_capacitacion">Capacitaciones de interés:</label>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Digitar los temas de interés de la persona en recibir capacitación y/o actualización."><i class="far fa-question-circle fa-lg"></i> </span>
                     </div>
                     <div class="col-6">
                         <textarea class="form-control w-100" id="interes_capacitacion" name="interes_capacitacion"></textarea>
@@ -172,6 +173,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                 <div class="d-flex justify-content-start mb-4">
                     <div class="col-5">
                         <label for="tiempo_desempleado">Tiempo desempleado: </label>
+                        <span data-toggle="tooltip" data-placement="bottom" title="Ingrese la información como se muestra en el ejemplo: Ej. 3 años y 4 meses."><i class="far fa-question-circle fa-lg"></i> </span>
                     </div>
                     <div class="col-6">
                         <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCaracteres(this,45)">

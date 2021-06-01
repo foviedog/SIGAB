@@ -29,7 +29,7 @@ Asistencia a {{ $actividad->tema }}
             {{-- Botones superiores --}}
             @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
             <div>
-                {{-- Botón para regresar al listado de actividades --}}
+                {{-- Botón para regresar al detalle de la actividad --}}
                 <a href="{{ route('actividad-promocion.show', $actividad->id) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
             </div>
             @endif

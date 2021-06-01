@@ -184,6 +184,22 @@ Botones contorno (outline)
     box-shadow: 0 0 0 0.2rem #034a9144 !important;
 }
 
+.btn-contorno-verde {
+    transition: all 0.4s ease;
+    border-color: #008000 !important;
+    background-color: #ffffff !important;
+    color: #008000 !important;
+}
+
+.btn-contorno-verde:hover {
+    background-color: #008000 !important;
+    color: #ffffff !important;
+}
+
+.btn-contorno-verde:focus {
+    box-shadow: 0 0 0 0.2rem #00800044 !important;
+}
+
 /* Sombra mostrada cuando un boton está seleccionado */
 
 .btn:focus {

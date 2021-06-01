@@ -34,7 +34,7 @@ Listado Estudiantil
                             </div>
                             <input type='text' class="form-control " id="cedula" name="cedula" onkeyup="contarCaracteres(this,50)" required>
                             <div class="input-group-append">
-                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Insertar la identificación del estudiante sin guiones y sin espacios." class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
+                                <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Ingresar la identificación del estudiante sin guiones y sin espacios." class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                             </div>
                             <div class="d-flex justify-content-end align-items-center w-5">
                                 <span id="mostrar_cedula"></span>
@@ -59,9 +59,15 @@ Listado Estudiantil
             <h2 class="texto-gris-oscuro ml-3 mb-4">Control Estudiantil</h2>
             <div class="d-flex">
                 <div class="mr-2">
+                    @if(Accesos::EXPORTAR_EXCEL())
+                    {{-- //Botón para exportar los datos en excel --}}
+                        <a href="{{ route('estudiantes.exportar') }}" class="btn btn-contorno-verde mr-2"> <i class="far fa-file-excel"></i> &nbsp; General excel </a>
+                    @endif
+
                     <a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"> Listar todo &nbsp; <i class="fas fa-bars"></i> </a>
                 </div>
                 <div>
+                    
 
                     @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
                     {{-- //Botón para añadir estudiante --}}
@@ -91,7 +97,7 @@ Listado Estudiantil
                             <div class="input-group ">
                                 <div class="input-group-prepend ">
                                     {{-- Input para realizar la búsqueda del estudiante --}}
-                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar por nombre, apellido o cédula"><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
+                                    <span class="input-group-text texto-azul-una font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Buscar solamente por nombre, apellido, cédula o cargo. No recupera datos si la búsqueda se realiza combinando primer nombre y apellido, en caso de personas que registran dos nombres."><i class="far fa-question-circle fa-lg texto-azul-una"></i></span>
                                 </div>
                                 <input type="search" class="form-control form-control-md" placeholder="Buscar estudiante" aria-controls="dataTable" placeholder="Buscar estudiante." name="filtro" @if (!is_null($filtro)) value={{ $filtro }} @endif />
                             </div>

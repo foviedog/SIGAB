@@ -27,7 +27,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             <h3>Registrar una actividad de promoción de la carrera</h3>
             @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
             <div>
-                <a href="{{ route('actividad-promocion.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-promocion.listado' ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado  </a>
             </div>
             @endif
         </div>

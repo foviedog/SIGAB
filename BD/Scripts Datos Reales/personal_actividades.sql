@@ -64,6 +64,7 @@ insert into tareas(nombre) values("Eliminar cargas académicas");
 insert into tareas(nombre) values("Eliminar actividades");
 insert into tareas(nombre) values("Eliminar evidencias a actividades");
 insert into tareas(nombre) values("Eliminar participantes de actividades");
+insert into tareas(nombre) values("Exportar en excel los datos");
 
 -- ACCESOS
 
@@ -191,6 +192,7 @@ insert into accesos(rol_id, tarea_id) values (3, 44);
 insert into accesos(rol_id, tarea_id) values (3, 46);
 insert into accesos(rol_id, tarea_id) values (3, 47);
 insert into accesos(rol_id, tarea_id) values (3, 48);
+insert into accesos(rol_id, tarea_id) values (3, 49);
 
 -- ASISTENTE ADMINISTRATIVA
 insert into accesos(rol_id, tarea_id) values (5, 1);

@@ -39,7 +39,7 @@ $personal_no_insertado = null;
             <div>
 
                 @if(Accesos::ACCESO_LISTAR_PERSONAL())
-                <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de personal </a>
+                <a href="{{ route('personal.listar') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado  </a>
                 @endif
 
             </div>
@@ -288,7 +288,8 @@ $personal_no_insertado = null;
                             </div>
                             <div class="col-10 mt-5">
                                 <div class="bg-light py-2 w-100 d-flex align-items-center rounded">
-                                    <span class="ml-3 font-weight-bold ">Lista de idiomas: </span>
+                                    <span class="ml-3 font-weight-bold ">Lista de idiomas: &nbsp;</span>
+                                    <span data-toggle="tooltip" data-placement="top" title="Ingrese el idioma, seguido del nivel de dominio entre paréntesis. Ej. Inglés (manejo instrumental)."><i class="far fa-question-circle fa-lg"></i></span>
                                 </div>
                                 <div class="alert alert-danger text-center font-weight-bold w-100" role="alert" id="alert-idiomas" style="display: none;">
                                     Complete todos los campos.
@@ -462,7 +463,7 @@ $personal_no_insertado = null;
                                     <textarea class="form-control w-100" id="experiencia_profesional" name="experiencia_profesional" rows="3">{{ $personal_no_insertado->experiencia_profesional ?? '' }}</textarea>
                                 </div>
                                 <div class="col-2 d-flex h-25">
-                                    <span data-toggle="tooltip" data-placement="top" title="Digite la experiencia profesional que se obtuvo en otras entidades externas a la UNA."><i class=" far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="top" title="Experiencia no académica que se obtuvo en otras entidades."><i class=" far fa-question-circle fa-lg"></i></span>
 
                                 </div>
                             </div>
@@ -488,7 +489,7 @@ $personal_no_insertado = null;
                                     <textarea type="text" id="publicaciones" name="publicaciones" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="col-2 d-flex h-25">
-                                    <span data-toggle="tooltip" data-placement="top" title="Enlistar todas las publicaciones de libros, revistas, ...."><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="top" title="Ingrese la información de publicaciones como referencias bibliográficas ordenadas alfabéticamente y deje un espacio entre cada una."><i class="far fa-question-circle fa-lg"></i></span>
                                 </div>
                             </div>
                             {{-- Campo: reconocimientos --}}
@@ -500,7 +501,7 @@ $personal_no_insertado = null;
                                     <textarea type="text" id="reconocimientos" name="reconocimientos" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="col-2 d-flex h-25">
-                                    <span data-toggle="tooltip" data-placement="top" title="Enlistar los reconocimientos concedidos al personal."><i class="far fa-question-circle fa-lg"></i></span>
+                                    <span data-toggle="tooltip" data-placement="top" title="Numerar cada reconocimiento nacional o internacional y deja un espacio entre cada uno."><i class="far fa-question-circle fa-lg"></i></span>
                                 </div>
                             </div>
 

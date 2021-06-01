@@ -26,7 +26,7 @@ Asistencia a {{ $actividad->tema }}
             {{-- Botones superiores --}}
             <div>
                 @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
-                {{-- Botón para regresar al listado de actividades --}}
+                {{-- Botón para regresar al detalle de la actividad --}}
                 <a href="{{ route('actividad-interna.show',$actividad->id ) }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al detalle </a>
                 @endif
 

@@ -11,6 +11,8 @@ use App\Helper\GlobalFunctions;
 use App\Helper\GlobalArrays;
 use App\Events\EventEstudiantes;
 use App\Exceptions\ControllerFailedException;
+use App\Exports\EstudiantesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Estudiante;
 use App\Persona;
 use App\Guias_academica;
@@ -311,6 +313,11 @@ class EstudianteController extends Controller
             throw new ControllerFailedException();
         }
 
+    }
+
+    public function exportar() 
+    {
+        return Excel::download(new EstudiantesExport, 'estudiantes.xlsx');
     }
 
 }

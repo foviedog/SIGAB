@@ -19,8 +19,8 @@ class GlobalArrays
         'Actividad cocurricular',
         'Tribunales de prueba de grado',
         'Tribunales de defensas públicas',
-        'Evaluacion interna ppaa',
-        'Evaluacion externa ppaa',
+        'Evaluacion interna PPAA',
+        'Evaluacion externa PPAA',
         'Comisiones de trabajo',
         'Externa',
         'Otro'
@@ -69,7 +69,11 @@ class GlobalArrays
         'Estudiantes de primer ingreso',
         'Estudiantes regulares',
         'Personal Docente',
-        'Personal Administrativo'
+        'Personal Administrativo',
+        'Graduados',
+        'Personal EBDI',
+        'Personal EBDI y estudiantes',
+        'Otros'
     ];
 
     public const ESTADOS_ACTIVIDAD = [

@@ -196,4 +196,8 @@ class Accesos
     public static function ACCESO_ELIMINAR_PARTICIPANTE() { 
         return GlobalFunctions::verificarAcceso(48);
     }
+
+    public static function EXPORTAR_EXCEL() { 
+        return GlobalFunctions::verificarAcceso(49);
+    }
 }

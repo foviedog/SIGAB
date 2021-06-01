@@ -31,7 +31,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
             @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
             <div>
-                <a href="{{ route('actividad-interna.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Listado de actividades </a>
+                <a href="{{ route('actividad-interna.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
             </div>
             @endif
 

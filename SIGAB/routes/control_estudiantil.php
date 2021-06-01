@@ -298,4 +298,11 @@ Route::group(['middleware' => ['auth']], function () {
             Estudiante asistente académica
     ');
 
+    Route::get('/estudiante/exportar', 'EstudianteController@exportar')->name('estudiantes.exportar')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+
 });

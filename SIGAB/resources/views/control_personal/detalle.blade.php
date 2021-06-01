@@ -369,7 +369,7 @@ $idiomas = [];
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="experiencia_profesional"><strong>Experiencia profesional</strong><br /></label>
-                                                    <span data-toggle="tooltip" data-placement="right" title="Experiencia profesional que se obtuvo en otras entidades externas a la UNA."><i class=" far fa-question-circle fa-lg"></i></span>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Experiencia no académica que se obtuvo en otras entidades."><i class=" far fa-question-circle fa-lg"></i></span>
                                                     <textarea type="text" name="experiencia_profesional" id="experiencia_profesional" class="form-control" placeholder="Experiencia Profesional" disabled>{{ $personal->experiencia_profesional }}</textarea>
                                                 </div>
                                             </div>
@@ -390,6 +390,7 @@ $idiomas = [];
                                                 {{-- Campo: reconocimientos --}}
                                                 <div class="form-group">
                                                     <label for="reconocimientos"><strong>Reconocimientos</strong><br /></label>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Numerar cada reconocimiento nacional o internacional y deja un espacio entre cada uno."><i class="far fa-question-circle fa-lg"></i></span>
                                                     <textarea type="text" id="reconocimientos" name="reconocimientos" class="form-control" placeholder="" rows="4" disabled>{{ $personal->reconocimientos }}</textarea>
                                                 </div>
                                             </div>
@@ -397,6 +398,7 @@ $idiomas = [];
                                                 {{-- Campo: publicaciones --}}
                                                 <div class="form-group">
                                                     <label for="publicaciones"><strong>Publicaciones</strong><br /></label>
+                                                    <span data-toggle="tooltip" data-placement="right" title="Ingrese la información de publicaciones como referencias bibliográficas ordenadas alfabéticamente y deje un espacio entre cada una."><i class="far fa-question-circle fa-lg"></i></span>
                                                     <textarea type="text" id="publicaciones" name="publicaciones" class="form-control" placeholder="" rows="4" disabled>{{ $personal->publicaciones }}</textarea>
                                                 </div>
                                             </div>
@@ -404,8 +406,9 @@ $idiomas = [];
 
                                         {{-- Espacio para agregar n idiomas a un personal --}}
                                         <div class="form-row border-top">
-                                            <div class="card-header py-3 w-100">
-                                                <p class="texto-rojo-medio m-0 font-weight-bold ">Lista de idiomas</p>
+                                            <div class="d-flex card-header py-3 w-100">
+                                                <p class="texto-rojo-medio m-0 font-weight-bold ">Lista de idiomas  &nbsp;</p>
+                                                <span data-toggle="tooltip" data-placement="top" title="Ingrese el idioma, seguido del nivel de dominio entre paréntesis. Ej. Inglés (manejo instrumental)."><i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
                                             <div class="alert alert-danger text-center font-weight-bold w-100" role="alert" id="alert-idiomas">
                                                 No puede dejar idiomas en blanco!
