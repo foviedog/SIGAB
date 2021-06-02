@@ -90,15 +90,15 @@ class ReporteInvolucramientoPorCicloController extends Controller
 
     public function consultaActividadesXCiclo($persona_id, $anio, $ciclo)
     {
-        if ($ciclo == 1) {
+        if ($ciclo == 1) {//Si es el primer ciclo setean el rango de fechas del primer ciclo
             $fechaIni = $anio . "-01-01";
             $fechaFin = $anio . "-07-01";
-        } else {
+        } else { // En caso contrario se setean las fechas del segundo ciclo
             $fechaIni = $anio . "-07-01";
             $fechaFin = $anio . "-12-31";
         }
 
-        $actividadesCiclo = Actividades::select("actividades.id",  "actividades_internas.tipo_actividad", "actividades.tema", "actividades.fecha_inicio_actividad", "actividades.fecha_final_actividad")
+        $actividadesCicloActuales = Actividades::select("actividades.id",  "actividades_internas.tipo_actividad", "actividades.tema", "actividades.fecha_inicio_actividad", "actividades.fecha_final_actividad")
             ->leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
@@ -112,6 +112,22 @@ class ReporteInvolucramientoPorCicloController extends Controller
             })
             ->whereBetween('actividades.fecha_final_actividad', [$fechaIni, $fechaFin])
             ->distinct()->get();
+
+            $actividadesCicloProgreso = Actividades::select("actividades.id",  "actividades_internas.tipo_actividad", "actividades.tema", "actividades.fecha_inicio_actividad", "actividades.fecha_final_actividad")
+            ->leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+            ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where(function ($query) use ($persona_id) {
+                $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                    ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
+                    ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
+            })
+            ->Where('actividades.estado', '=', 'En progreso')
+            ->whereYear('actividades.fecha_inicio_actividad', '<=', $anio)
+            ->whereYear('actividades.fecha_final_actividad', '>', $anio)
+            ->distinct()->get();
+
+            $actividadesCiclo = $actividadesCicloActuales->merge($actividadesCicloProgreso);
+
 
         return $actividadesCiclo;
     }

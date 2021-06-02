@@ -1074,7 +1074,7 @@ input[type="checkbox"] {
     }
 }
 
-@media (min-width: 1366px) {
+@media (min-width: 1380px) {
     .col-md-9 {
         flex: 0 0 75%;
         max-width: 75%;

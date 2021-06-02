@@ -324,7 +324,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 {{-- TARJETA CON LA INFORMACIÓN DEL FACILITADOR --}}
                                 <div class="row justify-content-center pb-3" id="facilitador-info" style="display: none;">
                                     <div class="w-75 p-3 d-flex border-top justify-content-center">
-                                        <div class="col-3">
+                                        <div class="col-3 p-0">
                                             <div class="d-flex justify-content-center mb-2">
                                                 <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
                                                     <img class="rounded mb-3" id="imagen-facilitador" style="max-width: 100%;  " />
@@ -342,7 +342,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                             </div>
                                         </div>
                                     </div>
+                                    <div class=" row w-100 d-flex justify-content-center pb-3">
+                                        <button type="button" id="btn-eliminar-facilitador" class="btn btn-contorno-rojo" ><i class="far fa-times-circle mr-2"></i> Eliminar facilitador </button>
+                                    </div>
                                 </div>
+                                
                             </div>
 
                             {{-- RESPONSABLE DE ACTIVIDAD --}}
@@ -370,7 +374,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 {{-- TARJETA CON LA INFORMACIÓN DEL RESPONSABLE --}}
                                 <div class="row justify-content-center pb-3" id="responsable-info" style="display: none;">
                                     <div class="w-75 p-3 d-flex border-top justify-content-center">
-                                        <div class="col-3">
+                                        <div class="col-3 p-0">
                                             <div class="d-flex justify-content-center mb-2">
                                                 <div class="overflow-hidden rounded " style="max-width: 160px; max-height: 160px; ">
                                                     <img class="rounded mb-3" id="imagen-responsable" style="max-width: 100%;  " />

@@ -24,6 +24,7 @@ function eventos() {
     validarInfo()
     evtEditar();
     evtCancelarEdicion();
+    evtEliminarFacilitador();
 }
 
 // ===============================================================================================
@@ -37,6 +38,7 @@ function evtEditar() {
         $("textarea").removeAttr("disabled");
         $("button").removeAttr("disabled");
         $("#editar-actividad").hide();
+        $("#btn-eliminar-facilitador").show();
         $("#cancelar-edi").show();
         $("#guardar-cambios").show();
         $("#cambiar-foto").show();
@@ -51,6 +53,13 @@ function evtEditar() {
 function evtCancelarEdicion() {
     $("#cancelar-edi").on("click", function () {
         location.reload(); // Recarga la página inicial para eliminar todos los cambios hechos y volver a bloquer todos los cambios
+    });
+}
+function evtEliminarFacilitador(){
+    $("#btn-eliminar-facilitador").on("click", function(){
+        esconderTarjetaInfo("facilitador-info");
+        $("#facilitador-encontrado").val("false")
+        $("#cedula-facilitador").val("")
     });
 }
 
@@ -68,7 +77,8 @@ function validarResponsable(e){
     if ($("#responsable-encontrado").val() === "false") {
         e.preventDefault();
         $("#cedula-responsable").val("");
-        mostrarMensajeFixed("mensaje-error","Debe designar un responsable")
+        $("#cedula-responsable").trigger("focus");
+        toastr.error("Debe designar un responsable")
     } else {
         activarLoader('Agregando actividad');
     }

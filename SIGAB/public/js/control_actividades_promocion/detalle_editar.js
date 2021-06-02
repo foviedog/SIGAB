@@ -47,7 +47,8 @@ function evtSubmit() {
         if (editarActivido === true && $("#responsable-encontrado").val() === "false") {
             e.preventDefault();
             $("#cedula-responsable").val("");
-            mostrarMensajeValidar("mensaje-alerta","Asigne un personal a la actividad")
+            $("#cedula-responsable").trigger("focus");
+            toastr.error("Debe designar un responsable")
         }
     });
 }

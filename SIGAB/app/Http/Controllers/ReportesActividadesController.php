@@ -73,9 +73,7 @@ class ReportesActividadesController extends Controller
             //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
             ini_set('precision', 10);
             ini_set('serialize_precision', 10);
-            //Las siguientes dos líneas de código arreglan el bug de las versiones de php > 7.1 con números flotantes
-            ini_set('precision', 10);
-            ini_set('serialize_precision', 10);
+
             //Se setean los tipos según la naturaleza de la actividad (Interna o promoción)
             $tip_act_int = $this->devolverTipos(0);
             $tip_act_prom = $this->devolverTipos(1);
@@ -219,8 +217,8 @@ class ReportesActividadesController extends Controller
         $cantAct = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->Where('actividades.estado', 'like', '%' .   $estado . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
-            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
-            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->where('actividades.fecha_final_actividad', '>=', $fecha_ini)
+            ->where('actividades.fecha_final_actividad', '<', $fecha_fin)
             ->count();
         return $cantAct;
     }
@@ -300,7 +298,7 @@ class ReportesActividadesController extends Controller
     // ============================================================================================================================
     private function propositosActividad()
     {
-        $propositos = ["Capacitación", "Indución", "Actualización", "Involucramiento del personal", "Otro"];
+        $propositos = GlobalArrays::PROPOSITOS_ACTIVIDAD_INTERNA;
         $anioActual = (string) Carbon::now()->format('Y');
         $fechaIni = $anioActual . "-01-01";
         $fechaFin = $anioActual . "-12-31";

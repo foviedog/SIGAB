@@ -42,7 +42,7 @@ class PersonaController extends Controller
         try{
 
             // Se accesede al objeto persona almacenado en la sesión.
-            $persona = session('persona');;
+            $persona = session('persona');
 
             // Datos asociados a la persona (no incluye la cédula ya que no debería ser posible editarla)
             $persona->fecha_nacimiento = $request->fecha_nacimiento;
@@ -69,9 +69,15 @@ class PersonaController extends Controller
     public function notifications()
     {
         $notificacionesNoLeidas = auth()->user()->unreadNotifications()->paginate(8);
-        $notificacionesLeidas = auth()->user()->readNotifications;
         return view('control_perfil.notificaciones', [
             'notificacionesNoLeidas'=> $notificacionesNoLeidas,
+        ]);
+    }
+    //Metodo que reedireciona a la vista de notificaciones leídas
+    public function notificacionesLeidas()
+    {
+        $notificacionesLeidas = auth()->user()->readNotifications()->paginate(8);
+        return view('control_perfil.notificaciones_leidas', [
             'notificacionesLeidas'=> $notificacionesLeidas
         ]);
     }
@@ -121,16 +127,20 @@ class PersonaController extends Controller
 
     public function misActividades(){
         $actividadesInternas =  Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
-        ->where('actividades.creada_por', '=', auth()->user()->persona_id)->get();
-        $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
-        ->where('actividades.creada_por', '=', auth()->user()->persona_id)->get();
+        ->where('actividades.creada_por', '=', auth()->user()->persona_id)->paginate(8);
         
         return view('control_perfil.actividades', [
             'actividadesInternas' => $actividadesInternas,
+        ]);
+    }
+    public function misActividadesPromocion(){
+        $actividadesPromocion = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
+        ->where('actividades.creada_por', '=', auth()->user()->persona_id)->paginate(8);
+        
+        return view('control_perfil.actividades_promocion', [
             'actividadesPromocion' => $actividadesPromocion
         ]);
     }
-
     public function cambiarContrasenna(){
         return view('control_perfil.contrasenna', [
         ]);

@@ -141,8 +141,8 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <div class="row ">
                             <div class="col-lg-12 col-xl-6 d-flex flex-column justify-content-center align-items-center mb-lg-5">
                                 <div class="header-grafico w-100 texto-rojo-medio d-flex ">
-                                    <h3>Propósitos de actividades {{ date("Y") }}</h3>&nbsp;
-                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades internas que finalizan en el 2021 según el propósito" style="font-size: 18px;"></i>
+                                    <h3>Propósitos de actividades internas {{ date("Y") }}</h3>&nbsp;
+                                    <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades internas que NO han sido canceladas y finalizan en el 2021 según el propósito" style="font-size: 18px;"></i>
                                 </div>
                                 <div class=" grafico-container w-100">
                                     <div id="grafico_proposito">

@@ -126,8 +126,8 @@ class ReporteInvolucramientoAnualController extends Controller
                     ->orWhere('actividades.estado', '=', 'En progreso');
             })
             // ->where(function ($query) use ($anio) {
-            //     $query->whereYear('actividades.fecha_final_actividad', $anio)
-            //         ->orwhereYear('actividades.fecha_inicio_actividad', $anio);
+            //  $query->whereYear('actividades.fecha_final_actividad', $anio)
+            //   ->orwhereYear('actividades.fecha_inicio_actividad', $anio);
             // })
             ->whereYear('actividades.fecha_inicio_actividad', $anio)
             ->distinct()

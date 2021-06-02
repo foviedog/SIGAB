@@ -224,7 +224,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
                         <div class="card-body row justify-content-center align-items-center">
                             {{-- RESPONSABLE DE ACTIVIDAD --}}
-                            <div class="col-5">
+                            <div class="col-7">
                                 {{-- INPUT PARA REALIZAR LA BÚSQUEDA DEL RESPONSABLE --}}
                                 <div class="row d-flex justify-content-center my-4">
                                     <div class="input-group w-90">

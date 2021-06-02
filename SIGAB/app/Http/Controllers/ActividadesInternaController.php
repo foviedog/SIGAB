@@ -131,7 +131,9 @@ class ActividadesInternaController extends Controller
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
-
+            $actividad_interna->personal_facilitador = NULL;
+            $actividad_interna->facilitador_externo = NULL;
+            
             if($request->facilitador_encontrado != "false"){
                 $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
             }
@@ -198,11 +200,12 @@ class ActividadesInternaController extends Controller
             $actividad_interna->certificacion_actividad = $request->certificacion_actividad;
             $actividad_interna->publico_dirigido = $request->publico_dirigido;
             $actividad_interna->recursos = $request->recursos;
+            $actividad_interna->personal_facilitador = NULL;
+            $actividad_interna->facilitador_externo = NULL;
+
             if($request->facilitador_encontrado != "false"){
                 $actividad_interna->personal_facilitador = $request->facilitador_encontrado;
             }
-            $actividad_interna->facilitador_externo = NULL;
-
             if ($request->externo_check == "on") {
                 $actividad_interna->facilitador_externo = $request->facilitador;
                 $actividad_interna->personal_facilitador = NULL;
