@@ -389,6 +389,9 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class=" row w-100 d-flex justify-content-center pb-3">
+                                            <button type="button" id="btn-eliminar-facilitador" class="btn btn-contorno-rojo" style="display: none;"><i class="far fa-times-circle mr-2"></i> Eliminar facilitador </button>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- RESPONSABLE DE ACTIVIDAD --}}

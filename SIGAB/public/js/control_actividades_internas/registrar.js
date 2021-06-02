@@ -21,6 +21,7 @@ function eventos() {
     evtBuscarFacilitador();
     evtBuscarResponsable();
     evtFacilitadorExterno();
+    evtEliminarFacilitador();
 }
 // ===============================================================================================
 //Función encargada de validar que se haya ingresado un personal
@@ -30,12 +31,19 @@ function evtSubmit() {
         validarResponsable(e);
     });
 }
-
+function evtEliminarFacilitador(){
+    $("#btn-eliminar-facilitador").on("click", function(){
+        esconderTarjetaInfo("facilitador-info");
+        $("#facilitador-encontrado").val("false")
+        $("#cedula-facilitador").val("")
+    });
+}
 function validarResponsable(e){
     if ($("#responsable-encontrado").val() === "false") {
         e.preventDefault();
         $("#cedula-responsable").val("");
-        mostrarMensajeFixed("mensaje-error","Debe designar un responsable")
+        $("#cedula-responsable").trigger("focus");
+        toastr.error("Debe designar un responsable")
     } else {
         activarLoader('Agregando actividad');
     }

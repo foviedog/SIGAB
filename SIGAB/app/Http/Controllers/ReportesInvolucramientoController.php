@@ -343,7 +343,7 @@ class ReportesInvolucramientoController extends Controller
                 ->where('actividades.estado', 'like', '%' .   $estado . '%')
                 ->where('actividades_internas.ambito', '=', $ambito)
                 ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
-                ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+                ->where('actividades.fecha_inicio_actividad', '<=', $fecha_fin)
                 ->count();
             array_push($dataSet, $count);
         }

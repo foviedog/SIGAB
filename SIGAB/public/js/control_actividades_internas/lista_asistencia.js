@@ -99,12 +99,13 @@ function evtAgregarParticipante() {
                 participante_id: $("#participante-encontrado").val(),
                 actividad_id: $("#actividad-id").val()
             };
-
+                
             $.ajax({
                 method: "POST",
                 url: rutas['lista-asistencia.store'],
-                dataType: "json",
+                dataType: "application/json",
                 data: {
+                    "_token": $('[name="_token"]').val(),
                     participante_id: $("#participante-encontrado").val(),
                     actividad_id: $("#actividad-id").val()
                 },
@@ -112,15 +113,20 @@ function evtAgregarParticipante() {
                     $("#loader").show();
                     $("#cancelar-agregar-part").trigger("click");
                 },
-                success: function(datos) {
+                success: function() {
                     $("#mensaje").val("Participante agregado correctamente");
                     $("#form-reload").trigger("submit");
                 },
                 statusCode: {
+                    200: function(){
+                        $("#mensaje").val("Participante agregado correctamente");
+                        $("#form-reload").trigger("submit");
+                    },
+
                     404: function() {
                         $("#loader").hide();
-                        $("#error").val("El participante ya ha sido agregado anteriormente");
-                        $("#form-reload").trigger("submit");
+                        $("#btn-agregar-part").trigger("click");
+                        toastr.error("El participante ya ha sido agregado anteriormente");
                     }
                 }
             });
