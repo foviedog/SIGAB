@@ -40,7 +40,7 @@ Notificaciones
                     </div>
                 </div>
 
-                <div class="card-body notificaciones">
+                <div class="card-body notificaciones" id="card-notificaciones">
                     <ul class="nav nav-tabs mb-5" id="pills-tab" role="tablist">
                         <li class="nav-item mr-2">
                             <a class="nav-link " id="sin-leer-tab" href="{{ route('perfil.notifications') }}" aria-selected="false">Sin leer</a>
@@ -51,7 +51,7 @@ Notificaciones
                     </ul>
                     <div class="d-flex justify-content-between mb-5 mr-5">
                         <div></div>
-                        <a href="{{ route('perfil.notifications.deleteall') }}" class="btn btn-contorno-rojo btn-sm mr-2"><i class="fas fa-times-circle"></i> Eliminar todas las notificaciones</a>
+                        <a href="#card-notificaciones" onClick="window.location='{{ route('perfil.notifications.deleteall') }}';" class="btn btn-contorno-rojo btn-sm mr-2"><i class="fas fa-times-circle"></i> Eliminar todas las notificaciones</a>
                     </div>
 
                     @if(count($notificacionesLeidas) == 0)
@@ -60,8 +60,9 @@ Notificaciones
                         </i> &nbsp; No existen registros
                     </div>
                     @endif
+                    
                     @foreach ($notificacionesLeidas as $notificacion)
-                    <div class="row mt-2 mx-5 border-bottom pb-3 notificacion">
+                    <div class="row mx-5 border-bottom pb-3 notificacion-container d-flex justify-content-between">
                         <div class="col-2 p-0 imagen-notificacion">
                             <div class="container-image">
                                 <img class="imagen-perfil" src="{{ URL::asset('img/fotos/'.$notificacion->data["imagen_perfil"]) }}" alt="">
@@ -76,11 +77,13 @@ Notificaciones
                             </div>
                             <span class="mt-auto font-italic texto-rojo-medio ">{{ date("d/m/Y - H:i:s", strtotime($notificacion->created_at))  }}</span>
                         </div>
-                        <div class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
+                        @if($notificacion->data["modelo"] != "usuario")
+                        <a href="{{ $notificacion->data['url'] }}" target="_blank" class="col-1 notificacion-detalle d-flex align-items-start justify-content-center">
                             <div class="btn btn-contorno-rojo">Detalle</div>
-                        </div>
+                        </a>
+                        @endif
                         <div class="col-1">
-                            <a href="{{ route('perfil.notifications.delete', $notificacion->id) }}" class="btn btn-contorno-rojo btn-sm"><i class="fas fa-times-circle"></i></a>
+                            <a href="#card-notificaciones" onClick="window.location='{{ route('perfil.notifications.delete', $notificacion->id) }}';" class="btn btn-contorno-rojo btn-sm"><i class="fas fa-times-circle"></i></a>
                         </div>
                     </div>
                     @endforeach
