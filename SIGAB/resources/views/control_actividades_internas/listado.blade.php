@@ -193,9 +193,9 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <td>{{ date("d/m/Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                     @if($actividadInterna->autorizada == 0)
-                                    <td><span class="bg-info text-dark font-weight-bold px-3 py-2 rounded">Pendiente</span></td>
+                                    <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
                                     @else
-                                    <td><span class="bg-success text-white font-weight-bold px-3 py-2 rounded">Autorizada</span></td>
+                                    <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
                                     @endif
                                 @endif
                                 @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
