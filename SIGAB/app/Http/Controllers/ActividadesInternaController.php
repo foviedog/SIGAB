@@ -191,6 +191,8 @@ class ActividadesInternaController extends Controller
             $actividad->duracion = $request->duracion;
             $actividad->save(); //se guarda el objeto en la base de datos
 
+           // dd( $request->duracion); 
+
             //se setean los atributos del objeto
             $actividad_interna->actividad_id = $actividad->id;
             $actividad_interna->tipo_actividad = $request->tipo_actividad;

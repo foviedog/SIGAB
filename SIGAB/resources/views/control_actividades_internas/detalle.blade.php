@@ -251,7 +251,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                                 <span class="input-group-text text-dark">Duración Total: </span>
                                             </div>
                                             <div class="w-50 mx-2">
-                                                <input type="number" min="0" step="1" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
+                                                <input type="number" name="duracion" id="duracion" value="{{ $actividad->duracion }}" disabled />
                                             </div>
                                             <div class="input-group-append">
                                                 <span class="input-group-text font-weight-bold font-italic"> h</span>
@@ -605,11 +605,10 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
 </script>
 
 <script src="{{ asset('js/control_actividades_internas/detalle_editar.js') }}" defer></script>
-
+<script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
+<script src="{{ mix('js/bootstrap-input-spinner.js') }}"></script>
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
-<script>
+<script defer>
     $("input[type='number']").inputSpinner();
-
 </script>
 @endsection

@@ -67,9 +67,6 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         <b>Fecha de inicio actividad: </b> {{$actividad_insertada->fecha_inicio_actividad}} <br>
                         <b>Fecha de cierre actividad: </b> {{$actividad_insertada->fecha_final_actividad}} <br>
                         <b>Descripción: </b> {{$actividad_insertada->descripcion ?? "No se digitó"}} <br>
-                        <b>Evaluación: </b> {{$actividad_insertada->evaluacion ?? "No se digitó"}} <br>
-                        <b>Objetivos: </b> {{$actividad_insertada->objetivos ?? "No se digitó" }} <br>
-                        <b>Responsable de coordinar: </b> {{$actividad_insertada->responsable_coordinar}} <br>
                         {{-- Link directo al detalle de la actividad recien agregada --}}
                         <br>
                         <a clas="btn btn-rojo" href="{{ route('actividad-promocion.show',$actividad_insertada->id) }}">
@@ -79,8 +76,12 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                     </div>
 
                     <div class="col-6 text-justify">
+                        <b>Evaluación: </b> {{$actividad_insertada->evaluacion ?? "No se digitó"}} <br>
+                        <b>Objetivos: </b> {{$actividad_insertada->objetivos ?? "No se digitó" }} <br>
+                        <b>Responsable de coordinar: </b> {{$actividad_insertada->responsable_coordinar}} <br>
                         <b>Tipo de actividad: </b> {{$actividad_promocion_insertada->tipo_actividad}} <br>
                         <b>Instituciones Patrocinadoras: </b> {{$actividad_promocion_insertada->instituciones_patrocinadoras ?? "No se digitó"}} <br>
+                        <b>Duración: </b> {{$actividad_insertada->duracion." h" ?? "No se digitó"}} <br>
                         <b>Recursos: </b> {{$actividad_promocion_insertada->recursos ?? "No se digitó"}} <br>
                     </div>
                 </div>
@@ -433,9 +434,9 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 {{-- Link al script de registro de actividades promocion --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
 <script src="{{ asset('js/control_actividades_internas/registrar.js') }}" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-input-spinner@1.13.5/src/bootstrap-input-spinner.min.js"></script>
-<script>
+<script src="{{ mix('js/bootstrap-input-spinner.js') }}"></script>
+{{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
+<script defer>
     $("input[type='number']").inputSpinner();
-
 </script>
 @endsection

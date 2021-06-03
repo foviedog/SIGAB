@@ -20,7 +20,7 @@ try {
  */
 
 window.axios = require("axios");
-
+window.inputSpinner = require('bootstrap-input-spinner');
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
