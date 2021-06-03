@@ -25,6 +25,7 @@ function eventos() {
     evtEditar();
     evtCancelarEdicion();
     evtEliminarFacilitador();
+    infoGeneralEvt();
 }
 
 // ===============================================================================================
@@ -214,6 +215,16 @@ function validarInfo() {
             $("#info-gen").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
             $("#info-esp").tab("show"); // Muestra la vista de participaciones.
         }
+    });
+}
+
+function infoGeneralEvt() {
+    $("#info-gen-tab").on("click", function (e) {
+        $("#info-gen-tab").addClass("active");// Desacitva la vista de información general
+        $("#info-esp-tab").removeClass("active");// Desacitva la vista de información general
+        $("#info-esp").removeClass('active'); // Desactiva la clase para el botón de volver a información general en la vista de participaciones.
+        $("#info-gen").tab("show"); // Muestra la vista de informacion general.
+
     });
 }
 

@@ -210,19 +210,20 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                     <tr>
                                         <td scope="col" class="thead-reporte ">Actividad cocurricular</td>
                                         <td class="cant-participaciones">{{ $nombre_actividad["Actividad cocurricular"] }}</td>
-                                        <td scope="col" class="thead-reporte ">Órgano colegiado</td>
-                                        <td class="cant-participaciones">{{ $nombre_actividad["Órgano colegiado"] }}</td>
+                                        <td scope="col" class="thead-reporte ">Evaluacion interna PPAA</td>
+                                        <td class="cant-participaciones">{{ $nombre_actividad["Evaluacion interna PPAA"] }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="col" class="thead-reporte ">Comisiones de trabajo</td>
                                         <td class="cant-participaciones">{{ $nombre_actividad["Comisiones de trabajo"] }}</td>
-                                        <td scope="col" class="thead-reporte ">Externa</td>
-                                        <td class="cant-participaciones">{{ $nombre_actividad["Externa"] }}</td>
+                                        <td scope="col" class="thead-reporte ">Evaluacion externa PPAA</td>
+                                        <td class="cant-participaciones ">{{ $nombre_actividad["Evaluacion externa PPAA"] }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="col" class="thead-reporte separador-fila">Otro</td>
                                         <td class="cant-participaciones separador-fila">{{ $nombre_actividad["Otro"] }}</td>
-                                        <td class="cant-participaciones separador-fila" colspan="2"></td>
+                                        <td scope="col" class="thead-reporte separador-fila">Externa</td>
+                                        <td class="cant-participaciones separador-fila">{{ $nombre_actividad["Externa"] }}</td>
                                     </tr>
                                     @endforeach
 

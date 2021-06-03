@@ -62,7 +62,7 @@ Notificaciones
                     @endif
                     
                     @foreach ($notificacionesLeidas as $notificacion)
-                    <div class="row mx-5 border-bottom pb-3 notificacion-container d-flex justify-content-between">
+                    <div class="row mx-5 border-bottom pb-3 notificacion-container d-flex justify-content-start">
                         <div class="col-2 p-0 imagen-notificacion">
                             <div class="container-image">
                                 <img class="imagen-perfil" src="{{ URL::asset('img/fotos/'.$notificacion->data["imagen_perfil"]) }}" alt="">
@@ -82,7 +82,7 @@ Notificaciones
                             <div class="btn btn-contorno-rojo">Detalle</div>
                         </a>
                         @endif
-                        <div class="col-1">
+                        <div class="col-1 ml-auto">
                             <a href="#card-notificaciones" onClick="window.location='{{ route('perfil.notifications.delete', $notificacion->id) }}';" class="btn btn-contorno-rojo btn-sm"><i class="fas fa-times-circle"></i></a>
                         </div>
                     </div>

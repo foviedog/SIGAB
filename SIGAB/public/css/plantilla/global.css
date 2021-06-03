@@ -374,19 +374,37 @@ Fin de la paleta de colores
         opacity: 0;
     }
 }
+/* **********************************************
+Pestaña de actividad autorizada
+********************************************** */
 
 .badge-info-success {
     background: #fff;
     position: absolute;
     color: #4f4f4f;
     width: 12rem;
-    padding: 7px 4px 4px 15px;
+    padding: 7px 4px 4px 18px;
     font-weight: 600;
     top: -2rem;
+    font-size: 18px;
 }
 
 .badge-info-success>i {
     color: #2cef76;
+}
+
+/* **********************************************
+Pestaña de actividad NO autorizada
+********************************************** */
+.badge-no-autorizada {
+    background: #fff;
+    position: absolute;
+    color: #4f4f4f;
+    width: 12rem;
+    padding: 7px 4px 4px 18px;
+    font-weight: 600;
+    top: -2rem;
+    font-size: 18px;
 }
 
 /* **********************************************

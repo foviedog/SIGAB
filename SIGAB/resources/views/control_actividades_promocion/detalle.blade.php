@@ -31,6 +31,10 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
     <div class="badge-info-success">
         <i class="fas fa-check"></i> Autorizada
     </div>
+    @else
+    <div class="badge-info-success">
+        <i class="far fa-clock"></i> Pendiente
+    </div>
     @endif
     <div class="card-body">
 
