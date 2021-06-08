@@ -39,9 +39,7 @@ use App\Helper\Accesos;
 
         {{-- Menú --}}
         @include('layouts.menu')
-
         <div id="content">
-
             {{-- Encabezado de la página --}}
             @include('layouts.head')
 
