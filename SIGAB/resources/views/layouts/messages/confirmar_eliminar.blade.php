@@ -95,9 +95,8 @@
             </div>
             <div class="modal-body">
                 <div class="row mx-3 py-2 font-weight-bold">
-                    Para poder eliminar el personal cambie los siguientes datos: <br>
+                    Para poder eliminar el personal cambie los siguientes datos:
                 </div>
-
                 @if(!empty($elementosBorrar[0]))
                 <div class="d-flex align-items-center row px-3 py-2 my-2 bg-gris-claro">
                     <i class="fas fa-clipboard-list texto-rojo-medio mr-2"></i> Participaciones en las siguientes listas de asistencia:
@@ -105,7 +104,7 @@
                 @endif
                 @foreach ($elementosBorrar[0] as $lista)
                 <div class="ml-4 mb-1 texto-azul-una row d-felx align-items-center">
-                    <i class="fas fa-minus-circle mr-2"></i> <a href="{{ $lista->url }}" target="_blank">{{ $lista->tema }}</a> <br>
+                    <i class="fas fa-minus-circle mr-2"></i> <a href="{{ $lista->url }}" target="_blank">{{ $lista->tema }}</a>
                 </div>
                 @endforeach
 
@@ -116,20 +115,20 @@
                 @endif
                 @foreach ($elementosBorrar[1] as $coordinacion)
                 <div class="ml-4 mb-1 texto-azul-una row d-felx align-items-center">
-                    <i class="fas fa-minus-circle mr-2"></i><a class="" href="{{ $coordinacion->url }}" target="_blank">{{ $coordinacion->tema }}</a> <br>
+                    <i class="fas fa-minus-circle mr-2"></i><a class="" href="{{ $coordinacion->url }}" target="_blank">{{ $coordinacion->tema }}</a>
                 </div>
                 @endforeach
 
                 @if(!empty($elementosBorrar[2]))
                 <div class="d-flex align-items-center row px-3 py-2 my-2 bg-gris-claro">
-                    <i class="fas fa-chalkboard-teacher texto-rojo-medio mr-2"></i> Es facilitador de las siguientes actividades: <br> @endif
+                    <i class="fas fa-chalkboard-teacher texto-rojo-medio mr-2"></i> Es facilitador de las siguientes actividades:
                 </div>
+                @endif
                 @foreach ($elementosBorrar[2] as $facilitador)
                 <div class="ml-4 mb-1 texto-azul-una row d-felx align-items-center">
-                    <i class="fas fa-minus-circle mr-2"></i><a href="{{ $facilitador->url }}" target="_blank">{{ $facilitador->tema }}</a> <br>
+                    <i class="fas fa-minus-circle mr-2"></i><a href="{{ $facilitador->url }}" target="_blank">{{ $facilitador->tema }}</a>
                 </div>
                 @endforeach
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
@@ -255,7 +254,7 @@
                     <div class="d-flex align-items-center texto-rojo-medio">
                         <i class="fas fa-trash-alt  mr-2"></i>
                         <h5 class="modal-title" id="exampleModalLongTitle">Eliminar actividad de promoción</h5>
-                    </div>                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </div> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

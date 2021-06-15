@@ -200,4 +200,12 @@ class Accesos
     public static function EXPORTAR_EXCEL() { 
         return GlobalFunctions::verificarAcceso(49);
     }
+
+    public static function REGISTRAR_USUARIO() { 
+        return GlobalFunctions::verificarAcceso(50);
+    }
+
+    public static function CAMBIAR_ROL() { 
+        return GlobalFunctions::verificarAcceso(51);
+    }
 }

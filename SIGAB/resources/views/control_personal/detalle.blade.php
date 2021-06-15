@@ -26,10 +26,10 @@ $idiomas = [];
 
 @section('contenido')
 
+
 @if(Accesos::ACCESO_ELIMINAR_PERSONAL())
 @include('layouts.messages.confirmar_eliminar')
 @endif
-
 @if(Accesos::ACCESO_MODIFICAR_PERSONAL())
 {{-- Formulario general de personal --}}
 <form autocomplete="off" action="{{ route('personal.update',$personal->persona_id ) }}" method="POST" role="form" enctype="multipart/form-data" id="personal-form" onsubmit="activarLoader('Enviando cambios');">
@@ -37,7 +37,6 @@ $idiomas = [];
     {{-- Metodo invocado para realizar la modificacion correctamente del personal --}}
     @method('PATCH')
     @endif
-
     <div class="card">
 
         <div class="card-body">
@@ -63,7 +62,7 @@ $idiomas = [];
                         {{-- Boton que habilita opcion de editar --}}
                         <button type="button" id="editar-personal" class="btn btn-rojo"><i class="fas fa-edit "></i> Editar </button>
                         {{-- Boton de cancelar edicion --}}
-                        <button type="button" id="cancelar-edi" class="btn btn-rojo"><i class="fas fa-close "></i> Cancelar </button>
+                        <button type="button" id="cancelar-edi" class="btn btn-rojo" style="display: none;"><i class="fas fa-close " ></i> Cancelar </button>
                         @endif
                     </div>
                 </div>
@@ -85,7 +84,7 @@ $idiomas = [];
                                 </div>
                                 {{-- Cedula del personal --}}
                                 <div class="mb-3" data-toggle="tooltip" data-placement="bottom" title="Cédula del personal"><i class="fa fa-id-card mr-1 texto-rojo"></i><small class="texto-negro" style="font-size: 17px;"><strong>ID {{ $personal->persona_id }} </strong></small></div>
-                                <div id="cambiar-foto">
+                                <div id="cambiar-foto"  style="display: none;">
                                     <hr>
                                     <input type="file" name="avatar" class="border">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -407,7 +406,7 @@ $idiomas = [];
                                         {{-- Espacio para agregar n idiomas a un personal --}}
                                         <div class="form-row border-top">
                                             <div class="d-flex card-header py-3 w-100">
-                                                <p class="texto-rojo-medio m-0 font-weight-bold ">Lista de idiomas  &nbsp;</p>
+                                                <p class="texto-rojo-medio m-0 font-weight-bold ">Lista de idiomas &nbsp;</p>
                                                 <span data-toggle="tooltip" data-placement="top" title="Ingrese el idioma, seguido del nivel de dominio entre paréntesis. Ej. Inglés (manejo instrumental)."><i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
                                             <div class="alert alert-danger text-center font-weight-bold w-100" role="alert" id="alert-idiomas">

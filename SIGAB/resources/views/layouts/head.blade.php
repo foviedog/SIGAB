@@ -33,13 +33,25 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('perfil.show') }}">
-                            <i class="fas fa-user"></i> &nbsp; Mi perfil
+                            <i class="fas fa-user texto-rojo-medio"></i> &nbsp; Mi perfil
                         </a>
+
+                        @if(Accesos::REGISTRAR_USUARIO())
+                        <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('register') }}">
+                                <i class="fas fa-plus-circle  texto-azul-una"></i> &nbsp; Registrar usuario
+                            </a>
+                        @endif
+                        @if(Accesos::CAMBIAR_ROL())
+                            <a class="dropdown-item" href="{{ route('cambiar-rol') }}">
+                                <i class="fas fa-sync-alt texto-a texto-azul-una"></i>  &nbsp; Cambiar rol
+                            </a>
+                        @endif
                         <div class="dropdown-divider"></div>
 
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                            <i class="fas fa-sign-in-alt"></i> &nbsp; Salir
+                            <i class="fas fa-sign-in-alt  texto-rojo-medio"></i> &nbsp; Salir
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -47,7 +59,7 @@
                         </form>
                     </div>
                 </li>
-                
+
             </ul>
         </div>
 
