@@ -232,7 +232,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 <div class="row">
                     {{-- Información general de los items por página y el total de resultados --}}
                     <div class="col-md-5 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$actividadesInternas->perPage() }}items de un total de {{ $actividadesInternas->total() }}</p>
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$actividadesInternas->perPage() }} items de un total de {{ $actividadesInternas->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}
                     <div class="col-md-5 ml-5">

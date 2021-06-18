@@ -14,6 +14,7 @@ class CreateActividadesInternasTable extends Migration
     public function up()
     {
         Schema::create('actividades_internas', function (Blueprint $table) {
+            
             $table->bigInteger('actividad_id')->unsigned()->primary();
             $table->foreign('actividad_id')->references('id')->on('actividades')->onDelete('cascade');
             $table->string('tipo_actividad', 45)->nullable();
