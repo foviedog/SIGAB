@@ -26,8 +26,7 @@ Curso
     {{-- Formulario para registrar informacion del estudiante --}}
     <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante" onsubmit="activarLoader('Agregando Estudiante');">
         @csrf
-        @endif
-        <input type="hidden" name="persona_existe" @if(!is_null($persona_existe))) value="true" @else value="false" @endif>
+    @endif
 
         {{-- Alerts --}}
         @include('layouts.messages.alerts')

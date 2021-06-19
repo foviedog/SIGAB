@@ -14,41 +14,49 @@ Registrar curso
         <div class="d-flex justify-content-between">
             <h2>Registrar curso</h2>
             <div>
-                @if(Accesos::ACCESO_LISTAR_ESTUDIANTES())
-                <div><a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a></div>
-                @endif
+                {{-- @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) --}}
+                <div><a href="{{ route('cursos.index') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a></div>
+                {{-- @endif --}}
             </div>
         </div>
         <hr>
 
-        @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES())
-        {{-- Formulario para registrar informacion del estudiante --}}
-        <form action="{{ route('estudiante.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="estudiante" onsubmit="activarLoader('Agregando Estudiante');">
+        {{-- @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES()) --}}
+        {{-- Formulario para registrar informacion del curso --}}
+        <form action="{{ route('cursos.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="curso" onsubmit="activarLoader('Agregando Curso');">
             @csrf
-            @endif
+        {{-- @endif --}}
+
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
 
             {{-- Mensaje de que muestra el objeto insertado (solo se muestra si ha sido exitoso el registro)  --}}
-            @if(isset($estudiante_insertado))
+            @if(isset($curso_insertado))
             <div class="alert alert-dark" role="alert">
-                Se registró el estudiante con lo siguientes datos: <br> <br>
+                Se registró el curso con lo siguientes datos: <br> <br>
                 <div class="row">
                     <div class="col-6 text-justify">
-                        {{-- <b>Cédula:</b> {{ $persona_insertada->persona_id }} <br>
-                        <b>Nombre/s:</b> {{ $persona_insertada->nombre }} <br>
-                        <b>Apellido/s:</b> {{ $persona_insertada->apellido }} <br>
-                        <b>Cantidad de hijos:</b> {{ $estudiante_insertado->cant_hijos ?? "No se digitó" }} <br> --}}
+                        <b>Código:</b> {{ $curso_insertado->codigo ?? "No se digitó" }} <br>
+                        <b>Nombre:</b> {{ $curso_insertado->nombre ?? "No se digitó" }} <br>
+                        <b>NRC:</b> {{ $curso_insertado->nombre ?? "No se digitó" }} <br>
                         {{-- Link directo al estudiante recien agregado --}}
-                        {{-- <br>
-                    <a clas="btn btn-rojo" href="{{ route('estudiante.show', $estudiante_insertado->persona_id) }}">
-                        <input type="button" @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) value="Editar" @else value="Detalle" @endif class="btn btn-rojo">
+                        <br>
+                        <a clas="btn btn-rojo" href="{{ route('cursos.show', $curso_insertado->codigo) }}">
+                        
+                        <input type="button" 
+                        {{-- @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) --}}
+                            value="Editar"
+                        {{-- @else value="Detalle" --}}
+                        {{-- @endif  --}}
+                        class="btn btn-rojo">
+
                         </a>
-                        <br> --}}
+                        <br>
                     </div>
                 </div>
-                <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo curso:</div>
-                @endif
+            </div>
+            <div class="h3 mb-5 mt-4 mx-3">Agregar un nuevo curso:</div>
+            @endif
                 {{-- INICIO DE LA SECCION DE REGISTRO --}}
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-9">
@@ -74,7 +82,7 @@ Registrar curso
                                         </div>
                                         <div class="d-flex justify-content-center w-100">
                                             <div class="input-group px-2 mb-3 w-75 ml-1 pl-3">
-                                                <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Código de curso" onkeypress="contarCaracteres(this,15)" required>
+                                                <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Código de curso" onkeydown="contarCaracteres(this,15)" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Código de curso"><i class="far fa-edit texto-azul-una"></i></span>
                                                 </div>
@@ -89,7 +97,7 @@ Registrar curso
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-center w-100 mt-auto">
-                                            <button class="btn btn-rojo ml-3" type="submit" onclick="activarLoader('Guardando datos');"><i class="fas fa-save"></i> &nbsp; Guardar</button>
+                                            <button class="btn btn-rojo ml-3" type="submit"><i class="fas fa-save"></i> &nbsp; Guardar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -98,6 +106,8 @@ Registrar curso
                     </div>
                 </div>
             </div>
+
+        </form>
     </div>
 
     @endsection
