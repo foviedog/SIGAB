@@ -171,8 +171,8 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                                 </div>
 
                                                 <div class="col-9 input-group pl-0">
-                                                    <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}' required>
-                                                    <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}' required>
+                                                    <input type="month" name="mes_inicio" id="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}' required>
+                                                    <input type="month" name="mes_final" id="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}' required>
                                                 </div>
 
                                                 <select class="col-8 mt-3 form-control" id="estado" name="estado_actividad" class="form-control">
@@ -181,8 +181,8 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                                     <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
                                                     @endforeach
                                                 </select>
-
-                                                <button class="btn btn-lg btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando gráficos');"><i class="fas fa-chart-line"></i> Generar gráficos</button>
+                                                {{-- El método onclick se encuentra definido en la parte inferior del documento --}}
+                                                <button class="btn btn-lg btn-rojo mt-4" type="button" id="boton-enviar" onclick="validarDatosVacios()"><i class="fas fa-chart-line"></i> Generar gráficos</button>
 
                                             </div>
                                         </div>
@@ -331,16 +331,24 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
 <script src="{{ asset('js/reportes/involucramiento/reportes.js') }}" defer></script>
 <script src="{{ asset('js/reportes/involucramiento/graficosPredeterminados.js') }}" defer></script>
+<script>
+    //Funcion para evitar que existan datos vacíos al genrar gráficos
+    function validarDatosVacios() {
+        if ($('#mes_inicio').val() == "" || $('#mes_final').val() == "") {
+            toastr.error("Debe designar un rango de fechas")
+        } else {
+            activarLoader('Generando gráficos');
+            $("#formulario-reporte").trigger('submit')
+        }
+    }
 
+</script>
 @if(!is_null($datos))
 <script>
     //Datos generales para los gráficos
     let dataSet = JSON.parse('{!! $datos !!}');
-
     //Mostrar espacio para los gráficos
     $("#seccion-graficos").show();
-
-    // Variable global utilizada para obtener el url de las imágenes con js.
     var url = window.location.href;
     window.location.href = url + "#formulario-reporte";
 
