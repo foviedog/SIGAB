@@ -57,6 +57,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapRutasControlEstadisticas();
 
         $this->mapRutasControlPerfil();
+
+        $this->mapRutasControlCursos();
     }
 
     /**
@@ -123,6 +125,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/control_perfil.php'));
+    }
+
+    protected function mapRutasControlCursos(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/control_cursos.php'));
     }
 
 }
