@@ -23,25 +23,23 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 @endphp
 
 @section('contenido')
+@if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
+{{-- Formulario para registrar informacion de la actividad --}}
+<form autocomplete="off" action="{{ route('actividad-interna.store') }}" method="POST" enctype="multipart/form-data" id="form-guardar" onsubmit="">
+    @csrf
+    @endif
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between texto-rojo-medio">
+                <h3><i class="fas fa-plus-circle "></i> Registrar una actividad de tipo interna</h3>
 
-<div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between texto-rojo-medio">
-            <h3><i class="fas fa-plus-circle "></i> Registrar una actividad de tipo interna</h3>
-
-            @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
-            <div>
-                <a href="{{ route('actividad-interna.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                @if(Accesos::ACCESO_LISTAR_ACTIVIDADES())
+                <div>
+                    <a href="{{ route('actividad-interna.listado') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a>
+                </div>
+                @endif
             </div>
-            @endif
-
-        </div>
-        <hr>
-        @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
-        {{-- Formulario para registrar informacion de la actividad --}}
-        <form autocomplete="off" action="{{ route('actividad-interna.store') }}" method="POST" enctype="multipart/form-data" id="form-guardar" onsubmit="">
-            @csrf
-            @endif
+            <hr>
             {{-- Mensajes para la validación de errores  --}}
             <div class="mensaje-container" id="mensaje-error" style="display:none;">
                 <div class="col-3 icono-mensaje d-flex align-items-center" id="icono-mensaje" style=" background-image: url('/img/recursos/iconos/error.png');"></div>
@@ -343,10 +341,10 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                         </div>
                                     </div>
                                     <div class=" row w-100 d-flex justify-content-center pb-3">
-                                        <button type="button" id="btn-eliminar-facilitador" class="btn btn-contorno-rojo" ><i class="far fa-times-circle mr-2"></i> Eliminar facilitador </button>
+                                        <button type="button" id="btn-eliminar-facilitador" class="btn btn-contorno-rojo"><i class="far fa-times-circle mr-2"></i> Eliminar facilitador </button>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             {{-- RESPONSABLE DE ACTIVIDAD --}}
@@ -473,7 +471,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 </div>
                             </div>
                         </div>
-                        {{-- Campo: Evaluacion --}}
+                        {{-- Campo: Evaluación --}}
                         <div class="col">
                             <div class="d-flex justify-content-center mb-3">
                                 <div class="w-100">
@@ -528,11 +526,6 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                         </div>
                     </div>
                 </div>
-
-
-
-
-
                 @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
                 <div class="d-flex justify-content-center">
                     {{-- Boton para agregar informacion de la actividad --}}
@@ -546,11 +539,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 </div>
                 @endif
             </div>
-            @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
-        </form>
-        @endif
+        </div>
     </div>
-</div>
+    @if(Accesos::ACCESO_REGISTRAR_ACTIVIDADES())
+</form>
+@endif
 
 @endsection
 
@@ -566,5 +559,6 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 {{-- Scripts para modificar la forma en la que se ven los input de tipo number --}}
 <script defer>
     $("input[type='number']").inputSpinner();
+
 </script>
 @endsection

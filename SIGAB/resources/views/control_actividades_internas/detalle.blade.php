@@ -91,46 +91,51 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
             <div>
             </div>
         </ul>
+        @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+        @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+        {{-- Botón para autorizar actividad --}}
+        <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" id="form-autorizar" enctype="multipart/form-data">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad" />
+        </form>
+        @endif
+        @endif
 
-
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab" role="tabpanel">
-                {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
-                <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger w-50 text-center" role="alert" id="mensaje-alerta" style="display: none;"></div>
-                </div>
-                <div class="row d-flex justify-content-end mt-4 px-3">
-                    <div class="d-flex ">
-                        @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
-                        @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
-                        {{-- Botón para autorizar actividad --}}
-                        <form autocomplete="off" action="{{ route('actividad-interna.autorizar') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" value="{{ Request::route('id_actividad') }}" name="id_actividad" />
-                            <button type="submit" class="btn btn-contorno-azul-una btn-sombreado-azul font-weight-light mr-1"><i class="fas fa-key"></i> &nbsp; Autorizar </button>
-                        </form>
-                        @endif
-                        @endif
-
-                        @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
-                        <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light mr-1"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
-                        @endif
-
-                        @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
-                        <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Asistencia </a>
-                        @endif
+        @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
+        {{-- Formulario general de actualización de datos de actividad --}}
+        <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="form-guardar">
+            {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
+            @method('PATCH')
+            {{-- Seguridad de envío de datos --}}
+            @csrf
+            @endif
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="info-gen" role="tabpanel" aria-labelledby="info-gen-tab" role="tabpanel">
+                    {{-- MENSAJE DE ALERTA PARA MANEJO DE ERRORES --}}
+                    <div class="row d-flex justify-content-center">
+                        <div class="alert alert-danger w-50 text-center" role="alert" id="mensaje-alerta" style="display: none;"></div>
                     </div>
-                </div>
+                    <div class="row d-flex justify-content-end mt-4 px-3">
+                        <div class="d-flex ">
+                            @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD()) {{-- Se verifica si tiene el privilegio para autorizar una actividad --}}
+                            @if($actividad->autorizada == 0) {{-- Se verifica si la actividad aún no ha sido autorizada --}}
+                            <button type="button" class="btn btn-contorno-azul-una btn-sombreado-azul font-weight-light mr-1" onclick="$('#form-autorizar').trigger('submit')"><i class="fas fa-key"></i> &nbsp; Autorizar </button>
+                            @endif
+                            @endif
 
-                @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
-                {{-- Formulario general de actualización de datos de actividad --}}
-                <form autocomplete="off" action="{{ route('actividad-interna.update', $actividad->id) }}" method="POST" role="form" enctype="multipart/form-data" id="form-guardar">
-                    {{-- Metodo invocado para realizar la modificacion correctamente del estudiante --}}
-                    @method('PATCH')
-                    {{-- Seguridad de envío de datos --}}
-                    @csrf
-                    @endif
+                            @if(Accesos::ACCESO_VISUALIZAR_EVIDENCIAS())
+                            <a href="{{ route('evidencias.show', $actividad->id) }}" id="evidencias" class="btn btn-azul-una btn-sombreado-azul font-weight-light mr-1"><i class="fas fa-file-upload"></i> &nbsp; Evidencias </a>
+                            @endif
+
+                            @if(Accesos::ACCESO_VISUALIZAR_LISTA_PARTICIPACION())
+                            <a href="{{ route('lista-asistencia.show', $actividad->id) }}" id="lista-asistencia" class="btn btn-azul-una btn-sombreado-azul"> <i class="far fa-address-book"></i> &nbsp; Asistencia </a>
+                            @endif
+                        </div>
+                    </div>
+
+
+
                     {{-- Campos iniciales --}}
                     <div class="row py-3 mt-2 border-bottom">
                         <div class="col">
@@ -447,159 +452,160 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                             </div>
                         </div>
                     </div>
-                    @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
-                    <div class="row d-flex justify-content-center mt-3">
-                        {{-- Boton para enviar los cambios --}}
-                        <button type="submit" id="guardar-cambios" class="btn btn-rojo" style="display: none;">Guardar cambios</button>
-                    </div>
-                    @endif
-                </form>
-            </div>
-
-            <div class="tab-pane fade" id="info-esp" role="tabpanel" aria-labelledby="info-esp-tab">
-                <div class="mt-4">
-                    <div class="row">
-                        {{-- Campo: Objetivos --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-100">
-                                    <div class="card shadow-sm rounded pb-2">
-                                        <div class="card-header py-3">
-                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                <i class="far fa-file-alt fa-2x"></i> &nbsp;&nbsp
-                                                Objetivos de la actividad &nbsp;&nbsp
-                                                <span data-toggle="tooltip" data-placement="right" title="Se describen los objetivos de la actividad">
-                                                    <i class="far fa-question-circle fa-lg"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <textarea type='text' class="form-control w-100" id="objetivos" name="objetivos" rows="4" disabled>{{ $actividad->objetivos }} </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Campo: Agenda --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-100">
-                                    <div class="card shadow-sm rounded pb-2">
-                                        <div class="card-header py-3">
-                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                <i class="far fa-calendar fa-2x"></i> &nbsp;&nbsp
-                                                Agenda &nbsp;&nbsp
-                                                <span data-toggle="tooltip" data-placement="right" title="Se describen los puntos a tratar en la actividad">
-                                                    <i class="far fa-question-circle fa-lg"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <textarea type='text' class="form-control w-100" id="agenda" name="agenda" rows="4" disabled>{{ $actividad->actividadInterna->agenda }} </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        {{-- Campo: Descripción --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-100">
-
-                                    <div class="card shadow-sm rounded pb-2">
-                                        <div class="card-header py-3">
-                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
-                                                Descripción &nbsp;&nbsp
-                                                <span data-toggle="tooltip" data-placement="right" title="Información que incluye una síntesis de los resultados de cada actividad con datos de: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
-                                                    <i class="far fa-question-circle fa-lg"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <textarea class="form-control w-100" id="descripcion" name="descripcion" rows="4" disabled>{{ $actividad->descripcion }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        {{-- Campo: Evaluacion --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-100">
-                                    <div class="card shadow-sm rounded pb-2">
-                                        <div class="card-header py-3">
-                                            <div class=" d-flex justify-content-between align-items-center">
-                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                    <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
-                                                    Evaluación &nbsp;&nbsp
-                                                    <span data-toggle="tooltip" data-placement="right" title="Información sobre los resultados de la evaluación de los participantes a cada actividad. La evaluación se realiza al final de cada actividad mediante un formulario digital u otro instrumento que se define como parte de la planificación de las actividades.">
-                                                        <i class="far fa-question-circle fa-lg"></i>
-                                                    </span>
-
-
-                                                </p>
-                                                <span class="text-muted" id="mostrar_evaluacion"></span>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" disabled>{{ $actividad->evaluacion }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{-- Campo: Recursos --}}
-                        <div class="col">
-                            <div class="d-flex justify-content-center mb-3">
-                                <div class="w-50">
-                                    <div class="card shadow-sm rounded pb-2">
-                                        <div class="card-header py-3">
-                                            <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
-                                                <i class="fas fa-pencil-ruler fa-2x"></i> &nbsp;&nbsp
-                                                Recursos &nbsp;&nbsp
-                                                <span data-toggle="tooltip" data-placement="right" title="Recursos necesarios para desarrollar la actividad ">
-                                                    <i class="far fa-question-circle fa-lg"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->actividadInterna->recursos }} </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
-            </div>
-        </div>
+
+                <div class="tab-pane fade" id="info-esp" role="tabpanel" aria-labelledby="info-esp-tab">
+                    <div class="mt-4">
+                        <div class="row">
+                            {{-- Campo: Objetivos --}}
+                            <div class="col">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="w-100">
+                                        <div class="card shadow-sm rounded pb-2">
+                                            <div class="card-header py-3">
+                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                    <i class="far fa-file-alt fa-2x"></i> &nbsp;&nbsp
+                                                    Objetivos de la actividad &nbsp;&nbsp
+                                                    <span data-toggle="tooltip" data-placement="right" title="Se describen los objetivos de la actividad">
+                                                        <i class="far fa-question-circle fa-lg"></i>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <textarea type='text' class="form-control w-100" id="objetivos" name="objetivos" rows="4" disabled>{{ $actividad->objetivos }} </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Campo: Agenda --}}
+                            <div class="col">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="w-100">
+                                        <div class="card shadow-sm rounded pb-2">
+                                            <div class="card-header py-3">
+                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                    <i class="far fa-calendar fa-2x"></i> &nbsp;&nbsp
+                                                    Agenda &nbsp;&nbsp
+                                                    <span data-toggle="tooltip" data-placement="right" title="Se describen los puntos a tratar en la actividad">
+                                                        <i class="far fa-question-circle fa-lg"></i>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <textarea type='text' class="form-control w-100" id="agenda" name="agenda" rows="4" disabled>{{ $actividad->actividadInterna->agenda }} </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            {{-- Campo: Descripción --}}
+                            <div class="col">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="w-100">
+
+                                        <div class="card shadow-sm rounded pb-2">
+                                            <div class="card-header py-3">
+                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                    <i class="fas fa-receipt fa-2x"></i> &nbsp;&nbsp
+                                                    Descripción &nbsp;&nbsp
+                                                    <span data-toggle="tooltip" data-placement="right" title="Información que incluye una síntesis de los resultados de cada actividad con datos de: moderador, cantidad total de participantes, público meta (estudiantes, docentes, empleadores, entre otros), cantidad de publicaciones y seguidores en redes sociales.">
+                                                        <i class="far fa-question-circle fa-lg"></i>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <textarea class="form-control w-100" id="descripcion" name="descripcion" rows="4" disabled>{{ $actividad->descripcion }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- Campo: Evaluacion --}}
+                            <div class="col">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="w-100">
+                                        <div class="card shadow-sm rounded pb-2">
+                                            <div class="card-header py-3">
+                                                <div class=" d-flex justify-content-between align-items-center">
+                                                    <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                        <i class="fas fa-user-edit fa-2x"></i> &nbsp;&nbsp
+                                                        Evaluación &nbsp;&nbsp
+                                                        <span data-toggle="tooltip" data-placement="right" title="Información sobre los resultados de la evaluación de los participantes a cada actividad. La evaluación se realiza al final de cada actividad mediante un formulario digital u otro instrumento que se define como parte de la planificación de las actividades.">
+                                                            <i class="far fa-question-circle fa-lg"></i>
+                                                        </span>
 
 
+                                                    </p>
+                                                    <span class="text-muted" id="mostrar_evaluacion"></span>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" disabled>{{ $actividad->evaluacion }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {{-- Campo: Recursos --}}
+                            <div class="col">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="w-50">
+                                        <div class="card shadow-sm rounded pb-2">
+                                            <div class="card-header py-3">
+                                                <p class="texto-rojo-medio m-0 font-weight-bold texto-rojo">
+                                                    <i class="fas fa-pencil-ruler fa-2x"></i> &nbsp;&nbsp
+                                                    Recursos &nbsp;&nbsp
+                                                    <span data-toggle="tooltip" data-placement="right" title="Recursos necesarios para desarrollar la actividad ">
+                                                        <i class="far fa-question-circle fa-lg"></i>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->actividadInterna->recursos }} </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @if(Accesos::ACCESO_MODIFICAR_ACTIVIDADES())
+                <div class="row d-flex justify-content-center mt-3">
+                    {{-- Boton para enviar los cambios --}}
+                    <button type="submit" id="guardar-cambios" class="btn btn-rojo" style="display: none;">Guardar cambios</button>
+                </div>
+                @endif
+        </form>
     </div>
+
+
+
+</div>
 </div>
 @endsection
 
