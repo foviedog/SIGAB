@@ -249,9 +249,7 @@ class EstudianteController extends Controller
 
     public function destroy($personaId){
         try{
-
             $esPersonal = Personal::where('persona_id', $personaId)->count() > 0;
-
             if($esPersonal){
                 //Se guarda el registro en la tabla de eliminados
                 $eliminado = new Eliminado;
