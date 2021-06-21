@@ -2,7 +2,7 @@
     <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title font-weight-bold" id="detalle-graduacion-modal">Detalle de la gradución</h5>
+                <h4 class="modal-title font-weight-bold" id="detalle-graduacion-modal">Detalle de la graduación</h5>
                     
                     @if(Accesos::ACCESO_MODIFICAR_TITULACIONES())
                     <div class="d-flex justify-content-end">
