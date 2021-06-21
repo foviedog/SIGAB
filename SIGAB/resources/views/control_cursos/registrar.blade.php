@@ -38,7 +38,7 @@ Registrar curso
                     <div class="col-6 text-justify">
                         <b>Código:</b> {{ $curso_insertado->codigo ?? "No se digitó" }} <br>
                         <b>Nombre:</b> {{ $curso_insertado->nombre ?? "No se digitó" }} <br>
-                        <b>NRC:</b> {{ $curso_insertado->nombre ?? "No se digitó" }} <br>
+                        <b>NRC:</b> {{ $curso_insertado->nrc ?? "No se digitó" }} <br>
                         {{-- Link directo al estudiante recien agregado --}}
                         <br>
                         <a clas="btn btn-rojo" href="{{ route('cursos.show', $curso_insertado->codigo) }}">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Registrar curso
+Detalle de curso
 @endsection
 
 @section('css')
@@ -9,16 +9,33 @@ Registrar curso
 @endsection
 
 @section('contenido')
+
+@if(Accesos::ACCESO_ELIMINAR_CURSOS())
+    @include('layouts.messages.confirmar_eliminar')
+@endif
+
 <div class="card">
     <div class="card-body pb-5">
         <div class="d-flex justify-content-between">
             <h2>Detalle curso</h2>
             <div class="d-flex ">
+
                 @if(Accesos::ACCESO_LISTAR_CURSOS())
-                <div><a href="{{ route('listado-estudiantil') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a></div>
+                {{-- Boton para volver al listado de cursos --}}
+                <div><a href="{{ route('cursos.index') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a></div>
+                @endif
+
+                @if(Accesos::ACCESO_MODIFICAR_CURSOS())
+                {{-- Botones para editar el curso --}}
                 <div><button class="btn btn-rojo ml-1" id="editar"><i class="fas fa-edit"></i> &nbsp; Editar </button></div>
                 <div><button class="btn btn-rojo ml-1" id="cancelar-edit" style="display: none;"><i class="fas fa-times"></i> &nbsp; Cancelar </button></div>
                 @endif
+
+                @if(Accesos::ACCESO_ELIMINAR_CURSOS())
+                {{-- Boton para eliminar el curso --}}
+                <div><a class="btn btn-rojo ml-1" data-toggle="modal" data-target="#modal-confirmacion"><i class="fas fa-times-circle"></i>&nbsp; Eliminar</a></div>
+                @endif
+
             </div>
         </div>
         <hr>
@@ -28,10 +45,10 @@ Registrar curso
             @csrf
             @method('PATCH')
         @endif
+
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
 
-            
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-9">
                     <div class="card">
@@ -81,10 +98,11 @@ Registrar curso
                 </div>
             </div>
 
-        @if(Accesos::ACCESO_MODIFICAR_CURSOS())
-        </form>
-        @endif
+            @if(Accesos::ACCESO_MODIFICAR_CURSOS())
+            </form>
+            @endif
         
+        </div>
     </div>
 </div>
 @endsection
@@ -96,4 +114,6 @@ Registrar curso
 <script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
 {{-- Habilitar y desabilitar edición --}}
 <script src="{{ asset('js/control_cursos/editar_cursos.js') }}"></script>
+{{-- Eliminar curso --}}
+<script src="{{ asset('js/control_cursos/eliminar_curso.js') }}"></script>
 @endsection

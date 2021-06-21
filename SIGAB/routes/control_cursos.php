@@ -47,4 +47,11 @@ Route::group(['middleware' => ['auth']], function () {
             Académica responsable de SIGAB
     ');
 
+    Route::delete('/curso/eliminar/{codigo}', 'CursoController@destroy')->name('cursos.destroy')
+    ->middleware(
+        'roles:
+            Académica responsable de Aseguramiento de la Calidad de la Carrera
+            Académica responsable de SIGAB
+    ');
+
 });

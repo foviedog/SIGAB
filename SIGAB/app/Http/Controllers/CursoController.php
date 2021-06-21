@@ -6,16 +6,35 @@ use Illuminate\Http\Request;
 use App\Exceptions\ControllerFailedException;
 use App\Events\EventCursos; //Se añade el evento
 use App\Curso;
+use App\Eliminado;
 
 class CursoController extends Controller
 {
     public function index(){
         try{
 
+            //Array que devuelve los items que se cargan por página
+            $paginaciones = [5, 10, 25, 50];
+
+            //Obtiene del request los items que se quieren recuperar por página y si el atributo no viene en el
+            //request se setea por defecto en 25 por página
+            $itemsPagina = request('itemsPagina', 25);
+
+            $filtro = request('filtro', NULL);
+
+            if (!is_null($filtro) && $filtro != ' ') {
+                $cursos = $this->filtroCursos($itemsPagina, $filtro); 
+            }  else { 
+                $cursos = $this->obtenerCursos($itemsPagina);
+            }
 
             return view('control_cursos.listado', [
-                //Variables que recibe la vista
+                'cursos' => $cursos, // Cursos
+                'itemsPagina' => $itemsPagina, //Items por página
+                'paginaciones' => $paginaciones, // Listado de items de paginaciones
+                'filtro' => $filtro
             ]);
+
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -25,7 +44,8 @@ class CursoController extends Controller
         try{
             $curso = Curso::findOrFail($codigo); //Obtener el curso desde la Base de datos
             return view('control_cursos.detalle', [ //Retornar a la vista destinada al curso
-                'curso' => $curso // Enviar el curso en el response
+                'curso' => $curso, // Enviar el curso en el response
+                'confirmarEliminar' => 'Curso' //Variable par el eliminado
             ]);
         } catch (\Exception $exception) {
             throw new ControllerFailedException(); // Validación de posibles errores 
@@ -84,7 +104,8 @@ class CursoController extends Controller
             $curso->save();
 
             return view('control_cursos.detalle', [ //Retornar a la vista destinada al curso
-                'curso' => $curso // Enviar el curso en el response
+                'curso' => $curso, // Enviar el curso en el response
+                'confirmarEliminar' => 'Curso' //Variable par el eliminado
             ])->with('mensaje_exito', "¡El curso se ha actualizado exitosamente!"); //Mensaje de éxito
         } catch (\Exception $exception) {
             //Manejo de posibles errores 
@@ -92,9 +113,23 @@ class CursoController extends Controller
         }
     }
 
-    public function destroy($codigo_curso){
+    public function destroy($codigo){
         try{
+            $curso = Curso::findOrFail($codigo); //Obtener el curso desde la Base de datos
             
+            //Se guarda el registro en la tabla de eliminados
+            $eliminado = new Eliminado;
+            $eliminado->eliminado_por = auth()->user()->persona_id;
+            $eliminado->elemento_eliminado = 'Curso';
+            $eliminado->titulo = 'Se eliminó el curso: '.$curso->codigo.' - '.$curso->nombre.' - '.$curso->nrc;
+            $eliminado->save();
+
+            //Se elimina de la base de datos
+            $curso->delete();
+
+            //Se reedireciona al listado
+            return redirect(route('cursos.index'))
+                ->with('mensaje-exito', "El curso se ha eliminado correctamente.");
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
@@ -104,13 +139,28 @@ class CursoController extends Controller
     public function edit(){
         try{
 
-            
+        
 
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
     }
 
+    private function filtroCursos($itemsPagina, $filtro)
+    {
+        $cursos = Curso::orWhere('codigo', 'like', '%' . $filtro . '%')
+            ->orWhere('cursos.nombre', 'like', '%' . $filtro . '%')
+            ->orWhere('cursos.nrc', 'like', '%' . $filtro . '%')
+            ->paginate($itemsPagina);
+
+        return $cursos; 
+    }
+
+    private function obtenerCursos($itemsPagina)
+    {
+        $cursos = Curso::paginate($itemsPagina);
+
+        return $cursos;
+    }
+
 }
-
-

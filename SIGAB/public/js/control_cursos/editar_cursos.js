@@ -1,7 +1,7 @@
 //Se agrega el evento carga inicial al momento de cargar el documento
 document.addEventListener("DOMContentLoaded", cargaInicial);
 // ===============================================================================================
-//Función encargada de hacer elllamado  de todos los métodos utilizados en el registro.
+//Función encargada de hacer elllamado  de todos los métodos utilizados.
 // ===============================================================================================
 function cargaInicial(event) {
     habilitarEdicion();
@@ -9,7 +9,7 @@ function cargaInicial(event) {
 }
 
 // =======================================================================
-// Evento que habilita el botón si se está de acuerdo con las condiciones
+// Función que se encarga de mosrtrar elementos al cargar la página
 // =======================================================================
 function habilitarEdicion() {
     $('#editar').on('click', function () {

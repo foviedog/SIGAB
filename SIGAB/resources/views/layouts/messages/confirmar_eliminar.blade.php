@@ -287,6 +287,56 @@
 
 </form>
 
+@elseif($confirmarEliminar == 'Curso')
+
+{{-- Formulario y modal para eliminar --}}
+<form action={{ route('cursos.destroy', \Route::current()->parameter('codigo')) }} id="form-eliminar" method="post">
+    @method('DELETE')
+    @csrf
+
+    <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="modal-eliminarTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center texto-rojo-medio">
+                        <i class="fas fa-trash-alt  mr-2"></i>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    {{-- Checklist para eliminar --}}
+                    <div class="form-check">
+                        <div class="row mx-4 border-bottom mb-3 pb-2">
+                            <input class="form-check-input check-list" type="checkbox" id="checkDatosCurso1">
+                            <label class="form-check-label" for="checkDatosCurso1">
+                                Estoy de acuerdo en que se eliminará todo lo asociado al curso
+                            </label>
+                        </div>
+
+                        <div class="row mx-4 border-bottom mb-3 pb-2">
+                            <input class="form-check-input check-list" type="checkbox" id="checkDatosCurso2">
+                            <label class="form-check-label" for="checkDatosCurso2">
+                                Estoy de acuerdo en que se eliminará todo lo asociado al curso
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-gris" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-rojo" id="button-submit-eliminar" onclick="activarLoader('Eliminando');" disabled><i class="fas fa-times-circle"></i>&nbsp; Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 @endif
 
 @endif
