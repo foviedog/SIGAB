@@ -34,6 +34,10 @@ use App\Events\EventEvidencias;
 use App\Listeners\ListenerUsuarios;
 use App\Events\EventUsuarios;
 
+//Se añaden el Listener y el Event creados
+use App\Listeners\ListenerCursos;
+use App\Events\EventCursos;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -71,6 +75,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         EventUsuarios::class =>[
             ListenerUsuarios::class
+        ],
+        //Se añaden de la siguiente manera:
+        EventCursos::class =>[
+            ListenerCursos::class
         ]
     ];
 

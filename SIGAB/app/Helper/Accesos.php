@@ -208,4 +208,24 @@ class Accesos
     public static function CAMBIAR_ROL() { 
         return GlobalFunctions::verificarAcceso(51);
     }
+
+    public static function ACCESO_LISTAR_CURSOS() { 
+        return GlobalFunctions::verificarAcceso(54);
+    }
+
+    public static function ACCESO_REGISTRAR_CURSOS() { 
+        return GlobalFunctions::verificarAcceso(55);
+    }
+
+    public static function ACCESO_VISUALIZAR_CURSOS() { 
+        return GlobalFunctions::verificarAcceso(56);
+    }
+
+    public static function ACCESO_MODIFICAR_CURSOS() { 
+        return GlobalFunctions::verificarAcceso(57);
+    }
+
+    public static function ACCESO_ELIMINAR_CURSOS() { 
+        return GlobalFunctions::verificarAcceso(58);
+    }
 }

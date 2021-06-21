@@ -92,5 +92,22 @@
         </li>
         @endif
 
+        <li> {{-- Se crea una nueva seccion --}}
+            <a href="#controlCursos" {{-- Se cambia el id --}} 
+                        data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
+                <i class="fas fa-graduation-cap"></i> {{-- Se elige el ícono --}}
+                Control Cursos
+            </a>
+            <ul class="collapse list-unstyled" id="controlCursos"> {{-- Se cambia el id --}}
+
+                @if (Accesos::ACCESO_LISTAR_CURSOS()) {{-- Se asignan los accesos --}}
+                    <li>
+                        <a href="{{ route('cursos.index') }}">Cursos</a> {{-- Se asignan las rutas --}}
+                    </li>
+                @endif
+
+            </ul>
+        </li>
+
     </ul>
 </nav>

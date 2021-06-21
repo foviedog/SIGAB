@@ -14,18 +14,18 @@ Registrar curso
         <div class="d-flex justify-content-between">
             <h2>Registrar curso</h2>
             <div>
-                {{-- @if(Accesos::ACCESO_LISTAR_ESTUDIANTES()) --}}
+                @if(Accesos::ACCESO_LISTAR_CURSOS())
                 <div><a href="{{ route('cursos.index') }}" class="btn btn-contorno-rojo"><i class="fas fa-chevron-left "></i> &nbsp; Volver al listado </a></div>
-                {{-- @endif --}}
+                @endif
             </div>
         </div>
         <hr>
 
-        {{-- @if(Accesos::ACCESO_REGISTRAR_ESTUDIANTES()) --}}
+        @if(Accesos::ACCESO_REGISTRAR_CURSOS())
         {{-- Formulario para registrar informacion del curso --}}
         <form action="{{ route('cursos.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="curso" onsubmit="activarLoader('Agregando Curso');">
             @csrf
-        {{-- @endif --}}
+        @endif
 
             {{-- Alerts --}}
             @include('layouts.messages.alerts')
@@ -44,10 +44,11 @@ Registrar curso
                         <a clas="btn btn-rojo" href="{{ route('cursos.show', $curso_insertado->codigo) }}">
                         
                         <input type="button" 
-                        {{-- @if(Accesos::ACCESO_MODIFICAR_ESTUDIANTES()) --}}
+                        @if(Accesos::ACCESO_MODIFICAR_CURSOS())
                             value="Editar"
-                        {{-- @else value="Detalle" --}}
-                        {{-- @endif  --}}
+                        @else 
+                            value="Detalle"
+                        @endif
                         class="btn btn-rojo">
 
                         </a>
@@ -107,12 +108,15 @@ Registrar curso
                 </div>
             </div>
 
+        @if(Accesos::ACCESO_REGISTRAR_CURSOS())
         </form>
-    </div>
+        @endif
 
-    @endsection
 
-    @section('scripts')
-    <script src="{{ asset('js/global/mensajes.js') }}"></script>
-    <script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
-    @endsection
+</div>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/global/mensajes.js') }}"></script>
+<script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
+@endsection

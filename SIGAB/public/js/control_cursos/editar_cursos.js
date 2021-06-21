@@ -12,7 +12,8 @@ function cargaInicial(event) {
 // =======================================================================
 function habilitarEdicion() {
     $('#editar').on('click', function () {
-        $("input").removeAttr("disabled");
+        $("#nombre").removeAttr("disabled");
+        $("#nrc").removeAttr("disabled");
         $('#editar').hide()
         $('#cancelar-edit').show()
     });
