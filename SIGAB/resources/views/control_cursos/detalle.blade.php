@@ -96,7 +96,7 @@ Registrar curso
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-center w-100 mt-auto">
-                                            <button class="btn btn-rojo ml-3" type="submit" onclick="activarLoader('Guardando datos');" style="display: none;"><i class="fas fa-save"></i> &nbsp; Guardar</button>
+                                            <button class="btn btn-rojo ml-3" id="guardar-btn" type="submit" onclick="activarLoader('Guardando datos');" style="display: none;"><i class="fas fa-save"></i> &nbsp; Guardar</button>
                                         </div>
                                     </div>
                                 </div>

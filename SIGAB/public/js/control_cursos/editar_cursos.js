@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", cargaInicial);//Se agrega el evento carga inicial al momento de cargar el documento
+//Se agrega el evento carga inicial al momento de cargar el documento
+document.addEventListener("DOMContentLoaded", cargaInicial);
 // ===============================================================================================
 //Función encargada de hacer elllamado  de todos los métodos utilizados en el registro.
 // ===============================================================================================
@@ -12,9 +13,10 @@ function cargaInicial(event) {
 // =======================================================================
 function habilitarEdicion() {
     $('#editar').on('click', function () {
-        $("input").removeAttr("disabled");
-        $('#editar').hide()
-        $('#cancelar-edit').show()
+        $("input").removeAttr("disabled");//Habilita todos los campos para su edición
+        $('#editar').hide()//Oculta el botón de editar
+        $('#cancelar-edit').show()//Muestra el botón de cancelar
+        $('#guardar-btn').show()//Muestra el botón de cancelar
     });
 }
 
@@ -23,7 +25,9 @@ function habilitarEdicion() {
 // =================================================================
 function cancelarEdicion() {
     $('#cancelar-edit').on('click', function () {
-        location.reload(); // Recarga la página inicial para eliminar todos los cambios hechos y volver a bloquer todos los cambios
+        // Recarga la página inicial para eliminar todos los cambios hechos y
+        // volver a bloquear todos los cambios
+        location.reload();
     });
 }
 
