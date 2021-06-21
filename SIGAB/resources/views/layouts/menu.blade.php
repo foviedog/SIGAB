@@ -95,7 +95,7 @@
         <li> {{-- Se crea una nueva seccion --}}
             <a href="#controlCursos" {{-- Se cambia el id --}} 
                         data-toggle="collapse" aria-expanded="false" class="dropdown-toggle link-drop-sidebar">
-                <i class="fas fa-graduation-cap"></i> {{-- Se elige el ícono --}}
+                <i class="fas fa-chalkboard"></i> {{-- Se elige el ícono --}}
                 Control Cursos
             </a>
             <ul class="collapse list-unstyled" id="controlCursos"> {{-- Se cambia el id --}}
