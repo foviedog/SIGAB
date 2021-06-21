@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-Curso {{ $curso->codigo }}
+Registrar curso
 @endsection
 
 @section('css')
@@ -67,6 +67,8 @@ Curso {{ $curso->codigo }}
                                                 <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="NRC del curso"><i class="far fa-question-circle fa-1x texto-azul-una"></i></span>
                                             </div>
                                             <span class="ml-1 text-muted d-flex align-items-center" id="mostrar_nrc"></span>
+                                        <div class="d-flex justify-content-center w-100 mt-auto">
+                                            <button class="btn btn-rojo ml-3" id="guardar-btn" type="submit" style="display: none;"><i class="fas fa-save"></i> &nbsp; Guardar</button>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center w-100 mt-auto">
@@ -88,7 +90,10 @@ Curso {{ $curso->codigo }}
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/global/mensajes.js') }}"></script>
+{{-- Mostrar mensajes --}}
+<script src="{{ asset('js/global/mensajes.js') }}"></script> 
+{{-- Contar caracteres al lado del input --}}
 <script src="{{ asset('js/global/contarCaracteres.js') }}"></script>
+{{-- Habilitar y desabilitar edición --}}
 <script src="{{ asset('js/control_cursos/editar_cursos.js') }}"></script>
 @endsection
