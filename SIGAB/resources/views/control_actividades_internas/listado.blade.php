@@ -35,8 +35,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             </div>
         </div>
 
-                {{-- Alerts --}}
-                @include('layouts.messages.alerts')
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
@@ -65,7 +65,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
 
                             <div class="custom-control custom-checkbox mr-5">
                                 <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" autocomplete="off" onchange="mostrarBusquedaAvanzada(this);" <?php if(isset($_GET['checkAvanzada'])) echo "checked='checked'"; ?>>
-                                <label class="custom-control-label" for="checkAvanzada">Busqueda avanzada</label>
+                                <label class="custom-control-label" for="checkAvanzada">Búsqueda avanzada</label>
                             </div>
                         </div>
                         <div class="col-4 text-nowrap">
@@ -192,11 +192,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 @endif
                                 <td>{{ date("d/m/Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
-                                    @if($actividadInterna->autorizada == 0)
-                                    <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
-                                    @else
-                                    <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
-                                    @endif
+                                @if($actividadInterna->autorizada == 0)
+                                <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
+                                @else
+                                <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
+                                @endif
                                 @endif
                                 @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
                                 <td>
