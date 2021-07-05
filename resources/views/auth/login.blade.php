@@ -28,7 +28,7 @@
                 <div class="card shadow-lg o-hidden border-0 my-5">
 
                     <div class="card-header bg-rojo-oscuro">
-                        <div class="text-lext font-weight-bold text-white bg-azul-una">
+                        <div class="text-lext font-weight-bold text-white bg-rojo-oscuro">
                             Inicio de sesión
                         </div>
                     </div>
