@@ -45,7 +45,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                 </div>
             </div>
             <div class="card-body">
-                @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES())
+                @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES()) 
                 {{-- Formulario para la paginación--}}
                 <form autocomplete="off" action="{{ route('actividad-promocion.listado') }}" method="GET" role="form" id="item-pagina">
                     <div class="row d-flex justify-content-between mb-2 ">
@@ -62,7 +62,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                             {{-- Checkbox para escoger la busqueda avanzada --}}
                             <div class="custom-control custom-checkbox mr-5">
                                 <input type="checkbox" class="custom-control-input" id="checkAvanzada" name="checkAvanzada" onchange="mostrarBusquedaAvanzada(this);" <?php if(isset($_GET['checkAvanzada'])) echo "checked='checked'"; ?>>
-                                <label class="custom-control-label" for="checkAvanzada">Búsqueda avanzada</label>
+                                <label class="custom-control-label" for="checkAvanzada">Busqueda avanzada</label>
                             </div>
                         </div>
                         <div class="col-4 text-nowrap">
@@ -140,7 +140,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
-                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
+                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES()) 
                                 <th>Ver detalle</th>
                                 @endif
                             </tr>
@@ -172,13 +172,13 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 @endif
                                 <td>{{ date("d/m/Y", strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
-                                @if($actividadPromocion->autorizada == 0)
-                                <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
-                                @else
-                                <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
+                                    @if($actividadPromocion->autorizada == 0)
+                                    <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
+                                    @else
+                                    <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
+                                    @endif
                                 @endif
-                                @endif
-                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
+                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES()) 
                                 <td>
                                     {{-- Botón para ver el detalle de la actividad --}}
                                     <strong>
@@ -187,7 +187,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 </td>
                                 @endif
                             </tr>
-
+                            
                             @endforeach
                         </tbody>
                         {{-- Nombre de las columnas en la parte de abajode la tabla --}}
@@ -202,7 +202,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
-                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
+                                @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES()) 
                                 <th>Ver detalle</th>
                                 @endif
                             </tr>

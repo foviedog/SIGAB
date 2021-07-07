@@ -3,6 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title font-weight-bold" id="detalle-graduacion-modal">Detalle de la graduación</h5>
+                    
                     @if(Accesos::ACCESO_MODIFICAR_TITULACIONES())
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-rojo" id="habilitar-edicion">
@@ -20,9 +21,9 @@
                     @csrf
                     @method('PATCH')
                     <div class="alert alert-danger" role="alert" id="validar-edicion" style="display:none;">
-                        <strong>No deben quedar espacios vacios al editar la graduacion</strong>
+                        <strong>No deben quedar espacios vacios al editar la graduacion</strong> 
                     </div>
-                    @endif
+                @endif
 
                     <div class="d-flex justify-content-center flex-column">
                         {{-- Campo: Grado académico --}}
@@ -31,7 +32,7 @@
                                 <label for="grado_academico">Grado académico <i class="text-danger">*</i></label>
                                 <span class="text-muted ml-2" id="mostrar_cant_grado_academico"></span>
                             </div>
-
+                            
                             <select class="form-control w-100" id="grado_academico" name="grado_academico" required disabled>
                                 <option value="" selected>Seleccione</option>
                                 <option value="Diplomado"> Diplomado</option>
@@ -64,13 +65,13 @@
                             </select>
                         </div>
                     </div>
-                    @if(Accesos::ACCESO_MODIFICAR_TITULACIONES())
+                @if(Accesos::ACCESO_MODIFICAR_TITULACIONES())
                 </form>
                 @endif
 
             </div>
-
-
+            
+            
             {{-- Botones para cerrar el modal o para guardar la edición --}}
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-gris" data-dismiss="modal" onclick="cancelarEdicion()">Cerrar</button>
