@@ -39,6 +39,7 @@ class ReportesActividadesController extends Controller
             $mesInicio = request('mes_inicio', null);
             $mesFinal = request('mes_final', null);
             $chart = request('tipo_grafico', null);
+            $tipoFecha = request('tipo_fecha', null);
             $tipoAct = request('tipo_actividad_int', null);
             $propositosDelAnio = $this->propositosActividad(); //Se obtiene el gráfico de cantidad de actividades según propósitos del año actual
             $estadosDelAnio = $this->estadosActividades(); //Se obtiene el gráfico de cantidad de actividades según estadis del año actual
@@ -48,6 +49,7 @@ class ReportesActividadesController extends Controller
                 'tip_act_int' => $tip_act_int,
                 'tip_act_prom' => $tip_act_prom,
                 'datos' => $datos,
+                'tipoFecha' => $tipoFecha,
                 'datosCuantitativos' => $datosCuantitativos,
                 'naturalezaAct' => $naturalezaAct,
                 'tipoAct' => $tipoAct,
@@ -85,13 +87,14 @@ class ReportesActividadesController extends Controller
             $mesInicio = $request->mes_inicio;
             $mesFinal = $request->mes_final;
             $chart = $request->tipo_grafico;
+            $tipoFecha = $request->tipo_fecha;
             if ($naturalezaAct == "Actividad interna") {
                 $tipoAct = $request->tipo_actividad_int;
             } else {
                 $tipoAct = $request->tipo_actividad_prom;
             }
             //Se llama al algoritmo para la obtención de actividades realizadas según las fecahs
-            $datos = $this->obtenerDatos($mesInicio, $mesFinal, $naturalezaAct, $tipoAct, $estadoActividad);
+            $datos = $this->obtenerDatos($mesInicio, $mesFinal, $naturalezaAct, $tipoAct, $estadoActividad, $tipoFecha);
             $datosCuantitativos = $this->datosCuantitativosActividades(); //Se obtienen los datos cuantitativos que están ubicados encima de la página
             $propositosDelAnio = $this->propositosActividad(); //Se obtiene el gráfico de cantidad de actividades según propósitos del año actual
             $estadosDelAnio = $this->estadosActividades(); //Se obtiene el gráfico de cantidad de actividades según estadis del año actual
@@ -105,6 +108,7 @@ class ReportesActividadesController extends Controller
                 'datosCuantitativos' => $datosCuantitativos,
                 'naturalezaAct' => $naturalezaAct,
                 'tipoAct' => $tipoAct,
+                'tipoFecha' => $tipoFecha,
                 'mesInicio' => $mesInicio,
                 'mesFinal' => $mesFinal,
                 'estadoActividad' => $estadoActividad,
@@ -123,7 +127,7 @@ class ReportesActividadesController extends Controller
     // naturaleza de la actividad, estado y tipo
     // Según cada uno de los meses que se encuentren en el rango de fechas seleccionado
     // ========================================================================================================================================
-    public function obtenerDatos($mes_inicio, $mes_final, $naturalezaAct, $tipo, $estado)
+    public function obtenerDatos($mes_inicio, $mes_final, $naturalezaAct, $tipo, $estado, $tipoFecha)
     {
         $anio_ini = (int)substr($mes_inicio, 0, 4);
         $anio_fin = (int)substr($mes_final, 0, 4);
@@ -138,7 +142,7 @@ class ReportesActividadesController extends Controller
         if ($DA == 0) {
             //Se realiza la consulta según el rango que existe entre el mes de inicio y el mes final
             for ($i = $mes_ini; $i <= $mes_fin; $i++) {
-                $this->agregarDatos($i, $naturalezaAct, $anio_ini, $estado, $tipo, $datos);
+                $this->agregarDatos($i, $naturalezaAct, $anio_ini, $estado, $tipo, $datos, $tipoFecha);
             }
         } //En caso de que la diferencia sea mayor a 1 año
         else if ($DA >= 1) {
@@ -148,7 +152,7 @@ class ReportesActividadesController extends Controller
             // Se obtienen los datos del primer rango de meses, el cual no siempre empieza en Enero, por lo cual se debe obener
             // desde el mes de inico hasta Diciembre de ese mismo año
             for ($i = $mes_ini; $i <= 12; $i++) {
-                $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos);
+                $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos, $tipoFecha);
             }
 
             $anio++; //Se amuenta el año axiliar devido a que se terminó el primer rango de fechas
@@ -156,7 +160,7 @@ class ReportesActividadesController extends Controller
             // Iteración de todos aquellos años que se encuentren en el rango de fechas y deba de contarse completos (12 meses)
             for ($i = 1; $i <= $anios_completos; $i++) {
                 for ($j = 1; $j <= 12; $j++) {
-                    $this->agregarDatos($j, $naturalezaAct, $anio, $estado, $tipo, $datos);
+                    $this->agregarDatos($j, $naturalezaAct, $anio, $estado, $tipo, $datos, $tipoFecha);
                 }
                 $anio++;
             }
@@ -165,7 +169,7 @@ class ReportesActividadesController extends Controller
             //Se obtienen los datos que se encuentren en el segundo extremo del rango de fechas,
             //el cual va de enero del año final al mes final que se haya digitado
             for ($i = 1; $i <= $mes_fin; $i++) {
-                $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos);
+                $this->agregarDatos($i, $naturalezaAct, $anio, $estado, $tipo, $datos, $tipoFecha);
             }
         }
 
@@ -175,12 +179,12 @@ class ReportesActividadesController extends Controller
     // ========================================================================================================================================
     // Función que obtiene los datos de la BD según la naturuleza de la actividad
     // ========================================================================================================================================
-    private function agregarDatos($mes, $naturalezaAct, &$anio, $estado, $tipo, &$datos)
+    private function agregarDatos($mes, $naturalezaAct, &$anio, $estado, $tipo, &$datos,$tipoFecha)
     {
         if ($naturalezaAct == "Actividad interna") {
-            $actvidadesPorMes = $this->cantActividadInterPorMes($mes, $anio, $estado, $tipo);
+            $actvidadesPorMes = $this->cantActividadInterPorMes($mes, $anio, $estado, $tipo,$tipoFecha);
         } else {
-            $actvidadesPorMes = $this->cantActividadPromPorMes($mes, $anio, $estado, $tipo);
+            $actvidadesPorMes = $this->cantActividadPromPorMes($mes, $anio, $estado, $tipo, $tipoFecha);
         }
         $datos[$anio . "-" . $mes] =  $actvidadesPorMes;
     }
@@ -188,7 +192,7 @@ class ReportesActividadesController extends Controller
     // ========================================================================================================================================
     // Función que devuelve utiliza una consulta de BD para obtener la cantidad de actividades internas generadas según 1 mes en específico
     // ========================================================================================================================================
-    public function cantActividadInterPorMes($mes, $anio, $estado, $tipo)
+    public function cantActividadInterPorMes($mes, $anio, $estado, $tipo, $tipoFecha)
     {
         //* Se considera un rango de meses de la siguiente forma:
         //* 2021-enero-01 al 2021-febrero-01 donde se excluyen la fecha final
@@ -213,12 +217,17 @@ class ReportesActividadesController extends Controller
             $fecha_fin =  $anio + 1 . "-01" . "-01";
         }
 
+        if($tipoFecha == "0"){
+            $fechaBusqueda = "actividades.fecha_inicio_actividad";
+        }else{
+            $fechaBusqueda = "actividades.fecha_final_actividad";
+        }
         // Se realiza la consulta a la BD
         $cantAct = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->Where('actividades.estado', 'like', '%' .   $estado . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
-            ->where('actividades.fecha_final_actividad', '>=', $fecha_ini)
-            ->where('actividades.fecha_final_actividad', '<', $fecha_fin)
+            ->where($fechaBusqueda, '>=', $fecha_ini)
+            ->where($fechaBusqueda, '<', $fecha_fin)
             ->count();
         return $cantAct;
     }
@@ -227,7 +236,7 @@ class ReportesActividadesController extends Controller
     // ============================================================================================================================
     // Función que devuelve utiliza una consulta de BD para obtener la cantidad de actividades de promoción generadas según 1 mes en específico
     // ============================================================================================================================
-    public function cantActividadPromPorMes($mes, $anio, $estado, $tipo)
+    public function cantActividadPromPorMes($mes, $anio, $estado, $tipo, $tipoFecha)
     {
         $mesIni = (int)$mes;
         $mesFin = $mesIni + 1;
@@ -244,11 +253,18 @@ class ReportesActividadesController extends Controller
         if ($mes == 12) {
             $fecha_fin =  $anio . "-12" . "-31";
         }
+
+        if($tipoFecha == "0"){
+            $fechaBusqueda = "actividades.fecha_inicio_actividad";
+        }else{
+            $fechaBusqueda = "actividades.fecha_final_actividad";
+        }
+
         $cantAct = ActividadesPromocion::join('actividades', 'actividades_promocion.actividad_id', '=', 'actividades.id')
             ->Where('actividades.estado', 'like', '%' .   $estado . '%')
             ->Where('actividades_promocion.tipo_actividad', 'like', '%' .   $tipo . '%')
-            ->where('actividades.fecha_inicio_actividad', '>=', $fecha_ini)
-            ->where('actividades.fecha_inicio_actividad', '<', $fecha_fin)
+            ->where($fechaBusqueda, '>=', $fecha_ini)
+            ->where($fechaBusqueda, '<', $fecha_fin)
             ->count();
 
         return  $cantAct;

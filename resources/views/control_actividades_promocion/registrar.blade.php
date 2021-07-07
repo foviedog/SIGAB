@@ -409,9 +409,9 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                     {{-- Boton para agregar informacion de la actividad --}}
                     <button type="submit" class="btn btn-rojo btn-lg mt-2" id="agregar-actividad">
                         @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
-                        Enviar actividad autorizada
+                        <i class="fas fa-save"></i>&nbsp;Registrar actividad
                         @else
-                        Enviar actividad para autorización
+                        <i class="fas fa-lock"></i>&nbsp;Enviar actividad para autorización
                         @endif
                     </button>
                 </div>

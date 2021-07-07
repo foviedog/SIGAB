@@ -244,7 +244,10 @@ class ActividadesInternaController extends Controller
                 }
             })
             ->whereBetween('actividades.fecha_inicio_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
-            ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
+            ->where(function ($query) use ($tema_filtro) {
+                $query->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+                    ->orwhere("actividades.responsable_coordinar",  'like', '%' .   $tema_filtro . '%');
+            })
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
             ->Where('actividades_internas.proposito', 'like', '%' .   $proposito_filtro . '%')
@@ -264,7 +267,10 @@ class ActividadesInternaController extends Controller
                     $query->where('actividades.autorizada', '=', '1');
                 }
             })
-            ->Where('actividades.tema', 'like', '%' .   $tema_filtro . '%')
+            ->where(function ($query) use ($tema_filtro) {
+                $query->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+                    ->orwhere("actividades.responsable_coordinar",  'like', '%' .   $tema_filtro . '%');
+            })
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
             ->Where('actividades_internas.proposito', 'like', '%' .   $proposito_filtro . '%')
@@ -283,12 +289,15 @@ class ActividadesInternaController extends Controller
                     $query->where('actividades.autorizada', '=', '1');
                 }
             })
-            ->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+            ->where(function ($query) use ($tema_filtro) {
+                $query->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
+                    ->orwhere("actividades.responsable_coordinar",  'like', '%' .   $tema_filtro . '%');
+            })
             ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por tema de manera desc
             ->paginate($itemsPagina); //Paginación de los resultados
-
         return $actividadesInternas;
     }
+
 
     public function autorizar(Request $request)
     {

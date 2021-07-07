@@ -44,7 +44,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                 {{-- Título de la tabla --}}
                 <h5 class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades internas</h5>
                 <div>
-                    <form action="{{ route('actividad-interna.listado') }}" method="GET" id="form-busqueda">
+                    <form action="{{ route('actividad-interna.listado') }}" method="GET" id="form-busqueda" onsubmit="activarLoader('Realizando búsqueda')">
                         <button type="submit" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
                     </form>
                 </div>
@@ -52,7 +52,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             <div class="card-body">
                 @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES())
                 {{-- Formulario para la paginación--}}
-                <form autocomplete="off" action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina"  onsubmit="activarLoader('Realizando búsqueda')">
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
@@ -156,7 +156,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <th>Tipo de actividad</th>
                                 <th>Propósito</th>
                                 <th>Estado</th>
-                                <th>Fecha de inicio</th>
+                                <th>Fechas</th>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
@@ -190,7 +190,15 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 @elseif($actividadInterna->estado == 'Ejecutada')
                                 <td><span class=" bg-success text-white px-2 rounded">{{ $actividadInterna->estado }}</span></td>
                                 @endif
-                                <td>{{ date("d/m/Y",strtotime($actividadInterna->fecha_inicio_actividad)) }} </td>
+                                <td class="font-italic">
+                                    <span class="w-md-100">
+                                        {{ date("Y-m",strtotime($actividadInterna->fecha_inicio_actividad)) }} 
+                                    </span>
+                                    <i class="fas fa-arrow-circle-right texto-rojo-medio"></i>
+                                    <span class="w-md-100">
+                                        {{ date("Y-m",strtotime($actividadInterna->fecha_final_actividad)) }} 
+                                    </span>
+                                </td>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                     @if($actividadInterna->autorizada == 0)
                                     <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
@@ -218,7 +226,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 <th>Tipo de actividad</th>
                                 <th>Propósito</th>
                                 <th>Estado</th>
-                                <th>Fecha de inicio</th>
+                                <th>Fechas</th>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif

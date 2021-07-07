@@ -213,7 +213,10 @@ Botones de paginación
     position: relative;
     bottom: 3px;
 }
-
+::selection{
+    color: #fff;
+    background: #990000;
+}
 /* ====================================================
 Fin de la paleta de colores
  ==================================================== */

@@ -39,7 +39,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                 {{-- Título de la tabla --}}
                 <h5 class="text-primary m-0 font-weight-bold texto-rojo-oscuro">Información de actividades de promoción </h5>
                 <div>
-                    <form action="{{ route('actividad-promocion.listado') }}" method="GET" id="form-busqueda">
+                    <form action="{{ route('actividad-promocion.listado') }}" method="GET" id="form-busqueda" onsubmit="activarLoader('Realizando búsqueda')">
                         <button type="submit" class="btn btn-contorno-azul-una" id="btn-listar-todo"><i class="fas fa-redo"></i>&nbsp; Listar todo </button>
                     </form>
                 </div>
@@ -47,7 +47,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
             <div class="card-body">
                 @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES()) 
                 {{-- Formulario para la paginación--}}
-                <form autocomplete="off" action="{{ route('actividad-promocion.listado') }}" method="GET" role="form" id="item-pagina">
+                <form autocomplete="off" action="{{ route('actividad-promocion.listado') }}" method="GET" role="form" id="item-pagina" onsubmit="activarLoader('Realizando búsqueda')">
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
@@ -136,7 +136,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 <th>ID Coordinador</th>
                                 <th>Tipo de actividad</th>
                                 <th>Estado</th>
-                                <th>Fecha de inicio</th>
+                                <th>Fechas</th>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
@@ -170,7 +170,15 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 @elseif($actividadPromocion->estado == 'Ejecutada')
                                 <td><span class=" bg-success text-white px-2 rounded">{{ $actividadPromocion->estado }}</span></td>
                                 @endif
-                                <td>{{ date("d/m/Y", strtotime($actividadPromocion->fecha_inicio_actividad)) }} </td>
+                                <td class="font-italic">
+                                    <span class="w-md-100">
+                                        {{ date("Y-m", strtotime($actividadPromocion->fecha_inicio_actividad)) }} 
+                                    </span>
+                                    <i class="fas fa-arrow-circle-right texto-rojo-medio"></i>
+                                    <span class="w-md-100">
+                                        {{ date("Y-m",strtotime($actividadPromocion->fecha_final_actividad)) }} 
+                                    </span>
+                                </td>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                     @if($actividadPromocion->autorizada == 0)
                                     <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
@@ -198,7 +206,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 <th>ID Coordinador</th>
                                 <th>Tipo de actividad</th>
                                 <th>Estado</th>
-                                <th>Fecha de inicio</th>
+                                <th>Fechas</th>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
                                 <th>Autorización</th>
                                 @endif
