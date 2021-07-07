@@ -112,7 +112,7 @@ Asistencia a {{ $actividad->tema }}
                                                 <span class="text-muted " id="mostrar_cedula"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeyup="contarCaracteres(this,100)" required>
+                                                <input type='text' class="form-control w-100" id="cedula" name="cedula" onkeypress="contarCaracteres(this,100)" required>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@ Asistencia a {{ $actividad->tema }}
                                                 <span class="text-muted" id="mostrar_nombre"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,60)" required>
+                                                <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeypress="contarCaracteres(this,60)" required>
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +147,7 @@ Asistencia a {{ $actividad->tema }}
                                                 <span class="text-muted" id="mostrar_apellidos"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="apellidos" name="apellidos" onkeyup="contarCaracteres(this,60)" required>
+                                                <input type='text' class="form-control w-100" id="apellidos" name="apellidos" onkeypress="contarCaracteres(this,60)" required>
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +166,7 @@ Asistencia a {{ $actividad->tema }}
                                                 <span class="text-muted " id="mostrar_correo"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="correo" name="correo" onkeyup="contarCaracteres(this,100)">
+                                                <input type='text' class="form-control w-100" id="correo" name="correo" onkeypress="contarCaracteres(this,100)">
 
                                             </div>
                                         </div>
@@ -185,7 +185,7 @@ Asistencia a {{ $actividad->tema }}
                                                 <span class="text-muted" id="mostrar_telefono"></span>
                                             </div>
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="telefono" name="telefono" onkeyup="contarCaracteres(this,60)">
+                                                <input type='text' class="form-control w-100" id="telefono" name="telefono" onkeypress="contarCaracteres(this,60)">
 
                                             </div>
                                         </div>
@@ -208,7 +208,7 @@ Asistencia a {{ $actividad->tema }}
                                             </div>
 
                                             <div class="d-flex">
-                                                <input type='text' class="form-control w-100" id="procedencia" name="procedencia" onkeyup="contarCaracteres(this,60)">
+                                                <input type='text' class="form-control w-100" id="procedencia" name="procedencia" onkeypress="contarCaracteres(this,60)">
                                             </div>
                                         </div>
                                     </div>

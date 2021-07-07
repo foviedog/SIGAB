@@ -90,7 +90,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                         <label for="nota"><strong>Nota de admisión</strong><br /></label>
                                         <span class="text-muted" id="mostrar_nota_admision"></span>
                                     </div>
-                                    <input type="number" id="nota_admision" name="nota_admision" min="0" max="999.99" step="0.01" onkeyup="contarCaracteres(this,6)" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" disabled />
+                                    <input type="number" id="nota_admision" name="nota_admision" min="0" max="999.99" step="0.01" onkeypress="contarCaracteres(this,6)" class="form-control" placeholder="Nota Admision" value="{{  $estudiante->nota_admision }}" disabled />
                                 </div>
                                 {{-- Campo: Ingreso a la UNA --}}
                                 <div class="form-group">
@@ -118,7 +118,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                         <label for="carrera1"><strong>Primera Carrera<i class="text-danger">* </i> </strong><br /></label>
                                         <span class="text-muted" id="mostrar_carrera_matriculada_1"></span>
                                     </div>
-                                    <input type="text" id="carrera_matriculada_1" name="carrera_matriculada_1" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
+                                    <input type="text" id="carrera_matriculada_1" name="carrera_matriculada_1" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
                                 </div>
                                 {{-- Campo: Segunda Carrera --}}
                                 <div class="form-group">
@@ -129,7 +129,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                         <span class="text-muted" id="mostrar_carrera_matriculada_2"></span>
                                     </div>
 
-                                    <input type="text" id="carrera_matriculada_2" name="carrera_matriculada_2" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Nombre de carrera" value="{{ $estudiante->carrera_matriculada_2  }}" disabled /> </input>
+                                    <input type="text" id="carrera_matriculada_2" name="carrera_matriculada_2" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Nombre de carrera" value="{{ $estudiante->carrera_matriculada_2  }}" disabled /> </input>
                                 </div>
                                 {{-- Campo: Colegio Procedencia --}}
                                 <div class="form-group">
@@ -196,7 +196,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
                                                         <span class="text-muted" id="mostrar_nombre"></span>
                                                     </div>
-                                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" onkeyup="contarCaracteres(this,50)" value="{{ $estudiante->persona->nombre }}" required disabled />
+                                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Estudiante" onkeypress="contarCaracteres(this,50)" value="{{ $estudiante->persona->nombre }}" required disabled />
                                                 </div>
 
                                             </div>
@@ -207,7 +207,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
                                                         <span class="text-muted" id="mostrar_apellido"></span>
                                                     </div>
-                                                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellidos" onkeyup="contarCaracteres(this,50)" value="{{ $estudiante->persona->apellido }}" required disabled />
+                                                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellidos" onkeypress="contarCaracteres(this,50)" value="{{ $estudiante->persona->apellido }}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -221,7 +221,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         <label for="correo_personal"><strong>Correo Personal</strong><br /></label>
                                                         <span class="text-muted" id="mostrar_correo_personal"></span>
                                                     </div>
-                                                    <input type="email" minlength="3" maxlength="45" id="correo_personal" name="correo_personal" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_personal" name="correo_personal" class="form-control" onkeypress="contarCaracteres(this,50)" placeholder="Correo Personal" value="{{ $estudiante->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
@@ -231,7 +231,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
                                                         <span class="text-muted" id="mostrar_correo_institucional"></span>
                                                     </div>
-                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeypress="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -245,7 +245,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
                                                         <span class="text-muted" id="mostrar_telefono_celular"></span>
                                                     </div>
-                                                    <input type="text" id="telefono_celular" name="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular}}" disabled />
+                                                    <input type="text" id="telefono_celular" name="telefono_celular" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $estudiante->persona->telefono_celular}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Telefono Fijo --}}
@@ -255,7 +255,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
                                                         <span class="text-muted" id="mostrar_telefono_fijo"></span>
                                                     </div>
-                                                    <input type="text" id="telefono_fijo" name="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo }}" disabled />
+                                                    <input type="text" id="telefono_fijo" name="telefono_fijo" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $estudiante->persona->telefono_fijo }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +274,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                     <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del estudiante "><i class="far fa-question-circle fa-lg"></i></span></label>
                                                 <span class="text-muted" id="mostrar_direccion_residencia"></span>
                                             </div>
-                                            <textarea type="text" id="direccion_residencia" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" class="form-control" placeholder="Direccion de residencia" required disabled />{{$estudiante->persona->direccion_residencia}}</textarea>
+                                            <textarea type="text" id="direccion_residencia" name="direccion_residencia" onkeypress="contarCaracteres(this,250)" class="form-control" placeholder="Direccion de residencia" required disabled />{{$estudiante->persona->direccion_residencia}}</textarea>
                                         </div>
                                         {{-- Campo: Direccion tiempo lectivo --}}
                                         <div class="form-row">
@@ -285,7 +285,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                             <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia del estudiante durante el tiempo lectivo"><i class="far fa-question-circle fa-lg"></i></span></label>
                                                         <span class="text-muted" id="mostrar_direccion_lectivo"></span>
                                                     </div>
-                                                    <textarea type="text" id="direccion_lectivo" name="direccion_lectivo" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de tiempo lectivo" disabled />{{$estudiante->direccion_lectivo}}</textarea>
+                                                    <textarea type="text" id="direccion_lectivo" name="direccion_lectivo" class="form-control" onkeypress="contarCaracteres(this,250)" placeholder="Direccion de tiempo lectivo" disabled />{{$estudiante->direccion_lectivo}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -340,7 +340,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                         </label>
                                                         <span class="text-muted" id="mostrar_apoyo_educativo"></span>
                                                     </div>
-                                                    <textarea type="text" id="apoyo_educativo" name="apoyo_educativo" class="form-control" onkeyup="contarCaracteres(this,500)" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
+                                                    <textarea type="text" id="apoyo_educativo" name="apoyo_educativo" class="form-control" onkeypress="contarCaracteres(this,500)" placeholder="Apoyo educativo del estudiante" disabled />{{ $estudiante->apoyo_educativo }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -380,7 +380,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                                             <span data-toggle="tooltip" data-placement="right" title="Ingresar si el estudiante posee alguna discapacidad o no"><i class="far fa-question-circle fa-lg"></i></span></label>
                                                         <span class="text-muted" id="mostrar_condicion_discapacidad"></span>
                                                     </div>
-                                                    <textarea type="text" id="condicion_discapacidad" name="condicion_discapacidad" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Discapacidad del estudiante" disabled />{{$estudiante->condicion_discapacidad}}</textarea>
+                                                    <textarea type="text" id="condicion_discapacidad" name="condicion_discapacidad" class="form-control" onkeypress="contarCaracteres(this,250)" placeholder="Discapacidad del estudiante" disabled />{{$estudiante->condicion_discapacidad}}</textarea>
                                                 </div>
                                             </div>
                                         </div>

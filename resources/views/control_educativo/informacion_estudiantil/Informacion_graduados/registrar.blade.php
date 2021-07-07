@@ -99,7 +99,7 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
                         <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i></label>
                         <span class="text-muted ml-2" id="mostrar_carrera_cursada"></span>
                     </div>
-                    <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeyup="contarCaracteres(this,80)" required>
+                    <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeypress="contarCaracteres(this,80)" required>
                 </div>
 
                 {{-- Campo: Año de graduación --}}

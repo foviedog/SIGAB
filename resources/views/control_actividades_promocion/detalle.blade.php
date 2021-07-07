@@ -138,7 +138,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-dark">Tema: <i class="text-danger">*</i></span>
                                             </div>
-                                            <input type='text' class="form-control " id="tema" name="tema" onkeyup="contarCaracteres(this,100)" value="{{ $actividad->tema }}" required disabled>
+                                            <input type='text' class="form-control " id="tema" name="tema" onkeypress="contarCaracteres(this,100)" value="{{ $actividad->tema }}" required disabled>
                                             <div class="input-group-append">
                                                 <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
@@ -154,7 +154,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-dark">Lugar: <i class="text-danger">*</i></span>
                                             </div>
-                                            <input type='text' class="form-control" id="lugar" name="lugar" value="{{ $actividad->lugar }}" onkeyup=" contarCaracteres(this,60)" disabled>
+                                            <input type='text' class="form-control" id="lugar" name="lugar" value="{{ $actividad->lugar }}" onkeypress=" contarCaracteres(this,60)" disabled>
                                             <div class="input-group-append">
                                                 <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                             </div>
@@ -381,7 +381,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->evaluacion }} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeypress="contarCaracteres(this,500)" disabled> {{ $actividad->evaluacion }} </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -408,7 +408,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)" disabled> {{ $actividad->actividadPromocion->recursos }} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeypress="contarCaracteres(this,500)" disabled> {{ $actividad->actividadPromocion->recursos }} </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -432,7 +432,7 @@ $rangoFechas = $fechaIni . " - " . $fechaFin
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
-                                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeyup="contarCaracteres(this,200)" disabled>{{ $actividad->actividadPromocion->instituciones_patrocinadoras}} </textarea>
+                                                    <textarea type='text' class="form-control w-100" id="instituciones_patrocinadoras" name="instituciones_patrocinadoras" rows="4" onkeypress="contarCaracteres(this,200)" disabled>{{ $actividad->actividadPromocion->instituciones_patrocinadoras}} </textarea>
                                                 </div>
                                             </div>
                                         </div>

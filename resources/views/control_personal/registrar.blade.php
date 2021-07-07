@@ -116,7 +116,7 @@ $personal_no_insertado = null;
                                     <label for="persona_id">Identificación: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6 ">
-                                    <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" value="{{ (!is_null($persona_existe)) ? $persona_existe->persona_id : ($persona_no_insertada->persona_id ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
+                                    <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeypress="contarCaracteres(this,15)" value="{{ (!is_null($persona_existe)) ? $persona_existe->persona_id : ($persona_no_insertada->persona_id ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -130,7 +130,7 @@ $personal_no_insertado = null;
                                     <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->nombre : ($persona_no_insertada->nombre ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
+                                    <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeypress="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->nombre : ($persona_no_insertada->nombre ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_nombre"></span>
@@ -143,7 +143,7 @@ $personal_no_insertado = null;
                                     <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->apellido : ($persona_no_insertada->apellido ?? '') }}" required @if(!is_null($persona_existe)) readonly @endif>
+                                    <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeypress="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->apellido : ($persona_no_insertada->apellido ?? '') }}" required @if(!is_null($persona_existe)) readonly @endif>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_apellido"></span>
@@ -166,7 +166,7 @@ $personal_no_insertado = null;
                                     <label for="telefono_fijo">Teléfono fijo:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)" value="{{ (!is_null($persona_existe)) ? $persona_existe->telefono_fijo : ($persona_no_insertada->telefono_fijo ?? '') }}">
+                                    <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeypress="contarCaracteres(this,30)" value="{{ (!is_null($persona_existe)) ? $persona_existe->telefono_fijo : ($persona_no_insertada->telefono_fijo ?? '') }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -180,7 +180,7 @@ $personal_no_insertado = null;
                                     <label for="telefono_celular">Teléfono celular:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)" value="{{(!is_null($persona_existe)) ? $persona_existe->telefono_celular : ($persona_no_insertada->telefono_celular ?? '') }}">
+                                    <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeypress="contarCaracteres(this,30)" value="{{(!is_null($persona_existe)) ? $persona_existe->telefono_celular : ($persona_no_insertada->telefono_celular ?? '') }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -194,7 +194,7 @@ $personal_no_insertado = null;
                                     <label for="correo_personal">Correo personal:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_personal : ($persona_no_insertada->correo_personal ?? '') }}" multiple>
+                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeypress="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_personal : ($persona_no_insertada->correo_personal ?? '') }}" multiple>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_correo_personal"></span>
@@ -207,7 +207,7 @@ $personal_no_insertado = null;
                                     <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}" required>
+                                    <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeypress="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}" required>
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_correo_institucional"></span>
@@ -235,7 +235,7 @@ $personal_no_insertado = null;
                                     <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                                 </div>
                                 <div class="col-6">
-                                    <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required>{{ (!is_null($persona_existe)) ? $persona_existe->direccion_residencia : ($persona_no_insertada->direccion_residencia ?? '')}}</textarea>
+                                    <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeypress="contarCaracteres(this,250)" required>{{ (!is_null($persona_existe)) ? $persona_existe->direccion_residencia : ($persona_no_insertada->direccion_residencia ?? '')}}</textarea>
                                 </div>
                                 <span data-toggle="tooltip" data-placement="top" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                                 <div class="col-1">
@@ -407,7 +407,7 @@ $personal_no_insertado = null;
                                     <label for="trabajo_externo">Lugar de trabajo externo: </label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeyup="contarCaracteres(this,60)" value="{{ $personal_no_insertado->lugar_trabajo_externo ?? '' }}">
+                                    <input type='text' class="form-control w-100" id="trabajo_externo" name="trabajo_externo" onkeypress="contarCaracteres(this,60)" value="{{ $personal_no_insertado->lugar_trabajo_externo ?? '' }}">
                                 </div>
                                 <div class="col-2 d-flex h-25">
                                     <span data-toggle="tooltip" data-placement="top" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -421,7 +421,7 @@ $personal_no_insertado = null;
                                     <label for="anio_propiedad">Año de propiedad:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeyup="contarCaracteres(this,4)" value="{{ $personal_no_insertado->anio_propiedad ?? '' }}" min="1990" max="{{ date("Y") }}" />
+                                    <input type='number' class="form-control w-100" id="anio_propiedad" name="anio_propiedad" onkeypress="contarCaracteres(this,4)" value="{{ $personal_no_insertado->anio_propiedad ?? '' }}" min="1990" max="{{ date("Y") }}" />
                                 </div>
                                 <div class=" col-2">
                                     <span data-toggle="tooltip" data-placement="top" title="Año en el que obtuvo la propiedad en la UNA (Aplica para profesores propietarios) (Rango: 1990 - Año actual)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -434,7 +434,7 @@ $personal_no_insertado = null;
                                     <label for="area_especializacion_1">Área de especialización 1 :</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeyup="contarCaracteres(this,100)" value="{{ $personal_no_insertado->area_especializacion_1 ?? '' }}">
+                                    <input type='text' class="form-control w-100" id="area_especializacion_1" name="area_especializacion_1" onkeypress="contarCaracteres(this,100)" value="{{ $personal_no_insertado->area_especializacion_1 ?? '' }}">
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_area_especializacion_1"></span>
@@ -447,7 +447,7 @@ $personal_no_insertado = null;
                                     <label for="area_especializacion_2">Área de especialización 2:</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeyup="contarCaracteres(this,100)" value="{{ $personal_no_insertado->area_especializacion_2 ?? '' }}">
+                                    <input type='text' class="form-control w-100" id="area_especializacion_2" name="area_especializacion_2" onkeypress="contarCaracteres(this,100)" value="{{ $personal_no_insertado->area_especializacion_2 ?? '' }}">
                                 </div>
                                 <div class="col-1">
                                     <span class="text-muted" id="mostrar_area_especializacion_2"></span>

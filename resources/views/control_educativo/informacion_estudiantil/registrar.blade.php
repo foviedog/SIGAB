@@ -115,7 +115,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="persona_id">Identificación: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6 ">
-                            <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeyup="contarCaracteres(this,15)" value="{{ (!is_null($persona_existe)) ? $persona_existe->persona_id : ($persona_no_insertada->persona_id ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
+                            <input type='text' class="form-control w-100" id="persona_id" name="persona_id" onkeypress="contarCaracteres(this,15)" value="{{ (!is_null($persona_existe)) ? $persona_existe->persona_id : ($persona_no_insertada->persona_id ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
                         </div>
                         <div class="col-2 d-flex h-25">
                             <span data-toggle="tooltip" data-placement="top" title="Digitar número de cédula sin guiones, ni espacios (Acepta caracteres para cédulas extranjeras)"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -129,7 +129,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="nombre">Nombre/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->nombre : ($persona_no_insertada->nombre ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
+                            <input type='text' class="form-control w-100" id="nombre" name="nombre" onkeypress="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->nombre : ($persona_no_insertada->nombre ?? '' )}}" required @if(!is_null($persona_existe)) readonly @endif>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_nombre"></span>
@@ -142,7 +142,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="apellido">Apellido/s: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->apellido : ($persona_no_insertada->apellido ?? '') }}" required @if(!is_null($persona_existe)) readonly @endif>
+                            <input type='text' class="form-control w-100" id="apellido" name="apellido" onkeypress="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->apellido : ($persona_no_insertada->apellido ?? '') }}" required @if(!is_null($persona_existe)) readonly @endif>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_apellido"></span>
@@ -165,7 +165,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="telefono_fijo">Teléfono fijo:</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeyup="contarCaracteres(this,30)" value="{{ (!is_null($persona_existe)) ? $persona_existe->telefono_fijo : ($persona_no_insertada->telefono_fijo ?? '') }}">
+                            <input type='text' class="form-control w-100" id="telefono_fijo" name="telefono_fijo" onkeypress="contarCaracteres(this,30)" value="{{ (!is_null($persona_existe)) ? $persona_existe->telefono_fijo : ($persona_no_insertada->telefono_fijo ?? '') }}">
                         </div>
                         <div class="col-2 d-flex h-25">
                             <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -179,7 +179,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="telefono_celular">Teléfono celular:</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeyup="contarCaracteres(this,30)" value="{{(!is_null($persona_existe)) ? $persona_existe->telefono_celular : ($persona_no_insertada->telefono_celular ?? '') }}">
+                            <input type='text' class="form-control w-100" id="telefono_celular" name="telefono_celular" onkeypress="contarCaracteres(this,30)" value="{{(!is_null($persona_existe)) ? $persona_existe->telefono_celular : ($persona_no_insertada->telefono_celular ?? '') }}">
                         </div>
                         <div class="col-2 d-flex h-25">
                             <span data-toggle="tooltip" data-placement="top" title="Digitar número sin guiones, ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
@@ -193,7 +193,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="correo_personal">Correo personal:</label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeyup="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_personal : ($persona_no_insertada->correo_personal ?? '') }}" multiple>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_personal" name="correo_personal" onkeypress="contarCaracteres(this,50)" value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_personal : ($persona_no_insertada->correo_personal ?? '') }}" multiple>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_personal"></span>
@@ -206,7 +206,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeyup="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}" required>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeypress="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}" required>
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_institucional"></span>
@@ -234,7 +234,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="direccion_residencia">Dirección de residencia: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeyup="contarCaracteres(this,250)" required>{{ (!is_null($persona_existe)) ? $persona_existe->direccion_residencia : ($persona_no_insertada->direccion_residencia ?? '')}}</textarea>
+                            <textarea class="form-control w-100" id="direccion_residencia" rows="4" name="direccion_residencia" onkeypress="contarCaracteres(this,250)" required>{{ (!is_null($persona_existe)) ? $persona_existe->direccion_residencia : ($persona_no_insertada->direccion_residencia ?? '')}}</textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="top" title="Dirección del domicilio en el que reside de manera regular"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -261,7 +261,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="direccion_lectivo">Dirección en tiempo lectivo: </label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeyup="contarCaracteres(this,250)"> {{ $estudiante_no_insertado->direccion_lectivo ?? '' }} </textarea>
+                            <textarea class="form-control w-100" id="direccion_lectivo" name="direccion_lectivo" onkeypress="contarCaracteres(this,250)"> {{ $estudiante_no_insertado->direccion_lectivo ?? '' }} </textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Dirección del domicilio o apartamento en el que reside durante los ciclos lectivos"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -275,7 +275,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="cantidad_hijos">Cantidad hijos: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='number' min="0" max="99" class="form-control w-100" id="cantidad_hijos" name="cantidad_hijos" onkeyup="contarCaracteres(this,2)" value="{{ $estudiante_no_insertado->cant_hijos ?? '' }}" required>
+                            <input type='number' min="0" max="99" class="form-control w-100" id="cantidad_hijos" name="cantidad_hijos" onkeypress="contarCaracteres(this,2)" value="{{ $estudiante_no_insertado->cant_hijos ?? '' }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="En caso de no tener hijos se debe ingresar un 0"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -307,7 +307,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="condicion_discapacidad">Condición de discapacidad:</label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="condicion_discapacidad" name="condicion_discapacidad" onkeyup="contarCaracteres(this,250)"> {{ $estudiante_no_insertado->condicion_discapacidad ?? '' }} </textarea>
+                            <textarea class="form-control w-100" id="condicion_discapacidad" name="condicion_discapacidad" onkeypress="contarCaracteres(this,250)"> {{ $estudiante_no_insertado->condicion_discapacidad ?? '' }} </textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Se debe especificar la condición que posee, o de no tener, se debe dejar vacío"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -389,7 +389,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="nota_admision">Nota de admisión: </label>
                         </div>
                         <div class="col-6">
-                            <input type='number' class="form-control w-100" min="0" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeyup="contarCaracteres(this,6)" value="{{ $estudiante_no_insertado->nota_admision ?? '' }}">
+                            <input type='number' class="form-control w-100" min="0" max="999.99" step="0.01" id="nota_admision" name="nota_admision" onkeypress="contarCaracteres(this,6)" value="{{ $estudiante_no_insertado->nota_admision ?? '' }}">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Nota de admisión especifíco para la Universidad Nacional"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -403,7 +403,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="carrera_matriculada_1">Carrera matriculada 1: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="carrera_matriculada_1" name="carrera_matriculada_1" onkeyup="contarCaracteres(this,45)" value="{{ $estudiante_no_insertado->carrera_matriculada_1 ?? '' }}" required>
+                            <input type='text' class="form-control w-100" id="carrera_matriculada_1" name="carrera_matriculada_1" onkeypress="contarCaracteres(this,45)" value="{{ $estudiante_no_insertado->carrera_matriculada_1 ?? '' }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -417,7 +417,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="carrera_matriculada_2">Carrera matriculada 2:</label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="carrera_matriculada_2" name="carrera_matriculada_2" onkeyup="contarCaracteres(this,45)" value="{{ $estudiante_no_insertado->carrera_matriculada_2 ?? '' }}">
+                            <input type='text' class="form-control w-100" id="carrera_matriculada_2" name="carrera_matriculada_2" onkeypress="contarCaracteres(this,45)" value="{{ $estudiante_no_insertado->carrera_matriculada_2 ?? '' }}">
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera secundaria"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -467,7 +467,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="apoyo_educativo">Apoyo educativo:</label>
                         </div>
                         <div class="col-6">
-                            <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeyup="contarCaracteres(this,500)">{{ $estudiante_no_insertado->apoyo_educativo ?? '' }}</textarea>
+                            <textarea class="form-control w-100" id="apoyo_educativo" name="apoyo_educativo" onkeypress="contarCaracteres(this,500)">{{ $estudiante_no_insertado->apoyo_educativo ?? '' }}</textarea>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Tipo de apoyo educativo establecido por el Departamento de Orientación y Psicología"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">

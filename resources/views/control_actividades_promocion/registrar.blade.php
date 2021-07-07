@@ -107,7 +107,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text text-dark">Tema: <i class="text-danger">*</i></span>
                                         </div>
-                                        <input type='text' class="form-control " id="tema" name="tema" onkeyup="contarCaracteres(this,100)" required>
+                                        <input type='text' class="form-control " id="tema" name="tema" onkeypress="contarCaracteres(this,100)" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Tema o nombre de la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
@@ -123,7 +123,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                         <div class="input-group-prepend">
                                             <span class="input-group-text text-dark">Lugar: <i class="text-danger">*</i></span>
                                         </div>
-                                        <input type='text' class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,60)">
+                                        <input type='text' class="form-control" id="lugar" name="lugar" onkeypress="contarCaracteres(this,60)">
                                         <div class="input-group-append">
                                             <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Lugar a realizar la actividad" class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                                         </div>
@@ -347,7 +347,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                         </div>
                                         <div class="card-body">
                                             <div class="d-flex">
-                                                <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeyup="contarCaracteres(this,500)"></textarea>
+                                                <textarea type='text' class="form-control w-100" id="evaluacion" name="evaluacion" rows="4" onkeypress="contarCaracteres(this,500)"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -372,7 +372,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                         </div>
                                         <div class="card-body">
                                             <div class="d-flex">
-                                                <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeyup="contarCaracteres(this,500)"></textarea>
+                                                <textarea type='text' class="form-control w-100" id="recursos" name="recursos" rows="4" onkeypress="contarCaracteres(this,500)"></textarea>
                                             </div>
                                         </div>
                                     </div>

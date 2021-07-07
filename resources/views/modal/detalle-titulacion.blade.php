@@ -49,7 +49,7 @@
                                 <label for="carrera_cursada">Carrera cursada <i class="text-danger">*</i></label>
                                 <span class="text-muted ml-2" id="mostrar_cant_carrera_cursada"></span>
                             </div>
-                            <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeyup="contarCarCarrCursada(this)" required disabled>
+                            <input type='text' class="form-control" id="carrera_cursada" name="carrera_cursada" onkeypress="contarCarCarrCursada(this)" required disabled>
                         </div>
 
                         {{-- Campo: Año de graduación --}}

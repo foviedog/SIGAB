@@ -155,7 +155,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <div class="form-group">
                                     <label for="correo_personal"><strong>Correo Personal</strong><br /></label>
                                     <span class="text-muted" id="mostrar_correo_personal"></span>
-                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Personal" value="{{ $persona->correo_personal }}" disabled />
+                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Correo Personal" value="{{ $persona->correo_personal }}" disabled />
                                 </div>
                             </div>
                             {{-- Correo Institucional --}}
@@ -163,7 +163,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <div class="form-group">
                                     <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
                                     <span class="text-muted" id="mostrar_correo_institucional"></span>
-                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Institucional" value="{{ $persona->correo_institucional }}" required disabled />
+                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Correo Institucional" value="{{ $persona->correo_institucional }}" required disabled />
                                 </div>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                     <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_telefono_celular"></span>
-                                    <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $persona->telefono_celular}}" disabled />
+                                    <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $persona->telefono_celular}}" disabled />
                                 </div>
                             </div>
                             {{-- Telefono Fijo --}}
@@ -184,7 +184,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                     <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_telefono_fijo"></span>
-                                    <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $persona->telefono_fijo }}" disabled />
+                                    <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $persona->telefono_fijo }}" disabled />
                                 </div>
                             </div>
                         </div>
@@ -227,7 +227,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                     <label for="DireccionResidencia"><strong>Dirección Residencia <i class="text-danger">* </i></strong></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del usuario "><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_direccion_residencia"> </span>
-                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" required disabled />{{$persona->direccion_residencia}}</textarea>
+                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeypress="contarCaracteres(this,250)" placeholder="Direccion de residencia" required disabled />{{$persona->direccion_residencia}}</textarea>
                                 </div>
                             </div>
                         </div>

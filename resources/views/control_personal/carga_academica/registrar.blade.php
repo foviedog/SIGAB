@@ -112,7 +112,7 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
                         <label for="nrc">NRC <i class="text-danger">*</i></label>
                         <span class="text-muted ml-2" id="mostrar_nrc"></span>
                     </div>
-                    <input type='number' class="form-control" id="nrc" name="nrc" onkeyup="contarCaracteres(this,7)" min="0" required>
+                    <input type='number' class="form-control" id="nrc" name="nrc" onkeypress="contarCaracteres(this,7)" min="0" required>
                 </div>
 
             </div>

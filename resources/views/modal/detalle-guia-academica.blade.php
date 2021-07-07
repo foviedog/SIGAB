@@ -51,7 +51,7 @@
                                 <label for="lugar" class="col-form-label">Lugar de atención &nbsp;<i class="text-danger">*</i></label>
                                 <span class="text-muted" id="mostrar_lugar"></span>
                             </div>
-                            <input type="text" class="form-control" id="lugar" name="lugar" onkeyup="contarCaracteres(this,44)" required disabled>
+                            <input type="text" class="form-control" id="lugar" name="lugar" onkeypress="contarCaracteres(this,44)" required disabled>
                         </div>
 
                         <div class="row">

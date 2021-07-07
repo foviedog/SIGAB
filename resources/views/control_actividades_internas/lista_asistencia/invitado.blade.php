@@ -75,7 +75,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <div class="form-group">
                                     <label for="correo_personal"><strong>Correo Personal</strong><br /></label>
                                     <span class="text-muted" id="mostrar_correo_personal"></span>
-                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Personal" />
+                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Correo Personal" />
                                 </div>
                             </div>
                             {{-- Correo Institucional --}}
@@ -83,7 +83,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                 <div class="form-group">
                                     <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
                                     <span class="text-muted" id="mostrar_correo_institucional"></span>
-                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,45)" placeholder="Correo Institucional" required />
+                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Correo Institucional" required />
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                     <label for="telefono_celular"><strong>Teléfono Celular</strong><br /></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_telefono_celular"></span>
-                                    <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" />
+                                    <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Celular" />
                                 </div>
                             </div>
                             {{-- Telefono Fijo --}}
@@ -104,7 +104,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                     <label for="telefono_fijo"><strong>Teléfono Fijo</strong><br /></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_telefono_fijo"></span>
-                                    <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" />
+                                    <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Fijo" />
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@ $estadosCiviles = GlobalArrays::ESTADOS_CIVILES;
                                     <label for="DireccionResidencia"><strong>Dirección Residencia </strong></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del personal "><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_direccion_residencia"> </span>
-                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" /></textarea>
+                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeypress="contarCaracteres(this,250)" placeholder="Direccion de residencia" /></textarea>
                                 </div>
                             </div>
                         </div>

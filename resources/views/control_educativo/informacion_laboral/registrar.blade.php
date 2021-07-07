@@ -88,7 +88,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <label for="nombre_organizacion">Nombre de la organización: <i class="text-danger">*</i></label>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeyup="contarCaracteres(this,100)" required>
+                        <input type='text' class="form-control w-100" id="nombre_organizacion" name="nombre_organizacion" onkeypress="contarCaracteres(this,100)" required>
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_nombre_organizacion"></span>
@@ -121,7 +121,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <span class="ml-1" data-toggle="tooltip" data-placement="bottom" title="Ingrese la jornada, seguido de la cantidad de horas entre paréntesis. Ej. Tiempo completo (40 horas)."><i class="far fa-question-circle fa-lg"></i> </span>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeyup="contarCaracteres(this,45)">
+                        <input type='text' class="form-control w-100" id="jornada_laboral" name="jornada_laboral" onkeypress="contarCaracteres(this,45)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_jornada_laboral"></span>
@@ -134,7 +134,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <label for="cargo_actual">Cargo actual: </label>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeyup="contarCaracteres(this,200)">
+                        <input type='text' class="form-control w-100" id="cargo_actual" name="cargo_actual" onkeypress="contarCaracteres(this,200)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_cargo_actual"></span>
@@ -163,7 +163,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <label for="jefe_inmediato">Jefe inmediato: </label>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeyup="contarCaracteres(this,45)">
+                        <input type='text' class="form-control w-100" id="jefe_inmediato" name="jefe_inmediato" onkeypress="contarCaracteres(this,45)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_jefe_inmediato"></span>
@@ -176,7 +176,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <span data-toggle="tooltip" data-placement="bottom" title="Ingrese la información como se muestra en el ejemplo: Ej. 3 años y 4 meses."><i class="far fa-question-circle fa-lg"></i> </span>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeyup="contarCaracteres(this,45)">
+                        <input type='text' class="form-control w-100" id="tiempo_desempleado" name="tiempo_desempleado" onkeypress="contarCaracteres(this,45)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_tiempo_desempleado"></span>
@@ -189,7 +189,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <label for="telefono_trabajo">Teléfono trabajo: </label>
                     </div>
                     <div class="col-6">
-                        <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeyup="contarCaracteres(this,45)">
+                        <input type='text' class="form-control w-100" id="telefono_trabajo" name="telefono_trabajo" onkeypress="contarCaracteres(this,45)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_telefono_trabajo"></span>
@@ -202,7 +202,7 @@ Registrar información laboral de {{ $estudiante->persona->nombre }}
                         <label for="correo_trabajo">Correo trabajo: </label>
                     </div>
                     <div class="col-6">
-                        <input type="email" class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeyup="contarCaracteres(this,80)">
+                        <input type="email" class="form-control w-100" id="correo_trabajo" name="correo_trabajo" onkeypress="contarCaracteres(this,80)">
                     </div>
                     <div class="col-1">
                         <span class="text-muted" id="mostrar_correo_trabajo"></span>

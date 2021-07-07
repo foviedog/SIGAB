@@ -125,7 +125,7 @@ $tiposDocumentos =
                             <div class="d-flex justify-content-between">
                                 {{-- Input para colocar el nombre que se le desea poner al archivo --}}
                                 <div class="input-group px-2 mb-3 w-75 ml-1 pl-3">
-                                    <input type="text" id="nombre-archivo" name="nombre_archivo" aria-label="Nombre archivo" class="form-control" placeholder="Nombre del archivo" onkeyup="contarCaracteres(this,99)" required>
+                                    <input type="text" id="nombre-archivo" name="nombre_archivo" aria-label="Nombre archivo" class="form-control" placeholder="Nombre del archivo" onkeypress="contarCaracteres(this,99)" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Nombre con el que quiere guardar el archivo"><i class="far fa-edit texto-azul-una"></i></span>
                                     </div>

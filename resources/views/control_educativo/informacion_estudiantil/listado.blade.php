@@ -32,7 +32,7 @@ Listado Estudiantil
                             <div class="input-group-prepend">
                                 <span class="input-group-text text-dark">Cédula: <i class="text-danger">*</i></span>
                             </div>
-                            <input type='text' class="form-control " id="cedula" name="cedula" onkeyup="contarCaracteres(this,50)" required>
+                            <input type='text' class="form-control " id="cedula" name="cedula" onkeypress="contarCaracteres(this,50)" required>
                             <div class="input-group-append">
                                 <span class="input-group-text texto-azul-una" data-toggle="tooltip" data-placement="top" title="Ingresar la identificación del estudiante sin guiones y sin espacios." class="mx-2"> <i class="far fa-question-circle fa-lg"></i></span>
                             </div>
