@@ -140,8 +140,8 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                     <div class="container-fluid mt-5 pt-2 graficos-especificos">
                         <div class="row ">
                             <div class="col-lg-12 col-xl-6 d-flex flex-column justify-content-center align-items-center mb-lg-5">
-                                <div class="header-grafico w-100 texto-rojo-medio d-flex ">
-                                    <h3>Propósitos de actividades internas {{ date("Y") }}</h3>&nbsp;
+                                <div class="header-grafico w-100 texto-rojo-medio d-flex align-items-center ">
+                                    <h3 class="m-0">Propósitos de actividades internas {{ date("Y") }}</h3>&nbsp;
                                     <i class="fas fa-question-circle " data-toggle="tooltip" data-placement="top" title="Gráfico que muestra la cantidad de actividades internas que NO han sido canceladas y finalizan en el 2021 según el propósito" style="font-size: 18px;"></i>
                                 </div>
                                 <div class=" grafico-container w-100">
@@ -151,8 +151,8 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 </div>
                             </div>
                             <div class="col d-flex flex-column justify-content-start align-items-center">
-                                <div class="display-5 w-75 texto-rojo-medio d-flex">
-                                    <h3>Estados de actividades {{ date("Y") }}</h3>&nbsp;
+                                <div class="display-5 w-75 texto-rojo-medio d-flex align-items-center">
+                                    <h3 class="m-0">Estados de actividades {{ date("Y") }}</h3>&nbsp;
                                     <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Gráfico que muestra cantidad total de actividades según los estados (Incluye actividades internas y actividades de promoción)" style="font-size: 18px;"></i>
                                 </div>
                                 <div class="grafico-container w-75">
@@ -164,69 +164,92 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-center pt-5 pb-5 border-top">
-                        <div class="display-5 w-75 texto-rojo-medio" id="graficoGenerado">
-                            <h2>Generación de gráficos y reportes</h2>
-                        </div>
-                        <div class="w-50 mt-3">
-                            <div id="chart"></div>
-                        </div>
-                    </div>
-
-                    <form action="{{ route('reportes-actividades.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte" onsubmit="activarLoader('Generando datos');">
-                        <div class="row d-flex justify-content-center mb-3">
-                            <div class="w-75">
-                                <div class="row d-flex justify-content-center mb-3">
-                                    <select class="col-4 custom-select mr-3" id="actividad" name="actividad_naturaleza" class="form-control">
-                                        <option value="Actividad interna" @if ($naturalezaAct=="Actividad interna" ) selected @endif>Actividad interna</option>
-                                        <option value="Actividad de promoción" @if ($naturalezaAct=="Actividad de promoción" ) selected @endif>Actividad de promoción</option>
-                                    </select>
-
-                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-int" name="tipo_actividad_int" class="form-control">
-                                        <option value="">Todos los tipos</option>
-                                        @foreach($tip_act_int as $tipo)
-                                        <option value='{{ $tipo }}' @if ($tipoAct==$tipo) selected @endif>{{ $tipo }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <select class="col-4 custom-select mr-3" id="tipo-actividad-prom" name="tipo_actividad_prom" class="form-control">
-                                        <option value="">Todos los tipos</option>
-                                        @foreach($tip_act_prom as $tipo)
-                                        <option value='{{ $tipo }}' @if ($tipoAct==$tipo) selected @endif>{{ $tipo }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <select class="col-2 custom-select mr-3" id="estado" name="estado_actividad" class="form-control">
-                                        <option value="">Todos los estados</option>
-                                        @foreach($estados as $estado)
-                                        <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="row d-flex justify-content-center">
-
-                                    <div class="col-7 input-group mr-3">
-                                        <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}'>
-                                        <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}'>
-                                    </div>
-
-                                    <select class="col-3 custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
-                                        <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
-                                        <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas de dispersión</option>
-                                        <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
-                                        <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Anillo</option>
-                                        <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Circular</option>
-                                    </select>
-                                </div>
-
+                    <div class="card shadow-lg">
+                        <div class="card-header">
+                            {{-- TITULO DE LA GENERACION DE GRAFICOS --}}
+                            <div class="display-5 w-100 texto-rojo-medio d-flex align-items-center justify-content-center py-2" id="graficoGenerado">
+                                <h3 class="m-0 ">Generación de gráficos y reportes</h3>
+                                <i class="m-1 fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Generar gráfico de la cantidad de actividades realizadas por fechas según los filtros especificados" style="font-size: 18px;"></i>
                             </div>
                         </div>
-                        <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
-                            <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
-                            <div class="btn btn-lg btn-contorno-rojo ml-2" id="reporte-trigger" data-toggle="modal" data-target="#reporte-modal"><i class="far fa-file-pdf"></i> Generar reporte</div>
+                        {{-- GRAFICO RESULTANTE --}}
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <div class="w-100 mt-3 d-flex justify-content-center">
+                                <div class="w-50 mt-3">
+                                    <div id="chart">
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="{{ route('reportes-actividades.resultado') }}" method="GET" enctype="multipart/form-data" id="formulario-reporte" onsubmit="activarLoader('Generando datos');">
+                                <div class="row d-flex justify-content-center mb-3">
+                                    <div class="w-75">
+                                        <div class="row d-flex justify-content-center mb-3">
+                                            <select class="col-3 custom-select mr-3" id="actividad" name="actividad_naturaleza" class="form-control">
+                                                <option value="Actividad interna" @if ($naturalezaAct=="Actividad interna" ) selected @endif>Actividad interna</option>
+                                                <option value="Actividad de promoción" @if ($naturalezaAct=="Actividad de promoción" ) selected @endif>Actividad de promoción</option>
+                                            </select>
+
+                                            <select class="col-4 custom-select mr-3" id="tipo-actividad-int" name="tipo_actividad_int" class="form-control">
+                                                <option value="">Todos los tipos</option>
+                                                @foreach($tip_act_int as $tipo)
+                                                <option value='{{ $tipo }}' @if ($tipoAct==$tipo) selected @endif>{{ $tipo }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <select class="col-4 custom-select mr-3" id="tipo-actividad-prom" name="tipo_actividad_prom" class="form-control">
+                                                <option value="">Todos los tipos</option>
+                                                @foreach($tip_act_prom as $tipo)
+                                                <option value='{{ $tipo }}' @if ($tipoAct==$tipo) selected @endif>{{ $tipo }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <select class="col-3 custom-select mr-3" id="estado" name="estado_actividad" class="form-control">
+                                                <option value="">Todos los estados</option>
+                                                @foreach($estados as $estado)
+                                                <option value='{{ $estado }}' @if ($estadoActividad==$estado) selected @endif>{{ $estado }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col-5 input-group mr-3">
+                                                <input type="month" name="mes_inicio" class="form-control" value='{{ $mesInicio ?? "" }}'>
+                                                <input type="month" name="mes_final" class="form-control" value='{{ $mesFinal ?? "" }}'>
+                                            </div>
+
+                                            <select class="col-2 custom-select mr-3" id="tipo-grafico" name="tipo_grafico" class="form-control">
+                                                <option value="bar" {{ $chart == "bar" ? 'selected' : '' }}>Barras</option>
+                                                <option value="line" {{ $chart == "line" ? 'selected' : '' }}>Líneas de dispersión</option>
+                                                <option value="area" {{ $chart == "area" ? 'selected' : '' }}>Área</option>
+                                                <option value="donut" {{ $chart == "donut" ? 'selected' : '' }}>Anillo</option>
+                                                <option value="pie" {{ $chart == "pie" ? 'selected' : '' }}>Circular</option>
+                                            </select>
+
+                                            <div class=" col-3 input-group mb-3">
+                                                <select class=" custom-select" id="tipo-actividad-prom" name="tipo_fecha" class="form-control">
+                                                    <option value="0" {{ $tipoFecha == "0" ? 'selected' : '' }}>Fecha de inicio</option>
+                                                    <option value="1" {{ $tipoFecha == "1" ? 'selected' : '' }}>Fecha final</option>
+                                                </select>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Filtrar los resultados según la fecha de inicio o fecha final de la actividad"><i class="far fa-question-circle texto-azul-una"></i></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row  d-flex justify-content-center align-items-center py-4 pb-4 pt-4">
+                                    <div class="btn btn-lg btn-rojo" onclick="enviar()"><i class="fas fa-chart-line"></i> Generar gráfico</div>
+                                    <div class="btn btn-lg btn-contorno-rojo ml-2" id="reporte-trigger" data-toggle="modal" data-target="#reporte-modal"><i class="far fa-file-pdf"></i> Generar reporte</div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -247,7 +270,6 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
     let x = [];
     let y = [];
     let naturalezaActividad = '{{ $naturalezaAct }}';
-
     //Meses para agregar al formateo
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"
         , "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
@@ -259,10 +281,11 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
     var total = 0;
     for (const atributo in dataSet) {
         if (dataSet[atributo] != 0) {
-            let aux = new Date(atributo);
+            console.log(atributo)
+            let aux = new Date(getAnio(atributo), getMes(atributo))
             x.push(meses[aux.getMonth()] + " del " + aux.getFullYear());
             y.push(dataSet[atributo]);
-            total+= dataSet[atributo];
+            total += dataSet[atributo];
         }
     }
 
@@ -273,6 +296,14 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
     url = url.substr(0, indexHref)
     window.location.href = url + "#graficoGenerado";
     $("#reporte-trigger").show();
+
+    function getAnio(fecha) {
+        return parseInt(fecha.slice(0, 4)) - 1
+    }
+
+    function getMes(fecha) {
+        return parseInt(fecha.slice(5, fecha.length)) - 1
+    }
 
 </script>
 @else {{-- En caso de que sea la primera vez que se cargue la página se setean los atributos en valores prederminados --}}
@@ -321,6 +352,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
 
 <script>
     $("input[type='number']").inputSpinner();
+
 </script>
 
 @endsection
