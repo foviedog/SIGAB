@@ -465,7 +465,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\david\OneDrive\Documents\GitHub\SIGAB\SIGAB\node_modules\bootstrap-input-spinner\src\bootstrap-input-spinner.js */"./node_modules/bootstrap-input-spinner/src/bootstrap-input-spinner.js");
+module.exports = __webpack_require__(/*! C:\Users\ivane\OneDrive\Documentos\GitHub\SIGAB\node_modules\bootstrap-input-spinner\src\bootstrap-input-spinner.js */"./node_modules/bootstrap-input-spinner/src/bootstrap-input-spinner.js");
 
 
 /***/ })

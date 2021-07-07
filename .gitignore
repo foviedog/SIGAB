@@ -12,3 +12,10 @@ npm-debug.log
 yarn-error.log
 .env
 SIGAB/public/js/app.js
+.env
+public/js/app.js
+public/fonts/vendor/font-awesome/fontawesome-webfont.svg
+public/css/toastr.css
+public/0.js
+public/js/bootstrap-input-spinner.js
+public/mix-manifest.json
