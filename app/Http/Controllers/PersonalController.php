@@ -250,6 +250,7 @@ class PersonalController extends Controller
         $personal->regimen_docente = $request->regimen_docente;
         $personal->area_especializacion_1 = $request->area_especializacion_1;
         $personal->area_especializacion_2 = $request->area_especializacion_2;
+        $personal->activo =  $request->activo;
 
         $personal->publicaciones =  $request->publicaciones;
         $personal->reconocimientos =  $request->reconocimientos;

@@ -80,6 +80,11 @@ $personal_no_insertado = null;
                     <br>
                 </div>
                 <div class="col-6 ">
+                    @if($personal_registrado->activo == 0)
+                    <b>Estado:</b> {{ "Inactivo" ?? "No se digitó" }} <br>
+                    @else
+                    <b>Estado:</b> {{ "Activo" ?? "No se digitó" }} <br>
+                    @endif
                     <b>Tipo de cargo:</b> {{ $personal_registrado->cargo?? "No se digitó" }} <br>
                     <b>Tipo de nombramiento:</b> {{ $personal_registrado->tipo_nombramiento ?? "No se digitó" }} <br>
                     <b>Tipo de puesto:</b> {{ $personal_registrado->tipo_puesto ?? "No se digitó" }} <br>
@@ -286,6 +291,20 @@ $personal_no_insertado = null;
                                     </select>
                                 </div>
                             </div>
+
+                            {{-- Campo: activo --}}
+                            <div class="d-flex justify-content-start mb-3">
+                                <div class="col-4">
+                                    <label for="activo">Estado: <i class="text-danger">*</i></label>
+                                </div>
+                                <div class="col-6">
+                                    <select id="activo" name="activo" class="form-control" required>
+                                        <option value="1" selected>Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-10 mt-5">
                                 <div class="bg-light py-2 w-100 d-flex align-items-center rounded">
                                     <span class="ml-3 font-weight-bold ">Lista de idiomas: &nbsp;</span>

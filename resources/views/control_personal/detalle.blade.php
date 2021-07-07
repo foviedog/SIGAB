@@ -97,7 +97,17 @@ $idiomas = [];
                             <div class="card-header py-3">
                                 <h6 class="texto-rojo-medio font-weight-bold m-0 texto-rojo">Información laboral </h6>
                             </div>
-                            <div class="card-body pb-5" style="height: 942px;">
+                            <div class="card-body pb-5">
+                                {{-- Campo: activo--}}
+                                <div class="form-group">
+                                    <div class="d-flex ">
+                                        <label for="activo"><strong>Estado<i class="text-danger">* </i></strong></label>
+                                    </div>
+                                    <select id="activo" name="activo" class="form-control" required disabled>
+                                        <option value="1" @if ( $personal->activo==1) selected @endif>Activo</option>
+                                        <option value="0" @if ( $personal->activo==0) selected @endif>Inactivo</option>
+                                    </select>
+                                </div>
                                 {{-- Campo: tipo_puesto 1--}}
                                 <div class="form-group">
                                     <div class="d-flex ">
@@ -172,20 +182,20 @@ $idiomas = [];
                                 <div class="form-group">
                                     <label for="area_especializacion_1"><strong>Área de especialización 1 </strong><br /></label>
                                     <span class="text-muted" id="mostrar_area_especializacion_1"></span>
-                                    <input type="text" name="area_especializacion_1" id="area_especializacion_1" class="form-control" onkeypress="contarCaracteres(this,100)" placeholder="Área de especialización 1" value="{{ $personal->area_especializacion_1 }}" disabled />
+                                    <input type="text" name="area_especializacion_1" id="area_especializacion_1" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Área de especialización 1" value="{{ $personal->area_especializacion_1 }}" disabled />
                                 </div>
                                 {{-- Campo: area_especializacion_2 --}}
                                 <div class="form-group">
                                     <label for="area_especializacion_2"><strong>Área de especialización 2</strong><br /></label>
                                     <span class="text-muted" id="mostrar_area_especializacion_2"></span>
-                                    <input type="text" name="area_especializacion_2" id="area_especializacion_2" class="form-control" onkeypress="contarCaracteres(this,100)" placeholder="Área de especialización 2" value="{{ $personal->area_especializacion_2 }}" disabled />
+                                    <input type="text" name="area_especializacion_2" id="area_especializacion_2" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Área de especialización 2" value="{{ $personal->area_especializacion_2 }}" disabled />
                                 </div>
                                 {{-- Campo: anio_propiedad --}}
                                 <div class="form-group">
                                     <label for="anio_propiedad"><strong>Año de propiedad</strong><br /></label>
                                     <span data-toggle="tooltip" data-placement="right" title="Año en el que obtuvo la propiedad en la UNA"><i class="far fa-question-circle fa-lg mr-2"></i></span>
                                     <span class="text-muted" id="mostrar_anio_propiedad"></span>
-                                    <input type="text" name="anio_propiedad" id="anio_propiedad" class="form-control" onkeypress="contarCaracteres(this,4)" placeholder="Sin especificar" value="{{ $personal->anio_propiedad }}" disabled />
+                                    <input type="text" name="anio_propiedad" id="anio_propiedad" class="form-control" onkeyup="contarCaracteres(this,4)" placeholder="Sin especificar" value="{{ $personal->anio_propiedad }}" disabled />
                                 </div>
                                 {{-- Campo: regimen_administrativo --}}
                                 <div class="form-group">
@@ -225,7 +235,7 @@ $idiomas = [];
                                                         <label for="nombre"><strong>Nombre/s<i class="text-danger">* </i> </strong></label>
                                                         <span class="text-muted" id="mostrar_nombre"></span>
                                                     </div>
-                                                    <input type="text" onkeypress="contarCaracteres(this,50)" id="nombre" name="nombre" class="form-control" placeholder="Nombre personal" value="{{ $personal->persona->nombre }}" required disabled />
+                                                    <input type="text" onkeyup="contarCaracteres(this,50)" id="nombre" name="nombre" class="form-control" placeholder="Nombre personal" value="{{ $personal->persona->nombre }}" required disabled />
                                                 </div>
                                             </div>
                                             {{-- Campo: Apellidos --}}
@@ -235,7 +245,7 @@ $idiomas = [];
                                                         <label for="apellido"><strong>Apellido/s<i class="text-danger">* </i> </strong></label>
                                                         <span class="text-muted" id="mostrar_apellido"></span>
                                                     </div>
-                                                    <input type="text" name="apellido" id="apellido" class="form-control" onkeypress="contarCaracteres(this,50)" placeholder="Apellidos" value="{{ $personal->persona->apellido }}" required disabled /> </input>
+                                                    <input type="text" name="apellido" id="apellido" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Apellidos" value="{{ $personal->persona->apellido }}" required disabled /> </input>
                                                 </div>
                                             </div>
 
@@ -250,7 +260,7 @@ $idiomas = [];
                                                         <label for="correo_personal"><strong>Correo Personal</strong></label>
                                                         <span class="text-muted" id="mostrar_correo_personal"></span>
                                                     </div>
-                                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeypress="contarCaracteres(this,50)" placeholder="Correo Personal" value="{{ $personal->persona->correo_personal}}" disabled />
+                                                    <input type="email" name="correo_personal" id="correo_personal" class="form-control" onkeyup="contarCaracteres(this,50)" placeholder="Correo Personal" value="{{ $personal->persona->correo_personal}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Correo Institucional --}}
@@ -260,7 +270,7 @@ $idiomas = [];
                                                         <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong></label>
                                                         <span class="text-muted" id="mostrar_correo_institucional"></span>
                                                     </div>
-                                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeypress="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $personal->persona->correo_institucional}}" required disabled />
+                                                    <input type="email" name="correo_institucional" id="correo_institucional" class="form-control" onkeyup="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $personal->persona->correo_institucional}}" required disabled />
                                                 </div>
                                             </div>
                                         </div>
@@ -275,7 +285,7 @@ $idiomas = [];
                                                             <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span></label>
                                                         <span class="text-muted" id="mostrar_telefono_celular"></span>
                                                     </div>
-                                                    <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $personal->persona->telefono_celular}}" disabled />
+                                                    <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Celular" value="{{ $personal->persona->telefono_celular}}" disabled />
                                                 </div>
                                             </div>
                                             {{-- Telefono Fijo --}}
@@ -286,14 +296,14 @@ $idiomas = [];
                                                             <span data-toggle="tooltip" data-placement="right" title="Digitar número sin guiones ni espacios"><i class="far fa-question-circle fa-lg mr-2"></i></span></label>
                                                         <span class="text-muted" id="mostrar_telefono_fijo"></span>
                                                     </div>
-                                                    <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeypress="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $personal->persona->telefono_fijo }}" disabled />
+                                                    <input type="text" name="telefono_fijo" id="telefono_fijo" class="form-control" onkeyup="contarCaracteres(this,30)" placeholder="Telefono Fijo" value="{{ $personal->persona->telefono_fijo }}" disabled />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 {{-- Tarjeta de informacion personal --}}
-                                <div class="card shadow-sm ">
+                                <div class="card shadow-sm" style="height: 1109px;">
                                     <div class="card-header py-3">
                                         <p class="texto-rojo-medio m-0 font-weight-bold ">Información Personal</p>
                                     </div>
@@ -341,7 +351,7 @@ $idiomas = [];
                                                             <span data-toggle="tooltip" data-placement="right" title="Aplica para personal docente interino"><i class="far fa-question-circle fa-lg mr-2"></i></span></label>
                                                         <span class="text-muted" id="mostrar_trabajo_externo"></span>
                                                     </div>
-                                                    <input type="text" name="trabajo_externo" id="trabajo_externo" class=" form-control" onkeypress="contarCaracteres(this,60)" placeholder="Solamente para docente interino" value="{{ $personal->lugar_trabajo_externo}}" disabled /> </input>
+                                                    <input type="text" name="trabajo_externo" id="trabajo_externo" class=" form-control" onkeyup="contarCaracteres(this,60)" placeholder="Solamente para docente interino" value="{{ $personal->lugar_trabajo_externo}}" disabled /> </input>
                                                 </div>
                                             </div>
                                             <div class="col-6 d-flex justify-content-center align-items-center mt-2">
@@ -359,7 +369,7 @@ $idiomas = [];
                                                             <span data-toggle="tooltip" data-placement="right" title="Lugar de residencia habitual del personal "><i class="far fa-question-circle fa-lg"></i></span></label>
                                                         <span class="text-muted" id="mostrar_direccion_residencia"></span>
                                                     </div>
-                                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeypress="contarCaracteres(this,250)" placeholder="Direccion de residencia" required disabled />{{$personal->persona->direccion_residencia}}</textarea>
+                                                    <textarea type="text" name="direccion_residencia" id="direccion_residencia" class="form-control" onkeyup="contarCaracteres(this,250)" placeholder="Direccion de residencia" required disabled />{{$personal->persona->direccion_residencia}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -404,7 +414,7 @@ $idiomas = [];
                                         </div>
 
                                         {{-- Espacio para agregar n idiomas a un personal --}}
-                                        <div class="form-row border-top">
+                                        <div class="form-row border-top mt-4">
                                             <div class="d-flex card-header py-3 w-100">
                                                 <p class="texto-rojo-medio m-0 font-weight-bold ">Lista de idiomas &nbsp;</p>
                                                 <span data-toggle="tooltip" data-placement="top" title="Ingrese el idioma, seguido del nivel de dominio entre paréntesis. Ej. Inglés (manejo instrumental)."><i class="far fa-question-circle fa-lg"></i></span>
