@@ -81,7 +81,7 @@ function validarResponsable(e){
         $("#cedula-responsable").trigger("focus");
         toastr.error("Debe designar un responsable")
     } else {
-        activarLoader('Agregando actividad');
+        activarLoader('Agregando cambios');
     }
 }
 
