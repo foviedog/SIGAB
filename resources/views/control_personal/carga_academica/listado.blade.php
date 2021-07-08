@@ -187,6 +187,8 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
 </div>
 @endsection
 
+{{-- Cambio 1 --}}
+
 @section('scripts')
 <script src="{{ asset('js/Control_personal/carga_academica.js') }}" defer></script>
 <script src="{{ asset('js/global/contarCaracteres.js') }}" defer></script>
