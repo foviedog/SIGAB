@@ -177,6 +177,9 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$cargas_academicas->perPage() }} de {{ $cargas_academicas->total() }}</p>
                     </div>
                     {{-- Items de paginación --}}
+
+                    {{-- Ejemplo de merge --}}
+                    {{-- Comentario para realizar el merge --}}
                     <div class="col-md-5 ml-5">
                         {{ $cargas_academicas->withQueryString()->links() }}
                     </div>
@@ -185,9 +188,11 @@ $anios = GlobalFunctions::obtenerAniosFuturos();
         </div>
     </div>
 </div>
+
 @endsection
 
 {{-- Cambio 1 --}}
+{{-- Seccion de archivos js --}}
 
 @section('scripts')
 <script src="{{ asset('js/Control_personal/carga_academica.js') }}" defer></script>
