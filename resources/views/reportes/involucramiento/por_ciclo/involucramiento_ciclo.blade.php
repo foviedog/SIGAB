@@ -100,6 +100,12 @@ Involucramiento Anual
                                     </select>
                                 </div>
                             </div>
+                            <div class="w-100 mt-3">
+                                <div class="custom-control custom-checkbox mr-5" >
+                                    <input type="checkbox" class="custom-control-input" id="personal_activo" name="personal_activo" />
+                                    <label class="custom-control-label" for="personal_activo" id="check_activo">Solo personal activo</label>
+                                </div>
+                            </div>
                             <div class="w-100 mb-3">
                                 <button class="btn btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando datos');"><i class="fas fa-chart-line"></i> Generar estadísticas</button>
                             </div>
@@ -213,6 +219,10 @@ Involucramiento Anual
         var actividadesCiclo = @json($actividadesPrimerCiclo);
         var actividadesSegundoCiclo = @json($actividadesSegundoCiclo);
         console.log(personal);
+
+        @if(!is_null($activo))
+        $("#check_activo").trigger('click');
+        @endif
 
     </script>
 

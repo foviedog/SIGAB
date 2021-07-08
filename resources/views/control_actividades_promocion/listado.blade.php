@@ -51,7 +51,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad" value="{{ $tema_filtro ?? ''  }}">
+                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad o cédula de responsable" value="{{ $tema_filtro ?? ''  }}">
                                 <div class=" input-group-append">
                                     <div class="input-group-text"><i class="fas fa-bullhorn"></i></div>
                                 </div>
@@ -110,7 +110,7 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2 p-0">
+                        <div class="col-3 p-0">
                             <div class="d-flex justify-content-between w-100">
                                 <label for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="right" title="Buscar por fecha de INICIO de la actividad"></i></label>
                             </div>
@@ -119,7 +119,12 @@ $estados = GlobalArrays::ESTADOS_ACTIVIDAD;
                                     <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
                                 <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
-
+                                <div class="input-group-append">
+                                    <select class="custom-select" id="tipo_fecha" name="tipo_fecha" class="form-control">
+                                        <option value="0"  @if($tipoFecha=="0") selected @endif> Fecha inicio </option>
+                                        <option value="1"  @if($tipoFecha=="1") selected @endif> Fecha final </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

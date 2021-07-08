@@ -35,8 +35,8 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             </div>
         </div>
 
-                {{-- Alerts --}}
-                @include('layouts.messages.alerts')
+        {{-- Alerts --}}
+        @include('layouts.messages.alerts')
 
         {{-- Contenedor de la tabla --}}
         <div class="card shadow">
@@ -52,11 +52,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
             <div class="card-body">
                 @if(Accesos::ACCESO_BUSCAR_ACTIVIDADES())
                 {{-- Formulario para la paginación--}}
-                <form autocomplete="off" action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina"  onsubmit="activarLoader('Realizando búsqueda')">
+                <form autocomplete="off" action="{{ route('actividad-interna.listado') }}" method="GET" role="form" id="item-pagina" onsubmit="activarLoader('Realizando búsqueda')">
                     <div class="row d-flex justify-content-between mb-2 ">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad" value="{{ $tema_filtro ?? ''  }}">
+                                <input type="text" class="form-control" id="tema_filtro" name="tema_filtro" placeholder="Tema de actividad o cédula de responsable" value="{{ $tema_filtro ?? ''  }}">
                                 <div class="input-group-append">
                                     <div class="input-group-text"><i class="fas fa-bullhorn texto-azul-una"></i></div>
                                 </div>
@@ -129,7 +129,7 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2 p-0">
+                        <div class="col-4 p-0">
                             <div class="d-flex justify-content-between w-100">
                                 <label for="rango_fechas"> Rango de fechas <i class="far fa-question-circle fa-lg texto-azul-una" data-toggle="tooltip" data-placement="right" title="Buscar por fecha de INICIO de la actividad"></i></label>
                             </div>
@@ -138,6 +138,12 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                     <span class="btn btn-contorno-rojo" data-toggle="tooltip" data-placement="top" title="Vaciar el campo de fecha" onclick="eliminarFechas(this);"><i class="fas fa-calendar-times fa-lg"></i></span>
                                 </div>
                                 <input type="text" class="form-control datetimepicker" name="rango_fechas" id="rango_fechas" placeholder="DD/MM/YYYY - DD/MM/YYYY" value="{{ $rango_fechas ?? null }}">
+                                <div class="input-group-append">
+                                    <select class="custom-select" id="tipo_fecha" name="tipo_fecha" class="form-control">
+                                        <option value="0"  @if($tipoFecha=="0") selected @endif> Fecha inicio </option>
+                                        <option value="1"  @if($tipoFecha=="1") selected @endif> Fecha final </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
@@ -200,11 +206,11 @@ $ambitos = GlobalArrays::AMBITOS_ACTIVIDAD;
                                     </span>
                                 </td>
                                 @if(Accesos::ACCESO_AUTORIZAR_ACTIVIDAD())
-                                    @if($actividadInterna->autorizada == 0)
-                                    <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
-                                    @else
-                                    <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
-                                    @endif
+                                @if($actividadInterna->autorizada == 0)
+                                <td><span class="bg-info text-dark font-weight-bold px-2 rounded">Pendiente <i class="far fa-clock"></i></span></td>
+                                @else
+                                <td><span class="bg-success text-white px-2 rounded"> Autorizada <i class="fas fa-check"></i> </span></td>
+                                @endif
                                 @endif
                                 @if(Accesos::ACCESO_VISUALIZAR_ACTIVIDADES())
                                 <td>

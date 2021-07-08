@@ -113,6 +113,12 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                                     </select>
                                 </div>
                             </div>
+                            <div class="w-100 mt-3">
+                                <div class="custom-control custom-checkbox mr-5" >
+                                    <input type="checkbox" class="custom-control-input" id="personal_activo" name="personal_activo" />
+                                    <label class="custom-control-label" for="personal_activo" id="check_activo">Solo personal activo</label>
+                                </div>
+                            </div>
                             <div class="w-100 mb-3">
                                 <button class="btn btn-rojo mt-4" type="submit" id="boton-enviar" onclick="activarLoader('Generando datos');"><i class="fas fa-chart-line"></i> Generar estadísticas</button>
                             </div>
@@ -127,7 +133,7 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
                 <form action="{{ route('involucramiento-anual.reporte') }}" method="post" target="_blank">
                     @csrf
                     <input type="hidden" name="actividadesXAnio" id="actividadesXAnio" value='@json($actividadesXAnio)''>
-                    <input type="hidden" name="graficosInvolucramiento" id="graficosInvolucramiento" value='{{ $graficosInvolucramiento }}'>
+                    <input type="hidden" name="graficosInvolucramiento" id="graficosInvolucramiento" value=' {{ $graficosInvolucramiento }}'>
                     <input type="hidden" name="personal" id="personal" value='@json($personal)'>
                     <input type="hidden" name="anioInicio" id="anioInicio" value='@json($anioInicio)'>
                     <input type="hidden" name="anioFinal" id="anioFinal" value='@json($anioFinal)'>
@@ -246,7 +252,9 @@ for ($anio = 2000; $anio <= date("Y"); $anio++) { array_push($anios, $anio); } @
     <script>
         var fotosURL = "{{ URL::asset('img/fotos/') }}";
         let graficosInvolucramiento = JSON.parse('{!! $graficosInvolucramiento !!}');
-
+        @if(!is_null($activo))
+        $("#check_activo").trigger('click');
+        @endif
     </script>
 
     <script src="{{ asset('js/global/variablesGraficos.js') }}" defer=""></script>

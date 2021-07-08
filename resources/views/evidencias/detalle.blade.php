@@ -27,8 +27,6 @@ $tiposDocumentos =
 
 @include('evidencias.info')
 <div class="card">
-
-
     <div class="card-body">
         <div class="d-flex justify-content-between">
             {{-- Título  --}}

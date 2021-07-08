@@ -37,14 +37,15 @@ class ActividadesInternaController extends Controller
             $estado_filtro = request('estado_filtro', NULL);
             $rango_fechas = request('rango_fechas', NULL);
             $checkAvanzada = request('checkAvanzada', NULL);
+            $tipo_fecha = request('tipo_fecha', NULL);
             $fecha_inicio  = NULL;
             $fecha_final = NULL;
-
+            // dd($tipo_fecha);
             //si se realiza una búsqueda sin seleccionar la fecha
             if (!is_null($checkAvanzada) && is_null($rango_fechas)) {
                 $actividadesInternas = $this->filtroTemaTipoEstado($itemsPagina, $tema_filtro, $tipo_filtro, $proposito_filtro, $estado_filtro);
             } else if (!is_null($checkAvanzada) && !is_null($rango_fechas)) { //si se realiza una búsqueda y se coloca la fecha
-                $actividadesInternas = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro);
+                $actividadesInternas = $this->filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro,$tipo_fecha);
             } else {
                 $actividadesInternas = $this->filtroTema($itemsPagina, $tema_filtro); //si no uso busqueda avanzada solo puedo buscar por tema
             }
@@ -57,6 +58,7 @@ class ActividadesInternaController extends Controller
                 'tema_filtro' => $tema_filtro,
                 'tipo_filtro' => $tipo_filtro,
                 'estado_filtro' => $estado_filtro,
+                "tipoFecha"=> $tipo_fecha, 
                 'proposito_filtro' => $proposito_filtro,
                 'rango_fechas' => $rango_fechas
             ]);
@@ -228,12 +230,18 @@ class ActividadesInternaController extends Controller
         }
     }
 
-    private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro)
+    private function filtroAvanzada($itemsPagina, $estado_filtro, $tipo_filtro, $proposito_filtro, $rango_fechas, $tema_filtro, $tipo_fecha)
     {
         $fechaIni = substr($rango_fechas, 0, 10);
         $fechaFin = substr($rango_fechas, -10);
         $fechaIni = date("Y-m-d", strtotime(str_replace('/', '-', $fechaIni)));
         $fechaFin = date("Y-m-d", strtotime(str_replace('/', '-', $fechaFin)));
+
+        if($tipo_fecha == "0"){
+            $fechaTipo = 'actividades.fecha_inicio_actividad';
+        }else{
+            $fechaTipo = 'actividades.fecha_final_actividad';
+        }
 
         $actividades_internas = Actividades_interna::join('actividades', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->join('personal', 'actividades.responsable_coordinar', '=', 'personal.persona_id')
@@ -243,7 +251,7 @@ class ActividadesInternaController extends Controller
                     $query->where('actividades.autorizada', '=', '1');
                 }
             })
-            ->whereBetween('actividades.fecha_inicio_actividad', [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
+            ->whereBetween($fechaTipo, [$fechaIni, $fechaFin]) //Sentencia sql que filtra los resultados entre las fechas indicadas
             ->where(function ($query) use ($tema_filtro) {
                 $query->Where('actividades.tema',  'like', '%' .   $tema_filtro . '%')
                     ->orwhere("actividades.responsable_coordinar",  'like', '%' .   $tema_filtro . '%');
@@ -251,8 +259,9 @@ class ActividadesInternaController extends Controller
             ->Where('actividades.estado', 'like', '%' .   $estado_filtro . '%')
             ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo_filtro . '%')
             ->Where('actividades_internas.proposito', 'like', '%' .   $proposito_filtro . '%')
-            ->orderBy('actividades.fecha_inicio_actividad', 'desc') // Ordena por fecha de manera descendente
+            ->orderBy($fechaTipo, 'desc') // Ordena por fecha de manera descendente
             ->paginate($itemsPagina); //Paginación de los resultados
+            
         return $actividades_internas;
     }
 

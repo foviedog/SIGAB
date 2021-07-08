@@ -16,6 +16,8 @@ use PDF;
 use App\Helper\GlobalArrays;
 use App\Helper\GlobalFunctions;
 
+
+
 class ReporteInvolucramientoPorCicloController extends Controller
 {
     private $anios;
@@ -35,6 +37,7 @@ class ReporteInvolucramientoPorCicloController extends Controller
         ini_set('serialize_precision', 10);
         try {
             $anio = request('anio', null);
+            $activo = request('personal_activo', null);
             $personal = null;
             $actividadesCiclo = [];
             $datosCuantitativos = $this->datosCuntitativosPersonal();
@@ -42,8 +45,15 @@ class ReporteInvolucramientoPorCicloController extends Controller
             $actividadesSegundoCiclo = null;
             
             if (!is_null($anio)) {
-                $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')->get()->keyBy('persona_id'); //Inner join de personal con personas
-                $actividadesCiclo = $this->actividadesPorCiclo($personal, $anio);
+                if(!is_null($activo)){
+                    $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')
+                    ->Where('personal.activo', '=', '1')
+                    ->get()->keyBy('persona_id'); //Inner join de personal con personas
+                }else{
+                    $personal = Personal::join('personas', 'personal.persona_id', '=', 'personas.persona_id')->get()->keyBy('persona_id'); //Inner join de personal con personas
+                }
+
+                $actividadesCiclo = $this->actividadesPorCiclo($personal, $anio, $activo);
                 $actividadesPrimerCiclo = $actividadesCiclo[0];
                 $actividadesSegundoCiclo = $actividadesCiclo[1];
             }
@@ -52,6 +62,7 @@ class ReporteInvolucramientoPorCicloController extends Controller
                 'datosCuantitativos' => $datosCuantitativos,
                 'personal' => $personal,
                 'anioReporte' => $anio,
+                'activo' => $activo,
                 'actividadesPrimerCiclo' =>  $actividadesPrimerCiclo,
                 'actividadesSegundoCiclo' =>   $actividadesSegundoCiclo,
                 'anios' => $this->anios
@@ -74,10 +85,11 @@ class ReporteInvolucramientoPorCicloController extends Controller
         return [$interinos, $propietarios, $fijo, $total];
     }
 
-    public function actividadesPorCiclo($personal, $anio)
+    public function actividadesPorCiclo($personal, $anio, $activo)
     {
         $primerCiclo = [];
         $segundoCiclo = [];
+        
         foreach ($personal as $persona) {
             $actividadesPersonalPrimerCiclo =  $this->consultaActividadesXCiclo($persona->persona_id, $anio, 1); //Actividades por personal del primer ciclo
             $actividadesPersonalSegundoCiclo =  $this->consultaActividadesXCiclo($persona->persona_id, $anio, 2); //Actividades por personal del segundo ciclo
@@ -90,6 +102,12 @@ class ReporteInvolucramientoPorCicloController extends Controller
 
     public function consultaActividadesXCiclo($persona_id, $anio, $ciclo)
     {
+        //Para poder obtener las actividades en las que se haya involucrado un personal se deben realizar dos tipos de consulta a la BD.
+        //Una debe obtener todas las actividades en las que ha participado ya sea por lista de asistencia, coordinador o facilitador (cuenta solo 1)
+        //y que se haya empezado y finalizado en el año que se haya seleccionado.
+        //La otra consulta va a tomar todos los datos de actividades que se hayan llevado acabo antes o igual al año seleccionado y que termine después o igual al año seleccionado
+        //Luego se juntan los resultados obtenidos en las dos consultas en una sola colección de datos y se devuelve el resultado. 
+
         if ($ciclo == 1) {//Si es el primer ciclo setean el rango de fechas del primer ciclo
             $fechaIni = $anio . "-01-01";
             $fechaFin = $anio . "-07-01";
@@ -97,7 +115,7 @@ class ReporteInvolucramientoPorCicloController extends Controller
             $fechaIni = $anio . "-07-01";
             $fechaFin = $anio . "-12-31";
         }
-
+        //Consulta de actividades del ciclo seleccionado
         $actividadesCicloActuales = Actividades::select("actividades.id",  "actividades_internas.tipo_actividad", "actividades.tema", "actividades.fecha_inicio_actividad", "actividades.fecha_final_actividad")
             ->leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
@@ -113,6 +131,7 @@ class ReporteInvolucramientoPorCicloController extends Controller
             ->whereBetween('actividades.fecha_final_actividad', [$fechaIni, $fechaFin])
             ->distinct()->get();
 
+            //Consulta de actividades que estén en progreso y que no sean específicas del ciclo selecciondo
             $actividadesCicloProgreso = Actividades::select("actividades.id",  "actividades_internas.tipo_actividad", "actividades.tema", "actividades.fecha_inicio_actividad", "actividades.fecha_final_actividad")
             ->leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
@@ -127,8 +146,6 @@ class ReporteInvolucramientoPorCicloController extends Controller
             ->distinct()->get();
 
             $actividadesCiclo = $actividadesCicloActuales->merge($actividadesCicloProgreso);
-
-
         return $actividadesCiclo;
     }
 

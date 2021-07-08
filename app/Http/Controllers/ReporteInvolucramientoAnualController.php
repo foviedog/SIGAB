@@ -38,12 +38,15 @@ class ReporteInvolucramientoAnualController extends Controller
         try {
             $anioInicio = request('anio_inicio', null);
             $anioFinal = request('anio_final', null);
+            $activo = request('personal_activo', null);
             $actividadesXAnio  = null;
             $graficosInvolucramiento  = null;
             $datosCuantitativos = $this->datosCuantitativosPersonal();
+            
+    
 
             if (!is_null($anioInicio) && !is_null($anioFinal)) {
-                $dataSet = $this->involucramientoAnual($anioInicio, $anioFinal);
+                $dataSet = $this->involucramientoAnual($anioInicio, $anioFinal,$activo);
                 $actividadesXAnio = $dataSet[0];
                 $graficosInvolucramiento = $dataSet[1];
             }
@@ -54,16 +57,20 @@ class ReporteInvolucramientoAnualController extends Controller
                 'datosCuantitativos' => $datosCuantitativos,
                 'actividadesXAnio' => $actividadesXAnio,
                 'personal' => $personal,
+                'activo' => $activo,
                 'anioInicio' => $anioInicio,
                 'anioFinal' => $anioFinal,
             ]);
         } catch (\Illuminate\Database\QueryException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-        } catch (ModelNotFoundException $ex) { //el catch atrapa la excepcion en caso de haber errores
-            return Redirect::back() //se redirecciona a la pagina anteriror
-                ->with('error', $ex->getMessage()); //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
-        }
+            dd($ex);
+            return view('reportes.involucramiento.anual.involucramiento_anual', [
+                'graficosInvolucramiento' => json_encode($graficosInvolucramiento, JSON_UNESCAPED_SLASHES),
+                'datosCuantitativos' => $datosCuantitativos,
+                'anioInicio' => $anioInicio,
+                'anioFinal' => $anioFinal,
+            ])->with('error', $ex->getMessage());
+
+        } 
     }
 
     public function datosCuantitativosPersonal()
@@ -77,7 +84,7 @@ class ReporteInvolucramientoAnualController extends Controller
 
 
 
-    public function involucramientoAnual($anioInicio, $anioFinal)
+    public function involucramientoAnual($anioInicio, $anioFinal, $activo)
     {
 
         $actividadesAnio = []; //Colección para guarfar todas los conjuntos de datos referentes al id de la persona y las actividades en las que se ha involucrado
@@ -87,17 +94,23 @@ class ReporteInvolucramientoAnualController extends Controller
         //Por efectos de tiempo de ejecución se decide devolver un array que contenga los dos tados (actividadesXPersonal y porcentajeParticipación)
         //De esta manera el método "cantActividadesXPersonal" solamente se ejecuta 1 vez.
         for ($anio = $anioInicio; $anio <= $anioFinal; $anio++) {
-            $actividadesPersonal =  $this->cantActividadesXPersonal($anio); //Se obtien la cantidad de actividades por personal
+            $actividadesPersonal =  $this->cantActividadesXPersonal($anio,$activo); //Se obtien la cantidad de actividades por personal
             $actividadesAnio[$anio] = $actividadesPersonal; //Se almacena el dato según el año consultado
             $graficosInvolucramiento[$anio] = $this->porcentajeParticipacion($actividadesPersonal); //Se consulta sobre el porcentaje de todo el personal y se guarda en formato JSON según el año
         }
         return [$actividadesAnio, $graficosInvolucramiento];
     }
 
-    public function cantActividadesXPersonal($anio)
+    public function cantActividadesXPersonal($anio, $activo)
     {
         $tipos = GlobalArrays::TIPOS_ACTIVIDAD_INTERNA;
-        $personal = DB::table("personal")->select("persona_id")->get(); //Inner join de personal con personas
+        if(!is_null($activo)){
+            $personal = DB::table("personal")->select("persona_id")
+            ->Where('personal.activo', '=', '1')
+            ->get(); //Inner join de personal activo con personas 
+        }else{
+            $personal = DB::table("personal")->select("persona_id")->get(); //Inner join de personal con personas
+        }
         $dataSet = [];
         foreach ($personal as &$persona) {
             $personaTipos = [];
@@ -107,16 +120,21 @@ class ReporteInvolucramientoAnualController extends Controller
             }
             $dataSet[$persona->persona_id] = $personaTipos;
         }
-
         return $dataSet;
     }
 
     public function cantActividadesInternasXTipo($persona_id, $tipo, $anio)
     {
-        $cant = Actividades::leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+        //Para poder obtener la cantidad de actividades en la que ha participado un personal se deben realizar dos tipos de consulta a la BD
+        //Una debe obtener todas las actividades en las que ha participado ya sea por lista de asistencia, coordinador o facilitador (cuenta solo 1)
+        //y que se haya empezado y finalizado en el año que se haya seleccionado.
+        //La otra consulta va a tomar todos los datos de actividades que se hayan llevado acabo antes o igual al año seleccionado y que termine después o igual al año seleccionado
+        //Luego se suman las participaciones obtenidas y se devuelve el resultado. 
+
+        $actividadesRealizadas = Actividades::leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
             ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
             ->where(function ($query) use ($persona_id) {
-                $query->where("actividades.responsable_coordinar", "=", $persona_id)
+                $query->where("actividades.responsable_coordinar", "=", "personal.persona_id")
                     ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
                     ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
             })
@@ -125,14 +143,25 @@ class ReporteInvolucramientoAnualController extends Controller
                 $query->where('actividades.estado', '=', 'Ejecutada')
                     ->orWhere('actividades.estado', '=', 'En progreso');
             })
-            // ->where(function ($query) use ($anio) {
-            //  $query->whereYear('actividades.fecha_final_actividad', $anio)
-            //  ->orwhereYear('actividades.fecha_inicio_actividad', $anio);
-            // })
             ->whereYear('actividades.fecha_inicio_actividad', $anio)
             ->distinct()
             ->count('actividades.id');
-        return $cant;
+
+            $actividadesEnProgreso = Actividades::leftJoin('lista_asistencias', 'lista_asistencias.actividad_id', '=', 'actividades.id')
+            ->join('actividades_internas', 'actividades_internas.actividad_id', '=', 'actividades.id')
+            ->where(function ($query) use ($persona_id) {
+                $query->where("actividades.responsable_coordinar", "=", "personal.persona_id")
+                    ->orwhere("actividades_internas.personal_facilitador", "=", $persona_id)
+                    ->orwhere("lista_asistencias.persona_id", "=", $persona_id);
+            })
+            ->Where('actividades_internas.tipo_actividad', 'like', '%' .   $tipo . '%')
+            ->Where('actividades.estado', '=', 'En progreso')
+            ->whereYear('actividades.fecha_inicio_actividad', '<=', $anio)
+            ->whereYear('actividades.fecha_final_actividad', '>', $anio)
+            ->distinct()
+            ->count('actividades.id');
+
+        return $actividadesRealizadas + $actividadesEnProgreso;
     }
 
     public function porcentajeParticipacion($actividadesXPersonal)
@@ -169,7 +198,6 @@ class ReporteInvolucramientoAnualController extends Controller
         $graficosInvolucramiento = $request->graficosInvolucramiento;
         $anioInicio =  json_decode($request->anioInicio);
         $anioFinal =  json_decode($request->anioFinal);
-        // dd($actividadesXAnio);
         return view('reportes.involucramiento.anual.reporte', [
             'graficosInvolucramiento' => $graficosInvolucramiento,
             'actividadesXAnio' => $actividadesXAnio,
