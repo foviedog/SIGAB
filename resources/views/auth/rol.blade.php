@@ -36,7 +36,7 @@
                     <div class="card-body p-0">
                         <div class="p-5">
                             <div class="text-center">
-                                <img class="mb-4" src="/img/logoSIGAB.png">
+                                <a href="{{  route('home') }}"><img class="mb-4" src="/img/logoSIGAB.png"></a>
                             </div>
 
                             {{-- Esta sección se despliega si la persona que se desea cambiar rol
