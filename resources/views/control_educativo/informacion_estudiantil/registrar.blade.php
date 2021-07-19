@@ -203,10 +203,10 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                     {{-- Campo: Correo institucional --}}
                     <div class="d-flex justify-content-start mb-3">
                         <div class="col-4">
-                            <label for="correo_institucional">Correo institucional: <i class="text-danger">*</i></label>
+                            <label for="correo_institucional">Correo institucional:</label>
                         </div>
                         <div class="col-6">
-                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeypress="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}" required>
+                            <input type='email' minlength="3" maxlength="45" class="form-control w-100" id="correo_institucional" name="correo_institucional" onkeypress="contarCaracteres(this,100)" multiple value="{{ (!is_null($persona_existe)) ? $persona_existe->correo_institucional : ($persona_no_insertada->correo_institucional ?? '') }}">
                         </div>
                         <div class="col-1">
                             <span class="text-muted" id="mostrar_correo_institucional"></span>
@@ -358,6 +358,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                         </div>
                         <div class="col-6">
                             <select id="anio_desercion" name="anio_desercion" class="form-control w-100" required>
+                            <option value="">Sin seleccionar</option>
                                 @foreach($anios as $anio)
                                 <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_desercion ) selected @endif>{{ $anio }}</option>
                                 @endforeach
@@ -403,7 +404,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                             <label for="carrera_matriculada_1">Carrera matriculada 1: <i class="text-danger">*</i></label>
                         </div>
                         <div class="col-6">
-                            <input type='text' class="form-control w-100" id="carrera_matriculada_1" name="carrera_matriculada_1" onkeypress="contarCaracteres(this,45)" value="{{ $estudiante_no_insertado->carrera_matriculada_1 ?? '' }}" required>
+                            <input type='text' class="form-control w-100" id="carrera_matriculada_1" name="carrera_matriculada_1" onkeypress="contarCaracteres(this,250)" value="{{ $estudiante_no_insertado->carrera_matriculada_1 ?? '' }}" required>
                         </div>
                         <span data-toggle="tooltip" data-placement="bottom" title="Nombre de la carrera principal"><i class="far fa-question-circle fa-lg"></i></span>
                         <div class="col-1">
@@ -432,6 +433,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                         </div>
                         <div class="col-6">
                             <select id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" class="form-control w-100" required>
+                                <option value="">Sin seleccionar</option>
                                 @foreach($aniosFuturos as $anio)
                                 <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_graduacion_estimado_1 ) selected @endif>{{ $anio }}</option>
                                 @endforeach
@@ -450,6 +452,7 @@ $estudiante_no_insertado = Session::get('estudiante_no_insertado');
                         </div>
                         <div class="col-6">
                             <select id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" class="form-control w-100" required>
+                                <option value="">Sin seleccionar</option>
                                 @foreach($aniosFuturos as $anio)
                                 <option value="{{ $anio }}" @if (!is_null($estudiante_no_insertado) && $anio==$estudiante_no_insertado->anio_graduacion_estimado_2 ) selected @endif>{{ $anio }}</option>
                                 @endforeach

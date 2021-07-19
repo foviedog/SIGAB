@@ -141,7 +141,7 @@ class GlobalArrays
     public const JORNADAS_PERSONAL = [
         "Tiempo completo (40 horas)",
         "Cuarto de tiempo (30 horas)",
-        "Medio tiempo (30 horas)",
+        "Medio tiempo (20 horas)",
         "Un cuarto de tiempo (10 horas)"
     ];
 

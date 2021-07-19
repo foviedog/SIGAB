@@ -109,7 +109,7 @@ class PersonalController extends Controller
                 $persona = Persona::find($request->persona_id);  //En caso de que la persona ya exista en la bd se busca al objeto para evitar conflictos de llave primaria duplicada
             }
 
-            $this->guardarPersonal($persona, $personal, $request, 1); 
+            $this->guardarPersonal($persona, $personal, $request, 1);
 
             $this->guardarIdiomas($request); //Se llama al método genérico para guardar idiomas
             $persona_existe = null;
@@ -117,14 +117,14 @@ class PersonalController extends Controller
                     ->with('mensaje_exito', '¡El registro ha sido exitoso!') //Retorna mensaje de exito con el response a la vista despues de registrar el objeto
                     ->with('persona_registrada', $persona) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
                     ->with('personal_registrado', $personal) //Retorna un objeto en el response con los atributos especificos que se acaban de ingresar en la base de datos
-                    ->with('persona_existe', null); 
+                    ->with('persona_existe', null);
 
         } catch (\Illuminate\Database\QueryException $ex) {
             return view('control_personal.registrar') //se redirecciona a la pagina de registro personal
                     ->with('mensaje_error', "Ocurrió un error al insertar, puede que el registro ingresado con la cédula  " . "$request->cedula" . " ya exista")  //Retorna mensaje de error con el response a la vista despues de fallar al registrar el objeto
                     ->with('persona_no_insertada', $persona) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
                     ->with('personal_no_insertado', $personal) //Retorna un objeto en el response con los atributos especificos que se habian digitados anteriormente
-                    ->with('persona_existe', null); 
+                    ->with('persona_existe', null);
         } catch (\Exception $exception) {
             throw new ControllerFailedException();
         }
@@ -136,7 +136,7 @@ class PersonalController extends Controller
     public function show($id_personal)
     {
         try{
-            //Busca en la base de datos al personal con la cédula indicada 
+            //Busca en la base de datos al personal con la cédula indicada
             $personal = Personal::findOrFail($id_personal);
 
             //Se optiene un arreglo con los idiomas específicos de la persona.
@@ -172,7 +172,7 @@ class PersonalController extends Controller
             $personal = Personal::find($id_personal);
 
             $this->guardarPersonal($persona, $personal, $request, 2); //Se llama al método genérico para guardar un personal
-        
+
             Idioma::where('persona_id', $id_personal)->delete(); // Antes de guardar los idiommas de la persona, se eliminan todos los registros de idomas referentes a esa persona para que sea posible actualizarlo
             $this->guardarIdiomas($request); //Se llama al método genérico para guardar idiomas
 
@@ -254,7 +254,7 @@ class PersonalController extends Controller
 
         $personal->publicaciones =  $request->publicaciones;
         $personal->reconocimientos =  $request->reconocimientos;
-        
+
         $persona->save(); //se guarda el objeto en la base de datos
         $personal->save();
 
@@ -321,7 +321,7 @@ class PersonalController extends Controller
                 $idiomas = Idioma::where('persona_id', $personaId);
                 $idiomas->delete();
 
-                
+
                 $personal->delete();
             } else {
 
@@ -342,7 +342,7 @@ class PersonalController extends Controller
                 $idiomas = Idioma::where('persona_id', $personaId);
                 $idiomas->delete();
 
-                
+
                 $personal->delete();
                 $persona = Persona::where('persona_id', $personaId);
                 $persona->delete();
@@ -420,9 +420,9 @@ class PersonalController extends Controller
         return $concurrencias;
     }
 
-    public function exportar() 
+    public function exportar()
     {
         return Excel::download(new PersonalExport, 'personal.xlsx');
     }
-    
+
 }

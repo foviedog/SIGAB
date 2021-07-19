@@ -118,7 +118,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                         <label for="carrera1"><strong>Primera Carrera<i class="text-danger">* </i> </strong><br /></label>
                                         <span class="text-muted" id="mostrar_carrera_matriculada_1"></span>
                                     </div>
-                                    <input type="text" id="carrera_matriculada_1" name="carrera_matriculada_1" class="form-control" onkeypress="contarCaracteres(this,45)" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
+                                    <input type="text" id="carrera_matriculada_1" name="carrera_matriculada_1" class="form-control" onkeypress="contarCaracteres(this,250)" placeholder="Nombre de primera carrera" value="{{ $estudiante->carrera_matriculada_1 }}" required disabled /> </input>
                                 </div>
                                 {{-- Campo: Segunda Carrera --}}
                                 <div class="form-group">
@@ -148,6 +148,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                     <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 1"><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_anio_graduacion_estimado_1"></span><br />
                                     <select id="anio_graduacion_estimado_1" name="anio_graduacion_estimado_1" class="form-control w-100" required disabled>
+                                        <option value="">Sin seleccionar</option>
                                         @foreach($aniosFuturos as $anio)
                                         <option value="{{ $anio }}" @if ($anio==$estudiante->anio_graduacion_estimado_1 ) selected @endif>{{ $anio }}</option>
                                         @endforeach
@@ -159,6 +160,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                     <span data-toggle="tooltip" data-placement="right" title="Año en el que se estima que concluya la carrera matriculada 2 (en caso de que el estudiante tenga)"><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_anio_graduacion_estimado_2"></span><br />
                                     <select id="anio_graduacion_estimado_2" name="anio_graduacion_estimado_2" class="form-control w-100" required disabled>
+                                        <option value="">Sin seleccionar</option>
                                         @foreach($aniosFuturos as $anio)
                                         <option value="{{ $anio }}" @if ($anio==$estudiante->anio_graduacion_estimado_2 ) selected @endif>{{ $anio }}</option>
                                         @endforeach
@@ -171,6 +173,7 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                     <span data-toggle="tooltip" data-placement="right" title="Se ingresa año de deserción si existe"><i class="far fa-question-circle fa-lg"></i></span>
                                     <span class="text-muted" id="mostrar_anio_desercion"></span><br />
                                     <select id="anio_desercion" name="anio_desercion" class="form-control w-100" required disabled>
+                                        <option value="">Sin seleccionar</option>
                                         @foreach($anios as $anio)
                                         <option value="{{ $anio }}" @if ($anio==$estudiante->anio_desercion ) selected @endif>{{ $anio }}</option>
                                         @endforeach
@@ -228,10 +231,10 @@ $aniosFuturos = GlobalFunctions::obtenerAniosFuturos();
                                             <div class="col">
                                                 <div class="form-group">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <label for="correo_institucional"><strong>Correo Institucional<i class="text-danger">* </i> </strong><br /></label>
+                                                        <label for="correo_institucional"><strong>Correo Institucional </strong><br /></label>
                                                         <span class="text-muted" id="mostrar_correo_institucional"></span>
                                                     </div>
-                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeypress="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" required disabled />
+                                                    <input type="email" minlength="3" maxlength="45" id="correo_institucional" name="correo_institucional" class="form-control" onkeypress="contarCaracteres(this,100)" placeholder="Correo Institucional" value="{{ $estudiante->persona->correo_institucional}}" disabled />
                                                 </div>
                                             </div>
                                         </div>

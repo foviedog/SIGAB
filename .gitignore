@@ -18,3 +18,4 @@ public/css/toastr.css
 public/0.js
 public/js/bootstrap-input-spinner.js
 public/mix-manifest.json
+.env
